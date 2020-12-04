@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/53/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,123 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/04/21/git-reset-revert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/21/git-reset-revert/" class="post-title-link" itemprop="url">git reset与revert</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-21 10:34:21" itemprop="dateCreated datePublished" datetime="2014-04-21T10:34:21+08:00">2014-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>reset和revert都可以修改历史提交,但二者的区别是很大的。</p>
+<p><strong>reset</strong><br>git reset - Reset current HEAD to the specified state</p>
+<p>对于撤销提交,git reset的命令格式如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset \[--soft --mixed --hard --merge --keep\] \[-q\] \[&lt;commit&gt;\]</span><br></pre></td></tr></table></figure>
+
+<p>这种形式的reset会将当前分支的头设置到指定的commit，并且根据不同的模式可能会更新索引区域(使用指定commit的目录树)和工作树。如果省略模式参数,则默认为<code>--mixed</code>,模式只能设置为以下值之一:</p>
+<ul>
+<li>  <code>--soft</code><br>不修改索引区域(staging area)和工作目录(woring tree)，直接将当前分支的头设置为commit。 </li>
+<li>  <code>--mixed</code><br>使用commit的目录树重置索引区域,当前工作树保持不变。因此工作树中修改的文件需要重新添加到索引区域才能提交。</li>
+<li>  <code>--hard</code><br>使用commit的目录树重设索引区域和工作树。完全丢弃commit之后的所有修改。 </li>
+<li>  <code>--merge</code><br>使用commit的目录树重设索引区域,并且更新工作树中在commit和HEAD之间存在差异的文件,但是不更新工作树中索引区域与工作树之间存在差异的文件。<br>如果一个文件在commit和有修改但未将修改更新到索引区域的文件之间存在差异,则撤销会被终止。</li>
+<li>  <code>--keep</code><br>使用commit的目录树重设索引区域,并且更新工作树中在commit和HEAD之间存在差异的文件。</li>
+</ul>
+<p><strong>revert</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git revert &lt;commit&gt;...</span><br></pre></td></tr></table></figure>
+<p>git revert用于反转提交,执行evert命令时要求工作树必须是干净的。git revert用一个新提交来消除一个历史提交所做的任何修改。</p>
+<p><strong>区别</strong></p>
+<p>reset会将历史提交直接撤销掉,不会保留提交历史。而revert会增加一个新的提交来反转指定的历史提交所做的修改,保留完整的提交历史,但被反转的提交相当于没对代码库做任何修改。简单来说,一次提交修改了代码库,revert后另一个提交把对应的修改恢复了原样。</p>
+<p>如果comit已经push到远程服务器,要慎用甚至最好不要用reset来撤销修改,除非你真的知道你在做什么。这时候用revert是比较合适的。如果这时候执行git push,会有错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">To gitsvr:xxx</span><br><span class="line"> ! \[rejected\] devel -&gt; devel (non-fast-forward)</span><br><span class="line">error: failed to push some refs to <span class="string">&#x27;gitsvr:xxx&#x27;</span></span><br><span class="line">hint: Updates were rejected because the tip <span class="keyword">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Integrate the remote changes (e.g.</span><br><span class="line">hint: <span class="string">&#x27;git pull ...&#x27;</span>) before pushing again.</span><br><span class="line">hint: See the <span class="string">&#x27;Note about fast-forwards&#x27;</span> <span class="keyword">in</span> <span class="string">&#x27;git push --help&#x27;</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
+<p>如果你确信你push到远程服务器的提交没有别人在引用,比如就你自己在使用代码库,可以强制更新远程代码库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -f</span><br></pre></td></tr></table></figure>
+<p>如果你的强制撤销会影响到别人，就应该使用git revert了。</p>
+<p><strong>git reset后悔药</strong> </p>
+<p>git reset后还能恢复吗？只要提交对象还在代码库中存在就可以恢复,因为只不过是HEAD指针被移动了而已,可以重新移动到原来的提交对象。<br>使用git reflog查看操作历史，找到之前 HEAD 的 hash 值，然后<code>git reset --hard</code>到那个hash就可以了。</p>
+<p>References:<br>[1]man git</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2014/04/20/mac-install-eclipse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -356,12 +466,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -458,12 +568,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -544,12 +654,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -624,12 +734,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -744,12 +854,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -833,12 +943,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -959,12 +1069,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1039,12 +1149,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1107,93 +1217,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">MAC平台PAC文件编写和自动代理配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-27 23:38:17" itemprop="dateCreated datePublished" datetime="2014-03-27T23:38:17+08:00">2014-03-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Internet/" itemprop="url" rel="index"><span itemprop="name">Internet</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>使用PAC(Proxy auto-config)可以使用户代理根据不同的URL采用不同的代理访问策略。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1233,7 +1256,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

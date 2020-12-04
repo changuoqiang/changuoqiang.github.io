@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/28/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,105 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/19/oracle-login-error-product-user-profile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/19/oracle-login-error-product-user-profile/" class="post-title-link" itemprop="url">oracle手工建库新用户登录错误Error accessing PRODUCT_USER_PROFILE</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-19 12:21:16" itemprop="dateCreated datePublished" datetime="2015-11-19T12:21:16+08:00">2015-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>手工创建oracle数据库，新建用户sqlplus登录时有错误提示信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ERROR:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">Error</span> accessing PRODUCT_USER_PROFILE</span><br><span class="line">Warning: Product user profile information not loaded!</span><br><span class="line">You may need to run PUPBLD.SQL <span class="keyword">as</span> SYSTEM</span><br></pre></td></tr></table></figure>
+
+<p>可以正常登录，不影响使用。</p>
+<p>用system用户登录数据库，执行脚本$ORACLE_HOME/sqlplus/admin/pupbld.sql可以消除此错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus system/xxxx@orcl</span><br><span class="line">SQL&gt;@/u01/app/oracle/product/<span class="number">10.2</span><span class="number">.0</span>/db_1/sqlplus/admin/pupbld.sql</span><br><span class="line"></span><br><span class="line">DROP SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01434</span>: private synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line"> DATE_VALUE FROM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">3</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">DROP TABLE PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">ALTER TABLE SQLPLUS_PRODUCT_PROFILE ADD (LONG_VALUE LONG)</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">Table created.</span><br><span class="line"></span><br><span class="line">DROP TABLE PRODUCT_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">DROP VIEW PRODUCT_PRIVS</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">View created.</span><br><span class="line"></span><br><span class="line">Grant succeeded.</span><br><span class="line"></span><br><span class="line">DROP PUBLIC SYNONYM PRODUCT_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01432</span>: public synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br><span class="line"></span><br><span class="line">DROP SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01434</span>: private synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br><span class="line"></span><br><span class="line">DROP PUBLIC SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01432</span>: public synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br></pre></td></tr></table></figure>
+
+<p>重新登录新用户，错误提示消失。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/16/6923/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -349,12 +441,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -454,12 +546,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -534,12 +626,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -642,12 +734,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -733,12 +825,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -828,12 +920,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -933,12 +1025,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1033,12 +1125,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1111,104 +1203,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/06/change-cassandra-data-dir/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/06/change-cassandra-data-dir/" class="post-title-link" itemprop="url">更改cassandra数据存储目录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-11-06 23:06:41" itemprop="dateCreated datePublished" datetime="2015-11-06T23:06:41+08:00">2015-11-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>debian使用apache源安装完成的cassandra节点，默认数据存储在/var/lib/cassandra/data目录下。</p>
-<p>为了优化性能，可能将data与commitlog分别存储到不同的磁盘上。</p>
-<p>比如，更改数据目录到/mnt/data/cassandra目录下，这是挂装的一个不同的磁盘驱动器。</p>
-<p>首先停掉cassandra</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service cassandra stop</span><br></pre></td></tr></table></figure>
-
-<p>然后修改/etc/cassandra/cassandra.yaml</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_file_directories:</span><br><span class="line"> - <span class="regexp">/mnt/</span>data/cassandra</span><br></pre></td></tr></table></figure>
-
-<p>将/var/lib/cassandra/data目录下的所有东西全部拷贝或移动到/mnt/data/cassandra目录下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra cp -r /<span class="keyword">var</span>/lib/cassandra/data<span class="comment">/* /mnt/data/cassandra</span></span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra mv /<span class="keyword">var</span>/lib/cassandra/data /mnt/data/cassandra</span><br></pre></td></tr></table></figure>
-
-<p>最后重新启动cassandra</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service cassandra start</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/27/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><span class="page-number current">28</span><a class="page-number" href="/page/29/">29</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/29/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1248,7 +1242,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

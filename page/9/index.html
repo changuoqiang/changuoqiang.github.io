@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/9/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,101 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/09/macosx-sed-i-parameter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/09/macosx-sed-i-parameter/" class="post-title-link" itemprop="url">macosx sed的-i参数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-09 21:20:24" itemprop="dateCreated datePublished" datetime="2019-07-09T21:20:24+08:00">2019-07-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>macosx上自带的很多命令行工具都是bsd版本的，包括sed</p>
+<p>sed的参数-i与gnu版本稍有不同,其-i参数后面的备份文件扩展名不可省略，即使是空字符串，也就是不要备份，而gnu版本不要备份的话是可以忽略掉的。<br>bsd版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;&#x27;</span> <span class="string">&#x27;s/123/456/&#x27;</span> test</span><br></pre></td></tr></table></figure>
+
+<p>gnu版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/123/456/&#x27;</span> test</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/09/mariadb-purge-mysql-bin-files/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -355,12 +443,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -446,12 +534,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -539,12 +627,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -628,12 +716,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -729,12 +817,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -820,12 +908,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -936,12 +1024,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1021,12 +1109,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1106,125 +1194,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/22/cassandra-compaction-strategy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/22/cassandra-compaction-strategy/" class="post-title-link" itemprop="url">cassandra compaction strategy</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-22 11:29:53" itemprop="dateCreated datePublished" datetime="2019-06-22T11:29:53+08:00">2019-06-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>cassandra更新或删除rows时并不会真正的更新或删除原先的rows，只是添加新的rows并将原rows打上tombstone标记，所以cassandra需要周期性的运行compaction来整理数据库。</p>
-<p>compaction有三种策略，SizeTieredCompactionStrategy (STCS)、LeveledCompactionStrategy (LCS)和DateTieredCompactionStrategy (DTCS)，默认的compaction策略是STCS。</p>
-<p>当前使用的集群在compaction时出现错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[CompactionExecutor:<span class="number">41367</span>\] <span class="number">2019</span>-<span class="number">06</span>-<span class="number">22</span> <span class="number">11</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">063</span> CassandraDaemon.java:<span class="number">185</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">41367</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">1</span>, expected write size = <span class="number">678107716200</span></span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">275</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">118</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">256</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>需要600多G的空间来compaction，昏！</p>
-<p>是的，有一个数据文件达到了600多G，默认的SizeTieredCompactionStrategy压缩策略需要比数据文件大一些的空闲空间来执行compaction，但是磁盘剩余空间只有不到400G了，so.</p>
-<p>“SizeTieredCompactionStrategy Compaction requires a lot of temporary space: In worst case, we need to merge all existing SSTables into one, so we need half the disk to be empty to write the output file and only later can delete the old SSTables”</p>
-<p>使用STCS compaction策略，cassandra节点一般要保持50%以上的剩余空间，对于大数据集来讲，太可怕了，几个T的数据，需要额外几个T的剩余空间才能正常运行, WTF!</p>
-<p>STCS策略会在达到min_threshold(默认为4)时，将这几个SSTABLE合并为一个大的SSTABLE，这个SSTABLE并不会有上限大小的限制，初期数据少的时候并不会有什么问题。但是目前2T的节点，已经有3个600G的SSTABLE了，下一步compaction要生成单个2T以上的SSTABLE了，看来默认的STCS策略并不太适合大数据集。</p>
-<p>LeveledCompactionStrategy压缩策略只使用很少的空间来执行压缩，只要10 * sstable_size_in_mb的空间，目前默认的sstable_size_in_mb为160MB，10倍的话差不多2个G的样子，不过官方也讲最好保持10G以上的剩余空间。</p>
-<p>sstable_size_in_mb是LeveledCompactionStrategy bean的一个RW attribute来控制compaction后生成的sstable的大小，一般使用当前默认的160M或设置为200M都是适合的。对于大数据集LCS会生成数量很多的sstables。</p>
-<p><strong>当前表的compaction</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; desc TABLE image;</span><br><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH bloom_filter_fp_chance = <span class="number">0.01</span></span><br><span class="line"> AND caching = <span class="string">&#x27;&#123;&quot;keys&quot;:&quot;ALL&quot;, &quot;rows_per_partition&quot;:&quot;NONE&quot;&#125;&#x27;</span></span><br><span class="line"> AND comment = <span class="string">&#x27;&#x27;</span></span><br><span class="line"> AND compaction = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy&#x27;</span>&#125;</span><br><span class="line"> AND compression = &#123;<span class="string">&#x27;sstable_compression&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.io.compress.LZ4Compressor&#x27;</span>&#125;</span><br><span class="line"> AND dclocal_read_repair_chance = <span class="number">0.1</span></span><br><span class="line"> AND default_time_to_live = <span class="number">0</span></span><br><span class="line"> AND gc_grace_seconds = <span class="number">864000</span></span><br><span class="line"> AND max_index_interval = <span class="number">2048</span></span><br><span class="line"> AND memtable_flush_period_in_ms = <span class="number">0</span></span><br><span class="line"> AND min_index_interval = <span class="number">128</span></span><br><span class="line"> AND read_repair_chance = <span class="number">0.0</span></span><br><span class="line"> AND speculative_retry = <span class="string">&#x27;99.0PERCENTILE&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>果然是SizeTieredCompactionStrategy</p>
-<p><strong>修改compaction策略</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt;ALTER TABLE image WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>,<span class="string">&#x27;sstable_size_in_mb&#x27;</span>:<span class="string">&#x27;200&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里虽然将compaction策略由STCS修改成了LCS，但是要完成一次完整的转换仍然需要巨大的剩余磁盘空间，因为在完整的转换为LCS之前，那些大的sstable,当前有3个600G以上的，会一直保留在磁盘上，完整转换完毕后才能删除，只剩下数量众多的小sstabel，之后的compaction就不会需要这么多的剩余磁盘空间了。</p>
-<p>official documnet: “While a merge of several SSTables is ongoing, the request path continues to read the old SSTables. Ideally, the old SSTables would be deleted as soon as the merge is done, but we must not delete an SSTable that still has in-progress reads.”</p>
-<p>还有一个问题，直接alter table修改compaction策略，会使所有的集群节点开始转换到LCS的compaction动作，集群的负载会高居不下，所以也可以使用jmx来逐个节点的迁移到LCS策略。</p>
-<p>当然也可以关闭节点的自动compaction</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool disableautocompation -- keyspacename tablename </span><br></pre></td></tr></table></figure>
-
-<p>修改完table的compaction策略后，手动逐个执行compaction</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool compact -- keyspacename tablename</span><br></pre></td></tr></table></figure>
-
-<p>最后再打开autocompaction</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool enableautocompaction</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建新表时</strong><br>可以直接指定compaction策略</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/dml/dmlHowDataMaintain.html">How is data maintained?</a><br>[2]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/leveled-compaction-in-apache-cassandra">Leveled Compaction in Apache Cassandra</a><br>[3]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/when-to-use-leveled-compaction">When to Use Leveled Compaction</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/didda/p/4728588.html">Cassandra 的压缩策略STCS，LCS 和 DTCS</a><br>[5]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/gpcuster/archive/2010/05/27/1745859.html">介绍CASSANDRA中的压缩</a><br>[6]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45419041/cancelling-ongoing-compaction-jobs-in-cassandra">Cancelling ongoing compaction jobs in Cassandra</a><br>[7]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/tools/toolsSetCompactionThreshold.html">nodetool setcompactionthreshold</a><br>[8]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sing1ee/archive/2012/05/24/2765042.html">被忽视的Compaction策略-有关NoSQL Compaction策略的一点思考</a><br>[9]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29392153/cassandra-control-sstable-size">Cassandra control SSTable size</a><br>[10]<a target="_blank" rel="noopener" href="https://github.com/scylladb/scylla/wiki/SSTable-compaction-and-compaction-strategies">SSTable compaction and compaction strategies</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1264,7 +1233,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

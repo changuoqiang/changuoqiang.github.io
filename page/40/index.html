@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/40/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,106 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/03/24/cassandra-permission-deny/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/24/cassandra-permission-deny/" class="post-title-link" itemprop="url">文件系统权限不足导致cassandra无法启动一例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-24 10:53:02" itemprop="dateCreated datePublished" datetime="2015-03-24T10:53:02+08:00">2015-03-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>集群中的某一node无法启动,nodetool status输出如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">error: No nodes present <span class="keyword">in</span> the cluster. Has <span class="built_in">this</span> node finished starting up?</span><br><span class="line">-- StackTrace --</span><br><span class="line">java.lang.RuntimeException: No nodes present <span class="keyword">in</span> the cluster. Has <span class="built_in">this</span> node finished starting up?</span><br><span class="line"> at org.apache.cassandra.dht.Murmur3Partitioner.describeOwnership(Murmur3Partitioner.java:<span class="number">129</span>)</span><br><span class="line"> at org.apache.cassandra.service.StorageService.getOwnership(StorageService.java:<span class="number">3856</span>)</span><br><span class="line"> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line"> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.reflect.misc.Trampoline.invoke(MethodUtil.java:<span class="number">71</span>)</span><br><span class="line"> at sun.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.reflect.misc.MethodUtil.invoke(MethodUtil.java:<span class="number">275</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:<span class="number">112</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:<span class="number">46</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.MBeanIntrospector.invokeM(MBeanIntrospector.java:<span class="number">237</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.PerInterface.getAttribute(PerInterface.java:<span class="number">83</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.MBeanSupport.getAttribute(MBeanSupport.java:<span class="number">206</span>)</span><br><span class="line"> at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute(DefaultMBeanServerInterceptor.java:<span class="number">647</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.JmxMBeanServer.getAttribute(JmxMBeanServer.java:<span class="number">678</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:<span class="number">1443</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:<span class="number">76</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:<span class="number">1307</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:<span class="number">1399</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.getAttribute(RMIConnectionImpl.java:<span class="number">637</span>)</span><br><span class="line"> at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:<span class="number">323</span>)</span><br><span class="line"> at sun.rmi.transport.Transport$1.run(Transport.java:<span class="number">200</span>)</span><br><span class="line"> at sun.rmi.transport.Transport$1.run(Transport.java:<span class="number">197</span>)</span><br><span class="line"> at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line"> at sun.rmi.transport.Transport.serviceCall(Transport.java:<span class="number">196</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:<span class="number">568</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:<span class="number">826</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$78(TCPTransport.java:<span class="number">683</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler$$Lambda$1/<span class="number">294183905.</span>run(Unknown Source)</span><br><span class="line"> at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line">at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:<span class="number">682</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>)</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure>
+
+<p>/var/log/cassandra/system.log有如下错误信息:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[MemtableFlushWriter:<span class="number">3</span>\] <span class="number">2015</span>-<span class="number">03</span>-<span class="number">23</span> <span class="number">18</span>:<span class="number">26</span>:<span class="number">37</span>,<span class="number">996</span> CassandraDaemon.java:<span class="number">153</span> - Exception <span class="keyword">in</span> thread Thread\[MemtableFlushWriter:<span class="number">3</span>,<span class="number">5</span>,main\]</span><br><span class="line">java.lang.RuntimeException: java.io.FileNotFoundException: <span class="regexp">/var/</span>lib/cassandra/data/image/image-2a19ce908f1f11e481c2a9fac1d00bce/image-image-tmp-ka--&gt; <span class="number">2</span>-Index.db (Permission denied)</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.&lt;init&gt;(SequentialWriter.java:<span class="number">75</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">104</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">99</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.sstable.SSTableWriter$IndexWriter.&lt;init&gt;(SSTableWriter.java:<span class="number">552</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.sstable.SSTableWriter.&lt;init&gt;(SSTableWriter.java:<span class="number">134</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.createFlushWriter(Memtable.java:<span class="number">390</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.writeSortedContents(Memtable.java:<span class="number">329</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.runWith(Memtable.java:<span class="number">313</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.DiskAwareRunnable.runMayThrow(DiskAwareRunnable.java:<span class="number">48</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at com.google.common.util.concurrent.MoreExecutors$SameThreadExecutorService.execute(MoreExecutors.java:<span class="number">297</span>) ~\[guava-<span class="number">16.0</span>.jar:na\]</span><br><span class="line"> at org.apache.cassandra.db.ColumnFamilyStore$Flush.run(ColumnFamilyStore.java:<span class="number">1037</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1145</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">615</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line">Caused by: java.io.FileNotFoundException: <span class="regexp">/var/</span>lib/cassandra/data/image/image-2a19ce908f1f11e481c2a9fac1d00bce/image-image-tmp-ka-<span class="number">2</span>-Index.db -&gt; (Permission denied)</span><br><span class="line"> at java.io.RandomAccessFile.open(Native Method) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.io.RandomAccessFile.&lt;init&gt;(RandomAccessFile.java:<span class="number">241</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.&lt;init&gt;(SequentialWriter.java:<span class="number">71</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> ... <span class="number">14</span> common frames omitted</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看错误信息为文件系统访问权限问题所致，查看/var/lib/cassandra/data/image,果然此目录的属主和组都成了root</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chown -R cassandra:cassandra /var/lib/cassandra/data/image</span><br></pre></td></tr></table></figure>
+
+<p>重新启动cassandra成功。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/03/24/debian-jessie-sourcelist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -353,12 +446,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -441,12 +534,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -533,12 +626,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -613,12 +706,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -697,12 +790,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -777,12 +870,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -867,12 +960,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -947,12 +1040,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1015,86 +1108,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/01/30/6167/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/01/30/6167/" class="post-title-link" itemprop="url">Untitled Post - 97</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-01-30 15:00:42" itemprop="dateCreated datePublished" datetime="2015-01-30T15:00:42+08:00">2015-01-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a> is a new Certificate Authority: It’s free, automated, and open. Arriving Mid-2015</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span><a class="page-number" href="/page/41/">41</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/41/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1134,7 +1147,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

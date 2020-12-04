@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/57/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,108 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/24/push-to-gerrit-unpack-failed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/01/24/push-to-gerrit-unpack-failed/" class="post-title-link" itemprop="url">push到gerrit服务器时的unpack failed错误</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-24 13:54:05" itemprop="dateCreated datePublished" datetime="2014-01-24T13:54:05+08:00">2014-01-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>向gerrit服务器提交代码时,发现如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/devel</span><br><span class="line"></span><br><span class="line">Counting objects: <span class="number">12</span>, done.</span><br><span class="line">Delta compression using up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">2</span>/<span class="number">2</span>), <span class="number">297</span> bytes <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">2</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">fatal: Unpack error, check server log </span><br><span class="line">remote: Resolving deltas: <span class="number">100</span>% (<span class="number">1</span>/<span class="number">1</span>)</span><br><span class="line">error: unpack failed: error Missing unknown 40febad12460dee95f917b2e7a95869e039b1038</span><br><span class="line">To ssh:<span class="comment">//cr/reis</span></span><br><span class="line"> ! \[remote rejected\] HEAD -&gt; refs/<span class="keyword">for</span>/devel (n/a (unpacker error))</span><br><span class="line">error: failed to push some refs to <span class="string">&#x27;ssh://cr/project&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>同时gerrit服务器端日志有如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ERROR com.google.gerrit.sshd.BaseCommand : Internal server error (user admin account <span class="number">1000000</span>)</span><br><span class="line"> during git-receive-pack <span class="string">&#x27;/xxx&#x27;</span></span><br><span class="line">com.google.gerrit.sshd.BaseCommand$Failure: fatal: Unpack error, check server log</span><br><span class="line"> at com.google.gerrit.sshd.commands.Receive.runImpl(Receive.java:<span class="number">162</span>)</span><br><span class="line"> ...</span><br><span class="line">Caused by: java.io.IOException: Unpack error on project <span class="string">&quot;reis&quot;</span>:</span><br><span class="line"> AdvertiseRefsHook: org.eclipse.jgit.transport.AdvertiseRefsHookChain@23c6488aclass </span><br><span class="line">org.eclipse.jgit.transport.AdvertiseRefsHookChain</span><br><span class="line"> ...</span><br><span class="line">Caused by: org.eclipse.jgit.errors.UnpackException: Exception <span class="keyword">while</span> parsing pack stream</span><br><span class="line"> ...</span><br><span class="line">Caused by: org.eclipse.jgit.errors.MissingObjectException: </span><br><span class="line">Missing unknown 40febad12460dee95f917b2e7a95869e039b1038</span><br><span class="line"> at org.eclipse.jgit.internal.storage.file.WindowCursor.open(WindowCursor.java:<span class="number">148</span>)</span><br></pre></td></tr></table></figure>
+
+<p>是因为丢失了对象40febad12460dee95f917b2e7a95869e039b1038才提示这些错误。</p>
+<p>为什么会丢失对象呢,因为测试的时候直接删除掉了repository,而这个repo还有打开的changes。虽然仓库被移除了,但是gerrit数据库里的记录还在。<br>已经merged和adandoned对象不会有问题。所以需要将这些orphan关闭掉。</p>
+<p>连上gerrit数据库，然后将对应的changes关闭就可以了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; update changes set open=<span class="string">&#x27;N&#x27;</span>,status=<span class="string">&#x27;A&#x27;</span> where ...</span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/24/4986/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -349,12 +444,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -436,12 +531,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -523,12 +618,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -659,12 +754,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -739,12 +834,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -826,12 +921,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -934,12 +1029,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1065,12 +1160,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1152,100 +1247,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/21/gerrit-add-verified-label/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/01/21/gerrit-add-verified-label/" class="post-title-link" itemprop="url">为Gerrit2添加verified label</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-01-21 09:40:40" itemprop="dateCreated datePublished" datetime="2014-01-21T09:40:40+08:00">2014-01-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>gerrit从2.6开始,默认不再添加verified category,也就是changes上就看不到verified label了。</p>
-<p>具体的原因见gerrit的<a target="_blank" rel="noopener" href="https://gerrit-review.googlesource.com/#/c/44084/">Change 44084</a>。这是为了简化out of the box工作流,如果需要与jenkins等CI环境集成,则需要手动添加verified category,只要在All-Projects的project.config文件里添加5行文本就可以了。</p>
-<p><strong>添加V标签</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir temp &amp;&amp; cd temp</span><br><span class="line">$ git clone ssh:<span class="comment">//cr/All-Projects.git</span></span><br><span class="line"></span><br><span class="line">Cloning into <span class="string">&#x27;All-Projects&#x27;</span>...</span><br><span class="line">remote: Counting objects: <span class="number">22</span>, done</span><br><span class="line">remote: Finding sources: <span class="number">100</span>% (<span class="number">22</span>/<span class="number">22</span>)</span><br><span class="line">remote: Total <span class="number">22</span> (delta <span class="number">1</span>), reused <span class="number">6</span> (delta <span class="number">1</span>)</span><br><span class="line">Receiving objects: <span class="number">100</span>% (<span class="number">22</span>/<span class="number">22</span>), <span class="number">5.33</span> KiB <span class="number">0</span> bytes/s, done.</span><br><span class="line">Resolving deltas: <span class="number">100</span>% (<span class="number">1</span>/<span class="number">1</span>), done.</span><br><span class="line">Checking connectivity... done.</span><br><span class="line">Note: checking out <span class="string">&#x27;a30b5de24cdd7993bbe3398e57b1cb771cbb1fc2&#x27;</span>.</span><br><span class="line"></span><br><span class="line">You are <span class="keyword">in</span> <span class="string">&#x27;detached HEAD&#x27;</span> state. You can look around, make experimental</span><br><span class="line">changes and commit them, and you can discard any commits you make <span class="keyword">in</span> <span class="built_in">this</span></span><br><span class="line">state without impacting any branches by performing another checkout.</span><br><span class="line"></span><br><span class="line">If you want to create a <span class="keyword">new</span> branch to retain commits you create, you may</span><br><span class="line"><span class="keyword">do</span> so (now or later) by using -b <span class="keyword">with</span> the checkout command again. Example:</span><br><span class="line"></span><br><span class="line"> git checkout -b new_branch_name</span><br><span class="line"></span><br><span class="line">$ cd All-Projects</span><br><span class="line">$ vim project.config</span><br></pre></td></tr></table></figure>
-<p>在文件project.config中添加如下5行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\[label <span class="string">&quot;Verified&quot;</span>\]</span><br><span class="line"> <span class="function"><span class="keyword">function</span> = <span class="title">MaxWithBlock</span></span></span><br><span class="line"><span class="function"> <span class="title">value</span> = -1 <span class="title">Fails</span></span></span><br><span class="line"><span class="function"> <span class="title">value</span> = 0 <span class="title">No</span> <span class="title">score</span></span></span><br><span class="line"><span class="function"> <span class="title">value</span> = +1 <span class="title">Verified</span></span></span><br></pre></td></tr></table></figure>
-
-<p>然后提交到远程仓库</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a -m <span class="string">&quot;add verified category&quot;</span></span><br><span class="line">$ git push origin HEAD:refs/meta/config</span><br><span class="line"></span><br><span class="line">Counting objects: <span class="number">15</span>, done.</span><br><span class="line">Delta compression using up to <span class="number">4</span> threads.</span><br><span class="line">Compressing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), done.</span><br><span class="line">Writing objects: <span class="number">100</span>% (<span class="number">3</span>/<span class="number">3</span>), <span class="number">323</span> bytes <span class="number">0</span> bytes/s, done.</span><br><span class="line">Total <span class="number">3</span> (delta <span class="number">1</span>), reused <span class="number">0</span> (delta <span class="number">0</span>)</span><br><span class="line">remote: Resolving deltas: <span class="number">100</span>% (<span class="number">1</span>/<span class="number">1</span>)</span><br><span class="line">remote: Processing changes: refs: <span class="number">1</span>, done </span><br><span class="line">To ssh:<span class="comment">//cr/All-Projects.git</span></span><br><span class="line"> 93dc4d8..22b46f7 HEAD -&gt; refs/meta/config</span><br></pre></td></tr></table></figure>
-<p>因为在分离头(detached HEAD)状态,所以手工指定将当前HEAD push到远程引用refs/meta/config。</p>
-<p>登录gerrit站点,changes上面就有V标签了。</p>
-<p><a target="_blank" rel="noopener" href="https://gerrit-review.googlesource.com/Documentation/config-labels.html#label_Verified">verified label</a>的用法见官方文档。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://blog.bruin.sg/2013/04/how-to-edit-the-project-config-for-all-projects-in-gerrit/">HOW TO EDIT THE PROJECT.CONFIG FOR ALL PROJECTS IN GERRIT</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/56/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><span class="page-number current">57</span><a class="page-number" href="/page/58/">58</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/58/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1285,7 +1286,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

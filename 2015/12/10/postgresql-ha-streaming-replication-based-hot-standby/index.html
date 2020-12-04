@@ -27,12 +27,12 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL高可用之streaming replication based hot standby">
 <meta property="og:url" content="http://example.com/2015/12/10/postgresql-ha-streaming-replication-based-hot-standby/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="前面讲了基于日志文件传输的warm&#x2F;hot standby配置，但日志文件传输的最大问题在于延迟。 单个日志文件要空间满了或者到了归档超时时间才会传输然后应用到备库，每个日志文件有16MB大小。这会造成较大的延迟，如果主库当机，则数据损失会较大。如果缩小归档超时时间，又会造成大量的空间浪费。 基于流复制则解决了这些问题。备库会连接到主库，不用等待WAL日志文件填满就可以立即传输完成的WAL记录到">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2015-12-10T13:26:05.000Z">
 <meta property="article:modified_time" content="2020-12-04T12:01:09.426Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="PostgresQL">
 <meta name="twitter:card" content="summary">
 
@@ -49,7 +49,7 @@
     lang   : 'en'
   };
 </script>
-<title>PostgreSQL高可用之streaming replication based hot standby | Hexo</title>
+<title>PostgreSQL高可用之streaming replication based hot standby | openwares.net</title>
   
 
 
@@ -109,9 +109,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -211,15 +212,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -275,12 +276,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -437,7 +438,7 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

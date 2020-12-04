@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/36/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,97 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/05/jenkins-deploy-to-root/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/06/05/jenkins-deploy-to-root/" class="post-title-link" itemprop="url">Jenkins自动部署war到tomcat根context</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-06-05 13:27:27" itemprop="dateCreated datePublished" datetime="2015-06-05T13:27:27+08:00">2015-06-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>自动部署war包到ROOT路径，也就是网站的根目录时，deploy插件的”Context path”要填写：”/“,而不是”ROOT”或者”/ROOT”,不然自动部署会失败，有类似以下错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">Build step <span class="string">&#x27;Invoke Gradle script&#x27;</span> changed build result to SUCCESS</span><br><span class="line">Deploying /<span class="keyword">var</span>/lib/jenkins/jobs/devel_auto_build_deploy/workspace/build/libs/reis.war to container Tomcat <span class="number">7.</span>x Remote</span><br><span class="line"> \[<span class="regexp">/var/</span>lib/jenkins/jobs/devel_auto_build_deploy/workspace/build/libs/reis.war\] is not deployed. Doing a fresh deployment.</span><br><span class="line"> Deploying \[<span class="regexp">/var/</span>lib/jenkins/jobs/devel_auto_build_deploy/workspace/build/libs/reis.war\]</span><br><span class="line">ERROR: Build step failed <span class="keyword">with</span> exception</span><br><span class="line">org.codehaus.cargo.container.ContainerException: Failed to deploy \[<span class="regexp">/var/</span>lib/jenkins/jobs/devel_auto_build_deploy/workspace/build/libs/reis.war\]</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.AbstractTomcatManagerDeployer.deploy(AbstractTomcatManagerDeployer.java:<span class="number">111</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.AbstractTomcatManagerDeployer.redeploy(AbstractTomcatManagerDeployer.java:<span class="number">185</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter.deploy(CargoContainerAdapter.java:<span class="number">73</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter$1.invoke(CargoContainerAdapter.java:<span class="number">116</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter$1.invoke(CargoContainerAdapter.java:<span class="number">103</span>)</span><br><span class="line">at hudson.FilePath.act(FilePath.java:<span class="number">991</span>)</span><br><span class="line">at hudson.FilePath.act(FilePath.java:<span class="number">969</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter.redeploy(CargoContainerAdapter.java:<span class="number">103</span>)</span><br><span class="line">at hudson.plugins.deploy.DeployPublisher.perform(DeployPublisher.java:<span class="number">61</span>)</span><br><span class="line">at hudson.tasks.BuildStepMonitor$3.perform(BuildStepMonitor.java:<span class="number">45</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:<span class="number">779</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:<span class="number">726</span>)</span><br><span class="line">at hudson.model.Build$BuildExecution.post2(Build.java:<span class="number">185</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:<span class="number">671</span>)</span><br><span class="line">at hudson.model.Run.execute(Run.java:<span class="number">1769</span>)</span><br><span class="line">at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:<span class="number">43</span>)</span><br><span class="line">at hudson.model.ResourceController.execute(ResourceController.java:<span class="number">98</span>)</span><br><span class="line">at hudson.model.Executor.run(Executor.java:<span class="number">374</span>)</span><br><span class="line">Caused by: java.io.IOException: <span class="built_in">Error</span> writing request body to server</span><br><span class="line">at sun.net.www.protocol.http.HttpURLConnection$StreamingOutputStream.checkError(HttpURLConnection.java:<span class="number">3478</span>)</span><br><span class="line">at sun.net.www.protocol.http.HttpURLConnection$StreamingOutputStream.write(HttpURLConnection.java:<span class="number">3461</span>)</span><br><span class="line">at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:<span class="number">82</span>)</span><br><span class="line">at java.io.BufferedOutputStream.write(BufferedOutputStream.java:<span class="number">126</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.pipe(TomcatManager.java:<span class="number">647</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.invoke(TomcatManager.java:<span class="number">538</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.deployImpl(TomcatManager.java:<span class="number">611</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.deploy(TomcatManager.java:<span class="number">291</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.AbstractTomcatManagerDeployer.deploy(AbstractTomcatManagerDeployer.java:<span class="number">102</span>)</span><br><span class="line">... <span class="number">17</span> more</span><br><span class="line">java.io.IOException: <span class="built_in">Error</span> writing request body to server</span><br><span class="line">at sun.net.www.protocol.http.HttpURLConnection$StreamingOutputStream.checkError(HttpURLConnection.java:<span class="number">3478</span>)</span><br><span class="line">at sun.net.www.protocol.http.HttpURLConnection$StreamingOutputStream.write(HttpURLConnection.java:<span class="number">3461</span>)</span><br><span class="line">at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:<span class="number">82</span>)</span><br><span class="line">at java.io.BufferedOutputStream.write(BufferedOutputStream.java:<span class="number">126</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.pipe(TomcatManager.java:<span class="number">647</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.invoke(TomcatManager.java:<span class="number">538</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.deployImpl(TomcatManager.java:<span class="number">611</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.TomcatManager.deploy(TomcatManager.java:<span class="number">291</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.AbstractTomcatManagerDeployer.deploy(AbstractTomcatManagerDeployer.java:<span class="number">102</span>)</span><br><span class="line">at org.codehaus.cargo.container.tomcat.internal.AbstractTomcatManagerDeployer.redeploy(AbstractTomcatManagerDeployer.java:<span class="number">185</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter.deploy(CargoContainerAdapter.java:<span class="number">73</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter$1.invoke(CargoContainerAdapter.java:<span class="number">116</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter$1.invoke(CargoContainerAdapter.java:<span class="number">103</span>)</span><br><span class="line">at hudson.FilePath.act(FilePath.java:<span class="number">991</span>)</span><br><span class="line">at hudson.FilePath.act(FilePath.java:<span class="number">969</span>)</span><br><span class="line">at hudson.plugins.deploy.CargoContainerAdapter.redeploy(CargoContainerAdapter.java:<span class="number">103</span>)</span><br><span class="line">at hudson.plugins.deploy.DeployPublisher.perform(DeployPublisher.java:<span class="number">61</span>)</span><br><span class="line">at hudson.tasks.BuildStepMonitor$3.perform(BuildStepMonitor.java:<span class="number">45</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:<span class="number">779</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.performAllBuildSteps(AbstractBuild.java:<span class="number">726</span>)</span><br><span class="line">at hudson.model.Build$BuildExecution.post2(Build.java:<span class="number">185</span>)</span><br><span class="line">at hudson.model.AbstractBuild$AbstractBuildExecution.post(AbstractBuild.java:<span class="number">671</span>)</span><br><span class="line">at hudson.model.Run.execute(Run.java:<span class="number">1769</span>)</span><br><span class="line">at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:<span class="number">43</span>)</span><br><span class="line">at hudson.model.ResourceController.execute(ResourceController.java:<span class="number">98</span>)</span><br><span class="line">at hudson.model.Executor.run(Executor.java:<span class="number">374</span>)</span><br><span class="line">Build step <span class="string">&#x27;Deploy war/ear to a container&#x27;</span> marked build <span class="keyword">as</span> failure</span><br><span class="line">Finished: FAILURE</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2015/06/04/6468/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -349,12 +433,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -430,12 +514,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -512,12 +596,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -614,12 +698,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -694,12 +778,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -774,12 +858,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -854,12 +938,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -934,12 +1018,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1002,97 +1086,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/05/16/user-crontab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/05/16/user-crontab/" class="post-title-link" itemprop="url">普通用户的crontab</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-05-16 14:10:38" itemprop="dateCreated datePublished" datetime="2015-05-16T14:10:38+08:00">2015-05-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>除了root用户外,普通用户可以添加自己的定时服务。/usr/bin/crontab程序设置了组ID,因此普通用户运行crontab时是以crontab组权限运行的。</p>
-<p><strong>编辑用户cron配置</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ crontab -e </span><br></pre></td></tr></table></figure>
-<p><strong>列出用户cron配置</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ crontab -l</span><br></pre></td></tr></table></figure>
-<p>更详细的用法见man crontab。</p>
-<p><strong>用户crontab文件位置</strong></p>
-<p>不同的操作系统，用户的crontab文件位置可能会不同:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Debian / Ubuntu Linux - <span class="regexp">/var/</span>spool/cron/crontabs/</span><br><span class="line">Mac OS X - <span class="regexp">/usr/</span>lib/cron/tabs/ </span><br><span class="line">FreeBSD/OpenBSD/NetBSD - <span class="regexp">/var/</span>cron/tabs/ </span><br><span class="line">CentOS/Red Hat/RHEL/Fedora/Scientific Linux - <span class="regexp">/var/</span>spool/cron/ </span><br><span class="line">HP-UX Unix - <span class="regexp">/var/</span>spool/cron/crontabs/</span><br><span class="line">IBM AIX Unix - <span class="regexp">/var/</span>spool/cron/</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1132,7 +1125,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>

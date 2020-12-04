@@ -23,12 +23,14 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
+<meta name="description" content="open source and free matters">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="openwares.net">
 <meta property="og:url" content="http://example.com/page/43/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="openwares.net">
+<meta property="og:description" content="open source and free matters">
 <meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
+<meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
 
@@ -44,7 +46,7 @@
     lang   : 'en'
   };
 </script>
-<title>Hexo</title>
+<title>openwares.net</title>
   
 
 
@@ -104,9 +106,10 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">openwares.net</h1>
       <i class="logo-line"></i>
     </a>
+      <p class="site-subtitle" itemprop="description">Freedom & Beauty</p>
   </div>
 
   <div class="site-nav-right">
@@ -206,15 +209,15 @@
 
         <section class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
+  <p class="site-author-name" itemprop="name">changuoqiang</p>
+  <div class="site-description" itemprop="description">open source and free matters</div>
 </div>
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-count">980</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -265,16 +268,101 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/24/cups-even-odd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/12/24/cups-even-odd/" class="post-title-link" itemprop="url">linux下cups打印奇偶页</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-12-24 15:33:14" itemprop="dateCreated datePublished" datetime="2014-12-24T15:33:14+08:00">2014-12-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian系统提供的打印对话框，竟然没有打印奇偶页的选项,一下命令可以满足要求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lp -o page-set=odd filename <span class="comment">//只打印奇数页</span></span><br><span class="line">$ lp -o page-set=even filename <span class="comment">//只打印偶数页</span></span><br></pre></td></tr></table></figure>
+
+
+<p>References:<br>[1] <a target="_blank" rel="noopener" href="http://www.xgezhang.com/linux_cups.html">Linux下通用打印系统CUPS使用教程</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2014/12/24/git-view-code-author/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -356,12 +444,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -444,12 +532,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -526,12 +614,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -618,12 +706,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -698,12 +786,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -778,12 +866,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -870,12 +958,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -950,12 +1038,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="openwares.net">
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
@@ -1027,145 +1115,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/11/05/jvm-commands-and-tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/11/05/jvm-commands-and-tools/" class="post-title-link" itemprop="url">查看JVM相关信息的命令与工具</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-11-05 20:32:18" itemprop="dateCreated datePublished" datetime="2014-11-05T20:32:18+08:00">2014-11-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>jps</strong><br>JVM版的ps命令,主要参数有:</p>
-<ul>
-<li>-l<br>输出完整的包名或者应用程序jar文件的全路径名</li>
-<li>-m<br>输出传给main方法的参数</li>
-<li>-v<br>输出传给JVM的参数</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo jps -lmv grep -v Jps</span><br><span class="line"><span class="number">738</span> org.apache.catalina.startup.Bootstrap start -Djava.util.logging.config.file=<span class="regexp">/var/</span>lib/tomcat8/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.awt.headless=<span class="literal">true</span> -Xmx128m -XX:+UseConcMarkSweepGC -Djava.endorsed.dirs=<span class="regexp">/usr/</span>share/tomcat8/endorsed -Dcatalina.base=<span class="regexp">/var/</span>lib/tomcat8 -Dcatalina.home=<span class="regexp">/usr/</span>share/tomcat8 -Djava.io.tmpdir=<span class="regexp">/tmp/</span>tomcat8-tomcat8-tmpJVM版的ps命令</span><br></pre></td></tr></table></figure>
-
-<p>jps命令的输出格式为:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvmid \[ \[ classname JARfilename <span class="string">&quot;Unknown&quot;</span>\] \[ arg* \] \[ jvmarg* \] \]</span><br></pre></td></tr></table></figure>
-
-<p>第一个列的lvmid是本地JVM标识符,同时也就是JVM进程的进程号。</p>
-<p>jps命令只会输出当前执行命令的用户有权限访问的JVM进程信息。所以就是root也不一定能读取JVM进程信息，比如访问tomcat8的JVM信息要这样:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u tomcat8 jps -lvm</span><br><span class="line"><span class="number">25768</span> sun.tools.jps.Jps -lvm -Dapplication.home=<span class="regexp">/usr/</span>lib/jvm/jdk-<span class="number">8</span>-oracle-x64 -Xms8m</span><br><span class="line"><span class="number">25151</span> org.apache.catalina.startup.Bootstrap start -Djava.util.logging.config.file=<span class="regexp">/var/</span>lib/tomcat8/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.awt.headless=<span class="literal">true</span> -Xmx3072m -Xms3072m -Xmn2048m -XX:PermSize=2048m -XX:MaxPermSize=3072m -XX:+UseConcMarkSweepGC -Djava.endor</span><br></pre></td></tr></table></figure>
-
-<p>用root用户也看不到详细信息：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo jps -lvm</span><br><span class="line"><span class="number">25809</span> sun.tools.jps.Jps -lvm -Dapplication.home=<span class="regexp">/usr/</span>lib/jvm/jdk-<span class="number">8</span>-oracle-x64 -Xms8m</span><br><span class="line"><span class="number">11806</span> -- process information unavailable</span><br><span class="line"><span class="number">9998</span> -- process information unavailable</span><br><span class="line"><span class="number">25151</span> -- process information unavailable</span><br></pre></td></tr></table></figure>
-
-<p>因为临时文件/tmp/hsperfdata_{user}/目录下的文件只有{user}才有存取权限。</p>
-<p><strong>jinfo</strong><br>查看JVM的所有配置信息和命令行标志,还可以动态设置JVM的命令行标志参数。详细用法见jinfo(1)。<br>如果出现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pid: well-known file is not secure </span><br></pre></td></tr></table></figure>
-<p>说明当前用户没有相应的权限，情使用与JVM进程相同的用户或者root用户再次尝试命令</p>
-<p>如果出现:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.io.IOException: Command failed <span class="keyword">in</span> target VM</span><br><span class="line"> at sun.tools.attach.LinuxVirtualMachine.execute(LinuxVirtualMachine.java:<span class="number">224</span>)</span><br><span class="line"> at sun.tools.attach.HotSpotVirtualMachine.executeCommand(HotSpotVirtualMachine.java:<span class="number">217</span>)</span><br><span class="line"> at sun.tools.attach.HotSpotVirtualMachine.setFlag(HotSpotVirtualMachine.java:<span class="number">190</span>)</span><br><span class="line"> at sun.tools.jinfo.JInfo.flag(JInfo.java:<span class="number">129</span>)</span><br><span class="line"> at sun.tools.jinfo.JInfo.main(JInfo.java:<span class="number">76</span>)</span><br></pre></td></tr></table></figure>
-<p>说明不支持配置此参数。</p>
-<p><strong>jstat</strong><br>JVM版的vmstat命令，JVM内存使用统计监控工具,可以监控各类内存使用量，也可以按时间间隔连续输出进行监控。详细用法参见jstat(1)和参考[1]</p>
-<p>列如,查看VM内存中三代（young,old,perm）对象的使用和占用大小</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo jstat -gccapacity lvmid</span><br><span class="line">NGCMN NGCMX NGC S0C S1C EC OGCMN OGCMX OGC OC PGCMN PGCMX PGC PC YGC FGC </span><br><span class="line"> <span class="number">20672.0</span> <span class="number">43648.0</span> <span class="number">43648.0</span> <span class="number">4352.0</span> <span class="number">4352.0</span> <span class="number">34944.0</span> <span class="number">41408.0</span> <span class="number">87424.0</span> <span class="number">87424.0</span> <span class="number">87424.0</span> <span class="number">21248.0</span> <span class="number">169984.0</span> <span class="number">90476.0</span> <span class="number">90476.0</span> <span class="number">271</span> <span class="number">24</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>jmap</strong><br>查看JVM中所有对象使用内存资源的详细情况,详细用法见jmap(1)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap \[ option \] lvmid</span><br></pre></td></tr></table></figure>
-
-<p>查看JVM堆使用情况</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u tomcat8 jmap -heap <span class="number">4891</span></span><br><span class="line">Attaching to process ID <span class="number">4891</span>, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is <span class="number">24.65</span>-b04</span><br><span class="line"></span><br><span class="line">using parallel threads <span class="keyword">in</span> the <span class="keyword">new</span> generation.</span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Concurrent Mark-Sweep GC</span><br><span class="line"></span><br><span class="line">Heap Configuration:</span><br><span class="line"> MinHeapFreeRatio = <span class="number">40</span></span><br><span class="line"> MaxHeapFreeRatio = <span class="number">70</span></span><br><span class="line"> MaxHeapSize = <span class="number">134217728</span> (<span class="number">128.</span>0MB)</span><br><span class="line"> NewSize = <span class="number">1310720</span> (<span class="number">1.</span>25MB)</span><br><span class="line"> MaxNewSize = <span class="number">44695552</span> (<span class="number">42.</span>625MB)</span><br><span class="line"> OldSize = <span class="number">5439488</span> (<span class="number">5.</span>1875MB)</span><br><span class="line"> NewRatio = <span class="number">2</span></span><br><span class="line"> SurvivorRatio = <span class="number">8</span></span><br><span class="line"> PermSize = <span class="number">21757952</span> (<span class="number">20.</span>75MB)</span><br><span class="line"> MaxPermSize = <span class="number">174063616</span> (<span class="number">166.</span>0MB)</span><br><span class="line"> G1HeapRegionSize = <span class="number">0</span> (<span class="number">0.</span>0MB)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p><strong>jstack</strong><br>Java 栈追踪,用法详见jstack(1)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstack \[ option \] pid</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u tomcat8 jstack <span class="number">4891</span></span><br><span class="line"><span class="number">2014</span>-<span class="number">11</span>-<span class="number">06</span> <span class="number">10</span>:<span class="number">30</span>:<span class="number">21</span></span><br><span class="line">Full thread dump OpenJDK <span class="number">64</span>-Bit Server VM (<span class="number">24.65</span>-b04 mixed mode):</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;Attach Listener&quot;</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f2174001000</span> nid=<span class="number">0x165f</span> waiting on condition \[<span class="number">0x0000000000000000</span>\]</span><br><span class="line"> java.lang.Thread.State: RUNNABLE</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;http-nio-80-exec-10&quot;</span> daemon prio=<span class="number">10</span> tid=<span class="number">0x00007f213800a800</span> nid=<span class="number">0x135a</span> waiting on condition \[<span class="number">0x00007f2161e16000</span>\]</span><br><span class="line"> java.lang.Thread.State: WAITING (parking)</span><br><span class="line"> at sun.misc.Unsafe.park(Native Method)</span><br><span class="line"> - parking to wait <span class="keyword">for</span> &lt;<span class="number">0x00000000f06fe518</span>&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)</span><br><span class="line"> at java.util.concurrent.locks.LockSupport.park(LockSupport.java:<span class="number">186</span>)</span><br><span class="line"> at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:<span class="number">2043</span>)</span><br><span class="line"> at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:<span class="number">442</span>)</span><br><span class="line"> at org.apache.tomcat.util.threads.TaskQueue.take(TaskQueue.java:<span class="number">103</span>)</span><br><span class="line"> at org.apache.tomcat.util.threads.TaskQueue.take(TaskQueue.java:<span class="number">31</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:<span class="number">1068</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1130</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">615</span>)</span><br><span class="line"> at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:<span class="number">61</span>)</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p><strong>jconsole</strong><br>jconsole是JMX兼容的java监视和管理控制台。可以查看JVM上运行程序的性能和资源占用情况。<br>当使用jconsole监视本地程序时，jconsole与本地程序必须使用相同的用户运行，或者使用root,比如要监视tomcat运行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u tomcat7 jconsole &lt;lvmid_for_tomcat&gt;</span><br></pre></td></tr></table></figure>
-<p>如果出现如下错误提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">No protocol specified</span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.lang.InternalError: Can<span class="string">&#x27;t connect to X11 window server using &#x27;</span>:<span class="number">0</span><span class="string">&#x27; as the value of the DISPLAY variable.</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.initDisplay(Native Method)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.access$200(X11GraphicsEnvironment.java:65)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment$1.run(X11GraphicsEnvironment.java:110)</span></span><br><span class="line"><span class="string"> at java.security.AccessController.doPrivileged(Native Method)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.&lt;clinit&gt;(X11GraphicsEnvironment.java:74)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName0(Native Method)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName(Class.java:191)</span></span><br><span class="line"><span class="string"> at java.awt.GraphicsEnvironment.createGE(GraphicsEnvironment.java:102)</span></span><br><span class="line"><span class="string"> at java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment(GraphicsEnvironment.java:81)</span></span><br><span class="line"><span class="string"> at sun.awt.X11.XToolkit.&lt;clinit&gt;(XToolkit.java:120)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName0(Native Method)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName(Class.java:191)</span></span><br><span class="line"><span class="string"> at java.awt.Toolkit$2.run(Toolkit.java:869)</span></span><br><span class="line"><span class="string"> at java.security.AccessController.doPrivileged(Native Method)</span></span><br><span class="line"><span class="string"> at java.awt.Toolkit.getDefaultToolkit(Toolkit.java:861)</span></span><br><span class="line"><span class="string"> at javax.swing.UIManager.getSystemLookAndFeelClassName(UIManager.java:608)</span></span><br><span class="line"><span class="string"> at sun.tools.jconsole.JConsole.&lt;clinit&gt;(JConsole.java:60)</span></span><br></pre></td></tr></table></figure>
-<p>这是因为用户tomcat7没有被授权访问本地显示服务器造成的，执行以下命令然后重新运行jconsole即可：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ xhost +local:all</span><br><span class="line">non-network local connections being added to access control list</span><br></pre></td></tr></table></figure>
-
-<p>如果出现以下错误：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u tomcat8 jconsole &lt;lvmid_for_tomcat&gt;</span><br><span class="line">X11 connection rejected because <span class="keyword">of</span> wrong authentication.</span><br><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.awt.AWTError: Can<span class="string">&#x27;t connect to X11 window server using &#x27;</span>localhost:<span class="number">0.0</span><span class="string">&#x27; as the value of the DISPLAY variable.</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.initDisplay(Native Method)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.access$200(X11GraphicsEnvironment.java:65)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment$1.run(X11GraphicsEnvironment.java:115)</span></span><br><span class="line"><span class="string"> at java.security.AccessController.doPrivileged(Native Method)</span></span><br><span class="line"><span class="string"> at sun.awt.X11GraphicsEnvironment.&lt;clinit&gt;(X11GraphicsEnvironment.java:74)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName0(Native Method)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName(Class.java:264)</span></span><br><span class="line"><span class="string"> at java.awt.GraphicsEnvironment.createGE(GraphicsEnvironment.java:103)</span></span><br><span class="line"><span class="string"> at java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment(GraphicsEnvironment.java:82)</span></span><br><span class="line"><span class="string"> at sun.awt.X11.XToolkit.&lt;clinit&gt;(XToolkit.java:126)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName0(Native Method)</span></span><br><span class="line"><span class="string"> at java.lang.Class.forName(Class.java:264)</span></span><br><span class="line"><span class="string"> at java.awt.Toolkit$2.run(Toolkit.java:860)</span></span><br><span class="line"><span class="string"> at java.awt.Toolkit$2.run(Toolkit.java:855)</span></span><br><span class="line"><span class="string"> at java.security.AccessController.doPrivileged(Native Method)</span></span><br><span class="line"><span class="string"> at java.awt.Toolkit.getDefaultToolkit(Toolkit.java:854)</span></span><br><span class="line"><span class="string"> at javax.swing.UIManager.getSystemLookAndFeelClassName(UIManager.java:611)</span></span><br><span class="line"><span class="string"> at sun.tools.jconsole.JConsole.&lt;clinit&gt;(JConsole.java:60)</span></span><br></pre></td></tr></table></figure>
-<p>是因为xauth授权的问题，因为tomcat8用户的主目录在/usr/share/tomcat8，但其主目录下并没有xauth授权文件.Xauthority文件，可以从登录用户的主目录下拷贝.Xauthority到tomcat8主目录，记得修改文件的属主和组为tomcat8，然后在重新执行命令就可以了。<br><strong>注意：</strong>.Xauthority文件中的凭证会过期，每次登录其凭证都会更新。所以拷贝的办法只能临时用用，不能解决根本性的问题。</p>
-<p><strong>VisualVM</strong></p>
-<p><a target="_blank" rel="noopener" href="https://visualvm.github.io/">VisualVM</a>是java的东家出品的、自由的性能分析和调优工具，基本上涵盖了以上几个命令行工具的功能。debian官方源里有对应的包VisualVM,也可以官网直接下载最新的zip包，解压缩后直接运行visualvm/bin/visualvm命令即可。这个工具更直观易用。</p>
-<p>visualvm支持jmx和jstatd两种方式连接到远程jvm，jmx需要每jvm实例单独设置，而jstatd则可以连接系统范围内的所有jvm实例，无需单独设置。</p>
-<p><strong>jstatd配置</strong><br>openjdk11内置jstatd，只要提供一个安全策略文件就可以直接运行，下面是一个可以运行的安全策略文件jstatd.all.policy</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">grant codebase <span class="string">&quot;jrt:/jdk.jstatd&quot;</span> &#123; </span><br><span class="line"> permission java.security.AllPermission; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">grant codebase <span class="string">&quot;jrt:/jdk.internal.jvmstat&quot;</span> &#123; </span><br><span class="line"> permission java.security.AllPermission; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>运行jstatd，如果需要连接到所有的jvm实例，则需要使用特权用户运行，如果只需要连接到特定用户的jvm实例，可以用对应的用户来运行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo jstatd -J-Djava.security.policy=jstatd.all.policy -J-Djava.rmi.server.hostname=&lt;ip_of_host&gt; -J-Djava.rmi.server.logCalls=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>默认监听在1099端口，默认创建的RMI名字为JStatRemoteHost，最后一个选项为启用调用日志，可以不要。<br>jstatd连接并不支持cpu监视，所以如果需要cpu监视的话可以使用jmx远程连接或者本地连接(可以通过ssh X11Forward在jvm所在机器本地运行VisualVM)。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://blog.csdn.net/michaelfeng726/article/details/8597921">jstat用法详解</a><br>[2]<a target="_blank" rel="noopener" href="https://manpages.debian.org/testing/openjdk-11-jdk-headless/jstatd.1.en.html">jstatd(1)</a><br>[3]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51032095/starting-jstatd-in-java-9">Starting jstatd in Java 9+</a><br>[4]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/32515727/jvisualvm-connect-to-remote-jstatd-not-showing-applications">jvisualvm connect to remote jstatd not showing applications</a><br>[5]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/55142971/visualvm-shows-not-supported-for-this-jvm">VisualVM shows “Not supported for this JVM”</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/42/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><span class="page-number current">43</span><a class="page-number" href="/page/44/">44</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/44/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1205,7 +1154,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">changuoqiang</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
