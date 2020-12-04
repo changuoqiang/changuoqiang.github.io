@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="JAR文件基于流行的ZIP文件格式,用来聚合很多分散的文件到一个档案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jar文件规范">
-<meta property="og:url" content="http://example.com/2013/05/04/jar-file-specification/index.html">
+<meta property="og:url" content="https://openwares.net/2013/05/04/jar-file-specification/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="JAR文件基于流行的ZIP文件格式,用来聚合很多分散的文件到一个档案。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2013/05/04/jar-file-specification/">
+<link rel="canonical" href="https://openwares.net/2013/05/04/jar-file-specification/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2013/05/04/jar-file-specification/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/05/04/jar-file-specification/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -327,7 +327,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>JAR文件基于流行的ZIP文件格式,用来聚合很多分散的文件到一个档案。</p>
 <a id="more"></a>
-<p>JAR文件本质上是一个zip文件，包含一个可选的META-INF目录。可以使用<a target="_blank" rel="noopener" href="https://openwares.net/lang/java_package_app_jar.html">命令行工具jar创建JAR文件</a>，也可以使用java平台的java.util.jar API来创建。JAR文件的名字没有限制，可以是任何特定平台上允许的文件名字。</p>
+<p>JAR文件本质上是一个zip文件，包含一个可选的META-INF目录。可以使用<a href="https://openwares.net/lang/java_package_app_jar.html">命令行工具jar创建JAR文件</a>，也可以使用java平台的java.util.jar API来创建。JAR文件的名字没有限制，可以是任何特定平台上允许的文件名字。</p>
 <p>多数情况下，JAR文件并不是类文件和/或资源文件的简单聚合档案。他们经常用作应用程序和扩展的构建基础。如果存在的话，META-INF目录用来存储包和扩展的配置数据，包括安全、版本、扩展和服务。</p>
 <p><strong>META-INF目录</strong></p>
 <p>java 2 平台识别和解释META-INF目录下的文件/目录，用来配置应用程序，扩展，类装载器和服务。</p>

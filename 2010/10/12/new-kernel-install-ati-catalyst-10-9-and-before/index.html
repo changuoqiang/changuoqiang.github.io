@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="因为安全以及GPL相关事宜,linux内核调整了compat_alloc_user_space()函数,将其从asm&#x2F;compat.h文件移动到linux&#x2F;compat.h,并将该函数提升为EXPORT_SYMBOL_GPL导出的符号。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在新内核上安装ATI Catalyst 10.9及之前版本的驱动">
-<meta property="og:url" content="http://example.com/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/index.html">
+<meta property="og:url" content="https://openwares.net/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="因为安全以及GPL相关事宜,linux内核调整了compat_alloc_user_space()函数,将其从asm&#x2F;compat.h文件移动到linux&#x2F;compat.h,并将该函数提升为EXPORT_SYMBOL_GPL导出的符号。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/">
+<link rel="canonical" href="https://openwares.net/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/10/12/new-kernel-install-ati-catalyst-10-9-and-before/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -330,7 +330,7 @@
 <p>这就打破了ATI的专有fglrx驱动,因为闭源ATI驱动需要compat_alloc_user_space()函数, 并且希望从asm/compat.h里找到该函数。</p>
 <p>在此更新之后的内核包括Ubuntu 10.10(Maverick MeerKat)上安装fglrx驱动时会出现错误,大体有以下字样,”kcl_ioctl.c:196 : error: implicit declaration of function ‘compat_alloc_user_space’”,就是因为这个问题。在ATI修复此问题之前可以通过一下方式来安装fglrx驱动。</p>
 <p>下载ati fglrx驱动并生成相应的ubuntu安装包<br>$ sh ./ati-driver-installer-10-7-x86.x86_64.run –buildpkg Ubuntu/lucid</p>
-<p>根据<a target="_blank" rel="noopener" href="https://openwares.net/linux/extract_modify_rebuilde_deb_package.html">修改deb</a>这篇文章的提示将生成的deb解开，包括数据和控制文件。修改fglrx/usr/src/fglrx-8.75/kcl_ioctl.c第196行的compat_alloc_user_space为arch_compat_alloc_user_space，重新打包deb，然后$sudo dpkg -i fglrx_new.deb即可.</p>
+<p>根据<a href="https://openwares.net/linux/extract_modify_rebuilde_deb_package.html">修改deb</a>这篇文章的提示将生成的deb解开，包括数据和控制文件。修改fglrx/usr/src/fglrx-8.75/kcl_ioctl.c第196行的compat_alloc_user_space为arch_compat_alloc_user_space，重新打包deb，然后$sudo dpkg -i fglrx_new.deb即可.</p>
 
     </div>
 

@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="HTML5新增加了很多input元素类型,比如color,date,datetime,datetime-local,email,month,number,range,search,tel,time,url,week等。 通过以下方法可以检测浏览器是否支持这些新的input类型: [html]var i &#x3D; document.createElement(‘input’);i.setAttribut">
 <meta property="og:type" content="article">
 <meta property="og:title" content="检测浏览器对HTML5新input类型的支持">
-<meta property="og:url" content="http://example.com/2014/07/17/detect-new-input-type/index.html">
+<meta property="og:url" content="https://openwares.net/2014/07/17/detect-new-input-type/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="HTML5新增加了很多input元素类型,比如color,date,datetime,datetime-local,email,month,number,range,search,tel,time,url,week等。 通过以下方法可以检测浏览器是否支持这些新的input类型: [html]var i &#x3D; document.createElement(‘input’);i.setAttribut">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2014/07/17/detect-new-input-type/">
+<link rel="canonical" href="https://openwares.net/2014/07/17/detect-new-input-type/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/07/17/detect-new-input-type/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/07/17/detect-new-input-type/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -331,7 +331,7 @@
 <p>[html]<br>var i = document.createElement(‘input’);<br>i.setAttribute(‘type’, ‘date’);<br>//浏览器不支持date类型<br>if(i.type == ‘text’){<br>}<br>[/html]<br>这里为新添加的input元素设置type特性(attribute)为date,如果浏览器支持date类型,则其对应的dom对象的type属性(property)会设置为date,否则会设置为text,这里一定要注意”特性(attribute)”和”属性(property)”的区别。attribute是标签的特性,而property是标签对应的DOM对象的属性。</p>
 <p>所以，即使浏览器不支持新的input类型,虽然其DOM对象的type属性被设置为text,但其标签的type特性仍然是原来设置的值，对上面这个栗子来说就是date</p>
 <p>[html]<br>i.getAttribute(‘type’) == ‘date’; //true<br>[/html]</p>
-<p>特性与属性的区别见”<a target="_blank" rel="noopener" href="https://openwares.net/linux/dom_property_element_attribute.html">DOM对象属性(property)与HTML标签特性(attribute)</a>“</p>
+<p>特性与属性的区别见”<a href="https://openwares.net/linux/dom_property_element_attribute.html">DOM对象属性(property)与HTML标签特性(attribute)</a>“</p>
 <p><strong>===<br>[erq]</strong></p>
 
     </div>

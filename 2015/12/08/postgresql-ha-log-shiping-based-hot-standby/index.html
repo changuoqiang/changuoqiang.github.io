@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="传统的备份恢复问题在于恢复时间过长，恢复时间有时候是无法接受的。因此有了高可用(High Availability)的概念。 高可用的实现方式多种多样，PostgreSQL内置支持基于WAL日志文件传输或流复制的方式来实现warm&#x2F;hot standby备库从而实现数据库的高可用性。 这一篇文章只讲基于日志文件传输方式的warm&#x2F;hot standby配置。hot standby与warm st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL高可用之log-shiping based hot standby">
-<meta property="og:url" content="http://example.com/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/index.html">
+<meta property="og:url" content="https://openwares.net/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="传统的备份恢复问题在于恢复时间过长，恢复时间有时候是无法接受的。因此有了高可用(High Availability)的概念。 高可用的实现方式多种多样，PostgreSQL内置支持基于WAL日志文件传输或流复制的方式来实现warm&#x2F;hot standby备库从而实现数据库的高可用性。 这一篇文章只讲基于日志文件传输方式的warm&#x2F;hot standby配置。hot standby与warm st">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/">
+<link rel="canonical" href="https://openwares.net/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -333,7 +333,7 @@
 <p>主备库硬件可以不同，但硬件架构必须相同，字长也必须相同。PostgreSQL的主版本号必须相同，小版本号可以不同。<br>但是推荐主备库使用完全相同的版本号。</p>
 <p>主备库升级时，要先升级备库，因为新版本的程序会兼容旧版本传输过来的wal日志，但反过来却不一定。</p>
 <p><strong>搭建warm standby备库</strong></p>
-<p>首先参考”<a target="_blank" rel="noopener" href="https://openwares.net/database/postgresql_restore_using_continuous_archiving_backup.html">PostgreSQL使用连续归档备份恢复数据库</a>“在主库上进行一次基础备份，然后将其在备机上恢复。</p>
+<p>首先参考”<a href="https://openwares.net/database/postgresql_restore_using_continuous_archiving_backup.html">PostgreSQL使用连续归档备份恢复数据库</a>“在主库上进行一次基础备份，然后将其在备机上恢复。</p>
 <p>然后recovery.conf文件中除了restore_comman参数之外，再打开standby_mode参数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">restore_command = <span class="string">&#x27;cp /var/backups/postgresql/archive/%f %p&#x27;</span></span><br><span class="line">standby_mode = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">#archive_cleanup_command = ’pg_archivecleanup /path/to/archive %r’</span><br></pre></td></tr></table></figure>
 

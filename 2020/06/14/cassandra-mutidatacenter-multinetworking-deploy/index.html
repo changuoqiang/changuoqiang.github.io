@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="cassandra集群以前运行于本地机房，现在需要扩展到云端，云主机添加为集群的新数据中心。因为并不是公有云，所有没有启动SSL认证和加密。 本地机房与云机房通过专线连接，并且本地只有两个互联ip地址可用。本地机房原集群内节点只使用私有网络地址，无法被云端访问。云端主机使用私有地址，云平台将私有地址映射到专线可以访问的“公有地址”，这里并不是真正的“公有地址”，仍然是一个大的私有网络，不过本地机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cassandra跨数据中心、多网络接口部署">
-<meta property="og:url" content="http://example.com/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/index.html">
+<meta property="og:url" content="https://openwares.net/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="cassandra集群以前运行于本地机房，现在需要扩展到云端，云主机添加为集群的新数据中心。因为并不是公有云，所有没有启动SSL认证和加密。 本地机房与云机房通过专线连接，并且本地只有两个互联ip地址可用。本地机房原集群内节点只使用私有网络地址，无法被云端访问。云端主机使用私有地址，云平台将私有地址映射到专线可以访问的“公有地址”，这里并不是真正的“公有地址”，仍然是一个大的私有网络，不过本地机">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
+<link rel="canonical" href="https://openwares.net/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

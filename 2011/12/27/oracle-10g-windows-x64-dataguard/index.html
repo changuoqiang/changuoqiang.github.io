@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="DataGuard为企业数据的高可用性,数据安全以及灾难恢复提供支持,一般由一个primary db与几个物理或逻辑standby db组成一个DataGuard配置。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Oracle 10g DataGuard手记之基础配置">
-<meta property="og:url" content="http://example.com/2011/12/27/oracle-10g-windows-x64-dataguard/index.html">
+<meta property="og:url" content="https://openwares.net/2011/12/27/oracle-10g-windows-x64-dataguard/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="DataGuard为企业数据的高可用性,数据安全以及灾难恢复提供支持,一般由一个primary db与几个物理或逻辑standby db组成一个DataGuard配置。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/12/27/oracle-10g-windows-x64-dataguard/">
+<link rel="canonical" href="https://openwares.net/2011/12/27/oracle-10g-windows-x64-dataguard/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/12/27/oracle-10g-windows-x64-dataguard/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/12/27/oracle-10g-windows-x64-dataguard/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -350,7 +350,7 @@
 <p>然后查询</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; select force_logging <span class="keyword">from</span> v$database;</span><br><span class="line">FOR</span><br><span class="line">---</span><br><span class="line">YES</span><br></pre></td></tr></table></figure>
 <p>说明已经开启FORCE LOGGING模式</p>
-<p><strong>2、创建密码文件</strong><br>如果密码文件不存在需要<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_passwd_file.html">创建密码文件</a>,DataGuard配置里面的每一个数据库都必须使用密码文件,并且所有数据库的SYS用户密码必须相同,这样才能成功的传输REDO LOGS。主库安装时已经自动创建了密码文件,备库安装时也使用相同的SYS密码进行安装并自动创建密码文件,所以此时不必再重复创建密码文件。</p>
+<p><strong>2、创建密码文件</strong><br>如果密码文件不存在需要<a href="https://openwares.net/database/oracle_passwd_file.html">创建密码文件</a>,DataGuard配置里面的每一个数据库都必须使用密码文件,并且所有数据库的SYS用户密码必须相同,这样才能成功的传输REDO LOGS。主库安装时已经自动创建了密码文件,备库安装时也使用相同的SYS密码进行安装并自动创建密码文件,所以此时不必再重复创建密码文件。</p>
 <p><strong>3、配置Standby Redo Log</strong></p>
 <p>最大保护模式和最大可用模式必须使用standby redo log,并且推荐所有的数据库都使用LGRW ASYNC日志传输模式。创建standby数据库时就要计划好standby redo log的配置,并创建所有需要的日志组和组成员。为了增加可用性,可以多路standby redo log文件,就像多路online redo log文件那样。多路时每个日志组内的所有日志文件内容都是一样的,可以将它们分散到不同的驱动器上以提高可用性和IO性能。</p>
 <p>创建standby redo log的步骤如下：</p>
@@ -369,13 +369,13 @@
 <p>在主库primary的$ORACLE_HOME/NETWORK/ADMIN/tnsname.ora文件中添加如下oracle net service name,primary标识主库和standby01标识(第一个)物理备库</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">primary =</span><br><span class="line"> (DESCRIPTION =</span><br><span class="line"> (ADDRESS = (PROTOCOL = TCP)(HOST = <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span>)(PORT = <span class="number">1521</span>))</span><br><span class="line"> (CONNECT_DATA =</span><br><span class="line"> (SERVER = DEDICATED)</span><br><span class="line"> (SERVICE_NAME = orcl)</span><br><span class="line"> )</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line">standby01 =</span><br><span class="line"> (DESCRIPTION =</span><br><span class="line"> (ADDRESS = (PROTOCOL = TCP)(HOST = <span class="number">10.0</span><span class="number">.0</span><span class="number">.2</span>)(PORT = <span class="number">1521</span>))</span><br><span class="line"> (CONNECT_DATA =</span><br><span class="line"> (SERVER = DEDICATED)</span><br><span class="line"> (SERVICE_NAME = orcl)</span><br><span class="line"> )</span><br><span class="line"> )</span><br></pre></td></tr></table></figure>
 <p><strong>5、设置primary初始化参数</strong><br>对于primary数据库,作为primary脚色需要定义几个初始化参数控制redo传输服务。还有几个附加的初始化参数需要定义以控制redo数据的接收和日志应用服务,当primary库转换到standby角色时会使用这些参数,方便主备库角色转换。</p>
-<p><a target="_blank" rel="noopener" href="https://openwares.net/database/dataguard_init_paras.html">DataGuard相关的初始化参数</a>详细解释见<a target="_blank" rel="noopener" href="https://openwares.net/database/dataguard_init_paras.html">这里</a></p>
+<p><a href="https://openwares.net/database/dataguard_init_paras.html">DataGuard相关的初始化参数</a>详细解释见<a href="https://openwares.net/database/dataguard_init_paras.html">这里</a></p>
 <p>因为需要修改的初始化参数较多,先从spfile导出pfile,然后用编辑pfile,最后再用pfile重建spfile</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; create pfile <span class="keyword">from</span> spfile;</span><br></pre></td></tr></table></figure>
 <p>会在$ORACLE_HOME/database/目录下生成INITorcl.ora</p>
 <p>下面是primary库需要修改或添加的初始化参数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DB_NAME=<span class="string">&#x27;orcl&#x27;</span></span><br><span class="line">DB_UNIQUE_NAME=<span class="string">&#x27;primary&#x27;</span></span><br><span class="line">LOG_ARCHIVE_CONFIG=<span class="string">&#x27;DG_CONFIG=(primary,standby01)&#x27;</span></span><br><span class="line">LOG_ARCHIVE_DEST_1=<span class="string">&#x27;LOCATION=D:\\archived_log\\ VALID_FOR=(ALL_LOGFILES,ALL_ROLES) DB_UNIQUE_NAME=primary&#x27;</span></span><br><span class="line">LOG_ARCHIVE_DEST_2=<span class="string">&#x27;SERVICE=standby01 LGWR ASYNC VALID_FOR=(ONLINE_LOGFILES,PRIMARY_ROLE) DB_UNIQUE_NAME=standby01&#x27;</span></span><br><span class="line">LOG_ARCHIVE_DEST_STATE_1=enable</span><br><span class="line">LOG_ARCHIVE_DEST_STATE_2=enable</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>：因为LOG_ARCHIVE_DEST_n与LOG_ARCHIVE_DEST(LOG_ARCHIVE_DUPLEX_DEST)参数不兼容,因此需要把LOG_ARCHIVE_DEST(LOG_ARCHIVE_DUPLEX_DEST)参数reset为空,归档日志路径问题详见<a target="_blank" rel="noopener" href="https://openwares.net/2011/10/31/oracle_10g_archive_destination/">oracle 10g重做日志归档路径参数</a>。</p>
+<p><strong>注</strong>：因为LOG_ARCHIVE_DEST_n与LOG_ARCHIVE_DEST(LOG_ARCHIVE_DUPLEX_DEST)参数不兼容,因此需要把LOG_ARCHIVE_DEST(LOG_ARCHIVE_DUPLEX_DEST)参数reset为空,归档日志路径问题详见<a href="https://openwares.net/2011/10/31/oracle_10g_archive_destination/">oracle 10g重做日志归档路径参数</a>。</p>
 <p><strong>注</strong>：LOG_ARCHIVE_DEST_1指定的本地归档目录必须在参数生效前已经存在,不然启动数据库时会报如下错误:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">16032</span>: parameter LOG_ARCHIVE_DEST_1 destination string cannot be translated</span><br><span class="line">ORA-<span class="number">09291</span>: sksachk: invalid device specified <span class="keyword">for</span> archive destination</span><br><span class="line">OSD-<span class="number">04018</span>: Unable to access the specified directory or device.</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">2</span>) XXXXXXXXXXXXXXXXXXXX</span><br></pre></td></tr></table></figure>
 <p>下面是standby脚色需要的初始化参数,为primary设置这些参数以方便在primary与standby脚色之间转换</p>
@@ -399,7 +399,7 @@
 <p>然后分别关闭primary和standby01</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown immediate</span><br></pre></td></tr></table></figure>
 <p>将上述文件拷贝到standby01库相应的目录下,因为两边库结构完全一致,所以直接从primary拷贝$ORACLE_BASE\PRODUCT\10.2.0\ORADATA\ORCL和$ORACLE_HOME\database\这两个目录覆盖到standby对应目录下即可。</p>
-<p>最后将生成的控制文件拷贝到standby01库初始化参数contro_files设置的路径,这里使用的是默认值,也就是standby01库的$ORACLE_BASE\PRODUCT\10.2.0\ORADATA\ORCL\目录下。注意控制文件是有冗余的,拷贝control01.ctl为control02.ctl和control03.ctl,分别覆盖standby01原来的三个控制文件,这三个控制文件是完全一样的。为了安全可靠,也可以修改初始化参数control_files,将三个控制文件放到不同的驱动器上面。关于控制文件见<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_control_files.html">oracle 10g 控制文件冗余</a>。</p>
+<p>最后将生成的控制文件拷贝到standby01库初始化参数contro_files设置的路径,这里使用的是默认值,也就是standby01库的$ORACLE_BASE\PRODUCT\10.2.0\ORADATA\ORCL\目录下。注意控制文件是有冗余的,拷贝control01.ctl为control02.ctl和control03.ctl,分别覆盖standby01原来的三个控制文件,这三个控制文件是完全一样的。为了安全可靠,也可以修改初始化参数control_files,将三个控制文件放到不同的驱动器上面。关于控制文件见<a href="https://openwares.net/database/oracle_10g_control_files.html">oracle 10g 控制文件冗余</a>。</p>
 <p><strong>2、设置oracle net service names</strong></p>
 <p>在备库standby01的$ORACLE_HOME/NETWORK/ADMIN/tnsname.ora文件中添加如下oracle net service name,primary标识主库和standby01标识(第一个)物理备库</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">primary =</span><br><span class="line"> (DESCRIPTION =</span><br><span class="line"> (ADDRESS = (PROTOCOL = TCP)(HOST = <span class="number">10.0</span><span class="number">.0</span><span class="number">.1</span>)(PORT = <span class="number">1521</span>))</span><br><span class="line"> (CONNECT_DATA =</span><br><span class="line"> (SERVER = DEDICATED)</span><br><span class="line"> (SERVICE_NAME = orcl)</span><br><span class="line"> )</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line">standby01 =</span><br><span class="line"> (DESCRIPTION =</span><br><span class="line"> (ADDRESS = (PROTOCOL = TCP)(HOST = <span class="number">10.0</span><span class="number">.0</span><span class="number">.2</span>)(PORT = <span class="number">1521</span>))</span><br><span class="line"> (CONNECT_DATA =</span><br><span class="line"> (SERVER = DEDICATED)</span><br><span class="line"> (SERVICE_NAME = orcl)</span><br><span class="line"> )</span><br><span class="line"> )</span><br></pre></td></tr></table></figure>

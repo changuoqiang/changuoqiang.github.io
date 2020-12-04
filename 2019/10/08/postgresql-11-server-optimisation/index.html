@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="服务器资源状况：32GB内存4路8核心CPU，逻辑核心32颗 postgresql.conf配置文件部分参数： shared_buffers设置为系统内存的40%，过多无益 work_mem单个查询排序所用内存，work_mem*所有用户数的全部查询数&#x3D;占用系统内存，因此如果并发用户很多，此参数不宜设置多大，比如设置为128MB，如果同时有10个并发查询，则会占用1280MB系统内存 maint">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL 11数据库参数优化">
-<meta property="og:url" content="http://example.com/2019/10/08/postgresql-11-server-optimisation/index.html">
+<meta property="og:url" content="https://openwares.net/2019/10/08/postgresql-11-server-optimisation/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="服务器资源状况：32GB内存4路8核心CPU，逻辑核心32颗 postgresql.conf配置文件部分参数： shared_buffers设置为系统内存的40%，过多无益 work_mem单个查询排序所用内存，work_mem*所有用户数的全部查询数&#x3D;占用系统内存，因此如果并发用户很多，此参数不宜设置多大，比如设置为128MB，如果同时有10个并发查询，则会占用1280MB系统内存 maint">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2019/10/08/postgresql-11-server-optimisation/">
+<link rel="canonical" href="https://openwares.net/2019/10/08/postgresql-11-server-optimisation/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/08/postgresql-11-server-optimisation/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/08/postgresql-11-server-optimisation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

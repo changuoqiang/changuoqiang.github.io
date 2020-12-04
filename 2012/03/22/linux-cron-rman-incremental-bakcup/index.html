@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="rman及catalog运行于linux,target数据库运行于windows,oracle版本一致,而且都是64位平台。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux基于cron的rman自动增量备份脚本及设置">
-<meta property="og:url" content="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/index.html">
+<meta property="og:url" content="https://openwares.net/2012/03/22/linux-cron-rman-incremental-bakcup/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="rman及catalog运行于linux,target数据库运行于windows,oracle版本一致,而且都是64位平台。">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/">
+<link rel="canonical" href="https://openwares.net/2012/03/22/linux-cron-rman-incremental-bakcup/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2012/03/22/linux-cron-rman-incremental-bakcup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -330,9 +330,9 @@
 <a id="more"></a>
 <p>历史原因数据库运行于windows,但显然linux更适合于系统管理,因此此处rman暂时运行于混合环境。</p>
 <p><strong>备份策略</strong></p>
-<p>数据库用于OLTP系统,容量中等,全库接近400G,但有大约200G的数据是不变化只用于查询的,将其表空间置于read only模式,备份时可以忽略这些数据。其他200G左右的数据每天都在发生变化,如果系统需要回复,要尽可能的恢复到最新的数据。已经做了<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">dataguard灾备</a>。</p>
+<p>数据库用于OLTP系统,容量中等,全库接近400G,但有大约200G的数据是不变化只用于查询的,将其表空间置于read only模式,备份时可以忽略这些数据。其他200G左右的数据每天都在发生变化,如果系统需要回复,要尽可能的恢复到最新的数据。已经做了<a href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">dataguard灾备</a>。</p>
 <p>基于以上情况制定备份策略，每周日凌晨做0级备份，周一到周六做1级备份。</p>
-<p>target数据库要打开<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_incremental_backup.html">块变化追踪机制</a>,然后<a target="_blank" rel="noopener" href="https://openwares.net/database/rman_catalog_database.html">建立恢复目录</a>。</p>
+<p>target数据库要打开<a href="https://openwares.net/database/oracle_10g_incremental_backup.html">块变化追踪机制</a>,然后<a href="https://openwares.net/database/rman_catalog_database.html">建立恢复目录</a>。</p>
 <p><strong>备份脚本</strong></p>
 <p> 1 #!/bin/bash<br> 2<br> 3 <strong>set</strong> -e<br> 4<br> 5 #############################################################<br> 6 # sunday incremental level 0<br> 7 # other day incremental level 1<br> 8 #<br> 9 # rman and catalog on oracle 10.2.0.4 64bits for debian amd64<br>10 # target on oracle 10.2.0.4 64bits for windows 2003 r2 sp2 x64<br>11 #############################################################<br>12<br>13 <strong>export</strong> ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1<br>14 rman_bin=$ORACLE_HOME/bin/rman<br>15<br>16 weekday=`date +%a`<br>17 <strong>case</strong> <strong>“</strong>${weekday}<strong>“</strong> <strong>in</strong><br>18<br>19     <strong>“**Sun</strong>“<strong>**)</strong><br>20         inc_level=0<br>21         <strong>;;</strong><br>22     *<strong>)</strong><br>23         inc_level=1<br>24         <strong>;;</strong><br>25 <strong>esac</strong><br>26<br>27 rman_user=rman_usr<br>28 rman_passwd=rman_usr<br>29 catalog_inst_name=catalogd<br>30<br>31 target_sys_passwd=oracle<br>32 target_inst_name=db_test<br>33<br>34 log_file=/var/log/rman/`date +%F`<em>${inc_level}.log<br>35 bak_file=<strong>‘**d:\rman_bak\bak_%U</strong>‘**<br>36 arc_file=**’**d:\rman_bak\arc</em>%U**’**<br>37 ctl_file=<strong>‘**d:\rman_bak\ctl_%F</strong>‘**<br>38<br>39 $rman_bin log ${log_file} <strong>&gt;&gt;</strong> /dev/null 2<strong>&gt;&amp;1</strong> <strong>&lt;&lt;EOF</strong><br>40<br>41 connect catalog ${rman_user}/${rman_passwd}@${catalog_inst_name};<br>42 connect target sys/${target_sys_passwd}@${target_inst_name};<br>43<br>44 run {<br>45  configure backup optimization on;<br>46  configure archivelog deletion policy to applied on standby;<br>47  configure retention policy to redundancy 3;<br>48  configure controlfile autobackup on;<br>49  configure controlfile autobackup format for device type disk to ‘${ctl_file}’;<br>50<br>51  allocate channel ch1 device type disk;<br>52  backup incremental level ${inc_level} cumulative database format ‘${bak_file}’ skip readonly plus archivelog format ‘${arc_file}’;<br>53<br>54  release channel ch1;<br>55 }<br>56<br>57 crosscheck backup;<br>58 delete noprompt obsolete;<br>59<br>60 delete noprompt archivelog all completed before ‘sysdate - 14’;<br>61<br>62 exit;<br>63 <strong>EOF</strong><br>64<br>65 <strong>exit</strong> 0 </p>
 <p>rman操作日志记录于/var/log/rman目录下,需要在/var/log目录先新建rman子目录,不然rman会报错无法打开log文件。脚本很简单,就不解释了。</p>

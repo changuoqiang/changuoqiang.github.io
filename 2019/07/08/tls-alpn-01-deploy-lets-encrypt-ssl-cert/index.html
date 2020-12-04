@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="TLS-SNI-01已经deprecated，但certbot尚不支持tls-alpn-01验证方法，因此可以使用dehydrated或者acme.sh通过https来获取Let’s Encrypt证书。 使用TLS_ALPN获取证书，需要使用443端口进行验证，借助nginx的ngx_stream_ssl_preread_module模块，可以路由来自443的请求到不同的处理后端。 确保ngi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用tls-alpn-01部署Let’s Encrypt证书">
-<meta property="og:url" content="http://example.com/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/index.html">
+<meta property="og:url" content="https://openwares.net/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="TLS-SNI-01已经deprecated，但certbot尚不支持tls-alpn-01验证方法，因此可以使用dehydrated或者acme.sh通过https来获取Let’s Encrypt证书。 使用TLS_ALPN获取证书，需要使用443端口进行验证，借助nginx的ngx_stream_ssl_preread_module模块，可以路由来自443的请求到不同的处理后端。 确保ngi">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/">
+<link rel="canonical" href="https://openwares.net/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -343,7 +343,7 @@
 <p><strong>更新证书</strong></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># acme.sh --renew -d openwares.net --force</span><br></pre></td></tr></table></figure>
 
-<p><strong>注意(updated 02/29/2020)：</strong><br>如果<a target="_blank" rel="noopener" href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">启用了proxy_protocol</a>以获取客户端的真实地址，申请或者更新证书时会出现错误：</p>
+<p><strong>注意(updated 02/29/2020)：</strong><br>如果<a href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">启用了proxy_protocol</a>以获取客户端的真实地址，申请或者更新证书时会出现错误：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Verify error:<span class="built_in">Error</span> getting validation data</span><br></pre></td></tr></table></figure>
 <p>因此申请或更新证书时需要临时禁止proxy_protocol协议。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://medium.com/@decrocksam/deploying-lets-encrypt-certificates-using-tls-alpn-01-https-18b9b1e05edf">Deploying Let’s Encrypt certificates using tls-alpn-01 (https)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.wuzhiyuan.com/2018/11/18/tls-alpn/">使用TLS-ALPN-01验证签发证书</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh/wiki/TLS-ALPN-without-downtime">TLS ALPN without downtime</a><br>[4]<a target="_blank" rel="noopener" href="https://raymii.org/s/tutorials/nginx_1.15.2_ssl_preread_protocol_multiplex_https_and_ssh_on_the_same_port.html">ssl_preread_protocol, multiplex HTTPS and SSH on the same port</a></p>

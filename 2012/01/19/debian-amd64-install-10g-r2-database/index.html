@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="服务器操作系统为Debian Squeeze AMD64,没有安装X,通过ssh远程访问。客户端为debian testing,安装有gnome桌面环境。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian Squeeze AMD64安装Oracle 10g x86_64 10.2.0.4数据库">
-<meta property="og:url" content="http://example.com/2012/01/19/debian-amd64-install-10g-r2-database/index.html">
+<meta property="og:url" content="https://openwares.net/2012/01/19/debian-amd64-install-10g-r2-database/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="服务器操作系统为Debian Squeeze AMD64,没有安装X,通过ssh远程访问。客户端为debian testing,安装有gnome桌面环境。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2012/01/19/debian-amd64-install-10g-r2-database/">
+<link rel="canonical" href="https://openwares.net/2012/01/19/debian-amd64-install-10g-r2-database/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2012/01/19/debian-amd64-install-10g-r2-database/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2012/01/19/debian-amd64-install-10g-r2-database/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -396,7 +396,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
 <p>从其他用户主目录下拷贝.profile,.bashrc,.bash_logout文件到oracle用户的主目录,在.bashrc文件增加下面的行<br>umask 022<br>然后</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$source .bashrc</span><br></pre></td></tr></table></figure>
-<p>最后设置oracle用户<a target="_blank" rel="noopener" href="https://openwares.net/linux/x11_forward_over_ssh.html">远程ssh登录时启用X11 Forward</a></p>
+<p>最后设置oracle用户<a href="https://openwares.net/linux/x11_forward_over_ssh.html">远程ssh登录时启用X11 Forward</a></p>
 <p>也可以不使用X远程静默安装oracle</p>
 <p><strong>8、安装oracle 10g x86_64数据库</strong></p>
 <p>登录到远程系统</p>
@@ -417,7 +417,7 @@
 <p><strong>1、升级软件</strong></p>
 <p>首先停止所有oracle服务,实际上如果安装完成10.2.0.1后立即进行升级的话,oracle的所有服务并没有运行,也就不必去停止它们</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#/etc/init.d/oracle stop</span><br></pre></td></tr></table></figure>
-<p>oracle数据库的启动和关闭控制见<a target="_blank" rel="noopener" href="https://openwares.net/2012/01/25/debian_oracle_10g_init/">Debian配置Oracle 10g自启动</a></p>
+<p>oracle数据库的启动和关闭控制见<a href="https://openwares.net/2012/01/25/debian_oracle_10g_init/">Debian配置Oracle 10g自启动</a></p>
 <p>然后运行升级包升级软件</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$/path/to/patchset_directory/Disk1/runInstaller -ignoreSysPrereqs</span><br></pre></td></tr></table></figure>
 <p>按提示升级即可</p>
@@ -445,7 +445,7 @@
 <p><strong>UPDATE:</strong></p>
 <p>在Debian 当前的tesing分支Wheezy上安装oracle 10g时,需要增加以下两个符号链接：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#ln -sf /usr/lib/x86_64-linux-gnu/ <span class="regexp">/usr/</span>lib64</span><br><span class="line">#ln -sf /lib/x86_64-linux-gnu/libgcc_s.so<span class="number">.1</span> /lib64/libgcc_s.so<span class="number">.1</span></span><br></pre></td></tr></table></figure>
-<p>这是因为Wheezy开始支持<a target="_blank" rel="noopener" href="https://openwares.net/linux/multiarch_and_lib_dir.html">multiarch</a>,库路径做了比较大的调整。</p>
+<p>这是因为Wheezy开始支持<a href="https://openwares.net/linux/multiarch_and_lib_dir.html">multiarch</a>,库路径做了比较大的调整。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/OracleDB">OracleDB</a></p>
 
     </div>

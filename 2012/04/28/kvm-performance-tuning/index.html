@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="KVM虚拟环境性能优化的几个措施">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVM性能优化">
-<meta property="og:url" content="http://example.com/2012/04/28/kvm-performance-tuning/index.html">
+<meta property="og:url" content="https://openwares.net/2012/04/28/kvm-performance-tuning/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="KVM虚拟环境性能优化的几个措施">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2012/04/28/kvm-performance-tuning/">
+<link rel="canonical" href="https://openwares.net/2012/04/28/kvm-performance-tuning/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/28/kvm-performance-tuning/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2012/04/28/kvm-performance-tuning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -330,7 +330,7 @@
 <a id="more"></a>
 <p>KVM本来性能已经很不错了,但还有一些微调措施来进一步提高KVM性能。</p>
 <p><strong>1、virtio</strong></p>
-<p>virtio是KVM的半虚拟化机制,用以提高IO性能,使用virtio可以显著提高KVM性能。virtio具体使用方法参见<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_kvm.html">1</a>,<a target="_blank" rel="noopener" href="https://openwares.net/linux/kvm_client_install.html">2</a>。</p>
+<p>virtio是KVM的半虚拟化机制,用以提高IO性能,使用virtio可以显著提高KVM性能。virtio具体使用方法参见<a href="https://openwares.net/linux/debian_kvm.html">1</a>,<a href="https://openwares.net/linux/kvm_client_install.html">2</a>。</p>
 <p><strong>2、使用writeback缓存选项</strong></p>
 <p>针对客户机块设备的缓存,drive有一个子选项cache来设置缓存模式。两个主要的选项为writeback和writethrough,man手册是这样说的</p>
 <p>By default, writethrough caching is used for all block device. This means that the host page cache will be used to read and write data but write notification will be sent to the guest only when the data has been reported as written by the storage subsystem.</p>

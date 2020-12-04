@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="javascript中并没有类的概念，这里的类指代用new操作符产生出其他对象的对象。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="javascript继承模型">
-<meta property="og:url" content="http://example.com/2013/06/05/javascript-instance-class-prototype/index.html">
+<meta property="og:url" content="https://openwares.net/2013/06/05/javascript-instance-class-prototype/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="javascript中并没有类的概念，这里的类指代用new操作符产生出其他对象的对象。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2013/06/05/javascript-instance-class-prototype/">
+<link rel="canonical" href="https://openwares.net/2013/06/05/javascript-instance-class-prototype/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2013/06/05/javascript-instance-class-prototype/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/06/05/javascript-instance-class-prototype/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -335,7 +335,7 @@
 <p>F* f = new F();<br>[/cpp]<br>是不是有一个F类还有一个F构造函数。F类的构造函数就是F(),生成f实例对象时new会在内部调用F()构造函数。new先申请一块类对象大小的内存块，然后初始化一些内部的变量如vptr等，最后会以此内存区域的首地址为this指针的值来调用构造函数F(),最后将实例对象的地址赋予实例对象指针f。</p>
 <p>javascript的原型继承与其有相似之处，只是实现方式不同。再回到最初的javascript函数构造器，F()就是构造函数，F对象就是类，F.prototype引用的原型对象F{}就是父类，原型对象F{}有一个字段constructor指向构造函数F()。</p>
 <p>var f = new F();</p>
-<p>构造函数为新创建对象添加用this修饰的属性，因为this此时指向新创建的对象，并返回给f,这是显式的。并且新创建的对象动态的继承原型对象F{}(F.prototype)中的所有属性。但是对象f并不从F对象继承任何属性，这与C++等是不同的。new做的具体操作参考<a target="_blank" rel="noopener" href="https://openwares.net/js/javascript_prototype_chain.html">JavaScript原型链浅析</a></p>
+<p>构造函数为新创建对象添加用this修饰的属性，因为this此时指向新创建的对象，并返回给f,这是显式的。并且新创建的对象动态的继承原型对象F{}(F.prototype)中的所有属性。但是对象f并不从F对象继承任何属性，这与C++等是不同的。new做的具体操作参考<a href="https://openwares.net/js/javascript_prototype_chain.html">JavaScript原型链浅析</a></p>
 <p>看一段测试代码<br>[javascript]<br>function F(){<br> var a = “a”; //a不过是函数F()的局部变量，离开F()，变量a就不存在了<br> this.b = “b”; //b也是函数F()作用域内部的变量，离开F()就不存在了，<br> //但b却添加到新对象上，因为执行构造函数F()之时，this指向新构造的对象<br> this.instanceF = function(){ //与b相同，所有this修饰的属性都会添加到新对象之上<br> console.log(“this=”+this);<br> console.log(“this.a=”+this.a);<br> console.log(“this.b=”+this.b);<br> console.log(“this.c=”+this.c);<br> };<br>};</p>
 <p>F.c = “c”; //这里c其实是添加到F对象之上<br>F.staticF = function(){ //与c相同,添加F对象之上<br> console.log(“this=”+this);<br> console.log(“this.a=”+this.a);<br> console.log(“this.b=”+this.b);<br> console.log(“this.c=”+this.c);<br>};</p>
 <p>//static</p>

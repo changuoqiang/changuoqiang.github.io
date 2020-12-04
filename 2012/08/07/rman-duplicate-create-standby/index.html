@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Oracle推荐使用rman来创建物理备库,可以在不影响主库的情况下,轻松完成物理备库的创建。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RMAN DUPLICATE创建DataGuard物理备库">
-<meta property="og:url" content="http://example.com/2012/08/07/rman-duplicate-create-standby/index.html">
+<meta property="og:url" content="https://openwares.net/2012/08/07/rman-duplicate-create-standby/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="Oracle推荐使用rman来创建物理备库,可以在不影响主库的情况下,轻松完成物理备库的创建。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2012/08/07/rman-duplicate-create-standby/">
+<link rel="canonical" href="https://openwares.net/2012/08/07/rman-duplicate-create-standby/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2012/08/07/rman-duplicate-create-standby/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2012/08/07/rman-duplicate-create-standby/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -340,12 +340,12 @@
 <p>主库端执行：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; create pfile=<span class="string">&#x27;d:\\INITorcl.ora&#x27;</span> <span class="keyword">from</span> spfile;</span><br></pre></td></tr></table></figure>
 
-<p>将生成的INITorcl.ora拷贝到物理备机的$ORACLE_HOME/database目录下,并做相应修改,参见<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">Oracle 10g DataGuard手记之基础配置</a></p>
+<p>将生成的INITorcl.ora拷贝到物理备机的$ORACLE_HOME/database目录下,并做相应修改,参见<a href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">Oracle 10g DataGuard手记之基础配置</a></p>
 <p>然后通过针对standby修改的INITorcl.ora为物理备库生成spfile</p>
 <p>备库端执行：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; create spfile <span class="keyword">from</span> pfile; <span class="comment">//也可以指定pfile的详细位置pfile=&#x27;/path/to/pfile&#x27;,此处使用的默认位置和默认文件名</span></span><br></pre></td></tr></table></figure>
 
-<p>4、创建物理备库<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_passwd_file.html">密码文件</a></p>
+<p>4、创建物理备库<a href="https://openwares.net/database/oracle_passwd_file.html">密码文件</a></p>
 <p>备库必须通过Oracle NEt并以SYSDBA权限访问,因此密码文件是必须的,因为不能使用OS认证。</p>
 <p>备库端执行：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; orapwd file=PWDorcl.ora password=yourpasswd</span><br></pre></td></tr></table></figure>
@@ -424,7 +424,7 @@
 <p>备库创建完成后rman将其置于mounted状态。</p>
 <p>2、创建备库时并不会将主库的online redo log files和standby redo log files拷贝到备库,但是控制文件中包含了这些信息。</p>
 <p>“因为在备份前主库创建了standby redo log，备库是根据主库的信息创建的，一开始它是包含了主库的standby redo log信息，如果主库设置的日志传送方式是LGWR，当主库发生日志切换时，备库的RFS会尝试使用standby redo log来存储主库传送过来的日志，因为此时备库实际上是不存在standby redo log的，所以备库会报错。当备库尝试打开字典信息的所有standby redo log失败以后，备库会自动把日志传送方式转为ARCN，并同时清除数据字典中的standby redo log信息。”参见<a target="_blank" rel="noopener" href="http://space6212.itpub.net/post/12157/299427">DG使用中遇到的几个错误</a>。</p>
-<p>因此如果需要开启实时redo apply的话,需要手动提前<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">添加standby redo log文件</a>,如下:<br>备库端:<br>[sql]<br>SQL&gt;alter database add standby logfile group 4 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO01.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 5 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO02.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 6 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO03.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 7 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO04.LOG’) size 50M;<br>Database altered.<br>[/sql]<br>然后就可以打开realtime redo apply了,如下打开实时日志应用:<br>备库端:<br>[sql]<br>SQL&gt;ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT FROM SESSION;<br>[/sql]</p>
+<p>因此如果需要开启实时redo apply的话,需要手动提前<a href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">添加standby redo log文件</a>,如下:<br>备库端:<br>[sql]<br>SQL&gt;alter database add standby logfile group 4 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO01.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 5 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO02.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 6 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO03.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 7 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO04.LOG’) size 50M;<br>Database altered.<br>[/sql]<br>然后就可以打开realtime redo apply了,如下打开实时日志应用:<br>备库端:<br>[sql]<br>SQL&gt;ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT FROM SESSION;<br>[/sql]</p>
 <p>3、此时会后台日志文件中会报如下错误</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">19527</span>: physical standby redo log must be renamed</span><br></pre></td></tr></table></figure>
 <p>物理standby并不需要在线redo日志,因为其并不以读写方式打开。但当物理standby要switch over成为主库时是必须要使用在线redo log的,在switch over之前,oracle会清除online redo log文件,为了加快switch over进度,oracle会在开启日志应用之时提前将物理standby的online redo log文件clear。oracle为了防止意外清除了主库的online redo log文件,即使物理standby与主库不在同一台主机上,只要其路径相同则必须明确的设置log_file_name_convert参数,这样才能避免此错误提示。<br>因此可以通过alter system set log_file_name_convert更改此参数设置或者在备库初始化文件中添加此参数并重新生成spfile启动数据库</p>

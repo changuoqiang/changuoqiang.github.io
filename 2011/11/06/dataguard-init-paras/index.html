@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="dataguard环境下适用于primary和&#x2F;或standby的初始化参数介绍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DataGuard相关的初始化参数">
-<meta property="og:url" content="http://example.com/2011/11/06/dataguard-init-paras/index.html">
+<meta property="og:url" content="https://openwares.net/2011/11/06/dataguard-init-paras/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="dataguard环境下适用于primary和&#x2F;或standby的初始化参数介绍">
 <meta property="og:locale" content="en_US">
@@ -36,7 +36,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/11/06/dataguard-init-paras/">
+<link rel="canonical" href="https://openwares.net/2011/11/06/dataguard-init-paras/">
 
 
 <script class="page-configurations">
@@ -271,7 +271,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/11/06/dataguard-init-paras/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/11/06/dataguard-init-paras/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -340,7 +340,7 @@
 <p>适用： primary,physical standby,logical standby<br>格式： DB_NAME = _database_name_<br>描述： 指定最多8个字符的数据库名。对于physical standby,把DB_NAME设置成与primary数据库初始化参数文件中相同的名字,也就是此参数physical standby与primary保持一致。但是对于logical standby,此参数不能与primary设置相同,可用DBNEWID(nid)为logical standby设置DB_NAME。<br>样例： DB_NAME = orcl</p>
 <p><strong>DB_UNIQUE_NAME</strong></p>
 <p>适用： primary,physical standby,logical standby<br>格式： DB_UNIQUE_NAME = <em>unique_service_provider_name_for_this_database</em><br>描述： 为本数据库指定一个独一无二的名字,primary和standby中此参数不能相同,此参数一般设置为oracle service name。<br>样例： DB_UNIQUE_NAME = primaryDB</p>
-<p><strong>FAL_CLIENT与FAL_SERVER</strong>参数详见”<a target="_blank" rel="noopener" href="https://openwares.net/database/fal_client_fal_server.html">FAL_CLIENT和FAL_SERVER参数详解</a>“</p>
+<p><strong>FAL_CLIENT与FAL_SERVER</strong>参数详见”<a href="https://openwares.net/database/fal_client_fal_server.html">FAL_CLIENT和FAL_SERVER参数详解</a>“</p>
 <p><strong>LOG_ARCHIVE_CONFIG</strong></p>
 <p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_CONFIG = _’DG_CONFIG(db_unique_name,db_unique_name,…)’_<br>描述： 使用DG_CONFIG属性标识出Data Guard配置中的primary数据库和各个standby数据库的DB_UNIQUE_NAME。此参数使primary发送redo日志到standby数据库,使standby数据库接收primary发送来的redo日志。<br>样例： LOG_ARCHIVE_CONFIG =’DG_CONFIG(PrimaryDB,StandbyDB1,StandbyDB2,…)’</p>
 <p><strong>LOG_ARCHIVE_DEST_n</strong></p>

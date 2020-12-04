@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="最近使用带有firmware的debian netinst安装一台服务器时,安装进度到99%配置console-setup时进程停滞了，没有当机，只是进度不动，几个小时都不带动的，一直在： 1configuring console-setup...  CTRL+ALT+4查看安装日志，也没有错误提示，只是在等待。重启进入rescue安装模式，在instaler环境下执行 1# dpkg --co">
 <meta property="og:type" content="article">
 <meta property="og:title" content="debian jessie服务器安装时console-setup配置停滞">
-<meta property="og:url" content="http://example.com/2014/11/18/debian-jessie-console-setup-hang/index.html">
+<meta property="og:url" content="https://openwares.net/2014/11/18/debian-jessie-console-setup-hang/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="最近使用带有firmware的debian netinst安装一台服务器时,安装进度到99%配置console-setup时进程停滞了，没有当机，只是进度不动，几个小时都不带动的，一直在： 1configuring console-setup...  CTRL+ALT+4查看安装日志，也没有错误提示，只是在等待。重启进入rescue安装模式，在instaler环境下执行 1# dpkg --co">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2014/11/18/debian-jessie-console-setup-hang/">
+<link rel="canonical" href="https://openwares.net/2014/11/18/debian-jessie-console-setup-hang/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/11/18/debian-jessie-console-setup-hang/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/11/18/debian-jessie-console-setup-hang/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -337,7 +337,7 @@
 <p>出现类似如下错误：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"> <span class="string">&#x27;Debian GNU/Linux ... Official amd64 CD Binary-1 ...&#x27;</span></span><br><span class="line"><span class="keyword">in</span> the drive <span class="string">&#x27;/media/cdrom/&#x27;</span> and press enter</span><br></pre></td></tr></table></figure>
 <p>无果。</p>
-<p>其实大部分包已经装完了，只是还没有安装grub，配置root用户和添加新用户而已。<br>所以使用<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_grub_install_fail.html">rescuecd引导系统安装grub</a><br>这时候root是没密码的，无法正常登录，grub引导时选择recovery模式，顺利以root登录系统，然后执行passwd命令为root设置密码，之后再添加普通用户即可。</p>
+<p>其实大部分包已经装完了，只是还没有安装grub，配置root用户和添加新用户而已。<br>所以使用<a href="https://openwares.net/linux/debian_grub_install_fail.html">rescuecd引导系统安装grub</a><br>这时候root是没密码的，无法正常登录，grub引导时选择recovery模式，顺利以root登录系统，然后执行passwd命令为root设置密码，之后再添加普通用户即可。</p>
 
     </div>
 

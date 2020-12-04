@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="bash的TAB自动完成(autocomplete)是一项特别贴心的功能，可以省却很多击键时间，减少错误">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian自动完成autocomplete与scp的自动完成">
-<meta property="og:url" content="http://example.com/2011/06/24/debian-autocomplete-scp/index.html">
+<meta property="og:url" content="https://openwares.net/2011/06/24/debian-autocomplete-scp/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="bash的TAB自动完成(autocomplete)是一项特别贴心的功能，可以省却很多击键时间，减少错误">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/06/24/debian-autocomplete-scp/">
+<link rel="canonical" href="https://openwares.net/2011/06/24/debian-autocomplete-scp/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/06/24/debian-autocomplete-scp/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/06/24/debian-autocomplete-scp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -329,7 +329,7 @@
 <a id="more"></a>
 <p>Debian基本系统默认的自动完成功能较弱,只支持很有限的自动完成动作。可以通过安装包bash-completion来大大的提高自动完成的能力</p>
 <p>$sudo apt-get install bash-completion</p>
-<p>而且scp(secure cp)也是支持自动完成的,但前提是必须使用证书而不是使用密码来存取远端的文件,也就是使用证书自动登录才能使用scp的自动完成功能。ssh证书自动登录请参考<a target="_blank" rel="noopener" href="https://openwares.net/linux/ssh_auto_login.html">debian:ssh安全自动登录设置</a>,其中有提及scp的使用。之所以用密码认证登录无法使用自动完成,应该是因为在使用tab自动完成时，还没有提示输入密码进行密码验证，所以无法提供自动完成的信息，而证书验证则不存在此问题。</p>
+<p>而且scp(secure cp)也是支持自动完成的,但前提是必须使用证书而不是使用密码来存取远端的文件,也就是使用证书自动登录才能使用scp的自动完成功能。ssh证书自动登录请参考<a href="https://openwares.net/linux/ssh_auto_login.html">debian:ssh安全自动登录设置</a>,其中有提及scp的使用。之所以用密码认证登录无法使用自动完成,应该是因为在使用tab自动完成时，还没有提示输入密码进行密码验证，所以无法提供自动完成的信息，而证书验证则不存在此问题。</p>
 
     </div>
 

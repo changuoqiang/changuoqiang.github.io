@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="DNS over HTTPS用于解决DNS解析的隐私问题 Debian可以使用dnscrypt-proxy MacOSX建议使用dnscrypt-proxy 安装cloudflared 123$ brew install cloudflare&#x2F;cloudflare&#x2F;cloudflared$ cloudflared --versioncloudflared version 2019.7.0 (bu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DNS over HTTPS">
-<meta property="og:url" content="http://example.com/2019/07/20/dns-over-https/index.html">
+<meta property="og:url" content="https://openwares.net/2019/07/20/dns-over-https/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="DNS over HTTPS用于解决DNS解析的隐私问题 Debian可以使用dnscrypt-proxy MacOSX建议使用dnscrypt-proxy 安装cloudflared 123$ brew install cloudflare&#x2F;cloudflare&#x2F;cloudflared$ cloudflared --versioncloudflared version 2019.7.0 (bu">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2019/07/20/dns-over-https/">
+<link rel="canonical" href="https://openwares.net/2019/07/20/dns-over-https/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/20/dns-over-https/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/20/dns-over-https/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -352,7 +352,7 @@
 <p>network.trr.mode = 3<br>#3为只使用DOH，1为关闭DOH特性，2为优先使用DOH，还可以fallback到传统dns</p>
 <p>network.trr.uri = <a target="_blank" rel="noopener" href="https://1.1.1.1/dns-query">https://1.1.1.1/dns-query</a><br>#cloudflare提供的DOH公共服务器</p>
 <p><em>ESNI设置</em></p>
-<p>同一个IP地址可以托管很多的站点,在建立TLS链接时<a target="_blank" rel="noopener" href="https://openwares.net/2009/09/21/server_name_indication/">SNI</a>域名会明文发送，Encrypted SNI就是为了解决这个问题，防止第三方窃取隐私。</p>
+<p>同一个IP地址可以托管很多的站点,在建立TLS链接时<a href="https://openwares.net/2009/09/21/server_name_indication/">SNI</a>域名会明文发送，Encrypted SNI就是为了解决这个问题，防止第三方窃取隐私。</p>
 <p>network.security.esni.enabled设置为true打开Encrypted SNI浏览器支持</p>
 <p><em>服务器端</em></p>
 <p>OpenSSL尚未支持ESNI，因此下游的nginx当前亦不支持，相信很快就会支持。<br><a target="_blank" rel="noopener" href="https://defo.ie/">DEfO</a>是一个为OpenSSL添加ENSI支持的项目<a target="_blank" rel="noopener" href="https://github.com/sftcd/openssl/tree/master/esnistuff">github地址</a>。</p>

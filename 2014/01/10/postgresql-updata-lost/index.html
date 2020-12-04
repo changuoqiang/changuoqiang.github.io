@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="所有的数据库都会遇到更新丢失(覆盖)的问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PostgreSQL防止更新丢失(覆盖)">
-<meta property="og:url" content="http://example.com/2014/01/10/postgresql-updata-lost/index.html">
+<meta property="og:url" content="https://openwares.net/2014/01/10/postgresql-updata-lost/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="所有的数据库都会遇到更新丢失(覆盖)的问题。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2014/01/10/postgresql-updata-lost/">
+<link rel="canonical" href="https://openwares.net/2014/01/10/postgresql-updata-lost/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/10/postgresql-updata-lost/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/10/postgresql-updata-lost/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -327,7 +327,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>所有的数据库都会遇到更新丢失(覆盖)的问题。</p>
 <a id="more"></a>
-<p>更新丢失(覆盖)的详细描述见<a target="_blank" rel="noopener" href="https://openwares.net/database/transaction_isolation_level.html">数据库事务隔离级别</a>。</p>
+<p>更新丢失(覆盖)的详细描述见<a href="https://openwares.net/database/transaction_isolation_level.html">数据库事务隔离级别</a>。</p>
 <p>发生更新丢失(覆盖)问题的关键在于”读取,计算,写回”这个过程中,当前事务使用了过期的(stale)数据,没有将其他并发事务对数据的修改纳入到计算结果中,从而在写回时将其他事务的更新覆盖了。</p>
 <p><strong>防止更新丢失(覆盖)的方法</strong></p>
 <ul>

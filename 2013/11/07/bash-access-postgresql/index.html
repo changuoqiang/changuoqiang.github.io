@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="bash脚本里有三种方式访问PostgreSQL数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="bash shell脚本访问PostgreSQL的三种方式">
-<meta property="og:url" content="http://example.com/2013/11/07/bash-access-postgresql/index.html">
+<meta property="og:url" content="https://openwares.net/2013/11/07/bash-access-postgresql/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="bash脚本里有三种方式访问PostgreSQL数据库">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2013/11/07/bash-access-postgresql/">
+<link rel="canonical" href="https://openwares.net/2013/11/07/bash-access-postgresql/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2013/11/07/bash-access-postgresql/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/07/bash-access-postgresql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -332,7 +332,7 @@
 <p>或</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - postgres</span><br><span class="line">$ psql</span><br></pre></td></tr></table></figure>
 
-<p>但是对于没有系统账户对应的数据库角色，如要使用脚本登录则必须使用<a target="_blank" rel="noopener" href="https://openwares.net/database/postgresql_passwd_file.html">PostgreSQL密码文件</a></p>
+<p>但是对于没有系统账户对应的数据库角色，如要使用脚本登录则必须使用<a href="https://openwares.net/database/postgresql_passwd_file.html">PostgreSQL密码文件</a></p>
 <ul>
 <li>  heredoc方式<br><a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Here_document">heredoc</a>是一种很常用的方式，在bash环境下还可以使用变量替换，用法示例<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">psql -U $&#123;role&#125; -h $&#123;host&#125; -d mydb &lt;&lt; EOF</span><br><span class="line"> CREATE SCHEMA $&#123;role&#125;;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 也可以在循环语句中，向数据库批量插入数据，类似<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ...</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">psql -U $&#123;role&#125; -h $&#123;host&#125; -d mydb &lt;&lt; EOF</span><br><span class="line"> INSERT INTO $&#123;table&#125; VALUES($&#123;value1&#125;,$&#123;value2&#125;,...);</span><br><span class="line">EOF</span><br><span class="line">done </span><br></pre></td></tr></table></figure>

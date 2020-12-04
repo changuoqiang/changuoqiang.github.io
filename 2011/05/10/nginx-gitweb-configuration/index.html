@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="gitweb是git的web接口，使用单向的http协议来发布git repositories。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx gitweb配置">
-<meta property="og:url" content="http://example.com/2011/05/10/nginx-gitweb-configuration/index.html">
+<meta property="og:url" content="https://openwares.net/2011/05/10/nginx-gitweb-configuration/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="gitweb是git的web接口，使用单向的http协议来发布git repositories。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/05/10/nginx-gitweb-configuration/">
+<link rel="canonical" href="https://openwares.net/2011/05/10/nginx-gitweb-configuration/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/05/10/nginx-gitweb-configuration/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/05/10/nginx-gitweb-configuration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -327,13 +327,13 @@
     <div class="post-body" itemprop="articleBody">
         <p>gitweb是git的web接口，使用单向的http协议来发布git repositories。</p>
 <a id="more"></a>
-<p>关于gitweb在Apache服务器下的配置，见<a target="_blank" rel="noopener" href="https://openwares.net/linux/gitweb_configuration.html">gitweb配置(configuration)</a></p>
+<p>关于gitweb在Apache服务器下的配置，见<a href="https://openwares.net/linux/gitweb_configuration.html">gitweb配置(configuration)</a></p>
 <p><strong>配置</strong></p>
 <p>假定git repositories所在的目录为/home/yourname/public_html/git，首先,把gitweb使用到的资源文件(图片和CSS)符号链接到此目录<br>$ln -sf /usr/share/gitweb/* .</p>
 <p>然后将gitweb主程序gitweb.cgi链接到git repositories目录<br>$ln -sd /usr/lib/cgi-bin/gitweb.cgi gitweb.cgi</p>
 <p>修改/etc/gitweb.conf文件中的$projectroot为/home/yourname/public_html/git</p>
 <p>最后是nginx virtualhost配置文件：<br>1 server {<br>2     listen      80;<br>3     server_name git.openwares.net;<br>4     root        /home/yourname/public_html/git;<br>5     index       gitweb.cgi;<br>6     access_log  off;<br>7<br>8     include     cgiwrap-fcgi.conf;<br>9 }  </p>
-<p>第8行 include cgiwrap-fcgi.conf; 让虚拟主机支持CGI应用程序,因为gitweb.cgi就是这样的CGI程序,nginx如何支持CGI程序见<a target="_blank" rel="noopener" href="https://openwares.net/linux/nginx_cgi_support.html">debian squeeze配置nginx支持CGI程序</a></p>
+<p>第8行 include cgiwrap-fcgi.conf; 让虚拟主机支持CGI应用程序,因为gitweb.cgi就是这样的CGI程序,nginx如何支持CGI程序见<a href="https://openwares.net/linux/nginx_cgi_support.html">debian squeeze配置nginx支持CGI程序</a></p>
 
     </div>
 

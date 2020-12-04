@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ZFS文件系统介绍 - 基础">
-<meta property="og:url" content="http://example.com/2012/05/14/zfs-basic/index.html">
+<meta property="og:url" content="https://openwares.net/2012/05/14/zfs-basic/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2012/05/14/zfs-basic/">
+<link rel="canonical" href="https://openwares.net/2012/05/14/zfs-basic/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2012/05/14/zfs-basic/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2012/05/14/zfs-basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -328,7 +328,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。</p>
 <a id="more"></a>
-<p>linux系统上已经有原生ZFS移植<a target="_blank" rel="noopener" href="http://zfsonlinux.org/">zfsonlinux</a>,其安装见”<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_amd64_install_zfs.html">Debian Wheezy AMD64编译安装原生ZFS文件系统</a>“</p>
+<p>linux系统上已经有原生ZFS移植<a target="_blank" rel="noopener" href="http://zfsonlinux.org/">zfsonlinux</a>,其安装见”<a href="https://openwares.net/linux/debian_amd64_install_zfs.html">Debian Wheezy AMD64编译安装原生ZFS文件系统</a>“</p>
 <p>linux虽然有btrfs文件系统可望与ZFS比肩,但btrfs是由oracle主导的,现在oracle已将ZFS纳入囊中,对btrfs会不会有所保留就不得而知了。</p>
 <p>ZFS集文件系统、卷管理、RAID功能于一身,能提供超大容量的存储空间,几乎可以视为没有存储空间限制。ZFS分为存储池和文件系统两部分,所有的ZFS文件系统都驻留在存储池之中,zpool命令用于管理存储池,zfs命令用于管理zfs文件系统。</p>
 <p>ZFS 是事务性文件系统,这意味着文件系统状态在磁盘上始终是一致的。文件系统绝对不会因意外断电或系统崩溃而被损坏。尽管最近写入的数据片段可能丢失,但是文件系统本身将始终是一致的。ZFS不需要fsck。</p>

@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Debian系统tomcat 7官方安装包配置eclipse调式服务器。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat 7 on Debian Jessie  for Eclipse Kepler配置">
-<meta property="og:url" content="http://example.com/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/index.html">
+<meta property="og:url" content="https://openwares.net/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="Debian系统tomcat 7官方安装包配置eclipse调式服务器。">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/">
+<link rel="canonical" href="https://openwares.net/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/">
 
 
 <script class="page-configurations">
@@ -274,7 +274,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -332,7 +332,7 @@
 <p>Eclipse开发Dynamic Web Project需要添加一个web服务器来调式应用。有很多servlet容器可选，这里使用的是Tomcat 7。</p>
 <p><strong>Tomcat多实例配置</strong></p>
 <p>Eclipse配置tomcat服务器时，默认是创建了一个新的运行实例。也可以使用系统tomcat实例，或者自定义一个新的实例。</p>
-<p>详见<a target="_blank" rel="noopener" href="https://openwares.net/linux/tomcat7_multiinstances_setup.html">tomcat多实例配置</a>。</p>
+<p>详见<a href="https://openwares.net/linux/tomcat7_multiinstances_setup.html">tomcat多实例配置</a>。</p>
 <p><strong>Eclipse配置tomcat7服务器</strong></p>
 <p><em>准备工作</em></p>
 <p>由于Debian按<a target="_blank" rel="noopener" href="http://www.pathname.com/fhs/">FHS文件系统标准</a>对tomcat包的拆分，虽然默认只有一个实例，$CATALINA_BASE和$CATALINA_HOME指向了不同的路径。为了应对Eclipse，需要做几个符号链接，让$CATALINA_HOME看起来像一个完整的tomcat实例。</p>

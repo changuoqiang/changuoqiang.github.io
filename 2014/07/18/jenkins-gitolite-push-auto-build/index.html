@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。 1、配置gitolite用户 jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”gitolite v3安装配置“。只要记住jenkins的用户主目录在&#x2F;var&#x2F;lib&#x2F;jenkins就可以了，与普通用户">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins集成gitolite提交自动构建发布">
-<meta property="og:url" content="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/index.html">
+<meta property="og:url" content="https://openwares.net/2014/07/18/jenkins-gitolite-push-auto-build/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。 1、配置gitolite用户 jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”gitolite v3安装配置“。只要记住jenkins的用户主目录在&#x2F;var&#x2F;lib&#x2F;jenkins就可以了，与普通用户">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/">
+<link rel="canonical" href="https://openwares.net/2014/07/18/jenkins-gitolite-push-auto-build/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/07/18/jenkins-gitolite-push-auto-build/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -328,7 +328,7 @@
         <a id="more"></a>
 <p>jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。</p>
 <p><strong>1、配置gitolite用户</strong></p>
-<p>jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”<a target="_blank" rel="noopener" href="https://openwares.net/linux/gitolite_v3_install_setup.html">gitolite v3安装配置</a>“。只要记住jenkins的用户主目录在/var/lib/jenkins就可以了，与普通用户的配置并无二致。同样可以在用户主目录下的.ssh目录下添加config来访问gitolite,注意known_hosts中要添加gitolite主机的fingerprint。</p>
+<p>jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”<a href="https://openwares.net/linux/gitolite_v3_install_setup.html">gitolite v3安装配置</a>“。只要记住jenkins的用户主目录在/var/lib/jenkins就可以了，与普通用户的配置并无二致。同样可以在用户主目录下的.ssh目录下添加config来访问gitolite,注意known_hosts中要添加gitolite主机的fingerprint。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host gitsvr</span><br><span class="line"> Hostname *.*.*.*</span><br><span class="line"> User git </span><br><span class="line"> Port <span class="number">2022</span></span><br><span class="line"> IdentityFile /<span class="keyword">var</span>/lib/jenkins/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
 <p>这里配置的gitolie访问别名为gitsvr,然后jenkins使用如gitsvr:project就可以访问到gitolite管理的仓库project了。</p>
 <p><strong>2、配置gitolite hook</strong> </p>

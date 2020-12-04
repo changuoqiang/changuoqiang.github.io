@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="windows平台上的GUI框架已经有很多了，为什么还会有KWinUI?答案就是轻量，高效，线程安全，并且可以完全掌控。 比较各种GUI Framework的优劣是没有太多意义的，存在的东西都有它存在的合理性和适用的范围。从来没有能满足所有需求的东西，C++亦如是，虽然它是如此的强大。KWinUI来源自开发实践，是做一个项目过程中产生的。对于一个界面并不算复杂的小项目来说，那些重量级的framew">
 <meta property="og:type" content="article">
 <meta property="og:title" content="轻量级开源C++ GUI开发框架KWinUI发布">
-<meta property="og:url" content="http://example.com/2009/06/05/kwinui-0-1-0-release/index.html">
+<meta property="og:url" content="https://openwares.net/2009/06/05/kwinui-0-1-0-release/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="windows平台上的GUI框架已经有很多了，为什么还会有KWinUI?答案就是轻量，高效，线程安全，并且可以完全掌控。 比较各种GUI Framework的优劣是没有太多意义的，存在的东西都有它存在的合理性和适用的范围。从来没有能满足所有需求的东西，C++亦如是，虽然它是如此的强大。KWinUI来源自开发实践，是做一个项目过程中产生的。对于一个界面并不算复杂的小项目来说，那些重量级的framew">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2009/06/05/kwinui-0-1-0-release/">
+<link rel="canonical" href="https://openwares.net/2009/06/05/kwinui-0-1-0-release/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2009/06/05/kwinui-0-1-0-release/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/06/05/kwinui-0-1-0-release/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -326,7 +326,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>windows平台上的GUI框架已经有很多了，为什么还会有KWinUI?<br>答案就是轻量，高效，线程安全，并且可以完全掌控。</p>
-<p>比较各种GUI Framework的优劣是没有太多意义的，存在的东西都有它存在的合理性和适用的范围。从来没有能满足所有需求的东西，C++亦如是，虽然它是如此的强大。KWinUI来源自开发实践，是做一个项目过程中产生的。对于一个界面并不算复杂的小项目来说，那些重量级的framework太过沉重了,而每次用SDK来写界面，显然又过于繁琐了，所以有了KWinUI。KWinUI使用C++来包装windows SDK,并没有使用太复杂的技术，太复杂的我也不会:)，主要使用了<a target="_blank" rel="noopener" href="https://openwares.net/it/kwinui/gui_wndproc_thunk.html">thunk技术</a>和C++模板的静多态特性，并且仔细考虑了线程安全，毕竟在这个多核的时代，如果不是线程安全的就显得不那么in。</p>
+<p>比较各种GUI Framework的优劣是没有太多意义的，存在的东西都有它存在的合理性和适用的范围。从来没有能满足所有需求的东西，C++亦如是，虽然它是如此的强大。KWinUI来源自开发实践，是做一个项目过程中产生的。对于一个界面并不算复杂的小项目来说，那些重量级的framework太过沉重了,而每次用SDK来写界面，显然又过于繁琐了，所以有了KWinUI。KWinUI使用C++来包装windows SDK,并没有使用太复杂的技术，太复杂的我也不会:)，主要使用了<a href="https://openwares.net/it/kwinui/gui_wndproc_thunk.html">thunk技术</a>和C++模板的静多态特性，并且仔细考虑了线程安全，毕竟在这个多核的时代，如果不是线程安全的就显得不那么in。</p>
 <p>跨平台不是KWinUI的诉求，现在不是、将来也不是，现在就有很多十分优秀的跨平台GUI开发框架，比如<a target="_blank" rel="noopener" href="http://vcf-online.org/">VCF</a>,wxWidget,<a target="_blank" rel="noopener" href="http://www.gtk.org/">gtk+</a>,QT等。KWinUI更像是一个自娱自乐的产物，只是觉得它可能对其他一些人也有用处，所有采用lgpl协议将它公布于众，如果能对其他人有些微的帮助，那么开放它的目的就达到了。采用lgpl的好处就是你可以放心的使用KWinUI,就是在商业程序中使用也没有问题。但是如果你对KWinUI做了更好的修改，最好公布一下修改的代码，以便给其他人以帮助。就算KWinUI真的没啥价值，这样发布应该也不会对别人造成什么伤害，权当娱乐一回吧，呵呵。</p>
 <p>KWinUI的主要特性如下：<br>轻量、高效、资源占用少、线程安全、使用简单，差不多就这些了。</p>
 <p>KWinUI因为使用了模板技术，所以就是一堆头文件和几个cpp文件，使用起来相当简单，后面我会继续发几个简单的sample来演示如何使用KWinUI。</p>

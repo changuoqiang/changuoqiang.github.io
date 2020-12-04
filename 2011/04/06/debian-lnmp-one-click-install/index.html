@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="很简单的脚本,方便nginx,mysql,php安装,使用dotdeb.org的安装源。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian Squeeze lnmp一键安装脚本">
-<meta property="og:url" content="http://example.com/2011/04/06/debian-lnmp-one-click-install/index.html">
+<meta property="og:url" content="https://openwares.net/2011/04/06/debian-lnmp-one-click-install/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="很简单的脚本,方便nginx,mysql,php安装,使用dotdeb.org的安装源。">
 <meta property="og:locale" content="en_US">
@@ -38,7 +38,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/04/06/debian-lnmp-one-click-install/">
+<link rel="canonical" href="https://openwares.net/2011/04/06/debian-lnmp-one-click-install/">
 
 
 <script class="page-configurations">
@@ -273,7 +273,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/04/06/debian-lnmp-one-click-install/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/04/06/debian-lnmp-one-click-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -330,7 +330,7 @@
 <a id="more"></a>
 <p>执行./lnmp_install.sh安装,安装过程中需要设置mysql root密码,安装完毕后,只需在nginx virtualhox配置文件中增加include php-fpm.php;即可让虚拟主机支持PHP程序,额外再添加include wordpress.conf;即可支持wordpress程序</p>
 <p><a href="/downloads/lnmp_install.sh">脚本下载</a></p>
-<p> 1 #!/bin/bash<br> 2<br> 3 ########################<br> 4 # <a target="_blank" rel="noopener" href="https://openwares.net/">http://openwares.net</a> #<br> 5 ########################<br> 6<br> 7 <strong>set</strong> -e<br> 8<br> 9 #dotdeb source<br>10 sudo <strong>sed</strong> -i <strong>‘</strong>$a\\n#dotdeb for nginx,mysql,php\ndeb <a target="_blank" rel="noopener" href="http://packages.dotdeb.org/">http://packages.dotdeb.org</a> squeeze all*<em>‘** /etc/apt/sources.list <br>11<br>12 wget <a target="_blank" rel="noopener" href="http://www.dotdeb.org/dotdeb.gpg">http://www.dotdeb.org/dotdeb.gpg</a><br>13 cat dotdeb.gpg sudo apt-key add -<br>14 <strong>rm</strong> dotdeb.gpg<br>15<br>16 sudo apt-get update<br>17<br>18 ###install nginx,php5(fastcgi),mysql5###<br>19 sudo apt-get -y <strong>install</strong> nginx-light mysql-server php5-cli php5-fpm php5-mysql<br>20<br>21 ###awstats,perl-fcgi modules###<br>22 #sudo apt-get -y install awstats<br>23 #sudo apt-get -y install libfcgi-perl libfcgi-procmanager-perl libio-all-perl<br>24<br>25 #php config file for nginx<br>26 sudo sh -c <strong>‘**echo “#pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000\nlocation ~ \.php$ {\n\tfastcgi_pass\t127.0.0.1:9000;\n\tfastcgi_index\tindex.php;\n\tinclude\t\t\tfastcgi_params;\n}” &gt; /etc/nginx/php-fpm.conf</strong>‘**<br>27<br>28 #nginx rewrite rules for wordpress<br>29 sudo sh -c **’**echo “#rewrite rules for wordpress\nlocation / {\n\tif (-d \$request_filename){\n\t\trewrite (.</em>) /\$1/index.php last;\n\t}\n\tif (!-f \$request_filename){\n\t\trewrite (.*) /index.php?\$1 last;\n\t}\n}” &gt; /etc/nginx/wordpress.conf**’**<br>30<br>31 sudo /etc/init.d/nginx <strong>start</strong><br>32 sudo /etc/init.d/php5-fpm <strong>start</strong></p>
+<p> 1 #!/bin/bash<br> 2<br> 3 ########################<br> 4 # <a href="https://openwares.net/">http://openwares.net</a> #<br> 5 ########################<br> 6<br> 7 <strong>set</strong> -e<br> 8<br> 9 #dotdeb source<br>10 sudo <strong>sed</strong> -i <strong>‘</strong>$a\\n#dotdeb for nginx,mysql,php\ndeb <a target="_blank" rel="noopener" href="http://packages.dotdeb.org/">http://packages.dotdeb.org</a> squeeze all*<em>‘** /etc/apt/sources.list <br>11<br>12 wget <a target="_blank" rel="noopener" href="http://www.dotdeb.org/dotdeb.gpg">http://www.dotdeb.org/dotdeb.gpg</a><br>13 cat dotdeb.gpg sudo apt-key add -<br>14 <strong>rm</strong> dotdeb.gpg<br>15<br>16 sudo apt-get update<br>17<br>18 ###install nginx,php5(fastcgi),mysql5###<br>19 sudo apt-get -y <strong>install</strong> nginx-light mysql-server php5-cli php5-fpm php5-mysql<br>20<br>21 ###awstats,perl-fcgi modules###<br>22 #sudo apt-get -y install awstats<br>23 #sudo apt-get -y install libfcgi-perl libfcgi-procmanager-perl libio-all-perl<br>24<br>25 #php config file for nginx<br>26 sudo sh -c <strong>‘**echo “#pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000\nlocation ~ \.php$ {\n\tfastcgi_pass\t127.0.0.1:9000;\n\tfastcgi_index\tindex.php;\n\tinclude\t\t\tfastcgi_params;\n}” &gt; /etc/nginx/php-fpm.conf</strong>‘**<br>27<br>28 #nginx rewrite rules for wordpress<br>29 sudo sh -c **’**echo “#rewrite rules for wordpress\nlocation / {\n\tif (-d \$request_filename){\n\t\trewrite (.</em>) /\$1/index.php last;\n\t}\n\tif (!-f \$request_filename){\n\t\trewrite (.*) /index.php?\$1 last;\n\t}\n}” &gt; /etc/nginx/wordpress.conf**’**<br>30<br>31 sudo /etc/init.d/nginx <strong>start</strong><br>32 sudo /etc/init.d/php5-fpm <strong>start</strong></p>
 
     </div>
 

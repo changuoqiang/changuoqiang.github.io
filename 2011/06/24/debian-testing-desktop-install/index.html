@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Ubuntu越来越蛋疼,用的越来越不爽,还是用回debian吧,其实testing做桌面也是很爽的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="debian testing桌面安装手记">
-<meta property="og:url" content="http://example.com/2011/06/24/debian-testing-desktop-install/index.html">
+<meta property="og:url" content="https://openwares.net/2011/06/24/debian-testing-desktop-install/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="Ubuntu越来越蛋疼,用的越来越不爽,还是用回debian吧,其实testing做桌面也是很爽的">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/06/24/debian-testing-desktop-install/">
+<link rel="canonical" href="https://openwares.net/2011/06/24/debian-testing-desktop-install/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/06/24/debian-testing-desktop-install/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/06/24/debian-testing-desktop-install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -329,7 +329,7 @@
 <a id="more"></a>
 <p>刚好办公室新换电脑,带的OEM的windows 7 home basic 32bits,只启动了一次就惨遭毒手,换成了debian testing单系统。</p>
 <p>下载<a target="_blank" rel="noopener" href="http://cdimage.debian.org/cdimage/daily-builds/daily/arch-latest/amd64/iso-cd/debian-testing-amd64-netinst.iso">debian testing netinst iso amd64 daily build</a>或<a target="_blank" rel="noopener" href="http://cdimage.debian.org/cdimage/weekly-builds/amd64/iso-cd/debian-testing-amd64-CD-1.iso">debian testing iso amd64 cd1 weekly build</a>,当然首选netinst。</p>
-<p>使用netinst安装基本系统。1T硬盘,分三个主分区,/dev/sda1分配给根文件系统/,/dev/sda2分配给home文件系统/home,/dev/sda3分配给swap分区,因为有4G内存,所以swap分了8G,其余都给了home。一步步按提示安装即可。只是现在的testing有点儿问题,grub-pc会安装失败,解决方法见<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_grub_install_fail.html">debian testing grub-pc安装失败解决方法</a></p>
+<p>使用netinst安装基本系统。1T硬盘,分三个主分区,/dev/sda1分配给根文件系统/,/dev/sda2分配给home文件系统/home,/dev/sda3分配给swap分区,因为有4G内存,所以swap分了8G,其余都给了home。一步步按提示安装即可。只是现在的testing有点儿问题,grub-pc会安装失败,解决方法见<a href="https://openwares.net/linux/debian_grub_install_fail.html">debian testing grub-pc安装失败解决方法</a></p>
 <p>安装完基本系统后,安装AMD显卡官方驱动,开源驱动3D性能还是差了不少,这里选择安装debian打包好的驱动,当然也可以去AMD官方下载驱动安装。</p>
 <p>安装方法如下:</p>
 <p>1、为/etc/apt/source.list增加non-free安装源<br>deb <a target="_blank" rel="noopener" href="http://ftp.debian.org/debian">http://ftp.debian.org/debian</a> testing main contrib non-free<br>更新源<br>#apt-get update</p>

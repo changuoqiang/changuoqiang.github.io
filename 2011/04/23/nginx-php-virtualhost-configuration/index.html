@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="安装lnmp或使用lnmp一键安装脚本完成后,php的FastCGI接口php-fpm(FastCGI Process Manager)已经就绪,nginx通过php-fpm来处理用户对php应用程序的请求。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx php fastcgi虚拟主机配置">
-<meta property="og:url" content="http://example.com/2011/04/23/nginx-php-virtualhost-configuration/index.html">
+<meta property="og:url" content="https://openwares.net/2011/04/23/nginx-php-virtualhost-configuration/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="安装lnmp或使用lnmp一键安装脚本完成后,php的FastCGI接口php-fpm(FastCGI Process Manager)已经就绪,nginx通过php-fpm来处理用户对php应用程序的请求。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/04/23/nginx-php-virtualhost-configuration/">
+<link rel="canonical" href="https://openwares.net/2011/04/23/nginx-php-virtualhost-configuration/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/04/23/nginx-php-virtualhost-configuration/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/04/23/nginx-php-virtualhost-configuration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -325,7 +325,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><a target="_blank" rel="noopener" href="https://openwares.net/linux/nginx_mysql_phpfastcgi_install.html">安装lnmp</a>或使用<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_lnmp_one_click_install.html">lnmp一键安装脚本</a>完成后,php的FastCGI接口php-fpm(FastCGI Process Manager)已经就绪,nginx通过php-fpm来处理用户对php应用程序的请求。</p>
+        <p><a href="https://openwares.net/linux/nginx_mysql_phpfastcgi_install.html">安装lnmp</a>或使用<a href="https://openwares.net/linux/debian_lnmp_one_click_install.html">lnmp一键安装脚本</a>完成后,php的FastCGI接口php-fpm(FastCGI Process Manager)已经就绪,nginx通过php-fpm来处理用户对php应用程序的请求。</p>
 <a id="more"></a>
 <p><strong>配置文件布局</strong></p>
 <p>nginx的主配置目录位于/etc/nginx,可用的虚拟主机配置文件请放置到/etc/nginx/sites-available,启用虚拟主机只需在/etc/nginx/sites-enabled目录下建一个到虚拟主机配置文件的符号链接即可,与apache的配置文件布局基本一致。Debian的配置文件布局还是很赏心悦目的。</p>

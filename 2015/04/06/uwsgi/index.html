@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="为了实现动态web,我们发展出了各式各样的技术，那真是五花八门，乱花渐欲迷人眼。 各种网关接口协议，从最古老的CGI(Common Gateway Interface)到SCGI(Simple Common Gateway Interface),FastCGI,WSGI(Python Web Server Gateway Interface),PSGI(Perl Web Server Gatew">
 <meta property="og:type" content="article">
 <meta property="og:title" content="uWSGI简介">
-<meta property="og:url" content="http://example.com/2015/04/06/uwsgi/index.html">
+<meta property="og:url" content="https://openwares.net/2015/04/06/uwsgi/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="为了实现动态web,我们发展出了各式各样的技术，那真是五花八门，乱花渐欲迷人眼。 各种网关接口协议，从最古老的CGI(Common Gateway Interface)到SCGI(Simple Common Gateway Interface),FastCGI,WSGI(Python Web Server Gateway Interface),PSGI(Perl Web Server Gatew">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2015/04/06/uwsgi/">
+<link rel="canonical" href="https://openwares.net/2015/04/06/uwsgi/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2015/04/06/uwsgi/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/06/uwsgi/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -335,7 +335,7 @@
 <p><strong>uWSGI是个什么东东?</strong></p>
 <p>uWSGI是一个应用服务器，支持几乎所有现有的网关接口协议，同时自己也实现了另一个网关接口协议，叫做<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/Protocol.html">uwsgi</a>。这么多接口了，为什么再造一个？据说还是性能，据说uwsgi比fastcgi和wsgi都快的多。</p>
 <p>且不论uWSGI的性能有多高，只是能支持几乎所有的网关接口协议就已经很不错了。nginx已经内置支持uWSGI,这样nginx + uWSGI这种组合可以应对各种各样的后端应用，部署和管理起来都方便的多。</p>
-<p>nginx不支持CGI,只能通过<a target="_blank" rel="noopener" href="https://openwares.net/internet/fastcgi_intro.html">FastCGI</a>来调用CGI程序。</p>
+<p>nginx不支持CGI,只能通过<a href="https://openwares.net/internet/fastcgi_intro.html">FastCGI</a>来调用CGI程序。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/index.html">uWSGI</a><br>[2]<a target="_blank" rel="noopener" href="http://metz.gehn.net/2013/02/running-anything-on-nginx-with-uwsgi/">Running (almost) anything on Nginx with uWSGI</a></p>
 <p><strong>===<br>[erq]</strong></p>
 

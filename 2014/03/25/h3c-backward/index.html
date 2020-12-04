@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="内网使用域名或公网IP访问同一个子网对外提供服务的服务器时,如不做特殊设置将无法访问,通过在内网接口上配置与公网接口相同的NAT设置可以解决此问题,实际上是对内网的源IP进行了NAT替换,替换成了防火墙内网接口的地址,从而使返回的数据包可以回流到防火墙再替换成正确的源IP,否则因为访问者和服务器在相同的内部网络中,数据包会走内部路由规则直接返回给访问者,由于数据包来源于内网ip而不是公网ip,会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="H3C防火墙端口回流设置">
-<meta property="og:url" content="http://example.com/2014/03/25/h3c-backward/index.html">
+<meta property="og:url" content="https://openwares.net/2014/03/25/h3c-backward/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="内网使用域名或公网IP访问同一个子网对外提供服务的服务器时,如不做特殊设置将无法访问,通过在内网接口上配置与公网接口相同的NAT设置可以解决此问题,实际上是对内网的源IP进行了NAT替换,替换成了防火墙内网接口的地址,从而使返回的数据包可以回流到防火墙再替换成正确的源IP,否则因为访问者和服务器在相同的内部网络中,数据包会走内部路由规则直接返回给访问者,由于数据包来源于内网ip而不是公网ip,会">
 <meta property="og:locale" content="en_US">
@@ -36,7 +36,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2014/03/25/h3c-backward/">
+<link rel="canonical" href="https://openwares.net/2014/03/25/h3c-backward/">
 
 
 <script class="page-configurations">
@@ -271,7 +271,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2014/03/25/h3c-backward/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/25/h3c-backward/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -329,14 +329,14 @@
 <p>也就是说，<strong>端口回流时，对数据包的源ip和目标ip都做了替换，源ip替换成了防火墙内网接口的ip,而目标ip替换成了内网真正提供服务机器的ip,相应包返回到防火墙内网接口时，根据此前的替换记录，将ip地址再对调回来</strong>就ok了。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ telnet x.x.x.x</span><br><span class="line">&lt;fw&gt; system-view</span><br><span class="line">\[fw\] interface xxx</span><br><span class="line">\[fw\] nat server ... </span><br></pre></td></tr></table></figure>
 
-<p><strong>注意：</strong>还要在<strong>内网接口</strong>上做相应的<a target="_blank" rel="noopener" href="https://openwares.net/misc/h3c_firewall_acl.html">acl规则</a>以允许相应的内网流量从防火墙的内网接口通过。<br>比如内网接口的acl添加如下规则:</p>
+<p><strong>注意：</strong>还要在<strong>内网接口</strong>上做相应的<a href="https://openwares.net/misc/h3c_firewall_acl.html">acl规则</a>以允许相应的内网流量从防火墙的内网接口通过。<br>比如内网接口的acl添加如下规则:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">211</span> permit ip source <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> destination <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> <span class="number">0</span> </span><br></pre></td></tr></table></figure>
 <p>以允许192.168.2.0/24网段的机器可以通过内网接口访问192.168.0.3这台机器。</p>
 <p>或者</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">216</span> permit ip destination <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
 
 <p>允许所有的机器可以通过内网接口访问192.168.0.3这台机器。</p>
-<p>UPDATE(05/26/2016):<br>但这样设置会造成一个问题，所有的访问流量无论内外网都会被替换源地址，这可能不是你想要的。<br>参见<a target="_blank" rel="noopener" href="https://openwares.net/2016/05/26/h3c-secpath-nat-destination-replace/">H3C SecPath防火墙内部服务器NAT访问所有源地址被替换问题</a></p>
+<p>UPDATE(05/26/2016):<br>但这样设置会造成一个问题，所有的访问流量无论内外网都会被替换源地址，这可能不是你想要的。<br>参见<a href="https://openwares.net/2016/05/26/h3c-secpath-nat-destination-replace/">H3C SecPath防火墙内部服务器NAT访问所有源地址被替换问题</a></p>
 <p>对端口回流问题的详述见Reference[1]</p>
 <p>H3C还有一种技术叫dns-map,其实这玩意儿的思路和Great Fucking Wall的DNS污染如出一辙,都是将DNS服务器返回的IP地址替换掉,不过一个是替换成错误的,而另一个是替换成更准确的(可以通过内网直接访问的)。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://melodyyayun.blog.51cto.com/2111476/956326">端口回流与dns-map与域内NAT</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-27575921-id-3462739.html">华为防火墙域之间inbound和outbound之间的区别！</a><br>[3]<a target="_blank" rel="noopener" href="http://virtualadc.blog.51cto.com/3027116/723231">用传统的NAT方式替代H3C的DNS-MAP功能</a><br>[4]<a target="_blank" rel="noopener" href="http://blog.163.com/iloveyou10000years@126/blog/static/16332221820137150811151">outbound与inbound的区别——华为</a><br>[5]<a target="_blank" rel="noopener" href="http://bluefox.blog.51cto.com/380387/166208">linux 做防火墙端口回流问题</a></p>

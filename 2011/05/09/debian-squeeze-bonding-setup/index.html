@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="通过多网卡bonding可以提供负载均衡,或者网卡热备(hot standby)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debian Squeeze 多网卡bonding设置">
-<meta property="og:url" content="http://example.com/2011/05/09/debian-squeeze-bonding-setup/index.html">
+<meta property="og:url" content="https://openwares.net/2011/05/09/debian-squeeze-bonding-setup/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="通过多网卡bonding可以提供负载均衡,或者网卡热备(hot standby)">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/05/09/debian-squeeze-bonding-setup/">
+<link rel="canonical" href="https://openwares.net/2011/05/09/debian-squeeze-bonding-setup/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/05/09/debian-squeeze-bonding-setup/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/05/09/debian-squeeze-bonding-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -343,7 +343,7 @@
 <p>如果重新启动网络时有bonding: Warning:字样的提示，则需要在/etc/modprobe.d目录下新建文件aliases-bond.conf,内容为<br>alias bond0 bonding<br>为bonding模块建立一个别名bond0,通过别名bonding模块可以支持多个bonding逻辑接口。</p>
 <p>配置完成。</p>
 <p><strong>UPDATE:</strong></p>
-<p>在Debian Squeezy(kernel 2.6.32-5-amd64,kvm 0.12.5)上配置bonding曾经遇到问题,<a target="_blank" rel="noopener" href="https://twitter.com/#!/openwares/status/75503003687337984">网络极度不稳定</a>,怀疑是兼容性问题。今天刚好发现有个家伙也遇到<a target="_blank" rel="noopener" href="http://www.spinics.net/lists/kvm/msg54612.html">bonding后速度极其缓慢</a>,和我一样的系统环境。这家伙说关闭网卡的LRO(<a target="_blank" rel="noopener" href="https://openwares.net/internet/lro_intro.html">Large receive offload</a>)特性后恢复正常。不过查看两块网卡接口的LRO特性都是关闭的,怀疑中,抽空实验一下。</p>
+<p>在Debian Squeezy(kernel 2.6.32-5-amd64,kvm 0.12.5)上配置bonding曾经遇到问题,<a target="_blank" rel="noopener" href="https://twitter.com/#!/openwares/status/75503003687337984">网络极度不稳定</a>,怀疑是兼容性问题。今天刚好发现有个家伙也遇到<a target="_blank" rel="noopener" href="http://www.spinics.net/lists/kvm/msg54612.html">bonding后速度极其缓慢</a>,和我一样的系统环境。这家伙说关闭网卡的LRO(<a href="https://openwares.net/internet/lro_intro.html">Large receive offload</a>)特性后恢复正常。不过查看两块网卡接口的LRO特性都是关闭的,怀疑中,抽空实验一下。</p>
 <p>**UPDATE:**在debian wheezy(kernel 3.2.0.2-amd64,kvm 1.0)上bonding问题依旧,active-backup模式,从外部根本无法ping通客户机,去掉bonding就没由任何问题,而且网卡的LRO特性都是关闭的。基本可以确认KVM与bonding加桥接网络存在兼容性问题。</p>
 
     </div>

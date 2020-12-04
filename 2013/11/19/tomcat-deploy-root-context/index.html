@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Tomcat支持多虚拟主机，每个虚拟主机又可以有多个虚拟目录,应用程序可以部署到虚拟目录，也可以直接部署到虚拟主机的根目录 添加虚拟主机 [xml]       \[&#x2F;xml\]  主机的基本目录为&#x2F;path&#x2F;to&#x2F;webapps，默认情况下,该目录下的ROOT目录为主机根虚拟目录，其他命名目录为相应名字的虚拟目录。也就是说，访问http:&#x2F;&#x2F;openwares.net&#x2F;会访问到&#x2F;path&#x2F;to">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Tomcat将应用程序部署到主机根目录">
-<meta property="og:url" content="http://example.com/2013/11/19/tomcat-deploy-root-context/index.html">
+<meta property="og:url" content="https://openwares.net/2013/11/19/tomcat-deploy-root-context/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="Tomcat支持多虚拟主机，每个虚拟主机又可以有多个虚拟目录,应用程序可以部署到虚拟目录，也可以直接部署到虚拟主机的根目录 添加虚拟主机 [xml]       \[&#x2F;xml\]  主机的基本目录为&#x2F;path&#x2F;to&#x2F;webapps，默认情况下,该目录下的ROOT目录为主机根虚拟目录，其他命名目录为相应名字的虚拟目录。也就是说，访问http:&#x2F;&#x2F;openwares.net&#x2F;会访问到&#x2F;path&#x2F;to">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2013/11/19/tomcat-deploy-root-context/">
+<link rel="canonical" href="https://openwares.net/2013/11/19/tomcat-deploy-root-context/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2013/11/19/tomcat-deploy-root-context/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/19/tomcat-deploy-root-context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -337,7 +337,7 @@
 </Engine>
 \[/xml\]
 
-<p>主机的基本目录为/path/to/webapps，默认情况下,该目录下的ROOT目录为主机根虚拟目录，其他命名目录为相应名字的虚拟目录。<br>也就是说，访问<a target="_blank" rel="noopener" href="http://openwares.net/%E4%BC%9A%E8%AE%BF%E9%97%AE%E5%88%B0/path/to/webapps/ROOT%E7%9B%AE%E5%BD%95%EF%BC%8C%E8%80%8C%E8%AE%BF%E9%97%AEhttp://openwares.net/foo">http://openwares.net/会访问到/path/to/webapps/ROOT目录，而访问http://openwares.net/foo</a><br>则会访问到/path/to/webapps/foo目录。</p>
+<p>主机的基本目录为/path/to/webapps，默认情况下,该目录下的ROOT目录为主机根虚拟目录，其他命名目录为相应名字的虚拟目录。<br>也就是说，访问<a href="http://openwares.net/%E4%BC%9A%E8%AE%BF%E9%97%AE%E5%88%B0/path/to/webapps/ROOT%E7%9B%AE%E5%BD%95%EF%BC%8C%E8%80%8C%E8%AE%BF%E9%97%AEhttp://openwares.net/foo">http://openwares.net/会访问到/path/to/webapps/ROOT目录，而访问http://openwares.net/foo</a><br>则会访问到/path/to/webapps/foo目录。</p>
 <p>如果是部署war文件，则ROOT.war对应根虚拟目录/，而foo.war则对应/foo虚拟目录</p>
 <p><strong>部署应用程序到根虚拟目录</strong></p>
 <p>最简单的办法就是，直接将应用程序部署到虚拟主机appBase目录下的ROOT目录，如果是部署war包则将其命名为ROOT.war放到appBase目录下</p>

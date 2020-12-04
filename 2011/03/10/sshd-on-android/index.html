@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="Samsung Galaxy S(i9000)屏幕是挺大的,但是输入就别扭多了,没HTC G1的实体键盘来的爽快,有时候用terminal、改设置真是别扭，经常按错，如果能SSH登录到手机，大屏幕，全键盘多爽啊。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用ssh登录android手机">
-<meta property="og:url" content="http://example.com/2011/03/10/sshd-on-android/index.html">
+<meta property="og:url" content="https://openwares.net/2011/03/10/sshd-on-android/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="Samsung Galaxy S(i9000)屏幕是挺大的,但是输入就别扭多了,没HTC G1的实体键盘来的爽快,有时候用terminal、改设置真是别扭，经常按错，如果能SSH登录到手机，大屏幕，全键盘多爽啊。">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2011/03/10/sshd-on-android/">
+<link rel="canonical" href="https://openwares.net/2011/03/10/sshd-on-android/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2011/03/10/sshd-on-android/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/03/10/sshd-on-android/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -333,7 +333,7 @@
 <p><strong>生成ssh登录密钥对</strong></p>
 <p>电脑端利用ssh-keygen生成登录验证需要的RSA密钥对,将生成的公钥，默认文件名id_rsa.pub，拷贝并重命名为手机/data/dropbear/.ssh/authorized_keys文件,并在手机端打开终端执行<br>1 #dropbearkey -t rsa -f /data/dropbear/dropbear_rsa_host_key<br>2 #chmod 755 /data/dropbear /data/dropbear/.ssh<br>3 #chown root.root /data/dropbear/.ssh/authorized_keys<br>4 #chmod 600 /data/dropbear/.ssh/authorized_keys<br>5 #chmod 644 /data/dropbear/dropbear_rsa_host_key  </p>
 <p><strong>启动sshd服务</strong><br>1 #dropbear -v -s -g  </p>
-<p>从电脑端ssh登录手机<br>参考<a target="_blank" rel="noopener" href="https://openwares.net/linux/ssh_auto_login.html">debian:ssh安全自动登录设置</a>,私钥要用上面用ssh-keygen生成的私钥，文件名为id_rsa,切记！</p>
+<p>从电脑端ssh登录手机<br>参考<a href="https://openwares.net/linux/ssh_auto_login.html">debian:ssh安全自动登录设置</a>,私钥要用上面用ssh-keygen生成的私钥，文件名为id_rsa,切记！</p>
 
     </div>
 

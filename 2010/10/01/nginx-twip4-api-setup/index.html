@@ -21,12 +21,12 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 <meta name="description" content="twip4最近已经支持nginx环境下架设API代理,已经试用几天,比较稳定,架设也很简单.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx环境安装twip4 API代理">
-<meta property="og:url" content="http://example.com/2010/10/01/nginx-twip4-api-setup/index.html">
+<meta property="og:url" content="https://openwares.net/2010/10/01/nginx-twip4-api-setup/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="twip4最近已经支持nginx环境下架设API代理,已经试用几天,比较稳定,架设也很简单.">
 <meta property="og:locale" content="en_US">
@@ -37,7 +37,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2010/10/01/nginx-twip4-api-setup/">
+<link rel="canonical" href="https://openwares.net/2010/10/01/nginx-twip4-api-setup/">
 
 
 <script class="page-configurations">
@@ -272,7 +272,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2010/10/01/nginx-twip4-api-setup/">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/10/01/nginx-twip4-api-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -329,7 +329,7 @@
 <a id="more"></a>
 <p>首先当然是注册一个twitter应用,应用程序类型选browser,callback URL随意填,缺省的存取类型选择Read &amp; Write.</p>
 <p><strong>设置步骤</strong></p>
-<p>1、获取最新的开发版本.去官网<a target="_blank" rel="noopener" href="http://code.google.com/p/twip/w/list">下载</a>,或者git svn clone <a target="_blank" rel="noopener" href="http://twip.googlecode.com/svn/trunk">http://twip.googlecode.com/svn/trunk</a> twip4获取最新的代码树<br>2、拷贝config-example.php到config.php,编辑config.php,OAUTH_KEY/OAUTH_SECRET分别填入注册应用程序的Consumer key/Consumer secret,BASE_URL为访问通过浏览器访问twip4应用程序的地址,比如<a href="http://example.com/twip/,%E4%B8%80%E5%AE%9A%E4%B8%8D%E8%A6%81%E5%BF%98%E8%AE%B0%E6%9C%80%E5%90%8E%E7%9A%84/,COMPRESS%E8%AE%BE%E7%BD%AE%E4%B8%BATRUE%E5%8F%AF%E4%BB%A5%E5%8E%8B%E7%BC%A9%E4%BC%A0%E8%BE%93%E7%9A%84%E5%86%85%E5%AE%B9">http://example.com/twip/,一定不要忘记最后的/,COMPRESS设置为TRUE可以压缩传输的内容</a>.<br>3、编辑nginx配置文件，增加rewrite规则.把rewrite_rules.txt里面的rewrite规则写在主机的配置文件里面即可<br>4、访问BASE_URL来配置O模式或T模式代理,注意要访问index.html而不是index.php,注意主机配置的index指令或显示指定</p>
+<p>1、获取最新的开发版本.去官网<a target="_blank" rel="noopener" href="http://code.google.com/p/twip/w/list">下载</a>,或者git svn clone <a target="_blank" rel="noopener" href="http://twip.googlecode.com/svn/trunk">http://twip.googlecode.com/svn/trunk</a> twip4获取最新的代码树<br>2、拷贝config-example.php到config.php,编辑config.php,OAUTH_KEY/OAUTH_SECRET分别填入注册应用程序的Consumer key/Consumer secret,BASE_URL为访问通过浏览器访问twip4应用程序的地址,比如<a target="_blank" rel="noopener" href="http://example.com/twip/,%E4%B8%80%E5%AE%9A%E4%B8%8D%E8%A6%81%E5%BF%98%E8%AE%B0%E6%9C%80%E5%90%8E%E7%9A%84/,COMPRESS%E8%AE%BE%E7%BD%AE%E4%B8%BATRUE%E5%8F%AF%E4%BB%A5%E5%8E%8B%E7%BC%A9%E4%BC%A0%E8%BE%93%E7%9A%84%E5%86%85%E5%AE%B9">http://example.com/twip/,一定不要忘记最后的/,COMPRESS设置为TRUE可以压缩传输的内容</a>.<br>3、编辑nginx配置文件，增加rewrite规则.把rewrite_rules.txt里面的rewrite规则写在主机的配置文件里面即可<br>4、访问BASE_URL来配置O模式或T模式代理,注意要访问index.html而不是index.php,注意主机配置的index指令或显示指定</p>
 <p>seesmic只能使用O模式而不能使用T模式,其他客户端未测试.</p>
 
     </div>
