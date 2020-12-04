@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="linux平台下默认安装的oracle 10g数据库是没有启动而且不会随系统自动启动的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian配置Oracle 10g自启动">
+<meta property="og:url" content="http://example.com/2012/01/25/debian-oracle-10g-init/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="linux平台下默认安装的oracle 10g数据库是没有启动而且不会随系统自动启动的。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-01-25T02:59:21.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.145Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/01/25/debian-oracle-10g-init/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Debian配置Oracle 10g自启动 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/01/25/debian-oracle-10g-init/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian配置Oracle 10g自启动
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-01-25 10:59:21" itemprop="dateCreated datePublished" datetime="2012-01-25T10:59:21+08:00">2012-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>linux平台下默认安装的oracle 10g数据库是没有启动而且不会随系统自动启动的。</p>
+<a id="more"></a>
+<p>配置oracle 10g数据库自启动的步骤如下：</p>
+<p><strong>1、配置/etc/oratab 文件</strong></p>
+<p>oratab文件中项的格式为<br>$ORACLE_SID:$ORACLE_HOME:NY<br>每个$ORACLE_SID只能有一个项<br>默认安装后,入口项的最后是N,将N修改为Y,使其可以通过dbstart工具启动</p>
+<p><strong>2、配置$Oracle_HOME/bin/dbstart文件</strong></p>
+<p>将dbstart文件中大约78行的ORACLE_HOME_LISTNER变量的值修改为$ORACLE_HOME所在的路径,此处为<br>ORACLE_HOME_LISTNER=/u01/app/oracle/product/10.2.0/db_1</p>
+<p><strong>3、运行dbstart,dbshut测试数据库是否正确启动和关闭</strong></p>
+<p>以oracle用户登陆,执行以下命令进行测试</p>
+<p>$ dbstart<br>$ ps aux grep ora_<br>$ ps aux grep LISTEN<br>$ lsnrctl status<br>$ dbshut</p>
+<p>数据库启动的日志文件为$ORACLE_HOME/startup.log,关闭的日志文件为$ORACLE_HOME/shutdown.log,监听器的日志文件$ORACLE_HOME/listener.log</p>
+<p><strong>4、创建启动init脚本</strong></p>
+<p>以root用户在/etc/init.d目录下创建文件oracle,其内容如下</p>
+<p> 1 #!/bin/sh<br> 2<br> 3 ### BEGIN INIT INFO<br> 4 # Provides: oracle<br> 5 # Required-Start: $local_fs<br> 6 # Required-Stop: $local_fs<br> 7 # Default-Start: 2 3 4 5<br> 8 # Default-Stop: 0 1 6<br> 9 # Short-Description:oracle database init script<br>10 # Description: starts and stops oracle database and listeners<br>11 ### END INIT INFO<br>12<br>13 set-e<br>14<br>15 ORACLE_HOME=“/u01/app/oracle/product/10.2.0/db_1”<br>16 ORACLE_OWNER=“oracle”<br>17<br>18 do_start() {<br>19     echo”starting oracle databases…”<br>20     su - $ORACLE_OWNER -c “$ORACLE_HOME/bin/dbstart $ORACLE_HOME” &gt;&gt; /var/log/oracle<br>21     touch /var/lock/oracle<br>22     echo”ok”<br>23 }<br>24<br>25 do_stop() {<br>26     echo”Stopping oracle databases…”<br>27     su - $ORACLE_OWNER -c “$ORACLE_HOME/bin/dbshut $ORACLE_HOME” &gt;&gt; /var/log/oracle<br>28     rm -f /var/lock/oracle<br>29     echo”ok”<br>30 }<br>31<br>32 status() {<br>33     if [ -f /var/lock/oracle ]; then<br>34         echo”oracle database is running.”<br>35     else<br>36         echo”oracle database is not running.”<br>37     fi<br>38 }<br>39<br>40 case “$1” in<br>41     start)<br>42         do_start<br>43         ;;<br>44     stop)<br>45         do_stop<br>46         ;;<br>47     restart)<br>48         do_stop<br>49         do_start<br>50         ;;<br>51     reload)<br>52         ;;<br>53     force-reload)<br>54         ;;<br>55     status)<br>56         status<br>57         ;;<br>58     *)<br>59         echo”$0 {startstoprestartreloadforce-reloadstatus}”<br>60 esac<br>61<br>62 exit 0</p>
+<p>然后在各个运行级对应的启动脚本目录下创建符号连接<br>#update-rc.d oracle defaults</p>
+<p>还有一点,因为init脚本是用su切换到oracle用户执行数据库启动和关闭的,所以为了设置用户资源限制,需要为/etc/pam.d/su文件增添下面的行<br>session required pam_limits.so</p>
+<p>配置完毕后,oracle数据库会随系统自动启动和关闭,手工控制以debian常见的方式进行</p>
+<p>#/etc/init.d/oracle startstopstatusrestart</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/01/19/debian-amd64-install-10g-r2-database/" rel="prev" title="Debian Squeeze AMD64安装Oracle 10g x86_64 10.2.0.4数据库">
+                  <i class="fa fa-chevron-left"></i> Debian Squeeze AMD64安装Oracle 10g x86_64 10.2.0.4数据库
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/03/14/firefox-java-plugin/" rel="next" title="为firefox安装java插件">
+                  为firefox安装java插件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="因为使用debian源安装horde会默认使用apache,所以改用pear方式安装horde">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webmail之horde安装配置">
+<meta property="og:url" content="http://example.com/2014/01/04/horde-webmail/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="因为使用debian源安装horde会默认使用apache,所以改用pear方式安装horde">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-01-04T03:17:52.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.229Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/01/04/horde-webmail/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>webmail之horde安装配置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get-install-php-pear"><span class="nav-number">1.</span> <span class="nav-text">apt-get install php-pear</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-upgrade-PEAR"><span class="nav-number">2.</span> <span class="nav-text">pear upgrade PEAR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get-remove-php5-suhosin-%E2%80%93purge"><span class="nav-number">3.</span> <span class="nav-text">apt-get remove php5-suhosin –purge</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#aptitude-purge-php5-suhosin"><span class="nav-number">4.</span> <span class="nav-text">aptitude purge php5-suhosin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-channel-discover-pear-horde-org"><span class="nav-number">5.</span> <span class="nav-text">pear channel-discover pear.horde.org</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-install-horde-horde-role"><span class="nav-number">6.</span> <span class="nav-text">pear install horde&#x2F;horde_role</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-run-scripts-horde-horde-role"><span class="nav-number">7.</span> <span class="nav-text">pear run-scripts horde&#x2F;horde_role</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-install-a-horde-horde"><span class="nav-number">8.</span> <span class="nav-text">pear install -a horde&#x2F;horde</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-install-horde-webmail"><span class="nav-number">9.</span> <span class="nav-text">pear install horde&#x2F;webmail</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-horde-config"><span class="nav-number">10.</span> <span class="nav-text">cd horde&#x2F;config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cp-conf-php-dist-conf-dist"><span class="nav-number">11.</span> <span class="nav-text">cp conf.php.dist conf.dist</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pear-config-get-bin-dir"><span class="nav-number">12.</span> <span class="nav-text">pear config-get bin_dir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webmail-install"><span class="nav-number">13.</span> <span class="nav-text">webmail-install</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/04/horde-webmail/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webmail之horde安装配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-04 11:17:52" itemprop="dateCreated datePublished" datetime="2014-01-04T11:17:52+08:00">2014-01-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>因为使用debian源安装horde会默认使用apache,所以改用pear方式安装horde</p>
+<a id="more"></a>
+<p><strong>安装pear</strong></p>
+<h1 id="apt-get-install-php-pear"><a href="#apt-get-install-php-pear" class="headerlink" title="apt-get install php-pear"></a>apt-get install php-pear</h1><p>更新pear包</p>
+<h1 id="pear-upgrade-PEAR"><a href="#pear-upgrade-PEAR" class="headerlink" title="pear upgrade PEAR"></a>pear upgrade PEAR</h1><p>如果提示:<br>PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20100525/suhosin.so’ - /usr/lib/php5/20100525/suhosin.so: cannot open shared object file: No such file or directory in Unknown on line 0<br>Nothing to upgrade</p>
+<p>卸载php5-suhosin就好了</p>
+<h1 id="apt-get-remove-php5-suhosin-–purge"><a href="#apt-get-remove-php5-suhosin-–purge" class="headerlink" title="apt-get remove php5-suhosin –purge"></a>apt-get remove php5-suhosin –purge</h1><p>或</p>
+<h1 id="aptitude-purge-php5-suhosin"><a href="#aptitude-purge-php5-suhosin" class="headerlink" title="aptitude purge php5-suhosin"></a>aptitude purge php5-suhosin</h1><p><strong>pear配置及horde安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># pear config-show</span><br><span class="line">PEAR directory php_dir /usr/share/php</span><br></pre></td></tr></table></figure>
+<p>确保/usr/share/php在/etc/php5/fpm/php.ini文件的include_path字段值中,默认是注释的掉,打开后如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">; UNIX: <span class="string">&quot;/path1:/path2&quot;</span></span><br><span class="line">include_path = <span class="string">&quot;.:/usr/share/php&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注册Horde PEAR channel server</p>
+<h1 id="pear-channel-discover-pear-horde-org"><a href="#pear-channel-discover-pear-horde-org" class="headerlink" title="pear channel-discover pear.horde.org"></a>pear channel-discover pear.horde.org</h1><p>安装pear install horde/horde_role,horde_role用于定义horde的安装目录,</p>
+<h1 id="pear-install-horde-horde-role"><a href="#pear-install-horde-horde-role" class="headerlink" title="pear install horde/horde_role"></a>pear install horde/horde_role</h1><h1 id="pear-run-scripts-horde-horde-role"><a href="#pear-run-scripts-horde-horde-role" class="headerlink" title="pear run-scripts horde/horde_role"></a>pear run-scripts horde/horde_role</h1><p>切记,在第二步运行脚本时提示安装路径,一定不要用带有符号链接的路径,否则horde会傻掉,不会在指定的路径安装任何东西。</p>
+<p>安装horde</p>
+<h1 id="pear-install-a-horde-horde"><a href="#pear-install-a-horde-horde" class="headerlink" title="pear install -a horde/horde"></a>pear install -a horde/horde</h1><p>安装webmail</p>
+<h1 id="pear-install-horde-webmail"><a href="#pear-install-horde-webmail" class="headerlink" title="pear install horde/webmail"></a>pear install horde/webmail</h1><p>拷贝默认horde配置</p>
+<h1 id="cd-horde-config"><a href="#cd-horde-config" class="headerlink" title="cd horde/config"></a>cd horde/config</h1><h1 id="cp-conf-php-dist-conf-dist"><a href="#cp-conf-php-dist-conf-dist" class="headerlink" title="cp conf.php.dist conf.dist"></a>cp conf.php.dist conf.dist</h1><p><strong>创建并初始化webmail数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database groupware;</span><br><span class="line">mysql&gt; grant all on groupware.* to groupware@localhost identified by <span class="string">&#x27;groupware&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看horde bin文件路径</p>
+<h1 id="pear-config-get-bin-dir"><a href="#pear-config-get-bin-dir" class="headerlink" title="pear config-get bin_dir"></a>pear config-get bin_dir</h1><p>/usr/bin</p>
+<p>初始化webmall</p>
+<h1 id="webmail-install"><a href="#webmail-install" class="headerlink" title="webmail-install"></a>webmail-install</h1><p>根据提示输入相关配置信息,最后初始化数据库。如提示如下错误：<br>Fatal Error:<br>The Content_Tagger class could not be found. Make sure the Content application is installed.<br>In /home/${username}/public_html/horde/kronolith/migration/18_kronolith_upgrade_categoriestotags.php on line 25</p>
+<p>而确认horde/content已经安装了,可以打开horde/config/registry.php文件,在文件最后添加如下行:<br>[php]<br>$this-&gt;applications[‘content’] = array(<br> ‘fileroot’ =&gt; dirname(<strong>FILE</strong>) . ‘/../content’,<br> ‘webroot’ =&gt; $this-&gt;applications[‘horde’][‘webroot’] . ‘/content’,<br> ‘status’ =&gt; ‘hidden’<br> );<br>[/php]<br>或者将存在的’content’ =&gt; array(行修改为以上内容。</p>
+<p><strong>nginx虚拟主机配置</strong><br>新增配置文件<br>/etc/nginx/sites-available/horde.openwares.net.conf,其内容如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">80</span>; </span><br><span class="line"> server_name horde.openwares.net;</span><br><span class="line"> root /home/$&#123;username&#125;/www/horde;</span><br><span class="line"> index index.php;</span><br><span class="line"> access_log /<span class="keyword">var</span>/log/nginx/horde.openwares.net_access.log;</span><br><span class="line"> error_log /<span class="keyword">var</span>/log/nginx/horde.openwares.net_error.log;</span><br><span class="line"></span><br><span class="line"> include php-fpm.conf;</span><br><span class="line"> include errpage.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在/etc/nginx/sites-enable目录下建好符号连接,reload nginx就可以了。</p>
+<p><strong>测试horde</strong></p>
+<p>编辑horde/conf.php,打开test<br>[php]<br>$conf[‘testdisable’] = false;<br>[/php]</p>
+<p>浏览器输入<a target="_blank" rel="noopener" href="http://horde.ip/test.php%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E6%B5%8B%E8%AF%95%E4%BF%A1%E6%81%AF%E4%BA%86%E3%80%82">http://horde.ip/test.php就可以看到测试信息了。</a></p>
+<p><strong>IMAP设置</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/01/03/postfix-imap-setup/" rel="prev" title="postfix邮件系统之imap配置">
+                  <i class="fa fa-chevron-left"></i> postfix邮件系统之imap配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/01/04/roundcubemail-setup/" rel="next" title="webmail之roundcubemail安装配置">
+                  webmail之roundcubemail安装配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

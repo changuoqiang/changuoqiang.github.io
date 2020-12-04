@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Spring Framework 3 对 JSON的支持很不错。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 3 MVC JSON Sample">
+<meta property="og:url" content="http://example.com/2013/10/12/spring3-mvc-json-sample/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring Framework 3 对 JSON的支持很不错。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-10-12T12:27:09.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.499Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/10/12/spring3-mvc-json-sample/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Spring 3 MVC JSON Sample | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/10/12/spring3-mvc-json-sample/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring 3 MVC JSON Sample
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-10-12 20:27:09" itemprop="dateCreated datePublished" datetime="2013-10-12T20:27:09+08:00">2013-10-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Spring Framework 3 对 JSON的支持很不错。</p>
+<a id="more"></a>
+<p>这个例子程序和以前一样，前端为html、javascript,这次后端改为使用spring framework 3.2.4,前后端通过ajax交换json数据，这个例子比只使用servlet 3更简洁，当然配置更复杂一些。</p>
+<p>完整的代码和配置<a href="/downloads/springjson.war">下载</a>。</p>
+<p><strong>配置</strong></p>
+<p>要使用spring framework,首先要在WEB-INF/web.xml中配置spring的DispatcherServlet，由其来接管映射的URL请求，之后就进入spring framework的处理流程。<br>web.xml<br>[xml]<br> <servlet><br> <servlet-name>spring</servlet-name><br> <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><br> <load-on-startup>1</load-on-startup><br> </servlet><br> <servlet-mapping><br> <servlet-name>spring</servlet-name><br> <url-pattern>/</url-pattern><br> </servlet-mapping><br>[/xml]</p>
+<p>如果不配置的DispatcherServlet的初始化参数contextConfigLocation，则spring framework会读取WEB-INF/<servlet-name>-servlet.xml作为其context参数文件，在这个配置里，这个文件为spring-servlet.xml,其内容如下：</p>
+<p>[xml]<br><?xml version="1.0" encoding="UTF-8"?><br><beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:mvc="http://www.springframework.org/schema/mvc"
+ xsi:schemaLocation="
+ http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context.xsd
+ http://www.springframework.org/schema/mvc
+ http://www.springframework.org/schema/mvc/spring-mvc.xsd"></p>
+<p> &lt;context:component-scan base-package=”net.openwares.test” /&gt;<br> &lt;mvc:default-servlet-handler /&gt;<br> &lt;mvc:annotation-driven /&gt;<br></beans><br>[/xml]</p>
+<p>其中<br>[xml]&lt;context:component-scan base-package=”net.openwares.test” /&gt;[/xml]<br>表示从包net.openwares.test里面自动扫描使用注解标示的组件，比如@RqeustMapping,@RequestBody等注解的组件。<br>不过这个地方存在一点问题，spring对jar包的扫描有特殊的要求，用jar -cvf 命令创建的jar包,spring扫描不到其中的组件，而不打包使用层次文件路径则没有问题，这里的路径是WEB-INF/classes/net/openwares/test/。使用<a target="_blank" rel="noopener" href="http://kyfxbl.iteye.com/blog/1675368">eclipse打包时有个选项add directory entries</a>，勾选这个选项打出来的包就可以被spring扫描到。现在还没发现如何用jar命令打包才可以让spring扫描到。</p>
+<p>[xml]&lt;mvc:default-servlet-handler /&gt;[/xml]<br>可以将spring framework不处理的其他资源请求路由到容器的default servlet,这样容器就可以继续处理这些请求，而不是被spring framework拦截掉。</p>
+<p>[xml]&lt;mvc:annotation-driven /&gt;[/xml]<br>支持注解，比如@RequestMapping,@PathVariable等。</p>
+<p>对于这个例子，这个配置就够了。现在spring framework朝着零配置方向又进一步，在servlet 3.0+环境下，也可以不用xml而使用java代码来完成如上配置。</p>
+<p><strong>代码</strong></p>
+<p>前端index.html只是改一下请求的url就可以了</p>
+<p>var url = “/springjson/ajaxcalc”;</p>
+<p>后端SpringJson.java代码：<br>[java]<br>package net.openwares.test;</p>
+<p>import java.io.Writer;<br>import java.io.IOException;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.RequestBody;<br>import org.springframework.web.bind.annotation.ResponseBody;</p>
+<p>import org.springframework.stereotype.Component;<br>import org.springframework.beans.factory.annotation.Autowired;</p>
+<p>@Component<br>class Attender {<br> private int augend, addend;</p>
+<p> public Attender(){}</p>
+<p> public int getAugend(){<br> return augend;<br> }<br> public void setAugend(int augend){<br> this.augend = augend;<br> }</p>
+<p> public int getAddend(){<br> return addend;<br> }<br> public void setAddend(int addend){<br> this.addend = addend;<br> }<br>}</p>
+<p>@Component<br>class Outcome {<br> private int result;</p>
+<p> public Outcome(){}</p>
+<p> public int getResult(){<br> return result;<br> }<br> public void setResult(int result){<br> this.result = result;<br> }<br>}</p>
+<p>@Controller<br>public class SpringJson {</p>
+<p> @Autowired<br> private Outcome outcome;</p>
+<p> @RequestMapping(“/ajaxcalc”)<br> public @ResponseBody Outcome getResult(@RequestBody Attender attender){</p>
+<p> outcome.setResult(attender.getAugend() + attender.getAddend());<br> return outcome;<br> }<br>}<br>[/java]</p>
+<p><strong>说明</strong></p>
+<p>只要前端ajax请求将Content-Type设置为application/json,则spring会自动的将请求内容映射到@RequestBody修饰的VO对象，<br>将@ResponseBody修饰的VO对象转换为返回的json数据。spring使用HttpMessageConverters来转换数据，<br>支持json,xml等多种数据类型，还以自定义转换接口。中间如有数据类型转换可能会出现转换问题。</p>
+<p>打包为spingjson.war,部署后访问URL<br><a target="_blank" rel="noopener" href="http://127.0.0.1/springjson/ajaxcalc">http://127.0.0.1/springjson/ajaxcalc</a></p>
+<p><strong>依赖</strong></p>
+<p>spring使用jackson来操作json数据，因此需要下载jackson jar包，spring 3.2.4支持jackson 2,直接下载<a target="_blank" rel="noopener" href="http://wiki.fasterxml.com/JacksonDownload">最新的jackson包</a>丢到lib目录即可，当前为这个三个文件：<br>jackson-core-2.2.3.jar<br>jackson-annotations-2.2.3<br>jackson-databind-2.2.3.jar</p>
+<p>spring使用<a target="_blank" rel="noopener" href="http://commons.apache.org/proper/commons-logging/">apache commons logging</a>组件来输出日志，因此需要依赖包<br>commons-logging-1.1.3.jar</p>
+<p>spring framework现在拆分了jar,不再提供单一的一个大jar包。此样例程序需要依赖以下spring包：<br>spring-core-3.2.4.RELEASE.jar //核心包，所有的spring程序都需要<br>spring-beans-3.2.4.RELEASE.jar //bean管理，依赖注入等核心功能<br>spring-context-3.2.4.RELEASE.jar //基础支持包<br>spring-expression-3.2.4.RELEASE.jar //此包必须，否则spring无法加载context配置文件，从而无法完成初始化<br>spring-web-3.2.4.RELEASE.jar //servlet支持<br>spring-webmvc-3.2.4.RELEASE.jar //MVC支持</p>
+<p><strong>后记</strong><br>这个例子和以前的几个例子都是完全用vim编辑，用javac编译，用jar打包的。虽然只是极其简单的小例子，仍然感觉十分繁琐，看来研究下eclipse还是有必要的。</p>
+<p>参考：<a target="_blank" rel="noopener" href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/mvc.html">Spring 3.2.4 MVC文档</a><br> <strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/10/10/xterm-vim-256-colors/" rel="prev" title="开启xterm终端256色和终端下vim 256色">
+                  <i class="fa fa-chevron-left"></i> 开启xterm终端256色和终端下vim 256色
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/10/12/xsd-file/" rel="next" title="关于XSD文件">
+                  关于XSD文件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Gerrit是用于Git版本控制系统的代码审核系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gerrit2安装配置">
+<meta property="og:url" content="http://example.com/2014/01/16/gerrit2-setup/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Gerrit是用于Git版本控制系统的代码审核系统。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-01-16T02:36:00.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.189Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/01/16/gerrit2-setup/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Gerrit2安装配置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#htpasswd-d-htpasswd-conf-admin"><span class="nav-number">1.</span> <span class="nav-text">htpasswd -d htpasswd.conf admin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh-p-29418-i-ssh-id-rsa-gerrit-x61-100-x6d-105-110-64-114-x65-x76-105-101-119-x2e-x64-111-109-x61-105-110-46-116-x6c-x64"><span class="nav-number">2.</span> <span class="nav-text">ssh -p 29418 -i ~&#x2F;.ssh&#x2F;id_rsa.gerrit &amp;#x61;&amp;#100;&amp;#x6d;&amp;#105;&amp;#110;&amp;#64;&amp;#114;&amp;#x65;&amp;#x76;&amp;#105;&amp;#101;&amp;#119;&amp;#x2e;&amp;#x64;&amp;#111;&amp;#109;&amp;#x61;&amp;#105;&amp;#110;&amp;#46;&amp;#116;&amp;#x6c;&amp;#x64;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get-install-gitweb"><span class="nav-number">3.</span> <span class="nav-text">apt-get install gitweb</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/16/gerrit2-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gerrit2安装配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-16 10:36:00" itemprop="dateCreated datePublished" datetime="2014-01-16T10:36:00+08:00">2014-01-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Gerrit是用于Git版本控制系统的代码审核系统。</p>
+<a id="more"></a>
+<p><strong>下载</strong></p>
+<p>当前最新版本的gerrit为2.8.1,从<a target="_blank" rel="noopener" href="http://gerrit-releases.storage.googleapis.com/index.html">官方下载</a>二进制war包即可。</p>
+<p><strong>数据库设置</strong></p>
+<p>gerrit可以使用H2,PostgreSQL,MySql和Oracle数据库。这个安装使用PostgreSQL数据库。</p>
+<p>创建gerrit使用的用户和数据库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ createuser --username=postgres -RDIElPS gerrit2</span><br><span class="line">$ createdb --username=postgres -E UTF-<span class="number">8</span> -O gerrit2 reviewdb</span><br></pre></td></tr></table></figure>
+<p>这里使用PostgreSQL提供的shell工具,也可以登录PostgreSQL使用psql来CREATE ROLE和CREATE DATABASE。</p>
+<p><strong>创建用户</strong></p>
+<p>为gerrit创建单独的用户gerrit2,用于运行gerrit,但是禁止gerrit2用户登录系统。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># adduser gerrit2</span><br><span class="line"># passwd --delete gerrit2</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<p>切换到gerrit2用户,使用gerrit2主目录下的review目录作为gerrit site的根目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># sudo su - gerrit2</span><br><span class="line"># java -jar gerrit-2.8.1.war init -d review</span><br></pre></td></tr></table></figure>
+
+<p>进入交互式安装,具体的安装配置如下:</p>
+<p>[bash gutter=”false”]<br><strong>* Gerrit Code Review 2.8.1<br>*</strong> 选项中大写字母为默认选项,如使用默认选项回车即可</p>
+<p>Create ‘/home/gerrit2/review’ [Y/n]? </p>
+<p><strong>* Git Repositories<br>*</strong> gerrit用于存储git仓库的目录,相对于根目录review</p>
+<p>Location of Git repositories [git]: </p>
+<p>*** SQL Database</p>
+<hr>
+<p>Database server type [h2]: postgresql<br>Server hostname [localhost]:<br>Server port [(postgresql default)]:<br>Database name [reviewdb]:<br>Database username [gerrit2]:<br>gerrit2’s password :<br> confirm password : </p>
+<p><strong>* User Authentication<br>*</strong> 使用HTTP认证,OPENID需要服务器连接互联网,还可以使用LDAP认证服务</p>
+<p>Authentication method [OPENID/?]: http<br>Get username from custom HTTP header [y/N]?<br>SSO logout URL : </p>
+<p><strong>* Email Delivery<br>*</strong> gerrit发送邮件设置,可以使用本地或远程SMTP服务器,<br>*** 只要在smtp服务器上有帐号即可。</p>
+<p>SMTP server hostname [localhost]: mail.openwares.net<br>SMTP server port [(default)]: 25<br>SMTP encryption [NONE/?]: tls<br>SMTP username [gerrit2]: <a href="mailto:&#x67;&#x65;&#114;&#114;&#105;&#x74;&#x32;&#64;&#111;&#112;&#x65;&#x6e;&#x77;&#x61;&#x72;&#101;&#115;&#46;&#110;&#101;&#116;">&#x67;&#x65;&#114;&#114;&#105;&#x74;&#x32;&#64;&#111;&#112;&#x65;&#x6e;&#x77;&#x61;&#x72;&#101;&#115;&#46;&#110;&#101;&#116;</a><br><a href="mailto:&#103;&#101;&#x72;&#114;&#105;&#x74;&#x32;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#x65;&#x73;&#x2e;&#x6e;&#x65;&#x74;">&#103;&#101;&#x72;&#114;&#105;&#x74;&#x32;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#x65;&#x73;&#x2e;&#x6e;&#x65;&#x74;</a>‘s password :<br> confirm password : </p>
+<p><strong>* Container Process<br>*</strong> 使用gerrit2用户运行gerrit</p>
+<p>Run as [gerrit2]:<br>Java runtime [/usr/lib/jvm/java-7-openjdk-amd64/jre]:<br>Copy gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war [Y/n]?<br>Copying gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war</p>
+<p><strong>* SSH Daemon<br>*</strong> gerrit自带的ssh服务,与服务器自身的ssh服务无关,监听默认端口即可<br>*** 注意:如要使用低于1024的特权端口,需authbind授权,否则ssh会绑定端口失败<br>Listen on address [*]:<br>Listen on port [29418]: </p>
+<p>Gerrit Code Review is not shipped with Bouncy Castle Crypto v144<br> If available, Gerrit can take advantage of features<br> in the library, but will also function without it.<br>Download and install it now [Y/n]?<br>Downloading <a target="_blank" rel="noopener" href="http://www.bouncycastle.org/download/bcprov-jdk16-144.jar">http://www.bouncycastle.org/download/bcprov-jdk16-144.jar</a> … OK<br>Checksum bcprov-jdk16-144.jar OK<br>Generating SSH host key … rsa… dsa… done</p>
+<p><strong>* HTTP Daemon<br>*</strong> 这里使用nginx反向代理gerrit,所以只在loop接口监听即可。<br>*** 如果使用域名访问gerrit,最好将规范URL设置为域名形式,发送校验邮件时会使用到</p>
+<p>Behind reverse proxy [y/N]? y<br>Proxy uses SSL (https://) [y/N]?<br>Subdirectory on proxy server [/]:<br>Listen on address [*]: 127.0.0.1<br>Listen on port [8081]:<br>Canonical URL [<a target="_blank" rel="noopener" href="http://127.0.0.1//]:http://review.domain.tld/">http://127.0.0.1/\]:http://review.domain.tld/</a></p>
+<p><strong>* Plugins<br>*</strong> 选装插件</p>
+<p>Install plugin download-commands version v2.8.1 [y/N]?<br>Install plugin reviewnotes version v2.8.1 [y/N]?<br>Install plugin replication version v2.8.1 [y/N]?<br>Install plugin commit-message-length-validator version v2.8.1 [y/N]? </p>
+<p>Initialized /home/gerrit2/review<br>Executing /home/gerrit2/review/bin/gerrit.sh start<br>Starting Gerrit Code Review:<br><strong>* 因为为ssh服务选在了低于1024的端口,且没有authbind端口授权,所以会出现如下错误,高于1024端口不会。<br>*</strong> FAILED<br><strong>* error: cannot start Gerrit: exit status 1<br>Waiting for server on 127.0.0.1:80 … OK<br>*</strong> 服务器上没有X,所以使用浏览器打开连接失败<br>Opening <a target="_blank" rel="noopener" href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a> …FAILED<br>Open Gerrit with a JavaScript capable browser:<br> <a target="_blank" rel="noopener" href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a></p>
+<p>*** 交互式安装完毕</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**gerrit自启动服务**</span><br><span class="line"></span><br><span class="line">添加&#x2F;etc&#x2F;default&#x2F;gerritcodereview文件,其内容如下:</span><br><span class="line">GERRIT_SITE&#x3D;&#x2F;path&#x2F;to&#x2F;gerrit</span><br><span class="line"></span><br><span class="line">然后</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line"># ln -sf &#x2F;home&#x2F;gerrit2&#x2F;review&#x2F;bin&#x2F;gerrit.sh &#x2F;etc&#x2F;init.d&#x2F;gerrit</span><br><span class="line"># ln -sf &#x2F;etc&#x2F;init.d&#x2F;gerrit &#x2F;etc&#x2F;rc3.d&#x2F;S90gerrit</span><br></pre></td></tr></table></figure>
+
+<p><strong>nginx配置</strong></p>
+<p>使用nginx反向代理gerrit,并且nginx承担http认证,gerrit不会对用户进行认证。gerrit将http认证成功后第一个登录的用户作为管理员,其他用户皆为普通用户。用户第一次http认证成功后,gerrit会为用户生成同名的gerrit用户,只要进一步完善账户即可。比如添加email和公钥。管理员为其他普通用户授权。</p>
+<p><em>nginx反向代理配置</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123; </span><br><span class="line"> listen <span class="number">80</span>;</span><br><span class="line"> server_name review.domain.tld;</span><br><span class="line"> location / &#123;</span><br><span class="line"> auth_basic <span class="string">&quot;Gerrit2 Code Review&quot;</span>;</span><br><span class="line"> auth_basic_user_file /home/gerrit2/htpasswd.conf;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line"> location /login/ &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>http认证文件</em></p>
+<p>使用htpasswd命令为管理云用户生成http认证配置文件,如果没有htpasswd文件需要安装apache2-utils包。</p>
+<h1 id="htpasswd-d-htpasswd-conf-admin"><a href="#htpasswd-d-htpasswd-conf-admin" class="headerlink" title="htpasswd -d htpasswd.conf admin"></a>htpasswd -d htpasswd.conf admin</h1><p>以后添加gerrit用户时,同样需要先为其配置http认证,然后用户登录后gerrit会为其自动生成用户帐号,名字与http认证名字一致。</p>
+<p><strong>账户配置</strong></p>
+<p>第一次成功登录的用户会被gerrit作为管理员用户。登录后点击右上角的”匿名懦夫”Anonymous Coward -&gt; Settings来配置账户。</p>
+<p><em>电子邮件</em></p>
+<p>选择左侧Contact Information页签,添加用户全称。然后注册新邮件Register New Email,输入管理员的邮件地址后,gerrit会向新邮箱发送<br>校验邮件,校验通过后才是有效的邮箱。这时候安装时配置Canonical URL就有用处了,校验邮件的域名部分就是Canonical URL,如果当时配置的是<a target="_blank" rel="noopener" href="http://127.0.0.1/,%E9%82%A3%E8%BF%99%E6%97%B6%E5%80%99%E5%B0%B1%E8%A6%81%E6%89%8B%E5%B7%A5%E4%BF%AE%E6%94%B9%E5%9F%9F%E5%90%8D%E9%83%A8%E5%88%86%E5%86%8D%E6%89%A7%E8%A1%8C%E9%AA%8C%E8%AF%81%E4%BA%86%E3%80%82">http://127.0.0.1/,那这时候就要手工修改域名部分再执行验证了。</a></p>
+<p>发送校验邮件有时候不太方便,可以使用gerrit提供的远程ssh shell来为用户添加有效邮箱。当然首先管理员要添加了SSH公钥才能远程访问gerrit的ssh shell。<br>语法如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ssh review gerrit set-account --add-email username@openwares.net username</span><br></pre></td></tr></table></figure>
+<p>这是review是.ssh/config中配置的远程ssh主机别名。</p>
+<p>也可以通过直接修改gerrit数据库表的方式来添加用户邮件,但这活着实有点儿脏,不建议使用。</p>
+<p><em>SSH公钥</em></p>
+<p>要使用gerrit必须要提供用户的公钥。选择页面左侧的SSH Public Keys为当前用户添加公钥。直接将公钥粘贴到Add SSH Public Key框内,然后点击add即可。<br>之后用户就可以用ssh来访问gerrit了。当然无法登录服务器,只能使用gerrit提供的shell。</p>
+<p><strong>添加其他普通账户</strong></p>
+<p>如果采用http认证,那么添加其他账户时,需要现添加http认证账户。用htpasswd创建的用户时，并没有往gerrit中添加账号，只有当该用户通过web登陆gerrit服务器时,该账号才会被添加进gerrit数据库中。使用http认证方式,不要使用gerrit ssh shell命令来新增用户,通过http认证第一次认证成功的用户,gerrit会为其自动创建账户,之后只要完善账户就可以了。使用ssh shell创建的用户无法与http认证后自动创建的用户关联起来,即是二者的用户名是完全一样的。</p>
+<p>其他用户帐号的配置与管理员的配置方式一样。</p>
+<p><strong>SSH访问gerrit</strong></p>
+<p>添加ssh公钥后就可以使用ssh来使用gerrit了。</p>
+<h1 id="ssh-p-29418-i-ssh-id-rsa-gerrit-x61-100-x6d-105-110-64-114-x65-x76-105-101-119-x2e-x64-111-109-x61-105-110-46-116-x6c-x64"><a href="#ssh-p-29418-i-ssh-id-rsa-gerrit-x61-100-x6d-105-110-64-114-x65-x76-105-101-119-x2e-x64-111-109-x61-105-110-46-116-x6c-x64" class="headerlink" title="ssh -p 29418 -i ~/.ssh/id_rsa.gerrit &#x61;&#100;&#x6d;&#105;&#110;&#64;&#114;&#x65;&#x76;&#105;&#101;&#119;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#116;&#x6c;&#x64;"></a>ssh -p 29418 -i ~/.ssh/id_rsa.gerrit <a href="mailto:&#x61;&#100;&#x6d;&#105;&#110;&#64;&#114;&#x65;&#x76;&#105;&#101;&#119;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#116;&#x6c;&#x64;">&#x61;&#100;&#x6d;&#105;&#110;&#64;&#114;&#x65;&#x76;&#105;&#101;&#119;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#116;&#x6c;&#x64;</a></h1><p>如果私钥名字为id_rsa可以不用使用-i参数。为ssh主机配置别名访问起来更简单,~/.ssh/config文件中添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host review</span><br><span class="line"> Hostname review.domain.tld</span><br><span class="line"> User admin</span><br><span class="line"> Port <span class="number">29418</span></span><br><span class="line"> #如果私钥名字为id_rsa,可以省略下面一行</span><br><span class="line"> IdentityFile ~<span class="regexp">/.ssh/i</span>d_rsa.gerrit</span><br></pre></td></tr></table></figure>
+
+<p>这样ssh访问gerrit就可以了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># ssh review</span><br><span class="line">**** Welcome to Gerrit Code Review ****</span><br><span class="line"></span><br><span class="line"> Hi username, you have successfully connected over SSH.</span><br><span class="line"></span><br><span class="line"> Unfortunately, interactive shells are disabled.</span><br><span class="line"> To clone a hosted Git repository, <span class="attr">use</span>:</span><br><span class="line"></span><br><span class="line"> git clone ssh:<span class="comment">//admin@review.domain.tld:29418/REPOSITORY_NAME.git</span></span><br><span class="line"></span><br><span class="line">Connection to review.tafdc.org closed.</span><br></pre></td></tr></table></figure>
+<p>查看gerrit shell帮助</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># ssh review gerrit --help</span><br><span class="line">gerrit \[COMMAND\] \[ARG ...\] \[--\] \[--help (-h)\]</span><br><span class="line"></span><br><span class="line"> -- : end <span class="keyword">of</span> options</span><br><span class="line"> --help (-h) : display <span class="built_in">this</span> help text</span><br><span class="line"></span><br><span class="line">Available commands <span class="keyword">of</span> gerrit are:</span><br><span class="line"></span><br><span class="line"> ban-commit Ban a commit <span class="keyword">from</span> a project<span class="string">&#x27;s repository</span></span><br><span class="line"><span class="string"> create-account Create a new batch/role account</span></span><br><span class="line"><span class="string"> create-group Create a new account group</span></span><br><span class="line"><span class="string"> create-project Create a new project and associated Git repository</span></span><br><span class="line"><span class="string"> flush-caches Flush some/all server caches from memory</span></span><br><span class="line"><span class="string"> gc Run Git garbage collection</span></span><br><span class="line"><span class="string"> gsql Administrative interface to active database</span></span><br><span class="line"><span class="string"> ls-groups List groups visible to the caller</span></span><br><span class="line"><span class="string"> ls-members Lists the members of a given group</span></span><br><span class="line"><span class="string"> ls-projects List projects visible to the caller</span></span><br><span class="line"><span class="string"> ls-user-refs List refs visible to a specific user</span></span><br><span class="line"><span class="string"> plugin </span></span><br><span class="line"><span class="string"> query Query the change database</span></span><br><span class="line"><span class="string"> receive-pack Standard Git server side command for client side git push</span></span><br><span class="line"><span class="string"> rename-group Rename an account group</span></span><br><span class="line"><span class="string"> review Verify, approve and/or submit one or more patch sets</span></span><br><span class="line"><span class="string"> set-account Change an account&#x27;</span>s settings</span><br><span class="line"> set-members Modifies members <span class="keyword">of</span> specific group or number <span class="keyword">of</span> groups</span><br><span class="line"> set-project Change a project<span class="string">&#x27;s settings</span></span><br><span class="line"><span class="string"> set-project-parent Change the project permissions are inherited from</span></span><br><span class="line"><span class="string"> set-reviewers Add or remove reviewers on a change</span></span><br><span class="line"><span class="string"> show-caches Display current cache statistics</span></span><br><span class="line"><span class="string"> show-connections Display active client SSH connections</span></span><br><span class="line"><span class="string"> show-queue Display the background work queues, including replication</span></span><br><span class="line"><span class="string"> stream-events Monitor events occurring in real time</span></span><br><span class="line"><span class="string"> test-submit </span></span><br><span class="line"><span class="string"> version Display gerrit version</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">See &#x27;</span>gerrit COMMAND --help<span class="string">&#x27; for more information.</span></span><br></pre></td></tr></table></figure>
+<p><strong>导入现存git代码库</strong></p>
+<p>最简单的办法就是直接将现在的git裸仓库拷贝到gerrit管理的仓库目录下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#cp -r /path/to/old.git /path/to/gerrit/git/</span><br></pre></td></tr></table></figure>
+
+<p>或者稍微繁琐一些的方法：在gerrit中新建一个project,不要做init commit,然后将新建的仓库做为已经存在仓库的远程仓库,然后push就可以了。<br>可以设置gerrit该仓库不经过审核,就可以直接将整个仓库push过来了。</p>
+<p><strong>gitweb集成</strong></p>
+<p>debian系统只要安装了gitweb包, gerrit就可以自动关联到gitweb,通过gitweb来浏览git仓库。</p>
+<h1 id="apt-get-install-gitweb"><a href="#apt-get-install-gitweb" class="headerlink" title="apt-get install gitweb"></a>apt-get install gitweb</h1><p><strong>其他问题</strong></p>
+<p><strong>SMTP证书</strong></p>
+<p>如果为gerrit配置的SMTP服务器是SSL/TLS加密的,并且SMTP服务器的证书是自签的,当gerrit试图发送邮件时会抛出异常:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sun.security.validator.ValidatorException: PKIX path building failed: </span><br><span class="line">sun.security.provider.certpath.SunCertPathBuilderException: </span><br><span class="line">unable to find valid certification path to requested target</span><br></pre></td></tr></table></figure>
+
+<p>因为自签的证书是不受信任的,最简单的解决办法就是告诉gerrit不要校验STMP服务的证书:</p>
+<p>编辑~/review/etc/gerrit.config,添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[sendmail\]</span><br><span class="line"> sslverify=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>或者更复杂的解决办法,将SMTP的SSL证书添加到JAVA的truststore里,参考[3]里有对此问题的详细描述。</p>
+<p><strong>Sign Out</strong></p>
+<p>使用http认证登录gerrit后,并无法通过点击”Sign Out”退出登录,只能通过直接关闭浏览器窗口来退出当前会话。</p>
+<p><strong>如果需要重新安装gerrit,记得将数据库drop掉再重新创建。</strong></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/index.html">Gerrit Code Review for Git</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.csdn.net/benkaoya/article/details/8680886">烤鸭的gerrit使用总结</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.163.com/guaiguai_family/blog/static/20078414520124224465323/">代码评审系统 ReviewBoard 和 Gerrit (下)</a> </p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/01/16/4829/" rel="prev" title="Untitled Post - 33">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 33
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/01/18/4853/" rel="next" title="Untitled Post - 34">
+                  Untitled Post - 34 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="nginx默认不支持传统的CGI程序,但是通过FCGI包装程序可以让nginx支持CGI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="debian squeeze配置nginx支持CGI程序">
+<meta property="og:url" content="http://example.com/2011/05/08/nginx-cgi-support/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="nginx默认不支持传统的CGI程序,但是通过FCGI包装程序可以让nginx支持CGI">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-05-08T01:49:05.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.360Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2011/05/08/nginx-cgi-support/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>debian squeeze配置nginx支持CGI程序 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2011/05/08/nginx-cgi-support/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          debian squeeze配置nginx支持CGI程序
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-05-08 09:49:05" itemprop="dateCreated datePublished" datetime="2011-05-08T09:49:05+08:00">2011-05-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>nginx默认不支持传统的CGI程序,但是通过FCGI包装程序可以让nginx支持CGI</p>
+<a id="more"></a>
+<p>只要是符合FCGI接口的包装程序都可以用来使nginx支持CGI程序，有很多这样的程序,有perl写的，有C写的，也有C++写，等等。</p>
+<p>nginx.org提供了一个<a target="_blank" rel="noopener" href="http://wiki.nginx.org/SimpleCGI">perl包装程序</a>,但没有提供system V风格的init文件，对这个程序稍加改造，然后写一个init控制文件就可以在debian squeeze上使用了。</p>
+<p>安装perl必要的支持库<br>$sudo apt-get -y install libfcgi-perl libfcgi-procmanager-perl libio-all-perl</p>
+<p>改造后的perl包装程序cgiwrap-fcgi.pl代码：<br> 1 #!/usr/bin/perl<br> 2 <strong>use</strong> FCGI;<br> 3 <strong>use</strong> Socket;<br> 4 <strong>use</strong> FCGI::ProcManager;<br> 5 <strong>use</strong> IO::All;<br> 6 <strong>sub</strong> shutdown { FCGI::CloseSocket($socket); <strong>exit</strong>; }<br> 7 <strong>sub</strong> restart { FCGI::CloseSocket($socket); &main; }<br> 8 <strong>use sigtrap</strong> ‘handler’, \&amp;shutdown, ‘normal-signals’;<br> 9 <strong>use sigtrap</strong> ‘handler’, \&amp;restart,  ‘HUP’;<br> 10 <strong>require</strong> ‘syscall.ph’;<br> 11 <strong>use</strong> POSIX qw(setsid);<br> 12  <br> 13 &daemonize;<br> 14<br> 15 END()   { }<br> 16 BEGIN() { }<br> 17 {<br> 18   <strong>no warnings</strong>;<br> 19   <em>CORE::GLOBAL::<strong>exit</strong> = <strong>sub</strong> { <strong>die</strong> “fakeexit\nrc=” . <strong>shift</strong>() . “\n”; };<br> 20 };<br> 21  <br> 22 <strong>eval</strong> q{exit};<br> 23 <strong>if</strong> ($@) {<br> 24   <strong>exit</strong> <strong>unless</strong> $@ =~ <strong>/**^fakeexit</strong>/<strong>;<br> 25 }<br> 26 &main;<br> 27  <br> 28 **sub</strong> daemonize() {<br> 29   <strong>chdir</strong> ‘/‘ <strong>or</strong> <strong>die</strong> “Can’t chdir to /: $!”;<br> 30   <strong>defined</strong>( <strong>my</strong> $pid = <strong>fork</strong> ) <strong>or</strong> <strong>die</strong> “Can’t fork: $!”;<br> 31   <strong>exit</strong> <strong>if</strong> $pid;<br> 32   setsid() <strong>or</strong> <strong>die</strong> “Can’t start a new session: $!”;<br> 33   <strong>umask</strong> 0;<br> 34 }<br> 35  <br> 36 <strong>sub</strong> main {<br> 37   $$ &gt; io(“/var/run/cgiwrap-fcgi/cgiwrap-fcgi.pid”);<br> 38   $proc_manager = FCGI::ProcManager-&gt;<strong>new</strong>( {n_processes =&gt; 2} );<br> 39   $socket = FCGI::OpenSocket( “/var/run/cgiwrap-fcgi/cgiwrap-fcgi.sock”, 10 )<br> 40   ; #use UNIX sockets - user running this script must have w access to the ‘nginx’ folder!!<br> 41   $request =<br> 42   FCGI::Request( \</em>STDIN, \<em>STDOUT, \</em>STDERR, \%req_params, $socket,<br> 43   &amp;FCGI::FAIL_ACCEPT_ON_INTR );<br> 44   $proc_manager-&gt;pm_manage();<br> 45   <strong>if</strong> ($request) { request_loop() }<br> 46   FCGI::CloseSocket($socket);<br> 47 }<br> 48  <br> 49 <strong>sub</strong> request_loop {<br> 50   <strong>while</strong> ( $request-&gt;Accept() &gt;= 0 ) {<br> 51     $proc_manager-&gt;pm_pre_dispatch();<br> 52  <br> 53     #processing any STDIN input from WebServer (for CGI-POST actions)<br> 54     $stdin_passthrough = ‘’;<br> 55     { <strong>no warnings</strong>; $req_len = 0 + $req_params{‘CONTENT_LENGTH’}; };<br> 56     <strong>if</strong> ( ( $req_params{‘REQUEST_METHOD’} <strong>eq</strong> ‘POST’ ) &amp;&amp; ( $req_len != 0 ) ) {<br> 57       <strong>my</strong> $bytes_read = 0;<br> 58       <strong>while</strong> ( $bytes_read &lt; $req_len ) {<br> 59         **my** $data = ‘’;<br> 60         **my** $bytes = **read**( STDIN, $data, ( $req_len - $bytes_read ) );<br> 61         **last** **if** ( $bytes == 0  !**defined**($bytes) );<br> 62         $stdin_passthrough .= $data;<br> 63         $bytes_read += $bytes;<br> 64       }<br> 65     }<br> 66  <br> 67     #running the cgi app<br> 68     **if** (<br> 69       ( **-x** $req_params{SCRIPT_FILENAME} ) &amp;&amp;    #can I execute this?<br> 70       ( **-s** $req_params{SCRIPT_FILENAME} ) &amp;&amp;    #Is this file empty?<br> 71       ( **-r** $req_params{SCRIPT_FILENAME} )       #can I read this file?<br> 72     ) {<br> 73       **pipe**( CHILD_RD,   PARENT_WR );<br> 74       **pipe**( PARENT_ERR, CHILD_ERR );<br> 75       **my** $pid = **open**( CHILD_O, “-“ );<br> 76       **unless** ( **defined**($pid) ) {<br> 77         **print**(“Content-type: text/plain\r\n\r\n”);<br> 78         **print** “Error: CGI app returned no output - Executing $req_params{SCRIPT_FILENAME} failed !\n”;<br> 79         **next**;<br> 80       }<br> 81       $oldfh = **select**(PARENT_ERR);<br> 82       $     = 1;<br> 83       **select**(CHILD_O);<br> 84       $ = 1;<br> 85       **select**($oldfh);<br> 86       **if** ( $pid &gt; 0 ) {<br> 87         <strong>close</strong>(CHILD_RD);<br> 88         <strong>close</strong>(CHILD_ERR);<br> 89         <strong>print</strong> PARENT_WR $stdin_passthrough;<br> 90         <strong>close</strong>(PARENT_WR);<br> 91         $rin = $rout = $ein = $eout = ‘’;<br> 92         <strong>vec</strong>( $rin, <strong>fileno</strong>(CHILD_O),    1 ) = 1;<br> 93         <strong>vec</strong>( $rin, <strong>fileno</strong>(PARENT_ERR), 1 ) = 1;<br> 94         $ein    = $rin;<br> 95         $nfound = 0;<br> 96  <br> 97         <strong>while</strong> ( $nfound = <strong>select</strong>( $rout = $rin, <strong>undef</strong>, $ein = $eout, 10 ) ) {<br> 98           <strong>die</strong> “$!” <strong>unless</strong> $nfound != -1;<br> 99           $r1 = <strong>vec</strong>( $rout, <strong>fileno</strong>(PARENT_ERR), 1 ) == 1;<br>100           $r2 = <strong>vec</strong>( $rout, <strong>fileno</strong>(CHILD_O),    1 ) == 1;<br>101           $e1 = <strong>vec</strong>( $eout, <strong>fileno</strong>(PARENT_ERR), 1 ) == 1;<br>102           $e2 = <strong>vec</strong>( $eout, <strong>fileno</strong>(CHILD_O),    1 ) == 1;<br>103  <br>104           <strong>if</strong> ($r1) {<br>105             <strong>while</strong> ( $bytes = <strong>read</strong>( PARENT_ERR, $errbytes, 4096 ) ) {<br>106               <strong>print</strong> STDERR $errbytes;<br>107             }<br>108             <strong>if</strong> ($!) {<br>109               $err = $!;<br>110               <strong>die</strong> $!;<br>111               <strong>vec</strong>( $rin, <strong>fileno</strong>(PARENT_ERR), 1 ) = 0<br>112               <strong>unless</strong> ( $err == EINTR <strong>or</strong> $err == EAGAIN );<br>113             }<br>114           }<br>115           <strong>if</strong> ($r2) {<br>116             <strong>while</strong> ( $bytes = <strong>read</strong>( CHILD_O, $s, 4096 ) ) {<br>117               <strong>print</strong> $s;<br>118             }<br>119             <strong>if</strong> ( !<strong>defined</strong>($bytes) ) {<br>120               $err = $!;<br>121               <strong>die</strong> $!;<br>122               <strong>vec</strong>( $rin, <strong>fileno</strong>(CHILD_O), 1 ) = 0<br>123               <strong>unless</strong> ( $err == EINTR <strong>or</strong> $err == EAGAIN );<br>124             }<br>125           }<br>126           <strong>last</strong> <strong>if</strong> ( $e1  $e2 );<br>127         }<br>128         <strong>close</strong> CHILD_RD;<br>129         <strong>close</strong> PARENT_ERR;<br>130         <strong>waitpid</strong>( $pid, 0 );<br>131       } <strong>else</strong> {<br>132         <strong>foreach</strong> $key ( <strong>keys</strong> %req_params ) {<br>133           $ENV{$key} = $req_params{$key};<br>134         }<br>135  <br>136         # cd to the script’s local directory<br>137         <strong>if</strong> ( $req_params{SCRIPT_FILENAME} =~ *<em>/**^(.</em>)\/[^\/] +$<strong>/</strong> ) {<br>138           <strong>chdir</strong> $1;<br>139         }<br>140         <strong>close</strong>(PARENT_WR);<br>141         #close(PARENT_ERR);<br>142         <strong>close</strong>(STDIN);<br>143         <strong>close</strong>(STDERR);<br>144  <br>145         #fcntl(CHILD_RD, F_DUPFD, 0);<br>146         <strong>syscall</strong>( &amp;SYS_dup2, <strong>fileno</strong>(CHILD_RD),  0 );<br>147         <strong>syscall</strong>( &amp;SYS_dup2, <strong>fileno</strong>(CHILD_ERR), 2 );<br>148  <br>149         #open(STDIN, “&lt;&amp;CHILD_RD”);<br>150         <strong>exec</strong>( $req_params{SCRIPT_FILENAME} );<br>151         <strong>die</strong>(“exec failed”);<br>152       }<br>153     } <strong>else</strong> {<br>154       <strong>print</strong>(“Content-type: text/plain\r\n\r\n”);<br>155       <strong>print</strong> “Error: No such CGI app - $req_params{SCRIPT_FILENAME} may not exist or is not executable by this process.\n”;<br>156     }<br>157   }<br>158 }  </p>
+<p>system V风格的init文件cgiwrap-fcgi:<br> 1 #!/bin/sh<br> 2<br> 3 ### BEGIN INIT INFO<br> 4 # Provides:         cgiwrap-fcgi<br> 5 # Required-Start:   $local_fs<br> 6 # Required-Stop:    $local_fs<br> 7 # Should-Start:     $syslog<br> 8 # Should-Stop:      $syslog<br> 9 # Default-Start:    2 3 4 5<br>10 # Default-Stop:     0 1 6<br>11 # Short-Description:fcgi support for nginx<br>12 # Description:      cgiwrap-fcgi is a perl script to provide simple cgi support for nginx http daemon<br>13 ### END INIT INFO<br>14<br>15 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin<br>16 DAEMON=/usr/local/bin/cgiwrap-fcgi.pl<br>17 NAME=cgiwrap-fcgi<br>18 DESC=<strong>“**cgiwrap-fcgi daemon</strong>“**<br>19 CGIWRAP_FCGIPIDDIR=/var/run/cgiwrap-fcgi<br>20 CGIWRAP_FCGIPID=$CGIWRAP_FCGIPIDDIR/cgiwrap-fcgi.pid<br>21<br>22 check_nginx_fcgi_piddir(){<br>23     <strong>if</strong> <strong>test</strong> <strong>!</strong> <strong>-d</strong> $CGIWRAP_FCGIPIDDIR*<em>;** <strong>then</strong><br>24         mkdir <strong>-m</strong> 02700 <strong>“</strong>$CGIWRAP_FCGIPIDDIR**”**<br>25         chown www-data:www-data <strong>“</strong>$CGIWRAP_FCGIPIDDIR**”**<br>26     <strong>fi</strong><br>27<br>28     <strong>if</strong> <strong>test</strong> <strong>!</strong> <strong>-x</strong> $CGIWRAP_FCGIPIDDIR**;** <strong>then</strong><br>29         <strong>echo</strong> <strong>“**Cannot access $CGIWRAP_FCGIPIDDIR directory,are you root?</strong>“** <strong>&gt;**</strong>&amp;<strong>2<br>30         **exit</strong> 1<br>31     <strong>fi</strong><br>32 }<br>33<br>34 start() {<br>35     check_nginx_fcgi_piddir<br>36     <strong>echo</strong> <strong>“**Starting $DESC: $NAME…</strong>“**<br>37<br>38     start-stop-daemon --start --quiet --oknodo --pidfile $CGIWRAP_FCGIPID \<br>39     --chuid www-data:www-data  --exec $DAEMON <strong>&gt;</strong> /dev/null 2<strong>&gt;&amp;1</strong><br>40     <strong>echo</strong> <strong>“**done.</strong>“**<br>41 }<br>42<br>43 stop() {<br>44     <strong>echo</strong> -n <strong>“**Stopping $DESC: **”</strong><br>45     pid=`cat $CGIWRAP_FCGIPID 2&gt;/dev/null`  true<br>46<br>47     <strong>if</strong> <strong>test</strong> <strong>!</strong> <strong>-f</strong> $CGIWRAP_FCGIPID <strong>-o</strong> <strong>-z</strong> <strong>“</strong>$pid**”;** <strong>then</strong><br>48         <strong>echo</strong> <strong>“**not running ( there is no $CGIWRAP_FCGIPID).</strong>“**<br>49         <strong>exit</strong> 0<br>50     <strong>fi</strong><br>51<br>52     <strong>if</strong> <strong>kill</strong> $pid <strong>;</strong> <strong>then</strong><br>53         cat /dev/null <strong>&gt;</strong> $CGIWRAP_FCGIPID**;**<br>54         <strong>echo</strong> <strong>“**success!</strong>“**<br>55     <strong>else</strong><br>56         <strong>echo</strong> <strong>“**Can’t stop $DESC</strong>“**<br>57     <strong>fi</strong><br>58<br>59     <strong>return</strong> 0<br>60 }<br>61<br>62 status() {<br>63     pid=`cat $CGIWRAP_FCGIPID 2&gt;/dev/null`  true<br>64<br>65     <strong>if</strong> <strong>[</strong> <strong>-z</strong> ${pid} <strong>]**</strong>;** <strong>then</strong><br>66         <strong>echo</strong> <strong>“</strong>${DESC} is not running.<strong>“</strong><br>67     <strong>else</strong><br>68         <strong>echo</strong> <strong>“</strong>${DESC} is running.<strong>“</strong><br>69     <strong>fi</strong><br>70 }<br>71<br>72 RETVAL=0<br>73<br>74 <strong>case</strong> <strong>“</strong>$1**”** <strong>in</strong><br>75     start**)**<br>76         start<br>77         <strong>;;</strong><br>78     stop**)**<br>79         stop<br>80         <strong>;;</strong><br>81     restart**)**<br>82         stop<br>83         start<br>84         <strong>;;</strong><br>85     force-reload**)**<br>86         <strong>;;</strong><br>87     status**)**<br>88        status<br>89         <strong>;;</strong><br>90     **</em>)**<br>91         <strong>echo</strong> <strong>“</strong>$0 {startstoprestartforece-reloadstatus}<strong>“</strong><br>92         <strong>exit</strong> 3<br>93         <strong>;;</strong><br>94 <strong>esac</strong><br>95<br>96 <strong>exit</strong> $RETVAL  </p>
+<p>这个init控制文件支持start,stop,status,restart,forec-reload控制指令。</p>
+<p><a href="/downloads/cgiwrap-fcgi.tar.gz">下载</a>以后，将cgiwrap-fcgi.pl拷贝到/usr/local/bin/目录下,将cgiwrap-fcgi拷贝到/etc/init.d/目录下，然后执行:<br>$sudo update-rc.d cgiwrap-fcgi defaults<br>更新/etc/rcX.d目录下的符号链接，这样debian启动时会自动启动cgiwrap-fcgi.pl程序</p>
+<p>手动控制cgiwarp-fcgi.pl程序</p>
+<p>$sudo /etc/init.d/cgiwrap-fcgi restart #重新启动<br>$sudo /etc/init.d/cgiwrap-fcgi stop #停止<br>$sudo /etc/init.d/cgiwrap-fcgi status #查看cgiwrap-fcgi的运行状态</p>
+<p>cgiwrap-fcgi.pl使用unix socket文件/var/run/cgiwrap-fcgi/cgiwrap-fcgi.sock来监听CGI程序请求，因此只要将对nginx的CGI请求转发到此socket即可，对应的nginx配置文件cgiwrap-fcgi.conf为:<br>1 location ~ \.(cgipl).*$ {<br>2     gzip off;<br>3     fastcgi_pass unix:/var/run/cgiwrap-fcgi/cgiwrap-fcgi.sock;<br>4     fastcgi_index index.cgi;<br>5     include fastcgi_params;<br>6 }<br>下载后将此文件拷贝到/etc/nginx/目录下，然后在虚拟主机配置文件的server节include cgiwrap-fcgi.conf即可。</p>
+<p>三个文件的打包<a href="/downloads/cgiwrap-fcgi.tar.gz">下载</a>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/05/07/oracle-10g-processes-exceeded/" rel="prev" title="Oracle 10g 超过最大进程数">
+                  <i class="fa fa-chevron-left"></i> Oracle 10g 超过最大进程数
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/05/08/web-document-root-dir/" rel="next" title="/var/www vs. /srv/www vs. /home/username/public_html">
+                  /var/www vs. /srv/www vs. /home/username/public_html <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

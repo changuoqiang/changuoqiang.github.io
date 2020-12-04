@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="通过多条路径访问同一个块设备,可以有效提高存储系统的可靠性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux SCSI多路径(multipath)IO设备设置">
+<meta property="og:url" content="http://example.com/2012/04/12/linux-multipath-config/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="通过多条路径访问同一个块设备,可以有效提高存储系统的可靠性。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-12T05:21:58.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.296Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/04/12/linux-multipath-config/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>linux SCSI多路径(multipath)IO设备设置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/12/linux-multipath-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux SCSI多路径(multipath)IO设备设置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-04-12 13:21:58" itemprop="dateCreated datePublished" datetime="2012-04-12T13:21:58+08:00">2012-04-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>通过多条路径访问同一个块设备,可以有效提高存储系统的可靠性。</p>
+<a id="more"></a>
+<p>linux kernel已经内置对<a target="_blank" rel="noopener" href="https://openwares.net/2011/03/18/multipath_io/">multipath I/O</a>的支持,可以支持绝大多数常见存储设备。</p>
+<p>系统环境：debian wheezy(testing) amd64,kernel 3.2.0-2-amd64</p>
+<p>安装multipath用户空间工具multipath-tools</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#apt-get install multipath-tools</span><br></pre></td></tr></table></figure>
+<p>通常,multipath-tools已经按默认参数设置好了multipath设备</p>
+<p>先查看默认的多路径拓扑信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#multipath -ll</span><br><span class="line"></span><br><span class="line">360080e500018a38a0000027c4dc9d637 dm-<span class="number">0</span> LSI,INF-<span class="number">01</span>-<span class="number">00</span></span><br><span class="line">size=<span class="number">1.</span>4T features=<span class="string">&#x27;3 queue_if_no_path pg_init_retries 50&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;round-robin 0&#x27;</span> prio=<span class="number">6</span> status=active</span><br><span class="line"> \<span class="string">`- 4:0:0:0 sdc 8:32 active ready running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;round-robin 0&#x27; prio=1 status=enabled</span></span><br><span class="line"><span class="string"> \`- 1:0:0:0 sdb 8:16 active ghost running</span></span><br></pre></td></tr></table></figure>
+<p>查看map设备</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ls -l /dev/mapper</span><br><span class="line"></span><br><span class="line">lrwxrwxrwx <span class="number">1</span> root root <span class="number">7</span> Apr <span class="number">12</span> <span class="number">01</span>:<span class="number">06</span> 360080e500018a38a0000027c4dc9d637 -&gt; ../dm-<span class="number">0</span></span><br><span class="line">lrwxrwxrwx <span class="number">1</span> root root <span class="number">7</span> Apr <span class="number">12</span> <span class="number">01</span>:<span class="number">06</span> 360080e500018a38a0000027c4dc9d637-part1 -&gt; ../dm-<span class="number">1</span></span><br><span class="line">crw------T <span class="number">1</span> root root <span class="number">10</span>, <span class="number">236</span> Apr <span class="number">12</span> <span class="number">01</span>:<span class="number">06</span> control</span><br></pre></td></tr></table></figure>
+<p>可以看到默认的多路径映射已经有了,<br>360080e500018a38a0000027c4dc9d637-part1设备是360080e500018a38a0000027c4dc9d637设备的分区,<br>control应该是SCSI控制器本身。dm-0就是真正的多路径设备。</p>
+<p>默认的多路径设置是按照默认的参数配置的,最好根据设备特性稍微调整一下,以及为设备设定一个别名以方便使用,还有就是屏蔽掉非多路径设备,一般就是本地硬盘。</p>
+<p>multipath的配置文件为/etc/multipath.conf,multipath-tools安装默认没有建立此文件,拷贝一个样本配置文件即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#cp /usr/share/doc/multipath-tools/examples/multipath.conf.synthetic /etc/multipath.conf</span><br></pre></td></tr></table></figure>
+<p>在编辑/etc/multipath.conf文件前,查看一下所有的路径及设备信息以准确了解多路径拓扑信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line">#multipath -v3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loading /lib/multipath/libcheckdirectio.so checker</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loading /lib/multipath/libprioconst.so prioritizer</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: not found <span class="keyword">in</span> pathvec</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: mask = <span class="number">0x1f</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: dev_t = <span class="number">8</span>:<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: size = <span class="number">1167966208</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: vendor = LSI</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: product = MegaRAID 8708EM2</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: rev = <span class="number">1.40</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: h:b:t:l = <span class="number">1</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: path state = running</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: <span class="number">7166</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: serial = 006736d00dd3092615001bc402b00506</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: get_state</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: path checker = directio (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: checker timeout = <span class="number">90000</span> ms (sysfs setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> directio: starting <span class="keyword">new</span> request</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> directio: io finished <span class="number">4096</span>/<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: state = up</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: getuid = <span class="regexp">/lib/u</span>dev/scsi_id --whitelisted --replace-whitespace --device=<span class="regexp">/dev/</span>%n (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: uid = 3600605b002c41b00152609d30dd03667 (callout)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: prio = <span class="keyword">const</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: prio = (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: <span class="keyword">const</span> prio = <span class="number">1</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sr0: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop0: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop1: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop2: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop3: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop4: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop5: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop6: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loop7: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: not found <span class="keyword">in</span> pathvec</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: mask = <span class="number">0x1f</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: dev_t = <span class="number">8</span>:<span class="number">16</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: size = <span class="number">2924441600</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: vendor = LSI</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: product = INF-<span class="number">01</span>-<span class="number">00</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: rev = <span class="number">0760</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: h:b:t:l = <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: tgt_node_name = <span class="number">0x20040080e518a38a</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: path state = running</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: <span class="number">50966</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: serial = SQ04600676</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: get_state</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loading /lib/multipath/libcheckrdac.so checker</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: path checker = rdac (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: checker timeout = <span class="number">30000</span> ms (sysfs setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: state = up</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: getuid = <span class="regexp">/lib/u</span>dev/scsi_id --whitelisted --replace-whitespace --device=<span class="regexp">/dev/</span>%n (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: uid = 360080e500018a38a0000027c4dc9d637 (callout)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> loading /lib/multipath/libpriordac.so prioritizer</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: prio = rdac (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: prio args = (<span class="literal">null</span>) (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdb: rdac prio = <span class="number">6</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> dm-<span class="number">0</span>: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> dm-<span class="number">1</span>: device node name blacklisted</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: not found <span class="keyword">in</span> pathvec</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: mask = <span class="number">0x1f</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: dev_t = <span class="number">8</span>:<span class="number">32</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: size = <span class="number">2924441600</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: vendor = LSI</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: product = INF-<span class="number">01</span>-<span class="number">00</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: rev = <span class="number">0760</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: h:b:t:l = <span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: tgt_node_name = <span class="number">0x20040080e518a38a</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: path state = running</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: <span class="number">51694</span> cyl, <span class="number">64</span> heads, <span class="number">32</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: serial = SQ04600187</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: get_state</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: path checker = rdac (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: checker timeout = <span class="number">30000</span> ms (sysfs setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: state = ghost</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: getuid = <span class="regexp">/lib/u</span>dev/scsi_id --whitelisted --replace-whitespace --device=<span class="regexp">/dev/</span>%n (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: uid = 360080e500018a38a0000027c4dc9d637 (callout)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: prio = rdac (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: prio args = (<span class="literal">null</span>) (controller setting)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sdc: rdac prio = <span class="number">1</span></span><br><span class="line">===== paths list =====</span><br><span class="line">uuid hcil dev dev_t pri dm_st chk_st vend/prod</span><br><span class="line">3600605b002c41b00152609d30dd03667 <span class="number">1</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span> sda <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span> undef ready LSI,MegaR</span><br><span class="line">360080e500018a38a0000027c4dc9d637 <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdb <span class="number">8</span>:<span class="number">16</span> <span class="number">6</span> undef ready LSI,INF-<span class="number">0</span></span><br><span class="line">360080e500018a38a0000027c4dc9d637 <span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdc <span class="number">8</span>:<span class="number">32</span> <span class="number">1</span> undef ghost LSI,INF-<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> params = <span class="number">3</span> queue_if_no_path pg_init_retries <span class="number">50</span> <span class="number">1</span> rdac <span class="number">2</span> <span class="number">1</span> round-robin <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">8</span>:<span class="number">16</span> <span class="number">1000</span> round-robin <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">8</span>:<span class="number">32</span> <span class="number">1000</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> status = <span class="number">2</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">2</span> <span class="number">1</span> A <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">8</span>:<span class="number">16</span> A <span class="number">0</span> E <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">8</span>:<span class="number">32</span> A <span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 360080e500018a38a0000027c4dc9d637: disassemble map \[<span class="number">3</span> queue_if_no_path pg_init_retries <span class="number">50</span> <span class="number">1</span> rdac <span class="number">2</span> <span class="number">1</span> round-robin <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">8</span>:<span class="number">16</span> <span class="number">1000</span> round-robin <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">8</span>:<span class="number">32</span> <span class="number">1000</span> \]</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 360080e500018a38a0000027c4dc9d637: disassemble status \[<span class="number">2</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">2</span> <span class="number">1</span> A <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">8</span>:<span class="number">16</span> A <span class="number">0</span> E <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">8</span>:<span class="number">32</span> A <span class="number">0</span> \]</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: ownership set to 3600605b002c41b00152609d30dd03667</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: not found <span class="keyword">in</span> pathvec</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: mask = <span class="number">0xc</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: path state = running</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: get_state</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> directio: starting <span class="keyword">new</span> request</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> directio: io finished <span class="number">4096</span>/<span class="number">0</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: state = up</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> sda: <span class="keyword">const</span> prio = <span class="number">1</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: features = <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: no_path_retry = <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: pgfailover = -<span class="number">1</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: pgpolicy = failover (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: selector = round-robin <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: features = <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: hwhandler = <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: rr_weight = <span class="number">1</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: minio = <span class="number">1</span> rq (config file <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: no_path_retry = <span class="number">0</span> (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: pg_timeout = NONE (internal <span class="keyword">default</span>)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: remove queue_if_no_path <span class="keyword">from</span> <span class="string">&#x27;0&#x27;</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: assembled map \[<span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> round-robin <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span>\]</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: set ACT_CREATE (map does not exist)</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> 3600605b002c41b00152609d30dd03667: domap (<span class="number">0</span>) failure <span class="keyword">for</span> create/reload map</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> directio checker refcount <span class="number">1</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> rdac checker refcount <span class="number">2</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> rdac checker refcount <span class="number">1</span></span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> unloading rdac prioritizer</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> unloading <span class="keyword">const</span> prioritizer</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> unloading rdac checker</span><br><span class="line">Apr <span class="number">11</span> <span class="number">21</span>:<span class="number">05</span>:<span class="number">13</span> unloading directio checker</span><br></pre></td></tr></table></figure>
+
+
+<p>可以看出本地非多路径设备sda并没有被排除,下面列出/etc/multipath.conf的内容：</p>
+<p> 1 blacklist {<br> 2    devnode “^sda”<br> 3 }<br> 4<br> 5 multipaths {<br> 6    multipath {<br> 7        wwid            360080e500018a38a0000027c4dc9d637<br> 8        alias           data<br> 9    }<br>10 }<br>11<br>12 devices {<br>13     device {<br>14         vendor              “LSI”<br>15         product             “INF-01-00”<br>16         hardware_handler    “1 rdac”<br>17     }<br>18 }</p>
+<p>首先从多路径配置中去掉sda。<br>wwid就是上面查看路径信息时提示的uuid,不过一定要分清楚多路径设备与非多路径设备。为多路径设备提供一个别名data。设备的vendor,product都可以从multipath -v3的输出中找到,hardware_handler此处设置为”1 rdac”,因为使用的是LSI的设备。<br>其他参数使用默认值即可。</p>
+<p>然后</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#/etc/init.d/multipath-tools reload</span><br></pre></td></tr></table></figure>
+<p>使新的配置生效,然后再查看多路径拓扑信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#multipath -ll</span><br><span class="line"></span><br><span class="line">data (360080e500018a38a0000027c4dc9d637) dm-<span class="number">0</span> LSI,INF-<span class="number">01</span>-<span class="number">00</span></span><br><span class="line">size=<span class="number">1.</span>4T features=<span class="string">&#x27;3 queue_if_no_path pg_init_retries 50&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;round-robin 0&#x27;</span> prio=<span class="number">6</span> status=active</span><br><span class="line"> \<span class="string">`- 4:0:0:0 sdc 8:32 active ready running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;round-robin 0&#x27; prio=1 status=enabled</span></span><br><span class="line"><span class="string"> \`- 1:0:0:0 sdb 8:16 active ghost running</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#ls -l /dev/mapper</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">crw------T 1 root root 10, 236 Apr 12 13:06 control</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Apr 12 14:06 data -&gt; ../dm-0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Apr 12 14:06 data-part1 -&gt; ../dm-1</span></span><br></pre></td></tr></table></figure>
+<p>可以看到新的设置已经生效,data即是真正的多路径设备,而data-part1设备是data设备的分区。以后把/dev/mapper/data和/dev/mapper/data-part1当作常规的块设备来使用就可以了。也可以通过blkid查看块设备的uuid。</p>
+<p>还有一个问题,如果系统启动时没有提前加载scsi_dh_rdac模块,则在启动时会有大量的I/O错误,启动会很慢,错误信息类似如下：</p>
+<p>[ 7.093679] sd 1:0:0:0: [sdb] Result: hostbyte=DID_OK driverbyte=DRIVER_SENSE<br>[ 7.093683] sd 1:0:0:0: [sdb] Sense Key : Illegal Request [current]<br>[ 7.093687] sd 1:0:0:0: [sdb] &lt;&gt; ASC=0x94 ASCQ=0x1ASC=0x94 ASCQ=0x1<br>[ 7.093698] sd 1:0:0:0: [sdb] CDB: Read(10): 28 00 00 00 00 00 00 00 08 00<br>[ 7.093705] end_request: I/O error, dev sdb, sector 0<br>[ 7.093751] Buffer I/O error on device sdb, logical block 0<br>[ 7.610368] sd 1:0:0:0: [sdb] Result: hostbyte=DID_OK driverbyte=DRIVER_SENSE<br>[ 7.610372] sd 1:0:0:0: [sdb] Sense Key : Illegal Request [current]<br>[ 7.610375] sd 1:0:0:0: [sdb] &lt;&gt; ASC=0x94 ASCQ=0x1ASC=0x94 ASCQ=0x1<br>[ 7.610380] sd 1:0:0:0: [sdb] CDB: Read(10): 28 00 00 00 00 00 00 00 08 00<br>[ 7.610385] end_request: I/O error, dev sdb, sector 0<br>[ 7.610427] Buffer I/O error on device sdb, logical block 0<br>[ 8.127039] sd 1:0:0:0: [sdb] Result: hostbyte=DID_OK driverbyte=DRIVER_SENSE<br>[ 8.127043] sd 1:0:0:0: [sdb] Sense Key : Illegal Request [current]<br>[ 8.127045] sd 1:0:0:0: [sdb] &lt;&gt; ASC=0x94 ASCQ=0x1ASC=0x94 ASCQ=0x1<br>[ 8.127050] sd 1:0:0:0: [sdb] CDB: Read(10): 28 00 00 00 00 00 00 00 08 00<br>[ 8.127055] end_request: I/O error, dev sdb, sector 0</p>
+<p>只要提前加载scsi_dh_rdac模块即可解决此问题</p>
+<p>修改/etc/initramfs-tools/initramfs.conf文件中的MODULES=most为MODULES=dep</p>
+<p>/etc/initramfs-tools/modules文件中增加行scsi_dh_rdac</p>
+<p>然后更新initrd初始化ram盘</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#update-initramfs -u</span><br></pre></td></tr></table></figure>
+<p>重新启动就没有此类错误了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://help.ubuntu.com/lts/serverguide/multipath-dm-multipath-config-file.html">The DM-Multipath Configuration File</a><br>[2]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux_DM_Multipath">Linux DM Multipath</a><br>[3]<a target="_blank" rel="noopener" href="https://help.ubuntu.com/lts/serverguide/multipath-setting-up-dm-multipath.html">Setting up DM-Multipath Overview</a><br>[4]<a target="_blank" rel="noopener" href="https://anothersysadmin.wordpress.com/2008/11/17/howto-debian-and-scsi-multipathing-with-multipath-tools/">HOWTO: Debian and SCSI multipathing with multipath-tools</a><br>[5]<a target="_blank" rel="noopener" href="https://help.ubuntu.com/lts/serverguide/multipath-admin-and-troubleshooting.html">DM-Multipath Administration and Troubleshooting</a><br>[6]<a target="_blank" rel="noopener" href="https://www.centos.org/docs/5/html/5.2/DM_Multipath/">Using Device-Mapper Multipath</a><br>[7]<a target="_blank" rel="noopener" href="https://www.redhat.com/archives/dm-devel/2011-November/msg00141.html">info on enabling only one path with rdac and DS4700</a><br>[8]<a target="_blank" rel="noopener" href="http://kaivanov.blogspot.com/2010/10/multipath-usage-guide-for-san-in-rhel.html">Multipath Usage Guide for SANs</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/04/10/uninstall-oracle-10g-linux/" rel="prev" title="linux系统卸载oracle 10g">
+                  <i class="fa fa-chevron-left"></i> linux系统卸载oracle 10g
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/04/17/rman-remote-backup/" rel="next" title="rman远程备份">
+                  rman远程备份 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

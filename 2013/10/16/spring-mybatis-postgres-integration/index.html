@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Spring Framework,MyBatis,PostgreSQL整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Framework,MyBatis,PostgreSQL整合示例">
+<meta property="og:url" content="http://example.com/2013/10/16/spring-mybatis-postgres-integration/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Spring Framework,MyBatis,PostgreSQL整合">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-10-16T14:43:47.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.497Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/10/16/spring-mybatis-postgres-integration/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Spring Framework,MyBatis,PostgreSQL整合示例 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/10/16/spring-mybatis-postgres-integration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Framework,MyBatis,PostgreSQL整合示例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-10-16 22:43:47" itemprop="dateCreated datePublished" datetime="2013-10-16T22:43:47+08:00">2013-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Spring Framework,MyBatis,PostgreSQL整合</p>
+<a id="more"></a>
+<p><strong>简介</strong></p>
+<p><a target="_blank" rel="noopener" href="http://projects.spring.io/spring-framework/">Spring Framework</a>是优秀的JAVA应用程序开发框架和IoC容器，支持依赖注入，事务管理，Web MVC模式开发，数据存取，JMS等，是全功能(full stack)的开发框架。</p>
+<p><a target="_blank" rel="noopener" href="https://code.google.com/p/mybatis/">MyBatis</a>是ORM半自动映射框架，是支持普通SQL查询,存储过程和高级映射的优秀持久层框架，其架构十分灵活，允许用户定制OR影射规则，其精华在mapper。</p>
+<p><a target="_blank" rel="noopener" href="http://www.postgresql.org/">PostgreSQL</a>是最好的开源关系数据库，虽然现在使用的并不是很广泛。</p>
+<p>企业应用开发可以整合Spring MVC，Spring，Mybatis，PostgreSQL实现一个完整的体系架构。Spring MVC作为MVC开发框架，Spring作为IoC容器，<br>MyBatis则为ORM持久层框架，底层使用PostgreSQL数据库。Spring MVC本来就是Spring Framework中的一个组件，所以二者是天然集成在一起的。</p>
+<p><strong>集成配置</strong></p>
+<p><strong>依赖</strong></p>
+<p>因为Spring 3发布时，MyBatis 3尚未完成，所以MyBatis提供了与Spring集成的包<a target="_blank" rel="noopener" href="http://mybatis.github.io/spring/">MyBatis-Spring</a>。所以需要下载MyBatis和MyBatis两个依赖包。<br>因为要使用数据库，所以需要Spring Famework提供的数据库相关的包,又因为Spring的事务管理框架是基于AOP实现的，所以还需要Spring AOP相关的jar包。<br>使用PostgresQL需要官方提供的<a target="_blank" rel="noopener" href="http://jdbc.postgresql.org/">PostgreSQL JDBC驱动</a>。<br>使用<a target="_blank" rel="noopener" href="http://www.mchange.com/projects/c3p0/">C3P0连接池</a>，需要C3P0的相关包。</p>
+<p>整合需要添加的jar包汇总如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Spring:</span><br><span class="line">===</span><br><span class="line">spring-aop-<span class="number">3.2</span><span class="number">.4</span>.RELEASE.jar</span><br><span class="line">spring-aspects-<span class="number">3.2</span><span class="number">.4</span>.RELEASE.jar</span><br><span class="line">spring-jdbc-<span class="number">3.2</span><span class="number">.4</span>.RELEASE.jar</span><br><span class="line">spring-tx-<span class="number">3.2</span><span class="number">.4</span>.RELEASE.jar</span><br><span class="line"></span><br><span class="line">MyBatis:</span><br><span class="line">===</span><br><span class="line">asm-<span class="number">3.3</span><span class="number">.1</span>.jar</span><br><span class="line">cglib-<span class="number">2.2</span><span class="number">.2</span>.jar</span><br><span class="line">javassist-<span class="number">3.17</span><span class="number">.1</span>-GA.jar</span><br><span class="line">mybatis-<span class="number">3.2</span><span class="number">.3</span>.jar</span><br><span class="line">mybatis-spring-<span class="number">1.2</span><span class="number">.1</span>.jar</span><br><span class="line"></span><br><span class="line">PostgreSQL:</span><br><span class="line">===</span><br><span class="line">postgresql-<span class="number">9.2</span>-<span class="number">1003.</span>jdbc4.jar</span><br><span class="line"></span><br><span class="line">C3P0:</span><br><span class="line">===</span><br><span class="line">mchange-commons-java-<span class="number">0.2</span><span class="number">.3</span><span class="number">.4</span>.jar</span><br><span class="line">c3p0-<span class="number">0.9</span><span class="number">.2</span><span class="number">.1</span>.jar</span><br></pre></td></tr></table></figure>
+
+<p>以上jar包都放入WEB-INF/lib目录下</p>
+<p><strong>配置</strong></p>
+<p>Spring配置文件spring-servlet.xml<br>[xml]<br> <!-- C3P0 pooled datasource --><br> <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+ destroy-method="close"><br> <property name="driverClass" value="${jdbc.driverClassName}" /><br> <property name="jdbcUrl" value="${jdbc.url}" /><br> <property name="user" value="${jdbc.username}" /><br> <property name="password" value="${jdbc.password}" /><br> </bean><br> &lt;context:property-placeholder location=”WEB-INF/jdbc.properties” /&gt;</p>
+ <!-- SqlSessionFactory for MyBatis -->
+ <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+ <property name="dataSource" ref="dataSource" />
+ <property name="configLocation" value="WEB-INF/mybatis.xml" />
+ </bean>
+
+ <!-- scanning for mappers -->
+<p> &lt;mybatis:scan base-package=”net.openwares.test.mapper” /&gt;<br>[/xml]<br>其中配置了C3P0 jdbc数据源dataSource，使用刚配置好的spring数据源dataSource配置MyBatis的SqlSessionFactoryBean,用来产生mapper需要的sqlsession,最后是自动扫描包下面的mapper,并生成相应接口的代理实现类。<br>不要忘了在spring-servlet.xml中添加mybatis 名字空间，如下：<br>[xml]<br><beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+ xsi:schemaLocation="
+ http://mybatis.org/schema/mybatis-spring
+ http://mybatis.org/schema/mybatis-spring.xsd"><br>[/xml]</p>
+<p>WEB-INF/jdbc.properties文件<br>[java]<br>jdbc.driverClassName=org.postgresql.Driver<br>jdbc.url=jdbc:postgresql://localhost/testdb<br>jdbc.username=postgres<br>jdbc.password=postgres<br>[/java]</p>
+<p>MyBatis的其他配置可以设置在WEB-INF/mybatis.xml文件中,但不用再设置environments元素，因为MyBatis-Spring会使用spring配置的数据库环境包括数据源和事务配置。</p>
+<p>这样配置就算完成了，MyBatis-Spring会自动扫描类classpath下包net.openwares.test.mapper里面的mapper配置xml和接口,生成mapper接口的代理实现类，并自动注入sqlSessionFactory为mapper提供可用的sqlSession。<br>如果有多个包需要扫描，只需用逗号或分号分隔包名即可。这是设置mapper bean最简单的方式。</p>
+<p>而且,MyBatis-Spring自动扫描产生的mapper接口实现类是线程安全的,也完全不用再与sqlsession打交道,MyBatis-Spring会在背后默默的处理好这一切。</p>
+<blockquote>
+<p>Rather than code data access objects (DAOs) manually using SqlSessionDaoSupport or SqlSessionTemplate, Mybatis-Spring can create a thread safe <a target="_blank" rel="noopener" href="http://mybatis.github.io/spring/mappers.html">mapper</a> that you can inject directly into other beans</p>
+</blockquote>
+<p><strong>简单示例代码</strong></p>
+<p>与前面的例子一样，这里只是把前端提交的加数augend和被加数addend存入postgresql数据库，PostgreSQL建库脚本testdb.sql如下：<br>[sql]<br>CREATE DATABASE testdb;</p>
+<p>\c testdb;</p>
+<p>CREATE TABLE Attender(<br> augend int,<br> addend int<br>);<br>[/sql]</p>
+<p>然后执行命令行建库,psql的简单使用参见 <a target="_blank" rel="noopener" href="https://openwares.net/database/postgres_first.html">PostgreSQL初步</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ psql -U postgres -h localhost -f testdb.sql</span><br></pre></td></tr></table></figure>
+
+<p>MyBatis mapper</p>
+<p>mapper分为两部分，一个是java接口，另一个是xml配置文件，这两个文件要放置在一个目录下，而且接口的全限定接口名一定要与xml配置文件中mapper元素的命名空间完全一致。MyBatis会扫描xml为mapper接口生成实现类，并注册到spring容器中，供应用程序使用。这个mapper接口实际上就是一个DAO接口。</p>
+<p>先看mapper配置文件<br>[xml]<br><?xml version="1.0" encoding="UTF-8" ?><br><!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><br><mapper namespace="net.openwares.test.mapper.AttenderMapper"><br> <select id="selectAttender" parameterType="int" resultType="net.openwares.test.mapper.AttenderPO"><br> select * from attender where augend = #{augend}<br> </select><br> <insert id="insertAttender" parameterType="net.openwares.test.mapper.AttenderPO"><br> insert into attender (augend, addend) values (#{augend},#{addend})<br> </insert><br></mapper><br>[/xml]</p>
+<p>mapper接口代码：<br>[java]<br>package net.openwares.test.mapper;</p>
+<p>import java.util.List;</p>
+<p>public interface AttenderMapper{<br> List<AttenderPO> getAttender(String augend);</p>
+<p> void insertAttender(AttenderPO attender);<br>}<br>[/java]</p>
+<p>接口全限定类名和xml配置文件中mapper的命名空间都为net.openwares.test.mapper.AttenderMapper，有了这些信息，无需实现mapper接口,<br>mybatis会自动提供接口的实现。</p>
+<p>最后使用此接口将客户提交的数据持久化到数据库<br>[java]<br>@Controller<br>public class Persistent{</p>
+<p> @Autowired<br> private Outcome outcome;</p>
+<p> @Autowired(required=true)<br> private AttenderMapper attenderMapper;</p>
+<p> @RequestMapping(“/ajaxcalc”)<br> public @ResponseBody Outcome getResult(@RequestBody Attender attender){</p>
+<p> //persistent Attender object<br> AttenderPO attenderPO = new AttenderPO();</p>
+<p> attenderPO.setAugend(attender.getAugend());<br> attenderPO.setAddend(attender.getAddend());</p>
+<p> attenderMapper.insertAttender(attenderPO);</p>
+<p> outcome.setResult(attender.getAugend() + attender.getAddend());<br> return outcome;<br> }<br>}<br>[/java]</p>
+<p>使用@Autowired(required=true)自动注入依赖attenderMapper即可。</p>
+<p>因为是简单的示例，这里没有使用事务管理，也没有仔细的分层，将代码直接写入了controller。</p>
+<p><a href="/downloads/persistent.war">完整的示例代码下载</a>。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/10/16/spring3-mybatis3-log4j/" rel="prev" title="tomcat 7,spring 3,mybatis 3 配置log4j日志组件">
+                  <i class="fa fa-chevron-left"></i> tomcat 7,spring 3,mybatis 3 配置log4j日志组件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/10/18/transaction-isolation-level/" rel="next" title="数据库事务隔离级别">
+                  数据库事务隔离级别 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

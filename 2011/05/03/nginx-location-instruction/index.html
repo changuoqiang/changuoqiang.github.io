@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="location指令隶属于NginxHttpCoreModule模块，是nginx最重要的指令之一,其语法如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx location指令">
+<meta property="og:url" content="http://example.com/2011/05/03/nginx-location-instruction/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="location指令隶属于NginxHttpCoreModule模块，是nginx最重要的指令之一,其语法如下：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-05-03T04:22:08.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.363Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Nginx">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2011/05/03/nginx-location-instruction/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>nginx location指令 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#matches-the-query-only"><span class="nav-number">1.</span> <span class="nav-text">matches the query &#x2F; only.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%85%E4%BB%85%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E8%AF%B7%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">仅仅精确匹配请求 &#x2F;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matches-any-query-since-all-queries-begin-with-but-regular"><span class="nav-number">3.</span> <span class="nav-text">matches any query, since all queries begin with &#x2F;, but regular</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#expressions-and-any-longer-conventional-blocks-will-be"><span class="nav-number">4.</span> <span class="nav-text">expressions and any longer conventional blocks will be</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matched-first"><span class="nav-number">5.</span> <span class="nav-text">matched first.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matches-any-query-beginning-with-images-and-halts-searching"><span class="nav-number">6.</span> <span class="nav-text">matches any query beginning with &#x2F;images&#x2F; and halts searching,</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#so-regular-expressions-will-not-be-checked"><span class="nav-number">7.</span> <span class="nav-text">so regular expressions will not be checked.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matches-any-request-ending-in-gif-jpg-or-jpeg-However-all"><span class="nav-number">8.</span> <span class="nav-text">matches any request ending in gif, jpg, or jpeg. However, all</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#requests-to-the-images-directory-will-be-handled-by"><span class="nav-number">9.</span> <span class="nav-text">requests to the &#x2F;images&#x2F; directory will be handled by</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuration-C"><span class="nav-number">10.</span> <span class="nav-text">Configuration C.</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2011/05/03/nginx-location-instruction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          nginx location指令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-05-03 12:22:08" itemprop="dateCreated datePublished" datetime="2011-05-03T12:22:08+08:00">2011-05-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>location指令隶属于NginxHttpCoreModule模块，是nginx最重要的指令之一,其语法如下：</p>
+<a id="more"></a>
+<p><strong>syntax:</strong> location [=~~*^~@] /uri/ { … }<br>default: no<br>默认值:无默认值<br><strong>context:</strong> server<br>上下文:server指令语句 </p>
+<p>This directive allows different configurations depending on the URI. It can be configured using both literal strings and regular expressions. To use regular expressions, you must use a prefix:</p>
+<ol>
+<li><p> “~” for case sensitive matching</p>
+</li>
+<li><p>“~*” for case insensitive matching</p>
+<p>这条指令依据不同的URI(Uniform Resource Identifier)可以有不同的配置。它可以被配置为使用字面字符值和规则表示式(Regular Expression),使用规则表达式，必须使用一下前缀来修饰：</p>
+</li>
+<li><p> “~” 用于区分大小的正则表达式匹配</p>
+</li>
+<li><p> “~*” 用于不区分大小的正则表达式匹配</p>
+</li>
+</ol>
+<p>To determine which location directive matches a particular query, the literal strings are checked first. Literal strings match the beginning portion of the query - the most specific match will be used. Afterwards, regular expressions are checked in the order defined in the configuration file. The first regular expression to match the query will stop the search. If no regular expression matches are found, the result from the literal string search is used. </p>
+<p>当决定哪一个location指令匹配一个特殊的请求时，nginx首先检查字面字符值。字面字符值匹配请求的开始部分 - 最相关的匹配会被采用。之后，以在配置文件内定义的顺序来检查规则表达式。当找到第一个匹配此请求的规则表达式后搜索停止(，并使用此结果)。如果没有与请求匹配的规则表达式，那么先前最相关配置的字面字符值会被采用。</p>
+<p>For case insensitive operating systems, like Mac OS X or Windows with Cygwin, literal string matching is done in a case insensitive way (0.7.7). However, comparison is limited to single-byte locale’s only.<br>对于大小写不敏感的操作系统，比如Mac OS X或者使用Cygwin的windows操作系统，字面字符值会以大小下不敏感的方式(since 0.7.7)进行匹配。然而，这种比较仅限于单字节字符locale。</p>
+<p>Regular expression may contain captures (0.7.40), which can then be used in other directives.<br>规则表达式可以包含捕获(since 0.7.40),也可以在其他指令内使用规则表达式捕获特性。</p>
+<p>It is possible to disable regular expression checks after literal string matching by using “^<del>“ prefix. If the most specific match literal location has this prefix: regular expressions aren’t checked.<br>可以使用”^</del>“前缀在字面字符值匹配以后禁止再检查规则表达式。如果最相关匹配的字面字符值location指令有前缀”^~”，那么将会禁止继续检查规则表达式。</p>
+<p>By using the “=” prefix we define the exact match between request URI and location. When matched search stops immediately. E.g., if the request “/“ occurs frequently, using “location = /“ will speed up processing of this request a bit as search will stop after first comparison.<br>使用”=”前缀在请求的URI和location指令之间定义<strong>精确匹配</strong>。当找到匹配，搜索立刻停止。比如，如果”/“请求很频繁，那么使用”location = /“将会加速对此请求的匹配搜索，因为搜索会在第一次匹配后停止。</p>
+<p>On exact match with literal location without “=” or “^<del>“ prefixes search is also immediately terminated.<br>当<strong>精确匹配</strong>到没有 “=” 或者 “^</del>“ 前缀的字面字符值location指令时，搜索同样立刻停止。</p>
+<p>To summarize, the order in which directives are checked is as follows:</p>
+<ol>
+<li> Directives with the “=” prefix that match the query exactly. If found, searching stops.</li>
+<li> All remaining directives with conventional strings. If this match used the “^~” prefix, searching stops.</li>
+<li> Regular expressions, in the order they are defined in the configuration file.</li>
+<li> If #3 yielded a match, that result is used. Otherwise, the match from #2 is used.</li>
+</ol>
+<p>总结一下，指令搜索的顺序如下：</p>
+<ol>
+<li> 带有”=”前缀的指令匹配精确的请求值。如果找到，搜索立刻停止。</li>
+<li> 所有其余的使用字面字符值的location指令。如果最相关匹配指令带有”^~”前缀，那么搜索停止，否则继续搜索。</li>
+<li> 规则表达式按照它们在配置文件内定义的顺序进行搜索。</li>
+<li> 如果第3条找到一个匹配，那么使用这个结果，否则使用第二条中搜索到的匹配。</li>
+</ol>
+<p>Example:</p>
+<p>location = / {</p>
+<h1 id="matches-the-query-only"><a href="#matches-the-query-only" class="headerlink" title="matches the query / only."></a>matches the query / only.</h1><h1 id="仅仅精确匹配请求"><a href="#仅仅精确匹配请求" class="headerlink" title="仅仅精确匹配请求 /"></a>仅仅精确匹配请求 /</h1><p> [ configuration A ]<br>}<br>location / {</p>
+<h1 id="matches-any-query-since-all-queries-begin-with-but-regular"><a href="#matches-any-query-since-all-queries-begin-with-but-regular" class="headerlink" title="matches any query, since all queries begin with /, but regular"></a>matches any query, since all queries begin with /, but regular</h1><h1 id="expressions-and-any-longer-conventional-blocks-will-be"><a href="#expressions-and-any-longer-conventional-blocks-will-be" class="headerlink" title="expressions and any longer conventional blocks will be"></a>expressions and any longer conventional blocks will be</h1><h1 id="matched-first"><a href="#matched-first" class="headerlink" title="matched first."></a>matched first.</h1><p>#与任意请求相匹配，因为所有的请求都是以/开头的，但是规则表达式和任何更长的字面字符值会优先匹配<br> [ configuration B ]<br>}<br>location ^~ /images/ {</p>
+<h1 id="matches-any-query-beginning-with-images-and-halts-searching"><a href="#matches-any-query-beginning-with-images-and-halts-searching" class="headerlink" title="matches any query beginning with /images/ and halts searching,"></a>matches any query beginning with /images/ and halts searching,</h1><h1 id="so-regular-expressions-will-not-be-checked"><a href="#so-regular-expressions-will-not-be-checked" class="headerlink" title="so regular expressions will not be checked."></a>so regular expressions will not be checked.</h1><p>#匹配任何以/images/开始的请求，并立刻停止搜索，因此规则表达式将不会被检查。<br> [ configuration C ]<br>}<br>location ~* \.(gifjpgjpeg)$ {</p>
+<h1 id="matches-any-request-ending-in-gif-jpg-or-jpeg-However-all"><a href="#matches-any-request-ending-in-gif-jpg-or-jpeg-However-all" class="headerlink" title="matches any request ending in gif, jpg, or jpeg. However, all"></a>matches any request ending in gif, jpg, or jpeg. However, all</h1><h1 id="requests-to-the-images-directory-will-be-handled-by"><a href="#requests-to-the-images-directory-will-be-handled-by" class="headerlink" title="requests to the /images/ directory will be handled by"></a>requests to the /images/ directory will be handled by</h1><h1 id="Configuration-C"><a href="#Configuration-C" class="headerlink" title="Configuration C."></a>Configuration C.</h1><p>#匹配任何以gif,jpg,jpeg字符结尾的请求,然后所有到/images/目录的请求将会被Configuration C处理<br> [ configuration D ]<br>}</p>
+<p>Example requests:</p>
+<ul>
+<li>  / -&gt; configuration A</li>
+<li>  /documents/document.html -&gt; configuration B</li>
+<li>  /images/1.gif -&gt; configuration C</li>
+<li>  /documents/1.jpg -&gt; configuration D</li>
+</ul>
+<p>Note that you could define these 4 configurations in any order and the results would remain the same. While nested locations are allowed by the configuration file parser, their use is discouraged and may produce unexpected results.<br>注意可以以任何顺序定义例子中的4个location配置，其搜索结果都是一样的。虽然配置文件解析器允许嵌套的location指令，但是不鼓励这样使用，因为可能会产生不可预料的结果。</p>
+<p>The prefix “@” specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests </p>
+<p>前缀”@”指定一个命名location。这样的location并不在正常的请求处理中使用，他们仅仅用于处理内部重定向请求。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/04/25/oracle-10g-reconfig-enterprise-manager/" rel="prev" title="Oracle 10g重新配置Enterprise Manager">
+                  <i class="fa fa-chevron-left"></i> Oracle 10g重新配置Enterprise Manager
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/05/03/oracle-exp-imp-job/" rel="next" title="Oracle exp/imp用户不同导致job停止工作">
+                  Oracle exp/imp用户不同导致job停止工作 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

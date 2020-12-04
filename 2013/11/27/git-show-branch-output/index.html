@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="为了弄明白git show-branch的输出格式,先做一系列实验，看其输出 初始化一个空的git库 12$ git initInitialized empty Git repository in &#x2F;home&#x2F;$&amp;#123;username&amp;#125;&#x2F;test&#x2F;.git&#x2F;  在master分支上做初始提交 123456$ touch master$ git add --all$ git com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git show-branch输出">
+<meta property="og:url" content="http://example.com/2013/11/27/git-show-branch-output/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为了弄明白git show-branch的输出格式,先做一系列实验，看其输出 初始化一个空的git库 12$ git initInitialized empty Git repository in &#x2F;home&#x2F;$&amp;#123;username&amp;#125;&#x2F;test&#x2F;.git&#x2F;  在master分支上做初始提交 123456$ touch master$ git add --all$ git com">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/downloads/show_branch_on_feature.png">
+<meta property="og:image" content="http://example.com/downloads/show_branch_on_devel.png">
+<meta property="og:image" content="http://example.com/downloads/show_branch_on_master.png">
+<meta property="og:image" content="http://example.com/downloads/show_branch_on_devel_merged_feature.png">
+<meta property="og:image" content="http://example.com/downloads/multiple_commit.png">
+<meta property="og:image" content="http://example.com/downloads/merge.png">
+<meta property="article:published_time" content="2013-11-27T02:11:42.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.199Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/downloads/show_branch_on_feature.png">
+
+
+<link rel="canonical" href="http://example.com/2013/11/27/git-show-branch-output/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>git show-branch输出 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/11/27/git-show-branch-output/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git show-branch输出
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-11-27 10:11:42" itemprop="dateCreated datePublished" datetime="2013-11-27T10:11:42+08:00">2013-11-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>为了弄明白git show-branch的输出格式,先做一系列实验，看其输出</p>
+<p><strong>初始化一个空的git库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/$&#123;username&#125;/test/.git/</span><br></pre></td></tr></table></figure>
+
+<p><strong>在master分支上做初始提交</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ touch master</span><br><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">&quot;master init commit&quot;</span></span><br><span class="line">\[master (root-commit) d47b60d\] master init commit</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">0</span> insertions(+), <span class="number">0</span> deletions(-)</span><br><span class="line"> create mode <span class="number">100644</span> master</span><br></pre></td></tr></table></figure>
+
+<p><strong>看看当前分支的情况</strong></p>
+<p>$ git branch</p>
+<ul>
+<li>master</li>
+</ul>
+<p>$ git show-branch<br>[master] master init commit</p>
+<p><strong>新建devel分支</strong></p>
+<p>$ git branch devel<br>$ git branch<br>   devel</p>
+<ul>
+<li>master</li>
+</ul>
+<p>$ git show-branch<br>!  [devel] master init commit<br>  *  [master] master init commit<br>–<br>+*  [devel] master init commit</p>
+<p><strong>切换到devel分支并做新的提交</strong><br>$ git checkout devel<br>Switched to branch ‘devel’<br>$ touch devel<br>$ git add –all<br>$ git commit -m “first commit on devel”<br>$ git branch</p>
+<ul>
+<li>devel<br>   master</li>
+</ul>
+<p>$ git show-branch<br>*  [devel] first commit on devel<br>  !   [master] master init commit<br>–<br>*     [devel] first commit on devel<br>*+  [master] master init commit</p>
+<p><strong>回到master分支</strong><br>$ git checkout master<br>$ git show-branch<br>!   [devel] first commit on devel<br>   *    [master] master init commit<br>–<br>+      [devel] first commit on devel</p>
+<ul>
+<li><ul>
+<li>  [master] master init commit</li>
+</ul>
+</li>
+</ul>
+<p><strong>在devel分支上新建feature分支</strong></p>
+<p>$ git checkout devel<br>$ git checkout -b feature<br>$ touch feature<br>$ git add –all<br>$ git commit -m “first commit on feature”<br>$ git show-branch<br><img src="/downloads/show_branch_on_feature.png" alt="show_branch_on_feature"></p>
+<p>切换到devel分支<br>$ git checkout devel<br>$ git show-branch<br><img src="/downloads/show_branch_on_devel.png" alt="show_branch_on_devel"></p>
+<p>切换到master分支<br>$ git checkout master<br>$ git show-branch<br><img src="/downloads/show_branch_on_master.png" alt="show_branch_on_master"></p>
+<p><strong>合并分支feature到devel</strong></p>
+<p>$ git checkout devel<br>$ git merge feature<br>$ git show-branch<br><img src="/downloads/show_branch_on_devel_merged_feature.png" alt="show_branch_on_devel_merged_feature"></p>
+<p><strong>feature分支多次提交之后</strong><br><img src="/downloads/multiple_commit.png" alt="multiple_commit"></p>
+<p><strong>然后再将分支feature合并到devel</strong><br><img src="/downloads/merge.png" alt="merge"></p>
+<h5 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h5><ul>
+<li>  git show-branch输出<br>输出分为上下两部分，使用短划线”-“分隔。两个分支使用两个短划线”–”，三个分支使用三个短划线”—“，依次类推。<br>上半部分为层次缩进的分支列表，下半部分为commit列表。<br>上半部分的分支列表中，使用<em>标识当前分支，其他分支使用!标识。分支前的标识符</em>或者!一直垂直贯通到下半部分，这一垂直列的符号都是属于这个分支的。<br>下半部分的commit列表中，前导的符号有<em>和+号。</em>表示这一列上的分支(当前分支)有此commit。而+表示这一列上的分支(非当前分支)有此commit。</li>
+</ul>
+<p>标识符的颜色只是用于容易区分列，一列的颜色是一致的，看起来更清楚。</p>
+<ul>
+<li>  分支名字和commit标识<br>show-branch输出中，上半部分的分支名字使用[分支名字]标识，下半部分的commit使用[分支名字]标识最后的commit,[分支名字^]标识该分支的上一个提交<br>[分支名字~2]标识该分支的倒数第三个commit。这是commit的快捷标识符，在git命令中可以引用对应的commit，也可以直接使用commit的hash tag,不过比较不直观而已。</li>
+<li>  git branch<br>branch只是简单的输出所有的分支，当前分支前使用*表示，当前分支的文字颜色为绿色。</li>
+<li>  merge<br>一个commit只输出一次，分支被合并后，被合并分支的commit使用[合并分支]标识，但commit是属于两个分支的，所以commit的前面有两个标识符号*和+。</li>
+<li>  分支名字空间<br>git的分支名字空间是扁平的，共享同一个namespace。</li>
+</ul>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/11/27/thread-safe/" rel="prev" title="线程安全">
+                  <i class="fa fa-chevron-left"></i> 线程安全
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/11/30/vim-call-python-format-json/" rel="next" title="vim调用python格式化json数据">
+                  vim调用python格式化json数据 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

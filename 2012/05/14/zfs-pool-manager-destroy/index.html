@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="管理和销毁存储池">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZFS文件系统介绍 - 存储池(2):管理和销毁存储池">
+<meta property="og:url" content="http://example.com/2012/05/14/zfs-pool-manager-destroy/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="管理和销毁存储池">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-05-14T06:15:03.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.605Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="ZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/05/14/zfs-pool-manager-destroy/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>ZFS文件系统介绍 - 存储池(2):管理和销毁存储池 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir"><span class="nav-number">1.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-add-reservoir-dev-vdd"><span class="nav-number">2.</span> <span class="nav-text">zpool add reservoir &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-1"><span class="nav-number">3.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-remove-reservoir-dev-vdd"><span class="nav-number">4.</span> <span class="nav-text">zpool remove reservoir &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-add-reservoir-mirror-dev-vdc-dev-vdd"><span class="nav-number">5.</span> <span class="nav-text">zpool add reservoir mirror &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-add-f-reservoir-mirror-dev-vdc-dev-vdd"><span class="nav-number">6.</span> <span class="nav-text">zpool add -f reservoir mirror &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-add-reservoir-raidz-dev-vde-dev-vdf"><span class="nav-number">7.</span> <span class="nav-text">zpool add reservoir raidz &#x2F;dev&#x2F;vde &#x2F;dev&#x2F;vdf</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-2"><span class="nav-number">8.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status"><span class="nav-number">9.</span> <span class="nav-text">zpool status</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-remove-reservoir-dev-vdc"><span class="nav-number">10.</span> <span class="nav-text">zpool remove reservoir &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-1"><span class="nav-number">11.</span> <span class="nav-text">zpool status</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-3"><span class="nav-number">12.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-remove-reservoir-dev-vdc-1"><span class="nav-number">13.</span> <span class="nav-text">zpool remove reservoir &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-4"><span class="nav-number">14.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-5"><span class="nav-number">15.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-remove-reservoir-dev-vdc-2"><span class="nav-number">16.</span> <span class="nav-text">zpool remove reservoir &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-6"><span class="nav-number">17.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-attach-reservoir-dev-vdb-dev-vdc"><span class="nav-number">18.</span> <span class="nav-text">zpool attach reservoir &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-7"><span class="nav-number">19.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-detach-reservoir-dev-vdc"><span class="nav-number">20.</span> <span class="nav-text">zpool detach reservoir &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-8"><span class="nav-number">21.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-attach-reservoir-dev-vdb-dev-vdd"><span class="nav-number">22.</span> <span class="nav-text">zpool attach reservoir &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-9"><span class="nav-number">23.</span> <span class="nav-text">zpool status reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-detach-reservoir-dev-vdd"><span class="nav-number">24.</span> <span class="nav-text">zpool detach reservoir &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-2"><span class="nav-number">25.</span> <span class="nav-text">zpool status</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/05/14/zfs-pool-manager-destroy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZFS文件系统介绍 - 存储池(2):管理和销毁存储池
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-05-14 14:15:03" itemprop="dateCreated datePublished" datetime="2012-05-14T14:15:03+08:00">2012-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>管理和销毁存储池</p>
+<a id="more"></a>
+<p><strong>管理存储池中的设备</strong></p>
+<p><strong>1、添加删除设备</strong></p>
+<p>通过添加新的顶层虚拟设备vdev,可以向存储池中动态添加、删除磁盘。此磁盘空间立即可供池中的所有数据集使用。使用zpool add命令向池中添加新虚拟设备,使用zpool remove命令从池中删除虚拟设备。zpool remove命令仅支持删除热备件、日志设备和高速缓存设备,非冗余设备和RAID-Z设备无法从池中删除,也就是在没有足够的冗余,无法保证池中数据完整的情况下,无法从池中删除设备。</p>
+<p>新添加的普通顶层虚拟设备,即非日志设备,非高速缓存设备,非热备设备,与池中现有顶层虚拟设备进行动态条带。</p>
+<p>普通条带池 # zpool create reservoir /dev/vdb /dev/vdc  </p>
+<h1 id="zpool-status-reservoir"><a href="#zpool-status-reservoir" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>          vdc1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-add-reservoir-dev-vdd"><a href="#zpool-add-reservoir-dev-vdd" class="headerlink" title="zpool add reservoir /dev/vdd"></a>zpool add reservoir /dev/vdd</h1><h1 id="zpool-status-reservoir-1"><a href="#zpool-status-reservoir-1" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>          vdc1      ONLINE       0     0     0<br>          vdd1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-remove-reservoir-dev-vdd"><a href="#zpool-remove-reservoir-dev-vdd" class="headerlink" title="zpool remove reservoir /dev/vdd"></a>zpool remove reservoir /dev/vdd</h1><p>cannot remove /dev/vdd: only inactive hot spares, cache, top-level, or log devices can be removed </p>
+<p>一个更复杂的例子,当然没人会用这样的池子 # zpool create reservoir /dev/vdb  </p>
+<h1 id="zpool-add-reservoir-mirror-dev-vdc-dev-vdd"><a href="#zpool-add-reservoir-mirror-dev-vdc-dev-vdd" class="headerlink" title="zpool add reservoir mirror /dev/vdc /dev/vdd"></a>zpool add reservoir mirror /dev/vdc /dev/vdd</h1><p>invalid vdev specification<br>use ‘-f’ to override the following errors:<br>mismatched replication level: pool uses disk and new vdev is mirror  </p>
+<h1 id="zpool-add-f-reservoir-mirror-dev-vdc-dev-vdd"><a href="#zpool-add-f-reservoir-mirror-dev-vdc-dev-vdd" class="headerlink" title="zpool add -f reservoir mirror /dev/vdc /dev/vdd"></a>zpool add -f reservoir mirror /dev/vdc /dev/vdd</h1><h1 id="zpool-add-reservoir-raidz-dev-vde-dev-vdf"><a href="#zpool-add-reservoir-raidz-dev-vde-dev-vdf" class="headerlink" title="zpool add reservoir raidz /dev/vde /dev/vdf"></a>zpool add reservoir raidz /dev/vde /dev/vdf</h1><h1 id="zpool-status-reservoir-2"><a href="#zpool-status-reservoir-2" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>          mirror-1  ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>            vdd1    ONLINE       0     0     0<br>          raidz1-2  ONLINE       0     0     0<br>            vde1    ONLINE       0     0     0<br>            vdf1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>添加删除日志设备 # zpool add reservoir log /dev/vdc  </p>
+<h1 id="zpool-status"><a href="#zpool-status" class="headerlink" title="zpool status"></a>zpool status</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>        logs<br>          vdc1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-remove-reservoir-dev-vdc"><a href="#zpool-remove-reservoir-dev-vdc" class="headerlink" title="zpool remove reservoir /dev/vdc"></a>zpool remove reservoir /dev/vdc</h1><h1 id="zpool-status-1"><a href="#zpool-status-1" class="headerlink" title="zpool status"></a>zpool status</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>添加删除高速缓存设备 # zpool add reservoir cache /dev/vdc  </p>
+<h1 id="zpool-status-reservoir-3"><a href="#zpool-status-reservoir-3" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>        cache<br>          vdc1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-remove-reservoir-dev-vdc-1"><a href="#zpool-remove-reservoir-dev-vdc-1" class="headerlink" title="zpool remove reservoir /dev/vdc"></a>zpool remove reservoir /dev/vdc</h1><h1 id="zpool-status-reservoir-4"><a href="#zpool-status-reservoir-4" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>添加删除热备件 # zpool add reservoir spare /dev/vdc  </p>
+<h1 id="zpool-status-reservoir-5"><a href="#zpool-status-reservoir-5" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>        spares<br>          vdc1      AVAIL     </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-remove-reservoir-dev-vdc-2"><a href="#zpool-remove-reservoir-dev-vdc-2" class="headerlink" title="zpool remove reservoir /dev/vdc"></a>zpool remove reservoir /dev/vdc</h1><h1 id="zpool-status-reservoir-6"><a href="#zpool-status-reservoir-6" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p><strong>2、附加分离设备</strong></p>
+<p>附加分离设备与添加删除设备的根本区别在于,附加分离设备是在虚拟设备内附加或分离磁盘,一般是在顶层虚拟设备内,而添加和删除设备是在池子中添加或删除顶层虚拟设备。</p>
+<p>可以通过附加磁盘使普通池成为冗余镜像池 # zpool status reservoir<br>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-attach-reservoir-dev-vdb-dev-vdc"><a href="#zpool-attach-reservoir-dev-vdb-dev-vdc" class="headerlink" title="zpool attach reservoir /dev/vdb /dev/vdc"></a>zpool attach reservoir /dev/vdb /dev/vdc</h1><h1 id="zpool-status-reservoir-7"><a href="#zpool-status-reservoir-7" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: resilvered 84K in 0h0m with 0 errors on Wed May 16 10:30:48 2012<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-detach-reservoir-dev-vdc"><a href="#zpool-detach-reservoir-dev-vdc" class="headerlink" title="zpool detach reservoir /dev/vdc"></a>zpool detach reservoir /dev/vdc</h1><h1 id="zpool-status-reservoir-8"><a href="#zpool-status-reservoir-8" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: resilvered 84K in 0h0m with 0 errors on Wed May 16 10:30:48 2012<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>附加磁盘时通过指定其前导磁盘来确定新附加磁盘的位置。此例的实质就是在唯一的顶层虚拟设备内,在原有磁盘设备/dev/vdb之后附加了另外一个磁盘/dev/vdc,二者位于同一个顶层设备内,成为镜像关系。</p>
+<p>还可以通过附加磁盘使双路镜像成为多路镜像,或者相反,但不能向现有raidz(1,2,3)配置中附加磁盘。 # zpool status<br>  pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-attach-reservoir-dev-vdb-dev-vdd"><a href="#zpool-attach-reservoir-dev-vdb-dev-vdd" class="headerlink" title="zpool attach reservoir /dev/vdb /dev/vdd"></a>zpool attach reservoir /dev/vdb /dev/vdd</h1><h1 id="zpool-status-reservoir-9"><a href="#zpool-status-reservoir-9" class="headerlink" title="zpool status reservoir"></a>zpool status reservoir</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: resilvered 84K in 0h0m with 0 errors on Wed May 16 10:43:31 2012<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>            vdd1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors  </p>
+<h1 id="zpool-detach-reservoir-dev-vdd"><a href="#zpool-detach-reservoir-dev-vdd" class="headerlink" title="zpool detach reservoir /dev/vdd"></a>zpool detach reservoir /dev/vdd</h1><h1 id="zpool-status-2"><a href="#zpool-status-2" class="headerlink" title="zpool status"></a>zpool status</h1><p>  pool: reservoir<br> state: ONLINE<br> scan: resilvered 84K in 0h0m with 0 errors on Wed May 16 10:43:31 2012<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p><strong>3、替换设备</strong></p>
+<p>如果冗余池中的设备出现故障,或者对所有池来说只是用更大容量的磁盘替换池中原有的小容量磁盘,可以使用zpool replace命令。<br>如果替换涉及到的新旧设备位于同一个物理位置,则只需标识出这个位置的物理设备即可,如果新旧磁盘设备位于不同的物理位置则需要分别标识出旧设备和新设备的物理位置。用大容量的磁盘替换非冗余池中的小容量磁盘设备,则新旧设备必须同时在线,同步完成后才可以移除旧设备。</p>
+<p><strong>替换镜像池中的故障设备</strong></p>
+<p>如果冗余池中的故障磁盘并未离线，先用以下命令使其离线</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># zpool offline reservoir /dev/vdc</span><br></pre></td></tr></table></figure>
+<p>然后将故障磁盘抽出,将新的磁盘插入，然后</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># zpool replace reservoir /dev/vdc</span><br></pre></td></tr></table></figure>
+<p>最后使新磁盘在线</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># zpool online reservoir /dev/vdc</span><br></pre></td></tr></table></figure>
+<p><strong>用大容量磁盘替换小容量磁盘来扩展镜像冗余池</strong></p>
+<p>假设镜像池reservoir由/dev/vdb和/dev/vdc组成,现由更大容量的/dev/vdd和/dev/vde来替换池中的磁盘</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># zpool replace reservoir /dev/vdb /dev/vdd</span><br><span class="line"># zpool replace reservoir /dev/vdd /dev/vde</span><br></pre></td></tr></table></figure>
+<p>最后需要设置autoexpand属性为on池子的容量才可以扩展到新设备的容量</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># zpool set autoexpand=on reservoir</span><br></pre></td></tr></table></figure>
+<p>但当前zfsonlinux的实现好像还是有点儿问题,设置了此属性,容量仍然无法扩展,虽然设备已经替换过了。<br>注：需要执行zpool onlie命令来扩展空间，每个设备上都要执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo zpool online -e reservoir &lt;设备id&gt;</span><br></pre></td></tr></table></figure>
+<p>设备id获取:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zpool status -vg reservoir</span><br></pre></td></tr></table></figure>
+
+<p><strong>销毁存储池</strong></p>
+<p>销毁存储池很简单,但一定要三思。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># zpool destroy reservoir</span><br></pre></td></tr></table></figure>
+<p>此命令会销毁池,即使池中包含挂载的数据集也是如此。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/ZFS/" rel="tag"># ZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-pool-create/" rel="prev" title="ZFS文件系统介绍 - 存储池(1):创建存储池">
+                  <i class="fa fa-chevron-left"></i> ZFS文件系统介绍 - 存储池(1):创建存储池
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-filesystem/" rel="next" title="ZFS文件系统介绍 - 文件系统">
+                  ZFS文件系统介绍 - 文件系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

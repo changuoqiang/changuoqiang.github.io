@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="KVM虚拟环境性能优化的几个措施">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVM性能优化">
+<meta property="og:url" content="http://example.com/2012/04/28/kvm-performance-tuning/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="KVM虚拟环境性能优化的几个措施">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-28T03:28:45.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.280Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="KVM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/04/28/kvm-performance-tuning/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>KVM性能优化 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/28/kvm-performance-tuning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KVM性能优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-04-28 11:28:45" itemprop="dateCreated datePublished" datetime="2012-04-28T11:28:45+08:00">2012-04-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>KVM虚拟环境性能优化的几个措施</p>
+<a id="more"></a>
+<p>KVM本来性能已经很不错了,但还有一些微调措施来进一步提高KVM性能。</p>
+<p><strong>1、virtio</strong></p>
+<p>virtio是KVM的半虚拟化机制,用以提高IO性能,使用virtio可以显著提高KVM性能。virtio具体使用方法参见<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_kvm.html">1</a>,<a target="_blank" rel="noopener" href="https://openwares.net/linux/kvm_client_install.html">2</a>。</p>
+<p><strong>2、使用writeback缓存选项</strong></p>
+<p>针对客户机块设备的缓存,drive有一个子选项cache来设置缓存模式。两个主要的选项为writeback和writethrough,man手册是这样说的</p>
+<p>By default, writethrough caching is used for all block device. This means that the host page cache will be used to read and write data but write notification will be sent to the guest only when the data has been reported as written by the storage subsystem.</p>
+<p>Writeback caching will report data writes as completed as soon as the data is present in the host page cache. This is safe as long as you trust your host. If your host crashes or loses power, then the guest may experience data corruption.</p>
+<p>writethrough写操作时不使用主机的缓存,只有当主机接受到存储子系统写操作完成的通知后,主机才通知客户机写操作完成,也就是说这是同步的。而writeback则是异步的,它使用主机的缓存,当客户机写入主机缓存后立刻会被通知写操作完成,而此时主机尚未将数据真正写入存储系统,之后待合适的时机主机会真正的将数据写入存储。显然writeback会更快,但是可能风险稍大一些,如果主机突然掉电,就会丢失一部分客户机数据。</p>
+<p>这样使用writeback选项</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-drive file=debian.img,<span class="keyword">if</span>=virtio,index=<span class="number">0</span>,media=disk,format=qcow2,cache=writeback </span><br></pre></td></tr></table></figure>
+<p>CDROM设备也可以使用writeback选项</p>
+<p><strong>3、客户机的磁盘IO调度策略</strong></p>
+<p>磁盘IO要经过调度才可以写入磁盘,这种调度又称作电梯算法。对于客户机对磁盘的IO操作实际上要经过三次IO调度才能真正访问到物理磁盘,客户机对虚拟磁盘执行一次IO调度,KVM主机对所有上层的IO执行一次调度,当KVM主机将IO提交给磁盘阵列时,磁盘阵列也会对IO进行调度,最后才会真正读写物理磁盘。</p>
+<p>客户机看到的磁盘只不过是主机的一个文件,所以其IO调度并无太大意义,反而会影响IO效率,所以可以通过将客户机的IO调度策略设置为NOOP来提高性能。NOOP就是一个FIFO队列,不做IO调度。</p>
+<p>linux客户机使用grub2引导时,可以通过给内核传递一个参数来使用NOOP调度策略</p>
+<p>编辑文件/etc/default/grub</p>
+<p>行GRUB_CMDLINE_LINUX_DEFAULT=”quiet splash”后添加elevator=noop,变成为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet splash elevator=noop&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-grub</span><br></pre></td></tr></table></figure>
+
+<p><strong>4、打开KSM(Kernel Samepage Merging)</strong></p>
+<p>页共享早已有之,linux中称之为COW(copy on write)。内核2.6.32之后又引入了KSM。KSM特性可以让内核查找内存中完全相同的内存页然后将他们合并,并将合并后的内存页打上COW标记。KSM对KVM环境有很重要的意义,当KVM上运行许多相同系统的客户机时,客户机之间将有许多内存页是完全相同的,特别是只读的内核代码页完全可以在客户机之间共享,从而减少客户机占用的内存资源,从而可以同时运行更多的客户机。</p>
+<p>查看内核是否支持KSM特性:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ grep KSM /boot/config-\<span class="string">`uname -r\`</span></span><br><span class="line"><span class="string">CONFIG_KSM=y</span></span><br></pre></td></tr></table></figure>
+
+<p>Debian系统中KSM默认是关闭的,通过以下命令来开启KSM</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># echo 1 &gt; /sys/kernel/mm/ksm/run</span><br></pre></td></tr></table></figure>
+<p>关闭KSM</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># echo 0 &gt; /sys/kernel/mm/ksm/run</span><br></pre></td></tr></table></figure>
+<p>这样设置后,重新启动系统KSM会恢复到默认状态,尚未找个哪个内核参数可以设置在/etc/sysctl.conf中让KSM持久运行。</p>
+<p>可以在/etc/rc.local中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo <span class="number">1</span> &gt; <span class="regexp">/sys/</span>kernel/mm/ksm/run</span><br></pre></td></tr></table></figure>
+<p>让KSM开机自动运行</p>
+<p>有个哥们不喜欢rc.local,为ksm写了<a target="_blank" rel="noopener" href="http://dnaeon.github.io/enable-ksm-during-boot-time-on-linux/">个debian风格的system V init脚本</a>,很简洁。</p>
+<p>通过/sys/kernel/mm/ksm目录下的文件来查看内存页共享的情况,pages_shared文件中记录了KSM已经共享的页面数。</p>
+<p>国人对KSM做了进一步优化,这就是<a target="_blank" rel="noopener" href="http://kerneldedup.org/">UKSM</a>(Ultra KSM)项目,据说比KSM扫描更全面,页面速度更快,而且CPU占用率更低,希望此项目能尽快进入内核mainline。</p>
+<p>KSM会稍微的影响系统性能,以效率换空间,如果系统的内存很宽裕,则无须开启KSM,如果想尽可能多的并行运行KVM客户机,则可以打开KSM。</p>
+<p><strong>5、KVM Huge Page Backed Memory</strong> </p>
+<p>通过为客户机提供巨页后端内存,减少客户机消耗的内存并提高TLB命中率,从而提升KVM性能。x86 CPU通常使用4K内存页,但也有能力使用更大的内存页,x86_32可以使用4MB内存页，x86_64和x86_32 PAE可以使用2MB内存页。x86使用多级页表结构,一般有三级,页目录表-&gt;页表-&gt;页,所以通过使用巨页,可以减少页目录表和也表对内存的消耗。当然x86有缺页机制,并不是所有代码、数据页面都会驻留在内存中。</p>
+<p>首先挂装hugetlbfs文件系统</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#mkdir /hugepages</span><br><span class="line">#mount -t hugetlbfs hugetlbfs /hugepages</span><br></pre></td></tr></table></figure>
+<p>然后指定巨页需要的内存页面数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#sysctl vm.nr_hugepages=xxx</span><br></pre></td></tr></table></figure>
+<p>最后指定KVM客户机使用巨页来分配内存</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kvm -mem-path /hugepages</span><br></pre></td></tr></table></figure>
+<p>也可以让系统开机自动挂载hugetlbfs文件系统,在/etc/fstab中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugetlbfs /hugepages hugetlbfs defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>在/etc/sysctl.conf中添加如下参数来持久设定巨页文件系统需要的内存页面数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.nr_hugepages=xxx</span><br></pre></td></tr></table></figure>
+<p>巨页文件系统需要的页面数可以由客户机需要的内存除以页面大小也就是2M来大体估算。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://dnaeon.github.io/enable-ksm-during-boot-time-on-linux/">Enable KSM during boot-time on Linux</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/dnaeon/ksm-init.d-debian">KSM init.d script for Debian GNU/Linux</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/KVM/" rel="tag"># KVM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/04/27/debian-amd64-install-zfs/" rel="prev" title="Debian Wheezy AMD64编译安装原生ZFS文件系统">
+                  <i class="fa fa-chevron-left"></i> Debian Wheezy AMD64编译安装原生ZFS文件系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/14/linux-add-smb-printer/" rel="next" title="linux系统添加windows共享打印机">
+                  linux系统添加windows共享打印机 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

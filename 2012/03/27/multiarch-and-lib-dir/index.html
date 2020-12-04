@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Debian的下一个版本Wheezy将会全面支持Multiarch架构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="multiarch架构与lib目录">
+<meta property="og:url" content="http://example.com/2012/03/27/multiarch-and-lib-dir/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Debian的下一个版本Wheezy将会全面支持Multiarch架构。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-03-27T11:35:11.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.340Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/03/27/multiarch-and-lib-dir/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>multiarch架构与lib目录 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/03/27/multiarch-and-lib-dir/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          multiarch架构与lib目录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-03-27 19:35:11" itemprop="dateCreated datePublished" datetime="2012-03-27T19:35:11+08:00">2012-03-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Debian的下一个版本Wheezy将会全面支持Multiarch架构。</p>
+<a id="more"></a>
+<p>Multiarch本质上是一个文件系统规范,为在一个系统内安装不同架构的库和二进制目标程序提供一个通用的解决方案,目前的multiarch仅限于库文件,对二进制目标文件的支持尚未提上日程,还有许多工作要做。</p>
+<p>multiarch对跨平台编译(cross-build)和模拟器/兼容层同样有重要意义。multiarch会大大降低cross-build的复杂性,因为编译和运行时都使用同样的库目录,大大减少了出现问题的可能性。multiarch对模拟器/兼容层一视同仁,为其支持库提供与native库一样的布局视图,改善用户体验。</p>
+<p>有一点需要澄清,multiarch并不能支持二进制应用程序跨平台运行。比如为power架构编译的二进制程序是不可能拿到amd64平台上来直接运行的,multiarch也不行。只有类似java这种字节码的应用程序才可以真正做到无修改跨平台直接运行,其实java并不是跨平台的,java本身就是一种平台。但是multiarch规范了同一个平台下不同的子平台之间的混合运行环境,比如amd64与x86之间。</p>
+<p>FHS 2.3制定的库规范可以称之为双架构”biarch”。FHS规定64bits平台,包括PPC64, s390x, sparc64 and AMD64,必须将其64bits共享库部署到/lib64目录,而32bits共享库部署到/lib目录,这样方便大量的32位程序正常运行而不用做任何改变,而IA64平台则须将其64bits库部署到/lib目录，因为其并没有32bits平台的负担。red hat和suse采用了这种设计,但是debian没有。因为biarch缺乏伸缩性,并不能轻易的扩展到其他多种平台,而debian的目标之一是成为通用操作系统,支持多种异构平台,因此需要更通用的解决方案,这就是multiarch。</p>
+<p>multiarch的实现也十分简洁,就是将架构相关的库部署到架构相关的路径下。比如/usr/lib/libfoo,如果机器是amd64架构,则将其放置到/usr/lib/x86_64-linux-gnu/libfoo,如果机器是i386架构,则将其放置到/usr/lib/i386-linux-gnu/libfoo,如果机器是ppc64架构,则将其放置到/usr/lib/powerpc64-linux-gnu/libfoo。</p>
+<p>multiarch路径包含一个GNU三位元组,用来描述系统架构。比如,x86_64-linux-gnu,x86_64指处理器类型,linux指操作系统内核,gnu则指用户空间的ABI。对于原生库,cross-build库还是模拟器支持库的部署路径都是一样的,没有任何差别。</p>
+<p>Debian Squeeze及之前的版本,AMD64平台上,/lib64是/lib目录的符号链接,/usr/lib64是/usr/lib的符号链接。而如果安装了ia32-libs库,则/lib32和/usr/lib32用来部署32位程序的共享库。这并没有遵守FHS 2.3的规定。从Wheezy开始,Debian全面支持multiarch架构。/lib64,/usr/lib64,/lib32,/usr/lib32等和ia32-libs库都是debian要消灭的目标,现在testing AMD64版本中,/lib64目录下还只剩一个符号链接ld-linux-x86-64.so.2,指向/lib/x86_64-linux-gnu/ld-2.13.so,这是因为bash的大部分命令还在硬编码/lib64/ld-linux-x86-64.so.2,估计不久的将来,最晚到wheezy正式发布,/lib64目录会被彻底消灭。ia32-libs也会被化解整合到/lib/i386-linux-gnu/,/usr/lib/i386-linux-gnu等目录下。这样有些软件在testing平台安装时,可能不得不手工做很多的符号链接以弥合这种库路径的变化,当然源内的软件是不会存在这种问题的。</p>
+<p>如果multiarch的目标完全实现,在同一个系统内安装不同架构的库和二进制目标文件。那么下一个目标极有可能就是通用二进制(<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Universal_binary">Universal binary</a>),这也算是水到渠成的事了。通用二进制的目标文件里面用不同section存储不同架构的二进制代码,比如支持power和amd64的通用二进制目标程序,在power平台运行时会执行存储power机器码的section,而在amd64平台运行时则会执行存储amd64机器码的section。当然这种方式存在冗余,每一种平台上只会用到一种机器码段,其他的机器码则没有任何用处,只是在白白的浪费存储空间。通用二进制势必会对操作系统底层,以及应用程序的build和release模式产生重大影响。</p>
+<p>其实现在linux平台上已经有了<a target="_blank" rel="noopener" href="http://icculus.org/fatelf/">FatELF</a>(Universal Binaries for Linux)项目,不过据说开发者Ryan Gordon<a target="_blank" rel="noopener" href="http://techsingular.net/?p=480">已经放弃该项目</a>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/03/27/vnc-over-ssh/" rel="prev" title="透过ssh使用VNC(VNC over SSH)">
+                  <i class="fa fa-chevron-left"></i> 透过ssh使用VNC(VNC over SSH)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/04/01/create-database-manual/" rel="next" title="手工创建oracle 10g数据库">
+                  手工创建oracle 10g数据库 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

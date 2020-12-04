@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="qcow2格式的虚拟磁盘初始容量设置过大,虽然并不会实际占用主机这么大的磁盘空间,只占用客户机实际使用的空间大小,但有时候还是有些不太方便,所以需要将其收缩(shrink)以下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="缩小qcow2格式kvm虚拟镜像磁盘大小">
+<meta property="og:url" content="http://example.com/2012/04/26/shrink-kvm-qcow2-disk/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="qcow2格式的虚拟磁盘初始容量设置过大,虽然并不会实际占用主机这么大的磁盘空间,只占用客户机实际使用的空间大小,但有时候还是有些不太方便,所以需要将其收缩(shrink)以下。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-26T04:49:04.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.490Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="KVM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/04/26/shrink-kvm-qcow2-disk/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>缩小qcow2格式kvm虚拟镜像磁盘大小 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/26/shrink-kvm-qcow2-disk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          缩小qcow2格式kvm虚拟镜像磁盘大小
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-04-26 12:49:04" itemprop="dateCreated datePublished" datetime="2012-04-26T12:49:04+08:00">2012-04-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>qcow2格式的虚拟磁盘初始容量设置过大,虽然并不会实际占用主机这么大的磁盘空间,只占用客户机实际使用的空间大小,但有时候还是有些不太方便,所以需要将其收缩(shrink)以下。</p>
+<a id="more"></a>
+<p>qemu-img命令有一个选项resize可以改变磁盘镜像的大小,其格式如下</p>
+<p>#qemu-img resize filename [+-]size</p>
+<p>+就是增加磁盘镜像的大小,-就是缩小磁盘镜像的大小,此处的磁盘镜像的大小并不是磁盘镜像文件在KVM主机中实际占用的存储空间大小,而是KVM客户机看到的磁盘的大小。</p>
+<p>但是扩大或收缩磁盘镜像大小远没有这么简单。</p>
+<p>man qemu-img如是说:<br>当使用此命令收缩磁盘镜像之前,必须使用客户机的文件系统和分区工具来收缩文件系统和分区,然后再执行resize操作,不然会可能丢失数据。当使用此命令扩大了磁盘镜像之后,必须使用客户机的文件系统和分区工具来使用新增加的磁盘容量。这很好理解,KVM支持的客户机操作系统多种多样,而且都有成熟的文件系统和分区操作工具,resize操作只是简单的扩大或缩小磁盘镜像大小,而不能也无需来了解客户机怎么应对这个改变,这是客户机的事情。面对这么多种类型的客户机,resize也只能做这么多工作了。</p>
+<p>不幸的是resize尚不支持qcow2格式的磁盘镜像收缩,会有提示</p>
+<p>qemu-img: This image format does not support resize</p>
+<p>但是扩大qcow2磁盘镜像没有问题。磁盘镜像扩大另文再叙,先说下缩小,针对不同的客户机会有不同的操作方式。</p>
+<p><strong>linux客户机</strong></p>
+<p>这里收缩的是一个debian客户机磁盘镜像,其他linux客户机应无不同。</p>
+<p>主要的思路就是通过分配一个新的小容量的磁盘镜像,挂载为虚拟机的新的磁盘,然后使用gparted live cd启动虚拟机,将分区拷贝到新的磁盘,然后用新的磁盘启动客户机。</p>
+<p>主要步骤如下：</p>
+<ol>
+<li><p>创建新的小容量的磁盘镜像</p>
+<p> #qemu-img create -f qcow2 debian_new.qcow2 15G<br> Formatting ‘debian_new.qcow2’, fmt=qcow2 size=16106127360 encryption=off cluster_size=65536<br> 下载<a target="_blank" rel="noopener" href="http://gparted.sourceforge.net/">GParted</a> live cd iso镜像,将二者挂载为客户机的新磁盘驱动器和光驱<br>  1 #!/bin/bash<br> 2<br> 3 kvm -bios /usr/share/seabios/bios.bin -smp 32 -m 2G -rtc base=utc,clock=host     <strong>\</strong><br> 4     -net nic,model=virtio,macaddr=52-54-00-12-34-02 -net tap,ifname=tap2                   <strong>\</strong><br> 5     -boot order=d -no-fd-bootchk                                                            <strong>\</strong><br> 6     -drive file=debian.qcow2,if=virtio,index=0,media=disk,format=qcow2,cache=writeback  <strong>\</strong><br> 7     -drive file=debian_new.qcow2,if=virtio,index=1,media=disk,format=qcow2,cache=writeback  <strong>\</strong><br> 8     -drive file=gparted.iso,index=2,media=cdrom  <strong>\</strong><br> 9     -vnc :0<br> 启动虚拟机</p>
+</li>
+</ol>
+<p>为新硬盘分区,然后将老硬盘上的分区拷贝到新的硬盘分区,如果原硬盘上的分区大于新的硬盘上的分区,可以通过GParted将原分区resize到小于新分区即可。交换分区不用拷贝,只要划出交换分区,在客户机内重新设置即可。分区拷贝完成后关闭虚拟机。<br>2.  用原硬盘引导客户机,使用dd将原硬盘的MBR及grub2用到的扇区拷贝到新的硬盘,grub2用到了MBR后面的保留扇区。这个保留扇区叫做post-MBR gap,范围为MBR之后,第一个分区之前。</p>
+<pre><code>#fdisk -l
+Disk /dev/vda: 64.4 GB, 64424509440 bytes
+255 heads, 63 sectors/track, 7832 cylinders, total 125829120 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x000c6773
+
+ Device Boot Start End Blocks Id System
+/dev/vda1 * 2048 27262975 13630464 83 Linux
+/dev/vda2 120637438 125827071 2594817 5 Extended
+/dev/vda5 120637440 125827071 2594816 82 Linux swap / Solaris
+
+Disk /dev/vdb: 16.1 GB, 16106127360 bytes
+255 heads, 63 sectors/track, 1958 cylinders, total 31457280 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005fc82
+
+ Device Boot Start End Blocks Id System
+/dev/vdb1 2048 27262975 13630464 83 Linux
+/dev/vdb2 27262976 31457279 2097152 82 Linux swap / Solaris
+
+可以看到客户机磁盘的第一个分区从2048扇区开始,保留扇区为2-2047扇区,第一扇区为MBR。因为两个硬盘分区并不完全相同,所以只拷贝MBR中的前446字节的引导代码即可。
+
+拷贝MBR引导代码
+#dd if=/dev/vda of=/dev/vdb bs=446 count=1
+拷贝保留扇区
+#dd if=/dev/vda of=/dev/vdb bs=512 seek=1 skip=1 count=2046</code></pre>
+<ol start="3">
+<li><p>关闭客户机,为客户机换上新的硬盘并从新硬盘启动<br> 一般来说拷贝过来的分区与原分区有相同的UUID,如若不然,新硬盘将无法引导客户机,但新建的swap分区其UUID发生了变化</p>
+<p> 查看新硬盘分区的UUID<br> #blkid<br> /dev/vda1: UUID=”48ed13f7-8640-4aba-8b8a-5efb087fadbf” TYPE=”ext4”<br> /dev/vda2: UUID=”b484c752-69be-4bcd-86c1-a3f70185cde1” TYPE=”swap”</p>
+<p> 打开/etc/fstab文件,将自动挂载文件系统的UUID修改成新硬盘上对应分区的UUID</p>
+<p> 重新启动客户机,调整完毕。</p>
+</li>
+</ol>
+<p><strong>windows客户机</strong></p>
+<ol>
+<li><p>创建新的小容量的磁盘镜像</p>
+<p> #qemu-img create -f qcow2 windows_new.qcow2 20G<br> 将其挂载为客户机的第二块硬盘,将GParted挂载为客户机的光驱,设置客户机为光驱启动并启动客户机</p>
+</li>
+<li><p> 用gparted resize调整老硬盘分区使其略小于新硬盘容量并apply</p>
+</li>
+</ol>
+<ol start="3">
+<li><p>打开终端<br> $sudo su -<br> #dd if=/dev/vda of=/dev/vdb bs=512 count=1<br> 将老硬盘的MBR完整复制到新硬盘</p>
+</li>
+<li><p> 用GParted复制老硬盘分区至新硬盘,然后resize拷贝过来的分区至新硬盘全部容量</p>
+</li>
+<li><p> 将新硬盘挂载为客户机的第一块硬盘,并从新硬盘启动即可。启动时windows会检查磁盘,之后一切正常。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/KVM/" rel="tag"># KVM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/04/20/rman-delete-control-file-copy/" rel="prev" title="rman删除控制文件拷贝(control file copy)">
+                  <i class="fa fa-chevron-left"></i> rman删除控制文件拷贝(control file copy)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/04/26/reduce-qcow2-image-size-kvm/" rel="next" title="减少qcow2虚拟磁盘文件实际占用的存储空间">
+                  减少qcow2虚拟磁盘文件实际占用的存储空间 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

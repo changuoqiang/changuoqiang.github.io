@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Java异常与Spring MVC异常统一处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java异常与Spring MVC异常统一处理">
+<meta property="og:url" content="http://example.com/2013/10/23/java-spring-mvc-exception/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Java异常与Spring MVC异常统一处理">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-10-23T06:42:23.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.251Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/10/23/java-spring-mvc-exception/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Java异常与Spring MVC异常统一处理 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/10/23/java-spring-mvc-exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java异常与Spring MVC异常统一处理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-10-23 14:42:23" itemprop="dateCreated datePublished" datetime="2013-10-23T14:42:23+08:00">2013-10-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Java异常与Spring MVC异常统一处理</p>
+<a id="more"></a>
+<p><strong>Java异常</strong></p>
+<p>异常是程序运行过程中出现错误。</p>
+<p>其实CPU也有异常的概念，有相应的异常中断处理器，当CPU遇到某些错误，会陷入异常处理器。</p>
+<p>Java的所有异常都继承自java.lang.Throwable,其有两个直接的子类java.lang.Error和java.lang.Exeption。</p>
+<p><em>错误</em><br>java.lang.Error是无需程序处理的，有些程序也是处理不了的，比如JVM资源耗尽，抛出java.lang.OutOfMemoryError异常。</p>
+<p><em>异常</em><br>java.lang.Exeption则是程序可以处理的异常，又分为两大类unchecked异常和checked异常。<br>java.lang.Exeption有个直接子类java.lang.RuntimeExeption,所有派生自java.lang.Error和java.lang.RuntimeExeption的异常都是unchecked异常，<br>其他的异常为checked异常</p>
+<p><em>unchecked异常</em><br>unchecked异常用户程序可以不用捕捉处理，程序编译不会有问题。运行时抛出此类异常会有JVM来负责处理。</p>
+<p><em>checked异常</em><br>checked异常用户程序必须要处理，如果一个方法抛出checked异常，还要在方法声明里添加异常规格声明，否则编译无法通过。<br>一个方法调用一个抛出checked异常的方法，有两个选择：要么处理或转换掉这个异常，要么在本方法上添加异常规格说明，直接重新抛出这个异常。</p>
+<p><strong>Spring MVC异常统一处理</strong></p>
+<p>当程序出现异常或错误时，最好不要将容器默认的错误页面直接返回给最终用户，这样是不友好的，会让用户手足无措。<br>最好对所有出现的错误，异常等进行统一处理包装，给用户友好的提示。</p>
+<p>tomcat可以设置自定义的错误页面，web.xml中添加：<br>[xml]<br> <!-- error page --><br> <error-page><br> <location>/error</location><br> </error-page><br>[/xml]</p>
+<p>在Servlet 3之前，声明一个错误页，必须指定错误码status-code或者异常类型exception-type。从Servlet 3之后，可以设定一个统一的错误页面。</p>
+<p>错误页面可以指向一个jsp,html页面,也可以指向一个控制器可以处理的URL。所以可以用一个controller来统一处理。</p>
+<p>[java]<br>@Controller<br>public class ErrorController {</p>
+<p> @RequestMapping(value=”/error”, produces=”application/json”)<br> @ResponseBody<br> public Map&lt;String, Object&gt; handle(HttpServletRequest request) {</p>
+<p> Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();<br> map.put(“status”, request.getAttribute(“javax.servlet.error.status_code”));<br> map.put(“reason”, request.getAttribute(“javax.servlet.error.message”));<br> map.put(“exception”, request.getAttribute(“javax.servlet.error.exception”));<br> map.put(“exception_type”, request.getAttribute(“javax.servlet.error.exception_type”));<br> map.put(“request_uri”, request.getAttribute(“javax.servlet.error.request_uri”));<br> map.put(“servlet_name”, request.getAttribute(“javax.servlet.error.servlet_name”));</p>
+<p> return map;<br> }</p>
+<p>}<br>[/java]</p>
+<p>这只是个简单的示例，返回json格式的响应信息。可以在控制器里通过X-Requested-With和Accept请求头来综合判断请求来自Ajax请求还是普通的页面请求，然后以不同的格式给出不用的响应内容。</p>
+<p>一般ajax请求会设置X-Requested-With请求头为XMLHttpRequest，但不是所有的ajax请求都会设置这个头，或者设置的不一定一致。<br>Accept头则指明了客户可以接受的mime类型。可以综合这二者进行判断。可以针对json请求返回json应答，其他返回html应答。</p>
+<p>Servlet 3.0 规范在10.9 Error Handling有如下规定：</p>
+<p>如果在部署描述文件中指定的错误页为一个Servlet或者JSP页面，则容器实现应该满足以下要求：</p>
+<ul>
+<li>  由容器创建的、原始未包装的请求和响应对象必须传递给Servlet或JSP页面</li>
+<li>  如果对错误处理页面执行了RequestDispatcher.forward，则应设置请求路径和相关属性</li>
+<li>  以下请求属性必须设置<br>[html]<br>请求属性 类型</li>
+</ul>
+<hr>
+<p>javax.servlet.error.status_code java.lang.Integer<br>javax.servlet.error.exception_type java.lang.Class<br>javax.servlet.error.message java.lang.String<br>javax.servlet.error.exception java.lang.Throwable<br>javax.servlet.error.request_uri java.lang.String<br>javax.servlet.error.servlet_name java.lang.String<br>[/html]</p>
+<p>所以在我们的错误控制器可以获取到这些错误相关的信息。<br>自从Servlet 2.3引入请求属性exception对象以后，异常类型属性exception_type和错误消息属性message就成多余无用的属性了，保留它们只是为了向后兼容。</p>
+<p>特别是在处理ajax的请求错误时，可以通过错误页面返回详细的错误信息，客户端收到响应后，除给客户一个友好的错误提示以外，还可以将对应客户端请求的context和服务器返回的错误信息进行打包，给开发人员提交一个feedback，方便分析定位解决问题。</p>
+<p>只要出现异常(不是错误),那一般说明程序存在问题(难以预料、非应用程序导致的IO异常除外)，完全可以通过完善程序来解决。<br>所以客户自定义的异常可以设计成unchecked异常，程序发现问题时直接携带详细错误信息抛出异常，不用捕捉处理，<br>事后通过分析定位解决问题来避免以后发生异常。</p>
+<p>很多时候就算处理了异常，程序也无法回到正常的执行路径。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://download.oracle.com/otndocs/jcp/servlet-3.0-fr-eval-oth-JSpec/">Java Servlet 3.0 Specification</a></p>
+<p>===<br>[erq]</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/10/22/javadoc-convention/" rel="prev" title="Java文档注释规范">
+                  <i class="fa fa-chevron-left"></i> Java文档注释规范
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/10/25/debian-jessie-tomcat7-eclipse-kepler/" rel="next" title="Tomcat 7 on Debian Jessie  for Eclipse Kepler配置">
+                  Tomcat 7 on Debian Jessie  for Eclipse Kepler配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

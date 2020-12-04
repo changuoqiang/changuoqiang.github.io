@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="rman及catalog运行于linux,target数据库运行于windows,oracle版本一致,而且都是64位平台。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基于cron的rman自动增量备份脚本及设置">
+<meta property="og:url" content="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="rman及catalog运行于linux,target数据库运行于windows,oracle版本一致,而且都是64位平台。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-03-22T02:15:51.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.292Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>linux基于cron的rman自动增量备份脚本及设置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/03/22/linux-cron-rman-incremental-bakcup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux基于cron的rman自动增量备份脚本及设置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-03-22 10:15:51" itemprop="dateCreated datePublished" datetime="2012-03-22T10:15:51+08:00">2012-03-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>rman及catalog运行于linux,target数据库运行于windows,oracle版本一致,而且都是64位平台。</p>
+<a id="more"></a>
+<p>历史原因数据库运行于windows,但显然linux更适合于系统管理,因此此处rman暂时运行于混合环境。</p>
+<p><strong>备份策略</strong></p>
+<p>数据库用于OLTP系统,容量中等,全库接近400G,但有大约200G的数据是不变化只用于查询的,将其表空间置于read only模式,备份时可以忽略这些数据。其他200G左右的数据每天都在发生变化,如果系统需要回复,要尽可能的恢复到最新的数据。已经做了<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">dataguard灾备</a>。</p>
+<p>基于以上情况制定备份策略，每周日凌晨做0级备份，周一到周六做1级备份。</p>
+<p>target数据库要打开<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_incremental_backup.html">块变化追踪机制</a>,然后<a target="_blank" rel="noopener" href="https://openwares.net/database/rman_catalog_database.html">建立恢复目录</a>。</p>
+<p><strong>备份脚本</strong></p>
+<p> 1 #!/bin/bash<br> 2<br> 3 <strong>set</strong> -e<br> 4<br> 5 #############################################################<br> 6 # sunday incremental level 0<br> 7 # other day incremental level 1<br> 8 #<br> 9 # rman and catalog on oracle 10.2.0.4 64bits for debian amd64<br>10 # target on oracle 10.2.0.4 64bits for windows 2003 r2 sp2 x64<br>11 #############################################################<br>12<br>13 <strong>export</strong> ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1<br>14 rman_bin=$ORACLE_HOME/bin/rman<br>15<br>16 weekday=`date +%a`<br>17 <strong>case</strong> <strong>“</strong>${weekday}<strong>“</strong> <strong>in</strong><br>18<br>19     <strong>“**Sun</strong>“<strong>**)</strong><br>20         inc_level=0<br>21         <strong>;;</strong><br>22     *<strong>)</strong><br>23         inc_level=1<br>24         <strong>;;</strong><br>25 <strong>esac</strong><br>26<br>27 rman_user=rman_usr<br>28 rman_passwd=rman_usr<br>29 catalog_inst_name=catalogd<br>30<br>31 target_sys_passwd=oracle<br>32 target_inst_name=db_test<br>33<br>34 log_file=/var/log/rman/`date +%F`<em>${inc_level}.log<br>35 bak_file=<strong>‘**d:\rman_bak\bak_%U</strong>‘**<br>36 arc_file=**’**d:\rman_bak\arc</em>%U**’**<br>37 ctl_file=<strong>‘**d:\rman_bak\ctl_%F</strong>‘**<br>38<br>39 $rman_bin log ${log_file} <strong>&gt;&gt;</strong> /dev/null 2<strong>&gt;&amp;1</strong> <strong>&lt;&lt;EOF</strong><br>40<br>41 connect catalog ${rman_user}/${rman_passwd}@${catalog_inst_name};<br>42 connect target sys/${target_sys_passwd}@${target_inst_name};<br>43<br>44 run {<br>45  configure backup optimization on;<br>46  configure archivelog deletion policy to applied on standby;<br>47  configure retention policy to redundancy 3;<br>48  configure controlfile autobackup on;<br>49  configure controlfile autobackup format for device type disk to ‘${ctl_file}’;<br>50<br>51  allocate channel ch1 device type disk;<br>52  backup incremental level ${inc_level} cumulative database format ‘${bak_file}’ skip readonly plus archivelog format ‘${arc_file}’;<br>53<br>54  release channel ch1;<br>55 }<br>56<br>57 crosscheck backup;<br>58 delete noprompt obsolete;<br>59<br>60 delete noprompt archivelog all completed before ‘sysdate - 14’;<br>61<br>62 exit;<br>63 <strong>EOF</strong><br>64<br>65 <strong>exit</strong> 0 </p>
+<p>rman操作日志记录于/var/log/rman目录下,需要在/var/log目录先新建rman子目录,不然rman会报错无法打开log文件。脚本很简单,就不解释了。</p>
+<p><strong>自动运行</strong></p>
+<p>打开/etc/crontab,编辑cron.daily所在的那行，将其第一个字段m(minute)改为0或其他小于60的数值,第二个字段h(hour)改为0,这样以来cron守护程序每天的0点稍后自动运行/etc/cron.daily目录下的脚本。然后将备份脚本拷贝到/etc/cron.daily目录下,注意为备份脚本添加可执行权限。</p>
+<p>*<em>特别注意：crond或者直接说run-parts不会执行带有.sh扩展名的脚本,也就说/etc/cron.</em>/目录下的脚本不要带任何扩展名。**</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/03/21/oracle-10g-incremental-backup/" rel="prev" title="oracle 10g 增量备份机制">
+                  <i class="fa fa-chevron-left"></i> oracle 10g 增量备份机制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/03/27/vnc-over-ssh/" rel="next" title="透过ssh使用VNC(VNC over SSH)">
+                  透过ssh使用VNC(VNC over SSH) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

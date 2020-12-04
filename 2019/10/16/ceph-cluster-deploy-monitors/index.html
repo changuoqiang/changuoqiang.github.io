@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="ceph官方仓库尚未提供debian 10 buster版本的ceph nautilus，而debian官方仓库里也只有ceph 12版本，可以使用三方仓库在debian buster上安装ceph nautilus proxmox仓库 123$ echo &amp;#x27;deb \[arch&#x3D;amd64\] http:&#x2F;&#x2F;download.proxmox.com&#x2F;debian&#x2F;ceph-nauti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph集群部署-monitors配置">
+<meta property="og:url" content="http://example.com/2019/10/16/ceph-cluster-deploy-monitors/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ceph官方仓库尚未提供debian 10 buster版本的ceph nautilus，而debian官方仓库里也只有ceph 12版本，可以使用三方仓库在debian buster上安装ceph nautilus proxmox仓库 123$ echo &amp;#x27;deb \[arch&#x3D;amd64\] http:&#x2F;&#x2F;download.proxmox.com&#x2F;debian&#x2F;ceph-nauti">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-16T14:26:56.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.086Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/10/16/ceph-cluster-deploy-monitors/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Ceph集群部署-monitors配置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/16/ceph-cluster-deploy-monitors/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ceph集群部署-monitors配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-16 22:26:56" itemprop="dateCreated datePublished" datetime="2019-10-16T22:26:56+08:00">2019-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>ceph官方仓库尚未提供debian 10 buster版本的ceph nautilus，而debian官方仓库里也只有ceph 12版本，可以使用三方仓库在debian buster上安装ceph nautilus</p>
+<p>proxmox仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo <span class="string">&#x27;deb \[arch=amd64\] http://download.proxmox.com/debian/ceph-nautilus buster main&#x27;</span> sudo tee /etc/apt/sources.list.d/proxmox-ceph.list</span><br><span class="line">$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7BF2812E8A6E88E0</span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install ceph</span><br></pre></td></tr></table></figure>
+
+<p>croit.io仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl https:<span class="comment">//mirror.croit.io/keys/release.asc sudo apt-key add -</span></span><br><span class="line">$ echo <span class="string">&#x27;deb https://mirror.croit.io/debian-nautilus/ buster main&#x27;</span> sudo tee /etc/apt/sources.list.d/croit-ceph.list</span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install ceph</span><br></pre></td></tr></table></figure>
+
+<p><strong>Updated(2020/02/01):</strong> 现在可以使用buster-backports仓库来安装ceph nautilus</p>
+<p>ceph集群安装的第一步是monitor自举</p>
+<p><strong>一、monitor bootstrapping</strong><br>1、添加配置文件/etc/ceph/ceph.conf<br>这里集群的名字使用默认的ceph,ceph.conf文件名中的基本名ceph也是集群名。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="built_in">global</span>\]</span><br><span class="line"># 使用uuidgen生成,debian请安装uuid-runtime包</span><br><span class="line">fsid = 0238426D-78D6-48CD-AF64-B6A8407996C6</span><br><span class="line"># 使用主机名,可以用hostname -s命令获取</span><br><span class="line">mon initial members = node8</span><br><span class="line"># ip地址,支持messenger v1和v2</span><br><span class="line">mon_host = <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span></span><br><span class="line">#mon_host = v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span></span><br><span class="line"># public network可以指定逗号分割的多个子网</span><br><span class="line">public network = <span class="number">192.168</span><span class="number">.3</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line"># 使用cephx认证</span><br><span class="line">auth cluster required = cephx</span><br><span class="line">auth service required = cephx</span><br><span class="line">auth client required = cephx</span><br><span class="line">osd journal size = <span class="number">1024</span></span><br><span class="line"># 副本策略,副本数量</span><br><span class="line">osd pool <span class="keyword">default</span> size = <span class="number">3</span></span><br><span class="line"># 降级状态最小副本数量,低于此数量会失败</span><br><span class="line">osd pool <span class="keyword">default</span> min size = <span class="number">2</span></span><br><span class="line"># 默认placement group数量</span><br><span class="line">osd pool <span class="keyword">default</span> pg num = <span class="number">333</span></span><br><span class="line"># 默认placement groups for placement数量</span><br><span class="line">osd pool <span class="keyword">default</span> pgp num = <span class="number">333</span></span><br><span class="line">osd crush chooseleaf type = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>2、创建集群keyring,生成monitor密钥</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon <span class="string">&#x27;allow *&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、创建管理keyring,生成client.admin用户并加入keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --cap mon <span class="string">&#x27;allow *&#x27;</span> --cap osd <span class="string">&#x27;allow *&#x27;</span> --cap mds <span class="string">&#x27;allow *&#x27;</span> --cap mgr <span class="string">&#x27;allow *&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>4、创建bootstrap-osd keyring,生成client.bootstrap-osd用户并加入keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool --create-keyring /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring --gen-key -n client.bootstrap-osd --cap mon <span class="string">&#x27;profile bootstrap-osd&#x27;</span> --cap mgr <span class="string">&#x27;allow r&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>5、将生成的key添加到ceph.mon.keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool /tmp/ceph.mon.keyring --<span class="keyword">import</span>-keyring /etc/ceph/ceph.client.admin.keyring</span><br><span class="line">$ sudo ceph-authtool /tmp/ceph.mon.keyring --<span class="keyword">import</span>-keyring /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring</span><br></pre></td></tr></table></figure>
+
+<p>6、生成monitor map</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monmaptool --create --add node8 <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span> --fsid 0238426D-78D6-48CD-AF64-B6A8407996C6 /tmp/monmap</span><br></pre></td></tr></table></figure>
+<p>注意此处指定的节点名称、ip地址和fsid要与/etc/ceph/ceph.conf中指定的一致,ip地址还可以使用新的格式指定v2:192.168.3.8:3300/0,v1:192.168.3.8:6789/0</p>
+<p>map文件是二进制格式的，可以这样查看生成的map内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ monmaptool --print /tmp/monmap</span><br><span class="line">monmaptool: monmap file /tmp/monmap</span><br><span class="line">epoch <span class="number">0</span></span><br><span class="line">fsid 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line">last_changed <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">24</span>:<span class="number">58.156493</span></span><br><span class="line">created <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">24</span>:<span class="number">58.156493</span></span><br><span class="line">min_mon_release <span class="number">0</span> (unknown)</span><br><span class="line"><span class="number">0</span>: v1:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span> mon.node8</span><br></pre></td></tr></table></figure>
+
+<p>7、创建monitor数据目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mon/ceph-node8</span><br></pre></td></tr></table></figure>
+<p>目录名字格式为{cluster-name}-{hostname}</p>
+<p>8、修改ceph.mon.keyring访问权限</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod o+r /tmp/ceph.mon.keyring</span><br></pre></td></tr></table></figure>
+<p>不然会因为ceph用户无法读取/tmp/ceph.mon.keyring而抛出如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">54.149</span> 7eff2ff1f440 -<span class="number">1</span> mon.node8@-<span class="number">1</span>(???) e0 unable to find a keyring file on /tmp/ceph.mon.keyring: (<span class="number">13</span>) Permission denied</span><br><span class="line"><span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">54.149</span> 7eff2ff1f440 -<span class="number">1</span> ceph-mon: error creating monfs: (<span class="number">2</span>) No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>9、初始化monitor数据结构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph ceph-mon --mkfs -i node8 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring</span><br></pre></td></tr></table></figure>
+
+<p>10、启动ceph monitor</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ sudo ln -sf /lib/systemd/system/ceph-mon@.service /etc/systemd/system/multi-user.target.wants/ceph-mon@node8.service</span></span><br><span class="line"><span class="comment">//$ sudo systemctl daemon-reload</span></span><br><span class="line">$ sudo systemctl enable ceph-mon@node8.service</span><br><span class="line">$ sudo systemctl start ceph-mon@node8.service</span><br></pre></td></tr></table></figure>
+<p>生成monitor实例自启动systemd服务文件并开启服务</p>
+<p>11、查看集群状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_WARN</span><br><span class="line"> <span class="number">1</span> monitors have not enabled msgr2</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">1</span> daemons, quorum node8 (age 12m)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+
+<p>12、启用messenger v2协议</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon enable-msgr2</span><br><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">1</span> daemons, quorum node8 (age 67m)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>集群健康状态成为HEALTH_OK<br>dump集群配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon dump</span><br><span class="line">dumped monmap epoch <span class="number">2</span></span><br><span class="line">epoch <span class="number">2</span></span><br><span class="line">fsid 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line">last_changed <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">02</span><span class="number">.687549</span></span><br><span class="line">created <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">51</span>:<span class="number">04</span><span class="number">.486571</span></span><br><span class="line">min_mon_release <span class="number">14</span> (nautilus)</span><br><span class="line"><span class="number">0</span>: \[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span>\] mon.node8</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、添加其他monitor</strong></p>
+<p>一个monitor可以运行ceph集群，但是在生产环境推荐至少要运行三个monitor实例或以上，而且数量最好是奇数，这是因为容错时需要大多数实例达成一致的原因。monitor可以与OSD实例运行在一台物理机器上，但推荐是分开部署。</p>
+<p>以下操作皆是在将要添加的monitor机器上执行</p>
+<p>1、拷贝初始monitor配置文件</p>
+<p>将集群第一个monitor的配置文件目录/etc/ceph整个拷贝到新monitor相同路径，注意保持文件属性不变。之后，新monitor节点虽然尚未初始化，但已经可以访问ceph集群。</p>
+<p>2、创建目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mon/ceph-node6</span><br></pre></td></tr></table></figure>
+
+<p>3、获取monitor keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get mon. -o /tmp/ceph.mon.keyring</span><br><span class="line">exported keyring <span class="keyword">for</span> mon.</span><br></pre></td></tr></table></figure>
+<p>注意检查/tmp/ceph.mon.keyring文件的访问权限，确保ceph用户可以读取。</p>
+<p>4、获取集群monitor map</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon getmap -o /tmp/ceph.mon.map</span><br><span class="line">got monmap epoch <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>5、初始化新monitor</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph ceph-mon --mkfs -i node6 --monmap /tmp/ceph.mon.map --keyring /tmp/ceph.mon.keyring</span><br><span class="line">$ sudo systemctl enable ceph-mon@node6.service</span><br><span class="line">$ sudo systemctl start ceph-mon@node6.service</span><br><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">2</span> daemons, quorum node8,node6 (age <span class="number">0.</span>16939s)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+
+<p>可以看到集群已经有了两个monitor<br>查看集群monitor状态信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon stat</span><br><span class="line">e3: <span class="number">2</span> mons at &#123;node6=\[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.6</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.6</span>:<span class="number">6789</span>/<span class="number">0</span>\],node8=\[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span>\]&#125;, election epoch <span class="number">26</span>, leader <span class="number">0</span> node8, quorum <span class="number">0</span>,<span class="number">1</span> node8,node6</span><br></pre></td></tr></table></figure>
+
+<p>添加其他新monitor重复以上步骤。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/">Ceph Docs</a><br>[2]<a target="_blank" rel="noopener" href="https://croit.io/2019/07/07/2019-07-07-debian-mirror">Debian stable and Ceph are great</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/install/manual-deployment/">MANUAL DEPLOYMENT</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/netant-cg/p/10696205.html">ceph nautilus版本手动安装</a><br>[5]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[6]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/rados/configuration/network-config-ref/">NETWORK CONFIGURATION REFERENCE</a><br>[7]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-mons/">ADDING/REMOVING MONITORS</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/16/postgresql-11-streaming-replication-ha/" rel="prev" title="PostgreSQL 11 流复制Hot Standby HA">
+                  <i class="fa fa-chevron-left"></i> PostgreSQL 11 流复制Hot Standby HA
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/18/debian-buster-tomcat9-no-stdout-log-catalina-out/" rel="next" title="debian buster tomcat9缺少控制台输出日志catalina.out">
+                  debian buster tomcat9缺少控制台输出日志catalina.out <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

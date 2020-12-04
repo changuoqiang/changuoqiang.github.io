@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="一、添加manager 通常每一个运行monitor的机器上同时运行一个manager,以获取同样的可用性，但是manager不涉及到选举，运行于primary&#x2F;standby模式。 1、创建mgr认证keyring 123$ sudo ceph auth get-or-create mgr.node6 mon &amp;#x27;allow profile mgr&amp;#x27; osd &amp;#x27;al">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ceph集群部署-mgr-osd-mds配置">
+<meta property="og:url" content="http://example.com/2019/10/31/ceph-deploy-mgr-osd-mds/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、添加manager 通常每一个运行monitor的机器上同时运行一个manager,以获取同样的可用性，但是manager不涉及到选举，运行于primary&#x2F;standby模式。 1、创建mgr认证keyring 123$ sudo ceph auth get-or-create mgr.node6 mon &amp;#x27;allow profile mgr&amp;#x27; osd &amp;#x27;al">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-31T12:04:42.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.087Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/10/31/ceph-deploy-mgr-osd-mds/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Ceph集群部署-mgr-osd-mds配置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/31/ceph-deploy-mgr-osd-mds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ceph集群部署-mgr-osd-mds配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-31 20:04:42" itemprop="dateCreated datePublished" datetime="2019-10-31T20:04:42+08:00">2019-10-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p><strong>一、添加manager</strong></p>
+<p>通常每一个运行monitor的机器上同时运行一个manager,以获取同样的可用性，但是manager不涉及到选举，运行于primary/standby模式。</p>
+<p>1、创建mgr认证keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mgr.node6 mon <span class="string">&#x27;allow profile mgr&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span></span><br><span class="line">\[mgr.node6\]</span><br><span class="line">key = AQDAzLpdq7HzDRAAkRLSSkRO/1aLZU+87FcN5g==</span><br></pre></td></tr></table></figure>
+<p>这里mgr的名字仍然选用主机名,也就是mgr.$(hostname -s)</p>
+<p>2、创建mgr实例的目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/</span><br></pre></td></tr></table></figure>
+
+<p>3、导出mgr keyring到ngr实例目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get mgr.node6 -o /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/keyring</span><br><span class="line">exported keyring <span class="keyword">for</span> mgr.node6</span><br></pre></td></tr></table></figure>
+
+<p>4、运行mgr实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mgr@node6.service</span><br><span class="line">$ sudo systemctl start ceph-mgr@node6.service</span><br><span class="line">$ sudo ceph -s</span><br><span class="line">cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, starting, since <span class="number">0.</span>109568s)</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>可以看到mgr活动实例启动了，重复以上步骤添加其他mgr实例。</p>
+<p><strong>二、添加OSD</strong></p>
+<p>OSD(Object Storage Device)是真正存储数据的组件，一般生产环境至少要部署3个OSD,参数文件/etc/ceph/ceph.conf中<code>osd pool default size = 3</code>设定为3，至少需要3个osd进程，集群才能达到active + clean状态。</p>
+<p>OSD有几种后端存储，建议使用bluestore提高系统稳定性和效率，bluestore只能使用逻辑卷、磁盘或分区，注意初始化OSD时指定的逻辑卷、磁盘或者分区上的数据会全部被抹掉。一般建议OSD使用单独的机器部署，并且与OS分别使用不同的驱动器。</p>
+<p>1、导出client.bootstrap-osd keyring<br>如果本地机器上没有此keyring,则需要先从集群导出到本地</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get client.bootstrap-osd -o /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring</span><br></pre></td></tr></table></figure>
+
+<p>2、创建OSD</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm create --data /dev/sdb</span><br></pre></td></tr></table></figure>
+<p>注意要使用正确的底层设备,lsblk可以查看系统块存储设备。<br>如果提示错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-volume lvm create: error: GPT headers found, they must be removed on: <span class="regexp">/dev/</span>sdb</span><br><span class="line">...</span><br><span class="line">stderr: Device /dev/sdc excluded by a filter.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>需要先清除掉分区表:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo partprobe -s /dev/sdb</span><br><span class="line">$ sudo dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/dev/</span>sdb bs=<span class="number">512</span> count=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>这些操作是破坏性的，一定要确认是在正确的块设备上进行操作。</p>
+<p>3、运行OSD</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm list</span><br><span class="line"></span><br><span class="line">====== osd<span class="number">.0</span> =======</span><br><span class="line"></span><br><span class="line"> \[block\] /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"></span><br><span class="line"> block device /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"> block uuid jYMJc5-jjUe-hgPk-Wlhk-yo9y-t6JF-r8SqNa</span><br><span class="line"> cephx lockbox secret </span><br><span class="line"> cluster fsid 0238426D-78D6-48CD-AF64-B6A8407996C6</span><br><span class="line"> cluster name ceph</span><br><span class="line"> crush device <span class="class"><span class="keyword">class</span> <span class="title">None</span></span></span><br><span class="line"><span class="class"> <span class="title">encrypted</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">fsid</span> <span class="title">bf952b83</span>-7<span class="title">ffe</span>-49<span class="title">e2</span>-<span class="title">bdd7</span>-<span class="title">d2fd3faacafb</span></span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">id</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">type</span> <span class="title">block</span></span></span><br><span class="line"><span class="class"> <span class="title">vdo</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">devices</span> /<span class="title">dev</span>/<span class="title">sdb</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">enable</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">start</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
+<p>先查找osd实例的名称，然后启用相应的实例服务,ceph-volume会自动创建相应的服务并启动它们。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 37m)</span><br><span class="line"> mgr: node6(active, since 25m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> osd: <span class="number">1</span> osds: <span class="number">1</span> up (since 85s), <span class="number">1</span> <span class="keyword">in</span> (since 85s)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">1.0</span> GiB used, <span class="number">6.0</span> GiB / <span class="number">7</span> GiB avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>可以看到运行了一个osd实例，重复以上步骤添加其他OSD实例。</p>
+<p><strong>三、添加mds</strong><br>如果要使用CephFS文件系统才需要设置mds实例，对象存储和块设备存储无需mds实例。</p>
+<p>1、创建mds实例目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph mkdir -p /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6</span><br></pre></td></tr></table></figure>
+<p>目录格式为{cluster-name}-{id}，按照惯例这里id仍然取主机名$(hostname -s)</p>
+<p>2、创建mds实例keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph ceph-authtool --create-keyring /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring --gen-key -n mds.node6</span><br></pre></td></tr></table></figure>
+
+<p>3、将mds实例keyring导入集群并设置caps权限</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth add mds.node6 osd <span class="string">&quot;allow rwx&quot;</span> mds <span class="string">&quot;allow&quot;</span> mon <span class="string">&quot;allow profile mds&quot;</span> -i /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br><span class="line">added key <span class="keyword">for</span> mds.node6</span><br></pre></td></tr></table></figure>
+<p>或者2,3步合并为一步：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mds.node6 mon <span class="string">&#x27;allow profile mds&#x27;</span> mgr <span class="string">&#x27;allow profile mds&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> sudo -u ceph tee /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br></pre></td></tr></table></figure>
+
+<p>4、编辑/etc/ceph/ceph.conf添加mds实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[mds.node6\]</span><br><span class="line">host = node6</span><br></pre></td></tr></table></figure>
+
+<p>5、启动mds实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mds@node6</span><br><span class="line">$ sudo systemctl start ceph-mds@node6</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master//cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/28/mcelog-and-rasdaemon/" rel="prev" title="mcelog and rasdaemon">
+                  <i class="fa fa-chevron-left"></i> mcelog and rasdaemon
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/31/cephfs-using/" rel="next" title="使用CephFS文件系统">
+                  使用CephFS文件系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

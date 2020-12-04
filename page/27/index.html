@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/27/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/27/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/" class="post-title-link" itemprop="url">PostgreSQL高可用之log-shiping based hot standby</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-08 21:45:01" itemprop="dateCreated datePublished" datetime="2015-12-08T21:45:01+08:00">2015-12-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>传统的备份恢复问题在于恢复时间过长，恢复时间有时候是无法接受的。因此有了高可用(High Availability)的概念。</p>
+<p>高可用的实现方式多种多样，PostgreSQL内置支持基于WAL日志文件传输或流复制的方式来实现warm/hot standby备库从而实现数据库的高可用性。</p>
+<p>这一篇文章只讲基于日志文件传输方式的warm/hot standby配置。<br>hot standby与warm standby的区别在于，hot standby在日志恢复的同时还可以提供只读查询，而warm standby只能进行日志恢复。</p>
+<p><strong>先决条件</strong></p>
+<p>主备库硬件可以不同，但硬件架构必须相同，字长也必须相同。PostgreSQL的主版本号必须相同，小版本号可以不同。<br>但是推荐主备库使用完全相同的版本号。</p>
+<p>主备库升级时，要先升级备库，因为新版本的程序会兼容旧版本传输过来的wal日志，但反过来却不一定。</p>
+<p><strong>搭建warm standby备库</strong></p>
+<p>首先参考”<a target="_blank" rel="noopener" href="https://openwares.net/database/postgresql_restore_using_continuous_archiving_backup.html">PostgreSQL使用连续归档备份恢复数据库</a>“在主库上进行一次基础备份，然后将其在备机上恢复。</p>
+<p>然后recovery.conf文件中除了restore_comman参数之外，再打开standby_mode参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">restore_command = <span class="string">&#x27;cp /var/backups/postgresql/archive/%f %p&#x27;</span></span><br><span class="line">standby_mode = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">#archive_cleanup_command = ’pg_archivecleanup /path/to/archive %r’</span><br></pre></td></tr></table></figure>
+
+<p>如果需要清理standby不再需要的归档日志，可以配置archive_cleanup_command。不过一般来讲，为了备份的目的，归档日志应该dump到永久存储介质之后再行删除。</p>
+<p>可以看到，此处与前文恢复数据库的主要区别既在于在recovery.conf中打开了standby_mode参数。这样以来，备库就会一直处于WAL归档日志恢复循环之中，直到主库失败,备库通过failover升级为主库，或者通过switchover升级为主库。</p>
+<p>还可以在recovery.conf文件通过trigger_file参数指定一个触发文件，当standby服务器检测到这个文件时，就会结束恢复模式进入正常操作模式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trigger_file = <span class="string">&#x27;/var/lib/postgresql/trigger&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>此参数在standby_mode为off时无效。即使设置了此参数，仍然可以使用pg_ctl promote命令来结束恢复模式，从而可以升级为master数据库。</p>
+<p><strong>提升为hot standby备库</strong></p>
+<p>warm standby是不可查询的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">psql: FATAL: the database system is starting up</span><br></pre></td></tr></table></figure>
+
+<p>在warm standby备库的基础上，主备库只需做少许参数配置即可升级到hot standby模式。</p>
+<p>主库端postgresql.conf文件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wal_level = hot_standby</span><br></pre></td></tr></table></figure>
+<p>然后重新启动主库，并切换归档日志，从而使下一个归档日志具有hot standby信息:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql restart</span><br><span class="line">$ sudo -u postgres psql -c <span class="string">&quot;select pg_switch_xlog()&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>备库端postgresql.conf文件中:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hot_standby = on</span><br></pre></td></tr></table></figure>
+
+<p>然后重新启动备库即可。</p>
+<p>如果启动备库时有类似如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FATAL: hot standby is not possible because max_connections = <span class="number">100</span> is a lower setting than on the master server (its value was <span class="number">500</span>)</span><br><span class="line">FATAL: hot standby is not possible because max_prepared_transactions = <span class="number">0</span> is a lower setting than on the master server (its value was <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<p>需要将standby上的max_connections，max_prepared_transactions参数设置为大于或等于master上对应参数的值，然后再重新启动。</p>
+<p>启动成功后日志中会有类似的输出:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23100</span>-<span class="number">3</span>\] LOG: entering standby mode</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23100</span>-<span class="number">4</span>\] LOG: restored log file <span class="string">&quot;0000000100000001000000A9&quot;</span> <span class="keyword">from</span> archive</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23100</span>-<span class="number">5</span>\] LOG: redo starts at <span class="number">1</span>/A9000090</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23100</span>-<span class="number">6</span>\] LOG: restored log file <span class="string">&quot;0000000100000001000000AA&quot;</span> <span class="keyword">from</span> archive</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23100</span>-<span class="number">7</span>\] LOG: consistent recovery state reached at <span class="number">1</span>/AB000000</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">09</span> <span class="number">21</span>:<span class="number">53</span>:<span class="number">19</span> CST \[<span class="number">23099</span>-<span class="number">1</span>\] LOG: database system is ready to accept read only connections</span><br></pre></td></tr></table></figure>
+
+<p>可用使用以下命令进一步确认备库处于日志恢复状态:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres psql -c <span class="string">&quot;select pg_is_in_recovery()&quot;</span></span><br><span class="line"> pg_is_in_recovery </span><br><span class="line">-------------------</span><br><span class="line"> t</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>此命令在主库上执行会返回false。</p>
+<p>可以在主库上修改数据库并切换归档，然后查询备库，检查数据是否有一样的变化。因为备库是基于日志文件传输的，所以如果不强制切换归档，备库要等到主库日志切换之后才能看到修改。</p>
+<p>流复制有更高的实时性，从而数据丢失的风险更低。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/recovery-config.html">Chapter 26. Recovery Configuration</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/06/postgresql-restore-using-continuous-archiving-backup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/06/postgresql-restore-using-continuous-archiving-backup/" class="post-title-link" itemprop="url">PostgreSQL使用连续归档备份恢复数据库</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-06 21:29:27" itemprop="dateCreated datePublished" datetime="2015-12-06T21:29:27+08:00">2015-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>当数据库因为各种原因损坏时，连续归档备份就派上用场了，不过这种恢复在对停机时间很苛刻的环境下并不是很合适。<br>如果数据库很大的话，恢复时间可能是不可接受的，这时候就应该配置高可用实时复制系统，比如配置warm/hot standby备用机。</p>
+<p>此文中的$PG_VERISON代表postgresql的主次版本号，比如当前为9.4。</p>
+<p><strong>数据恢复</strong></p>
+<ol>
+<li> 停止服务器<br>如果服务器还在运行中，应该先将其停止。如果硬件故障已无法开机，则可以在异机恢复。这里以异机恢复为例讲解。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql stop</span><br></pre></td></tr></table></figure></li>
+<li> 删除现有集群数据<br>将当前postgresql集群数据目录下的所有文件删除，删除debian默认安装postgresql集群数据：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main<span class="comment">/*</span></span><br></pre></td></tr></table></figure></li>
+<li> 恢复基础备份<br>将最近的基础备份恢复到集群的数据目录：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres tar jxvf <span class="number">20151207.</span>tbz2 -C /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main/</span><br></pre></td></tr></table></figure>
+一定要注意恢复的数据文件的属主是运行PostgreSQL服务的系统用户，debian系统上为postgres,还应该保持原来的权限。</li>
+<li> pg_xlog目录<br>如果进行基础备份时，pg_xlog目录下有未归档日志，恢复后应将目录下的所有文件删除，因为这些文件已经过时。如果没有pg_xlog目录则建立此目录，注意目录的属主和权限。<br>主服务器崩溃后如果尚未归档的WAL日志还能访问，则应将其拷贝到pg_xlog目录，以尽最大可能恢复数据。</li>
+<li> 配置recovery.conf文件<br>如果使用pg_basebackup命令进行备份时使用了-R(–write-recovery-conf)参数,则恢复后的数据目录中已经有了一个recovery.conf文件。如果没有，则可以拷贝一个模板到数据目录：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres cp /usr/share/postgresql/$PG_VERSION/recovery.conf.sample /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main/</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>然后修改文件中的restore_command为适当的shell脚本以在恢复时可以读取到归档的WAL日志：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restore_command = <span class="string">&#x27;cp /var/backups/postgresql/archive/%f %p&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为此案例没有使用流复制，因此应该注释掉primary_conninfo参数。</p>
+<p>恢复期间还应该修改pg_hba.conf文件或其他途径以阻止客户端连接。<br>6.  启动服务器，开始恢复</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql start</span><br></pre></td></tr></table></figure>
+<p>当所有的归档WAL恢复完毕,无法读取到其他更新的归档日志后，恢复就会自动结束，并且recovery.conf会被更名为recovery.done,防止意外重新进入restore过程。<br>恢复完毕后，可以允许客户端连接到服务器。<br>注意，恢复的最后阶段，日志中会出现No such file or directory字样的提示，这是正常的，因为恢复过程已经无法读取到其他的归档日志文件或时间线history文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">5</span>\] LOG: consistent recovery state reached at <span class="number">1</span>/<span class="number">86008798</span></span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">000000010000000100000087</span>’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">6</span>\] LOG: redo done at <span class="number">1</span>/<span class="number">86008798</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">7</span>\] LOG: last completed transaction was at log time <span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">08</span>:<span class="number">57</span>:<span class="number">51.075265</span>+<span class="number">08</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">8</span>\] LOG: restored log file <span class="string">&quot;000000010000000100000086&quot;</span> <span class="keyword">from</span> archive</span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">00000002</span>.history’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">9</span>\] LOG: selected <span class="keyword">new</span> timeline ID: <span class="number">2</span></span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">00000001</span>.history’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">10</span>\] LOG: archive recovery complete</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">11</span>\] LOG: MultiXact member wraparound protections are now enabled</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4924</span>-<span class="number">1</span>\] LOG: autovacuum launcher started</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4905</span>-<span class="number">1</span>\] LOG: database system is ready to accept connections</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间点恢复Point-in-Time Recovery (PITR)</strong></p>
+<p>默认情况下，恢复过程会一直持续到最后一个可用的WAL归档日志。<br>但是也可以在recovery.conf中设置参数来控制恢复到的目标点，这四个参数recovery_target,recovery_target_name，recovery_target_time和recovery_target_xid可以用来指定恢复的目标点，但同时只能有一个生效，如果指定多个，则以最后一个为准。</p>
+<p>这几个参数的含义如下：</p>
+<ul>
+<li>  recovery_target<br>该参数目前只有一个取值’immediate’,指示恢复应该在达到一直状态后尽快的结束。对于连续归档备份来说，基础备份结束时就处于一致状态。</li>
+<li>  recovery_target_name<br>指定使用pg_create_restore_point()函数设定的恢复点名称。pg_create_restore_point()可以创建一个命名的恢复日志记录作为恢复目标，此函数只有超级用户可以访问。</li>
+<li>  recovery_target_time<br>指定恢复所要到达的时间戳。注意，recovery_target_time 设置的时间格式,使用pg的now函数输出的格式。比如：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recovery_target_time = <span class="string">&#x27;2015-02-13 20:04:49.63197+08&#x27;</span> </span><br></pre></td></tr></table></figure></li>
+<li>  recovery_target_xid<br>指定恢复过程要到达的事务id。要注意，事务id在事务开始时顺序赋值，但每个事务的完成不一定会遵循先后顺序，因此指定这个参数，只有那些在此事务id之前启动的事务会被恢复。</li>
+</ul>
+<p>还有几个参数会影响恢复目标的设定以及到达恢复目标时的动作：</p>
+<ul>
+<li>  recovery_target_inclusive<br>此参数只影响recovery_target_time和recovery_target_xid参数。当设定为true时，会包含恢复目标，而设定为false时，会恢复到恢复目标之前而不包含恢复目标。此参数默认为true。</li>
+<li>  recovery_target_timeline<br>指定在一个特定的时间线上恢复。默认在与制作基础备份相同的时间线上恢复。设置为latest会在归档日志中最新的时间线上恢复。</li>
+<li>  pause_at_recovery_target<br>指定当到达恢复目标是是否应该暂停，默认为true。此参数的意图是允许查询数据库来检查当前的恢复目标是否是想要的恢复点。<br>如果当前恢复目标并不是想要的，可以停止服务器，修改恢复目标设置，重新开始恢复数据库。<br>可以使用pg_xlog_replay_resume()函数来结束暂停继续恢复数据库，此时会一直恢复到最后的一致状态。</li>
+</ul>
+<p>没有指定恢复目标，或者没有处于hot_standby状态时，这个参数并不生效。</p>
+<p><strong>恢复时间线timeline</strong></p>
+<p>在做数据恢复时，如果能像时间旅行或者并行宇宙中那样来来回回随意穿梭就好了。比如，恢复一次之后，发现不满意，可以从头再来，直到找到满意的恢复点为止。</p>
+<p>幸好，PostgreSQL支持时间线timeline，正好支持了这种“超能力”。如果没有时间线，每次恢复之后新产生的WAL日志极有可能会将部分之前的WAL日志覆盖，从而再也无法恢复到那些状态。</p>
+<p>时间线是这样的，无论何时，一个恢复完成后，会创建一个新的时间线来标识此次恢复之后产生的WAL日志。时间线的id号是WAL日志文件名字的一部分，因此不会覆盖其他时间线上的WAL日志文件。</p>
+<p>每次创建一个新的时间线时，PostgreSQL会创建一个新的时间线历史文件，后缀为.history。历史文件会标识此时间线是什么时候从那个时间线分支而来的。有了时间线历史文件，PostgreSQL就可以在含有多个时间线的归档文件中找到正确的WAL归档日志。</p>
+<p>虽然时间线看起来的确很高能，但是无论如何也不可能恢复到制作基础备份之前的时间。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.2/static/continuous-archiving.html">24.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/recovery-target-settings.html">26.2. Recovery Target Settings</a><br>[3]<a target="_blank" rel="noopener" href="http://my.oschina.net/hippora/blog/378415">postgresql在线备份与恢复(三)</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/04/postgresql-continuous-archiving-pitr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/04/postgresql-continuous-archiving-pitr/" class="post-title-link" itemprop="url">PostgreSQL连续归档备份</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-04 20:55:48" itemprop="dateCreated datePublished" datetime="2015-12-04T20:55:48+08:00">2015-12-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pg_dump/pg_dumpall属于一致性逻辑备份，可以用其进行跨PostgreSQL版本，跨系统平台的数据迁移。用于常规备份则其速度和灵活性略显不足。</p>
+<p>而连续归档模式则类似于oracle的rman备份方式，可用于大型数据库的增量备份和恢复，以及用于搭建高可用standby镜像备份。</p>
+<p><strong>设置归档</strong></p>
+<p>PostgreSQL默认处于非归档模式。开启归档模式，主要涉及到三个参数：wal_level,archive_mode和archive_command</p>
+<p>wal_level参数默认为mininal,设置此参数为archive或者之上的级别都可以打开归档。<br>当postgresql需要传输归档日志时，会调用archive_command指定的shell命令。归档文件传输成功时，shell命令要返回0，此时，postgresql会认为归档文件已经传输成功，因此可以删除或者重新循环利用归档文件。当shell命令返回非0值时，postgresql会保留所有未成功传输的归档日志，并不断尝试重新传输，直到成功。如果归档命令一直不成功，pg_xlog目录会持续增长，有耗尽服务器存储空间的可能，此时postgresql会PANIC关闭，直到释放存储空间。</p>
+<p>将归档WAL日志存储在本机上是风险极高，不被推荐的。postgresql通过archive_command提供了存储WAL日志的灵活性，可以将归档日志存储到挂装的NFS目录，磁带，刻录到光盘，也可以将WAL日志通过ssh/scp传输到异机保存。</p>
+<p>要注意，archive_command将以运行PostgreSQL的系统用户的身份运行。debian系统里，这个系统用户是postgres。</p>
+<p>修改/etc/postgresql/$PG_VERISON/main/postgresql.conf文件以启动归档:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wal_level = archive</span><br><span class="line">archive_mode = on</span><br><span class="line">#archive_command = <span class="string">&#x27;test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f&#x27;</span></span><br><span class="line">archive_command = <span class="string">&#x27;ssh arc_svr test ! -f /path/to/archive/%f &amp;&amp; scp %p arc_svr:/path/to/archive/%f&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>arc_svr是用于存储WAL日志的ssh服务器别名<br>然后重新启动postgresql</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql restart</span><br></pre></td></tr></table></figure>
+
+<p>手动切换WAL日志,看配置是否正确，WAL是否正确传输了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql -c <span class="string">&#x27;select pg_switch_xlog()&#x27;</span></span><br><span class="line">pg_switch_xlog </span><br><span class="line">----------------</span><br><span class="line"> <span class="number">1</span>/6A0006A8</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>查看归档目录下出现了归档WAL日志文件。</p>
+<p><strong>使用pg_start_backup进行基础备份</strong></p>
+<ol>
+<li><p> 确保postgesql运行于归档模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select name, setting from pg_catalog.pg_settings where name like &#x27;archive%&#x27; or name = &#x27;wal_level&#x27;;</span><br><span class="line"> name setting </span><br><span class="line">-----------------+---------------------------------------------------------------------------</span><br><span class="line"> archive_command ssh node5 test ! -f /<span class="keyword">var</span>/backups/postgresql/archive/%f &amp;&amp; scp %p node5:<span class="regexp">/var/</span>backups/postgresql/archive/%f</span><br><span class="line"> archive_mode on</span><br><span class="line"> archive_timeout <span class="number">0</span></span><br><span class="line"> wal_level archive</span><br><span class="line">(<span class="number">4</span> rows)</span><br></pre></td></tr></table></figure></li>
+<li><p> 使用超级用户执行pg_start_backup</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_start_backup(&#x27;basebackup-20151205&#x27;);</span><br><span class="line"> pg_start_backup </span><br><span class="line">-----------------</span><br><span class="line"> <span class="number">1</span>/6F000028</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>basebackup-20151205是一个标签，用户自行指定用于标识本次基础备份。pg_start_backup会创建一个备份标签文件(backup label file),文件内保存有此次基本备份的相关信息。</p>
+</li>
+<li><p> 使用文件系统备份工具备份整个集群的数据文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres tar cjvf /<span class="keyword">var</span>/backups/postgresql/base/<span class="number">20151205.</span>tbz2 -P \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/postmaster.pid \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/postmaster.opts \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/pg_xlog \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/pg_replslot \\</span><br><span class="line">--warning=no-file-changed --warning=no-file-removed \\</span><br><span class="line">/<span class="keyword">var</span>/lib/postgresql/<span class="number">9.4</span>/main </span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>备份时需要排除掉postmaster.pid和postmaster.opts文件，以及pg_xlog和pg_replslot目录。</p>
+<p>生成的基础备份应该与归档WAL日志采用一样的存储策略，存储到异机保存，并可以进一步保存到永久介质保存，比如磁带或者CDROM。<br>4.  以超级用户身份执行pg_stop_backup</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_stop_backup();</span><br><span class="line">NOTICE: pg_stop_backup complete, all required WAL segments have been archived</span><br><span class="line"> pg_stop_backup </span><br><span class="line">----------------</span><br><span class="line"> <span class="number">1</span>/6F1A64F8</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>pg_stop_backup会将备份期间活动的WAL日志文件归档，一旦这些日志完成归档，则整个备份过程就结束了。<br>pg_stop_backup会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。<br>比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw------- <span class="number">1</span> admin admin <span class="number">306</span> Dec <span class="number">5</span> <span class="number">21</span>:<span class="number">37</span> 00000001000000010000006F<span class="number">.00000028</span>.backup</span><br><span class="line">-rw------- <span class="number">1</span> admin admin 16M Dec <span class="number">5</span> <span class="number">21</span>:<span class="number">37</span> 00000001000000010000006F</span><br></pre></td></tr></table></figure>
+<p>说明此次备份所需的归档WAL日志文件从00000001000000010000006F往后即可，包含此文件和对应的.backup文件。<br>backup文件的内容类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">1</span>/6F000028 (file 00000001000000010000006F)</span><br><span class="line">STOP WAL LOCATION: <span class="number">1</span>/6F1A64F8 (file 00000001000000010000006F)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">1</span>/6F000028</span><br><span class="line">BACKUP METHOD: pg_start_backup</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">21</span>:<span class="number">03</span>:<span class="number">03</span> CST </span><br><span class="line">LABEL: basebackup-<span class="number">20151205</span></span><br><span class="line">STOP TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">21</span>:<span class="number">37</span>:<span class="number">58</span> CST </span><br></pre></td></tr></table></figure>
+
+<p><strong>使用pg_basebackup进行基础备份</strong></p>
+<p>pg_basebackup使用复制协议，因此需要配置pg_hba.conf文件以允许replication连接,无论本地还是通过网络。<br>比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local replication postgres peer </span><br><span class="line">host replication postgres <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> md5 </span><br></pre></td></tr></table></figure>
+
+<p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份。<br>修改两个参数文件后，重新启动postgresql。</p>
+<p>然后执行以下命令:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres pg_basebackup -RPv　-D baseback20151205-<span class="number">1</span></span><br><span class="line">transaction log start point: <span class="number">1</span>/<span class="number">72000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">498974</span>/<span class="number">498974</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">transaction log end point: <span class="number">1</span>/<span class="number">72000430</span></span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+
+<p>这会生成一个备份目录，其目录结构与数据库集群的目录结构一致。如果要将数据打包到一个bz2文件，可以执行如下命令:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /<span class="keyword">var</span>/lib/postgresql</span><br><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -RPv -Ft -D - bzip2 &gt; baseback20151205-1.tbz2&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>pg_basebackup命令同样会在备份中生成backup_label文件和.backup归档日志文件。<br>其.backup文件内容类似如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">1</span>/7C000028 (file 00000001000000010000007C)</span><br><span class="line">STOP WAL LOCATION: <span class="number">1</span>/7C000998 (file 00000001000000010000007C)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">1</span>/7C000550</span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">52</span>:<span class="number">23</span> CST </span><br><span class="line">LABEL: pg_basebackup base backup</span><br><span class="line">STOP TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">53</span>:<span class="number">20</span> CST </span><br></pre></td></tr></table></figure>
+
+<p>可以远程使用pg_basebackup来进行基础备份。</p>
+<p>pg_basebackup的详细参数见man pg_basebackup或参考[2]。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/continuous-archiving.html">24.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.4/static/app-pgbasebackup.html">pg_basebackup</a></p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/01/6973/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/01/6973/" class="post-title-link" itemprop="url">Untitled Post - 158</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-01 15:27:09" itemprop="dateCreated datePublished" datetime="2015-12-01T15:27:09+08:00">2015-12-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>KVM qcow2格式镜像文件转换为VirtualBox VDI格式镜像文件，转换完毕后，可以使用VirtualBox直接启动虚拟机：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu-img convert -f qcow2 foo.qcow2 -O vdi foo.vdi</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/28/intel-centrino-wireless-n-2200-linux-compatibility/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/28/intel-centrino-wireless-n-2200-linux-compatibility/" class="post-title-link" itemprop="url">Intel Centrino Wireless-N 2200 linux兼容性问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-28 11:02:12" itemprop="dateCreated datePublished" datetime="2015-11-28T11:02:12+08:00">2015-11-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>intel迅驰无线网卡Centrino Wireless-N 2200在debian jessie系统下奇慢无比，连接速度只有1Mb/s,到网关的延迟有时达到1000ms以上。</p>
+<p>是因为此无线网卡在802.11n模式下与当前内核存在兼容性问题。所以，要解决此问题，要么关闭无线网卡的802.11n模式，或者更改无线路由器不开启802.11n模式。</p>
+<p><strong>关闭网卡的802.11n工作模式</strong></p>
+<p> /etc/modprobe.d目录下新建文件11n_disable.conf,添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">options iwlwifi 11n_disable=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>重新启动机器。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://syntaxionist.rogerhub.com/intel-centrino-wireless-n-2200-ubuntu-1mbps-workaround.html">Intel Centrino Wireless-N 2200 Ubuntu 1Mbps Workaround</a><br>[2]<a target="_blank" rel="noopener" href="http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards">How to fix slow wireless on machines with Intel wireless cards?</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/25/mac-os-x-ipp-printer-bugs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/25/mac-os-x-ipp-printer-bugs/" class="post-title-link" itemprop="url">Mac OS X连接IPP打印机的那些坑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-25 13:25:39" itemprop="dateCreated datePublished" datetime="2015-11-25T13:25:39+08:00">2015-11-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>Mac OS X 10.11连接linux系统CUPS使用ipp(Internet Printing Protocol)协议共享的打印机时，遇到两个大坑。</p>
+<p><strong>系统打印机配置的坑</strong></p>
+<p>使用mac系统的打印机配置来连接共享打印机<br>从System Preferences-&gt;Printers &amp; Scanners对话框添加ip打印机，选择IPP协议，address输入正确的共享打印机地址:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//printer_server_ip:631/printers/HP_LaserJet_P1008</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">无论使用何种驱动，add时都会有提示:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">Unable to verify the printer on your network.</span><br><span class="line">Unable to connect to ‘printer_server_ip’ due to an error. Would you still like to create the printer?</span><br></pre></td></tr></table></figure>
+<p>如果强制添加，<strong>然而并不能真的打印</strong>。<br>事后发现mac os x 10.11系统打印机配置添加的ipp打印机访问地址是错误的，可以通过cups配置界面看到其错误的地址。</p>
+<p><strong>HP官方驱动的坑</strong></p>
+<p>一直以为官方驱动应该是最靠谱的，不过这次不行。<br>已经提前安装了HP Mac OS X drivers,500多M!</p>
+<p>改用cups来添加共享打印机。<br>mac上的cups默认是没有打开web管理界面的，首先启用web管理界面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cupsctl WebInterface=yes</span><br></pre></td></tr></table></figure>
+<p>然后访问<a href="http://127.0.0.1:631打开cups管理界面来添加远程ipp协议共享打印机。">http://127.0.0.1:631打开cups管理界面来添加远程ipp协议共享打印机。</a></p>
+<p>Administration-&gt;Printer-&gt;Add Printer-&gt;Other Network Printers-&gt;Internet Printing Protocol(http)</p>
+<p>输入ipp打印机的访问地址：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//printer_server_ip:631/printers/HP_LaserJet_P1008</span></span><br></pre></td></tr></table></figure>
+
+<p>选择HP提供的P1008官方驱动，添加完成。</p>
+<p><strong>然而并不能打印！</strong></p>
+<p>重新修改已添加打印机配置，Printers-&gt;P1008-&gt;Modify Printer将其驱动更改为cups内置的Generic PostScript Printer</p>
+<p>打印测试页，<strong>success</strong>!</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Internet_Printing_Protocol">Internet Printing Protocol</a><br>[2]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Line_Printer_Daemon_protocol">Line Printer Daemon protocol</a><br>[3]<a target="_blank" rel="noopener" href="https://support.apple.com/en-us/HT201311">About AirPrint</a><br>[4]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/PostScript_Printer_Description">PostScript Printer Description</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/24/cassandra-export-import/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/24/cassandra-export-import/" class="post-title-link" itemprop="url">cassandra导出和导入数据</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-24 20:47:47" itemprop="dateCreated datePublished" datetime="2015-11-24T20:47:47+08:00">2015-11-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra像其他RDBMS一样提供了export/import工具：</p>
+<ul>
+<li>  cqlsh命令COPY TO/FROM<br>注意这不是cql命令。使用这组命令可以在cassandra与其他RDBMS或cassandra之间迁移数据。COPY TO/FROM支持CSV文件格式以及标准输出和输入。<br>COPY TO/FROM命令同样支持集合数据类型。</li>
+<li>  sstable2json/json2sstable<br>这组工具已经过时，在3.0版本中已被删除。所以不应该再使用这组工具。</li>
+<li>  sstableloader<br>Cassandra bulk loader,可以装载外部数据到cassandra,也可以恢复snapshot,装载sstable到不同配置的cassandra集群。<br>如果数据量很大，应该使用sstableloader，如果数据量比较小的话，使用COPY TO/FROM更省时省力。</li>
+<li>  Snapshots<br>snapshots是cassandra正牌的备份恢复工具，而不是用于与其他数据库系统进行数据迁移的工具。所以严格来说它不应该算作export/import工具。</li>
+<li>  ETL工具<br>很多第三方的ETL(Extract-Transform-Load)工具支持从其他数据库向cassandra数据库迁移数据。</li>
+</ul>
+<p><strong>COPY TO/FROM</strong></p>
+<p>这里只讲一下COPY TO/FROM命令。</p>
+<p>命令格式:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">COPY table_name ( column, ...)</span><br><span class="line">FROM ( <span class="string">&#x27;file_name&#x27;</span> STDIN )</span><br><span class="line">WITH option = <span class="string">&#x27;value&#x27;</span> AND ...</span><br><span class="line"></span><br><span class="line">COPY table_name ( column , ... )</span><br><span class="line">TO ( <span class="string">&#x27;file_name&#x27;</span> STDOUT )</span><br><span class="line">WITH option = <span class="string">&#x27;value&#x27;</span> AND ...</span><br></pre></td></tr></table></figure>
+
+<p>COPY FROM 用于从csv文件或标准输入import数据到表，而COPY TO用于将表数据export到csv文件或标准输出。</p>
+<p>WITH option=’value’ 用于指定csv文件的格式,分隔符，引用，转移字符，文件编码，时间格式等等，详见官方文档。</p>
+<p>如果不指定列名，会按表元数据中记载的列顺序输出所有的列。同样，如果csv也是按相同的顺序组织数据，COPY FROM时也可以忽略所有的列名。</p>
+<p>COPY TO/FROM时，可以只指定部分列进行部分数据的导出和导入，而且可以以任意顺序指定列名。</p>
+<p>如果表中已经存在数据，COPY FROM不会truncate已有的数据。</p>
+<p>导出数据的示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; use test ;</span><br><span class="line">cqlsh&gt; COPY airplanes (name, mach, year, manufacturer) TO <span class="string">&#x27;export.csv&#x27;</span> ;</span><br></pre></td></tr></table></figure>
+
+<p>导入数据的示例:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; COPY airplanes (name, mach, year, manufacturer) FROM <span class="string">&#x27;import.csv&#x27;</span> ;</span><br></pre></td></tr></table></figure>
+
+<p>如果使用标准输入导入数据，要使用只包含 <code>\.</code> 字符的单独一行来结束数据输入。</p>
+<p>如果导入数据时出现如下错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span> starting <span class="keyword">import</span> process:</span><br><span class="line"></span><br><span class="line">field larger than field limit (<span class="number">131072</span>)</span><br><span class="line">%d format: a number is required, not NoneType</span><br></pre></td></tr></table></figure>
+<p>这是因为csv文件包含大容量字段，python的csv模块需要设置更大的字段尺寸限制。</p>
+<p>修改/usr/bin/cqlsh.py文件,在导入csv模块之后，添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">csv.field_size_limit(sys.maxsize)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：含有counter列的表无法使用COPY TO/FROM来导出和导入数据。</strong></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.datastax.com/dev/blog/ways-to-move-data-tofrom-datastax-enterprise-and-cassandra">Ways to Move Data To/From DataStax Enterprise and Cassandra</a><br>[2]<a target="_blank" rel="noopener" href="https://issues.apache.org/jira/browse/CASSANDRA-9618">Consider deprecating sstable2json/json2sstable in 2.2</a><br>[3]<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/15063936/csv-error-field-larger-than-field-limit-131072">_csv.Error: field larger than field limit (131072)</a><br>[4]<a target="_blank" rel="noopener" href="http://alongwith.me/cassandra/cassandra%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB">cassandra数据迁移</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/22/gnome-x-app-autostart/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/22/gnome-x-app-autostart/" class="post-title-link" itemprop="url">GNOME环境X应用程序自启动</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-22 10:16:28" itemprop="dateCreated datePublished" datetime="2015-11-22T10:16:28+08:00">2015-11-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>GNOME环境下的GUI应用程序可以配置在GNOME初始化后自动运行。</p>
+<p>配置自启动的位置在：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$HOME/.config/autostart/</span><br></pre></td></tr></table></figure>
+
+<p>简单的将/usr/share/applications目录下的.desktop文件拷贝到此目录下即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cp /usr/share/applications/foo.desktop ~<span class="regexp">/.config/</span>autostart/</span><br></pre></td></tr></table></figure>
+
+<p>或者使用GNOME Tweak Tool -&gt; Startup Applications选择一下就可以了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Autostarting">Autostarting</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/19/6929/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/19/6929/" class="post-title-link" itemprop="url">Untitled Post - 157</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-19 21:58:37" itemprop="dateCreated datePublished" datetime="2015-11-19T21:58:37+08:00">2015-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Dumps created by pg_dump are internally consistent, meaning, the dump represents a snapshot of<br>the database at the time pg_dump began running. pg_dump does not block other operations on the<br>database while it is working. (Exceptions are those operations that need to operate with an exclusive<br>lock, such as most forms of ALTER TABLE .)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/11/19/oracle-login-error-product-user-profile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/19/oracle-login-error-product-user-profile/" class="post-title-link" itemprop="url">oracle手工建库新用户登录错误Error accessing PRODUCT_USER_PROFILE</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-19 12:21:16" itemprop="dateCreated datePublished" datetime="2015-11-19T12:21:16+08:00">2015-11-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>手工创建oracle数据库，新建用户sqlplus登录时有错误提示信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ERROR:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">Error</span> accessing PRODUCT_USER_PROFILE</span><br><span class="line">Warning: Product user profile information not loaded!</span><br><span class="line">You may need to run PUPBLD.SQL <span class="keyword">as</span> SYSTEM</span><br></pre></td></tr></table></figure>
+
+<p>可以正常登录，不影响使用。</p>
+<p>用system用户登录数据库，执行脚本$ORACLE_HOME/sqlplus/admin/pupbld.sql可以消除此错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus system/xxxx@orcl</span><br><span class="line">SQL&gt;@/u01/app/oracle/product/<span class="number">10.2</span><span class="number">.0</span>/db_1/sqlplus/admin/pupbld.sql</span><br><span class="line"></span><br><span class="line">DROP SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01434</span>: private synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line"> DATE_VALUE FROM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">3</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">DROP TABLE PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">ALTER TABLE SQLPLUS_PRODUCT_PROFILE ADD (LONG_VALUE LONG)</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">Table created.</span><br><span class="line"></span><br><span class="line">DROP TABLE PRODUCT_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">DROP VIEW PRODUCT_PRIVS</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00942</span>: table or view does not exist</span><br><span class="line"></span><br><span class="line">View created.</span><br><span class="line"></span><br><span class="line">Grant succeeded.</span><br><span class="line"></span><br><span class="line">DROP PUBLIC SYNONYM PRODUCT_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01432</span>: public synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br><span class="line"></span><br><span class="line">DROP SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01434</span>: private synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br><span class="line"></span><br><span class="line">DROP PUBLIC SYNONYM PRODUCT_USER_PROFILE</span><br><span class="line"> *</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">01432</span>: public synonym to be dropped does not exist</span><br><span class="line"></span><br><span class="line">Synonym created.</span><br></pre></td></tr></table></figure>
+
+<p>重新登录新用户，错误提示消失。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/2/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/19/debian-use-dvd-iso-set-apt-source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/19/debian-use-dvd-iso-set-apt-source/" class="post-title-link" itemprop="url">debian使用dvd iso镜像配置本地源</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-19 21:06:10" itemprop="dateCreated datePublished" datetime="2020-05-19T21:06:10+08:00">2020-05-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为某云在某个网络内没有debian安装源，所以只能使用本地源。<br>debian支持的软件包很多，amd64架构的dvd iso竟然有16张之多，bd格式iso则只有4张，这里使用dvd格式的iso。</p>
+<p>首先，下载debian 10.1.0 amd64架构的dvd iso，<a target="_blank" rel="noopener" href="https://cdimage.debian.org/cdimage/archive/10.1.0/amd64/iso-dvd/">http方式只能下载前三个iso</a>,下载其他iso需要使用jigdo方式即时下载在线制作iso文件。</p>
+<p>debian系统安装jigdo-file使用jigdo-lite命令，输入iso的jigdo文件url即可下载制作iso镜像。debian 10.1.0 dvd iso的<a target="_blank" rel="noopener" href="https://cdimage.debian.org/cdimage/archive/10.1.0/amd64/jigdo-dvd/">jigdo下载地址在此</a>。<br>因为需要安装的包postgresql-11-postgis-2.5不在前三张dvd，所以使用jigdo下载了第四张dvd镜像。</p>
+<p>然后，将四张dvd iso分别挂载到/media目录的挂载点:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-1.iso /media/cdrom1/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-2.iso /media/cdrom2/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-3.iso /media/cdrom3/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-4.iso /media/cdrom4/</span><br></pre></td></tr></table></figure>
+<p>也可以添加到/etc/fstab:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">1.</span>iso/media/cdrom1udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">2.</span>iso/media/cdrom2udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">3.</span>iso/media/cdrom3udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">4.</span>iso/media/cdrom4udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -a</span><br></pre></td></tr></table></figure>
+<p>编辑/etc/apt/sources.list文件，添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom1/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom2/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom3/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom4/ buster main contrib </span><br></pre></td></tr></table></figure>
+
+<p>最后，apt update后正常安装软件即可，如果要安装的软件还是找不到，可能需要下载更多的dvd iso镜像。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/" class="post-title-link" itemprop="url">使用rman从windows x64向linux amd64平台迁移oracle 10g 10.2.0.4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-29 12:05:21" itemprop="dateCreated datePublished" datetime="2020-04-29T12:05:21+08:00">2020-04-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用rman convert database将oracle 10g 10.2.0.4 for windows x64环境下的数据库转换到oracle 10g 10.2.0.4 for linux x64环境下。</p>
+<p>**注意:**无法使用standby备库来进行转换。</p>
+<p><strong>1、以只读方式打开数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown immediate</span><br><span class="line">SQL&gt; startup mount</span><br><span class="line">SQL&gt; alter database open read only;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、检查可转换性和标示外部对象。</strong></p>
+<p>使用DBMS_TDB.CHECK_DB检查数据库状态，是否可以顺利转换到目标平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">    db_ready boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* db_ready is ignored, but with SERVEROUTPUT set to ON any </span></span><br><span class="line"><span class="comment">     * conditions preventing transport will be output to console */</span></span><br><span class="line">    db_ready := dbms_tdb.check_db(<span class="string">&#x27;Linux x86 64-bit&#x27;</span>, dbms_tdb.skip_none);</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>DBMS_TDB.CHECK_DB返回TRUE表示可以转换到目标平台，返回FALSE则不可以，同时会输出不可已转换的原因。</p>
+<p>使用DBMS_TDB.CHECK_EXTERNAL标识外部对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">     external boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* value of external is ignored, but with SERVEROUTPUT set to ON</span></span><br><span class="line"><span class="comment">     * dbms_tdb.check_external displays report of external objects</span></span><br><span class="line"><span class="comment">     * on console */</span></span><br><span class="line">    external := dbms_tdb.check_external;</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>如果有外部对象会在输出中显示出来。</p>
+<p><strong>3、转换数据库</strong></p>
+<p>可以在源数据库，也可以在目标数据库进行数据文件的转换。这里选择在目标数据库进行数据文件转换，这样可以减少源数据库的停止服务时间。</p>
+<p>在源数据库执行rman convert database:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/passwd@dbinst</span><br><span class="line">RMAN&gt; CONVERT DATABASE ON TARGET PLATFORM</span><br><span class="line"> CONVERT SCRIPT <span class="string">&#x27;D:\\rman\\convertscript.rman&#x27;</span></span><br><span class="line"> TRANSPORT SCRIPT <span class="string">&#x27;D:\\rman\\transportscript.sql&#x27;</span></span><br><span class="line"> <span class="keyword">new</span> database <span class="string">&#x27;orcl&#x27;</span></span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\rman\\%U&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完成会生成一个transport脚本用于在目标平台上创建数据库，一个pfile文件包含源数据库相同的参数配置，还生成一个convert脚本用于在目标平台上转换数据文件。</p>
+<p><strong>注意：</strong>在windows平台上只能使用windows系统路径名，包括FORMAT参数使用的路径，在linux平台上做数据库转换时，根据linux平台上oracle数据库的目录结构布局来相应修改生成的convertscript.rman，pfile和transportscript.sql。</p>
+<p><strong>3.1 convertscript.rman</strong><br>生成的转换脚本类似如下： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>根据目标平台文件系统布局，修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>/mnt/data/database目录下为从源库直接拷贝过来待转换的数据文件，转换完成的数据文件存储到/u01/oradata/orcl/目录下。</p>
+<p><strong>3.2 pfile</strong><br>生成的INIT文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;D:\\RMAN\\CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;D:\\RMAN\\flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;D:\\RMAN\\ADUMP&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;/u01/oradata/orcl/CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;/u01/app/oracle/flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;/u01/app/oracle/admin/orcl/adump&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.3 transportscript.sql</strong><br>生成的建库脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-- The following commands will create a <span class="keyword">new</span> control file and use it</span><br><span class="line">-- to open the database.</span><br><span class="line">-- Data used by Recovery Manager will be lost.</span><br><span class="line">-- The contents <span class="keyword">of</span> online logs will be lost and all backups will</span><br><span class="line">-- be invalidated. Use <span class="built_in">this</span> only <span class="keyword">if</span> online logs are damaged.</span><br><span class="line"></span><br><span class="line">-- After mounting the created controlfile, the following SQL</span><br><span class="line">-- statement will place the database <span class="keyword">in</span> the appropriate</span><br><span class="line">-- protection mode:</span><br><span class="line">-- ALTER DATABASE SET STANDBY DATABASE TO MAXIMIZE PERFORMANCE</span><br><span class="line"></span><br><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;D:\\RMAN\\INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;/u01/app/oracle/admin/orcl/pfile/INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.4 实施转换</strong></p>
+<p>首先，将源数据库的数据文件全部拷贝到目标数据库（因为只拷贝数据文件，可以从standby备库拷贝），然后根据数据文件所在的路径相应的修改convert脚本，然后使用rman执行转换脚本，转换后的数据文件存储在format指定的位置。</p>
+<p>目标平台必须要有一个已经存在的数据库，因为rman需要连接到target数据库才能工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rman target / nocatalog</span><br><span class="line">RMAN&gt; @CONVERTSCRIPT.RMAN</span><br></pre></td></tr></table></figure>
+
+<p>然后，根据目标平台环境修改生成的pfile文件参数<br>最后，执行transportscript.sql生成目标数据库。使用utlirp.sql和utlrp.sql脚本重新编译目标平台数据的PL/SQL模块。<br>先关闭已有的数据库，oracle实例每次只能启动一个数据库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; @TRANSPORTSCRIPT.SQL</span><br></pre></td></tr></table></figure>
+<p>脚本最后最自动调用utlirp.sql和utlrp.sql编译模块。</p>
+<p>其中遇到了错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">27102</span>: out <span class="keyword">of</span> memory</span><br><span class="line">Linux-x86_64 <span class="built_in">Error</span>: <span class="number">28</span>: No space left on device</span><br></pre></td></tr></table></figure>
+<p>是因为内核参数kernel.shmall设置为了2097152，oracle最大只能使用2097152*4096=8GB的系统内存，而INIT文件中设置的SGA大小超过了10GB，重新设置kernel.shmall为4194304可以最大允许16GB，问题解决。</p>
+<p>数据库的sys用户是由本地密码文件验证的，数据库转换时并没有涉及到sys用户，因此需要本地重新为sys用户新建一个密码文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ orapwd file=$ORACLE_HOME/dbs/orapw$ORACLE_SID password=passwd_for_sys force=y</span><br></pre></td></tr></table></figure>
+
+<p>至此，数据库转换完成，最后以OPEN RESETLOGS方式打开新数据库。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/backup.102/b14191/dbxptrn.htm#BRADV05432">15 RMAN Cross-Platform Transportable Databases and Tablespaces</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34556414/article/details/80188533">使用RMAN Convert Database命令实现跨平台的数据库迁移</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/28/debian-buster-install-oracle-10g/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/28/debian-buster-install-oracle-10g/" class="post-title-link" itemprop="url">debian buster安装oracle 10g</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-28 22:12:33" itemprop="dateCreated datePublished" datetime="2020-04-28T22:12:33+08:00">2020-04-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>oracle 10g已经太老了，直接在debian buster上安装是不可以的。但可以迂回一下，先在debian squeeze上安装，然后将安装好的oracle文件打包拷贝到debian buster相同的目录结构下，并且使用相同的用户和组权限。</p>
+<p><strong>一、安装</strong></p>
+<p>1、安装squeeze及支持组件</p>
+<p>下载squeeze最后的版本<a target="_blank" rel="noopener" href="https://cdimage.debian.org/mirror/cdimage/archive/6.0.10/amd64/iso-cd/debian-6.0.10-amd64-netinst.iso">6.0.10</a>，脱机安装完毕后，编辑/etc/apt/sources.list使用以下源：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb http:<span class="comment">//archive.debian.org/debian squeeze main contrib non-free</span></span><br></pre></td></tr></table></figure>
+<p>其他镜像源都已不可用，只有此归档源可以。</p>
+<p>安装支持组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install build-essential ia32-libs ia32-libs-dev libc6 libc6-i386 libc6-dev libc6-dev-i386 rpm libstdc++<span class="number">5</span> libaio1 gcc-multilib xauth unzip</span><br></pre></td></tr></table></figure>
+
+<p>创建符号链接</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ln -sf /usr/bin/awk /bin/awk</span><br><span class="line"># ln -sf /usr/bin/rpm /bin/rpm</span><br><span class="line"># ln -sf /usr/bin/basename /bin/basename</span><br></pre></td></tr></table></figure>
+
+<p>2、创建用户和组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># groupadd oinstall</span><br><span class="line"># groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line"># groupadd nobody</span><br><span class="line"># id oracle</span><br><span class="line">uid=<span class="number">1001</span>(oracle) gid=<span class="number">1001</span>(oinstall) groups=<span class="number">1001</span>(oinstall),<span class="number">1002</span>(dba)</span><br></pre></td></tr></table></figure>
+
+<p>3、修改内核参数<br>添加文件/etc/sysctl.d/oracle.conf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fs.file-max = <span class="number">65536</span></span><br><span class="line">fs.aio-max-nr = <span class="number">1048576</span></span><br><span class="line"># semaphores: semmsl, semmns, semopm, semmni</span><br><span class="line">kernel.sem = <span class="number">250</span> <span class="number">32000</span> <span class="number">100</span> <span class="number">128</span></span><br><span class="line"># (Oracle recommends total machine Ram -1 byte)</span><br><span class="line">kernel.shmmax = <span class="number">2147483648</span></span><br><span class="line">kernel.shmall = <span class="number">4194304</span></span><br><span class="line">kernel.shmmni = <span class="number">4096</span></span><br><span class="line">net.ipv4.ip_local_port_range = <span class="number">1024</span> <span class="number">65000</span></span><br><span class="line"># dba group</span><br><span class="line">vm.hugetlb_shm_group = <span class="number">1002</span></span><br><span class="line">vm.nr_hugepages = <span class="number">64</span></span><br></pre></td></tr></table></figure>
+
+<p>4、修改资源限制<br>添加文件/etc/security/limits.d/oracle.conf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">oracle soft nproc <span class="number">2047</span></span><br><span class="line">oracle hard nproc <span class="number">16384</span></span><br><span class="line">oracle soft nofile <span class="number">1024</span></span><br><span class="line">oracle hard nofile <span class="number">65536</span></span><br><span class="line">oracle soft memlock <span class="number">204800</span></span><br><span class="line">oracle hard memlock <span class="number">204800</span></span><br></pre></td></tr></table></figure>
+
+<p>5、准备目录结构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line"></span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
+<p>从其他用户主目录拷贝.profile，.bashrc，.bash_logout文件到oracle用户主目录</p>
+<p>6、安装10.2.0.1<br>通过X11 forward远程安装，安装路径设定为/u01/app/oracle/product/10.2.0/db_1<br>只安装软件，不创建数据库，忽略ins_emdb.mk错误继续安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -XC oracle@host</span><br><span class="line">$ gunzip 10201_database_linux_x86_64.cpio.gz</span><br><span class="line">$ cpio -idmv &lt; 10201_database_linux_x86_64.cpio</span><br><span class="line">$ database/runInstaller -ignoreSysPrereqs</span><br></pre></td></tr></table></figure>
+
+<p>7、升级10.2.0.4</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ unzip p6810189_10204_Linux-x86-<span class="number">64.</span>zip</span><br><span class="line">$ Disk1/runInstaller -ignoreSysPrereqs</span><br></pre></td></tr></table></figure>
+<p>升级时选择同一个实例，即OraDb10g_home1</p>
+<p><strong>二、移植</strong></p>
+<p>1、在squeeze上打包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zcvf /tmp/oracle.tar.gz /u01</span><br><span class="line">$ tar zcvf /tmp/oracle_conf.tar.gz /etc/oratab /etc/oraInst.loc /usr/local/bin/ <span class="regexp">/etc/</span>sysctl.d/oracle.conf /etc/security/limits.d/oracle.conf</span><br></pre></td></tr></table></figure>
+
+<p>2、buster上创建用户组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#groupadd oinstall</span><br><span class="line">#groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line">#groupadd nobody</span><br></pre></td></tr></table></figure>
+
+<p>3、准备目录结构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chown -R oracle:oinstall /u01/app</span><br><span class="line">#chown -R oracle:oinstall /u01/app/oracle</span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
+
+<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录，以oracle用户执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf /tmp/oracle.tar.gz -C /</span><br></pre></td></tr></table></figure>
+<p>以root用户执行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
+
+<p>5、oracle用户配置<br>.bashrc添加如下环境变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> ORACLE_SID=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_UNQNAME=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_OWNER=oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_BASE=<span class="regexp">/u01/</span>app/oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=$ORACLE_BASE/product/<span class="number">10.2</span><span class="number">.0</span>/db_1</span><br><span class="line"><span class="keyword">export</span> PATH=$ORACLE_HOME/bin:$PATH</span><br><span class="line"><span class="keyword">export</span> TNS_ADMIN=$ORACLE_HOME/network/admin</span><br><span class="line"><span class="keyword">export</span> SQLPATH=$ORACLE_HOME/scripts</span><br><span class="line"><span class="keyword">export</span> LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<p>安装完成，经测试可以正常创建数据库，正常使用。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/OracleDB">OracleDB</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/25/terminal-modes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/25/terminal-modes/" class="post-title-link" itemprop="url">terminal modes</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-25 16:17:50" itemprop="dateCreated datePublished" datetime="2020-02-25T16:17:50+08:00">2020-02-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>The Linux terminals that are provided by the console device drivers include line-mode terminals, block-mode terminals, and full-screen mode terminals.</p>
+<p>On a full-screen mode terminal, pressing any key immediately results in data being sent to the terminal. Also, terminal output can be positioned anywhere on the screen. This feature facilitates advanced interactive capability for terminal-based applications like the vi editor. It works in raw mode default,can set to cbreak mode also.</p>
+<p>On a line-mode terminal, the user first types a full line, and then presses Enter to indicate that the line is complete. The device driver then issues a read to get the completed line, adds a new line, and hands over the input to the generic TTY routines. It works in cooked mode default.</p>
+<p>The terminal that is provided by the 3270 terminal device driver is a traditional IBM® mainframe block-mode terminal. Block-mode terminals provide full-screen output support and users can type input in predefined fields on the screen. Other than on typical full-screen mode terminals, no input is passed on until the user presses Enter. The terminal that is provided by the 3270 terminal device driver provides limited support for full-screen applications. For example, the ned editor is supported, but not vi.</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Terminal_mode">Terminal mode</a><br>[2]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13104460/confusion-about-raw-vs-cooked-terminal-modes">Confusion about raw vs. cooked terminal modes?</a><br>[3]<a target="_blank" rel="noopener" href="http://foldoc.org/cooked%20mode">cooked mode</a><br>[4]<a target="_blank" rel="noopener" href="https://utcc.utoronto.ca/~cks/space/blog/unix/CBreakAndRaw">What goes into the terminal’s ‘cbreak’ and ‘raw’ modes</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/23/get-macos-sysinfo-from-shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/23/get-macos-sysinfo-from-shell/" class="post-title-link" itemprop="url">命令行获取macos系统相关信息</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-23 21:46:54" itemprop="dateCreated datePublished" datetime="2020-02-23T21:46:54+08:00">2020-02-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://teczd.com/2015/09/23/osx-get-system-info-from-command-line/">Get OS X System Info from the Command Line</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/15/macos-write-img-to-usb-stick/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/15/macos-write-img-to-usb-stick/" class="post-title-link" itemprop="url">macos write img to usb stick</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-15 19:52:31" itemprop="dateCreated datePublished" datetime="2020-02-15T19:52:31+08:00">2020-02-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>insert usb stick, the device name of usb stick is /dev/disk2</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ diskutil list #find device name <span class="keyword">of</span> usb stick</span><br><span class="line">/dev/disk2 (external, physical):</span><br><span class="line"> #: TYPE NAME SIZE IDENTIFIER</span><br><span class="line"> <span class="number">0</span>: GUID_partition_scheme *<span class="number">32.2</span> GB disk2</span><br><span class="line"> <span class="number">1</span>: EFI TAILS <span class="number">8.6</span> GB disk2s1</span><br><span class="line">$ diskutil unmountdisk /dev/disk2</span><br><span class="line">$ sudo dd <span class="keyword">if</span>=tails-amd64-<span class="number">4.3</span>.img <span class="keyword">of</span>=<span class="regexp">/dev/</span>disk2 bs=64m</span><br><span class="line">$ diskutil eject /dev/disk2</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/10/using-dnscrypt-proxy-inbuild-doh-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/10/using-dnscrypt-proxy-inbuild-doh-server/" class="post-title-link" itemprop="url">firefox使用dnscrypt-proxy内建doh服务器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-10 10:08:04" itemprop="dateCreated datePublished" datetime="2020-02-10T10:08:04+08:00">2020-02-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>dnscrypt-proxy内建doh服务器，可以为本机或外部提供doh服务</p>
+<p><strong>本地使用</strong></p>
+<p>先生成自签证书</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -x509 -nodes -newkey rsa:<span class="number">2048</span> -days <span class="number">5000</span> -sha256 -keyout localhost.pem -out localhost.pem</span><br></pre></td></tr></table></figure>
+
+<p>编辑/usr/local/etc/dnscrypt-proxy.toml，添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\[local_doh\]</span><br><span class="line"> listen_addresses = \[<span class="string">&#x27;127.0.0.1:3000&#x27;</span>\]</span><br><span class="line"> path = <span class="string">&quot;/dns-query&quot;</span></span><br><span class="line"> cert_file = <span class="string">&quot;localhost.pem&quot;</span></span><br><span class="line"> cert_key_file = <span class="string">&quot;localhost.pem&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>重启dnscrypt-proxy服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo brew services restart dnscrypt-proxy</span><br></pre></td></tr></table></figure>
+
+<p>打开firefox浏览器，访问<a target="_blank" rel="noopener" href="https://127.0.0.1:3000/dns-query%E5%B9%B6%E6%8E%A5%E5%8F%97%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6">https://127.0.0.1:3000/dns-query并接受自签证书</a><br>然后输入about:config配置如下选项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">network.trr.custom_uri = https:<span class="comment">//127.0.0.1:3000/dns-query</span></span><br><span class="line">network.trr.uri = https:<span class="comment">//127.0.0.1:3000/dns-query</span></span><br><span class="line">network.trr.resolvers = \[&#123; <span class="string">&quot;name&quot;</span>: <span class="string">&quot;local&quot;</span>, <span class="string">&quot;url&quot;</span>: <span class="string">&quot;https://127.0.0.1:3000/dns-query&quot;</span> &#125;\]</span><br><span class="line">network.trr.mode = <span class="number">3</span></span><br><span class="line">network.security.esni.enabled = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>重新启动firefox，访问<a target="_blank" rel="noopener" href="https://www.cloudflare.com/ssl/encrypted-sni/">Browsing Experience Security Check</a>检查浏览器设置结果。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Local-DoH">Local DoH</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/07/nginx-ssl-preread-real-client-ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/07/nginx-ssl-preread-real-client-ip/" class="post-title-link" itemprop="url">nginx启用ssl_preread时获取客户真实ip地址</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-07 16:48:38" itemprop="dateCreated datePublished" datetime="2020-02-07T16:48:38+08:00">2020-02-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用ssl_preread分流请求时，真正的服务程序无法获取到真实的客户ip，这时候可以借助<a target="_blank" rel="noopener" href="https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt">proxy_protocol</a>来获取真实的客户ip地址</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> proxy_headers_hash_bucket_size 6400; #添加此行</span><br><span class="line"> include mime.types;</span><br><span class="line"> default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line"> log_format main <span class="string">&#x27;$proxy_protocol_addr - $remote_user \[$time_local\] &quot;$request&quot; &#x27;</span></span><br><span class="line"> <span class="string">&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line"> &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;; #修改此行,用$proxy_protocol_addr替换$remote_addr</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"> listen 8443 ssl http2 proxy_protocol default_server;#此行添加proxy_protocol指令</span><br><span class="line">...</span><br><span class="line"># ssl preread for request certs</span><br><span class="line">stream &#123;</span><br><span class="line"> map $ssl_preread_alpn_protocols $tls_port &#123;</span><br><span class="line"> ~\\bacme-tls/<span class="number">1</span>\\b <span class="number">10443</span>;</span><br><span class="line"> <span class="keyword">default</span> <span class="number">8443</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">443</span>;</span><br><span class="line"> listen \[::\]:<span class="number">443</span>;</span><br><span class="line"> proxy_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:$tls_port;</span><br><span class="line"> proxy_protocol on; #添加此行</span><br><span class="line"> ssl_preread on;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样access日志就可以获取到真实的客户ip地址($proxy_protocol_addr)了，但是nginx的error日志格式无法改变，只能更改日志级别，因此preread之后的错误日志就没办法了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/04/xpra-intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/04/xpra-intro/" class="post-title-link" itemprop="url">Xpra入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-04 18:49:22" itemprop="dateCreated datePublished" datetime="2020-02-04T18:49:22+08:00">2020-02-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ssh x11 forward太慢了，真的。</p>
+<p>Xpra除了很快，还可以后台运行gui应用，被称为screen for X11。还可以远程运行整个桌面。</p>
+<p>下面使用macos远程使用debian buster系统上的gui application</p>
+<p><strong>安装</strong></p>
+<p>debian端:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q https:<span class="comment">//xpra.org/gpg.asc -O- sudo apt-key add -</span></span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://xpra.org/ buster main&quot;</span></span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install xpra -y</span><br></pre></td></tr></table></figure>
+
+<p>mac端：<br>下载<a target="_blank" rel="noopener" href="https://xpra.org/dists/osx/x86_64/Xpra.pkg">Xpra.pkg</a>安装即可。<br>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install xpra</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行</strong></p>
+<p>通过ssh隧道运行</p>
+<p>linux/macos平台:</p>
+<p>一次性运行gui应用，结束时自动关闭xpra服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p>启动gui应用,结束时不关闭xpra服务，可以再次附加到gui应用程序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo</span></span><br></pre></td></tr></table></figure>
+
+<p>断开后可以重新附加到已经运行的gui应用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra attach ssh:<span class="comment">//user@host</span></span><br></pre></td></tr></table></figure>
+
+<p>windows平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; xpra_cmd start ssh:<span class="comment">//user@host --ssh=&quot;C:\\\\Program Files\\\\putty\\\\Plink.exe -ssh -noagent -i c:\\\\***.ppk -P 22&quot; --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>其他命令</strong></p>
+<p>列出所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra list</span><br></pre></td></tr></table></figure>
+
+<p>终止所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra stop</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入法</strong><br>服务器上安装ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ibus-pinyin</span><br></pre></td></tr></table></figure>
+
+<p>配置ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-setup&quot;</span></span><br></pre></td></tr></table></figure>
+<p>运行firefox，同时启动ibus输入法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=firefox --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-daemon -x -d -r&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他请参考<code>xpra --help</code></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://xpra.org/trac/browser/xpra/trunk/src/man/xpra.1">manual</a><br>[2]<a target="_blank" rel="noopener" href="https://xpra.org/trac/wiki/FAQ">FAQ</a><br>[3]<a target="_blank" rel="noopener" href="https://medium.com/@summitkwan/guide-work-remotely-on-a-linux-server-from-local-mac-windows-f05cdc6db0e0">GUIDE: Work remotely on a Linux server from local Mac</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/04/pgadmin4-start-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/04/pgadmin4-start-error/" class="post-title-link" itemprop="url">pgadmin4无法启动错误</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-04 16:49:15" itemprop="dateCreated datePublished" datetime="2020-02-04T16:49:15+08:00">2020-02-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pgadmin4无法启动，有类似错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: <span class="string">&#x27;module&#x27;</span> object has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>是因为python3-paramiko与python3-gssapi冲突，启动python3,import paramiko会报错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.3</span> (<span class="keyword">default</span>, Apr <span class="number">3</span> <span class="number">2019</span>, <span class="number">05</span>:<span class="number">39</span>:<span class="number">12</span>) </span><br><span class="line">\[GCC <span class="number">8.3</span><span class="number">.0</span>\] on linux</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> paramiko</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"> File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/__init__.py&quot;</span>, line <span class="number">22</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.transport <span class="keyword">import</span> SecurityOptions, Transport</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/transport.py&quot;</span>, line <span class="number">38</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.auth_handler <span class="keyword">import</span> AuthHandler</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/auth_handler.py&quot;</span>, line <span class="number">72</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.ssh_gss <span class="keyword">import</span> GSSAuth, GSS_EXCEPTIONS</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/ssh_gss.py&quot;</span>, line <span class="number">55</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> GSS_EXCEPTIONS = (gssapi.GSSException,)</span><br><span class="line">AttributeError: <span class="built_in">module</span> <span class="string">&#x27;gssapi&#x27;</span> has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>临时的解决办法就是卸载掉python3-gssapi</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove python3-gssapi</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="代码的版本控制十分常见，数据库版本也有必要纳入版本控制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库版本控制">
+<meta property="og:url" content="http://example.com/2013/10/30/database-version-control/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="代码的版本控制十分常见，数据库版本也有必要纳入版本控制。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-10-30T05:36:04.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.111Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PostgresQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/10/30/database-version-control/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>数据库版本控制 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/10/30/database-version-control/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据库版本控制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-10-30 13:36:04" itemprop="dateCreated datePublished" datetime="2013-10-30T13:36:04+08:00">2013-10-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>代码的版本控制十分常见，数据库版本也有必要纳入版本控制。</p>
+<a id="more"></a>
+<p>开发和维护过程中，数据库的schema发生变化是难以避免的，而相关数据库脚本不做版本控制，很容易造成开发，测试，上线时的混乱。<br>一般来说，数据库版本会有一个baseline,之后所有的变化都通过升级脚本来更新。特别是对于生产库来讲，drop然后重新create是不可能的，必须通过升级脚本来升级数据库。</p>
+<p><strong>版本控制策略</strong></p>
+<p>将数据库脚本与源代码一起纳入repo的管理。应用程序的每一个release版本包含一个重新设立的基线脚本和增量升级脚本。</p>
+<p>重新设立的基线baseline脚本用来初始化一个全新的数据库，而增量脚本则是针对上一个release版本发布以来，到当前release版本之间的数据库schema变化。<br>而且增量脚本绝对不容许跨多个release版本，只能是针对上一个release版本的变化。</p>
+<p>对于一个全新的安装，比如测试安装，或者新客户安装，只要从代码库里检出需要的release版本，然后执行基线脚本就可以了，没有任何历史负担。<br>而对于升级安装来说，则需要执行增量升级脚本。</p>
+<p>增量升级脚本必须检查应用程序当前的数据库版本，如果应用程序使用的数据库版本是上个release的数据库版本，则可以升级，否则拒绝升级。<br>这需要在数据库中设置版本记录表，比如：<br>记录应用程序版本<br>[sql]<br>CREATE TABLE appversion (<br> id INTEGER PRIMARY KEY,<br> name varchar(20),<br> version varchar(20),<br> applied_time time,<br> remarks varchar(255)<br>)<br>[/sql]</p>
+<p>记录数据库版本:<br>[sql]<br>CREATE TABLE dbversion (<br> id INTEGER PRIMARY KEY,<br> name varchar(20),<br> version varchar(20),<br> applied_time time,<br> remarks varchar(255)<br>)<br>[/sql]</p>
+<p>数据库版本号采用与应用程序一致的版本号，比如常用的主.次.修订.build。应用程序启动时如果发现数据库版本与其不一致，可以给出提示，拒绝启动。</p>
+<p>由于schema变化导致的数据迁移脚本也要与增量脚本一起提供，基线版本则没有这个问题。</p>
+<p>对于划分模块，每个模块负责自己的数据库设计和修改的情况，可以提供统一的shell脚本来逐一调用每个模块的基线和增量数据库脚本。<br>也就是每个模块维护自己的基线和数据库脚本，由调用shell脚本负责统一更新应用程序记载的数据库版本号。</p>
+<p>基线脚本或增量脚本可以写在一个文件中，也可以拆分到几个文件中。脚本可以手写，当然也可以采用数据库提供的工具来自动生成。</p>
+<p>增量升级时建议将Views, Stored Procedures和funcations等drop掉重新create,这样可以<a target="_blank" rel="noopener" href="http://odetocode.com/blogs/scott/archive/2008/02/02/versioning-databases-views-stored-procedures-and-the-like.aspx">避免很多问题</a>。</p>
+<p>采用这种版本策略，如果生产中的应用程序要跨版本升级是不可以的，必须逐个release依次增量升级。当然对于应用程序来讲，这有点儿繁琐，但确实可以保证应用程序和数据库时刻处于一致的状态。</p>
+<p>下面是一个可能的版本库中数据库脚本的目录结构：<br>[html]<br>database/<br>– baseline<br> – bootstrap.sql<br> `– create_schema.sh<br>– increment<br> `– increment.sh<br>`– modules<br> – modules1<br> – baseline.sql<br> `– increment.sql<br> – modules2<br> – modules3<br> – modules4<br> `– modules5<br>[/html]</p>
+<p>bootstrap.sql用于初始化系统的数据库脚本。</p>
+<p>数据库版本纳入版本库统一管理后，更有利于应用程序和数据库的持续集成、测试、部署和升级。</p>
+<p>而且可以快速搭建开发环境，开发人员从repo中检出一个release后，通过执行baseline脚本，可以迅速的搭建好开发环境需要的数据库环境，而且应用程序和数据库版本是一致的，没有混乱。</p>
+<p>如果客户提交一个bug,可以根据客户的应用和数据库版本，迅速的搭建起与客户一致的环境，从而更容易的定位bug。</p>
+<p>参考：<br><a target="_blank" rel="noopener" href="http://odetocode.com/blogs/scott/archive/2008/01/30/three-rules-for-database-work.aspx">Three Rules for Database Work</a><br><a target="_blank" rel="noopener" href="http://odetocode.com/blogs/scott/archive/2008/01/31/versioning-databases-the-baseline.aspx">Versioning Databases – The Baseline</a><br><a target="_blank" rel="noopener" href="http://odetocode.com/blogs/scott/archive/2008/02/02/versioning-databases-change-scripts.aspx">Versioning Databases – Change Scripts</a><br><a target="_blank" rel="noopener" href="http://odetocode.com/blogs/scott/archive/2008/02/02/versioning-databases-views-stored-procedures-and-the-like.aspx">Versioning Databases – Views, Stored Procedures, and the Like</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PostgresQL/" rel="tag"># PostgresQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/10/29/postgresql-constaint/" rel="prev" title="PostgreSQL约束">
+                  <i class="fa fa-chevron-left"></i> PostgreSQL约束
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/10/30/twenty-thirteen-width/" rel="next" title="修改WP默认主题Twenty Thirteen的宽度">
+                  修改WP默认主题Twenty Thirteen的宽度 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

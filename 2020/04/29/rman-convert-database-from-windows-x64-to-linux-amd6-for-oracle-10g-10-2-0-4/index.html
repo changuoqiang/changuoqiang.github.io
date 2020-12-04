@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="使用rman convert database将oracle 10g 10.2.0.4 for windows x64环境下的数据库转换到oracle 10g 10.2.0.4 for linux x64环境下。 **注意:**无法使用standby备库来进行转换。 1、以只读方式打开数据库 123SQL&gt; shutdown immediateSQL&gt; startup mountSQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用rman从windows x64向linux amd64平台迁移oracle 10g 10.2.0.4">
+<meta property="og:url" content="http://example.com/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用rman convert database将oracle 10g 10.2.0.4 for windows x64环境下的数据库转换到oracle 10g 10.2.0.4 for linux x64环境下。 **注意:**无法使用standby备库来进行转换。 1、以只读方式打开数据库 123SQL&gt; shutdown immediateSQL&gt; startup mountSQ">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-29T04:05:21.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.470Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>使用rman从windows x64向linux amd64平台迁移oracle 10g 10.2.0.4 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用rman从windows x64向linux amd64平台迁移oracle 10g 10.2.0.4
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-29 12:05:21" itemprop="dateCreated datePublished" datetime="2020-04-29T12:05:21+08:00">2020-04-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>使用rman convert database将oracle 10g 10.2.0.4 for windows x64环境下的数据库转换到oracle 10g 10.2.0.4 for linux x64环境下。</p>
+<p>**注意:**无法使用standby备库来进行转换。</p>
+<p><strong>1、以只读方式打开数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown immediate</span><br><span class="line">SQL&gt; startup mount</span><br><span class="line">SQL&gt; alter database open read only;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、检查可转换性和标示外部对象。</strong></p>
+<p>使用DBMS_TDB.CHECK_DB检查数据库状态，是否可以顺利转换到目标平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">    db_ready boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* db_ready is ignored, but with SERVEROUTPUT set to ON any </span></span><br><span class="line"><span class="comment">     * conditions preventing transport will be output to console */</span></span><br><span class="line">    db_ready := dbms_tdb.check_db(<span class="string">&#x27;Linux x86 64-bit&#x27;</span>, dbms_tdb.skip_none);</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>DBMS_TDB.CHECK_DB返回TRUE表示可以转换到目标平台，返回FALSE则不可以，同时会输出不可已转换的原因。</p>
+<p>使用DBMS_TDB.CHECK_EXTERNAL标识外部对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">     external boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* value of external is ignored, but with SERVEROUTPUT set to ON</span></span><br><span class="line"><span class="comment">     * dbms_tdb.check_external displays report of external objects</span></span><br><span class="line"><span class="comment">     * on console */</span></span><br><span class="line">    external := dbms_tdb.check_external;</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>如果有外部对象会在输出中显示出来。</p>
+<p><strong>3、转换数据库</strong></p>
+<p>可以在源数据库，也可以在目标数据库进行数据文件的转换。这里选择在目标数据库进行数据文件转换，这样可以减少源数据库的停止服务时间。</p>
+<p>在源数据库执行rman convert database:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/passwd@dbinst</span><br><span class="line">RMAN&gt; CONVERT DATABASE ON TARGET PLATFORM</span><br><span class="line"> CONVERT SCRIPT <span class="string">&#x27;D:\\rman\\convertscript.rman&#x27;</span></span><br><span class="line"> TRANSPORT SCRIPT <span class="string">&#x27;D:\\rman\\transportscript.sql&#x27;</span></span><br><span class="line"> <span class="keyword">new</span> database <span class="string">&#x27;orcl&#x27;</span></span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\rman\\%U&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完成会生成一个transport脚本用于在目标平台上创建数据库，一个pfile文件包含源数据库相同的参数配置，还生成一个convert脚本用于在目标平台上转换数据文件。</p>
+<p><strong>注意：</strong>在windows平台上只能使用windows系统路径名，包括FORMAT参数使用的路径，在linux平台上做数据库转换时，根据linux平台上oracle数据库的目录结构布局来相应修改生成的convertscript.rman，pfile和transportscript.sql。</p>
+<p><strong>3.1 convertscript.rman</strong><br>生成的转换脚本类似如下： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>根据目标平台文件系统布局，修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>/mnt/data/database目录下为从源库直接拷贝过来待转换的数据文件，转换完成的数据文件存储到/u01/oradata/orcl/目录下。</p>
+<p><strong>3.2 pfile</strong><br>生成的INIT文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;D:\\RMAN\\CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;D:\\RMAN\\flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;D:\\RMAN\\ADUMP&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;/u01/oradata/orcl/CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;/u01/app/oracle/flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;/u01/app/oracle/admin/orcl/adump&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.3 transportscript.sql</strong><br>生成的建库脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-- The following commands will create a <span class="keyword">new</span> control file and use it</span><br><span class="line">-- to open the database.</span><br><span class="line">-- Data used by Recovery Manager will be lost.</span><br><span class="line">-- The contents <span class="keyword">of</span> online logs will be lost and all backups will</span><br><span class="line">-- be invalidated. Use <span class="built_in">this</span> only <span class="keyword">if</span> online logs are damaged.</span><br><span class="line"></span><br><span class="line">-- After mounting the created controlfile, the following SQL</span><br><span class="line">-- statement will place the database <span class="keyword">in</span> the appropriate</span><br><span class="line">-- protection mode:</span><br><span class="line">-- ALTER DATABASE SET STANDBY DATABASE TO MAXIMIZE PERFORMANCE</span><br><span class="line"></span><br><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;D:\\RMAN\\INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;/u01/app/oracle/admin/orcl/pfile/INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.4 实施转换</strong></p>
+<p>首先，将源数据库的数据文件全部拷贝到目标数据库（因为只拷贝数据文件，可以从standby备库拷贝），然后根据数据文件所在的路径相应的修改convert脚本，然后使用rman执行转换脚本，转换后的数据文件存储在format指定的位置。</p>
+<p>目标平台必须要有一个已经存在的数据库，因为rman需要连接到target数据库才能工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rman target / nocatalog</span><br><span class="line">RMAN&gt; @CONVERTSCRIPT.RMAN</span><br></pre></td></tr></table></figure>
+
+<p>然后，根据目标平台环境修改生成的pfile文件参数<br>最后，执行transportscript.sql生成目标数据库。使用utlirp.sql和utlrp.sql脚本重新编译目标平台数据的PL/SQL模块。<br>先关闭已有的数据库，oracle实例每次只能启动一个数据库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; @TRANSPORTSCRIPT.SQL</span><br></pre></td></tr></table></figure>
+<p>脚本最后最自动调用utlirp.sql和utlrp.sql编译模块。</p>
+<p>其中遇到了错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">27102</span>: out <span class="keyword">of</span> memory</span><br><span class="line">Linux-x86_64 <span class="built_in">Error</span>: <span class="number">28</span>: No space left on device</span><br></pre></td></tr></table></figure>
+<p>是因为内核参数kernel.shmall设置为了2097152，oracle最大只能使用2097152*4096=8GB的系统内存，而INIT文件中设置的SGA大小超过了10GB，重新设置kernel.shmall为4194304可以最大允许16GB，问题解决。</p>
+<p>数据库的sys用户是由本地密码文件验证的，数据库转换时并没有涉及到sys用户，因此需要本地重新为sys用户新建一个密码文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ orapwd file=$ORACLE_HOME/dbs/orapw$ORACLE_SID password=passwd_for_sys force=y</span><br></pre></td></tr></table></figure>
+
+<p>至此，数据库转换完成，最后以OPEN RESETLOGS方式打开新数据库。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/backup.102/b14191/dbxptrn.htm#BRADV05432">15 RMAN Cross-Platform Transportable Databases and Tablespaces</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34556414/article/details/80188533">使用RMAN Convert Database命令实现跨平台的数据库迁移</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/28/debian-buster-install-oracle-10g/" rel="prev" title="debian buster安装oracle 10g">
+                  <i class="fa fa-chevron-left"></i> debian buster安装oracle 10g
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/05/19/debian-use-dvd-iso-set-apt-source/" rel="next" title="debian使用dvd iso镜像配置本地源">
+                  debian使用dvd iso镜像配置本地源 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

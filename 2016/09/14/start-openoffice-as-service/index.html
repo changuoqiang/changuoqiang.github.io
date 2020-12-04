@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="使用JODConverter转换文档时，需要连接到正在运行的OpenOffice并执行API调用，这需要openoffice创建一个UNO监听器并运行于监听模式下。下面记叙openoffice以TCP监听模式启动作为后台服务的配置方法。 安装 当前的debian testing官方源已经不再提供openoffice，因为这货被libreoffice替代了。去ooo官方下载Linux 64-bit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="监听模式启动libreoffice&#x2F;openoffice服务">
+<meta property="og:url" content="http://example.com/2016/09/14/start-openoffice-as-service/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用JODConverter转换文档时，需要连接到正在运行的OpenOffice并执行API调用，这需要openoffice创建一个UNO监听器并运行于监听模式下。下面记叙openoffice以TCP监听模式启动作为后台服务的配置方法。 安装 当前的debian testing官方源已经不再提供openoffice，因为这货被libreoffice替代了。去ooo官方下载Linux 64-bit">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-09-14T13:35:33.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.511Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2016/09/14/start-openoffice-as-service/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>监听模式启动libreoffice/openoffice服务 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/09/14/start-openoffice-as-service/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          监听模式启动libreoffice/openoffice服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-09-14 21:35:33" itemprop="dateCreated datePublished" datetime="2016-09-14T21:35:33+08:00">2016-09-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>使用JODConverter转换文档时，需要连接到正在运行的OpenOffice并执行API调用，这需要openoffice创建一个UNO监听器并运行于监听模式下。<br>下面记叙openoffice以TCP监听模式启动作为后台服务的配置方法。</p>
+<p><strong>安装</strong></p>
+<p>当前的debian testing官方源已经不再提供openoffice，因为这货被libreoffice替代了。去ooo<a target="_blank" rel="noopener" href="https://www.openoffice.org/download/index.html">官方下载</a>Linux 64-bit(x86-64)(DEB)版本，下载的为tar.gz包，解压后进入en_US/DEBS目录，安装此目录下的所有deb包。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># dpkg -i *.deb</span><br></pre></td></tr></table></figure>
+
+<p>ooo被安装在了/opt/openoffice4目录，可执行程序soffice位于/opt/openoffice4/program目录下。</p>
+<p><strong>监听模式启动ooo</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ unset DISPLAY</span><br><span class="line">$ ./soffice -nologo -headless -nofirststartwizard -accept=<span class="string">&quot;socket,host=0,port=8100;urp;tcpNoDelay;StarOffice.ServiceManager&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样ooo在本地所有网络接口地址的TCP 8100端口上启动监听服务。如果只在本地回环地址监听，可以设置host为127.0.0.1或localhost。<br>服务模式启动时不要设置DISPLAY变量。</p>
+<p><strong>libreoffice</strong></p>
+<p>ooo自从被收入o记囊中，是一天不如一天了，最近又传闻因为没有活跃的开发者要项目要关闭了。ooo当前最新的4.1.2还是2015年10月发布了，这货是没救了。</p>
+<p>libreoffice则开发活跃，如日中天，开源社区真不是哪家公司可以一手遮天的，再大的公司也不行。</p>
+<p>其实本篇所述的监听模式启动ooo是完全适用于libreoffice的，因此不必大费周章的安装openoffice,直接官方源安装libreoffice-common和libreoffice-writer即可。soffice bin存在于libreoffice-common包中，同时还需要安装jdk和libreoffice-java-common包。</p>
+<p>使用libreoffice时，命令行参数使用双中线开头，不然会有deprecated提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Warning: -nologo is deprecated. Use --nologo instead.</span><br><span class="line">Warning: -headless is deprecated. Use --headless instead.</span><br><span class="line">Warning: -nofirststartwizard is deprecated. Use --nofirststartwizard instead.</span><br><span class="line">Warning: -accept=socket,host=<span class="number">0</span>,port=<span class="number">8100</span>;urp;tcpNoDelay;StarOffice.ServiceManager is deprecated. Use --accept=socket,host=<span class="number">0</span>,port=<span class="number">8100</span>;urp;tcpNoDelay;StarOffice.ServiceManager instead.</span><br></pre></td></tr></table></figure>
+
+<p>注：ooo是openoffice.org曾经的简称,不知道现在为何官方不再使用了。</p>
+<p><strong>为libreoffice设置systemd服务</strong><br>编辑libreoffice.service单元文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">\[Unit\]</span><br><span class="line">Description=LibreOffice service</span><br><span class="line">After=syslog.target</span><br><span class="line"></span><br><span class="line">\[Service\]</span><br><span class="line">ExecStart=<span class="regexp">/usr/</span>bin/soffice --accept=<span class="string">&quot;socket,host=0,port=8100;urp;StarOffice.ServiceManager&quot;</span> --headless --nofirststartwizard --nologo --nodefault --nocrashreport --nolockcheck</span><br><span class="line">Restart=always</span><br><span class="line">KillSignal=SIGQUIT</span><br><span class="line">Type=simple</span><br><span class="line">StandardError=syslog</span><br><span class="line">NotifyAccess=all</span><br><span class="line">User=tomcat8</span><br><span class="line"></span><br><span class="line">\[Install\]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>将编辑好的文件拷贝到/lib/systemd/system文件夹，然后启用该unit文件，最后启动libreoffice服务。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp libreoffice.service /lib/systemd/system/</span><br><span class="line">$ sudo systemctl enable libreoffice.service</span><br><span class="line">Created symlink <span class="keyword">from</span> /etc/systemd/system/multi-user.target.wants/libreoffice.service to /lib/systemd/system/libreoffice.service.</span><br><span class="line">$ sudo systemctl start libreoffice</span><br><span class="line">$ sudo netstat -anp grep <span class="number">8100</span></span><br><span class="line">tcp <span class="number">0</span> <span class="number">0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">8100</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:* LISTEN <span class="number">9895</span>/soffice.bin</span><br></pre></td></tr></table></figure>
+
+<p>可以看到libreoffice已经启用了后台服务，并在8100端口进行监听。</p>
+<p><strong>update(17/10/2019):</strong><br>debian buster系统:<br>只安装libreoffice-common和libreoffice-writer包即可，tomcat9的系统用户为tomcat，权限问题<a target="_blank" rel="noopener" href="https://openwares.net/2016/09/17/soffice_permission_deny_issues/">参考权限导致soffice(libreoffice/openoffice)无法运行的问题</a></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://serverfault.com/questions/753819/systemd-service-script-for-libreoffice-openoffice">systemd service script for libreoffice/openoffice</a><br>[2]<a target="_blank" rel="noopener" href="https://gist.github.com/vjt/4194760">Libreoffice LSB init script</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.art-of-coding.eu/starting-multiple-openoffice-instances/">Starting Multiple OpenOffice Instances</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/09/13/hello-qt5/" rel="prev" title="Hello Qt5">
+                  <i class="fa fa-chevron-left"></i> Hello Qt5
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/09/15/postgresql-xa-config/" rel="next" title="PostgreSQL分布式事务配置">
+                  PostgreSQL分布式事务配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

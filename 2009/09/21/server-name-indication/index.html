@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Server Name Indication是用来改善SSL(Secure Socket Layer)和TLS(Transport Layer Security)的一项特性。它允许客户端在服务器端向其发送证书之前请求服务器的域名。这对于在虚拟主机模式使用TLS是必要的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器名字指示SNI(Server Name Indication)">
+<meta property="og:url" content="http://example.com/2009/09/21/server-name-indication/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Server Name Indication是用来改善SSL(Secure Socket Layer)和TLS(Transport Layer Security)的一项特性。它允许客户端在服务器端向其发送证书之前请求服务器的域名。这对于在虚拟主机模式使用TLS是必要的。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2009-09-21T12:11:26.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.481Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2009/09/21/server-name-indication/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>服务器名字指示SNI(Server Name Indication) | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2009/09/21/server-name-indication/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          服务器名字指示SNI(Server Name Indication)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-09-21 20:11:26" itemprop="dateCreated datePublished" datetime="2009-09-21T20:11:26+08:00">2009-09-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Server Name Indication是用来改善SSL(Secure Socket Layer)和TLS(Transport Layer Security)的一项特性。它允许客户端在服务器端向其发送证书之前请求服务器的域名。这对于在虚拟主机模式使用TLS是必要的。</p>
+<a id="more"></a>
+<p><strong>TLS背景</strong></p>
+<p>加密一个面向流的通讯会话最常用的方法之一就是使用TLS协议。比如，当用户在浏览器的地址栏里面输入https时就是在使用这个协议。</p>
+<p>为了确认用户想要连接的站点就是浏览器实际连接到的站点，TLS使用包含站点域名的数字签名证书。客户端软件(比如浏览器)通常信任这个证书，如果这个证书是由其内置信任的认证机构签发的。<br>在TLS启动阶段，客户端软件比较用户输入的URI的域名部分与在服务器证书里面找到的域名部分，如果比较失败，浏览器会提示用户，这个站点的证书存在问题。<br><strong>缺点</strong></p>
+<p>SSL v2的设计顺应经典的公钥基础设施PKI(public key infrastructure)设计，后者认为一个服务器只提供一个服务从而也就只使用一个证书。这意味着服务器可以在TLS启动的早期阶段发送或提交证书，因为它知道它在为哪个域服务。</p>
+<p>HTTP服务器开启虚拟主机支持后，每个服务器通过相同的地址可以为很多域提供服务。服务器检查每一个请求来决定它在为哪个域服务。这个信息通常从HTTP请求头获得。不幸的是，当设置了TLS加密，服务器在读取HTTP请求里面的域名之前已经向客户端提交了证书，也就是已经为默认域提供了服务。</p>
+<p>因此，这种为虚拟主机提供安全的简单途径经常导致使用了错误的数字证书，从而导致浏览器对用户发出警告。</p>
+<p><strong>钓鱼连接</strong></p>
+<p>实际上，这意味着每一个HTTP服务器只能为一个域提供安全浏览。而事实上每一个web服务器都为很多域提供服务，结果就是其他的域无法使用安全通信，从而处于危险境地。此外，安全浏览的缺乏使浏览器无法认证服务器，亦即它无法校验站点是否真的是属于宣称它的那个人或实体。钓鱼的一个重要因素是他们企图通过虚假站点来获取用户的信息。使用SSL或者TLS安全连接，浏览器可以基于它的证书来认证站点。钓鱼站点不会作为一个欺骗性的站点得到认证，浏览器会警告这个安全风险。然而，没有安全HTTP就没有标准的方法去认证服务器，使这种钓鱼的企图很容易就能实现。</p>
+<p><strong>修正</strong></p>
+<p>一个叫做SNI的TLS扩展通过发送虚拟域的名字做为TSL协商的一部分修正了这个问题。这会使服务器更早的切换到正确的虚拟域，并且发送给浏览器包含正确名字的数字证书。</p>
+<p><strong>行动</strong></p>
+<p>在2005年，人们意识到从SSL v2到TLS没有很容易的升级路径，并且站点不得不升级他们的软件来。为了尽快的推进，Mozilla宣告完全抛弃对SSL v2的支持。Firefox社区确信其余的站点会升级他们的服务器到SSL v3或TLS v1。</p>
+<p>从2005年开始，CAcert在虚拟服务器上用不同的方法使用TLS来进行试验，大部分试验是不满意并且不实际的。比如，可以使用subjectAltName在一个数字证书中包含多个域，但是这是一个证书，意味着所有的域必须被一个人拥有并控制，并且每次域列表发生变化，证书必须重新发放。</p>
+<p>2004年，EdelKey project为OpenSSL里面的TLS/SNI开发了一个补丁。2006年这个补丁进入OpenSSL的开发分支，2007年，它被向后移植到了OpenSSL 0.9.8，也就是当前的发行版本。</p>
+<p><strong>支持状况</strong></p>
+<p>支持SNI的浏览器</p>
+<ul>
+<li>Mozilla Firefox 2.0 or later</li>
+<li>Opera 8.0 or later (the TLS 1.1 protocol must be enabled)</li>
+<li>Internet Explorer 7 or later on Windows Vista or higher</li>
+<li>Google Chrome (Vista, not XP)</li>
+<li>Safari 3.2.1 Mac OS X 10.5.6</li>
+</ul>
+<p>支持SNI的服务器</p>
+<ul>
+<li>Apache 2.2.12 or later using mod_ssl (or alternatively with experimental mod_gnutls)</li>
+<li>Cherokee if compiled with TLS support</li>
+<li>Versions of lighttpd 1.4.x and 1.5.x with patch</li>
+<li>Nginx with an accompanying OpenSSL built with SNI support</li>
+<li>acWEB with OpenSSL 0.9.8j and later (on Windows)</li>
+</ul>
+<p>支持SNI的库</p>
+<ul>
+<li>Mozilla NSS 3.11.1 client side only</li>
+<li>OpenSSL</li>
+</ul>
+<p> 0.9.8f (released 11 Oct 2007) - not compiled in by default, can be compiled in with config option ‘–enable-tlsext’.<br> 0.9.8j (released 07 Jan 2009) - now compiled in by default<br> Unreleased 0.9.9 is likely to include SNI compiled in by default.</p>
+<ul>
+<li>GNU TLS</li>
+</ul>
+<p>不支持SNI的操作系统,浏览器和库</p>
+<p>客户端</p>
+<ul>
+<li>Internet Explorer 6 or earlier and any IE version on Windows XP , windows 2003 or earlier</li>
+<li>Konqueror/KDE in any version</li>
+</ul>
+<p>服务器端</p>
+<ul>
+<li>Microsoft Internet Information Server IIS (As of 2009).</li>
+<li>Apache Tomcat 8 or earlier</li>
+</ul>
+<p>库</p>
+<ul>
+<li>Qt</li>
+<li>Mozilla NSS server side</li>
+<li>Python</li>
+</ul>
+<p><strong>windows和IE</strong></p>
+<p>可以看得出，windows XP和windows 2003 server系统上的任何IE版本浏览器都是不支持SNI的, vista及以后系统上的IE 7及更高版本的IE浏览器支持SNI。IE6及更早版本的IE浏览器在任何系统上都是不支持SNI的。</p>
+<p><strong>tomcat</strong></p>
+<p>tomcat当前的稳定版8尚不支持SNI,tomcat 9才会支持,以后可能会backport到tomcat 8和7。可以使用nginx反向https代理后端的tomcat,参见[2]</p>
+<p><strong>SNI测试</strong></p>
+<p>用浏览器或其他https客户端比如wget等访问SNI测试站点<a target="_blank" rel="noopener" href="https://sni.velox.ch/%E5%8D%B3%E5%8F%AF%E4%BB%A5%E7%9F%A5%E9%81%93%E6%B5%8F%E8%A7%88%E5%99%A8%E6%88%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81SNI%E3%80%82">https://sni.velox.ch/即可以知道浏览器或客户端是否支持SNI。</a></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Server_Name_Indication">Server Name Indication</a><br>[2]<a target="_blank" rel="noopener" href="http://webapp.org.ua/sysadmin/setting-up-nginx-ssl-reverse-proxy-for-tomcat/">Setting up NGINX SSL reverse proxy for Tomcat</a><br>[3]<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/20190464/howto-setup-tomcat-serving-two-ssl-certificates-using-sni">HowTo setup Tomcat serving two SSL Certificates using SNI?</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/09/21/oracle-jobs-exp-imp/" rel="prev" title="Oracle Jobs与Exp/Imp">
+                  <i class="fa fa-chevron-left"></i> Oracle Jobs与Exp/Imp
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2009/09/27/antibanned/" rel="next" title="use bridges to antibanned for tor on debian/ubuntu linux">
+                  use bridges to antibanned for tor on debian/ubuntu linux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

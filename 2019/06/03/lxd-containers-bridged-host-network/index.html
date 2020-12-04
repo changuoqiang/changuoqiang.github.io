@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。 host设置网桥 安装bridge-utils 1$ sudo apt install bridge-utiles  编辑&#x2F;etc&#x2F;network&#x2F;interfaces文件: 123456789">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lxd容器桥接host网络">
+<meta property="og:url" content="http://example.com/2019/06/03/lxd-containers-bridged-host-network/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。 host设置网桥 安装bridge-utils 1$ sudo apt install bridge-utiles  编辑&#x2F;etc&#x2F;network&#x2F;interfaces文件: 123456789">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-06-03T11:54:05.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.309Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/06/03/lxd-containers-bridged-host-network/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>lxd容器桥接host网络 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/03/lxd-containers-bridged-host-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          lxd容器桥接host网络
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-03 19:54:05" itemprop="dateCreated datePublished" datetime="2019-06-03T19:54:05+08:00">2019-06-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。</p>
+<p><strong>host设置网桥</strong></p>
+<p>安装bridge-utils</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install bridge-utiles</span><br></pre></td></tr></table></figure>
+
+<p>编辑/etc/network/interfaces文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># This file describes the network interfaces available on your system</span><br><span class="line"># and how to activate them. For more information, see interfaces(5).</span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d<span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line"><span class="comment">auto lo</span></span><br><span class="line"><span class="comment">iface lo inet loopback</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line"><span class="comment">auto enp0s3</span></span><br><span class="line"><span class="comment">iface enp0s3 inet manual</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># bridge interface</span></span><br><span class="line"><span class="comment">auto br0 </span></span><br><span class="line"><span class="comment">iface br0 inet static</span></span><br><span class="line"><span class="comment"> address 192.168.3.6/24</span></span><br><span class="line"><span class="comment"> gateway 192.168.3.1</span></span><br><span class="line"><span class="comment"> # bridge options</span></span><br><span class="line"><span class="comment"> bridge_ports enp0s3</span></span><br><span class="line"><span class="comment"> bridge_stp off </span></span><br><span class="line"><span class="comment"> bridge_fd 0</span></span><br><span class="line"><span class="comment"> bridge_maxwait 0</span></span><br><span class="line"><span class="comment"> bridge_waitport 0 </span></span><br></pre></td></tr></table></figure>
+<p>这里配置了host本地网桥br0，需要重新启动网络才能生效。</p>
+<p><strong>配置容器网络接口(方法一)</strong></p>
+<p>为容器添加网络设备eth0，桥接到host本地网络</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config device add bst eth0 nic nictype=bridged parent=br0 name=eth0</span><br></pre></td></tr></table></figure>
+<p>注意，容器原有的重名网络设备eth0会被直接覆盖，这时候容器新添加的网络设备默认使用dhcp获取ip地址，如果需要指定静态ip，请编辑容器的/etc/network/interfaces文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec bst -- vim /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法二)</strong></p>
+<p>通过创建新的profile，并使已有容器或新建容器使用此profile</p>
+<p>查看现有profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+---------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+---------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+---------+---------+</span><br></pre></td></tr></table></figure>
+<p>可以看到有一个容器在使用默认profile，来看一下default profile的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: <span class="keyword">default</span></span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>containers/bst</span><br></pre></td></tr></table></figure>
+<p>其实这就是执行<code>lxd init</code>命令时创建的默认profile</p>
+<p>下面创建新的host桥接网络profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile create hostbridgedprofile</span><br><span class="line">Profile hostbridgedprofile created</span><br></pre></td></tr></table></figure>
+
+<p>编辑新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF lxc profile edit hostbridgedprofile</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>可以确认一下新的profile:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+--------------------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> hostbridgedprofile <span class="number">0</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"></span><br><span class="line">$ lxc profile show hostbridgedprofile</span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">name: hostbridgedprofile</span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
+
+<p>在现有容器bst上叠加新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile assign bst <span class="keyword">default</span>,hostbridgedprofile </span><br><span class="line">Profiles <span class="keyword">default</span>,hostbridgedprofile applied to bst</span><br></pre></td></tr></table></figure>
+<p>注意，这里先使用default，然后用hostbridgedprofile来覆盖默认的网络设置</p>
+<p>新建容器可以指定要使用的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch -p <span class="keyword">default</span> -p hostbridgedprofile images:debian/buster/amd64 new_container</span><br></pre></td></tr></table></figure>
+
+<p>如果一个profile不再使用，可以删除掉，当然不能有容器在使用它才行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile <span class="keyword">delete</span> hostbridgedprofile </span><br><span class="line"><span class="built_in">Error</span>: Profile is currently <span class="keyword">in</span> use</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法三)</strong></p>
+<p>重新初始化lxd,注意在有容器实例存在的情况下，重新初始化网络设置是可以的，但是已经存在的storage pool是不能改动的，当然可以添加新的storage pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Do you want to configure a <span class="keyword">new</span> storage pool? (yes/no) \[<span class="keyword">default</span>=yes\]: no</span><br><span class="line">Would you like to connect to a MAAS server? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like to create a <span class="keyword">new</span> local network bridge? (yes/no) \[<span class="keyword">default</span>=yes\]: no &lt;=这里为no</span><br><span class="line">Would you like to configure LXD to use an existing bridge or host interface? (yes/no) \[<span class="keyword">default</span>=no\]: yes &lt;= 这里为yes</span><br><span class="line">Name <span class="keyword">of</span> the existing bridge or host interface: br0 &lt;= 这里输入主机桥接接口bro</span><br><span class="line">Would you like LXD to be available over the network? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like stale cached images to be updated automatically? (yes/no) \[<span class="keyword">default</span>=yes\] </span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
+<p>这其实是修改的default profile</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://blog.simos.info/how-to-initialize-lxd-again/">How to initialize LXD again</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/02/lxd-container-first/" rel="prev" title="lxd容器初步">
+                  <i class="fa fa-chevron-left"></i> lxd容器初步
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/04/lxd-snapshots/" rel="next" title="lxd容器快照">
+                  lxd容器快照 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

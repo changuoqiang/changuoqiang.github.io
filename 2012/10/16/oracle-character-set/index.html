@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="oracle的字符集牵扯到数据库字符集,国家字符集,客户端字符集这几个概念。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle字符集">
+<meta property="og:url" content="http://example.com/2012/10/16/oracle-character-set/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="oracle的字符集牵扯到数据库字符集,国家字符集,客户端字符集这几个概念。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-10-16T13:17:04.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.388Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/10/16/oracle-character-set/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>oracle字符集 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/10/16/oracle-character-set/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          oracle字符集
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-10-16 21:17:04" itemprop="dateCreated datePublished" datetime="2012-10-16T21:17:04+08:00">2012-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>oracle的字符集牵扯到数据库字符集,国家字符集,客户端字符集这几个概念。</p>
+<a id="more"></a>
+<p><strong>oracle支持的字符集</strong></p>
+<p>oracle支持单字节字符集如ASCII字符集,传统的多字节字符集如GBK字符集,当然更优先支持UNICODE字符集。</p>
+<p>oracle支持GBK的兼容字符集叫做ZHS16GBK,但即使是用于中文系统也建议优先使用UNICODE字符集。UNICODE字符集涵盖更多的字符,而且标准兼容性更好。</p>
+<p>ORACLE支持UNICODE的字符集主要有UFT8,AL32UTF8和AL16UTF16。UTF8从8i开始出现,最高支持到Unicode 3.0标准,而且此字符集不再升级。AL32UTF8和AL16UTF16从9i开始出现,在10g r2中支持Unicode 4.0标准,此二者的区别在于一个是UTF-8编码转换格式,另一个为UTF-16编码转换格式。</p>
+<p>oracle推荐新建的数据库都采用AL32UTF8作为数据库字符集。AL32UTF8涵盖了ZHS16GBK支持的所有字符,但并不是其超集,因为二者的编码格式是不兼容的。</p>
+<p><strong>数据库字符集(Database Character Set)</strong></p>
+<p>Oracle数据库使用数据库字符集来:<br>1)存储SQL CHAR datatypes (CHAR, VARCHAR2, CLOB, and LONG)<br>2)用作表名,列名,PL/SQl变量名等标识符<br>3)输入和存储SQL和PL/SQL源代码</p>
+<p>查询数据库字符集</p>
+<p>第一种方法:<br>[sql]<br>SQL&gt; SELECT userenv(‘language’) FROM dual;<br>USERENV(‘LANGUAGE’)</p>
+<hr>
+<p>AMERICAN_AMERICA.AL32UTF8<br>[/sql]<br>字符集为AL32UTF8</p>
+<p>第二种方法：<br>[sql]<br>SQL&gt; SELECT value FROM v$nls_parameters WHERE parameter=’NLS_CHARACTERSET’;<br>VALUE</p>
+<hr>
+<p>AL32UTF8<br>[/sql]<br><strong>国家字符集(National Character Set)</strong></p>
+<p>国家字符集可以使数据库在没有指定UNICODE数据库字符集时来存储UNICODE字符数据,国家字符集只用于NCHAR, NVARCHAR2和NCLOB类型字段的数据存储。NCHAR, NVARCHAR2和NCLOB只支持UNICODE字符而不支持其他的单字节和多字节字符集。CHAR, VARCHAR2, CLOB和LONG则可以支持所有的字符编码类型。如果数据库字符集为UNICODE字符集,则没什么必要使用NCHAR, NVARCHAR2和NCLOB等数据类型。<br>oracle 10g只支持两种国家字符集UTF8和AL16UTF16,UTF8为变长编码,AL16UTF16为双字节编码,优先使用UTF8。</p>
+<p>查询国家字符集<br>[sql]<br>SQL&gt; SELECT value FROM v$nls_parameters WHERE parameter=’NLS_NCHAR_CHARACTERSET’;<br>VALUE</p>
+<hr>
+<p>UTF8<br>[/sql]<br><strong>客户端字符集</strong></p>
+<p>客户端字符集通过NLS_LANG环境变量或注册表orale home下的键NLS_LANG来设置。</p>
+<p>NLS_LANG参数由以下部分组成:<br>NLS_LANG=<Language>_<Territory>.<Clients Characterset></p>
+<p>linux平台:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> NLS_LANG=AMERICAN_AMERICA.AL32UTF8</span><br></pre></td></tr></table></figure>
+<p>在这里,AMERICAN是语言,AMERICA是区域,AL32UTF8则为客户端字符集。</p>
+<p>oracle数据库根据数据库字符集和客户端字符集来决定是否进行字符集转换。如果客户端字符集与数据库字符集完全一致,则无需进行字符编码转换。如果客户端字符集是数据库字符集的子集,也无需进行字符编码转换,其他情形下则需要在客户端字符集和数据库字符集之间进行转换。这个规则对于写入和查询都是一样的。</p>
+<p>客户端字符集不是由数据库字符集决定的,而是由客户端系统环境所决定的。oracle无从知晓客户端的系统环境,只能依靠客户端设置的NLS_LANG参数来决定客户端使用的字符集。客户端的NLS_LANG参数应该设置成与客户端操作系统一致的字符集,因为客户端依赖操作系统的字符集来进行输入和输出。所以如果操作系统使用utf-8字符集,则客户端字符集设置为AL32UTF8即可。如果操作系统使用GKB字符集,则客户端字符集需要设置为ZHS16GBK。当然,如果oracle客户端自身支持字符集的转换,也可以按客户端自身设置的字符集来设定NLS_LANG变量。</p>
+<p>还有一种情形,如果使用sql文件作为客户端的输入,则应视sql文件使用的字符集而设定客户端的字符集,因为文件使用的字符集可以和操作系统使用的字符集不一致。理论上是这样的,但如果某些oracle客户端将sql输入文件转换成与系统一致的字符编码格式再传送到服务器端执行则另当别论。</p>
+<p>一句话,NLS_LANG设置的原则为:<strong>客户端送给数据库何种字符集编码的字符流,将NLS_LANG设置成这种字符集即可</strong>,这样数据库就会知道如何正确的去解读接受的字符流。</p>
+<p><strong>exp/imp与客户端字符集</strong></p>
+<p>expdp/impdp都是在服务器端执行的,所以不会牵扯到客户端字符集。<br>exp/imp时设置的客户端字符集如果与数据库字符集不同,则数据库在导出到数据文件或从数据文件导入时发生字符集转换。</p>
+<p>很显然,从数据库exp导出到数据文件时,设置客户端字符集与数据库字符集一致是最佳的,因为这样不会发生字符集转换,导出文件是二进制格式的,无论以何种字符集导出都是可以在OS中正常存储和拷贝的。</p>
+<p>当从数据文件导入到数据库时,客户端字符集要设置成导出数据文件使用的字符集,这样数据库才能正确理解客户端发送的数据流。此时数据库字符集可能与客户端字符相同,也可能不同。如果相同则无需在导出数据文件和数据库之间转换字符集,如果不同则需要在导出数据文件和字符集之间转换字符集,甚至如果字符集不兼容,则会丢失数据。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/10/16/unicode-intro/" rel="prev" title="UNICODE字符集">
+                  <i class="fa fa-chevron-left"></i> UNICODE字符集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/10/18/debian-l2tp-ipsec-server/" rel="next" title="Debian系统架设L2TP/IPSec VPN服务器">
+                  Debian系统架设L2TP/IPSec VPN服务器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

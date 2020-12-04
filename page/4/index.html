@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/4/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/4/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/14/ceph-cluster-benchmark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/ceph-cluster-benchmark/" class="post-title-link" itemprop="url">ceph cluster benchmark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-14 10:34:06" itemprop="dateCreated datePublished" datetime="2019-11-14T10:34:06+08:00">2019-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>创建测试使用的pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd pool create testbench <span class="number">32</span> <span class="number">32</span></span><br></pre></td></tr></table></figure>
+
+<p>写测试</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> write --no-cleanup</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line">Maintaining <span class="number">16</span> concurrent writes <span class="keyword">of</span> <span class="number">4194304</span> bytes to objects <span class="keyword">of</span> size <span class="number">4194304</span> <span class="keyword">for</span> up to <span class="number">10</span> seconds or <span class="number">0</span> objects</span><br><span class="line"><span class="built_in">Object</span> prefix: benchmark_data_work_17785</span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">18</span> <span class="number">2</span> <span class="number">7.99976</span> <span class="number">8</span> <span class="number">0.743612</span> <span class="number">0.641529</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">30</span> <span class="number">14</span> <span class="number">27.9973</span> <span class="number">48</span> <span class="number">1.85864</span> <span class="number">1.29122</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">42</span> <span class="number">26</span> <span class="number">34.663</span> <span class="number">48</span> <span class="number">1.28555</span> <span class="number">1.39395</span></span><br><span class="line"> <span class="number">4</span> <span class="number">16</span> <span class="number">55</span> <span class="number">39</span> <span class="number">38.9956</span> <span class="number">52</span> <span class="number">1.32261</span> <span class="number">1.43965</span></span><br><span class="line"> <span class="number">5</span> <span class="number">16</span> <span class="number">58</span> <span class="number">42</span> <span class="number">33.5958</span> <span class="number">12</span> <span class="number">1.53666</span> <span class="number">1.44482</span></span><br><span class="line"> <span class="number">6</span> <span class="number">16</span> <span class="number">68</span> <span class="number">52</span> <span class="number">34.662</span> <span class="number">40</span> <span class="number">2.08014</span> <span class="number">1.50223</span></span><br><span class="line"> <span class="number">7</span> <span class="number">16</span> <span class="number">84</span> <span class="number">68</span> <span class="number">38.8516</span> <span class="number">64</span> <span class="number">0.823587</span> <span class="number">1.5045</span></span><br><span class="line"> <span class="number">8</span> <span class="number">16</span> <span class="number">96</span> <span class="number">80</span> <span class="number">39.9944</span> <span class="number">48</span> <span class="number">0.899492</span> <span class="number">1.44845</span></span><br><span class="line"> <span class="number">9</span> <span class="number">16</span> <span class="number">114</span> <span class="number">98</span> <span class="number">43.5496</span> <span class="number">72</span> <span class="number">0.633734</span> <span class="number">1.40136</span></span><br><span class="line"> <span class="number">10</span> <span class="number">16</span> <span class="number">123</span> <span class="number">107</span> <span class="number">42.7941</span> <span class="number">36</span> <span class="number">0.856593</span> <span class="number">1.3861</span></span><br><span class="line">Total time run: <span class="number">10.6523</span></span><br><span class="line">Total writes made: <span class="number">124</span></span><br><span class="line">Write size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">46.5625</span></span><br><span class="line">Stddev Bandwidth: <span class="number">20.2254</span></span><br><span class="line">Max bandwidth (MB/sec): <span class="number">72</span></span><br><span class="line">Min bandwidth (MB/sec): <span class="number">8</span></span><br><span class="line">Average IOPS: <span class="number">11</span></span><br><span class="line">Stddev IOPS: <span class="number">5.05635</span></span><br><span class="line">Max IOPS: <span class="number">18</span></span><br><span class="line">Min IOPS: <span class="number">2</span></span><br><span class="line">Average Latency(s): <span class="number">1.3707</span></span><br><span class="line">Stddev Latency(s): <span class="number">0.472979</span></span><br><span class="line">Max latency(s): <span class="number">2.64427</span></span><br><span class="line">Min latency(s): <span class="number">0.539447</span></span><br></pre></td></tr></table></figure>
+
+<p>顺序读测试</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> seq</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">42</span> <span class="number">26</span> <span class="number">103.976</span> <span class="number">104</span> <span class="number">0.588145</span> <span class="number">0.431675</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">69</span> <span class="number">53</span> <span class="number">105.983</span> <span class="number">108</span> <span class="number">0.593612</span> <span class="number">0.500811</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">98</span> <span class="number">82</span> <span class="number">109.319</span> <span class="number">116</span> <span class="number">0.555486</span> <span class="number">0.529656</span></span><br><span class="line"> <span class="number">4</span> <span class="number">15</span> <span class="number">124</span> <span class="number">109</span> <span class="number">108.986</span> <span class="number">108</span> <span class="number">0.408214</span> <span class="number">0.531251</span></span><br><span class="line">Total time run: <span class="number">4.45077</span></span><br><span class="line">Total reads made: <span class="number">124</span></span><br><span class="line">Read size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">111.441</span></span><br><span class="line">Average IOPS: <span class="number">27</span></span><br><span class="line">Stddev IOPS: <span class="number">1.25831</span></span><br><span class="line">Max IOPS: <span class="number">29</span></span><br><span class="line">Min IOPS: <span class="number">26</span></span><br><span class="line">Average Latency(s): <span class="number">0.567093</span></span><br><span class="line">Max latency(s): <span class="number">1.16315</span></span><br><span class="line">Min latency(s): <span class="number">0.062019</span></span><br></pre></td></tr></table></figure>
+
+<p>随机读测试</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> rand</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">43</span> <span class="number">27</span> <span class="number">107.978</span> <span class="number">108</span> <span class="number">0.548233</span> <span class="number">0.400351</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">70</span> <span class="number">54</span> <span class="number">107.985</span> <span class="number">108</span> <span class="number">0.507102</span> <span class="number">0.467039</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">99</span> <span class="number">83</span> <span class="number">110.653</span> <span class="number">116</span> <span class="number">0.66861</span> <span class="number">0.518288</span></span><br><span class="line"> <span class="number">4</span> <span class="number">16</span> <span class="number">128</span> <span class="number">112</span> <span class="number">111.987</span> <span class="number">116</span> <span class="number">0.821184</span> <span class="number">0.518217</span></span><br><span class="line"> <span class="number">5</span> <span class="number">16</span> <span class="number">155</span> <span class="number">139</span> <span class="number">111.187</span> <span class="number">108</span> <span class="number">0.71247</span> <span class="number">0.532804</span></span><br><span class="line"> <span class="number">6</span> <span class="number">16</span> <span class="number">183</span> <span class="number">167</span> <span class="number">111.32</span> <span class="number">112</span> <span class="number">0.698042</span> <span class="number">0.541571</span></span><br><span class="line"> <span class="number">7</span> <span class="number">16</span> <span class="number">211</span> <span class="number">195</span> <span class="number">111.416</span> <span class="number">112</span> <span class="number">0.137</span> <span class="number">0.545219</span></span><br><span class="line"> <span class="number">8</span> <span class="number">16</span> <span class="number">239</span> <span class="number">223</span> <span class="number">111.488</span> <span class="number">112</span> <span class="number">0.797219</span> <span class="number">0.549091</span></span><br><span class="line"> <span class="number">9</span> <span class="number">16</span> <span class="number">267</span> <span class="number">251</span> <span class="number">111.543</span> <span class="number">112</span> <span class="number">0.249707</span> <span class="number">0.547871</span></span><br><span class="line"> <span class="number">10</span> <span class="number">16</span> <span class="number">296</span> <span class="number">280</span> <span class="number">111.988</span> <span class="number">116</span> <span class="number">0.577749</span> <span class="number">0.555318</span></span><br><span class="line">Total time run: <span class="number">10.5902</span></span><br><span class="line">Total reads made: <span class="number">297</span></span><br><span class="line">Read size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">112.179</span></span><br><span class="line">Average IOPS: <span class="number">28</span></span><br><span class="line">Stddev IOPS: <span class="number">0.816497</span></span><br><span class="line">Max IOPS: <span class="number">29</span></span><br><span class="line">Min IOPS: <span class="number">27</span></span><br><span class="line">Average Latency(s): <span class="number">0.565831</span></span><br><span class="line">Max latency(s): <span class="number">1.20987</span></span><br><span class="line">Min latency(s): <span class="number">0.0559923</span></span><br></pre></td></tr></table></figure>
+
+<p>清除测试数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rados -p testbench cleanup</span><br><span class="line">Removed <span class="number">124</span> objects</span><br></pre></td></tr></table></figure>
+
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/1.3/html/administration_guide/benchmarking_performance">CHAPTER 9. BENCHMARKING PERFORMANCE</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/14/tomcat9-umask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/tomcat9-umask/" class="post-title-link" itemprop="url">tomcat9 默认文件/目录创建权限</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-14 10:31:12" itemprop="dateCreated datePublished" datetime="2019-11-14T10:31:12+08:00">2019-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat9默认的文件创建权限UMASK更改为0027,创建的文件/目录其他用户是没有权限访问的,而nginx worker process默认使用nobody用户来运行,因此也无法访问tomcat9创建的文件</p>
+<p><strong>更改tomcat9的UMASK</strong></p>
+<p>/usr/share/tomcat9/bin目录下如果没有setenv.sh,添加此文件,内容如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UMASK=<span class="number">0022</span></span><br></pre></td></tr></table></figure>
+
+<p>使此文件可执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod +x setenv.sh</span><br></pre></td></tr></table></figure>
+
+<p>重新启动tomcat9</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart tomcat9</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/13/tomcat9-%E8%AE%BF%E9%97%AE%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/13/tomcat9-%E8%AE%BF%E9%97%AE%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">tomcat9 访问目录权限问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-13 21:57:27" itemprop="dateCreated datePublished" datetime="2019-11-13T21:57:27+08:00">2019-11-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat9在systemd的沙箱中运行，默认只能访问一下路径：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- <span class="regexp">/var/</span>lib/tomcat9/conf/Catalina (actually /etc/tomcat9/Catalina)</span><br><span class="line">- <span class="regexp">/var/</span>lib/tomcat9/logs (actually /<span class="keyword">var</span>/log/tomcat9)</span><br><span class="line">- <span class="regexp">/var/</span>lib/tomcat9/webapps</span><br><span class="line">- <span class="regexp">/var/</span>lib/tomcat9/work (actually /<span class="keyword">var</span>/cache/tomcat9)</span><br></pre></td></tr></table></figure>
+<p>如果需要访问其他路径，需要覆盖默认的service设置，添加文件/etc/systemd/system/tomcat9.service.d/override.conf，其内容如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[Service\]</span><br><span class="line"> ReadWritePaths=<span class="regexp">/path/</span>to/the/directory/</span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl restart tomcat9</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://salsa.debian.org/java-team/tomcat9/blob/master/debian/README.Debian">README.Debian</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/11/lxd-clustering-using-ceph-storage-backend/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/11/lxd-clustering-using-ceph-storage-backend/" class="post-title-link" itemprop="url">lxd clustering using ceph storage backend</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-11 16:50:44" itemprop="dateCreated datePublished" datetime="2019-11-11T16:50:44+08:00">2019-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd集群使用ceph后端共享存储，多个host共同管理一组容器，可以提高lxd容器的可用性，但当前版本的lxd集群功能还不够完善，不支持lxd容器在集群host之间live migration，故障迁移支持也不完善。<br>lxd集群部署ceph后端，数据丢失的风险大大降低，集群中host掉线，可以将lxd容器快速移动到其他host继续提供服务。</p>
+<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不用的集群要使用不用的ceph pool。</p>
+<p><strong>其他节点配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">What name should be used to identify <span class="built_in">this</span> node <span class="keyword">in</span> the cluster? \[<span class="keyword">default</span>=web\]: </span><br><span class="line">What IP address or DNS name should be used to reach <span class="built_in">this</span> node? \[<span class="keyword">default</span>=<span class="number">10.100</span><span class="number">.0</span><span class="number">.80</span>\]: </span><br><span class="line">Are you joining an existing cluster? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">IP address or FQDN <span class="keyword">of</span> an existing cluster node: <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span></span><br><span class="line">Cluster fingerprint: 79ec4bdfa32501a664b1adde03a2296f7d663a43676a422781668df1bec2ee12</span><br><span class="line">You can validate <span class="built_in">this</span> fingerprint by running <span class="string">&quot;lxc info&quot;</span> locally on an existing node.</span><br><span class="line">Is <span class="built_in">this</span> the correct fingerprint? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">Cluster trust password: </span><br><span class="line">All existing data is lost when joining a cluster, <span class="keyword">continue</span>? (yes/no) \[<span class="keyword">default</span>=no\] yes</span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
+
+<p><strong>集群管理</strong><br>集群节点列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxc cluster list</span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> NAME URL DATABASE STATE MESSAGE </span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> vm02 https:<span class="comment">//10.100.0.33:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> vmsvr02 https:<span class="comment">//10.100.0.31:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> web https:<span class="comment">//10.100.0.80:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br></pre></td></tr></table></figure>
+
+<p>容器静态迁移，假设容器名字为foo，将其移动到node2主机运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop foo</span><br><span class="line">$ lxc move foo --target node2</span><br></pre></td></tr></table></figure>
+<p>容器所在主机故障时，可以使用lxc move移动容器到健康的节点继续运行，因为使用ceph,这个过程中没有主机间的数据拷贝。</p>
+<p>如果lxd集群支持在线迁移和故障自动迁移就好用多了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lxd.readthedocs.io/en/latest/clustering/">Clustering</a><br>[2]<a target="_blank" rel="noopener" href="https://ubuntu.com/blog/lxd-clusters-a-primer">LXD Clusters: A Primer</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/06/debian-buster-en-us-utf-8-locale-date-output/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/06/debian-buster-en-us-utf-8-locale-date-output/" class="post-title-link" itemprop="url">debian buster en_US.UTF-8 locale下date输出格式问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-06 15:32:19" itemprop="dateCreated datePublished" datetime="2019-11-06T15:32:19+08:00">2019-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian buster升级后date命令默认输出12　hours格式，很不适应，locale一直使用en_US.UTF-8，这次升级en_US的默认时间显示格式调整了，这习惯还要变来变去吗？！</p>
+<p>如果想继续显示24 hours格式，就要选择一个时间习惯是24 hours格式的locale</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-locale LC_TIME=C.UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure>
+<p>此命令修改了/etc/default/locale，添加了一行LC_TIME=C.UTF-8</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://serverfault.com/questions/977598/date-in-terminal-now-in-12hr-format-on-debian-buster">``date`` in terminal now in 12hr format on Debian Buster</a><br>[2]<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=877900">general: en-us locale defaults to 24-hour “military” time on stock install</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/05/cephfs-nfs-export-mount/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/05/cephfs-nfs-export-mount/" class="post-title-link" itemprop="url">CephFS文件系统NFS导出和挂载</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-05 13:53:36" itemprop="dateCreated datePublished" datetime="2019-11-05T13:53:36+08:00">2019-11-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>一、使用nfs-ganesha</strong></p>
+<p>需要先创建cephfs,参考<a target="_blank" rel="noopener" href="https://openwares.net/2019/10/31/cephfs-using/">使用CephFS文件系统</a></p>
+<p><strong>安装</strong><br>在ceph集群的某个节点上安装nfs-ganesha-ceph</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install nfs-ganesha-ceph</span><br></pre></td></tr></table></figure>
+<p>如果启动服务时出错:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to restart nfs-ganesha.service: The name org.freedesktop.PolicyKit1 was not provided by any .service files</span><br></pre></td></tr></table></figure>
+<p>安装policykit-1包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install policykit-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置</strong><br>/etc/ganesha/ganesha.conf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">NFS_CORE_PARAM</span><br><span class="line">&#123;</span><br><span class="line">Enable_NLM = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">Enable_RQUOTA = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">Protocols = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">NFSv4</span><br><span class="line">&#123;</span><br><span class="line">Delegations = active;;</span><br><span class="line"></span><br><span class="line">Minor_Versions = <span class="number">1</span>,<span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CACHEINODE &#123;</span><br><span class="line">Dir_Chunk = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">NParts = <span class="number">1</span>;</span><br><span class="line">Cache_Size = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">EXPORT</span><br><span class="line">&#123;</span><br><span class="line"># Unique export ID number for this export</span><br><span class="line">Export_ID=<span class="number">100</span>;</span><br><span class="line"></span><br><span class="line"># We&#x27;re only interested in NFSv4 in this configuration</span><br><span class="line">Protocols = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"># NFSv4 does not allow UDP transport</span><br><span class="line">Transports = TCP;</span><br><span class="line"></span><br><span class="line">Path = /;</span><br><span class="line"> Pseudo = <span class="regexp">/cephfs/</span>;</span><br><span class="line"></span><br><span class="line"># We want to be able to read and write</span><br><span class="line">Access_Type = RW;</span><br><span class="line"></span><br><span class="line"># Time out attribute cache entries immediately</span><br><span class="line">Attr_Expiration_Time = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">Delegations = RW;</span><br><span class="line"></span><br><span class="line">Squash = no_root_squash;</span><br><span class="line"></span><br><span class="line">FSAL &#123;</span><br><span class="line"># FSAL_CEPH export</span><br><span class="line">Name = CEPH;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># Config block for FSAL_CEPH</span><br><span class="line">CEPH</span><br><span class="line">&#123;</span><br><span class="line"># Path to a ceph.conf file for this cluster.</span><br><span class="line"># Ceph_Conf = /etc/ceph/ceph.conf;</span><br><span class="line"></span><br><span class="line"># User file-creation mask. These bits will be masked off from the unix</span><br><span class="line"># permissions on newly-created inodes.</span><br><span class="line"># umask = 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重启nfs-ganesha服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart nfs-ganesha</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端挂载</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount -t nfs4 -o nfsvers=<span class="number">4.2</span>,rw <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/ /m</span>nt/mycephfs</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount -t nfs4 -o nfsvers=<span class="number">4.2</span>,rw <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/cephfs /m</span>nt/mycephfs</span><br></pre></td></tr></table></figure>
+<p>/etc/fstab挂载项:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/ /m</span>nt/mycephfs nfs4 nfsvers=<span class="number">4.2</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>二、使用kernel driver/ceph-fuse和nfsd</strong></p>
+<p>Ceph 提供了 kernel driver/ceph-fuse 来挂载和访问 CephFS。在 NFS 服务器上通过 kernel driver/ceph-fuse 挂载 CephFS 后，我们可以通过 nfsd 将其发布出去。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/cephfs/nfs/">NFS</a><br>[2]<a target="_blank" rel="noopener" href="https://amito.me/2019/Mount-CephFS-over-NFS/">将 Ceph 文件系统 CephFS 挂载为 NFS</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/phdeniel/nfs-ganesha/wiki/nfsidmap">nfsidmap</a><br>[4]<a target="_blank" rel="noopener" href="https://jtlayton.wordpress.com/2018/12/10/deploying-an-active-active-nfs-cluster-over-cephfs/">Deploying an Active/Active NFS Cluster over CephFS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/04/using-ceph-rdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/04/using-ceph-rdb/" class="post-title-link" itemprop="url">使用ceph块设备</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-04 22:43:24" itemprop="dateCreated datePublished" datetime="2019-11-04T22:43:24+08:00">2019-11-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ceph提供了一个具有很多高级特性的虚拟块设备，可以当做普通块设备来使用，也可以用于qemu等虚拟化环境。ceph提供的块设备具有多副本高可用、快照、精简配置、条带化、远程镜像等很多特性。</p>
+<p><strong>基本操作</strong></p>
+<p>创建并初始化一个块设备池，取名叫rbd</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph osd pool create rbd <span class="number">36</span> <span class="number">36</span></span><br><span class="line">$ sudo rbd pool init</span><br></pre></td></tr></table></figure>
+<p>如不提供pool名字,rdb命令默认使用名字为rdb的pool</p>
+<p>创建块设备镜像data，大小为1024MB，可以忽略掉pool名字</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rbd create --size <span class="number">1024</span> rbd/data</span><br></pre></td></tr></table></figure>
+<p>因为ceph使用精简配置，所以把size设置的大一些也无妨，不使用并不会真正的占用存储空间。</p>
+<p>获取镜像信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rbd info data</span><br><span class="line">rbd image <span class="string">&#x27;data&#x27;</span>:</span><br><span class="line">size <span class="number">1</span> GiB <span class="keyword">in</span> <span class="number">256</span> objects</span><br><span class="line">order <span class="number">22</span> (<span class="number">4</span> MiB objects)</span><br><span class="line">snapshot_count: <span class="number">0</span></span><br><span class="line">id: 2ab0d130bf615</span><br><span class="line">block_name_prefix: rbd_data.2ab0d130bf615</span><br><span class="line">format: <span class="number">2</span></span><br><span class="line">features: layering, exclusive-lock, object-map, fast-diff, deep-flatten</span><br><span class="line">op_features: </span><br><span class="line">flags: </span><br><span class="line">create_timestamp: Wed Nov <span class="number">6</span> <span class="number">21</span>:<span class="number">59</span>:<span class="number">10</span> <span class="number">2019</span></span><br><span class="line">access_timestamp: Wed Nov <span class="number">6</span> <span class="number">21</span>:<span class="number">59</span>:<span class="number">10</span> <span class="number">2019</span></span><br><span class="line">modify_timestamp: Wed Nov <span class="number">6</span> <span class="number">21</span>:<span class="number">59</span>:<span class="number">10</span> <span class="number">2019</span></span><br></pre></td></tr></table></figure>
+
+<p>resize镜像,扩大和缩小</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rbd resize --size <span class="number">2048</span> foo</span><br><span class="line">$ sudo rbd resize --size <span class="number">2048</span> foo --allow-shrink</span><br></pre></td></tr></table></figure>
+
+<p>删除块设备镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ suro rbd rm &#123;pool-name&#125;/&#123;image-name&#125;</span><br><span class="line">$ sudo rbd rm foo</span><br></pre></td></tr></table></figure>
+
+<p><strong>内核模块块设备映射</strong></p>
+<p>可以通过内核模块将ceph块设备镜像映射成为OS可以操作的块设备，就像一个真的块设备一样，比如一块硬盘。</p>
+<p>镜像列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rbd list</span><br></pre></td></tr></table></figure>
+
+<p>映射为块设备，使用默认的client.admin用户</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">###format: rbd device map &#123;pool-name&#125;/&#123;image-name&#125; --id &#123;user-name&#125;</span><br><span class="line">$ sudo rbd device map data</span><br><span class="line">bd: sysfs write failed</span><br><span class="line">RBD image feature set mismatch. You can disable features unsupported by the kernel <span class="keyword">with</span> <span class="string">&quot;rbd feature disable data object-map fast-diff deep-flatten&quot;</span>.</span><br><span class="line">In some cases useful info is found <span class="keyword">in</span> syslog - <span class="keyword">try</span> <span class="string">&quot;dmesg tail&quot;</span>.</span><br><span class="line">rbd: map failed: (<span class="number">6</span>) No such device or address</span><br><span class="line">$ sudo rbd feature disable data object-map fast-diff deep-flatten</span><br><span class="line">$ sudo rbd device map data</span><br><span class="line">/dev/rbd0</span><br></pre></td></tr></table></figure>
+<p>这里映射出来的块设备名字为/dev/rbd0，当做普通的块设备来使用就行了。</p>
+<p>查看映射设备列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rbd device list</span><br><span class="line">id pool namespace image snap device </span><br><span class="line"><span class="number">0</span> rbd data - <span class="regexp">/dev/</span>rbd0 </span><br></pre></td></tr></table></figure>
+
+<p>取消设备映射</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">###format: rbd device unmap /dev/rbd/&#123;poolname&#125;/&#123;imagename&#125;</span><br><span class="line">###format: rbd device unmap &#123;devicename&#125;</span><br><span class="line">$ sudo rbd device unmap /dev/rbd0</span><br></pre></td></tr></table></figure>
+
+<p>注意：块设备是不能共享访问的，所以不要多次映射并行访问同一个镜像。</p>
+<p><strong>QEMU集成</strong></p>
+<p>创建镜像,要使用raw格式,不要使用其他格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">###format: qemu-img create -f raw rbd:&#123;pool-name&#125;/&#123;image-name&#125; &#123;size&#125;</span><br><span class="line">$ sudo qemu-img create -f raw rbd:rbd/foo 10G</span><br><span class="line">Formatting <span class="string">&#x27;rbd:rbd/foo&#x27;</span>, fmt=raw size=<span class="number">10737418240</span></span><br></pre></td></tr></table></figure>
+
+<p>查看镜像信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo qemu-img info rbd:rbd/foo</span><br><span class="line">image: json:&#123;<span class="string">&quot;driver&quot;</span>: <span class="string">&quot;raw&quot;</span>, <span class="string">&quot;file&quot;</span>: &#123;<span class="string">&quot;pool&quot;</span>: <span class="string">&quot;rbd&quot;</span>, <span class="string">&quot;image&quot;</span>: <span class="string">&quot;foo&quot;</span>, <span class="string">&quot;driver&quot;</span>: <span class="string">&quot;rbd&quot;</span>&#125;&#125;</span><br><span class="line">file format: raw</span><br><span class="line">virtual size: 10G (<span class="number">10737418240</span> bytes)</span><br><span class="line">disk size: unavailable</span><br><span class="line">cluster_size: <span class="number">4194304</span></span><br></pre></td></tr></table></figure>
+
+<p>resize镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">###format: qemu-img resize rbd:&#123;pool-name&#125;/&#123;image-name&#125; &#123;size&#125;</span><br><span class="line">$ sudo qemu-img resize rbd:rbd/foo 20G</span><br></pre></td></tr></table></figure>
+
+<p>转换已有kvm镜像为ceph镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo qemu-img convert -f qcow2 -O raw bar.qcow2 rbd:rbd/bar</span><br><span class="line">###or: sudo qemu-img convert -f qcow2 bar.qcow2 -O raw rbd:rbd/bar</span><br></pre></td></tr></table></figure>
+
+<p>运行客户机</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu -m <span class="number">1024</span> -drive format=rbd,file=rbd:rbd/bar,cache=writeback</span><br></pre></td></tr></table></figure>
+
+<p><strong>lxd集成</strong></p>
+<p>lxd已经内置支持ceph集群存储,执行lxd init时，指定存储后端为ceph即可。<br>也可以使用lxc storage命令创建新的存储池。<br>lxd集群使用ceph后端存储可以创建高可用lxd容器，但是同一时刻只能有一个节点在运行一个容器实例，需要其他机制来自动故障转移。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rbd/">CEPH BLOCK DEVICE</a><br>[2]<a target="_blank" rel="noopener" href="https://amito.me/2018/Using-RBD-in-Ceph/">Ceph 中块设备 RBD 的基本用法</a><br>[3]<a target="_blank" rel="noopener" href="https://ubuntu.com/blog/ceph-storage-driver-in-lxd">Ceph storage driver in LXD</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/31/cephfs-using/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/31/cephfs-using/" class="post-title-link" itemprop="url">使用CephFS文件系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-31 23:01:57" itemprop="dateCreated datePublished" datetime="2019-10-31T23:01:57+08:00">2019-10-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>创建池</strong><br>ceph文件系统需要驻留在pool上，至少需要创建一个data和一个metadata pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph osd pool create cephfs_data <span class="number">128</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_data&#x27;</span> created</span><br><span class="line"></span><br><span class="line">$ sudo ceph osd pool create cephfs_metadata <span class="number">128</span></span><br><span class="line"><span class="built_in">Error</span> ERANGE: pg_num <span class="number">128</span> size <span class="number">3</span> would mean <span class="number">768</span> total pgs, which exceeds max <span class="number">750</span> (mon_max_pg_per_osd <span class="number">250</span> * num_in_osds <span class="number">3</span>)</span><br><span class="line">john@node6:~$ sudo ceph osd pool create cephfs_metadata <span class="number">24</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_metadata&#x27;</span> created</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建文件系统</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph fs <span class="keyword">new</span> cephfs cephfs_metadata cephfs_data</span><br><span class="line"><span class="keyword">new</span> fs <span class="keyword">with</span> metadata pool <span class="number">2</span> and data pool <span class="number">1</span></span><br><span class="line">$ sudo ceph fs ls</span><br><span class="line">name: cephfs, metadata pool: cephfs_metadata, data pools: \[cephfs_data \]</span><br></pre></td></tr></table></figure>
+<p>查看mds状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mds stat</span><br><span class="line">cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br></pre></td></tr></table></figure>
+<p>没有创建文件系统之前，所有的mds实例都为standby状态<br>集群状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, since 11m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> mds: cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br><span class="line"> osd: <span class="number">3</span> osds: <span class="number">3</span> up (since 11m), <span class="number">3</span> <span class="keyword">in</span> (since 3d)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">2</span> pools, <span class="number">152</span> pgs</span><br><span class="line"> objects: <span class="number">22</span> objects, <span class="number">2.2</span> KiB</span><br><span class="line"> usage: <span class="number">3.0</span> GiB used, <span class="number">18</span> GiB / <span class="number">21</span> GiB avail</span><br><span class="line"> pgs: <span class="number">152</span> active+clean</span><br></pre></td></tr></table></figure>
+
+<p><strong>fuse挂载cephfs</strong><br>安装客户端和fuse</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ceph-common ceph-fuse</span><br></pre></td></tr></table></figure>
+<p>将集群配置/etc/ceph/*拷贝到客户机相同位置<br>挂载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse /path/to/mount</span><br></pre></td></tr></table></figure>
+<p>或者指定monitor地址</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse -m ip_of_monitor /path/to/mount</span><br></pre></td></tr></table></figure>
+<p>/etc/fstab:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">none /mnt/mycephfs fuse.ceph ceph.id=admin,_netdev,defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这里指定使用admin用户，使用其他用户需要提前建立用户keyring</p>
+<p><strong>内核驱动挂载cephfs</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount.ceph <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/ /m</span>nt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br><span class="line">###or: sudo mount -t ceph 192.168.3.8:6789:/ /mnt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br></pre></td></tr></table></figure>
+<p>如果不指定name选项，默认使用guest用户<br>当前内核驱动使用msgr v1协议与ceph集群通讯，因此应该使用6789端口，指定3300端口无法连接。</p>
+<p><strong>后记：</strong><br>只要/etc/ceph目录下的文件普通用户可以读取，特别是keyring文件，那么普通用户就可以连接到集群使用所有的ceph命令。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/cephfs/createfs/">CREATE A CEPH FILESYSTEM</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/kernel/">MOUNT CEPHFS WITH THE KERNEL DRIVER</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/administration/">CEPHFS ADMINISTRATIVE COMMANDS</a><br>[4]<a target="_blank" rel="noopener" href="https://runsisi.com/2019-02-14/cephx">cephx</a><br>[5]<a target="_blank" rel="noopener" href="https://int32bit.me/2016/05/19/Ceph-Pool%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Ceph Pool操作总结</a><br>[6]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/jewel/rados/operations/pools/">POOLS</a><br>[7]<a target="_blank" rel="noopener" href="https://blog.programster.org/ubuntu-14-04-mount-ceph-filesystem">Mount Ceph Filesystem</a><br>[8]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/man/8/mount.fuse.ceph/">MOUNT CEPHFS IN YOUR FILE SYSTEMS TABLE</a><br>[9]<a target="_blank" rel="noopener" href="https://amito.me/2018/CephFS-Introduction-Installation-and-Configuration/">Ceph 文件系统 CephFS 的介绍与配置</a><br>[10]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/cephfs-shell/">CEPHFS SHELL</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/31/ceph-deploy-mgr-osd-mds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/31/ceph-deploy-mgr-osd-mds/" class="post-title-link" itemprop="url">Ceph集群部署-mgr-osd-mds配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-31 20:04:42" itemprop="dateCreated datePublished" datetime="2019-10-31T20:04:42+08:00">2019-10-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>一、添加manager</strong></p>
+<p>通常每一个运行monitor的机器上同时运行一个manager,以获取同样的可用性，但是manager不涉及到选举，运行于primary/standby模式。</p>
+<p>1、创建mgr认证keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mgr.node6 mon <span class="string">&#x27;allow profile mgr&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span></span><br><span class="line">\[mgr.node6\]</span><br><span class="line">key = AQDAzLpdq7HzDRAAkRLSSkRO/1aLZU+87FcN5g==</span><br></pre></td></tr></table></figure>
+<p>这里mgr的名字仍然选用主机名,也就是mgr.$(hostname -s)</p>
+<p>2、创建mgr实例的目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/</span><br></pre></td></tr></table></figure>
+
+<p>3、导出mgr keyring到ngr实例目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get mgr.node6 -o /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/keyring</span><br><span class="line">exported keyring <span class="keyword">for</span> mgr.node6</span><br></pre></td></tr></table></figure>
+
+<p>4、运行mgr实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mgr@node6.service</span><br><span class="line">$ sudo systemctl start ceph-mgr@node6.service</span><br><span class="line">$ sudo ceph -s</span><br><span class="line">cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, starting, since <span class="number">0.</span>109568s)</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>可以看到mgr活动实例启动了，重复以上步骤添加其他mgr实例。</p>
+<p><strong>二、添加OSD</strong></p>
+<p>OSD(Object Storage Device)是真正存储数据的组件，一般生产环境至少要部署3个OSD,参数文件/etc/ceph/ceph.conf中<code>osd pool default size = 3</code>设定为3，至少需要3个osd进程，集群才能达到active + clean状态。</p>
+<p>OSD有几种后端存储，建议使用bluestore提高系统稳定性和效率，bluestore只能使用逻辑卷、磁盘或分区，注意初始化OSD时指定的逻辑卷、磁盘或者分区上的数据会全部被抹掉。一般建议OSD使用单独的机器部署，并且与OS分别使用不同的驱动器。</p>
+<p>1、导出client.bootstrap-osd keyring<br>如果本地机器上没有此keyring,则需要先从集群导出到本地</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get client.bootstrap-osd -o /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring</span><br></pre></td></tr></table></figure>
+
+<p>2、创建OSD</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm create --data /dev/sdb</span><br></pre></td></tr></table></figure>
+<p>注意要使用正确的底层设备,lsblk可以查看系统块存储设备。<br>如果提示错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-volume lvm create: error: GPT headers found, they must be removed on: <span class="regexp">/dev/</span>sdb</span><br><span class="line">...</span><br><span class="line">stderr: Device /dev/sdc excluded by a filter.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>需要先清除掉分区表:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo partprobe -s /dev/sdb</span><br><span class="line">$ sudo dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/dev/</span>sdb bs=<span class="number">512</span> count=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong>这些操作是破坏性的，一定要确认是在正确的块设备上进行操作。</p>
+<p>3、运行OSD</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm list</span><br><span class="line"></span><br><span class="line">====== osd<span class="number">.0</span> =======</span><br><span class="line"></span><br><span class="line"> \[block\] /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"></span><br><span class="line"> block device /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"> block uuid jYMJc5-jjUe-hgPk-Wlhk-yo9y-t6JF-r8SqNa</span><br><span class="line"> cephx lockbox secret </span><br><span class="line"> cluster fsid 0238426D-78D6-48CD-AF64-B6A8407996C6</span><br><span class="line"> cluster name ceph</span><br><span class="line"> crush device <span class="class"><span class="keyword">class</span> <span class="title">None</span></span></span><br><span class="line"><span class="class"> <span class="title">encrypted</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">fsid</span> <span class="title">bf952b83</span>-7<span class="title">ffe</span>-49<span class="title">e2</span>-<span class="title">bdd7</span>-<span class="title">d2fd3faacafb</span></span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">id</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">type</span> <span class="title">block</span></span></span><br><span class="line"><span class="class"> <span class="title">vdo</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">devices</span> /<span class="title">dev</span>/<span class="title">sdb</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">enable</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">start</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
+<p>先查找osd实例的名称，然后启用相应的实例服务,ceph-volume会自动创建相应的服务并启动它们。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 37m)</span><br><span class="line"> mgr: node6(active, since 25m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> osd: <span class="number">1</span> osds: <span class="number">1</span> up (since 85s), <span class="number">1</span> <span class="keyword">in</span> (since 85s)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">1.0</span> GiB used, <span class="number">6.0</span> GiB / <span class="number">7</span> GiB avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>可以看到运行了一个osd实例，重复以上步骤添加其他OSD实例。</p>
+<p><strong>三、添加mds</strong><br>如果要使用CephFS文件系统才需要设置mds实例，对象存储和块设备存储无需mds实例。</p>
+<p>1、创建mds实例目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph mkdir -p /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6</span><br></pre></td></tr></table></figure>
+<p>目录格式为{cluster-name}-{id}，按照惯例这里id仍然取主机名$(hostname -s)</p>
+<p>2、创建mds实例keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph ceph-authtool --create-keyring /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring --gen-key -n mds.node6</span><br></pre></td></tr></table></figure>
+
+<p>3、将mds实例keyring导入集群并设置caps权限</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth add mds.node6 osd <span class="string">&quot;allow rwx&quot;</span> mds <span class="string">&quot;allow&quot;</span> mon <span class="string">&quot;allow profile mds&quot;</span> -i /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br><span class="line">added key <span class="keyword">for</span> mds.node6</span><br></pre></td></tr></table></figure>
+<p>或者2,3步合并为一步：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mds.node6 mon <span class="string">&#x27;allow profile mds&#x27;</span> mgr <span class="string">&#x27;allow profile mds&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> sudo -u ceph tee /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br></pre></td></tr></table></figure>
+
+<p>4、编辑/etc/ceph/ceph.conf添加mds实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[mds.node6\]</span><br><span class="line">host = node6</span><br></pre></td></tr></table></figure>
+
+<p>5、启动mds实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mds@node6</span><br><span class="line">$ sudo systemctl start ceph-mds@node6</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master//cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/28/mcelog-and-rasdaemon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/28/mcelog-and-rasdaemon/" class="post-title-link" itemprop="url">mcelog and rasdaemon</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-28 09:30:31" itemprop="dateCreated datePublished" datetime="2019-10-28T09:30:31+08:00">2019-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>用于记录MCE(Machine Check Exception)日志的mcelog已经deprecated,debian buster系统上被rasdaemon包替代，RAS是指Reliability, Availability and Serviceability,rasdaemon将日志写入syslog,可以直接阅读syslog或者使用journalctl</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Machine-check_exception">Machine-check exception</a><br>[2]<a target="_blank" rel="noopener" href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=890301">mcelog replaced with rasdaemon</a><br>[3]<a target="_blank" rel="noopener" href="https://pagure.io/rasdaemon">rasdaemon</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

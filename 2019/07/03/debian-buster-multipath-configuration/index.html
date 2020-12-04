@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="安装 1$ sudo apt install multipath-tools  查看多路径配置 1$ sudo multipath -ll 没有信息输出，多路径没有自动配置好，需要手工配置 查看路径信息 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta property="og:type" content="article">
+<meta property="og:title" content="debian buster multipath 多路径设备配置">
+<meta property="og:url" content="http://example.com/2019/07/03/debian-buster-multipath-configuration/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="安装 1$ sudo apt install multipath-tools  查看多路径配置 1$ sudo multipath -ll 没有信息输出，多路径没有自动配置好，需要手工配置 查看路径信息 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-03T09:40:55.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.129Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/07/03/debian-buster-multipath-configuration/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>debian buster multipath 多路径设备配置 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/03/debian-buster-multipath-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          debian buster multipath 多路径设备配置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-03 17:40:55" itemprop="dateCreated datePublished" datetime="2019-07-03T17:40:55+08:00">2019-07-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install multipath-tools</span><br></pre></td></tr></table></figure>
+
+<p>查看多路径配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -ll</span><br></pre></td></tr></table></figure>
+<p>没有信息输出，多路径没有自动配置好，需要手工配置</p>
+<p>查看路径信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -v3</span><br><span class="line">ul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> set open fds limit to <span class="number">1048576</span>/<span class="number">1048576</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libchecktur.so checker</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> checker tur: message table size = <span class="number">3</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libprioconst.so prioritizer</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> foreign library <span class="string">&quot;nvme&quot;</span> loaded successfully</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: dev_t = <span class="number">8</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: size = <span class="number">1167966208</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: product = ServeRAID M5015</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: rev = <span class="number">2.12</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: h:b:t:l = <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: tgt_node_name = </span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: <span class="number">7166</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: serial = 00f8ec7f2abe47c318d0451a04b00506</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> failed to issue vpd inquiry <span class="keyword">for</span> pgc9</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: path_checker = tur (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: checker timeout = <span class="number">90</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: tur state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: uid = 3600605b0041a45d018c347be2a7fecf8 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: prio = <span class="keyword">const</span> (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: prio args = <span class="string">&quot;&quot;</span> (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: <span class="keyword">const</span> prio = <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sr0: blacklisted, udev property missing</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: dev_t = <span class="number">8</span>:<span class="number">16</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: size = <span class="number">10538188800</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: product = <span class="number">1814</span> FAStT</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rev = <span class="number">1060</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: h:b:t:l = <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> SCSI target <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span> -&gt; FC rport <span class="number">1</span>:<span class="number">0</span>-<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: tgt_node_name = <span class="number">0x20040080e52c8d92</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: <span class="number">65535</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: serial = SQ22101119</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libcheckrdac.so checker</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> checker rdac: message table size = <span class="number">9</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: path_checker = rdac (setting: storage device autodetected)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: checker timeout = <span class="number">30</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rdac state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: uid = 360080e50002c8d920000146c5d1bca10 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libpriordac.so prioritizer</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: prio = rdac (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: prio args = <span class="string">&quot;&quot;</span> (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rdac prio = <span class="number">14</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: dev_t = <span class="number">8</span>:<span class="number">32</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: size = <span class="number">10538188800</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: product = <span class="number">1814</span> FAStT</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rev = <span class="number">1060</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: h:b:t:l = <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> SCSI target <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span> -&gt; FC rport <span class="number">4</span>:<span class="number">0</span>-<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: tgt_node_name = <span class="number">0x20040080e52c8d92</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: <span class="number">65535</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: serial = SQ22101611</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: path_checker = rdac (setting: storage device autodetected)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: checker timeout = <span class="number">30</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rdac state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: uid = 360080e50002c8d920000146c5d1bca10 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: prio = rdac (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: prio args = <span class="string">&quot;&quot;</span> (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rdac prio = <span class="number">9</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> libdevmapper version <span class="number">1.02</span><span class="number">.155</span> (<span class="number">2018</span>-<span class="number">12</span>-<span class="number">18</span>)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> DM multipath kernel driver v1<span class="number">.13</span><span class="number">.0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 3600605b0041a45d018c347be2a7fecf8 not <span class="keyword">in</span> wwids file, skipping sda</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> <span class="keyword">const</span> prioritizer refcount <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 360080e50002c8d920000146c5d1bca10 not <span class="keyword">in</span> wwids file, skipping sdb</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> rdac prioritizer refcount <span class="number">2</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 360080e50002c8d920000146c5d1bca10 not <span class="keyword">in</span> wwids file, skipping sdc</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> rdac prioritizer refcount <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading rdac prioritizer</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading <span class="keyword">const</span> prioritizer</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading rdac checker</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading tur checker</span><br><span class="line">===== paths list =====</span><br><span class="line">uuid hcil dev dev_t pri dm_st chk_st vend/prod</span><br><span class="line">3600605b0041a45d018c347be2a7fecf8 <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span> sda <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span> undef undef IBM,Serve</span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdb <span class="number">8</span>:<span class="number">16</span> <span class="number">14</span> undef undef IBM,<span class="number">1814</span> </span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdc <span class="number">8</span>:<span class="number">32</span> <span class="number">9</span> undef undef IBM,<span class="number">1814</span> </span><br></pre></td></tr></table></figure>
+
+
+<p>或者可以直接查看存在的路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -d -v3 <span class="number">2</span>&gt;<span class="regexp">/dev/</span><span class="literal">null</span></span><br><span class="line">===== paths list =====</span><br><span class="line">uuid hcil dev dev_t pri dm_st chk_st vend/prod</span><br><span class="line">3600605b0041a45d018c347be2a7fecf8 <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span> sda <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span> undef undef IBM,Serve</span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdb <span class="number">8</span>:<span class="number">16</span> <span class="number">14</span> undef undef IBM,<span class="number">1814</span> </span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdc <span class="number">8</span>:<span class="number">32</span> <span class="number">9</span> undef undef IBM,<span class="number">1814</span> </span><br></pre></td></tr></table></figure>
+
+<p>可以看到有两条路径有相同的wwid，添加此wwid到系统/etc/multipath/wwids配置文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -a 360080e50002c8d920000146c5d1bca10</span><br><span class="line">wwid <span class="string">&#x27;360080e50002c8d920000146c5d1bca10&#x27;</span> added</span><br></pre></td></tr></table></figure>
+
+<p>重新启动multipathd服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart multipathd.service</span><br></pre></td></tr></table></figure>
+
+<p>可以看到有多路径设备dm-0了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -l</span><br><span class="line">360080e50002c8d920000146c5d1bca10 dm-<span class="number">0</span> IBM,<span class="number">1814</span> FAStT</span><br><span class="line">size=<span class="number">4.</span>9T features=<span class="string">&#x27;5 queue_if_no_path pg_init_retries 50 queue_mode mq&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=<span class="number">0</span> status=enabled</span><br><span class="line"> \<span class="string">`- 1:0:0:0 sdb 8:16 active undef running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;service-time 0&#x27; prio=0 status=enabled</span></span><br><span class="line"><span class="string"> \`- 4:0:0:0 sdc 8:32 active undef running</span></span><br></pre></td></tr></table></figure>
+
+<p>还不好，设备没有别名，访问起来很麻烦，添加一个多路径配置文件/etc/multipath/conf.d/multipath.conf,内容如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">multipaths &#123;</span><br><span class="line">multipath &#123;</span><br><span class="line">wwid 360080e50002c8d920000146c5d1bca10</span><br><span class="line">alias data</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后重新查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart multipathd.service</span><br><span class="line"></span><br><span class="line">$ sudo multipath -l</span><br><span class="line">data (360080e50002c8d920000146c5d1bca10) dm-<span class="number">0</span> IBM,<span class="number">1814</span> FAStT</span><br><span class="line">size=<span class="number">4.</span>9T features=<span class="string">&#x27;5 queue_if_no_path pg_init_retries 50 queue_mode mq&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=<span class="number">14</span> status=active</span><br><span class="line"> \<span class="string">`- 1:0:0:0 sdb 8:16 active ready running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;service-time 0&#x27; prio=9 status=enabled</span></span><br><span class="line"><span class="string"> \`- 4:0:0:0 sdc 8:32 active ready running</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$ ls -l /dev/mapper/</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">crw------- 1 root root 10, 236 Jul 3 14:55 control</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data -&gt; ../dm-0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data-part1 -&gt; ../dm-1</span></span><br></pre></td></tr></table></figure>
+
+<p>/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1</p>
+<p>格式化为ext4文件系统，<strong>注意会破坏分区上的所有数据</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkfs.ext4 /dev/mapper/data-part1 </span><br><span class="line">mke2fs <span class="number">1.44</span><span class="number">.5</span> (<span class="number">15</span>-Dec-<span class="number">2018</span>)</span><br><span class="line">Creating filesystem <span class="keyword">with</span> <span class="number">1317273339</span> 4k blocks and <span class="number">164659200</span> inodes</span><br><span class="line">Filesystem UUID: b60f85e2-<span class="number">5813</span>-48d7-856b-2f8dc7c1aad0</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line"> <span class="number">32768</span>, <span class="number">98304</span>, <span class="number">163840</span>, <span class="number">229376</span>, <span class="number">294912</span>, <span class="number">819200</span>, <span class="number">884736</span>, <span class="number">1605632</span>, <span class="number">2654208</span>, </span><br><span class="line"> <span class="number">4096000</span>, <span class="number">7962624</span>, <span class="number">11239424</span>, <span class="number">20480000</span>, <span class="number">23887872</span>, <span class="number">71663616</span>, <span class="number">78675968</span>, </span><br><span class="line"> <span class="number">102400000</span>, <span class="number">214990848</span>, <span class="number">512000000</span>, <span class="number">550731776</span>, <span class="number">644972544</span></span><br><span class="line"></span><br><span class="line">Allocating group tables: done </span><br><span class="line">Writing inode tables: done </span><br><span class="line">Creating journal (<span class="number">262144</span> blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: </span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">$ blkid /dev/mapper/data-part1 </span><br><span class="line">/dev/mapper/data-part1: UUID=<span class="string">&quot;b60f85e2-5813-48d7-856b-2f8dc7c1aad0&quot;</span> TYPE=<span class="string">&quot;ext4&quot;</span> PARTUUID=<span class="string">&quot;ba6bcf54-89e3-4852-a993-4f44d8839531&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>自动挂载/etc/fstab添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/mapper/data-part1 /mnt/data ext4 defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>挂载后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem Size Used Avail Use% Mounted on</span><br><span class="line">udev 16G <span class="number">0</span> 16G <span class="number">0</span>% /dev</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">9.</span>3M <span class="number">3.</span>2G <span class="number">1</span>% /run</span><br><span class="line">/dev/sda2 516G <span class="number">1.</span>4G 488G <span class="number">1</span>% /</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/dev/</span>shm</span><br><span class="line">tmpfs <span class="number">5.</span>0M <span class="number">0</span> <span class="number">5.</span>0M <span class="number">0</span>% <span class="regexp">/run/</span>lock</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/sys/</span>fs/cgroup</span><br><span class="line">/dev/sda1 511M <span class="number">5.</span>1M 506M <span class="number">1</span>% <span class="regexp">/boot/</span>efi</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">0</span> <span class="number">3.</span>2G <span class="number">0</span>% <span class="regexp">/run/u</span>ser/<span class="number">1000</span></span><br><span class="line">/dev/mapper/data-part1 <span class="number">4.</span>9T 89M <span class="number">4.</span>7T <span class="number">1</span>% <span class="regexp">/mnt/</span>data</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/26/7z-compatibility-issue/" rel="prev" title="7z版本兼容性问题">
+                  <i class="fa fa-chevron-left"></i> 7z版本兼容性问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/07/nginx-ssl-reverse-proxy-wordpress/" rel="next" title="nginx ssl 反向代理wordpress">
+                  nginx ssl 反向代理wordpress <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

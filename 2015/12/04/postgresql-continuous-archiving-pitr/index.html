@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="pg_dump&#x2F;pg_dumpall属于一致性逻辑备份，可以用其进行跨PostgreSQL版本，跨系统平台的数据迁移。用于常规备份则其速度和灵活性略显不足。 而连续归档模式则类似于oracle的rman备份方式，可用于大型数据库的增量备份和恢复，以及用于搭建高可用standby镜像备份。 设置归档 PostgreSQL默认处于非归档模式。开启归档模式，主要涉及到三个参数：wal_level,ar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL连续归档备份">
+<meta property="og:url" content="http://example.com/2015/12/04/postgresql-continuous-archiving-pitr/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="pg_dump&#x2F;pg_dumpall属于一致性逻辑备份，可以用其进行跨PostgreSQL版本，跨系统平台的数据迁移。用于常规备份则其速度和灵活性略显不足。 而连续归档模式则类似于oracle的rman备份方式，可用于大型数据库的增量备份和恢复，以及用于搭建高可用standby镜像备份。 设置归档 PostgreSQL默认处于非归档模式。开启归档模式，主要涉及到三个参数：wal_level,ar">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-12-04T12:55:48.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.417Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PostgresQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2015/12/04/postgresql-continuous-archiving-pitr/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>PostgreSQL连续归档备份 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/04/postgresql-continuous-archiving-pitr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PostgreSQL连续归档备份
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-04 20:55:48" itemprop="dateCreated datePublished" datetime="2015-12-04T20:55:48+08:00">2015-12-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>pg_dump/pg_dumpall属于一致性逻辑备份，可以用其进行跨PostgreSQL版本，跨系统平台的数据迁移。用于常规备份则其速度和灵活性略显不足。</p>
+<p>而连续归档模式则类似于oracle的rman备份方式，可用于大型数据库的增量备份和恢复，以及用于搭建高可用standby镜像备份。</p>
+<p><strong>设置归档</strong></p>
+<p>PostgreSQL默认处于非归档模式。开启归档模式，主要涉及到三个参数：wal_level,archive_mode和archive_command</p>
+<p>wal_level参数默认为mininal,设置此参数为archive或者之上的级别都可以打开归档。<br>当postgresql需要传输归档日志时，会调用archive_command指定的shell命令。归档文件传输成功时，shell命令要返回0，此时，postgresql会认为归档文件已经传输成功，因此可以删除或者重新循环利用归档文件。当shell命令返回非0值时，postgresql会保留所有未成功传输的归档日志，并不断尝试重新传输，直到成功。如果归档命令一直不成功，pg_xlog目录会持续增长，有耗尽服务器存储空间的可能，此时postgresql会PANIC关闭，直到释放存储空间。</p>
+<p>将归档WAL日志存储在本机上是风险极高，不被推荐的。postgresql通过archive_command提供了存储WAL日志的灵活性，可以将归档日志存储到挂装的NFS目录，磁带，刻录到光盘，也可以将WAL日志通过ssh/scp传输到异机保存。</p>
+<p>要注意，archive_command将以运行PostgreSQL的系统用户的身份运行。debian系统里，这个系统用户是postgres。</p>
+<p>修改/etc/postgresql/$PG_VERISON/main/postgresql.conf文件以启动归档:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wal_level = archive</span><br><span class="line">archive_mode = on</span><br><span class="line">#archive_command = <span class="string">&#x27;test ! -f /mnt/server/archivedir/%f &amp;&amp; cp %p /mnt/server/archivedir/%f&#x27;</span></span><br><span class="line">archive_command = <span class="string">&#x27;ssh arc_svr test ! -f /path/to/archive/%f &amp;&amp; scp %p arc_svr:/path/to/archive/%f&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>arc_svr是用于存储WAL日志的ssh服务器别名<br>然后重新启动postgresql</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql restart</span><br></pre></td></tr></table></figure>
+
+<p>手动切换WAL日志,看配置是否正确，WAL是否正确传输了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql -c <span class="string">&#x27;select pg_switch_xlog()&#x27;</span></span><br><span class="line">pg_switch_xlog </span><br><span class="line">----------------</span><br><span class="line"> <span class="number">1</span>/6A0006A8</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>查看归档目录下出现了归档WAL日志文件。</p>
+<p><strong>使用pg_start_backup进行基础备份</strong></p>
+<ol>
+<li><p> 确保postgesql运行于归档模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select name, setting from pg_catalog.pg_settings where name like &#x27;archive%&#x27; or name = &#x27;wal_level&#x27;;</span><br><span class="line"> name setting </span><br><span class="line">-----------------+---------------------------------------------------------------------------</span><br><span class="line"> archive_command ssh node5 test ! -f /<span class="keyword">var</span>/backups/postgresql/archive/%f &amp;&amp; scp %p node5:<span class="regexp">/var/</span>backups/postgresql/archive/%f</span><br><span class="line"> archive_mode on</span><br><span class="line"> archive_timeout <span class="number">0</span></span><br><span class="line"> wal_level archive</span><br><span class="line">(<span class="number">4</span> rows)</span><br></pre></td></tr></table></figure></li>
+<li><p> 使用超级用户执行pg_start_backup</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_start_backup(&#x27;basebackup-20151205&#x27;);</span><br><span class="line"> pg_start_backup </span><br><span class="line">-----------------</span><br><span class="line"> <span class="number">1</span>/6F000028</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>basebackup-20151205是一个标签，用户自行指定用于标识本次基础备份。pg_start_backup会创建一个备份标签文件(backup label file),文件内保存有此次基本备份的相关信息。</p>
+</li>
+<li><p> 使用文件系统备份工具备份整个集群的数据文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres tar cjvf /<span class="keyword">var</span>/backups/postgresql/base/<span class="number">20151205.</span>tbz2 -P \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/postmaster.pid \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/postmaster.opts \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/pg_xlog \\</span><br><span class="line">--exclude=<span class="regexp">/var/</span>lib/postgresql/<span class="number">9.4</span>/main/pg_replslot \\</span><br><span class="line">--warning=no-file-changed --warning=no-file-removed \\</span><br><span class="line">/<span class="keyword">var</span>/lib/postgresql/<span class="number">9.4</span>/main </span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>备份时需要排除掉postmaster.pid和postmaster.opts文件，以及pg_xlog和pg_replslot目录。</p>
+<p>生成的基础备份应该与归档WAL日志采用一样的存储策略，存储到异机保存，并可以进一步保存到永久介质保存，比如磁带或者CDROM。<br>4.  以超级用户身份执行pg_stop_backup</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_stop_backup();</span><br><span class="line">NOTICE: pg_stop_backup complete, all required WAL segments have been archived</span><br><span class="line"> pg_stop_backup </span><br><span class="line">----------------</span><br><span class="line"> <span class="number">1</span>/6F1A64F8</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>pg_stop_backup会将备份期间活动的WAL日志文件归档，一旦这些日志完成归档，则整个备份过程就结束了。<br>pg_stop_backup会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。<br>比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-rw------- <span class="number">1</span> admin admin <span class="number">306</span> Dec <span class="number">5</span> <span class="number">21</span>:<span class="number">37</span> 00000001000000010000006F<span class="number">.00000028</span>.backup</span><br><span class="line">-rw------- <span class="number">1</span> admin admin 16M Dec <span class="number">5</span> <span class="number">21</span>:<span class="number">37</span> 00000001000000010000006F</span><br></pre></td></tr></table></figure>
+<p>说明此次备份所需的归档WAL日志文件从00000001000000010000006F往后即可，包含此文件和对应的.backup文件。<br>backup文件的内容类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">1</span>/6F000028 (file 00000001000000010000006F)</span><br><span class="line">STOP WAL LOCATION: <span class="number">1</span>/6F1A64F8 (file 00000001000000010000006F)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">1</span>/6F000028</span><br><span class="line">BACKUP METHOD: pg_start_backup</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">21</span>:<span class="number">03</span>:<span class="number">03</span> CST </span><br><span class="line">LABEL: basebackup-<span class="number">20151205</span></span><br><span class="line">STOP TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">21</span>:<span class="number">37</span>:<span class="number">58</span> CST </span><br></pre></td></tr></table></figure>
+
+<p><strong>使用pg_basebackup进行基础备份</strong></p>
+<p>pg_basebackup使用复制协议，因此需要配置pg_hba.conf文件以允许replication连接,无论本地还是通过网络。<br>比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local replication postgres peer </span><br><span class="line">host replication postgres <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> md5 </span><br></pre></td></tr></table></figure>
+
+<p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份。<br>修改两个参数文件后，重新启动postgresql。</p>
+<p>然后执行以下命令:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres pg_basebackup -RPv　-D baseback20151205-<span class="number">1</span></span><br><span class="line">transaction log start point: <span class="number">1</span>/<span class="number">72000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">498974</span>/<span class="number">498974</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">transaction log end point: <span class="number">1</span>/<span class="number">72000430</span></span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+
+<p>这会生成一个备份目录，其目录结构与数据库集群的目录结构一致。如果要将数据打包到一个bz2文件，可以执行如下命令:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /<span class="keyword">var</span>/lib/postgresql</span><br><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -RPv -Ft -D - bzip2 &gt; baseback20151205-1.tbz2&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>pg_basebackup命令同样会在备份中生成backup_label文件和.backup归档日志文件。<br>其.backup文件内容类似如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">1</span>/7C000028 (file 00000001000000010000007C)</span><br><span class="line">STOP WAL LOCATION: <span class="number">1</span>/7C000998 (file 00000001000000010000007C)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">1</span>/7C000550</span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">52</span>:<span class="number">23</span> CST </span><br><span class="line">LABEL: pg_basebackup base backup</span><br><span class="line">STOP TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">53</span>:<span class="number">20</span> CST </span><br></pre></td></tr></table></figure>
+
+<p>可以远程使用pg_basebackup来进行基础备份。</p>
+<p>pg_basebackup的详细参数见man pg_basebackup或参考[2]。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/continuous-archiving.html">24.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.4/static/app-pgbasebackup.html">pg_basebackup</a></p>
+<p>===<br>[erq]</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PostgresQL/" rel="tag"># PostgresQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/12/01/6973/" rel="prev" title="Untitled Post - 158">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 158
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/12/06/postgresql-restore-using-continuous-archiving-backup/" rel="next" title="PostgreSQL使用连续归档备份恢复数据库">
+                  PostgreSQL使用连续归档备份恢复数据库 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

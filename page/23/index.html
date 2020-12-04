@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/23/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/23/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/18/7409/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/18/7409/" class="post-title-link" itemprop="url">Untitled Post - 164</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-18 12:00:35" itemprop="dateCreated datePublished" datetime="2016-06-18T12:00:35+08:00">2016-06-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>如果cqlsh执行COPY命令时出现错误”get_num_processes() takes no keyword arguments”,删除掉/usr/lib/pymodules/python2.7/cqlshlib/copyutil.so文件，如果有文件copyutil.c也删除掉就可以了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/18/cassandra-change-dc-rack-name/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/18/cassandra-change-dc-rack-name/" class="post-title-link" itemprop="url">更改cassandra集群数据中心和机架(rack)名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-18 11:10:25" itemprop="dateCreated datePublished" datetime="2016-06-18T11:10:25+08:00">2016-06-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>为了防止意外，cassandra不允许更改节点的数据中心和机架名字。会有类似错误提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[main\] <span class="number">2016</span>-<span class="number">06</span>-<span class="number">18</span> <span class="number">11</span>:<span class="number">01</span>:<span class="number">40</span>,<span class="number">730</span> CassandraDaemon.java:<span class="number">638</span> - Cannot start node <span class="keyword">if</span> snitch<span class="string">&#x27;s </span></span><br><span class="line"><span class="string">data center (DC1) differs from previous data center (datacenter1). Please fix the snitch configuration, </span></span><br><span class="line"><span class="string">decommission and rebootstrap this node or use the flag -Dcassandra. ignore_dc=true.</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你知道你在做什么，可以添加两个JVM参数cassandra.ignore_rack和cassandra.ignore_dc来更改数据中心和机架的名字。</p>
+<p>编辑/etc/cassandra/cassandra-env.sh文件,添加JVM参数:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JVM_OPTS=<span class="string">&quot;$JVM_OPTS -Dcassandra.ignore_dc=true -Dcassandra.ignore_rack=true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/35056986/failed-to-start-dse-solr-node">failed to start dse solr node</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/16/7397/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/16/7397/" class="post-title-link" itemprop="url">Untitled Post - 163</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-16 09:52:28" itemprop="dateCreated datePublished" datetime="2016-06-16T09:52:28+08:00">2016-06-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>vim可以通过scp来编辑远程文件，大约是这个样子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ vim scp:<span class="comment">//user@host/path/to/file </span></span><br><span class="line">$ vim scp:<span class="comment">//server_alias/path/to/file</span></span><br></pre></td></tr></table></figure>
+<p>很神奇的样子。此功能依赖于netrw.vim，vim已经在发行中集成。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/15/psql-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/15/psql-variable/" class="post-title-link" itemprop="url">psql变量</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-15 22:34:17" itemprop="dateCreated datePublished" datetime="2016-06-15T22:34:17+08:00">2016-06-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>psql 提供变量替换特性，类似于shell的变量。</p>
+<p>psql的变量就是简单的名字/值对，名字只能有字母、数字和下划线组成。</p>
+<p>使用\set命令来设置变量:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set foo bar</span><br></pre></td></tr></table></figure>
+
+<p>这样设置了变量foo,其值为bar。这样来显示变量的值:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :foo</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+
+<p>使用\set只指定变量名，不指定值时，会设置该变量，只不过其值为空。</p>
+<p>使用\unset命令来销毁变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\unset foo</span><br></pre></td></tr></table></figure>
+
+<p>使用\set命令，不提供任何参数，显示全部的变量。<br>下面展示的是系统预置的变量:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set</span><br><span class="line">AUTOCOMMIT = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">PROMPT1 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT2 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT3 = <span class="string">&#x27;&gt;&gt; &#x27;</span></span><br><span class="line">VERBOSITY = <span class="string">&#x27;default&#x27;</span></span><br><span class="line">VERSION = <span class="string">&#x27;PostgreSQL 9.4.8 on x86_64-unknown-linux-gnu, compiled by gcc (Debian 4.9.2-10) 4.9.2, 64-bit&#x27;</span></span><br><span class="line">DBNAME = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">USER = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">HOST = <span class="string">&#x27;localhost&#x27;</span></span><br><span class="line">PORT = <span class="string">&#x27;5432&#x27;</span></span><br><span class="line">ENCODING = <span class="string">&#x27;UTF8&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看PostgreSQL版本</strong></p>
+<p>因此获取postgresql版本就有了另外一种方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :VERSION</span><br><span class="line">PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br></pre></td></tr></table></figure>
+
+<p>另一种方法是:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT VERSION();</span><br><span class="line"> version </span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line"> PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>二者结果是一样的。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/15/psql-psqlrc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/15/psql-psqlrc/" class="post-title-link" itemprop="url">psql配置文件psqlrc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-15 20:10:27" itemprop="dateCreated datePublished" datetime="2016-06-15T20:10:27+08:00">2016-06-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>psql启动时会先读取系统范围的psqlrc文件，然后读取用户主目录下的.psqlrc文件</p>
+<p>下面是一个简单的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">-- 静默模式</span><br><span class="line">\\set QUIET ON</span><br><span class="line"></span><br><span class="line">-- 设置扩展显示</span><br><span class="line">\\x auto </span><br><span class="line"></span><br><span class="line">--以大写字母自动完成关键字</span><br><span class="line">\\set COMP_KEYWORD_CASE upper</span><br><span class="line"></span><br><span class="line">-- <span class="literal">null</span>显示为(<span class="literal">null</span>)</span><br><span class="line">\\pset <span class="literal">null</span> <span class="string">&#x27;(null)&#x27;</span></span><br><span class="line"></span><br><span class="line">-- 显示query执行时间</span><br><span class="line">\\timing</span><br><span class="line"></span><br><span class="line">-- 不同的数据库使用不同的命令历史文件</span><br><span class="line">\\set HISTFILE ~/.psql_history- :DBNAME</span><br><span class="line"></span><br><span class="line">-- 历史记录忽略重复的命令</span><br><span class="line">\\set HISTCONTROL ignoredups</span><br><span class="line"></span><br><span class="line">-- 更详细的错误报告</span><br><span class="line">\\set VERBOSITY verbose</span><br><span class="line"></span><br><span class="line">-- 关闭自动提交事务.</span><br><span class="line">\\set AUTOCOMMIT OFF</span><br><span class="line"></span><br><span class="line">-- 提示符<span class="number">1</span></span><br><span class="line">\\set PROMPT1 <span class="string">&#x27;%\[%033\[1m%\]%n@%/(%M)%R%\[%033\[0m%\]%#&#x27;</span></span><br><span class="line"></span><br><span class="line">--关闭静默模式</span><br><span class="line">\\unset QUIET</span><br></pre></td></tr></table></figure>
+
+<p><strong>自动提交事务</strong></p>
+<p>AUTOCOMMIT是默认打开的，当命令执行成功时会自动进行提交。在自动提交事务打开时，如果要显式手动提交，那么必须在执行命令或命令块之前执行BEGIN或START TRANSACTION命令执行完命令后再执行END或COMMIT来手动提交事务。<br>当关闭自动提交时，命令执行成功后需要手动END或COMMIT来提交。<br>关闭自动提交时，系统默默的在任何没有开启事务的语句前自动添加BEGIN或START TRANSACTION等事务开始语句。</p>
+<p>自动提交关闭时，要用ABORT或ROLLBACK显式的撤销回滚事务，如果没有提交退出当前会话，则未提交事务会自动回滚。</p>
+<p>**注意:**这里有一个坑,当关闭事务自动提交时,使用psql导入数据库时,可能会因为sql文件中没有提交语句而最后回滚,但没有错误提示,只是没有什么数据也没导入而已.比如,pg_dump/pg_dumpall导出的sql脚本文件就没有COMMIT语句,从而导入不会成功.</p>
+<p><strong>提示符变量</strong></p>
+<p><code>%[</code> 和 <code>%]</code> 之间的字符解释为终端控制字符序列。</p>
+<p><code>%digits</code> 转换为八进制字符序列，比如 <code>%033</code> 转换为 <code>\033</code> ,所以 <code>%033[</code> 正好转换为终端转义控制序列起始字符 <code>\033[</code> ,后面紧跟的正是终端转义控制序列，可以指定字体的颜色，粗细等等属性。</p>
+<p>设置图形模式的终端转义序列的结束字符为m,所以,\033[与m之间的字符为真正的终端转义控制序列，这语法真的很@&amp;^*(#!%</p>
+<p>其实 <code>\033[</code> 即 <code>Esc[</code></p>
+<p>完整详细的终端转义控制序列参见[4]</p>
+<p>postgresql支持的提示符变量参见[1]</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/9.4/static/app-psql.html">psql</a><br>[2]<a target="_blank" rel="noopener" href="https://robots.thoughtbot.com/an-explained-psqlrc">An Explained psqlrc</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/thoughtbot/dotfiles/blob/master/psqlrc">psqlrc</a><br>[4]<a target="_blank" rel="noopener" href="http://ascii-table.com/ansi-escape-sequences.php">ANSI Escape sequences</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/14/postgresql-export-to-csv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/14/postgresql-export-to-csv/" class="post-title-link" itemprop="url">PostgreSQL导出数据到CSV文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-14 08:40:20" itemprop="dateCreated datePublished" datetime="2016-06-14T08:40:20+08:00">2016-06-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>postgresql支持在表和文件之间拷贝数据，可以使用PostgreSQL扩展的SQL函数COPY或者psql内部命令\copy来做这件事。</p>
+<p>导出数据的格式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COPY table_name (query) TO <span class="string">&#x27;filename&#x27;</span> PROGRAM <span class="string">&#x27;command&#x27;</span> STDOUT \[ WITH OPTIONS \];</span><br></pre></td></tr></table></figure>
+
+<p>导入数据的格式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COPY table_name (query) FROM <span class="string">&#x27;filename&#x27;</span> PROGRAM <span class="string">&#x27;command&#x27;</span> STDIN \[ WITH OPTIONS \];</span><br></pre></td></tr></table></figure>
+
+<p>更详细的格式描述见[1]</p>
+<p><strong>COPY函数</strong></p>
+<p>COPY函数在服务器上执行，如果输出到文件，要注意postgresql服务器进程有没有对指定目录的执行权限，比如:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=# COPY (SELECT * FROM base.tb_dictionary WHERE ...) TO &#x27;/tmp/designusage.csv&#x27; WITH CSV DELIMITER &#x27;,&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>将查询结果输出到临时目录下的指定文件。debian系统postgresql系统进程用户postgres的主目录是/var/lib/postgresql,也可以将文件输出到此目录。<br>如无写权限，会提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: could not open file <span class="string">&quot;...&quot;</span> <span class="keyword">for</span> writing: Permission denied</span><br></pre></td></tr></table></figure>
+
+<p><strong>\copy命令</strong></p>
+<p>psql命令\copy在客户端执行，如果输出到文件是输出到客户端的文件系统，要注意当前执行psql的用户权限。比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=# \\copy (SELECT * FROM base.tb_dictionary WHERE ...) TO &#x27;/tmp/designusage.csv&#x27; WITH CSV DELIMITER &#x27;,&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>如果要输出列名，可以指定HEADER选项，HEADER只用于CSV格式。<br>可以写到临时目录，也可以写到当前用户的主目录。</p>
+<p>其实\copy命令实际上是使用了COPY FROM STDIN或者COPY TO STDOUT，然会通过STDIN或STDOUT与文件交互。</p>
+<p>所以可以这样:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ psql -c <span class="string">&quot;COPY (SELECT * FROM base.tb_dictionary WHERE ...) TO STDOUT WITH CSV DELIMITER &#x27;,&#x27; &quot;</span> -U role -h host dbname &gt; <span class="keyword">export</span>.csv</span><br></pre></td></tr></table></figure>
+
+<p>使用COPY函数输出到STDOUT，然后重定向到文件。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/current/static/sql-copy.html">copy data between a file and a table</a><br>[2]<a target="_blank" rel="noopener" href="http://blogs.harvard.edu/dlarochelle/2011/12/11/outputing-to-csv-in-postgresql/">Outputting to CSV in Postgresql</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/03/7344/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/03/7344/" class="post-title-link" itemprop="url">Untitled Post - 162</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-03 21:06:55" itemprop="dateCreated datePublished" datetime="2016-06-03T21:06:55+08:00">2016-06-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一个小坑，windows计划任务执行的命令或脚本，以及嵌套调用的命令或脚本，其路径名中不能包含括号，不能包含括号，不能包含括号。不然只会告诉你执行失败，退出码0x1,别无其他可用信息。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/" class="post-title-link" itemprop="url">pandoc转换markdown为pdf</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-01 21:19:30" itemprop="dateCreated datePublished" datetime="2016-06-01T21:19:30+08:00">2016-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pandoc是一款强悍的文档的转换工具，支持绝大多数文档格式之间的相互转换，而且具有强大的控制能力。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install texlive-xetex pandoc</span><br></pre></td></tr></table></figure>
+
+<p><strong>转换markdown</strong></p>
+<p>默认latex引擎pdflatex不支持中文，需要使用xelatex引擎，并且要指定中文字体</p>
+<p>可以这样查看系统中文字体:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fc-list :lang=zh</span><br></pre></td></tr></table></figure>
+
+<p>然后mkd转换到pdf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc foo.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o foo.pdf</span><br></pre></td></tr></table></figure>
+
+<p>然而对中文的支持还是有些问题，这样会把较长的文本行截断，需要定制template来解决此问题。</p>
+<p>先导出pandoc默认模板：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc -D latex &gt; mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>在生成的模板文件mytemplate.tex文件的第一行后面添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\XeTeXlinebreaklocale <span class="string">&quot;zh&quot;</span></span><br><span class="line">\\XeTeXlinebreakskip = 0pt plus 1pt minus <span class="number">0.</span>1pt</span><br></pre></td></tr></table></figure>
+
+<p>将模板文件mytemplate.lex置于~/.pandoc/templates/路径下，或者置于转换命令当前目录下。</p>
+<p>然后这样转换：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>还有一个小问题，默认生成的pdf边距比较大，可以通过geometry参数来控制边距。</p>
+<p>所以最后的命令行大约是这个样子的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf -V geometry:<span class="string">&quot;top=2cm, bottom=1.5cm, left=1cm, right=1cm&quot;</span> --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>可以用模板文件指定使用的字体，模板文件可以很复杂，嗯，latex太复杂了。</p>
+<p>pandoc转换markdown时，对两个tab缩进支持不好，还没找到好的解决办法。</p>
+<p><strong>Mac OS X</strong></p>
+<p>安装pandoc和mactex</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install pandoc</span><br><span class="line">$ brew cask install mactex</span><br></pre></td></tr></table></figure>
+
+<p>中文字体可以使用苹方简体中文 “PingFang SC”</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc/wiki/Pandoc-With-Chinese-(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Pandoc With Chinese (简体中文)</a><br>[2]<a target="_blank" rel="noopener" href="http://pandoc.org/faqs.html">pandoc faqs</a><br>[3]<a target="_blank" rel="noopener" href="http://tex.stackexchange.com/questions/179926/pandoc-markdown-to-pdf-without-cutting-off-code-block-lines-that-are-too-long">Pandoc: Markdown to PDF, without cutting off code block lines that are too long</a><br>[4]<a target="_blank" rel="noopener" href="https://jdhao.github.io/2017/12/10/pandoc-markdown-with-chinese/">纯文本做笔记 — 使用 Pandoc 与 Markdown 生成 PDF 文件</a><br>[5]<a target="_blank" rel="noopener" href="http://blog.jqian.net/post/xelatex.html">使用xelatex生成中文pdf</a><br>[6]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7f9a9ff053bb">使用pandoc转换md为PDF并添加中文支持</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/31/nginx-tomcat-memcached-session-share-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/31/nginx-tomcat-memcached-session-share-cluster/" class="post-title-link" itemprop="url">nginx,tomcat,memcached会话共享集群配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-31 20:40:19" itemprop="dateCreated datePublished" datetime="2016-05-31T20:40:19+08:00">2016-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat自身支持会话复制的集群。</p>
+<p>此post主要讲使用memcached存储会话，使用msm(memcached-session-manager)来管理会话复制。</p>
+<p>通过配置共享会话的tomcat集群，可以提高服务的高可用性，并可以做到不停机连续更新应用程序。</p>
+<p>示例配置采用两台机器，ip分别为10.100.0.20和10.100.0.21。每台机器分别部署nginx,tomcat和memcached。两个tomcat实例和两个memcached实例通过msm组成一个会话共享集群，前端由nginx做负载均衡。</p>
+<p>还可以在nginx之前做DNS负载均衡。</p>
+<p><strong>nginx配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">upstream servers &#123;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.20</span>:<span class="number">8080</span>;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.21</span>:<span class="number">8080</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//servers;</span></span><br><span class="line"> proxy_set_header Accept-Encoding <span class="string">&quot;gzip&quot;</span>;</span><br><span class="line"></span><br><span class="line"> # proxy websocket reverse</span><br><span class="line"> proxy_http_version <span class="number">1.1</span>;</span><br><span class="line"> proxy_set_header Upgrade $http_upgrade;</span><br><span class="line"> proxy_set_header Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>nginx会将客户请求分发到后端服务器组</p>
+<p><strong>memcached配置</strong><br>安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install memcached</span><br></pre></td></tr></table></figure>
+
+<p>memcached默认安装只监听本地回环地址，更改/etc/memcached.conf，注释掉下面的行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#-l 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>重启memcached服务会监听所有本地接口。</p>
+<p><strong>msm和tomcat配置</strong></p>
+<p>kiro序列化性能较高，因此这里使用kiro序列化器。</p>
+<p>将msm基础包memcached-session-manager-${version}.jar，memcached-session-manager-tc8-${version}.jar和spymemcached-2.11.1.jar，以及kryo序列化支持jar包拷贝到$CATALINA_HOME/lib/目录。</p>
+<p>debian系统中tomcat8的lib目录位于/usr/share/tomcat8/lib/</p>
+<p>还有一个包<a target="_blank" rel="noopener" href="http://objenesis.org/download.html">Objenesis</a>也需要下载安装到此目录中。</p>
+<p><strong>sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line"> memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line"> failoverNodes=<span class="string">&quot;n1&quot;</span></span><br><span class="line"> requestUriIgnorePattern=<span class="string">&quot;.*\\.(icopnggifjpgcssjs)$&quot;</span></span><br><span class="line"> transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line"> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>msm默认处于sticky模式，因此不用显式指定sticky参数。failoverNodes参数指定本机memcached节点名称,这样正常情况下msm会存储会话到其他memcached节点，当没有其他节点可用时才会使用failoverNodes。</p>
+<p><strong>non-sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line">memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line">sticky=<span class="string">&quot;false&quot;</span></span><br><span class="line">sessionBackupAsync=<span class="string">&quot;false&quot;</span></span><br><span class="line">lockingMode=<span class="string">&quot;auto&quot;</span></span><br><span class="line">transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里明确指定sticky参数为false，注意不要设置requestUriIgnorePattern参数，否则当前配置下会出现问题，无法完成session共享。</p>
+<p>sticky会话模式就是将用户“粘”在某一个服务器节点上，即同一个会话中的请求必须被转发到同一个节点上，除非该节点宕机才转发到故障转移节点。</p>
+<p>non-sticky会话模式则是每一次请求都可能转发到不同节点。</p>
+<p>sticky会话模式性能更好。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/magro/memcached-session-manager/wiki/SetupAndConfiguration">SetupAndConfiguration</a><br>[2]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic4.html">分布式session</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/30/gradle-proxy-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/30/gradle-proxy-setup/" class="post-title-link" itemprop="url">gradle代理设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-30 21:08:23" itemprop="dateCreated datePublished" datetime="2016-05-30T21:08:23+08:00">2016-05-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>众所周知的原因，访问国外的网络不是那么顺畅。gradle下载插件时，几乎无法下载，而使用proxychains也不凑效。<br>可以这样为gradle设置全局socks5代理：</p>
+<p>$HOME/.gradle/gradle.properties文件中添加如下行，如没有该文件请自行建立：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.gradle.jvmargs=-DsocksProxyHost=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -DsocksProxyPort=<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不设置代理，也可以使用maven镜像仓库，或者maven本地仓库。</p>
+<p>最后，祝狗日的Great Fucking Wall和XXX早日死掉！ </p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

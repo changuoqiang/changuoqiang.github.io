@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZFS文件系统介绍 - 基础">
+<meta property="og:url" content="http://example.com/2012/05/14/zfs-basic/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-05-14T02:10:52.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.602Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="ZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/05/14/zfs-basic/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>ZFS文件系统介绍 - 基础 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/05/14/zfs-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZFS文件系统介绍 - 基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-05-14 10:10:52" itemprop="dateCreated datePublished" datetime="2012-05-14T10:10:52+08:00">2012-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ZFS是SUN为Solaris开发的文件系统,号称史上最后一个文件系统。</p>
+<a id="more"></a>
+<p>linux系统上已经有原生ZFS移植<a target="_blank" rel="noopener" href="http://zfsonlinux.org/">zfsonlinux</a>,其安装见”<a target="_blank" rel="noopener" href="https://openwares.net/linux/debian_amd64_install_zfs.html">Debian Wheezy AMD64编译安装原生ZFS文件系统</a>“</p>
+<p>linux虽然有btrfs文件系统可望与ZFS比肩,但btrfs是由oracle主导的,现在oracle已将ZFS纳入囊中,对btrfs会不会有所保留就不得而知了。</p>
+<p>ZFS集文件系统、卷管理、RAID功能于一身,能提供超大容量的存储空间,几乎可以视为没有存储空间限制。ZFS分为存储池和文件系统两部分,所有的ZFS文件系统都驻留在存储池之中,zpool命令用于管理存储池,zfs命令用于管理zfs文件系统。</p>
+<p>ZFS 是事务性文件系统,这意味着文件系统状态在磁盘上始终是一致的。文件系统绝对不会因意外断电或系统崩溃而被损坏。尽管最近写入的数据片段可能丢失,但是文件系统本身将始终是一致的。ZFS不需要fsck。</p>
+<p>ZFS存储池最新版本为33,ZFS文件系统最新版本为5。当前zfsonlinux实现的池版本为28,文件系统版本为5。</p>
+<p><strong>存储池</strong></p>
+<p>传统的文件系统一般存在于单独的一个物理设备或者由卷管理器如lvm管理的逻辑卷之上。ZFS与之不同,ZFS文件系统建立于虚拟的存储池之上。存储池可以由整块物理磁盘、磁盘分区或者文件组成，而且可以动态增加磁盘。ZFS支持热备组件(hot spare),可以为存储池提供一个或多个备用磁盘，当池内的磁盘出现故障时,ZFS可以使用热备件自动替换出现故障的磁盘。ZFS存储池支持动态扩容,文件不用离线即可更换更大容量的磁盘。还可以为存储池提供高速缓存设备,比如使用SSD磁盘来作为存储池的缓存设备来提高IO性能。ZFS也支持单独的日志设备。</p>
+<p>ZFS文件系统可以存取到所有设备组合起来的全部容量。</p>
+<p><strong>文件系统</strong></p>
+<p>管理ZFS文件系统类似于管理一个普通的目录。</p>
+<p>ZFS 文件系统构建于存储池上。文件系统可以动态创建和销毁,而不需要分配或格式化任何底层磁盘空间。</p>
+<p><strong>条带与冗余</strong></p>
+<p>ZFS支持镜像和RAID-Z配置,RAID-Z又分为三种：raidz(raidz1),raidz2和raidz3。镜像mirror与传统的RAID-1类似,提供最高的冗余性,但存储容量会大打折扣。RAID-Z则在冗余、性能和存储容量之间达到平衡。单奇偶校验RAID-Z (raidz 或 raidz1) 与 RAID-5 类似,双奇偶校验 RAID-Z (raidz2) 与RAID-6类似,三奇偶校验RAID-Z（raidz3)没有传统的RAID对应物。</p>
+<p>每个存储池都包含一个或多个虚拟设备(virtual device),简称vdev。虚拟设备是存储池的内部表示形式,用于描述物理存储器的布局以及存储池的故障特征。因此,虚拟设备表示用于创建存储池的磁盘设备或文件。一个池可以在配置的顶层具有任意数目的虚拟设备,称为顶层vdev。ZFS以条带形式将数据动态分布在所有顶层虚拟设备(vdev)上。ZFS的条带类似于传统的RAID-0,但其条带宽度是动态变化的。</p>
+<p><strong>快照和克隆</strong></p>
+<p>快照是文件系统或卷的只读副本。快照采取写时复制COW技术,在最初创建快照时并不占用额外的存储空间,只是一些指针操作,快照与原始文件系统使用相同的数据块,但当原始的文件系统发生变化时,快照继续引用旧数据块,而原始文件系统会使用新的数据块,因此快照会阻止存储空间的释放,比如原始文件系统删除了一个文件,而该文件存在于快照中,那么此文件占据的空间在快照删除之前不能被重新利用。ZFS文件系统可以回滚到之前创建的快照,具有类似时间机器的效果。</p>
+<p>ZFS快照可以发送到远程系统,远程系统可以接收快照流并在本地生成一个新的文件系统,这个特性可以用来做数据备份。</p>
+<p>克隆是可读写的文件系统或卷的副本,克隆只能从快照创建。克隆快照时,会在克隆和快照之间建立隐式相关性。即使克隆是在文件系统分层结构中的其他位置创建的,但只要克隆存在,就无法销毁始快照。克隆最初与原始文件系统共享相同的数据块,随着原始文件系统或克隆的变化,会创建新的块,但是未变化的数据块仍然在二者之间共享。</p>
+<p><strong>共享ZFS系统</strong></p>
+<p>ZFS仍然是单机文件系统,不能直接用于集群环境。如需要在不同系统之间共享数据,可采用NFS或SAMBA共享方式,ZFS内置支持这两种共享方式。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/ZFS/" rel="tag"># ZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/05/14/linux-add-smb-printer/" rel="prev" title="linux系统添加windows共享打印机">
+                  <i class="fa fa-chevron-left"></i> linux系统添加windows共享打印机
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-pool-create/" rel="next" title="ZFS文件系统介绍 - 存储池(1):创建存储池">
+                  ZFS文件系统介绍 - 存储池(1):创建存储池 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

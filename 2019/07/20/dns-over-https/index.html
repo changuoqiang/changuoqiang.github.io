@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="DNS over HTTPS用于解决DNS解析的隐私问题 Debian可以使用dnscrypt-proxy MacOSX建议使用dnscrypt-proxy 安装cloudflared 123$ brew install cloudflare&#x2F;cloudflare&#x2F;cloudflared$ cloudflared --versioncloudflared version 2019.7.0 (bu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DNS over HTTPS">
+<meta property="og:url" content="http://example.com/2019/07/20/dns-over-https/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DNS over HTTPS用于解决DNS解析的隐私问题 Debian可以使用dnscrypt-proxy MacOSX建议使用dnscrypt-proxy 安装cloudflared 123$ brew install cloudflare&#x2F;cloudflare&#x2F;cloudflared$ cloudflared --versioncloudflared version 2019.7.0 (bu">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-07-20T06:50:53.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.166Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/07/20/dns-over-https/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>DNS over HTTPS | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/20/dns-over-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DNS over HTTPS
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-20 14:50:53" itemprop="dateCreated datePublished" datetime="2019-07-20T14:50:53+08:00">2019-07-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>DNS over HTTPS用于解决DNS解析的隐私问题</p>
+<p><strong>Debian</strong><br>可以使用<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy</a></p>
+<p><strong>MacOSX</strong><br>建议使用<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy</a></p>
+<p><em>安装cloudflared</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ brew install cloudflare/cloudflare/cloudflared</span><br><span class="line">$ cloudflared --version</span><br><span class="line">cloudflared version <span class="number">2019.7</span><span class="number">.0</span> (built <span class="number">2019</span>-<span class="number">07</span>-<span class="number">11</span>-<span class="number">1655</span> UTC)</span><br></pre></td></tr></table></figure>
+
+<p><em>添加配置文件config.yaml</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /usr/local/etc/cloudflared</span><br><span class="line">$ cat &lt;&lt; EOF &gt; <span class="regexp">/usr/</span>local/etc/cloudflared/config.yml</span><br><span class="line">proxy-dns: <span class="literal">true</span></span><br><span class="line">proxy-dns-upstream:</span><br><span class="line"> - https:<span class="comment">//1.1.1.1/dns-query</span></span><br><span class="line"> - https:<span class="comment">//1.0.0.1/dns-query</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p><em>安装服务</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cloudflared service install</span><br><span class="line">INFO\[<span class="number">0000</span>\] Installing Argo Tunnel client <span class="keyword">as</span> a system launch daemon. Argo Tunnel client will run at boot </span><br><span class="line">INFO\[<span class="number">0000</span>\] Outputs are logged to /Library/Logs/com.cloudflare.cloudflared.err.log and /Library/Logs/com.cloudflare.cloudflared.out.log</span><br></pre></td></tr></table></figure>
+
+<p><em>卸载cloudflare</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cloudflared service uninstall</span><br><span class="line">$ brew uninstall cloudflare/cloudflare/cloudflared</span><br></pre></td></tr></table></figure>
+
+<p><em>校验</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ dig +short @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> cloudflare.com A</span><br><span class="line"><span class="number">198.41</span><span class="number">.214</span><span class="number">.162</span></span><br><span class="line"><span class="number">198.41</span><span class="number">.215</span><span class="number">.162</span></span><br><span class="line">$ dig +short @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> cloudflare.com AAAA</span><br><span class="line"><span class="number">2606</span>:<span class="number">4700</span>::c629:d7a2</span><br><span class="line"><span class="number">2606</span>:<span class="number">4700</span>::c629:d6a2</span><br></pre></td></tr></table></figure>
+
+<p><em>设置系统dns</em></p>
+<p>将系统DNS设置为127.0.0.1</p>
+<p><strong>Firefox浏览器</strong></p>
+<p><em>DOH设置</em></p>
+<p>地址栏输入about:config进入配置界面，修改以下参数配置DOH：</p>
+<p>network.trr.mode = 3<br>#3为只使用DOH，1为关闭DOH特性，2为优先使用DOH，还可以fallback到传统dns</p>
+<p>network.trr.uri = <a target="_blank" rel="noopener" href="https://1.1.1.1/dns-query">https://1.1.1.1/dns-query</a><br>#cloudflare提供的DOH公共服务器</p>
+<p><em>ESNI设置</em></p>
+<p>同一个IP地址可以托管很多的站点,在建立TLS链接时<a target="_blank" rel="noopener" href="https://openwares.net/2009/09/21/server_name_indication/">SNI</a>域名会明文发送，Encrypted SNI就是为了解决这个问题，防止第三方窃取隐私。</p>
+<p>network.security.esni.enabled设置为true打开Encrypted SNI浏览器支持</p>
+<p><em>服务器端</em></p>
+<p>OpenSSL尚未支持ESNI，因此下游的nginx当前亦不支持，相信很快就会支持。<br><a target="_blank" rel="noopener" href="https://defo.ie/">DEfO</a>是一个为OpenSSL添加ENSI支持的项目<a target="_blank" rel="noopener" href="https://github.com/sftcd/openssl/tree/master/esnistuff">github地址</a>。</p>
+<p><strong>chrome浏览器</strong></p>
+<p>即将支持:-(，参考[5]<br>今年10月晚期发布的chrome 78会开始实验性的支持DOH，参见[9]<br>ESNI一样尚未支持</p>
+<p>版本78以后，打开Secure DNS lookups<br>（chrome://flags/#dns-over-https）标志，并将系统dns设置为1.1.1.1和/或1.0.0.1</p>
+<p><strong>References:</strong><br>[1]<a target="_blank" rel="noopener" href="https://program-think.blogspot.com/2018/10/Comparison-of-DNS-Protocols.html">对比4种强化域名安全的协议——DNSSEC，DNSCrypt，DNS over TLS，DNS over HTTPS</a><br>[2]<a target="_blank" rel="noopener" href="https://www.cloudflare.com/ssl/encrypted-sni/">Browsing Experience Security Check</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/curl/curl/wiki/DNS-over-HTTPS">DNS over HTTPS</a><br>[4]<a target="_blank" rel="noopener" href="https://wiki.mozilla.org/Trusted_Recursive_Resolver">Trusted Recursive Resolver</a><br>[5]<a target="_blank" rel="noopener" href="https://chromium-review.googlesource.com/c/chromium/src/+/1639663">Add DNS-over-HTTPS to chrome://flags</a><br>[6]<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/1.1.1.1/dns-over-https/cloudflared-proxy/">Running a DNS over HTTPS Client</a><br>[7]<a target="_blank" rel="noopener" href="https://github.com/jedisct1/dnscrypt-proxy">dnscrypt-proxy</a><br>[8]<a target="_blank" rel="noopener" href="https://blog.ysoup.org/tech/doh.html">MacOS 开启 DNS over HTTPS (DoH)</a><br>[9]<a target="_blank" rel="noopener" href="https://www.zdnet.com/article/google-to-run-dns-over-https-doh-experiment-in-chrome/">Google to run DNS-over-HTTPS (DoH) experiment in Chrome</a><br>[10]<a target="_blank" rel="noopener" href="https://wiki.mozilla.org/Trusted_Recursive_Resolver">Trusted Recursive Resolver</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/07/16/debian-buster-find-hba-wwn/" rel="prev" title="debian buster查看hba卡wwn序号">
+                  <i class="fa fa-chevron-left"></i> debian buster查看hba卡wwn序号
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/07/24/%E7%83%BD%E7%81%ABhg2201u%E6%94%B9%E6%A1%A5%E6%8E%A5/" rel="next" title="烽火HG2201U改桥接">
+                  烽火HG2201U改桥接 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

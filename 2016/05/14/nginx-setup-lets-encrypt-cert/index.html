@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="感谢Let’s Encrypt让互联网更安全。 Let’s Encrypt的客户端刚刚更名为certbot,以前叫letsencrypt。certbot可以自动化的申请，安装和更新证书，让生活更美好。不过当前nginx插件尚不成熟，而且certbot自身尚处于beta阶段，当前版本0.7.0，debian源里的版本也比较陈旧。 因此还是需要一些简单的手工配置。 安装 从官方仓库克隆certbot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx部署Let&#39;s Encrypt证书">
+<meta property="og:url" content="http://example.com/2016/05/14/nginx-setup-lets-encrypt-cert/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="感谢Let’s Encrypt让互联网更安全。 Let’s Encrypt的客户端刚刚更名为certbot,以前叫letsencrypt。certbot可以自动化的申请，安装和更新证书，让生活更美好。不过当前nginx插件尚不成熟，而且certbot自身尚处于beta阶段，当前版本0.7.0，debian源里的版本也比较陈旧。 因此还是需要一些简单的手工配置。 安装 从官方仓库克隆certbot">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-05-14T06:06:13.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.366Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2016/05/14/nginx-setup-lets-encrypt-cert/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Nginx部署Let's Encrypt证书 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/14/nginx-setup-lets-encrypt-cert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nginx部署Let's Encrypt证书
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-14 14:06:13" itemprop="dateCreated datePublished" datetime="2016-05-14T14:06:13+08:00">2016-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p><strong>感谢<a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a>让互联网更安全。</strong></p>
+<p>Let’s Encrypt的客户端刚刚更名为certbot,以前叫letsencrypt。certbot可以自动化的申请，安装和更新证书，让生活更美好。<br>不过当前nginx插件尚不成熟，而且certbot自身尚处于beta阶段，当前版本0.7.0，debian源里的版本也比较陈旧。</p>
+<p>因此还是需要一些简单的手工配置。</p>
+<p><strong>安装</strong></p>
+<p>从官方仓库克隆certbot</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo git clone https:<span class="comment">//github.com/certbot/certbot /opt/certbot</span></span><br></pre></td></tr></table></figure>
+
+<p>执行certbot-auto会自动安装发行版依赖和python依赖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt/certbot</span><br><span class="line">$ ./certbot-auto </span><br></pre></td></tr></table></figure>
+
+<p><strong>配置nginx</strong></p>
+<p>申请证书时，let’s encrypt需要访问域名的特定目录来确认域名的所有权，由certbot配合来完成验证。</p>
+<p>需要访问的目录为${webroot-path}/.well-known/acme-challenge/,申请证书时,certbot会写入认证所需信息，由let’s encrypt来验证。</p>
+<p>将此目录映射到/var/www/letsencrypt,先建立目录：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /<span class="keyword">var</span>/www</span><br><span class="line"># mkdir letsencrypt</span><br><span class="line"># chgroup www-data letsencrypt</span><br></pre></td></tr></table></figure>
+
+<p>然后修改站点配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">80</span> default_server;</span><br><span class="line"> server_name my-domain;</span><br><span class="line"></span><br><span class="line"> location /.well-known/acme-challenge &#123;</span><br><span class="line"> root /<span class="keyword">var</span>/www/letsencrypt;</span><br><span class="line"> &#125;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后重新加载nginx配置文件:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nginx -t &amp;&amp; sudo nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置certbot</strong></p>
+<p>新建一个配置文件/etc/letsencrypt/configs/my-domain.conf来指定要申请证书的域名等相关信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># This is an example of the kind of things you can do in a configuration file.</span><br><span class="line"># All flags used by the client can be configured here. Run Certbot with</span><br><span class="line"># &quot;--help&quot; to learn more about the available options.</span><br><span class="line"></span><br><span class="line"># Use a 4096 bit RSA key instead of 2048</span><br><span class="line">rsa-key-size = 2048 # or 4096</span><br><span class="line"></span><br><span class="line"># Uncomment and update to register with the specified e-mail address</span><br><span class="line">email = xxx@gmail.com</span><br><span class="line"></span><br><span class="line"># Uncomment and update to generate certificates for the specified</span><br><span class="line"># domains.</span><br><span class="line">domains = my-domain, www.my-domain</span><br><span class="line"></span><br><span class="line"># Uncomment to use a text interface instead of ncurses</span><br><span class="line">text = True</span><br><span class="line"></span><br><span class="line"># Uncomment to use the standalone authenticator on port 443</span><br><span class="line"># authenticator = standalone</span><br><span class="line"># standalone-supported-challenges = tls-sni-01</span><br><span class="line"></span><br><span class="line"># Uncomment to use the webroot authenticator. Replace webroot-path with the</span><br><span class="line"># path to the public_html / webroot folder being served by your web server.</span><br><span class="line">authenticator = webroot</span><br><span class="line">webroot-path = <span class="regexp">/var/</span>www/letsencrypt/</span><br></pre></td></tr></table></figure>
+
+<p>可以使用webroot插件来减轻验证配置，自动修改web server来完整验证。</p>
+<p><strong>申请证书</strong></p>
+<p>因为let’s encrypt限制每个站点在一定时间内申请的证书数量，所以可以用<code>--test-cert</code>选项进行测试，此时申请的证书是无效的，<br>但操作步骤是完全一样的，测试通过后去掉此选项就是申请正式证书了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto --test-cert --config /etc/letsencrypt/configs/mydomain.conf certonly</span><br><span class="line">Checking <span class="keyword">for</span> <span class="keyword">new</span> version...</span><br><span class="line">Requesting root privileges to run certbot...</span><br><span class="line"> sudo CERTBOT_AUTO=./certbot-auto /home/xxx/.local/share/letsencrypt/bin/letsencrypt </span><br><span class="line">--test-cert --config /etc/letsencrypt/configs/mydomain certonly</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Please read the Terms <span class="keyword">of</span> Service at https:<span class="comment">//letsencrypt.org/documents/LE-</span></span><br><span class="line">SA-v1<span class="number">.0</span><span class="number">.1</span>-July-<span class="number">27</span>-<span class="number">2015.</span>pdf. You must agree <span class="keyword">in</span> order to register <span class="keyword">with</span> the ACME</span><br><span class="line">server at https:<span class="comment">//acme-staging.api.letsencrypt.org/directory</span></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">(A)gree/(C)ancel: A</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at</span><br><span class="line"> /etc/letsencrypt/live/mydomain/fullchain.pem. Your cert</span><br><span class="line"> will expire on <span class="number">2016</span>-<span class="number">08</span>-<span class="number">12.</span> To obtain a <span class="keyword">new</span> version <span class="keyword">of</span> the</span><br><span class="line"> certificate <span class="keyword">in</span> the future, simply run Certbot again.</span><br><span class="line"> - If you lose your account credentials, you can recover through</span><br><span class="line"> e-mails sent to xxx@gmail.com.</span><br><span class="line"> - Your account credentials have been saved <span class="keyword">in</span> your Certbot</span><br><span class="line"> configuration directory at /etc/letsencrypt. You should make a</span><br><span class="line"> secure backup <span class="keyword">of</span> <span class="built_in">this</span> folder now. This configuration directory will</span><br><span class="line"> also contain certificates and private keys obtained by Certbot so</span><br><span class="line"> making regular backups <span class="keyword">of</span> <span class="built_in">this</span> folder is ideal.</span><br></pre></td></tr></table></figure>
+
+<p>申请的证书位于/etc/letsencrypt/live/mydomain/目录下</p>
+<p><strong>安装证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">443</span> ssl default_server;</span><br><span class="line"> server_name my-domain;</span><br><span class="line"></span><br><span class="line"> ssl_certificate /etc/letsencrypt/live/my-domain/fullchain.pem;</span><br><span class="line"> ssl_certificate_key /etc/letsencrypt/live/my-domain/privkey.pem;</span><br><span class="line"></span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多ssl优化设置参见[4]</p>
+<p><strong>更新证书</strong></p>
+<p>let’s encrypt发行的证书只有90天的有效期，到期需要更新证书。如果参数没有变化，更新证书只需简单的执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto renew</span><br></pre></td></tr></table></figure>
+
+<p>certbot-auto会使用上次申请证书时使用的参数来更新证书。<br>如果要测试证书更新，添加选项<code>--dry-run</code>，此时不会更改系统当前设置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto renew --dry-run</span><br><span class="line">Checking <span class="keyword">for</span> <span class="keyword">new</span> version...</span><br><span class="line">Requesting root privileges to run certbot...</span><br><span class="line"> sudo CERTBOT_AUTO=./certbot-auto /home/guoqiang/.local/share/letsencrypt/bin/letsencrypt renew --dry-run</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Processing /etc/letsencrypt/renewal/cucc.tazzfdc.com.conf</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">** DRY RUN: simulating <span class="string">&#x27;certbot renew&#x27;</span> close to cert expiry</span><br><span class="line">** (The test certificates below have not been saved.)</span><br><span class="line"></span><br><span class="line">Congratulations, all renewals succeeded. The following certs have been renewed:</span><br><span class="line"> /etc/letsencrypt/live/cucc.tazzfdc.com/fullchain.pem (success)</span><br><span class="line">** DRY RUN: simulating <span class="string">&#x27;certbot renew&#x27;</span> close to cert expiry</span><br><span class="line">** (The test certificates above have not been saved.)</span><br></pre></td></tr></table></figure>
+
+<p><strong>自动更新证书</strong></p>
+<p>可以添加cron脚本来自动更新证书，当证书无需更新时，renew命令并不会去更新证书，所以crontab设置的时间间隔并无强制要求，但一般无需设置太过频繁的调度。<br>let’s encrypt证书大约还剩一个月有效期时，可以进行更新。</p>
+<p>自动更新脚本renew‑letsencrypt.sh：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd /opt/certbot/</span><br><span class="line">./certbot-auto renew</span><br><span class="line"><span class="keyword">if</span> \[ $? -ne <span class="number">0</span> \]; then</span><br><span class="line"> ERRORLOG=\<span class="string">`tail /var/log/letsencrypt/letsencrypt.log\`</span></span><br><span class="line"><span class="string"> echo -e &quot;The Let&#x27;s Encrypt cert has not been renewed! \\n \\n&quot; \\</span></span><br><span class="line"><span class="string"> $ERRORLOG</span></span><br><span class="line"><span class="string">else</span></span><br><span class="line"><span class="string"> nginx -s reload</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br></pre></td></tr></table></figure>
+
+<p>将脚本添加到crontab自动运行即可。比如，每月1号执行此脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">1</span> * * <span class="regexp">/usr/</span>local/bin/renew-letsencrypt.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>未来</strong></p>
+<p>以上安装配置仍然十分繁琐，nginx插件成熟并且进入官方源后，只要几条指令就可以安装和更新证书了：</p>
+<p>安装certbot:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install certbot certbot-nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装证书：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ certbot --nginx</span><br></pre></td></tr></table></figure>
+
+<p>更新证书：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ certbot renew</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://letsencrypt.org/getting-started/">Getting Started</a><br>[2]<a target="_blank" rel="noopener" href="https://certbot.eff.org/docs/using.html#installation">User Guide</a><br>[3]<a target="_blank" rel="noopener" href="https://www.nginx.com/blog/free-certificates-lets-encrypt-and-nginx/">Using Free SSL/TLS Certificates from Let’s Encrypt with NGINX</a><br>[4]<a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/configuring_https_servers.html">Configuring HTTPS servers</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/05/13/dataguard-not-update-v-archived-log-applied-column/" rel="prev" title="Dataguard配置中primary不更新v$_archived_log的'APPLIED'列">
+                  <i class="fa fa-chevron-left"></i> Dataguard配置中primary不更新v$_archived_log的'APPLIED'列
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/05/16/rman-06214-delte-obsolete-archivelog/" rel="next" title="rman-06214无法删除废弃的归档日志">
+                  rman-06214无法删除废弃的归档日志 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

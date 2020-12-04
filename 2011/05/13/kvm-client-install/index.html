@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="KVM主机端设置完毕后,开始安装客户机,这里介绍两个客户机的安装,Debian Squeeze AMD64和Windows 2003 x64">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian Squeeze KVM虚拟机安装笔记(2):客户机安装">
+<meta property="og:url" content="http://example.com/2011/05/13/kvm-client-install/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="KVM主机端设置完毕后,开始安装客户机,这里介绍两个客户机的安装,Debian Squeeze AMD64和Windows 2003 x64">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-05-13T05:35:52.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.276Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="KVM">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2011/05/13/kvm-client-install/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Debian Squeeze KVM虚拟机安装笔记(2):客户机安装 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2011/05/13/kvm-client-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian Squeeze KVM虚拟机安装笔记(2):客户机安装
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-05-13 13:35:52" itemprop="dateCreated datePublished" datetime="2011-05-13T13:35:52+08:00">2011-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>KVM主机端设置完毕后,开始安装客户机,这里介绍两个客户机的安装,Debian Squeeze AMD64和Windows 2003 x64</p>
+<a id="more"></a>
+<p>当然主机系统是64位平台,必须的。</p>
+<p><strong>准备</strong></p>
+<p>因为要使用半虚拟化(Paravirtualized)驱动virtio,但是当前的Debian Stable版本也就是squeeze发行版的kvm并不支持从virtio驱动器启动,所以需要更新一下seabios,从Debian官方sid源下载<a target="_blank" rel="noopener" href="http://ftp.us.debian.org/debian/pool/main/s/seabios/seabios_0.6.1.2-2_all.deb">seabios 0.6.1.2</a>,然后手动安装该包 seabios_0.6.1.2-2_all.deb</p>
+<p>$sudo dpkg -i seabios_0.6.1.2-2_all.deb</p>
+<p>主机系统只安装了debian基本系统(base system),没有X,因此使用VNC来远程安装客户机，如果使用windows系统,请自行下载TightVNC Viewer。</p>
+<p><strong>KVM核心参数</strong></p>
+<p>这是只简单介绍几个主要的参数,详细的文档请见man kvm。</p>
+<p>-bios file<br>指定虚拟机使用的BIOS,file指定BIOS文件路径</p>
+<p>-smp n[,cores=cores][,threads=threads][,sockets=sockets][,maxcpus=maxcpus]<br>模拟一个有n个cpu的smp系统,可以简单的指定n为一个数值,或者分别指定socket数,core数/socket,线程数/core</p>
+<p>-m megs<br>指定虚拟机使用的内存数量,可以使用M或G后缀</p>
+<p>-rtc [base=utclocaltimedate][,clock=hostvm][,driftfix=noneslew]<br>指定虚拟机使用的时间,linux客户机使用-rtc base=utc,clock=host,windows客户机使用-rtc base=localtime,clock=host</p>
+<p>-net nic,model=virtio,macaddr=52-54-00-12-34-01 -net tap,ifname=tap0<br>桥接网络，客户机网络接口通过tap接口桥接到主机网络，使用的tap接口名为tap0，由/etc/kvm/kvm-ifup来动态配置tap0接口。model=virtio指定虚拟机网卡使用半虚拟化驱动,如果有多个虚拟客户机同时运行则必须指定macaddr为一个独一无二的值,否则会出现mac地址冲突。如果通过主机的/etc/network/interfaces来静态配置tap接口,则此处应在-net tap接口处附加两个另外的参数script=no,downscript=no</p>
+<p>-drive file=debian.img,if=virtio,index=0,media=disk,format=qcow2,cache=writeback<br>指定客户机使用的硬盘驱动器,if=virtio指定使用半虚拟化驱动,index=0指定该硬盘为接口的第一个驱动器,media=disk指定为硬盘驱动器,如果是光盘则为media=cdrom。旧式指定第一个硬盘驱动器的参数为-hda debian.img,已经不再推荐使用。</p>
+<p>-drive file=debian.iso,index=2,media=cdrom或者-hdc debian.iso<br>指定光盘驱动器,debian.iso为使用的光驱映像文件</p>
+<p>-fda file<br>指定软盘驱动器,file为软磁盘镜像 </p>
+<p>-no-fd-bootchk<br>客户机启动时不检查软盘驱动器,加速客户机启动</p>
+<p>-boot order=c<br>指定引导顺序,c为第一个硬盘驱动器,d为第一个光盘驱动器</p>
+<p>-vnc :0<br>将虚拟机的视频输出重定向到vnc端口,通过vnc viewer可以连接到虚拟机的视频输出</p>
+<p>-nographic<br>禁止kvm虚拟机的视频输出</p>
+<p>-daemonize<br>后台运行虚拟机</p>
+<p><strong>安装Debian Squeeze AMD64客户机</strong></p>
+<p>使用一下脚本开始安装debian客户机</p>
+<p>1 #!/bin/bash<br>2<br>3 sudo kvm -bios /usr/share/seabios/bios.bin -smp 16 -m 4G -rtc base=utc,clock=host       <strong>\</strong><br>4     -net nic,model=virtio,macaddr=52-54-00-12-34-01 -net tap,ifname=tap0                <strong>\</strong><br>5     -boot order=c -no-fd-bootchk                                                        <strong>\</strong><br>6     -drive file=debian.img,if=virtio,index=0,media=disk,format=qcow2,cache=writeback    <strong>\</strong><br>7     -drive file=debian.iso,index=2,media=cdrom                                          <strong>\</strong><br>8     -vnc :0  </p>
+<p>这里指定虚拟机使用的BIOS,这样安装完成后才能从virtio磁盘启动客户机,debian.iso为客户机安装光盘镜像,远程通过vnc viewer连接到主机开始安装客户机,Debian Squeeze内置支持virtio设备支持,因此正常安装即可。</p>
+<p>安装完毕开启sshd后,将-vnc :0参数更换为-nographic -daemonize,以后通过ssh登录即可。</p>
+<p><strong>安装windows 2003 R2 x64客户机</strong></p>
+<p>首先从Fedora下载<a target="_blank" rel="noopener" href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">virtio for windows驱动</a>,使用如下脚本启动虚拟安装<br>1 #!/bin/bash<br>2<br>3 sudo kvm -bios /usr/share/seabios/bios.bin -smp 16 -m 2G -rtc base=localtime,clock=host     <strong>\</strong><br>4     -boot order=d                                                                           <strong>\</strong><br>5     -net nic,model=virtio,macaddr=52-54-00-12-34-02 -net tap,ifname=tap1                    <strong>\</strong><br>6     -drive file=win2k3_dns.qcow2,if=virtio,index=0,media=disk,format=qcow2,cache=writeback  <strong>\</strong><br>7     -drive file=windows_2003_r2_x64_cd1.iso,index=2,media=cdrom                             <strong>\</strong><br>8     -fda virtio-win-1.1.16.vfd                                                              <strong>\</strong><br>9     -vnc :0   </p>
+<p>使用vnc viewer连接到主机开始安装,按F6从<a href="/downloads/virtio-win-1.1.16.vfd">virtio软磁盘镜像</a>加载virto驱动,否则会找不到硬盘驱动器,系统安装完成后将光驱换上virtio-win-1.1.16.iso安装virtio网卡驱动,打开远程桌面后将-vnc :0替换成-nographic -daemonize,然后用远程桌面管理虚拟机即可。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KVM/" rel="tag"># KVM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/05/11/debian-kvm/" rel="prev" title="Debian Squeeze KVM虚拟机安装笔记(1):基础">
+                  <i class="fa fa-chevron-left"></i> Debian Squeeze KVM虚拟机安装笔记(1):基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/05/16/windows-x64-32bits-webapp-connect-to-oracle10g/" rel="next" title="windows x64平台部署32位asp程序及连接oracle 10g数据库">
+                  windows x64平台部署32位asp程序及连接oracle 10g数据库 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

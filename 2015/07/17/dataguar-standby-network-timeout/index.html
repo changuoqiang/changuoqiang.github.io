@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="本来DG已经配置为最大可用模式(maximize availability)了，也就是说如果物理备库无法访问，不应该影响主库的运行才对。但是有一条光纤物理链路出现故障严重丢包，导致主库向其传输归档日志时出现超时错误，无法归档，导致主库运行十分缓慢，直至无法正常访问。 alert_orcl.log文件中有如下错误记录: 123456789101112131415161718192021222324">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dataguard配置中phsycia standby备库网络超时故障一例">
+<meta property="og:url" content="http://example.com/2015/07/17/dataguar-standby-network-timeout/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本来DG已经配置为最大可用模式(maximize availability)了，也就是说如果物理备库无法访问，不应该影响主库的运行才对。但是有一条光纤物理链路出现故障严重丢包，导致主库向其传输归档日志时出现超时错误，无法归档，导致主库运行十分缓慢，直至无法正常访问。 alert_orcl.log文件中有如下错误记录: 123456789101112131415161718192021222324">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-07-17T05:35:44.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.112Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2015/07/17/dataguar-standby-network-timeout/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Dataguard配置中phsycia standby备库网络超时故障一例 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/07/17/dataguar-standby-network-timeout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dataguard配置中phsycia standby备库网络超时故障一例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-07-17 13:35:44" itemprop="dateCreated datePublished" datetime="2015-07-17T13:35:44+08:00">2015-07-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>本来DG已经配置为最大可用模式(maximize availability)了，也就是说如果物理备库无法访问，不应该影响主库的运行才对。<br>但是有一条光纤物理链路出现故障严重丢包，导致主库向其传输归档日志时出现超时错误，无法归档，导致主库运行十分缓慢，直至无法正常访问。</p>
+<p>alert_orcl.log文件中有如下错误记录:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br></pre></td><td class="code"><pre><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span> <span class="number">2015</span></span><br><span class="line">ORA-<span class="number">16198</span>: LGWR received timedout error <span class="keyword">from</span> KSR</span><br><span class="line">LGWR: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (<span class="number">16198</span>)</span><br><span class="line">LGWR: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span><br><span class="line">ORA-<span class="number">16198</span>: Timeout incurred on internal channel during remote archival</span><br><span class="line"></span><br><span class="line">LGWR: Network asynch I/O wait error <span class="number">16198</span> log <span class="number">1</span> service <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span> <span class="number">2015</span></span><br><span class="line">Destination LOG_ARCHIVE_DEST_3 is UNSYNCHRONIZED</span><br><span class="line">LGWR: Failed to archive log <span class="number">1</span> thread <span class="number">1</span> sequence <span class="number">4526</span> (<span class="number">16198</span>)</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span><br><span class="line">ORA-<span class="number">16198</span>: Timeout incurred on internal channel during remote archival</span><br><span class="line"></span><br><span class="line">LGWR: <span class="built_in">Error</span> <span class="number">16198</span> closing archivelog file <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">LGWR: <span class="built_in">Error</span> <span class="number">16198</span> disconnecting <span class="keyword">from</span> destination LOG_ARCHIVE_DEST_3 standby host <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">42</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4527</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4527</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">43</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4527</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 2 seq# 4527 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">18</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4528</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4528</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">18</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4528</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 3 seq# 4528 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">00</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4529</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4529</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">00</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4529</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 1 seq# 4529 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">05</span> <span class="number">2015</span></span><br><span class="line">ARC1: LGWR is actively archiving destination LOG_ARCHIVE_DEST_3</span><br><span class="line">ARC1: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4528</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_3</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">06</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> cannot allocate <span class="keyword">new</span> log, sequence <span class="number">4530</span></span><br><span class="line">Checkpoint not complete</span><br><span class="line"> Current log# 1 seq# 4529 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">LNSc started <span class="keyword">with</span> pid=<span class="number">88</span>, OS id=<span class="number">3680</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4530</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4530</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_3</span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4530</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4530</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">21</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4530</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 2 seq# 4530 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">21</span> <span class="number">2015</span></span><br><span class="line">ARC0: LGWR is actively archiving destination LOG_ARCHIVE_DEST_3</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">44</span> <span class="number">2015</span></span><br><span class="line">ARC0: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4529</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_3</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">48</span>:<span class="number">36</span> <span class="number">2015</span></span><br><span class="line">ORA-<span class="number">16198</span>: LGWR received timedout error <span class="keyword">from</span> KSR</span><br><span class="line">LGWR: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (<span class="number">16198</span>)</span><br><span class="line">LGWR: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">48</span>:<span class="number">36</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span><br><span class="line">ORA-<span class="number">16198</span>: Timeout incurred on internal channel during remote archival</span><br><span class="line"></span><br><span class="line">LGWR: Network asynch I/O wait error <span class="number">16198</span> log <span class="number">2</span> service <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">50</span>:<span class="number">58</span> <span class="number">2015</span></span><br><span class="line">LGWR: Failed to archive log <span class="number">2</span> thread <span class="number">1</span> sequence <span class="number">4530</span> (<span class="number">16198</span>)</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">50</span>:<span class="number">58</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span><br><span class="line">ORA-<span class="number">16198</span>: Timeout incurred on internal channel during remote archival</span><br><span class="line"></span><br><span class="line">LGWR: <span class="built_in">Error</span> <span class="number">16198</span> closing archivelog file <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4531</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4531</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">51</span>:<span class="number">07</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4531</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 1 seq# 4531 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">54</span>:<span class="number">12</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> cannot allocate <span class="keyword">new</span> log, sequence <span class="number">4532</span></span><br><span class="line">All online logs needed archiving</span><br><span class="line"> Current log# 1 seq# 4531 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">56</span>:<span class="number">10</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4532</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4532</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">56</span>:<span class="number">10</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4532</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 2 seq# 4532 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">56</span>:<span class="number">10</span> <span class="number">2015</span></span><br><span class="line">ARC0: LGWR is actively archiving destination LOG_ARCHIVE_DEST_3</span><br><span class="line">ARC0: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4531</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_3</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">58</span>:<span class="number">53</span> <span class="number">2015</span></span><br><span class="line">ARC1: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (<span class="number">12571</span>)</span><br><span class="line">ARC1: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">58</span>:<span class="number">53</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span><br><span class="line">ORA-<span class="number">12571</span>: TNS:packet writer failure</span><br><span class="line"></span><br><span class="line">ARC1: I/O error <span class="number">12571</span> archiving log <span class="number">3</span> to <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">00</span>:<span class="number">58</span>:<span class="number">54</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span><br><span class="line">ORA-<span class="number">01041</span>: internal error. hostdef extension doesn<span class="string">&#x27;t exist</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ARC1: Error 1041 Closing archive log file &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">LNSc started with pid=46, OS id=3000</span></span><br><span class="line"><span class="string">Fri Jul 17 00:59:30 2015</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected to archive thread 1 sequence 4533</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected for thread 1 sequence 4533 for destination LOG_ARCHIVE_DEST_3</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected to archive thread 1 sequence 4533</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected for thread 1 sequence 4533 for destination LOG_ARCHIVE_DEST_2</span></span><br><span class="line"><span class="string">Fri Jul 17 00:59:35 2015</span></span><br><span class="line"><span class="string">Thread 1 advanced to log sequence 4533 (LGWR switch)</span></span><br><span class="line"><span class="string"> Current log# 3 seq# 4533 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 01:05:13 2015</span></span><br><span class="line"><span class="string">ORA-16198: LGWR received timedout error from KSR</span></span><br><span class="line"><span class="string">LGWR: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (16198)</span></span><br><span class="line"><span class="string">LGWR: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span></span><br><span class="line"><span class="string">Fri Jul 17 01:05:13 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span></span><br><span class="line"><span class="string">ORA-16198: Timeout incurred on internal channel during remote archival</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">LGWR: Network asynch I/O wait error 16198 log 3 service &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Fri Jul 17 01:07:52 2015</span></span><br><span class="line"><span class="string">Thread 1 cannot allocate new log, sequence 4534</span></span><br><span class="line"><span class="string">All online logs needed archiving</span></span><br><span class="line"><span class="string"> Current log# 3 seq# 4533 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 01:23:03 2015</span></span><br><span class="line"><span class="string">ARC1: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (12571)</span></span><br><span class="line"><span class="string">ARC1: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span></span><br><span class="line"><span class="string">Fri Jul 17 01:23:03 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-12571: TNS:packet writer failure</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">FAL\[server, ARC1\]: FAL archive failed, see trace file.</span></span><br><span class="line"><span class="string">Fri Jul 17 01:23:03 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-16055: FAL request rejected</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ARCH: FAL archive failed. Archiver continuing</span></span><br><span class="line"><span class="string">Fri Jul 17 02:01:41 2015</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; WAITED TOO LONG FOR A ROW CACHE ENQUEUE LOCK! pid=128</span></span><br><span class="line"><span class="string">System State dumped to trace file e:\\oracle\\product\\10.2.0\\admin\\orcl\\udump\\orcl_ora_2960.trc</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:22 2015</span></span><br><span class="line"><span class="string">ARC1: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (12571)</span></span><br><span class="line"><span class="string">ARC1: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:22 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-12571: TNS:packet writer failure</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">FAL\[server, ARC1\]: FAL archive failed, see trace file.</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:22 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-16055: FAL request rejected</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ARCH: FAL archive failed. Archiver continuing</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:25 2015</span></span><br><span class="line"><span class="string">LGWR: Failed to archive log 3 thread 1 sequence 4533 (16198)</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:25 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span></span><br><span class="line"><span class="string">ORA-16198: Timeout incurred on internal channel during remote archival</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">LGWR: Error 16198 closing archivelog file &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">LGWR: Error 16198 disconnecting from destination LOG_ARCHIVE_DEST_3 standby host &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:36 2015</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected to archive thread 1 sequence 4534</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected for thread 1 sequence 4534 for destination LOG_ARCHIVE_DEST_2</span></span><br><span class="line"><span class="string">Fri Jul 17 02:05:36 2015</span></span><br><span class="line"><span class="string">Thread 1 advanced to log sequence 4534 (LGWR switch)</span></span><br><span class="line"><span class="string"> Current log# 2 seq# 4534 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 02:07:39 2015</span></span><br><span class="line"><span class="string">Thread 1 cannot allocate new log, sequence 4535</span></span><br><span class="line"><span class="string">All online logs needed archiving</span></span><br><span class="line"><span class="string"> Current log# 2 seq# 4534 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span></span><br><span class="line"><span class="string">LNSc started with pid=44, OS id=3356</span></span><br><span class="line"><span class="string">Fri Jul 17 02:11:42 2015</span></span><br><span class="line"><span class="string">Error 12637 received logging on to the standby</span></span><br><span class="line"><span class="string">Fri Jul 17 02:11:42 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-12637: Packet receive failed</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PING\[ARC1\]: Heartbeat failed to connect to standby &#x27;</span>db_feich<span class="string">&#x27;. Error is 12637.</span></span><br><span class="line"><span class="string">Fri Jul 17 02:12:02 2015</span></span><br><span class="line"><span class="string">Error 28547 received logging on to the standby</span></span><br><span class="line"><span class="string">Fri Jul 17 02:12:06 2015</span></span><br><span class="line"><span class="string">LGWR: Error 28547 creating archivelog file &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Fri Jul 17 02:12:06 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span></span><br><span class="line"><span class="string">ORA-28547: connection to server failed, probable Oracle Net admin error</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected to archive thread 1 sequence 4535</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected for thread 1 sequence 4535 for destination LOG_ARCHIVE_DEST_2</span></span><br><span class="line"><span class="string">Fri Jul 17 02:12:11 2015</span></span><br><span class="line"><span class="string">Thread 1 advanced to log sequence 4535 (LGWR switch)</span></span><br><span class="line"><span class="string"> Current log# 3 seq# 4535 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 02:14:11 2015</span></span><br><span class="line"><span class="string">Thread 1 cannot allocate new log, sequence 4536</span></span><br><span class="line"><span class="string">All online logs needed archiving</span></span><br><span class="line"><span class="string"> Current log# 3 seq# 4535 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:20 2015</span></span><br><span class="line"><span class="string">LGWR: Failed to archive log 3 thread 1 sequence 4535 (28547)</span></span><br><span class="line"><span class="string">LNSc started with pid=46, OS id=4036</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:33 2015</span></span><br><span class="line"><span class="string">Error 12170 received logging on to the standby</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:33 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc1_2584.trc:</span></span><br><span class="line"><span class="string">ORA-12170: TNS:Connect timeout occurred</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">PING\[ARC1\]: Heartbeat failed to connect to standby &#x27;</span>db_feich<span class="string">&#x27;. Error is 12170.</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:44 2015</span></span><br><span class="line"><span class="string">Error 12170 received logging on to the standby</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:48 2015</span></span><br><span class="line"><span class="string">LGWR: Error 12170 creating archivelog file &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:48 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_lgwr_1568.trc:</span></span><br><span class="line"><span class="string">ORA-12170: TNS:Connect timeout occurred</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:53 2015</span></span><br><span class="line"><span class="string">ARC0: Attempting destination LOG_ARCHIVE_DEST_3 network reconnect (12571)</span></span><br><span class="line"><span class="string">ARC0: Destination LOG_ARCHIVE_DEST_3 network reconnect abandoned</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:53 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc0_2784.trc:</span></span><br><span class="line"><span class="string">ORA-12571: TNS:packet writer failure</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">ARC0: I/O error 12571 archiving log 1 to &#x27;</span>db_feich<span class="string">&#x27;</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:53 2015</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected to archive thread 1 sequence 4536</span></span><br><span class="line"><span class="string">LGWR: Standby redo logfile selected for thread 1 sequence 4536 for destination LOG_ARCHIVE_DEST_2</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:53 2015</span></span><br><span class="line"><span class="string">Thread 1 advanced to log sequence 4536 (LGWR switch)</span></span><br><span class="line"><span class="string"> Current log# 2 seq# 4536 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span></span><br><span class="line"><span class="string">Fri Jul 17 02:17:57 2015</span></span><br><span class="line"><span class="string">Errors in file e:\\oracle\\product\\10.2.0\\admin\\orcl\\bdump\\orcl_arc0_2784.trc:</span></span><br><span class="line"><span class="string">ORA-01041: internal error. hostdef extension doesn&#x27;</span>t exist</span><br><span class="line"></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">17</span>:<span class="number">57</span> <span class="number">2015</span></span><br><span class="line">ARC0: <span class="built_in">Error</span> <span class="number">1041</span> Closing archive log file <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">19</span>:<span class="number">45</span> <span class="number">2015</span></span><br><span class="line">LGWR: Failed to archive log <span class="number">2</span> thread <span class="number">1</span> sequence <span class="number">4536</span> (<span class="number">12170</span>)</span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4537</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4537</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">19</span>:<span class="number">51</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4537</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 1 seq# 4537 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">21</span>:<span class="number">23</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4538</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4538</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">21</span>:<span class="number">23</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4538</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 3 seq# 4538 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO03.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">22</span>:<span class="number">55</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4539</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4539</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">22</span>:<span class="number">55</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4539</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 2 seq# 4539 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO02.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">22</span>:<span class="number">55</span> <span class="number">2015</span></span><br><span class="line">ARC0: LGWR is actively archiving destination LOG_ARCHIVE_DEST_3</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">23</span>:<span class="number">16</span> <span class="number">2015</span></span><br><span class="line"><span class="built_in">Error</span> <span class="number">12170</span> received logging on to the standby</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">02</span>:<span class="number">23</span>:<span class="number">16</span> <span class="number">2015</span></span><br><span class="line">Errors <span class="keyword">in</span> file e:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\bdump\\orcl_arc0_2784.trc:</span><br><span class="line">ORA-<span class="number">12170</span>: TNS:Connect timeout occurred</span><br><span class="line"></span><br><span class="line">ARC0: <span class="built_in">Error</span> <span class="number">12170</span> Creating archive log file to <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">05</span>:<span class="number">22</span>:<span class="number">08</span> <span class="number">2015</span></span><br><span class="line">LGWR: Standby redo logfile selected to archive thread <span class="number">1</span> sequence <span class="number">4540</span></span><br><span class="line">LGWR: Standby redo logfile selected <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">4540</span> <span class="keyword">for</span> destination LOG_ARCHIVE_DEST_2</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">05</span>:<span class="number">22</span>:<span class="number">08</span> <span class="number">2015</span></span><br><span class="line">Thread <span class="number">1</span> advanced to log sequence <span class="number">4540</span> (LGWR <span class="keyword">switch</span>)</span><br><span class="line"> Current log# 1 seq# 4540 mem# 0: E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\REDO01.LOG</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">19</span> <span class="number">2015</span></span><br><span class="line">Suppressing further error logging <span class="keyword">of</span> LOG_ARCHIVE_DEST_3.</span><br><span class="line">Fri Jul <span class="number">17</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">40</span> <span class="number">2015</span></span><br><span class="line"><span class="built_in">Error</span> <span class="number">12170</span> received logging on to the standby</span><br><span class="line">Suppressing further error logging <span class="keyword">of</span> LOG_ARCHIVE_DEST_3.</span><br></pre></td></tr></table></figure>
+
+<p>这错误从早上０点多就出现了。<br>trace文件中有如下错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32.348</span> <span class="number">57480</span> kcrr.c</span><br><span class="line">Making upinblc request to LNSc (ocis <span class="number">0x000000001677E828</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">2832</span></span><br><span class="line">LGWR had received a timeout previously. <span class="keyword">return</span> timeout again</span><br><span class="line">LGWR had received a timeout previously. <span class="keyword">return</span> timeout again</span><br><span class="line"><span class="built_in">Error</span> <span class="number">16198</span> closing standby archive log file at host <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">ORA-<span class="number">16198</span>: Timeout incurred on internal channel during remote archival</span><br><span class="line">Archive destination LOG_ARCHIVE_DEST_3 made inactive: File close error</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32.351</span> <span class="number">62692</span> kcrr.c</span><br><span class="line">LGWR: <span class="built_in">Error</span> <span class="number">16198</span> closing archivelog file <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">LGWR had received a timeout previously. <span class="keyword">return</span> timeout again</span><br><span class="line"><span class="built_in">Error</span> <span class="number">16198</span> detaching RFS <span class="keyword">from</span> standby instance at host <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32.392</span> <span class="number">57269</span> kcrr.c</span><br><span class="line">Making upidhs request to LNSc (ocis <span class="number">0x000000001677E828</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">32</span>&gt; and NET_TIMEOUT &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">2832</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">36.392</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">36.392</span> <span class="number">57391</span> kcrr.c</span><br><span class="line">Cleaninup up LNS12 \[pid <span class="number">2832</span>\] after network detach</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">36.397</span> <span class="number">54392</span> kcrr.c</span><br><span class="line">LNSc \[pid <span class="number">2832</span>\] receiving termination signal..</span><br><span class="line"> .... killed successfully</span><br><span class="line"> .. pmon posted <span class="keyword">for</span> <span class="keyword">async</span> lns cleanup</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">37.597</span> <span class="number">62692</span> kcrr.c</span><br><span class="line">LGWR: <span class="built_in">Error</span> <span class="number">16198</span> disconnecting <span class="keyword">from</span> destination LOG_ARCHIVE_DEST_3 standby host <span class="string">&#x27;db_feich&#x27;</span></span><br><span class="line">Ignoring krslcmp() detach error <span class="number">16198</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">42.863</span> <span class="number">57625</span> kcrr.c</span><br><span class="line">Making upinbls request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">34</span>:<span class="number">37</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">13.051</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">13.051</span> <span class="number">57480</span> kcrr.c</span><br><span class="line">Making upinblc request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">13</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">18.509</span> <span class="number">57625</span> kcrr.c</span><br><span class="line">Making upinbls request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">37</span>:<span class="number">13</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">39</span>:<span class="number">54.545</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">39</span>:<span class="number">54.545</span> <span class="number">57480</span> kcrr.c</span><br><span class="line">Making upinblc request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">39</span>:<span class="number">54</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">00</span><span class="number">.802</span> <span class="number">57625</span> kcrr.c</span><br><span class="line">Making upinbls request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">39</span>:<span class="number">54</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">12.967</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">12.967</span> <span class="number">57480</span> kcrr.c</span><br><span class="line">Making upinblc request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">12</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">13.066</span> <span class="number">55452</span> kcrr.c</span><br><span class="line">Initializing NetServer\[LNSc\] <span class="keyword">for</span> dest=db_feich mode SYNC</span><br><span class="line">LNSc is not running anymore. </span><br><span class="line">New SYNC LNSc needs to be started</span><br><span class="line">Waiting <span class="keyword">for</span> subscriber count on LGWR-LNSc channel to go to zero</span><br><span class="line">Subscriber count went to zero - time now is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">13</span>&gt;</span><br><span class="line">Starting LNSc ...</span><br><span class="line">Waiting <span class="keyword">for</span> LNSc to initialize itself</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16.083</span> <span class="number">55743</span> kcrr.c</span><br><span class="line">Netserver LNSc \[pid <span class="number">3680</span>\] <span class="keyword">for</span> mode SYNC has been initialized</span><br><span class="line">Performing a channel reset to ignore previous responses</span><br><span class="line">Successfully started LNSc \[pid <span class="number">3680</span>\] <span class="keyword">for</span> dest db_feich mode SYNC ocis=<span class="number">0x000000001677E828</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16.083</span> <span class="number">56246</span> kcrr.c</span><br><span class="line">Making upiahm request to LNSc \[pid <span class="number">3680</span>\]: Begin Time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">13</span>&gt;. NET_TIMEOUT = &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">Waiting <span class="keyword">for</span> LNSc to respond to upiahm</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16.156</span> <span class="number">56410</span> kcrr.c</span><br><span class="line"> upiahm connect done status is <span class="number">0</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSc</span><br><span class="line">Receiving message <span class="keyword">from</span> LNSc</span><br><span class="line">Receiving message <span class="keyword">from</span> LNSc</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16.508</span> <span class="number">57625</span> kcrr.c</span><br><span class="line">Making upinbls request to LNSc (ocis <span class="number">0x000000001677E828</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">13</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3680</span></span><br><span class="line">Receiving message <span class="keyword">from</span> LNSb</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">21.818</span> <span class="number">57625</span> kcrr.c</span><br><span class="line">Making upinbls request to LNSb (ocis <span class="number">0x000000001677E580</span>). Begin time is &lt;<span class="number">07</span>/<span class="number">17</span>/<span class="number">2015</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">16</span>&gt; and NET_TIMEOUT is &lt;<span class="number">180</span>&gt; seconds</span><br><span class="line">NetServer pid:<span class="number">3584</span></span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">42.129</span></span><br><span class="line">LGWR found LNSc alive.. waiting <span class="keyword">for</span> msg</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">40</span>:<span class="number">52.140</span></span><br><span class="line">LGWR found LNSc alive.. waiting <span class="keyword">for</span> msg</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">41</span>:<span class="number">03</span><span class="number">.356</span></span><br><span class="line">LGWR found LNSc alive.. waiting <span class="keyword">for</span> msg</span><br><span class="line">*** <span class="number">2015</span>-<span class="number">07</span>-<span class="number">17</span> <span class="number">00</span>:<span class="number">41</span>:<span class="number">18.972</span></span><br></pre></td></tr></table></figure>
+
+<p>按官方文档讲，DG最大可用模式下备库不可用是可以自动降级到最大性能模式的，但这次没有，主库的运行受到了影响。<br>因为物理链路修复没有时间表，因此当务之急时先略过或禁用出故障的备库。</p>
+<p>首先尝试将DG降级到最大性能模式：<br>[sql]<br>SQL&gt;alter database set standby database to maximize performance;<br>[/sql]</p>
+<p>无果</p>
+<p>禁用出故障的备库：<br>[sql]<br>SQL&gt;alter system set log_archive_dest_state_3 = defer;<br>SQL&gt;shutdown immediate<br>SQL&gt;startup<br>[/sql]<br>故障解除。而且需要重新启动数据库。</p>
+<p>LOG_ARCHIVE_DEST_STATE_n参数，可以取值alternate reset defer enable，其含义如下：</p>
+<ul>
+<li><p>  alternate<br>备用。只有当其他归档目标失效时才尝试使用本归档目标。</p>
+</li>
+<li><p>  defer<br>保留配置信息，但从归档目标中删除，直到重新启用。</p>
+</li>
+<li><p>  enable<br>启用。这是默认值。</p>
+</li>
+<li><p>*UPDATE(06/05/2016):**</p>
+</li>
+</ul>
+<p>在未禁用有网络故障的standby备库的情况下，如果重新启动数据库，有可能startup过程会一直卡在Database mounted.处</p>
+<p>从alert.log看，主库正在向有网络故障的备库同步归档日志文件，因为网络不通畅就卡住了，此时将备库禁用后，重新启动数据库就可以了。</p>
+<p><strong>====<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/07/14/6515/" rel="prev" title="Untitled Post - 124">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 124
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/07/17/shutdown-immediate-hang/" rel="next" title="shutdown immediate 无响应">
+                  shutdown immediate 无响应 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

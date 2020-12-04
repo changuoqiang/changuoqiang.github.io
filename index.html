@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/03/acme-sh-dns-01-issue-renew-lets-encrypt-ssl-cert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/12/03/acme-sh-dns-01-issue-renew-lets-encrypt-ssl-cert/" class="post-title-link" itemprop="url">acme.sh使用DNS-01申请/自动更新Let's Encrypt ssl证书</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-03 10:49:23" itemprop="dateCreated datePublished" datetime="2020-12-03T10:49:23+08:00">2020-12-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>安装acme.sh</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https:<span class="comment">//get.acme.sh sh</span></span><br><span class="line">$ source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>会自动添加cron任务</p>
+<p><strong>创建api token</strong></p>
+<p>acme.sh支持name.com，访问<a target="_blank" rel="noopener" href="https://www.name.com/account/settings/api%EF%BC%8C%E9%9A%8F%E6%84%8F%E8%AE%BE%E7%BD%AEtoken%E6%98%B5%E7%A7%B0acme_sh_dns%EF%BC%8C%E7%94%9F%E6%88%90token">https://www.name.com/account/settings/api，随意设置token昵称acme_sh_dns，生成token</a><br>编辑~/.acme.sh/account.conf添加如下两行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> Namecom_Username=<span class="string">&quot;your_name_com_username&quot;</span></span><br><span class="line"><span class="keyword">export</span> Namecom_Token=<span class="string">&quot;*********&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Namecom_Username指定你在name.com的用户名而不是token name</p>
+<p><strong>申请证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ acme.sh --issue --dns dns_namecom -d g.openwares.net</span><br></pre></td></tr></table></figure>
+<p>可以会有提示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g.openwares.net:Verify error:DNS problem: SERVFAIL looking up CAA <span class="keyword">for</span> openwares.net - the domain<span class="string">&#x27;s nameservers may be malfunctioning</span></span><br></pre></td></tr></table></figure>
+<p>忽略即可</p>
+<p><strong>安装证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ acme.sh --install-cert -d g.openwares.net \\</span><br><span class="line">--cert-file /path/to/certfile/cert.pem \\</span><br><span class="line">--key-file /path/to/keyfile/key.pem \\</span><br><span class="line">--fullchain-file /path/to/fullchain/certfile/fullchain.pem</span><br></pre></td></tr></table></figure>
+
+<p><strong>自动更新</strong><br>acme.sh自动安装了crontab入口，acme.sh会自动记录下申请证书和安装证书的命令，所以会在设定的周期内自动更新证书。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/gnome-main-menu-alacarte-crash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/09/24/gnome-main-menu-alacarte-crash/" class="post-title-link" itemprop="url">gnome main menu alacarte crash</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-09-24 17:02:33" itemprop="dateCreated datePublished" datetime="2020-09-24T17:02:33+08:00">2020-09-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用alacarte删除了几个菜单项后，再也打不开gnome main menu了，终端下运行alacarte出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ alacarte</span><br><span class="line">usr/share/alacarte/Alacarte/MainWindow.py:<span class="number">22</span>: PyGIWarning: GMenu was imported without specifying a version first. Use gi.require_version(<span class="string">&#x27;GMenu&#x27;</span>, <span class="string">&#x27;3.0&#x27;</span>) before <span class="keyword">import</span> to ensure that the right version gets loaded.</span><br><span class="line"> <span class="keyword">from</span> gi.repository <span class="keyword">import</span> Gtk, GdkPixbuf, Gdk, GMenu</span><br><span class="line"></span><br><span class="line">(alacarte:<span class="number">1718</span>): Gtk-CRITICAL **: <span class="number">16</span>:<span class="number">54</span>:<span class="number">24.699</span>: gtk_accel_label_set_accel_closure: assertion <span class="string">&#x27;gtk_accel_group_from_accel_closure (accel_closure) != NULL&#x27;</span> failed</span><br><span class="line"></span><br><span class="line">(alacarte:<span class="number">1718</span>): Gtk-CRITICAL **: <span class="number">16</span>:<span class="number">54</span>:<span class="number">24.699</span>: gtk_accel_label_set_accel_closure: assertion <span class="string">&#x27;gtk_accel_group_from_accel_closure (accel_closure) != NULL&#x27;</span> failed</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"> File <span class="string">&quot;/usr/bin/alacarte&quot;</span>, line <span class="number">26</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> main()</span><br><span class="line"> File <span class="string">&quot;/usr/share/alacarte/Alacarte/MainWindow.py&quot;</span>, line <span class="number">464</span>, <span class="keyword">in</span> main</span><br><span class="line"> app.setMenuBasename(basename)</span><br><span class="line"> File <span class="string">&quot;/usr/share/alacarte/Alacarte/MainWindow.py&quot;</span>, line <span class="number">62</span>, <span class="keyword">in</span> setMenuBasename</span><br><span class="line"> self.editor = MenuEditor(menu_basename)</span><br><span class="line"> File <span class="string">&quot;/usr/share/alacarte/Alacarte/MenuEditor.py&quot;</span>, line <span class="number">36</span>, <span class="keyword">in</span> __init__</span><br><span class="line"> self.load()</span><br><span class="line"> File <span class="string">&quot;/usr/share/alacarte/Alacarte/MenuEditor.py&quot;</span>, line <span class="number">49</span>, <span class="keyword">in</span> load</span><br><span class="line"> <span class="keyword">if</span> not self.tree.load_sync():</span><br><span class="line">gi.repository.GLib.Error: g-markup-error-quark: <span class="built_in">Error</span> on line <span class="number">1</span> char <span class="number">1</span>: Document was empty or contained only whitespace (<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>发现~/.config/menus目录下多了一个空白文件gnome-applications.menu，将其删除问题解决。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/09/postgresql-stream-replication-switchover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/07/09/postgresql-stream-replication-switchover/" class="post-title-link" itemprop="url">PostgreSQL流复制主备切换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-09 13:46:31" itemprop="dateCreated datePublished" datetime="2020-07-09T13:46:31+08:00">2020-07-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>一、判断主备角色</strong><br>有几个方法可以判断：<br>1、查看wal进程</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux grep wal</span><br></pre></td></tr></table></figure>
+<p>如果进程名有”postgres: 11/main: walwriter”字样，则为主库，walwriter为wal发送方。<br>如果进程名有”postgres: 11/main: walreceiver streaming 2A/ACAA1088”字样，则为备库，walreceiver为wal接收方。<br>2、pg_is_in_recovery函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">postgres=# select pg_is_in_recovery();</span><br><span class="line">pg_is_in_recovery</span><br><span class="line">-------------------</span><br><span class="line"> f</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>显示f说明是主库，显示t说明为备库。<br>3、查看数据库控制信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres /usr/lib/postgresql/<span class="number">11</span>/bin/pg_controldata -D /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main/</span><br><span class="line">g_control version number: <span class="number">1100</span></span><br><span class="line">Catalog version number: <span class="number">201809051</span></span><br><span class="line">Database system identifier: <span class="number">6745356148899875633</span></span><br><span class="line">Database cluster state: <span class="keyword">in</span> production</span><br><span class="line">pg_control last modified: Thu <span class="number">09</span> Jul <span class="number">2020</span> <span class="number">02</span>:<span class="number">40</span>:<span class="number">49</span> PM CST</span><br><span class="line">Latest checkpoint location: <span class="number">825</span>/245660D8</span><br><span class="line">Latest checkpoint<span class="string">&#x27;s REDO location: 825/245660A0</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>Database cluster state这行为in production说明位主库，为in archive recovery说明为备库。<br>4、通过recovery.conf 文件判断<br>一般的，备库才有recovery.conf，主库一般没有或是改名为recovery.done</p>
+<p><strong>二、主备切换</strong><br>1、使用trigger文件切换</p>
+<p>a. 在备库启动时在 recovery.conf 文件中加入一个触发文件的路径（新加则需要重启备库）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trigger_file=<span class="string">&#x27;/var/lib/postgresql/11/main/.postgresql.trigger&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>b. 关闭主库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop postgresql@<span class="number">11</span>-main.service</span><br></pre></td></tr></table></figure>
+<p>或者<br>先查看postgresql集群信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pg_lsclusters</span><br><span class="line">Ver Cluster Port Status Owner Data directory Log file</span><br><span class="line"><span class="number">11</span> main <span class="number">5432</span> online postgres /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main /<span class="keyword">var</span>/log/postgresql/postgresql-<span class="number">11</span>-main.log</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pg_ctlcluster <span class="number">11</span> main stop</span><br></pre></td></tr></table></figure>
+
+<p>c.在备库上创建trigger文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo touch /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main/.postgresql.trigger</span><br></pre></td></tr></table></figure>
+<p>可以看到备库上的recovery文件已经成为done了,此时备库已经被激活为主库，可以直接做读写操作了<br>在新主库上创建复制槽</p>
+<p>d. 原主库搭建为新备库<br>准备recovery.conf文件，primary_conninfo指向新主库，使用合适的复制槽，然后重新启动数据库即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">recovery_target_timeline=<span class="string">&#x27;latest&#x27;</span></span><br><span class="line">standby_mode = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">primary_conninfo = <span class="string">&#x27;host=59.206.31.149 port=5432 user=xxxx password=xxxx&#x27;</span></span><br><span class="line">primary_slot_name = <span class="string">&#x27;repl_slot_2&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这里必须添加recovery_target_timeline=’latest’，因为主备切换时timeline更新了。<br>注意pg_hba_conf中对replication的权限设定</p>
+<p>2、使用pg_ctlcluster命令切换<br>a. 停止应用程序，关闭主库<br>b. 备库提升为主库<br>备库端执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pg_ctlcluster <span class="number">11</span> main promote</span><br></pre></td></tr></table></figure>
+<p>c. 老主库上配置recovery.conf文件，启动原主库为新的备库</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/warm-standby-failover.html">26.3. Failover</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43303221/article/details/85777529">PostgreSQL 流复制的主备切换</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.51cto.com/heyiyi/1917655">PostgreSQL Switchover vs. Failover</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lottu/p/7490759.html">PostgreSQL主备切换</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/05/nfs%E4%BD%BF%E7%94%A8%E5%9B%BA%E5%AE%9A%E7%AB%AF%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/07/05/nfs%E4%BD%BF%E7%94%A8%E5%9B%BA%E5%AE%9A%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">NFS使用固定端口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-05 22:38:21" itemprop="dateCreated datePublished" datetime="2020-07-05T22:38:21+08:00">2020-07-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>NFS通常情况下会使用动态端口，对于防火墙配置很不友好。<br>可以设置使用固定的几个端口。<br>修改以下配置文件：<br>/etc/default/nfs-common:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STATDOPTS=<span class="string">&quot;--port 3000 --outgoing-port 3001&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>/etc/default/nfs-kernel-server:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RPCMOUNTDOPTS=<span class="string">&quot;--manage-gids --port 3002&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>新添加配置文件：<br>/etc/sysctl.d/nfs-static-ports.conf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fs.nfs.nlm_tcpport = <span class="number">3003</span></span><br><span class="line">fs.nfs.nlm_udpport = <span class="number">3003</span></span><br></pre></td></tr></table></figure>
+<p>然后：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p /etc/sysctl.d/nfs-<span class="keyword">static</span>-ports.conf</span><br><span class="line">$ sudo systemctl restart nfs-utils.service</span><br><span class="line">$ sudo systemctl restart nfs-kernel-server.service</span><br></pre></td></tr></table></figure>
+
+<p>然后打通防火墙的TCP和UDP端口:111,2049,3000-3003就可以了。</p>
+<p>如果出现错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount.nfs: access denied by server <span class="keyword">while</span> mounting ...</span><br></pre></td></tr></table></figure>
+<p>可以检查/etc/exports设置的访问网段是否正确，如果通过防火墙NAT方式访问，端口号会大约1024，需要添加insecure访问选项，比如(insecure,rw)</p>
+<p>修改/etc/exports后，可以使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo exportfs -a</span><br></pre></td></tr></table></figure>
+<p>重新导出文件系统</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/SecuringNFS">SecuringNFS</a><br>[2]<a target="_blank" rel="noopener" href="https://www.peterbeard.co/blog/post/setting-up-iptables-for-nfs-on-ubuntu/">Setting Up iptables for NFS on Ubuntu</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/04/java-networking-and-proxies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/07/04/java-networking-and-proxies/" class="post-title-link" itemprop="url">Java Networking and Proxies</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-04 21:35:20" itemprop="dateCreated datePublished" datetime="2020-07-04T21:35:20+08:00">2020-07-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/technotes/guides/net/proxies.html">Java Networking and Proxies</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/28/danted-redsocks-iptables-nftables-global-socks5-proxy-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/28/danted-redsocks-iptables-nftables-global-socks5-proxy-config/" class="post-title-link" itemprop="url">danted + redsocks + iptables/nftables全局socks5代理配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-28 17:46:44" itemprop="dateCreated datePublished" datetime="2020-06-28T17:46:44+08:00">2020-06-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>1、danted<br>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install dante-server</span><br></pre></td></tr></table></figure>
+
+<p>配置/etc/danted.conf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">logoutput: syslog /<span class="keyword">var</span>/log/sockd.log stdout</span><br><span class="line">internal: br0 port = <span class="number">1080</span></span><br><span class="line">external: <span class="number">10.100</span><span class="number">.0</span><span class="number">.32</span></span><br><span class="line">clientmethod: none</span><br><span class="line">socksmethod: none</span><br><span class="line">user.privileged: proxy</span><br><span class="line">user.unprivileged: nobody</span><br><span class="line">user.libwrap: nobody</span><br><span class="line">client pass &#123;</span><br><span class="line"> <span class="keyword">from</span>: <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span> port <span class="number">1</span>-<span class="number">65535</span> to: <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line">socks pass &#123;</span><br><span class="line"> <span class="keyword">from</span>: <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">8</span> to: <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span></span><br><span class="line"> command: bind connect udpassociate</span><br><span class="line"> log: error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/26/sshfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/26/sshfs/" class="post-title-link" itemprop="url">sshfs</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-26 23:23:06" itemprop="dateCreated datePublished" datetime="2020-06-26T23:23:06+08:00">2020-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>sshfs可以通过ssh和sftp协议来安全的在本地挂载远程文件系统，比NFS更方便的是无需更改防火墙设置，只要能使用ssh访问远程主机就可以了。</p>
+<p>sshfs使用fuse在用户空间挂载远程文件系统，debian系统直接安装sshfs包，为了方便挂载，最好配置使用公私钥对来访问远程ssh主机，特别是fstab文件不支持ssh的密码访问方式。</p>
+<p>挂载远程文件系统：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+<p>也支持直接使用ssh别名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+
+<p>具体的sshfs选项参见man</p>
+<p>注意：<br>ssh长时间连接会超时，导致出现类似错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
+<p>可以在ssh服务器/etc/ssh/sshd_config中打开客户端心跳探测:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval <span class="number">30</span></span><br><span class="line">ClientAliveCountMax <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>30秒发送一个心跳探测，超过3次没有回应断开连接。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.redhat.com/sysadmin/sshfs">SSHFS: Mounting a remote file system over SSH</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/SSHFS_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">SSHFS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/26/ora-19815/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/26/ora-19815/" class="post-title-link" itemprop="url">ORA-19815</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-26 08:11:38" itemprop="dateCreated datePublished" datetime="2020-06-26T08:11:38+08:00">2020-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>客户端连接失败，提示ORA-19815，alert.log有以下提示：<br>Errors in file /u01/app/oracle/admin/orcl/bdump/orcl_arc0_2734.trc:<br>ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 remaining bytes available.<br>Wed Jun 24 09:02:21 2020</p>
+<hr>
+<p>You have following choices to free up space from flash recovery area:</p>
+<ol>
+<li>Consider changing RMAN RETENTION POLICY. If you are using Data Guard,<br>then consider changing RMAN ARCHIVELOG DELETION POLICY.</li>
+<li>Back up files to tertiary device such as tape using RMAN<br>BACKUP RECOVERY AREA command.</li>
+<li>Add disk space and increase db_recovery_file_dest_size parameter to<br>reflect the new space.</li>
+<li>Delete unnecessary files using RMAN DELETE command. If an operating<br>system command was used to delete files, then use RMAN CROSSCHECK and<br>DELETE EXPIRED commands.</li>
+</ol>
+<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">rman&gt; crosscheck archivelog all;</span><br><span class="line">rman&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/" class="post-title-link" itemprop="url">cassandra跨数据中心、多网络接口部署</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-14 12:36:06" itemprop="dateCreated datePublished" datetime="2020-06-14T12:36:06+08:00">2020-06-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra集群以前运行于本地机房，现在需要扩展到云端，云主机添加为集群的新数据中心。因为并不是公有云，所有没有启动SSL认证和加密。</p>
+<p>本地机房与云机房通过专线连接，并且本地只有两个互联ip地址可用。本地机房原集群内节点只使用私有网络地址，无法被云端访问。云端主机使用私有地址，云平台将私有地址映射到专线可以访问的“公有地址”，这里并不是真正的“公有地址”，仍然是一个大的私有网络，不过本地机房和云机房通过这些地址可以互访，所有这里也叫做“公有地址”</p>
+<p>因此集群的本地机房节点通过NAT映射，将私有地址的7000和9042端口映射到公有地址，从而可以被云主机访问，同时做了端口回流，保证本地机房其他机器也可以通过公有地址访问节点。<br>如果不做或不能做端口回流，应该也可以使用iptables/nftables在集群内节点以及需要访问集群的客户机器上添加nat转换规则,从公有ip转换到对应的私有ip，这个没试。</p>
+<p>这样本地机房和云机房的节点都有私有地址和映射后的公有地址，cassandra集群节点需要使用公有地址进行互访，但cassandra都无法直接监听公有地址。这需要配置cassandra.yaml,设置listen_address和rpc_address为私有地址，设置broadcast_address和broadcast_rpc_address为公有ip地址，但是listen_on_broadcast_address设置为false，因为各个节点并不能在公有ip上监听。这样当跨数据中心时使用公有ip通讯，但在本地网络内部可以使用私有网络。</p>
+<p>cassandra-rackdc.properties配置文件可以打开prefer_local选项，这样可以优先使用本地网络，降低网络延迟。</p>
+<p>配置实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listen_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line">rpc_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_rpc_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line"></span><br><span class="line">seed_provider:</span><br><span class="line"> # Addresses of hosts that are deemed contact points. </span><br><span class="line"> # Cassandra nodes use this list of hosts to find each other and learn</span><br><span class="line"> # the topology of the ring. You must change this if you are running</span><br><span class="line"> # multiple nodes!</span><br><span class="line"> - class_name: org.apache.cassandra.locator.SimpleSeedProvider</span><br><span class="line"> parameters:</span><br><span class="line"> # seeds is actually a comma-delimited list of addresses.</span><br><span class="line"> # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;</span><br><span class="line"> - seeds: <span class="string">&quot;59.206.31.152,10.160.4.196,10.160.4.197&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样本地数据中心和云数据中心就可以通过公有ip相互通讯了。<br><strong>备注：</strong>rpc并不是必须的，只使用cql是可行的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/configMultiNetworks.html">Using multiple network interfaces</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/06/load-pubkey-users-xxx-ssh-id-rsa-invalid-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/06/load-pubkey-users-xxx-ssh-id-rsa-invalid-format/" class="post-title-link" itemprop="url">load pubkey "/Users/xxx/.ssh/id_rsa": invalid format</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-06 10:11:27" itemprop="dateCreated datePublished" datetime="2020-06-06T10:11:27+08:00">2020-06-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>brew upgrade升级了openssh以后，每次登录远程服务器都提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load pubkey <span class="string">&quot;/Users/xxx/.ssh/id_rsa&quot;</span>: invalid format</span><br></pre></td></tr></table></figure>
+
+<p>因为客户端根本就没存储公钥啊，为什么要读取公钥？公钥放在服务器端了啊</p>
+<p>客户端重新生成对应的公钥，满足openssh的无理要求就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -f ~<span class="regexp">/.ssh/i</span>d_rsa -y &gt; ~<span class="regexp">/.ssh/i</span>d_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>以前也没这问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

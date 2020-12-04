@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="JavaScript prototype chain 探索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript原型链浅析">
+<meta property="og:url" content="http://example.com/2013/05/29/javascript-prototype-chain/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="JavaScript prototype chain 探索">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/downloads/js_obj_layout.png">
+<meta property="article:published_time" content="2013-05-29T14:06:14.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.260Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/downloads/js_obj_layout.png">
+
+
+<link rel="canonical" href="http://example.com/2013/05/29/javascript-prototype-chain/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>JavaScript原型链浅析 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/05/29/javascript-prototype-chain/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript原型链浅析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-05-29 22:06:14" itemprop="dateCreated datePublished" datetime="2013-05-29T22:06:14+08:00">2013-05-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JavaScript prototype chain 探索</p>
+<a id="more"></a>
+<p>先来看图<br><img src="/downloads/js_obj_layout.png" alt="javascript object layout"><br>这图有点儿复杂，不过画的很好。这是<a target="_blank" rel="noopener" href="http://www.mollypages.org/misc/js.mp">原图</a>，我对其做了些微修改，以便看起来更清楚一些。</p>
+<p><strong>1、对象的prototype和__proto__属性</strong><br>确切的说，__proto__不是一个标准的属性，是部分浏览器的特定实现。不过除了IE浏览器之外，其他的浏览器都使用这个名字来实现javascript标准文档里所讲的[[prototype]]隐藏属性。这个属性是隐藏的，只应该有解释器来使用，客户代码不应该依赖于此属性。最新的标准提供了Object.getPrototypeOf函数来获取对象的[[prototype]]属性。</p>
+<p>prototype是一个显式的属性，客户可以存取，prototype属性引用对象“关联”的原型对象，而__proto__属性引用“构造”该对象的原型对象。javascript查找对象的属性时是使用__proto__引用的原型对象链向上查找的。</p>
+<p>所有的对象都有__proto__属性，但只有可以作为构造器的函数对象才有prototype属性，当然所有的函数都可以作为构造器，也就是只有函数才有prototype属性。普通的非函数对象实例是没有的，因为这样的对象并不能用来构造新的对象。而这个prototype属性所引用的原型对象正是构造器函数构造对象时使用的原型，一会儿讲new运算符会讲到。</p>
+<p>[javascript]<br>function F(){};<br>var f = new F();<br>console.log(f.<strong>proto</strong> == F.prototype); //true<br>console.log(f.prototype);//undefined<br>[/javascript]</p>
+<p><strong>2、函数对象的prototype从哪里来，由谁负责构造</strong><br>内置函数对象的prototype属性及其引用的原型对象由javascript引擎提供。用户在自定义函数时，js引擎会背地里同时为该函数生成一个原型对象，其为一个与用户定义函数同名的对象，看代码</p>
+<p>[javascript]<br>function f(){this.test=””;}<br>console.log(f.prototype); //f{}<br>console.log(typeof f.prototype); //object<br>[/javascript]<br>请注意，f.prototype的类型为object,而不是Object。Object其实是一个函数对象，而object表明f.prototype是一个地地道道的纯粹对象。<br>其实构造器函数的prototype就是为其派生对象存储公共属性的一个容器，不然这些派生对象从原型继承来的属性放到哪里呢？当然prototype还有其他用来管理的属性，比如其constructor属性就指回到函数构造器。当一个对象用构造器构造完成后，构造器的使命就完成了，派生对象从此之后只与其prototype有关系，而与构造器彻底无关了。</p>
+<p><strong>再看看内置对象的prototype属性及其类型</strong><br>[javascript]<br>console.log(Object.prototype); //Object{}<br>console.log(typeof Object.prototype); //object<br>console.log(Function.prototype); //function()<br>console.log(typeof Function.prototype); //function<br>console.log(Array.prototype); //[]<br>console.log(typeof Array.prototype); //object<br>[/javascript]<br>可以看到，除了Function的原型对象为function类型外，其他内置函数对象的原型对象皆为object类型，纯粹的对象，注意不要与Object混淆。</p>
+<p>Function比较特殊，其prototype属性和__proto__属性皆引用同一个原型对象，且其原型对象的类型为function(),而不是对象。因为javascript中的所有函数功能皆来自于Function.prototype原型对象,包括Function自身，所以如果Function.prototype也是一个对象而不是函数的话，那函数的功能从哪里来呢？所以其为函数类型，由js引擎来实现。<br>也就是说，Function对象的原型对象就是其自身Function(),Function对象是由其自身构造的。bootstrap?！但请注意Function.prototype是由Object().prototype构造的。</p>
+<p><strong>前面只是说原型对象(prototype属性所引用的对象)由javascript引擎生成的，但其构造器是什么呢？</strong></p>
+<p>除了Object()之外的所有函数构造器，包括自定义构造器，他们”关联”的原型对象(prototype属性所引用)都是由Object()构造器构造而来，也就是他们“关联”的原型对象(prototype属性所引用)的原型对象(由__proto__属性所引用)是Object.prototype。那么Object()构造器关联的原型对象Object.prototype(prototype属性所引用)是由谁负责构造的呢？答案就是，Object.prototype是原型链的顶端，是有javascript引擎构造出来的，它没有构造器，它的__proto__属性为null。</p>
+<p><strong>3、对象的__proto__属性指向哪里？</strong><br><strong>首先看用户对象</strong><br>对于用户自定义的对象，其<strong>proto__属性都指向使用的构造器的prototype对象<br>[javascript]<br>function f(){this.test=””;}<br>var f1 = new f();<br>console.log(f.prototype); //f{}<br>console.log(f1.prototype); //undefined<br>console.log(f1.__proto</strong>); //f{}<br>console.log(f1.constructor);//function f(){this.test=””;}<br>[/javascript]</p>
+<p>对于对象直接量，其实内部是调用Object函数构造器来构造对象的，所以其<strong>proto__指向Object原型对象。Object其实是一个函数，是由Fucntion对象构造的。<br>[javascript]<br>var o={first:1,last:2};<br>console.log(o.prototype); //undefined<br>console.log(o.__proto</strong>); //Object{}<br>console.log(o.constructor);//Object() 或输出function Object() { [native code] }<br>[/javascript]</p>
+<p>对于数组对象直接量,则是由内部调用Array函数构造器来构造的。<br>[javascript]<br>var arr = [];<br>console.log(arr.prototype); //undefined<br>console.log(arr.<strong>proto</strong>);//[]<br>console.log(o.constructor);//function Array() { [native code] }<br>[/javascript]</p>
+<p>其他内置对象大抵如是。</p>
+<p><strong>再看用户自定义函数</strong><br>用户自定义函数都是由Function()构造器构造的,其<strong>proto__属性都指向Function.prototype<br>[javascript]<br>function f(){this.test=””;}<br>console.log(f.__proto</strong>); //function()<br>console.log(Function.prototype); //function()<br>console.log(f.<strong>proto</strong>=== Function.prototype); //true<br>[/javascript]</p>
+<p><strong>最后看内置对象</strong><br>内置函数对象其<strong>proto__属性都指向Function.prototype,因为这些对象都是函数原型派生而来，具有函数的公共方法，比如call,apply,bind等。<br>[javascript]<br>console.log(Object.__proto</strong>); //function()<br>console.log(Function.<strong>proto</strong>); //function()<br>console.log(Arrar.<strong>proto</strong>);//function()<br>[/javascript]</p>
+<p><strong>4、函数构造器与变量</strong><br>为什么构造器里用var声明的变量，派生对象无法访问，而用this限定的变量派生对象可以访问到呢？这是因为new操作符。</p>
+<p>new主要做了三件事，这里大大简化了：<br>第一，创建一个空object,注意不是Object()<br>第二，将空对象的constructor属性初始化为基对象prototype对象的constructor属性的值，将空对象的__proto__属性初始化成基对象的prototype属性引用的原型对象<br>第三，将空对象绑定到构造器上来调用构造器，类似constructor.call(obj,parameters)，也就是构造器里的this即指向新创建的对象。</p>
+<p>所以从第三步可以看出，使用this限定的构造器变量，在这一步执行时，实际上就为派生对象添加了对应的属性，所以派生对象可以访问到这个变量，因为这已经成了派生对象的内置属性。而用var修饰的局部变量则与派生对象毫无关系，构造器执行完毕后，这些局部变量就被销毁了。<br>所以说，<strong>实例对象从其构造器静态获取属性，而从其原型对象(__proto__引用的对象)动态获取属性</strong>。阮一峰在<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html">Javascript继承机制的设计思想</a>说,”<strong>实例对象的属性和方法，分成两种，一种是本地的，另一种是引用的</strong>“,既是此意。</p>
+<p><strong>5、Object.prototype</strong></p>
+<p>Object.prototype的__proto__属性指向哪里？答：指向null。<br>这已经是javascript对象原型链的顶点了。</p>
+<p><strong>6、函数构造器“关联”的原型对象有prototype吗？</strong><br>没有，但他们有__proto__属性指向其原型对象。因为他们都是普通的对象，Function有点儿例外，但Function的原型对象也只是个普通的函数，而不是函数对象。再次证明，只有函数构造器对象才有prototype属性。</p>
+<p><strong>7、函数构造器从其prototype指向的原型对象继承属性吗？</strong><br>答案是：Nope。函数构造器prototype属性“关联”的原型对象是为从这个构造器派生的对象提供原型服务的，构造器自身从其__proto__也就是[[prototype]]属性指向的原型对象（亦即其自身的构造器）继承属性。</p>
+<p><strong>8、Object()构造器与Function()构造器</strong><br>Object()是由Function()构造的(Object.<strong>proto</strong> = Function.prototype),而Function()是由其自身构造的(Function.<strong>proto</strong> = Function.prototype)。而Function.prototype是由Object()构造的(Function.prototype.<strong>proto</strong>=Object.prototype)。<br>有此可知，Object()是Function()的直接实例，而Function()是Object()的间接实例，所以Object()与Function()互为实例<br>[javascript]<br>console.log(Object instanceof Function); //true<br>console.log(Function instanceof Object); //true<br>console.log(Object.<strong>proto</strong> == Function.prototype); //true<br>console.log(Function.<strong>proto</strong>.<strong>proto</strong> == Object.prototype); //true<br>[/javascript]</p>
+<p><strong>9、如果忘了new会怎样?</strong></p>
+<p>如果忘了在构造器上使用new操作符,那么构造器会退化成一个普通的函数调用<br>[javascript]<br>function F(){this.test=””;}<br>var f = F();<br>console.log(typeof f); //undefined<br>console.log(f); //undefined<br>[/javascript]</p>
+<p>没有new就不会生成一个新的对象，而且函数如果没有return语句，默认返回undefined。如果函数有显式的return语句，则f为return返回结果的引用。</p>
+<p><strong>10、如果构造器返回一个对象</strong></p>
+<p>构造器函数也是函数，它可以返回它想返回的任何类型，虽然通常情况下构造器函数没有return语句，不会显式的返回值，但却会隐式的返回undefined。构造器也可以有显式的return语句，返回简单数据类型或对象。比如：<br>[javascript]<br>return 0; //number<br>return “”; //string<br>return true; //boolean<br>return; //undefined<br>return {}; //object<br>return [1,2]; //object<br>return function(){}; //function<br>[/javascript]</p>
+<p>new操作符的行为正与构造器的返回类型有关。上面有一点儿没有提到，new操作符创建了一个新对象，但具体返回什么还要看构造器函数的返回值类型。<br>如果构造器函数返回undefined,number,string,boolean等简单数据类型,那么new操作符会返回新构造的对象覆盖构造器函数的返回。但是如果构造器函数返回了object或function等对象类型，那么new操作符会抛弃新构造的对象而直接返回构造器函数的返回值。<br>简单来说，如果构造器返回的是对象new操作符就直接返回这个对象，否则new操作符返回新构造的对象，也就是new操作符总是返回一个对象而不会返回简单数据类型。</p>
+<p>如果不在构造器函数上施加new运算符，则构造器函数就是一个普通的函数，直接返回其返回值，隐式的或显式的。</p>
+<p>当函数构造器返回一个对象或函数(也是对象)时，用不用new运算符，结果都是一样的。</p>
+<p>[javascript]<br> function Bar() {<br> return 0;<br> //return “”;<br> //return true;<br> //return;<br> //return [1,2];<br> //return {};<br> //return function(){};<br> }</p>
+<p> Bar.prototype = {<br> foo: function() {}<br> };</p>
+<p> var bar1 = new Bar();<br> var bar2 = Bar();</p>
+<p> console.log(typeof bar1); //object</p>
+<p> //返回的是Bar对象，所以其有foo属性，会从Bar.prototype继承属性<br> console.log(bar1.<strong>proto</strong>); //Object {foo: function}</p>
+<p> console.log(typeof bar2); //number<br> console.log(bar2.<strong>proto</strong>); //Number {}<br>[/javascript]</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/05/27/vim-vundle-install/" rel="prev" title="安装vim插件管理器vundle">
+                  <i class="fa fa-chevron-left"></i> 安装vim插件管理器vundle
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/06/03/innerhtml-load-javascript/" rel="next" title="innerHTML动态加载javascript脚本">
+                  innerHTML动态加载javascript脚本 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="除了标准的基本数据类型以外,用户还可以自定义数据类型对象,而且自定义类型对象还可以有方法,构造函数,这实质上就是OOP思想在DBMS里的投射。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle 自定义数据类型对象">
+<meta property="og:url" content="http://example.com/2014/02/13/oracle-type/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="除了标准的基本数据类型以外,用户还可以自定义数据类型对象,而且自定义类型对象还可以有方法,构造函数,这实质上就是OOP思想在DBMS里的投射。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-02-13T13:12:27.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.398Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/02/13/oracle-type/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>oracle 自定义数据类型对象 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/02/13/oracle-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          oracle 自定义数据类型对象
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-02-13 21:12:27" itemprop="dateCreated datePublished" datetime="2014-02-13T21:12:27+08:00">2014-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>除了标准的基本数据类型以外,用户还可以自定义数据类型对象,而且自定义类型对象还可以有方法,构造函数,这实质上就是OOP思想在DBMS里的投射。</p>
+<a id="more"></a>
+<p>oracle支持的自定义类型有object, SQLJ object,可变数组(varying array,varray), 嵌套表(nested table type), 或不完全对象类型( incomplete object type). </p>
+<p><strong>创建类型(CREATE TYPE)</strong></p>
+<p>比较常用的是object类型,可以使用基本数据类型或其他自定义数据类型来定义object类型,而且支持继承。</p>
+<p>简单的语法,更详细的语法见oracle文档[1]<br>[sql]<br>CREATE OR REPLACE TYPE type_name AS OBJECT(<br> foo VARCHAR(10),<br> bar VARCHAR(100,<br> …<br>) NOT FINAL FINAL;<br>[/sql]</p>
+<p>NOT FINAL 指明类型可以被其他类型继承,继承时使用UNDER关键字指明父类型。<br>FINAL 指明类型不可以被其他类型继承。</p>
+<p>类型中的字段又称为类型的属性(Attribute)</p>
+<p>类型创建以后可以像基本数据类型一样用于创建表字段。<br>[sql]<br>CREATE TABLE table_name (<br> foo bar_type,<br>);<br>[/sql]</p>
+<p>也可以创建只有自定义数据类型的对象表:</p>
+<p>[sql]<br>CREATE TABLE table_name OF object_type;<br>[/sql]<br>可以使用VALUE函数来获取对象表的值。</p>
+<p><strong>更改类型(ALTER TYPE)</strong></p>
+<p>ALTER TYPE详细用法见oracle文档[2]<br>为类型添加新的属性(字段)的语法如下:<br>[sql]ALTER TYPE type_name ADD ATTRIBUTE column data_type [CASCADE];[/sql]</p>
+<p>CASCADE为可选属性,指明是否一并更改当前类型的子类型。</p>
+<p><strong>对象实例条件测试(IS OF)</strong></p>
+<p>使用IS OF来测试对象是否是指定类型的实例，详细语法参见oracle文档[3]<br>[sql]… expr IS [NOT] OF [TYPE] ([ONLY] [SCHEMA.]type_name)[/sql];</p>
+<p>ONLY 指明确匹配指定的类型,不匹配子类型。当expr的结果是type_name的类型或子类型(不指定ONLY)时条件测试为真,否则为假。</p>
+<p><strong>改变类型(TREAT函数)</strong></p>
+<p>使用TREAT函数来改变表达式的类型为指定的类型,类似于编程语言中常见的强制类型转换,详细的语法见oracle文档[4]</p>
+<p>[sql]TREAT(expr AS [REF] [schema.]type_name)[/sql]</p>
+<p>REF 指明表达式为引用类型,还真全活,连引用都有-_-#</p>
+<p><strong>更新类型对象属性值</strong></p>
+<p>可以像编程语言中访问对象的属性一样来访问类型的属性,使用”.”操作符<br>[sql]<br>SQL&gt;UPDATE table_name t set t.foo.bar=foobar where t.xxx=yyy;<br>[/sql]</p>
+<p>但如果需要使用TREAT函数进行类型转换,则UPDATE时比较麻烦,目前使用的方法如下,不知道有没有更好的方法:<br>[sql]<br>SQL&gt; UPDATE (SELECT TREAT(t.foo as bar).foobar f,t.column c from table_name t) SET f=xxx WHERE c=yyy;<br>[/sql]</p>
+<p><strong>标准兼容性</strong></p>
+<p>SQL标准中没有自定义数据类型,因为这个特性是不可移植的,应该谨慎使用。<br>PostgreSQL也支持自定义数据类型,语法与oracle大同小异。</p>
+<p>references:<br>[1]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_8001.htm">CREATE TYPE</a><br>[2]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_4002.htm">ALTER TYPE</a><br>[3]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B28359_01/server.111/b28286/conditions014.htm#SQLRF52157">IS OF type Condition</a><br>[4]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/server.102/b14200/functions198.htm">TREAT</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/02/12/oracle-10g-logminer-usage/" rel="prev" title="oracle 10g 日志分析工具LogMiner简单使用">
+                  <i class="fa fa-chevron-left"></i> oracle 10g 日志分析工具LogMiner简单使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/02/24/diff-and-patch/" rel="next" title="diff和patch">
+                  diff和patch <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

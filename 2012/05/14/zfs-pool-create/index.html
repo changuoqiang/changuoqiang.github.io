@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="ZFS使用存储池来管理物理存储,文件系统不再受限于单个物理设备。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZFS文件系统介绍 - 存储池(1):创建存储池">
+<meta property="og:url" content="http://example.com/2012/05/14/zfs-pool-create/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ZFS使用存储池来管理物理存储,文件系统不再受限于单个物理设备。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-05-14T06:14:07.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.603Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="ZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/05/14/zfs-pool-create/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>ZFS文件系统介绍 - 存储池(1):创建存储池 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fdisk-dev-vdb"><span class="nav-number">1.</span> <span class="nav-text">fdisk &#x2F;dev&#x2F;vdb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-dev-vdb-dev-vdc-dev-vdd"><span class="nav-number">2.</span> <span class="nav-text">zpool create reservoir &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-f-reservoir-dev-vdb-dev-vdc-dev-vdd"><span class="nav-number">3.</span> <span class="nav-text">zpool create -f reservoir &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT"><span class="nav-number">4.</span> <span class="nav-text">zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-pool-reservoir"><span class="nav-number">5.</span> <span class="nav-text">zpool status reservoir pool: reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fidsk-dev-vdb"><span class="nav-number">6.</span> <span class="nav-text">fidsk &#x2F;dev&#x2F;vdb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc"><span class="nav-number">7.</span> <span class="nav-text">zpool create reservoir mirror &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-1"><span class="nav-number">8.</span> <span class="nav-text">zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-pool-reservoir-1"><span class="nav-number">9.</span> <span class="nav-text">zpool status reservoir pool: reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc-dev-vdd"><span class="nav-number">10.</span> <span class="nav-text">zpool create reservoir mirror &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc-mirror-dev-vdd-dev-vde"><span class="nav-number">11.</span> <span class="nav-text">zpool create reservoir mirror &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc mirror &#x2F;dev&#x2F;vdd &#x2F;dev&#x2F;vde</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-2"><span class="nav-number">12.</span> <span class="nav-text">zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-pool-reservoir-2"><span class="nav-number">13.</span> <span class="nav-text">zpool status reservoir pool: reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-raidz2-dev-vdb-dev-vdc-dev-vdd"><span class="nav-number">14.</span> <span class="nav-text">zpool create reservoir raidz2 &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc &#x2F;dev&#x2F;vdd</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-3"><span class="nav-number">15.</span> <span class="nav-text">zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-pool-reservoir-3"><span class="nav-number">16.</span> <span class="nav-text">zpool status reservoir pool: reservoir</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-log-mirror-dev-vdd-dev-vde"><span class="nav-number">17.</span> <span class="nav-text">zpool create reservoir raidz &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc log mirror &#x2F;dev&#x2F;vdd &#x2F;dev&#x2F;vde</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-cache-dev-vdd-dev-vde"><span class="nav-number">18.</span> <span class="nav-text">zpool create reservoir raidz &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc cache &#x2F;dev&#x2F;vdd &#x2F;dev&#x2F;vde</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-spare-dev-vdd-dev-vde"><span class="nav-number">19.</span> <span class="nav-text">zpool create reservoir raidz &#x2F;dev&#x2F;vdb &#x2F;dev&#x2F;vdc spare &#x2F;dev&#x2F;vdd &#x2F;dev&#x2F;vde</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zpool-status-reservoir-pool-reservoir-4"><span class="nav-number">20.</span> <span class="nav-text">zpool status reservoir pool: reservoir</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/05/14/zfs-pool-create/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZFS文件系统介绍 - 存储池(1):创建存储池
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-05-14 14:14:07" itemprop="dateCreated datePublished" datetime="2012-05-14T14:14:07+08:00">2012-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ZFS使用存储池来管理物理存储,文件系统不再受限于单个物理设备。</p>
+<a id="more"></a>
+<p>不再需要预先考虑并确定文件系统的大小,因为文件系统会在分配给存储池的磁盘空间内自动增长。添加新的物理存储设备后,无需执行其他操作,池中的所有文件系统即可立即使用所增加的磁盘空间。所以有了ZFS,就不再需要传统的卷管理器，甚至也不再需要传统的RAID设备了。</p>
+<p>下文及后续文章涉及到的命令皆基于如下KVM虚拟系统环境：</p>
+<p>debian amd64 testing + zfsonlinux 0.6.0-rc8</p>
+<p><strong>创建存储池</strong></p>
+<p>可以使用整块磁盘,磁盘上面的分区或者文件来创建ZFS存储池,但是推荐使用整块磁盘来创建存储池，并且最好不要用硬件RAID提供的虚拟卷。</p>
+<p>下面只演示使用整块物理磁盘的情形。这里创建了6个1G的磁盘设备,从KVM客户机里看到的“物理设备”名称为/dev/vdb,/dev/vdc,/dev/vdd,/dev/vde,/dev/vdf,/dev/vdg。所有6个磁盘没有进行分区,处于原始状态。</p>
+<p><strong>1、创建基本存储池</strong></p>
+<p>先查看下物理磁盘状态</p>
+<h1 id="fdisk-dev-vdb"><a href="#fdisk-dev-vdb" class="headerlink" title="fdisk /dev/vdb"></a>fdisk /dev/vdb</h1><p>Disk /dev/vdb: 1073 MB, 1073741824 bytes<br>16 heads, 63 sectors/track, 2080 cylinders, total 2097152 sectors<br>Units = sectors of 1 * 512 = 512 bytes<br>Sector size (logical/physical): 512 bytes / 512 bytes<br>I/O size (minimum/optimal): 512 bytes / 512 bytes<br>Disk identifier: 0x00000000</p>
+<p>Disk /dev/vdb doesn’t contain a valid partition table</p>
+<p>创建池</p>
+<h1 id="zpool-create-reservoir-dev-vdb-dev-vdc-dev-vdd"><a href="#zpool-create-reservoir-dev-vdb-dev-vdc-dev-vdd" class="headerlink" title="zpool create reservoir /dev/vdb /dev/vdc /dev/vdd"></a>zpool create reservoir /dev/vdb /dev/vdc /dev/vdd</h1><p>会有提示：<br>invalid vdev specification<br>use ‘-f’ to override the following errors:<br>/dev/vdb does not contain an EFI label but it may contain partition<br>information in the MBR</p>
+<p>这是ZFS检测到磁盘不是GPT格式的,而且有可能存在分区,所以进行了提示,加上-f选项继续执行会成功创建存储池。</p>
+<h1 id="zpool-create-f-reservoir-dev-vdb-dev-vdc-dev-vdd"><a href="#zpool-create-f-reservoir-dev-vdb-dev-vdc-dev-vdd" class="headerlink" title="zpool create -f reservoir /dev/vdb /dev/vdc /dev/vdd"></a>zpool create -f reservoir /dev/vdb /dev/vdc /dev/vdd</h1><p>reservoir是存储池的名字,solaris提供的zfs手册里举例喜欢用tank做池子的名字,tank与reservoir都有蓄水池的意思。这个存储池基于/dev/vdb,/dev/vdc和/dev/vdd这三个物理磁盘设备创建。从ZFS的角度看,这三个物理磁盘设备同时还是顶层的vdev设备。</p>
+<p>查看存储池基本信息</p>
+<h1 id="zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT"><a href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT" class="headerlink" title="zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT"></a>zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</h1><p>reservoir 2.95G 112K  2.95G 0%  1.00x ONLINE - </p>
+<p>ZFS在这三个设备上执行动态条带,但没有任何数据冗余,任何一个磁盘出现故障都将导致存储池不可用,而且无法动态更换磁盘。其容量为3块物理磁盘之和。</p>
+<p>这种类型的池子对物理磁盘数量没有限制</p>
+<p>查看下存储池reservoir的状态和布局</p>
+<h1 id="zpool-status-reservoir-pool-reservoir"><a href="#zpool-status-reservoir-pool-reservoir" class="headerlink" title="zpool status reservoir pool: reservoir"></a>zpool status reservoir pool: reservoir</h1><p> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          vdb1      ONLINE       0     0     0<br>          vdc1      ONLINE       0     0     0<br>          vdd1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>可以看到池子并没有如预期使用整个磁盘,而是在磁盘上自动创建了一个覆盖全部存储空间的GPT分区来做为存储池的底层物理设备,可以再看下物理磁盘的分区状态</p>
+<h1 id="fidsk-dev-vdb"><a href="#fidsk-dev-vdb" class="headerlink" title="fidsk /dev/vdb"></a>fidsk /dev/vdb</h1><p>Disk /dev/vdb: 1073 MB, 1073741824 bytes<br>256 heads, 63 sectors/track, 130 cylinders, total 2097152 sectors<br>Units = sectors of 1 * 512 = 512 bytes<br>Sector size (logical/physical): 512 bytes / 512 bytes<br>I/O size (minimum/optimal): 512 bytes / 512 bytes<br>Disk identifier: 0x00000000</p>
+<p> Device Boot Start End Blocks Id System<br>/dev/vdb1 1 2097151 1048575+ ee GPT</p>
+<p>可以清楚的看到ZFS为物理磁盘自动创建了一个GPT分区,为什么会这样呢？可以看此处<a target="_blank" rel="noopener" href="https://github.com/zfsonlinux/zfs/issues/94">对这个问题的讨论</a>,Brian Behlendorf对此的解释是为了对齐，而且ZFS的行为尽量与solaris一致云云。<br>总之目前在zfsonlinux上面,你给了它整个物理磁盘,它自动为你分区,然后使用整个分区,这也不是什么大问题。</p>
+<p><strong>2、创建镜像池</strong></p>
+<p>没有任何冗余的池子你敢用吗？这也体现不出ZFS的优势。使用mirror命令来创建镜像池,至少需要两块物理磁盘。</p>
+<h1 id="zpool-create-reservoir-mirror-dev-vdb-dev-vdc"><a href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc" class="headerlink" title="zpool create reservoir mirror /dev/vdb /dev/vdc"></a>zpool create reservoir mirror /dev/vdb /dev/vdc</h1><p>查看池子的基本信息</p>
+<h1 id="zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-1"><a href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-1" class="headerlink" title="zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT"></a>zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</h1><p>reservoir 1008M 109K  1008M 0%  1.00x ONLINE - 可以看到其容量为一块磁盘的容量,与RAID1基本类似。</p>
+<p>查看存储池状态和布局</p>
+<h1 id="zpool-status-reservoir-pool-reservoir-1"><a href="#zpool-status-reservoir-pool-reservoir-1" class="headerlink" title="zpool status reservoir pool: reservoir"></a>zpool status reservoir pool: reservoir</h1><p> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>此镜像池reservoir的顶层虚拟设备vdev为mirror-0,而不是那两块物理磁盘。<br>这个池子是双向镜像池,还可以创建三向或更多向镜像池,其冗余度越来越高。</p>
+<p>三向镜像池</p>
+<h1 id="zpool-create-reservoir-mirror-dev-vdb-dev-vdc-dev-vdd"><a href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc-dev-vdd" class="headerlink" title="zpool create reservoir mirror /dev/vdb /dev/vdc /dev/vdd"></a>zpool create reservoir mirror /dev/vdb /dev/vdc /dev/vdd</h1><p>这个新池子只是多了一份冗余,其容量仍然是一块物理磁盘的容量。</p>
+<p>ZFS存储池支持层次结构,比如可以创建一个池子，动态条带化两个顶层镜像虚拟设备,如下</p>
+<h1 id="zpool-create-reservoir-mirror-dev-vdb-dev-vdc-mirror-dev-vdd-dev-vde"><a href="#zpool-create-reservoir-mirror-dev-vdb-dev-vdc-mirror-dev-vdd-dev-vde" class="headerlink" title="zpool create reservoir mirror /dev/vdb /dev/vdc mirror /dev/vdd /dev/vde"></a>zpool create reservoir mirror /dev/vdb /dev/vdc mirror /dev/vdd /dev/vde</h1><p>查看池子的基本信息</p>
+<h1 id="zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-2"><a href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-2" class="headerlink" title="zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT"></a>zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</h1><p>reservoir 1.97G 91.5K 1.97G 0%  1.00x ONLINE -<br>其容量为两个镜像虚拟设备的容量之和</p>
+<p>查看池子的状态和布局</p>
+<h1 id="zpool-status-reservoir-pool-reservoir-2"><a href="#zpool-status-reservoir-pool-reservoir-2" class="headerlink" title="zpool status reservoir pool: reservoir"></a>zpool status reservoir pool: reservoir</h1><p> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          mirror-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>          mirror-1  ONLINE       0     0     0<br>            vdd1    ONLINE       0     0     0<br>            vde1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>可以看到这个池子有两个顶层vdev,mirror-0和mirror-1,ZFS在这两个vdev之间执行动态条带化,而每个vdev又对其数据进行镜像。</p>
+<p><strong>3、创建raidz池</strong></p>
+<p>RAID-Z有3种,分别为单奇偶校验的raidz或叫raidz1,双奇偶校验的raidz2和三奇偶校验的raidz3。一个RAID-Z配置包含 N 个大小为 X 的磁盘,其中有 P 个奇偶校验磁盘,该配置可以存放大约 (N-P)*X 字节的数据,并且只有在 P 个设备出现故障时才会危及数据完整性。单奇偶校验 RAID-Z 配置至少需要两个磁盘,双奇偶校验 RAID-Z 配置至少需要三个磁盘,三奇偶校验 RAID-Z 配置至少需要四个磁盘。单奇偶校验至多只能掉一块磁盘,双奇偶校验至多只能掉2块盘,三奇偶校验至多只能掉3块盘。</p>
+<p>创建raidz2池</p>
+<h1 id="zpool-create-reservoir-raidz2-dev-vdb-dev-vdc-dev-vdd"><a href="#zpool-create-reservoir-raidz2-dev-vdb-dev-vdc-dev-vdd" class="headerlink" title="zpool create reservoir raidz2 /dev/vdb /dev/vdc /dev/vdd"></a>zpool create reservoir raidz2 /dev/vdb /dev/vdc /dev/vdd</h1><p>查看池子基本信息</p>
+<h1 id="zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-3"><a href="#zpool-list-reservoir-NAME-SIZE-ALLOC-FREE-CAP-DEDUP-HEALTH-ALTROOT-3" class="headerlink" title="zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT"></a>zpool list reservoir NAME      SIZE  ALLOC FREE  CAP DEDUP HEALTH ALTROOT</h1><p>reservoir 2.95G 279K  2.95G 0%  1.00x ONLINE - </p>
+<p>查看池子的状态和布局</p>
+<h1 id="zpool-status-reservoir-pool-reservoir-3"><a href="#zpool-status-reservoir-pool-reservoir-3" class="headerlink" title="zpool status reservoir pool: reservoir"></a>zpool status reservoir pool: reservoir</h1><p> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          raidz2-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>            vdd1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p>可以看到池子的顶层vdev设备为raidz2-0</p>
+<p><strong>4、创建使用日志设备的存储池</strong></p>
+<p>默认情况下,ZFS的日志从主池中分配,通过提供单独的日志设备，可以提高ZFS的性能和安全性,也可以使用镜像日志设备,但日志设备不支持RAID-Z,也就是日志设备不可以作成RAID-Z方式,但是RAID-Z池可以使用日志设备。<br>创建使用镜像日志设备的raidz池</p>
+<h1 id="zpool-create-reservoir-raidz-dev-vdb-dev-vdc-log-mirror-dev-vdd-dev-vde"><a href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-log-mirror-dev-vdd-dev-vde" class="headerlink" title="zpool create reservoir raidz /dev/vdb /dev/vdc log mirror /dev/vdd /dev/vde"></a>zpool create reservoir raidz /dev/vdb /dev/vdc log mirror /dev/vdd /dev/vde</h1><p>查看池子的状态和布局<br>#zpool status reservoir pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          raidz1-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>        logs<br>          mirror-1  ONLINE       0     0     0<br>            vdd1    ONLINE       0     0     0<br>            vde1    ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p><strong>5、创建使用高速缓存设备的存储池</strong><br>为池子指定高速缓存设备可以有效提高ZFS的性能,比如使用SSD作为高速缓存设备</p>
+<h1 id="zpool-create-reservoir-raidz-dev-vdb-dev-vdc-cache-dev-vdd-dev-vde"><a href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-cache-dev-vdd-dev-vde" class="headerlink" title="zpool create reservoir raidz /dev/vdb /dev/vdc cache /dev/vdd /dev/vde"></a>zpool create reservoir raidz /dev/vdb /dev/vdc cache /dev/vdd /dev/vde</h1><p>查看池子的状态和布局<br>#zpool status reservoir pool: reservoir<br> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          raidz1-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>        cache<br>          vdd1      ONLINE       0     0     0<br>          vde1      ONLINE       0     0     0  </p>
+<p>errors: No known data errors </p>
+<p><strong>6、创建使用热备件的存储池</strong><br>ZFS支持hot spare,通过指定热备件,当池中的活动设备发生严重故障时必须更换时,ZFS可以自动使用热备件来替换故障设备</p>
+<h1 id="zpool-create-reservoir-raidz-dev-vdb-dev-vdc-spare-dev-vdd-dev-vde"><a href="#zpool-create-reservoir-raidz-dev-vdb-dev-vdc-spare-dev-vdd-dev-vde" class="headerlink" title="zpool create reservoir raidz /dev/vdb /dev/vdc spare /dev/vdd /dev/vde"></a>zpool create reservoir raidz /dev/vdb /dev/vdc spare /dev/vdd /dev/vde</h1><p>查看池子的状态和布局</p>
+<h1 id="zpool-status-reservoir-pool-reservoir-4"><a href="#zpool-status-reservoir-pool-reservoir-4" class="headerlink" title="zpool status reservoir pool: reservoir"></a>zpool status reservoir pool: reservoir</h1><p> state: ONLINE<br> scan: none requested<br>config:  </p>
+<p>        NAME        STATE     READ WRITE CKSUM<br>        reservoir   ONLINE       0     0     0<br>          raidz1-0  ONLINE       0     0     0<br>            vdb1    ONLINE       0     0     0<br>            vdc1    ONLINE       0     0     0<br>        spares<br>          vdd1      AVAIL   <br>          vde1      AVAIL     </p>
+<p>errors: No known data errors</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/ZFS/" rel="tag"># ZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-basic/" rel="prev" title="ZFS文件系统介绍 - 基础">
+                  <i class="fa fa-chevron-left"></i> ZFS文件系统介绍 - 基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-pool-manager-destroy/" rel="next" title="ZFS文件系统介绍 - 存储池(2):管理和销毁存储池">
+                  ZFS文件系统介绍 - 存储池(2):管理和销毁存储池 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

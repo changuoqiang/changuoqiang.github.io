@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="软件开发文档是软件质量保证的重要一环，所有软件开发文档都应该纳入版本管理之中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件开发文档管理">
+<meta property="og:url" content="http://example.com/2013/12/10/dev-docs/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="软件开发文档是软件质量保证的重要一环，所有软件开发文档都应该纳入版本管理之中。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-12-10T02:49:36.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.163Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/12/10/dev-docs/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>软件开发文档管理 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/10/dev-docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件开发文档管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-10 10:49:36" itemprop="dateCreated datePublished" datetime="2013-12-10T10:49:36+08:00">2013-12-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>软件开发文档是软件质量保证的重要一环，所有软件开发文档都应该纳入版本管理之中。</p>
+<a id="more"></a>
+<p>这里分为两类文档来讨论，一种是与源代码一起书写的文档，另一种是单独撰写的文档。</p>
+<p><strong>代码中的注释和API(接口)文档</strong></p>
+<p>这种类型的文档一般语言层面上都有专门的文档生成工具，比如java有javadoc,javascript有jsdoc,python也有自己的文档注释标准和文档生成工具。只要按照语言的注释文档规范书写文档即可。</p>
+<p>数据库设计文档也应该从sql建库脚本中自动生成,只要自定义一些注释标签，然后使用工具自动生成即可。已经在使用自定义的标签书写sql建库脚本，下一步会开发sqldoc工具来自动生成数据库设计文档。</p>
+<p>还有大名鼎鼎的文档生成工具<a target="_blank" rel="noopener" href="http://www.doxygen.org/">Doxygen</a>，可以处理绝大多数语言的注释文档。</p>
+<p>注释文档的好处是比较容易同步，修改代码时可以比较方便的同步修改文档。而且文档与代码一起纳入版本库管理。</p>
+<p><strong>单独撰写的文档</strong></p>
+<p>单独撰写的文档也有很多，比如用户需求规格说明书，系统概要设计，系统详细设计，用户使用手册，测试文档等。这些也应该纳入版本库统一管理。</p>
+<p>这些文档最好不要使用专有的文档格式撰写，而且要采用文本格式，而不是二进制格式，方便进行版本管理。</p>
+<p>LaTeX是很专业的排版软件，可以用于撰写软件开发文档，但显然有些过于重量级了，比较复杂，有学习曲线，而且有大材小用之嫌。而Markdown则语法简单，功能不弱，适合开发文档的撰写，而且很容易纳入git版本库进行管理。</p>
+<p>Mac下有一个很不错的Markdown编辑软件叫做<a target="_blank" rel="noopener" href="http://mouapp.com/">Mou</a>。<br>vim也可以找到很多的Markdown语法高亮和<a target="_blank" rel="noopener" href="http://howiefh.github.io/2013/05/16/vim-markdown-preview/">实时预览</a>插件。<br>还有一个好玩的基于git仓库的使用Markdown语法的wiki系统<a target="_blank" rel="noopener" href="http://gitit.net/">gitit</a>。</p>
+<p>使用Markdown撰写的文档，后期可以通过<a target="_blank" rel="noopener" href="http://johnmacfarlane.net/pandoc/">pandoc</a>输出到其他多种交换格式，比如html5,LaTex，PDF(via LaTeX)等。<br>Markdown语法十分简单，五分钟入门够了。语法可以看<a target="_blank" rel="noopener" href="http://jianshu.io/p/q81RER">献给写作者的 Markdown 新手指南</a>，<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/Markdown">Markdown</a>,<a target="_blank" rel="noopener" href="http://markdown.tw/">Markdown语法说明</a>和<a target="_blank" rel="noopener" href="http://wowubuntu.com/markdown/">Markdown 语法说明 (简体中文版)</a> 。<br>这里还有两篇Markdown和LaTeX结合的文章，<a target="_blank" rel="noopener" href="http://blog.yesmryang.net/markdown-latex/">用markdown来写LaTeX</a>和<a target="_blank" rel="noopener" href="http://jianshu.io/p/PpDNMG">Markdown写作浅谈</a></p>
+<p>Markdown的<a target="_blank" rel="noopener" href="http://daringfireball.net/projects/markdown/">老家</a>。</p>
+<p><strong>详细设计文档与注释(API/接口)文档</strong></p>
+<p>详细设计文档撰写应该早于编码进行，是编码的指导性文件。</p>
+<p>详细设计文档提供模块设计上的考虑、核心决策，包括模块与概要(总体)设计的关系、重要操作的处理流程、重要的业务规则设计、采用的核心算法等等信息，提供了对模块设计的概述性信息。详细设计宜使用一些图表来更直观的表达设计意图。</p>
+<p>详细设计文档也不要过细，一些十分细节的设计问题应该放到代码文档注释中。详细设计文档的粒度应该介于概要(总体)设计和文档注释之间。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/12/04/%E5%BC%80%E6%BA%90%E5%8F%AF%E8%A7%86%E5%8C%96web%E7%BC%96%E8%BE%91%E5%99%A8bluegriffon/" rel="prev" title="开源可视化web编辑器BlueGriffon">
+                  <i class="fa fa-chevron-left"></i> 开源可视化web编辑器BlueGriffon
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/12/10/vim-markdown-chrome/" rel="next" title="vim编辑Markdown使用chrome实时预览">
+                  vim编辑Markdown使用chrome实时预览 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

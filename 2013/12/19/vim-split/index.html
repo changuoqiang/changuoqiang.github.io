@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="vim即可以切分窗口,也可以将窗口分页，分页以后仍然可以在页签内继续切分窗口，很强大有木有。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vim切分窗口(Split Window)">
+<meta property="og:url" content="http://example.com/2013/12/19/vim-split/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="vim即可以切分窗口,也可以将窗口分页，分页以后仍然可以在页签内继续切分窗口，很强大有木有。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-12-19T02:55:38.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.568Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Vim">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/12/19/vim-split/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Vim切分窗口(Split Window) | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/19/vim-split/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vim切分窗口(Split Window)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-19 10:55:38" itemprop="dateCreated datePublished" datetime="2013-12-19T10:55:38+08:00">2013-12-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>vim即可以切分窗口,也可以将窗口分页，分页以后仍然可以在页签内继续切分窗口，很强大有木有。</p>
+<a id="more"></a>
+<p><strong>启动时切分窗口</strong></p>
+<p>启动时分割窗口的参数,man里是这样写的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-o\[N\] Open N windows stacked. When N is omitted, open one <span class="built_in">window</span> <span class="keyword">for</span> each file.</span><br><span class="line">-O\[N\] Open N windows side by side. When N is omitted, open one <span class="built_in">window</span> <span class="keyword">for</span> each file.</span><br></pre></td></tr></table></figure>
+
+<p>参数小写o用于水平分割窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim -o\[N\] file1 file2 ... </span><br></pre></td></tr></table></figure>
+<p>参数大写O用于垂直分割窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim -O\[N\] file1 file2 ... </span><br></pre></td></tr></table></figure>
+<p>N指定分割几个窗口,如果不指定参数N,则每一个文件打开一个分割窗口。如果指定参数N，不指定file参数，则显示空白的分割窗口<br>,参数N不必与要打开的文件个数相同。</p>
+<p>vimdiff命令也是以切分窗口的方式来打开文件并高亮展示文件之间的差异，vimdiff同样识别上面说过的小写o和大写O参数,同样也可以指定N,vimdiff默认以垂直切分窗口显示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vimdiff \[-o\[N\] -O\[N\]\] file1 file2 ... </span><br></pre></td></tr></table></figure>
+
+<p><strong>动态切分窗口</strong></p>
+<p>打开vim编辑窗口之后,仍然可以方便的按需切分窗口。</p>
+<p>水平切分<br>有多个命令可以水平切分窗口,如果提供file参数,可以在新分割的窗口中显示文件内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:\[N\]sp\[lit\] \[file\]</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:\[N\]<span class="keyword">new</span> \[file\]</span><br></pre></td></tr></table></figure>
+<p>还有一个快捷键组合</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w s</span><br></pre></td></tr></table></figure>
+
+<p>垂直切分<br>有多个命令可以垂直切分窗口，如果提供file参数,可以在新分割的窗口中显示文件内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:\[N\]vs\[plit\]</span><br><span class="line">:vert\[ical\] sp\[lit\]</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:\[N\]vne\[w\]</span><br><span class="line">:vert\[ical\] <span class="keyword">new</span></span><br></pre></td></tr></table></figure>
+<p>还有一个快捷键组合</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w v</span><br></pre></td></tr></table></figure>
+
+<p>可选参数N是一个数字,用于指定新分割窗口的大小，以行数计。</p>
+<p><strong>移动光标</strong></p>
+<p>要在切分窗口间移动光标,只要先按CTRL+w,然后组合vim的光标移动键h,j,k,l等就可以在窗口间移动光标</p>
+<p>移动到左侧紧邻窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w h</span><br></pre></td></tr></table></figure>
+<p>移动到下面紧邻窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w j</span><br></pre></td></tr></table></figure>
+<p>移动到上面紧邻窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w k</span><br></pre></td></tr></table></figure>
+<p>移动到右侧紧邻窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w l</span><br></pre></td></tr></table></figure>
+
+<p>在窗口间依次循环切换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w w</span><br></pre></td></tr></table></figure>
+
+<p>移动到最顶部(top)的窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w t</span><br></pre></td></tr></table></figure>
+
+<p>移动到最底部(bottom)的窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w b</span><br></pre></td></tr></table></figure>
+
+<p>移动到前一个(previous)的窗口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w p</span><br></pre></td></tr></table></figure>
+
+<p><strong>移动窗口</strong></p>
+<p>仍然需要先按CTRL+w,不过移动窗口使用大写的vim光标键H,J,K,L等。不过这里稍微有些不同，马上会看到</p>
+<p>移动当前窗口到最左侧</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w H</span><br></pre></td></tr></table></figure>
+<p>移动当前窗口到最底部</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w J</span><br></pre></td></tr></table></figure>
+<p>移动当前窗口到最顶部</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w K</span><br></pre></td></tr></table></figure>
+<p>移动当前窗口到最右侧</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CTRL+w L</span><br></pre></td></tr></table></figure>
+<p>当前窗口与下面窗口或右侧窗口进行位置交换(eXchange)。<br>如果当前窗口在底部，下面已经没有其他窗口，这时命令将当前窗口与上面窗口进行位置交换。<br>如果当前窗口在最右侧，右侧已经没有其他窗口，这是命令将当前窗口与其左侧的窗口进行位置交换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctrl+w x</span><br></pre></td></tr></table></figure>
+<p>窗口向下进行循环(recycle)移动,这个命令可以前缀一个数字N作为参数，指明向下循环移动所执行的次数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]ctrl+w r</span><br></pre></td></tr></table></figure>
+<p>窗口向上进行循环(Recycle)移动,这个命令可以前缀一个数字N作为参数，指明向上循环移动所执行的次数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]ctrl+w R</span><br></pre></td></tr></table></figure>
+
+<p><strong>窗口大小</strong></p>
+<p>调整窗口高度</p>
+<p>增加高度,默认每次增加一行,如果指定参数N则增加N行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w \[N\]+</span><br></pre></td></tr></table></figure>
+<p>减少高度,默认每次减少一行,如果指定参数N则减少N行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w \[N\]-</span><br></pre></td></tr></table></figure>
+<p>所有窗口高度一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+w =</span><br></pre></td></tr></table></figure>
+<p>使当前窗口调整到指定高度,如果指定参数N则调整到指定的N行高度,否则当前窗口的高度尽可能的最大。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w _</span><br></pre></td></tr></table></figure>
+
+<p>resize命令调整窗口高度。resize不带任何参数,则当前窗口的高度尽可能的最大。如果指定参数N则调整到指定的N行高度,如果指定参数N的同时使用+或者-前缀修饰,则在当前窗口高度的基础上增加或者减少N行高度。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:res\[ize\] \[\[+-\]N\]</span><br></pre></td></tr></table></figure>
+
+<p>窗口宽度调整</p>
+<p>增加窗口宽度,如果指定N则增加N行宽度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w \[N\]&gt;</span><br></pre></td></tr></table></figure>
+
+<p>减少窗口宽度,如果指定N则减少N行宽度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[N\]Ctrl+w \[N\]&lt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>关闭窗口</strong></p>
+<p>可以使用<code>ZZ</code>或是<code>:q</code>命令或<code>ctrl+w c</code>关闭当前窗口。</p>
+<p>命令<code>ctrl+w o</code>可以使得当前窗口成为屏幕上的唯一(only)窗口，而其他窗口全部关闭。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://yyq123.blogspot.com/2009/08/vim-window.html">VIM学习笔记 窗口(Window)</a><br>[2]<a target="_blank" rel="noopener" href="http://coolshell.cn/articles/1679.html">Vim的分屏功能</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vim/" rel="tag"># Vim</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/12/19/4506/" rel="prev" title="Untitled Post - 27">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 27
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/12/19/mybatis-generator-ignore-example/" rel="next" title="配置Mybatis Generator不要生成Example类">
+                  配置Mybatis Generator不要生成Example类 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

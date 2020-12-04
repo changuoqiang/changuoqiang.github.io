@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="javascript中并没有类的概念，这里的类指代用new操作符产生出其他对象的对象。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript继承模型">
+<meta property="og:url" content="http://example.com/2013/06/05/javascript-instance-class-prototype/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="javascript中并没有类的概念，这里的类指代用new操作符产生出其他对象的对象。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-06-05T03:07:57.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.257Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Javascript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/06/05/javascript-instance-class-prototype/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>javascript继承模型 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/06/05/javascript-instance-class-prototype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          javascript继承模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-06-05 11:07:57" itemprop="dateCreated datePublished" datetime="2013-06-05T11:07:57+08:00">2013-06-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>javascript中并没有类的概念，这里的类指代用new操作符产生出其他对象的对象。</p>
+<a id="more"></a>
+<p>这里说的属性也包括方法，因为方法只不过是值为函数的属性。</p>
+<p>javascript是基于原型的，没有类的概念，但是借鉴了new操作符来通过原型对象(constructor.prototype)生成实例对象，new运算符作用于一个函数构造器(constructor)之上。先看一个简单的函数构造器(constructor)<br>[javascript]<br>function F(){}<br>[/javascript]</p>
+<p>F看起来平淡无奇，但其背后隐藏了很多看不到的奥秘。首先F是一个函数F()，其次函数本身还是一个对象F，再次函数F()背后还有一个由javascript引擎安排的一个函数构造器原型(constructor.prototype)对象F{}。这个构造器原型对象F{}是F对象的属性，而不是F()函数的,由F对象的prototype属性引用，也就是F.prototype=F{}</p>
+<p>从机器域来说，函数F()就是一段可执行代码，所以底层实现还是需要一个数据区来存储函数对象F的属性。在机器层面上这与C++的类模型并无本质的不同。</p>
+<p>这里有必要区分下F()函数和F对象。先来看段C++代码：<br>[cpp]<br>class F{<br>public:<br> F(){<br> this.m_a=’a’;<br> }<br>private:<br> char m_a;<br>}</p>
+<p>F* f = new F();<br>[/cpp]<br>是不是有一个F类还有一个F构造函数。F类的构造函数就是F(),生成f实例对象时new会在内部调用F()构造函数。new先申请一块类对象大小的内存块，然后初始化一些内部的变量如vptr等，最后会以此内存区域的首地址为this指针的值来调用构造函数F(),最后将实例对象的地址赋予实例对象指针f。</p>
+<p>javascript的原型继承与其有相似之处，只是实现方式不同。再回到最初的javascript函数构造器，F()就是构造函数，F对象就是类，F.prototype引用的原型对象F{}就是父类，原型对象F{}有一个字段constructor指向构造函数F()。</p>
+<p>var f = new F();</p>
+<p>构造函数为新创建对象添加用this修饰的属性，因为this此时指向新创建的对象，并返回给f,这是显式的。并且新创建的对象动态的继承原型对象F{}(F.prototype)中的所有属性。但是对象f并不从F对象继承任何属性，这与C++等是不同的。new做的具体操作参考<a target="_blank" rel="noopener" href="https://openwares.net/js/javascript_prototype_chain.html">JavaScript原型链浅析</a></p>
+<p>看一段测试代码<br>[javascript]<br>function F(){<br> var a = “a”; //a不过是函数F()的局部变量，离开F()，变量a就不存在了<br> this.b = “b”; //b也是函数F()作用域内部的变量，离开F()就不存在了，<br> //但b却添加到新对象上，因为执行构造函数F()之时，this指向新构造的对象<br> this.instanceF = function(){ //与b相同，所有this修饰的属性都会添加到新对象之上<br> console.log(“this=”+this);<br> console.log(“this.a=”+this.a);<br> console.log(“this.b=”+this.b);<br> console.log(“this.c=”+this.c);<br> };<br>};</p>
+<p>F.c = “c”; //这里c其实是添加到F对象之上<br>F.staticF = function(){ //与c相同,添加F对象之上<br> console.log(“this=”+this);<br> console.log(“this.a=”+this.a);<br> console.log(“this.b=”+this.b);<br> console.log(“this.c=”+this.c);<br>};</p>
+<p>//static</p>
+<p>console.log(F.a); //undefined<br>console.log(F.b); //undefined<br>console.log(F.c); //c<br>//F.instanceF(); //TypeError: F.instanceF is not a function<br>F.staticF(); //依次输出(可以看出staticF()函数的this就是F对象，也就是function F(){…}):<br> //this=function F(){<br> // var a = “a”; //a不过是函数F()的局部变量，离开F()，变量a就不存在了<br> // this.b = “b”; //b也是函数F()作用域内部的变量，离开F()就不存在了，<br> // //但b却添加到新对象上，因为执行构造函数F()之时，this指向新构造的对象<br> // this.instanceF = function(){ //与b相同，所有this修饰的属性都会添加到新对象之上<br> // console.log(“this=”+this);<br> // console.log(“this.a=”+this.a);<br> // console.log(“this.b=”+this.b);<br> // console.log(“this.c=”+this.c);<br> // };<br> //}<br> //this.a=undefined<br> //this.b=undefined<br> //this.c=c</p>
+<p>//函数对象F是由Function(){}构造的<br>console.log(F.constructor); //function Function() { [native code] }<br>console.log(F.constructor===F.<strong>proto</strong>.constructor); //true<br>//new instance<br>var f = new F();</p>
+<p>console.log(f.a); //undefined<br>console.log(f.b); //b<br>console.log(f.c); //undefined<br>f.instanceF(); //依次输出:<br> //this=[object object]<br> //this.a=undefined<br> //this.b=b<br> //this.c=undefined<br>//f.staticF(); //TypeError: f.staticF is not a function<br>[/javascript]</p>
+<p>对象实例f，拥有构造函数F()为其添加的属性、自己添加的属性，并可以访问原型链F.prototype上的属性，但不能访问F对象上的属性。从构造函数F()添加的属性每个实例都有一个单独的拷贝，不会相互影响，但F.prototype上的属性则是由所有的实例共享的，修改F.prototype的属性会影响所有的实例。</p>
+<p>由此可见，<strong>F.prototype其有属性constructor指向构造函数F(),并且new出来的实例对象从F.prototype继承属性，并可沿原型链上溯。相对而言F对象则看起来可有可无了。因为纯粹的构造函数F()是不能持有属性的，所以就有了F对象来持有F的prototype属性，难道这就是生成F对象的唯一原因吗？</strong></p>
+<p>F对象的方法很像其他语言里的类静态方法，无需实例化对象即可直接访问，其实就是一种全局函数，不过就是加上了类型的名字空间而已。</p>
+<p>那么，最终可以与C++,java等语言做一个类比，当然并没有很多的可比性，差别还是很大的：<br>new生成的f对象是F类的实例，而F类的功能则是由F()和F共同提供，F()提供实例属性，F提供类静态属性，F{}(F.prototype)则是F类的父类，大体是这么个对应关系。但是实例对象f并不能访问F对象的静态属性。</p>
+<p>也就是说：<strong>函数构造器是构造函数，其背后隐式的对象为类，构造器的prototype是父类，而通过构造器new出来的则是对象。</strong><br>一个字，真绕！</p>
+<p><strong>P.S.</strong> 这篇文章<a target="_blank" rel="noopener" href="http://blog.vjeux.com/2011/javascript/how-prototypal-inheritance-really-works.html">Javascript – How Prototypal Inheritance really works</a>对javascript原型继承讲述的十分清晰。<br>这里还有一篇大牛Douglas Crockford的文章<a target="_blank" rel="noopener" href="http://javascript.crockford.com/prototypal.html">Prototypal Inheritance in JavaScript</a></p>
+<p><strong>UPDATE（05/03/2014)：</strong>如果非要与传统的OOP类比的话,应该是<strong>构造函数</strong>和其<strong>原型对象</strong>一起构成了继承链中的<strong>父类</strong>。<br><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/06/03/innerhtml-load-javascript/" rel="prev" title="innerHTML动态加载javascript脚本">
+                  <i class="fa fa-chevron-left"></i> innerHTML动态加载javascript脚本
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/06/10/javascript-this/" rel="next" title="javascript this关键字">
+                  javascript this关键字 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

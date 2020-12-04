@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/24/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/24/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/26/h3c-secpath-nat-destination-replace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/26/h3c-secpath-nat-destination-replace/" class="post-title-link" itemprop="url">H3C SecPath防火墙内部服务器NAT访问所有源地址被替换问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-26 22:26:49" itemprop="dateCreated datePublished" datetime="2016-05-26T22:26:49+08:00">2016-05-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>设置NAT内部服务器，并且设置了<a target="_blank" rel="noopener" href="https://openwares.net/2014/03/25/h3c_backward/">端口回流</a>，内网可以正常通过公网ip访问内部服务。</p>
+<p>但是当通过外网访问该服务时，从服务器上观察，TCP连接的源地址也被替换成了防火墙的内网接口地址，不过访问一切正常。</p>
+<p>经排查，是因为设置端口回流时，在内网接口的ACL条目中未指定source,类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">216</span> permit ip destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>导致防火墙将所有访问NAT服务的源地址全部替换成了防火墙的内网接口地址(内网接口优先级高，且不区分内外网网络地址???)。</p>
+<p>通过指定哪些内网段访问NAT服务器时可以通过内网接口，可以只替换这些网段的源地址。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">226</span> permit ip source <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span> </span><br><span class="line">rule <span class="number">227</span> permit ip source <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+<p>这样以来，外网访问时，源地址没有被替换，但acl rule未指定的其他内网地址段将不能通过公网ip访问NAT服务。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/16/rman-06214-delte-obsolete-archivelog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/16/rman-06214-delte-obsolete-archivelog/" class="post-title-link" itemprop="url">rman-06214无法删除废弃的归档日志</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-16 14:26:17" itemprop="dateCreated datePublished" datetime="2016-05-16T14:26:17+08:00">2016-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>rman备份脚本出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">06207</span>: WARNING: <span class="number">380</span> objects could not be deleted <span class="keyword">for</span> DISK channel(s) due</span><br><span class="line">RMAN-<span class="number">06208</span>: to mismatched status. Use CROSSCHECK command to fix status</span><br><span class="line">RMAN-<span class="number">06210</span>: List <span class="keyword">of</span> Mismatched objects</span><br><span class="line">RMAN-<span class="number">06211</span>: ==========================</span><br><span class="line">RMAN-<span class="number">06212</span>: <span class="built_in">Object</span> Type Filename/Handle</span><br><span class="line">RMAN-<span class="number">06213</span>: --------------- ---------------------------------------------------</span><br><span class="line">RMAN-<span class="number">06214</span>: Archivelog D:\\ARCHIVED_LOG\\ARC24290_0749146507<span class="number">.001</span></span><br></pre></td></tr></table></figure>
+
+<p>然后手动执行crosscheck并重新删除:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; crosscheck archivelog all;</span><br><span class="line">RMAN&gt; <span class="keyword">delete</span> obsolete;</span><br></pre></td></tr></table></figure>
+
+<p>提示由于恢复目录中没有归档日志的信息，无法删除。列出的归档日志是早已经物理删除掉、无用的日志。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+<p>也无法删除</p>
+<p>最后，强制删除废弃的归档日志，<code>force</code>关键字会忽略掉错误将其干掉。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAMN&gt; <span class="keyword">delete</span> force obsolete;</span><br></pre></td></tr></table></figure>
+
+<p>删除成功。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/14/nginx-setup-lets-encrypt-cert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/14/nginx-setup-lets-encrypt-cert/" class="post-title-link" itemprop="url">Nginx部署Let's Encrypt证书</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-14 14:06:13" itemprop="dateCreated datePublished" datetime="2016-05-14T14:06:13+08:00">2016-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>感谢<a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a>让互联网更安全。</strong></p>
+<p>Let’s Encrypt的客户端刚刚更名为certbot,以前叫letsencrypt。certbot可以自动化的申请，安装和更新证书，让生活更美好。<br>不过当前nginx插件尚不成熟，而且certbot自身尚处于beta阶段，当前版本0.7.0，debian源里的版本也比较陈旧。</p>
+<p>因此还是需要一些简单的手工配置。</p>
+<p><strong>安装</strong></p>
+<p>从官方仓库克隆certbot</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo git clone https:<span class="comment">//github.com/certbot/certbot /opt/certbot</span></span><br></pre></td></tr></table></figure>
+
+<p>执行certbot-auto会自动安装发行版依赖和python依赖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt/certbot</span><br><span class="line">$ ./certbot-auto </span><br></pre></td></tr></table></figure>
+
+<p><strong>配置nginx</strong></p>
+<p>申请证书时，let’s encrypt需要访问域名的特定目录来确认域名的所有权，由certbot配合来完成验证。</p>
+<p>需要访问的目录为${webroot-path}/.well-known/acme-challenge/,申请证书时,certbot会写入认证所需信息，由let’s encrypt来验证。</p>
+<p>将此目录映射到/var/www/letsencrypt,先建立目录：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd /<span class="keyword">var</span>/www</span><br><span class="line"># mkdir letsencrypt</span><br><span class="line"># chgroup www-data letsencrypt</span><br></pre></td></tr></table></figure>
+
+<p>然后修改站点配置文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">80</span> default_server;</span><br><span class="line"> server_name my-domain;</span><br><span class="line"></span><br><span class="line"> location /.well-known/acme-challenge &#123;</span><br><span class="line"> root /<span class="keyword">var</span>/www/letsencrypt;</span><br><span class="line"> &#125;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后重新加载nginx配置文件:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># nginx -t &amp;&amp; sudo nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置certbot</strong></p>
+<p>新建一个配置文件/etc/letsencrypt/configs/my-domain.conf来指定要申请证书的域名等相关信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># This is an example of the kind of things you can do in a configuration file.</span><br><span class="line"># All flags used by the client can be configured here. Run Certbot with</span><br><span class="line"># &quot;--help&quot; to learn more about the available options.</span><br><span class="line"></span><br><span class="line"># Use a 4096 bit RSA key instead of 2048</span><br><span class="line">rsa-key-size = 2048 # or 4096</span><br><span class="line"></span><br><span class="line"># Uncomment and update to register with the specified e-mail address</span><br><span class="line">email = xxx@gmail.com</span><br><span class="line"></span><br><span class="line"># Uncomment and update to generate certificates for the specified</span><br><span class="line"># domains.</span><br><span class="line">domains = my-domain, www.my-domain</span><br><span class="line"></span><br><span class="line"># Uncomment to use a text interface instead of ncurses</span><br><span class="line">text = True</span><br><span class="line"></span><br><span class="line"># Uncomment to use the standalone authenticator on port 443</span><br><span class="line"># authenticator = standalone</span><br><span class="line"># standalone-supported-challenges = tls-sni-01</span><br><span class="line"></span><br><span class="line"># Uncomment to use the webroot authenticator. Replace webroot-path with the</span><br><span class="line"># path to the public_html / webroot folder being served by your web server.</span><br><span class="line">authenticator = webroot</span><br><span class="line">webroot-path = <span class="regexp">/var/</span>www/letsencrypt/</span><br></pre></td></tr></table></figure>
+
+<p>可以使用webroot插件来减轻验证配置，自动修改web server来完整验证。</p>
+<p><strong>申请证书</strong></p>
+<p>因为let’s encrypt限制每个站点在一定时间内申请的证书数量，所以可以用<code>--test-cert</code>选项进行测试，此时申请的证书是无效的，<br>但操作步骤是完全一样的，测试通过后去掉此选项就是申请正式证书了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto --test-cert --config /etc/letsencrypt/configs/mydomain.conf certonly</span><br><span class="line">Checking <span class="keyword">for</span> <span class="keyword">new</span> version...</span><br><span class="line">Requesting root privileges to run certbot...</span><br><span class="line"> sudo CERTBOT_AUTO=./certbot-auto /home/xxx/.local/share/letsencrypt/bin/letsencrypt </span><br><span class="line">--test-cert --config /etc/letsencrypt/configs/mydomain certonly</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Please read the Terms <span class="keyword">of</span> Service at https:<span class="comment">//letsencrypt.org/documents/LE-</span></span><br><span class="line">SA-v1<span class="number">.0</span><span class="number">.1</span>-July-<span class="number">27</span>-<span class="number">2015.</span>pdf. You must agree <span class="keyword">in</span> order to register <span class="keyword">with</span> the ACME</span><br><span class="line">server at https:<span class="comment">//acme-staging.api.letsencrypt.org/directory</span></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">(A)gree/(C)ancel: A</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at</span><br><span class="line"> /etc/letsencrypt/live/mydomain/fullchain.pem. Your cert</span><br><span class="line"> will expire on <span class="number">2016</span>-<span class="number">08</span>-<span class="number">12.</span> To obtain a <span class="keyword">new</span> version <span class="keyword">of</span> the</span><br><span class="line"> certificate <span class="keyword">in</span> the future, simply run Certbot again.</span><br><span class="line"> - If you lose your account credentials, you can recover through</span><br><span class="line"> e-mails sent to xxx@gmail.com.</span><br><span class="line"> - Your account credentials have been saved <span class="keyword">in</span> your Certbot</span><br><span class="line"> configuration directory at /etc/letsencrypt. You should make a</span><br><span class="line"> secure backup <span class="keyword">of</span> <span class="built_in">this</span> folder now. This configuration directory will</span><br><span class="line"> also contain certificates and private keys obtained by Certbot so</span><br><span class="line"> making regular backups <span class="keyword">of</span> <span class="built_in">this</span> folder is ideal.</span><br></pre></td></tr></table></figure>
+
+<p>申请的证书位于/etc/letsencrypt/live/mydomain/目录下</p>
+<p><strong>安装证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">443</span> ssl default_server;</span><br><span class="line"> server_name my-domain;</span><br><span class="line"></span><br><span class="line"> ssl_certificate /etc/letsencrypt/live/my-domain/fullchain.pem;</span><br><span class="line"> ssl_certificate_key /etc/letsencrypt/live/my-domain/privkey.pem;</span><br><span class="line"></span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更多ssl优化设置参见[4]</p>
+<p><strong>更新证书</strong></p>
+<p>let’s encrypt发行的证书只有90天的有效期，到期需要更新证书。如果参数没有变化，更新证书只需简单的执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto renew</span><br></pre></td></tr></table></figure>
+
+<p>certbot-auto会使用上次申请证书时使用的参数来更新证书。<br>如果要测试证书更新，添加选项<code>--dry-run</code>，此时不会更改系统当前设置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ./certbot-auto renew --dry-run</span><br><span class="line">Checking <span class="keyword">for</span> <span class="keyword">new</span> version...</span><br><span class="line">Requesting root privileges to run certbot...</span><br><span class="line"> sudo CERTBOT_AUTO=./certbot-auto /home/guoqiang/.local/share/letsencrypt/bin/letsencrypt renew --dry-run</span><br><span class="line"></span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">Processing /etc/letsencrypt/renewal/cucc.tazzfdc.com.conf</span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line">** DRY RUN: simulating <span class="string">&#x27;certbot renew&#x27;</span> close to cert expiry</span><br><span class="line">** (The test certificates below have not been saved.)</span><br><span class="line"></span><br><span class="line">Congratulations, all renewals succeeded. The following certs have been renewed:</span><br><span class="line"> /etc/letsencrypt/live/cucc.tazzfdc.com/fullchain.pem (success)</span><br><span class="line">** DRY RUN: simulating <span class="string">&#x27;certbot renew&#x27;</span> close to cert expiry</span><br><span class="line">** (The test certificates above have not been saved.)</span><br></pre></td></tr></table></figure>
+
+<p><strong>自动更新证书</strong></p>
+<p>可以添加cron脚本来自动更新证书，当证书无需更新时，renew命令并不会去更新证书，所以crontab设置的时间间隔并无强制要求，但一般无需设置太过频繁的调度。<br>let’s encrypt证书大约还剩一个月有效期时，可以进行更新。</p>
+<p>自动更新脚本renew‑letsencrypt.sh：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">cd /opt/certbot/</span><br><span class="line">./certbot-auto renew</span><br><span class="line"><span class="keyword">if</span> \[ $? -ne <span class="number">0</span> \]; then</span><br><span class="line"> ERRORLOG=\<span class="string">`tail /var/log/letsencrypt/letsencrypt.log\`</span></span><br><span class="line"><span class="string"> echo -e &quot;The Let&#x27;s Encrypt cert has not been renewed! \\n \\n&quot; \\</span></span><br><span class="line"><span class="string"> $ERRORLOG</span></span><br><span class="line"><span class="string">else</span></span><br><span class="line"><span class="string"> nginx -s reload</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">exit 0</span></span><br></pre></td></tr></table></figure>
+
+<p>将脚本添加到crontab自动运行即可。比如，每月1号执行此脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">1</span> * * <span class="regexp">/usr/</span>local/bin/renew-letsencrypt.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>未来</strong></p>
+<p>以上安装配置仍然十分繁琐，nginx插件成熟并且进入官方源后，只要几条指令就可以安装和更新证书了：</p>
+<p>安装certbot:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install certbot certbot-nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装证书：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ certbot --nginx</span><br></pre></td></tr></table></figure>
+
+<p>更新证书：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ certbot renew</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://letsencrypt.org/getting-started/">Getting Started</a><br>[2]<a target="_blank" rel="noopener" href="https://certbot.eff.org/docs/using.html#installation">User Guide</a><br>[3]<a target="_blank" rel="noopener" href="https://www.nginx.com/blog/free-certificates-lets-encrypt-and-nginx/">Using Free SSL/TLS Certificates from Let’s Encrypt with NGINX</a><br>[4]<a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/configuring_https_servers.html">Configuring HTTPS servers</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/13/dataguard-not-update-v-archived-log-applied-column/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/13/dataguard-not-update-v-archived-log-applied-column/" class="post-title-link" itemprop="url">Dataguard配置中primary不更新v$_archived_log的'APPLIED'列</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-13 08:28:48" itemprop="dateCreated datePublished" datetime="2016-05-13T08:28:48+08:00">2016-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>Dataguard配置中因为网络故障出现了日志gap,修复gap后，恢复自动同步。</p>
+<p>备库看一切正常：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> YES</span><br></pre></td></tr></table></figure>
+
+<p>但主库确显示日志并未应用:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line"></span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> NO</span><br></pre></td></tr></table></figure>
+
+<p>其实日志已经正确的同步并应用了，只是primary没有更新applied列的值而已，这是个bug, 编号1369630.1</p>
+<p>主库上有一个指定的ARCn进程与远程的RFS进程通讯来更新applied列的值，如果此进程挂起，无法与远程通讯也就无法更新v$archived_log的applied列值。</p>
+<p><strong>解决方案</strong></p>
+<p>主库ALERT_sid.LOG文件查找最新的,包含以下类似信息的行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARCn: Becoming the heartbeat ARCH</span><br></pre></td></tr></table></figure>
+
+<p>说明ARCn进程/线程出问题挂起了,n是数字,比如ARC0</p>
+<p>然后查找ARC0的进程/线程号,*nix平台是进程,windows平台是线程:</p>
+<p>windows平台输出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT spid, osuser, s.program FROM v$process p, v$session s WHERE p.addr=s.paddr and p.program like <span class="string">&#x27;%ARC0%&#x27;</span></span><br><span class="line">SPID OSUSER PROGRAM</span><br><span class="line">---------- ----------------- -----------------------</span><br><span class="line"><span class="number">2616</span> SYSTEM ORACLE.EXE (ARC0)</span><br></pre></td></tr></table></figure>
+
+<p>将对应的进程/线程kill掉就可以了,oracle会重新启动相应的进程/线程。</p>
+<p>*nix平台:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># kill -9 processid </span><br></pre></td></tr></table></figure>
+
+<p>windows平台:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; orakill sid threadid</span><br></pre></td></tr></table></figure>
+
+<p>sid是oracle实例名</p>
+<p><strong>或者更简单粗暴的重新启动oracle实例</strong></p>
+<p>alert_sid.log文件中可能会出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
+
+<p>sid_arc0_xxxx.trc文件中也会有：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span> <span class="number">16401</span> creating standby archive log file at host <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
+
+<p>这是出现重复归档的错误提示，因为ARC0想重新归档已经应用到备库的日志，可以安全的忽略掉这些信息，ARC0会更新已经传输到备库的日志的APPLIED列。</p>
+<p>ORA-16401也可能出现在多个主库和/或备库向同一个备库归档的情形下，这种情况一般是因为LOG_ARCHIVE_DEST_n参数配置错误。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://oracle-artifacts.blogspot.com/2012/04/oracle-data-guard-issues-applied-column.html">Oracle Data-guard Issues - ‘APPLIED’-Column not updated in v$archived_log table</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1drYAr6VVQh652kl7cvHFZXEmFlN5eYMrJr6q3hPtWO4/edit?pref=2&pli=1">Bug Note: 1369630.1</a><br>[3]<a target="_blank" rel="noopener" href="http://topmanopensource.iteye.com/blog/1171271">ORACLE在windows上使用orakill结束oracle会话的线程</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/12/dataguard-archive-gap-handle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/12/dataguard-archive-gap-handle/" class="post-title-link" itemprop="url">dataguard archive gap 日志间隙处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-12 10:23:12" itemprop="dateCreated datePublished" datetime="2016-05-12T10:23:12+08:00">2016-05-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为网络故障或资源紧张，会使standby出现日志同步间隙(archive gap)。虽然设置好了FAL_CLIENT和FAL_SERVER参数，有时候仍然无法自动解决日志间隙问题。</p>
+<p>比如由于CONTROL_FILE_RECORD_KEEP_TIME设置导致，较旧的主库归档日志记录被循环覆盖，standby无法自动获取相应的日志文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Fetching gap sequence <span class="keyword">in</span> thread <span class="number">1</span>, gap sequence <span class="number">19767</span>-<span class="number">19866</span></span><br><span class="line">Thu May <span class="number">12</span> <span class="number">09</span>:<span class="number">45</span>:<span class="number">47</span> <span class="number">2016</span></span><br><span class="line">FAL\[client\]: Failed to request gap sequence </span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">19767</span>-<span class="number">19866</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br><span class="line">FAL\[client\]: All defined FAL servers have been attempted.</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">Check that the CONTROL_FILE_RECORD_KEEP_TIME initialization</span><br><span class="line">parameter is defined to a value that is sufficiently large</span><br><span class="line">enough to maintain adequate log <span class="keyword">switch</span> information to resolve</span><br><span class="line">archivelog gaps.</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>如果standby缺少的归档日志尚未删除，可以拷贝缺少的日志到备库，然后在备库上注册，备库会apply这些归档日志。<br>如果归档日志已经被删除，则需要从主库做增量备份，然后在备库进行恢复来修复日志间隙。</p>
+<p><strong>手工拷贝归档日志</strong></p>
+<p>首先查看日志间隙:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select * <span class="keyword">from</span> v$archive_gap;</span><br><span class="line">THREAD# LOW_SEQUENCE# HIGH_SEQUENCE#</span><br><span class="line">-------- ---------------- ----------------------</span><br><span class="line"><span class="number">1</span> <span class="number">19767</span> <span class="number">19866</span></span><br></pre></td></tr></table></figure>
+
+<p>将对应的归档日志拷贝到备库端</p>
+<p>最后在备库端注册这些归档日志：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter database register physical logfile <span class="string">&#x27;\\path\\to\\archive_log&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>备库会立即应用这些归档日志。如果日志数量过多,也可以使用以下语句来自动恢复数据库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE;</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建备库导致的日志不同步问题</strong></p>
+<p>最近遇到的一个案例是这样的,rman dupicate创建完备库后,因为没有使用dorecovery恢复增量备份,主库上的部分归档日志又被清除掉了,导致主备库无法进行同步,备库有类似如下错误提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Media Recovery Waiting <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">23943</span></span><br><span class="line">Fetching gap sequence <span class="keyword">in</span> thread <span class="number">1</span>, gap sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line">Sun Jul <span class="number">24</span> <span class="number">13</span>:<span class="number">02</span>:<span class="number">27</span> <span class="number">2016</span></span><br><span class="line">FAL\[client\]: Failed to request gap sequence </span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br><span class="line">FAL\[client\]: All defined FAL servers have been attempted.</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">Check that the CONTROL_FILE_RECORD_KEEP_TIME initialization</span><br><span class="line">parameter is defined to a value that is sufficiently large</span><br><span class="line">enough to maintain adequate log <span class="keyword">switch</span> information to resolve</span><br><span class="line">archivelog gaps.</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>主库有类似如下错误提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FAL Redo Shipping Client Established Network Login</span><br><span class="line">Failed to queue the whole gap</span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br></pre></td></tr></table></figure>
+
+<p>此时备库查询v$archive_gap表是没有任何记录的,幸好还有一个备库有完整的归档日志,将相应的归档日志完整拷贝到新建的物理备库上,然后执行以下语句自动恢复数据库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE;</span><br></pre></td></tr></table></figure>
+
+<p>所有可用日志全部恢复完毕后,会有如下提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00279</span>: change <span class="number">7255663631</span> generated at <span class="number">07</span>/<span class="number">25</span>/<span class="number">2016</span> <span class="number">08</span>:<span class="number">51</span>:<span class="number">20</span> needed <span class="keyword">for</span> thread <span class="number">1</span></span><br><span class="line">ORA-<span class="number">00289</span>: suggestion : D:\\ARCHIVED_LOG\\ARC24380_0874659493<span class="number">.001</span></span><br><span class="line">ORA-00280: change 7255663631 for thread 1 is in sequence #24380</span><br><span class="line">ORA-<span class="number">00278</span>: log file <span class="string">&#x27;D:\\ARCHIVED_LOG\\ARC24380_0874659493.001&#x27;</span> no longer needed <span class="keyword">for</span> <span class="built_in">this</span> recovery</span><br><span class="line">ORA-<span class="number">00308</span>: cannot open archived log <span class="string">&#x27;D:\\ARCHIVED_LOG\\ARC24380_0874659493.001&#x27;</span></span><br><span class="line">ORA-<span class="number">27041</span>: unable to open file</span><br><span class="line">OSD-<span class="number">04002</span>: unable to open file</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">2</span>) 系统找不到指定的文件。</span><br></pre></td></tr></table></figure>
+
+<p>这是因为已经没有日志可用于恢复了,此时重新打开实时日志应用就可以开始自动同步了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database recover managed standby database disconnect <span class="keyword">from</span> session;</span><br></pre></td></tr></table></figure>
+
+<p>如果归档日志已经找不到了,则可以采用以下增量备份方式修复备库。</p>
+<p><strong>增量备份修复备库</strong></p>
+<ol>
+<li> 查找恢复点SCN<br>备库端：<br>首先查看日志间隙:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select * <span class="keyword">from</span> v$archive_gap;</span><br><span class="line">THREAD# LOW_SEQUENCE# HIGH_SEQUENCE#</span><br><span class="line">-------- ---------------- ----------------------</span><br><span class="line"><span class="number">1</span> <span class="number">19767</span> <span class="number">19766</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>主库端：<br>然后主库上查找日志间隙中低端日志序号的上一个日志的first_change#</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select SEQUENCE#, FIRST_CHANGE# from v$archived_log where SEQUENCE#=19766;</span><br><span class="line">SEQUENCE# FIRST_CHANGE# </span><br><span class="line">--------- -------------</span><br><span class="line"><span class="number">19766</span> <span class="number">7008518015</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li> 备库停止apply log<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter database recover managed standby database cancel;</span><br></pre></td></tr></table></figure></li>
+<li> 主库增量SCN备份<br>主库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">RMAN&gt; backup incremental <span class="keyword">from</span> scn <span class="number">7008518015</span> database format <span class="string">&#x27;/path/to/stdby_%U.bak&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li> 生成备库控制文件<br>主库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; backup current controlfile <span class="keyword">for</span> standby format <span class="string">&#x27;/path/to/stdby_%U.ctl&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li> 拷贝备份和控制文件到备库</li>
+<li> 备库使用新生成的控制文件启动<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rman&gt; shutdown immediate;</span><br><span class="line">rman&gt; startup nomount;</span><br><span class="line">rman&gt; restore standby controlfile <span class="keyword">from</span> <span class="string">&#x27;/path/to/stdby_xxx.ctl&#x27;</span>;</span><br><span class="line">rman&gt; alter database mount</span><br></pre></td></tr></table></figure></li>
+<li> 备库进行数据恢复<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; catalog start <span class="keyword">with</span> <span class="string">&#x27;/path/to_bak&#x27;</span>;</span><br><span class="line">RMAN&gt; recover database noredo;</span><br></pre></td></tr></table></figure></li>
+<li> 备库恢复日志应用<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database recover managed standby database disconnect <span class="keyword">from</span> session;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.programgo.com/article/9189574397/">DataGuard 中处理archive gap的方法</a><br>[2]<a target="_blank" rel="noopener" href="https://shivanandarao-oracle.com/2012/03/26/roll-forward-physical-standby-database-using-rman-incremental-backup/">Roll Forward Physical Standby Database using RMAN incremental backup</a><br>[3]<a target="_blank" rel="noopener" href="http://www.zhongweicheng.com/?p=1305">Oracle Physical DataGuard使用RMAN增量备份修复GAP</a><br>[4]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/backup.102/b14191/rcmdupdb.htm#BRADV05444">Using RMAN Incremental Backups to Refresh a Standby Database</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/11/rman-readonly-tablespaces/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/11/rman-readonly-tablespaces/" class="post-title-link" itemprop="url">只读表空间的备份和恢复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-11 16:43:32" itemprop="dateCreated datePublished" datetime="2016-05-11T16:43:32+08:00">2016-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>查询表空间状态：<br>[sql]<br>sql&gt; select tablespace_name,status from dba_tablespaces;<br>[/sql]</p>
+<p>修改表空间状态为READ ONLY：<br>[sql]<br>sql&gt; alter tablespace tablespace_name read only;<br>[/sql]</p>
+<p>表空间置为READ ONLY之后，不再发生任何变化，只需保存一份有效的备份即可，可以使用RMAN，也可以使用OS直接拷贝数据文件来备份只读表空间。</p>
+<p>之后日常备份时就可以skip readonly来忽略掉只读表空间的备份，加速备份速度。</p>
+<p>但恢复数据库时记得要check readonly,即使没有只读表空间，恢复仍然会成功，但open数据库会出现错误。</p>
+<p>如果不使用check readonly，记得要将只读表空间的数据文件拷贝到相应的位置之后再recover数据库。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/Richardzhu/articles/2890833.html">Oracle Read-only Tablespace(只读表空间)</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.csdn.net/xcl168/article/details/20297247">(09)常被人遗忘的只读表空间</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/backup.102/b14192/recov002.htm">Database Backup and Recovery Basics</a><br>[4]<a target="_blank" rel="noopener" href="http://blog.csdn.net/leshami/article/details/6646492">只读表空间的备份与恢复</a><br>[5]<a target="_blank" rel="noopener" href="http://gavinsoorma.com/2009/08/read-only-tablespace-restore-and-recovery/">READ ONLY Tablespace Restore and Recovery</a><br>[6]<a target="_blank" rel="noopener" href="http://kubilaykara.blogspot.com/2008/02/backing-up-restoring-and-recovering.html">Backing up, Restoring and Recovering Read Only tablespaces with RMAN</a><br>[7]<a target="_blank" rel="noopener" href="https://hemantoracledba.blogspot.com/2010/05/read-only-tablespaces-and-backup.html">Read Only Tablespaces and BACKUP OPTIMIZATION</a><br>[8]<a target="_blank" rel="noopener" href="http://www.xifenfei.com/2011/04/rman%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4.html">Rman管理命令</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/05/10/crontab-environ-vars/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/10/crontab-environ-vars/" class="post-title-link" itemprop="url">crontab环境变量问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-10 21:50:00" itemprop="dateCreated datePublished" datetime="2016-05-10T21:50:00+08:00">2016-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>python脚本在shell下运行的好好的，作为crontab任务运行就出错，import cx_Oracle的时候出错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: libclntsh.so<span class="number">.12</span><span class="number">.1</span>: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>明显是库路径的问题。</p>
+<p>crontab运行程序时，其环境变量与用户的环境变量是不同的，有自己的变量环境，因此需要为crontab设置正确的环境变量，脚本才能正确运行。</p>
+<p>python脚本中使用os.environ或者os.putenv来设置环境变量是没用的，反正在py脚本中正确设置了LD_LIBRARY_PATH变量，仍然无法解决问题。</p>
+<p>有这么几个方法来设置crontab的环境变量：</p>
+<p><strong>第一种</strong></p>
+<p>可以在crontab配置文件中添加环境变量，但是不能用变量，类似$PATH这种，只能照实写。<br>类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ORACLE_HOME=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">LD_LIBRARY_PATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">PATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">TNS_ADMIN=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">SQLPATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">NLS_LANG=AMERICAN_AMERICA.AL32UTF8</span><br></pre></td></tr></table></figure>
+<p><strong>第二种</strong></p>
+<p>写一个bash脚本来中转一下，bash脚本中再调用py脚本，类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">source /home/xxx/.mybashrc</span><br><span class="line">/home/xxx/py/business_notify.py <span class="string">&quot;$@&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第三种</strong></p>
+<p>直接在crontab配置任务要执行的命令行上添加环境变量，类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*<span class="regexp">/10 * * * * LD_LIBRARY_PATH=/</span>opt/oracle/instantclient_12_1 TNS_ADMIN=<span class="regexp">/opt/</span>oracle/instantclient_12_1 /home/xxx/py/business_notify.py</span><br></pre></td></tr></table></figure>
+
+<p>推荐第一种</p>
+<p>一般crontab运行的脚本中尽量不要依赖环境变量，使用绝对路径为佳。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/28/oracle-instant-client-and-tnsping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/28/oracle-instant-client-and-tnsping/" class="post-title-link" itemprop="url">oracle instant client and tnsping</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-28 16:09:31" itemprop="dateCreated datePublished" datetime="2016-04-28T16:09:31+08:00">2016-04-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>最近版本的即时客户端已经没有了tnsping这个命令，可以从相应版本的客户端或服务器bin目录中拷贝此文件，或者用脚本简单的替代：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tnsping &gt;<span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> </span><br><span class="line"> <span class="function"><span class="title">tnsping</span>(<span class="params"></span>)</span> &#123; </span><br><span class="line"> sqlplus -L -S x/x@$<span class="number">1</span> &lt;<span class="regexp">/dev/</span><span class="literal">null</span> grep ORA- (grep -v ORA-<span class="number">01017</span> echo OK) </span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+
+<p>将此段脚本放入.profile或.bashrc即可。</p>
+<p>又或者直接测试一下服务器的1521端口是否正常开放:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ telnet a.b.c.d <span class="number">1521</span></span><br><span class="line">Trying a.b.c.d...</span><br><span class="line">Connected to a.b.c.d.</span><br><span class="line">Escape character is <span class="string">&#x27;^\]&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>这样就说明oracle监听是正常的。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/25/serial-console-access-kvm-guest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/25/serial-console-access-kvm-guest/" class="post-title-link" itemprop="url">通过串行控制台访问kvm客户机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-25 11:20:37" itemprop="dateCreated datePublished" datetime="2016-04-25T11:20:37+08:00">2016-04-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>当ssh,vnc都不能访问客户机时,serial console可以提供另一种访问客户机的途径。</p>
+<p><strong>客户机serial console配置</strong></p>
+<p>/etc/inittab文件打开或添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T0:<span class="number">23</span>:respawn:<span class="regexp">/sbin/g</span>etty -L ttyS0 <span class="number">38400</span> vt100</span><br></pre></td></tr></table></figure>
+
+<p>/etc/securetty文件中确保列出了ttyS0:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ttyS0</span><br></pre></td></tr></table></figure>
+
+<p>/etc/default/grub文件添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=<span class="string">&#x27;console=tty0 console=ttyS0,38400n8&#x27;</span></span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_SERIAL_COMMAND=<span class="string">&quot;serial --speed=38400 --unit=0 --word=8 --parity=no --stop=1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>波特率是38400，没有奇偶校验，停止位是1</p>
+<p>使用virsh来连接客户机串行控制台比较简单，应该也可以重定向客户机的串行端口到主机。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/howto-setup-serial-console-on-debian-linux/">Debian Linux: Set a Serial Console</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/working_with_the_serial_console">Working with the serial console</a><br>[3]<a target="_blank" rel="noopener" href="https://blackdot.be/2013/07/qemu-kvm-monitor-and-serial-console-over-sockets-with-minicom/">qemu(-kvm) monitor and serial console over sockets with minicom</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2016/04/25/kvm-guest-access-host-dir/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/25/kvm-guest-access-host-dir/" class="post-title-link" itemprop="url">kvm客户机共享主机目录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-25 10:28:06" itemprop="dateCreated datePublished" datetime="2016-04-25T10:28:06+08:00">2016-04-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>主机通过virtio上的9p文件系统以及文件系统设备，可以将主机上的文件系统导出给客户机来挂载使用</p>
+<p>v9fs是plan 9 9p远程文件系统协议的实现</p>
+<p><strong>主机配置</strong></p>
+<p>在客户机启动命令上新添加fsdev和device选项</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-fsdev local,security_model=passthrough,id=fsdev0,path=<span class="regexp">/mnt/</span>share </span><br><span class="line">-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare</span><br></pre></td></tr></table></figure>
+<p>这样导出了主机的/mnt/share目录供客户机来存取</p>
+<p><strong>客户机配置</strong></p>
+<p>客户机需要在内核中开启9P文件系统相关选项，可以这样查看:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat /boot/config-$(uname -r) grep 9P</span><br><span class="line">CONFIG_NET_9P=m</span><br><span class="line">CONFIG_NET_9P_VIRTIO=m</span><br><span class="line">CONFIG_NET_9P_RDMA=m</span><br><span class="line"># CONFIG_NET_9P_DEBUG is not set</span><br><span class="line">CONFIG_9P_FS=m</span><br><span class="line">CONFIG_9P_FSCACHE=y</span><br><span class="line">CONFIG_9P_FS_POSIX_ACL=y</span><br><span class="line">CONFIG_9P_FS_SECURITY=y</span><br></pre></td></tr></table></figure>
+
+<p>可以看到9P配置成了内核模块的形式，然后就可以挂载主机的目录来使用了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t 9p -o trans=virtio\[,version=9p2000.L\] hostshare /mnt/point</span><br></pre></td></tr></table></figure>
+
+<p>hostshare就是主机导出的挂载点的名称，此处将其挂载到客户机的/mnt/point。<br>version选项是可选的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.linux-kvm.org/page/9p_virtio">Example Sharing Host files with the Guest</a><br>[2]<a target="_blank" rel="noopener" href="http://wiki.qemu.org/Documentation/9psetup">Documentation/9psetup</a><br>[3]<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/9p.txt">v9fs: Plan 9 Resource Sharing for Linux</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

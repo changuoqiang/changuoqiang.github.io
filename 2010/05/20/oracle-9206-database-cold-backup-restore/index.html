@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="windows 2003 R2做oracle数据库冷备份恢复时遇到路径依赖问题，原库oracle安装在F分区，而恢复到的oracle安装在E分区。两边数据库的版本是完全一致的，除了安装路径不同,sid实例名都为orcl。停下服务器后，把原库的控制文件、数据文件、联机日志文件(online redo files)、初始化参数文件(spfile)、密码文件拷贝到了新库安装目录。如果数据库运行于归档模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2003 R2平台oracle 9206数据库冷备份恢复的路径依赖问题">
+<meta property="og:url" content="http://example.com/2010/05/20/oracle-9206-database-cold-backup-restore/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="windows 2003 R2做oracle数据库冷备份恢复时遇到路径依赖问题，原库oracle安装在F分区，而恢复到的oracle安装在E分区。两边数据库的版本是完全一致的，除了安装路径不同,sid实例名都为orcl。停下服务器后，把原库的控制文件、数据文件、联机日志文件(online redo files)、初始化参数文件(spfile)、密码文件拷贝到了新库安装目录。如果数据库运行于归档模式">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2010-05-20T07:46:37.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.387Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2010/05/20/oracle-9206-database-cold-backup-restore/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>2003 R2平台oracle 9206数据库冷备份恢复的路径依赖问题 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2010/05/20/oracle-9206-database-cold-backup-restore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2003 R2平台oracle 9206数据库冷备份恢复的路径依赖问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-05-20 15:46:37" itemprop="dateCreated datePublished" datetime="2010-05-20T15:46:37+08:00">2010-05-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>windows 2003 R2做oracle数据库冷备份恢复时遇到路径依赖问题，原库oracle安装在F分区，而恢复到的oracle安装在E分区。两边数据库的版本是完全一致的，除了安装路径不同,sid实例名都为orcl。停下服务器后，把原库的控制文件、数据文件、联机日志文件(online redo files)、初始化参数文件(spfile)、密码文件拷贝到了新库安装目录。如果数据库运行于归档模式,还应单独备份归档日志文件。实际上为了省事，把oracle的安装目录整个同步了一遍。拷贝完后oracle服务无法启动，无法启动就对了。这些关键文件的路径都变了，库肯定是打不开了。怎么办？</p>
+<p>两个方法，一是重新安装oracle使其路径与原库一致,二是修改关键文件的路径。第一种没啥意思，就第二种吧。</p>
+<p>因为机器名字不同了，所以要打开\oracle\ora92\network\admin下面的几个文件tnsnames.ora、snmp_ro.ora和listener.ora把里面的机器名改成正确的值,snmp_ro.ora和listener.ora文件里面的文件路径改为正确的值。</p>
+<p>参数文件里面记录了控制文件的路径，要把这些路径更改过来。oracle 9i默认是使用spfile的，而spfile是二进制的，最好不要直接修改，导出pfile，修改控制文件路径后再导回去就ok了</p>
+<a id="more"></a>
+<p>&gt;sqlplus “/ as sysdba”<br>SQL&gt;create pfile=”e:\oracle\admin\orcl\pfile\initorcl.ora” from spfile</p>
+<p>然后打开initorcl.ora修改控制文件路径为实际的控制文件路径，再导回到spfile</p>
+<p>SQL&gt;create spfile from pfile=”e:\oracle\admin\orcl\pfile\initorcl.ora”</p>
+<p>然后重建控制文件，因为控制文件里面记录了数据文件、日志文件的路径。数据文件好多啊，还是先从原库备份一下控制文件吧</p>
+<p>SQL&gt;alter database backup controlfile to trace;</p>
+<p>找到生成的trc文件，路径为F:\oracle\admin\orcl\udump\orcl_ora_xxxx.trc，看看生成时间就能知道是哪个了。从这个文件里面提取出一个sql文件来，因为日志文件是完整的，就提取NORESETLOGS这段,保存到文件createctrlfile.sql。oracle 9206生成的这个脚本有个bug,CHARACTER SET ZHS16GBK这行的上面一行多了个逗号，去掉就可以了。语句的样子大体如下</p>
+<p>STARTUP NOMOUNT<br>CREATE CONTROLFILE REUSE DATABASE “ORCL” NORESETLOGS NOARCHIVELOG<br>– SET STANDBY TO MAXIMIZE PERFORMANCE<br> MAXLOGFILES 50<br> MAXLOGMEMBERS 5<br> MAXDATAFILES 100<br> MAXINSTANCES 1<br> MAXLOGHISTORY 2722<br>LOGFILE<br> GROUP 1 ‘F:\ORACLE\ORADATA\ORCL\REDO01.LOG’ SIZE 100M,<br> GROUP 2 ‘F:\ORACLE\ORADATA\ORCL\REDO02.LOG’ SIZE 100M,<br> GROUP 3 ‘F:\ORACLE\ORADATA\ORCL\REDO03.LOG’ SIZE 100M<br>– STANDBY LOGFILE<br>DATAFILE<br> ‘F:\ORACLE\ORADATA\ORCL\SYSTEM01.DBF’,<br> ‘F:\ORACLE\ORADATA\ORCL\UNDOTBS01.DBF’,<br> ‘F:\ORACLE\ORADATA\ORCL\CWMLITE01.DBF’,<br> ‘F:\ORACLE\ORADATA\ORCL\DRSYS01.DBF’,<br> …<br>CHARACTER SET ZHS16GBK<br>;</p>
+<p>把这个sql里面的数据文件和日志文件的路径修改成正确的路径后，执行一下语句</p>
+<blockquote>
+<p>sqlplus “/ as sysdba”<br>SQL&gt;shutdown immediate<br>SQL&gt;@createctrlfile.sql</p>
+</blockquote>
+<p>提示控制文件重建完成就ok了，然后</p>
+<p>SQL&gt;alter database open</p>
+<p>就可以启动数据库了。抱怨一句，oracle数据库的这些关键文件为什么不用相对路径呢？相对于$ORACLE_HOME不就得了吗，真烦！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2010/05/16/cpp-project-directories/" rel="prev" title="C++项目目录组织结构">
+                  <i class="fa fa-chevron-left"></i> C++项目目录组织结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2010/07/12/dcube3-register-failure/" rel="next" title="DCube3.ocx控件注册失败的解决办法">
+                  DCube3.ocx控件注册失败的解决办法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

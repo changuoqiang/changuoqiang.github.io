@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/6/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/15/random-7-urandom-warnings-missed-due-to-ratelimiting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/15/random-7-urandom-warnings-missed-due-to-ratelimiting/" class="post-title-link" itemprop="url">random: 7 urandom warning(s) missed due to ratelimiting</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-15 13:32:21" itemprop="dateCreated datePublished" datetime="2019-10-15T13:32:21+08:00">2019-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>kvm上的debian虚拟客户机，升级操作系统到buster之后，重启内核启动缓慢:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\[ <span class="number">3.126166</span>\] ppdev: user-space parallel port driver</span><br><span class="line">\[ <span class="number">138.280959</span>\] random: crng init done</span><br><span class="line">\[ <span class="number">138.280968</span>\] random: <span class="number">7</span> urandom warning(s) missed due to ratelimiting</span><br></pre></td></tr></table></figure>
+<p>随机数产生存在问题，以下方法解决</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install haveged</span><br><span class="line">sudo systemctl enable haveged</span><br><span class="line">sudo systemctl start haveged</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/461425/debian-testing-takes-a-long-time-to-load-crng-init-done">Debian Testing takes a long time to load. Crng init done [closed]</a><br>[2]<a target="_blank" rel="noopener" href="https://www.linode.com/community/questions/17915/random-7-urandom-warnings-missed-due-to-ratelimiting">random: 7 urandom warning(s) missed due to ratelimiting</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/13/zfs-pool-expand/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/13/zfs-pool-expand/" class="post-title-link" itemprop="url">zfs pool 空间扩展</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-13 20:56:05" itemprop="dateCreated datePublished" datetime="2019-10-13T20:56:05+08:00">2019-10-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>这里以lxd使用的zfs存储后端为例来扩展zpool</p>
+<p>先看一下lxd默认存储池default的信息:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage show <span class="keyword">default</span></span><br><span class="line">config:</span><br><span class="line"> size: 10GB</span><br><span class="line"> source: <span class="regexp">/var/</span>snap/lxd/common/lxd/disks/<span class="keyword">default</span>.img</span><br><span class="line"> zfs.pool_name: <span class="keyword">default</span></span><br><span class="line">description: <span class="string">&quot;&quot;</span></span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">driver: zfs</span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>profiles/<span class="keyword">default</span></span><br><span class="line">status: Created</span><br><span class="line">locations:</span><br><span class="line">- none</span><br></pre></td></tr></table></figure>
+<p>从zfs端看default zpool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ zpool list <span class="keyword">default</span></span><br><span class="line">NAME SIZE ALLOC FREE CKPOINT EXPANDSZ FRAG CAP DEDUP HEALTH ALTROOT</span><br><span class="line"><span class="keyword">default</span> 9G 372K <span class="number">9.</span>00G - - <span class="number">0</span>% <span class="number">0</span>% <span class="number">1.</span>00x ONLINE -</span><br></pre></td></tr></table></figure>
+<p>只有10G大小，现在扩展到100G</p>
+<p>停止所有正在运行的容器，使用truncate将存储文件尺寸增大90G：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo truncate -c -s +90G /<span class="keyword">var</span>/snap/lxd/common/lxd/disks/<span class="keyword">default</span>.img</span><br></pre></td></tr></table></figure>
+
+<p>查看zpool的自动扩展属性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ zpool get autoexpand <span class="keyword">default</span></span><br><span class="line">NAME PROPERTY VALUE SOURCE</span><br><span class="line"><span class="keyword">default</span> autoexpand off <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+<p>是关闭的，将其打开</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo zpool set autoexpand=on <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+
+<p>查看default存储池的设备名称</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ zpool status -vg <span class="keyword">default</span></span><br><span class="line">pool: <span class="keyword">default</span></span><br><span class="line"> state: ONLINE</span><br><span class="line"> scan: none requested</span><br><span class="line">config:</span><br><span class="line"></span><br><span class="line">NAME STATE READ WRITE CKSUM</span><br><span class="line"><span class="keyword">default</span> ONLINE <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"> <span class="number">15286821055422665849</span> ONLINE <span class="number">0</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">errors: No known data errors</span><br></pre></td></tr></table></figure>
+
+<p>扩展default池到最大可用容量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo zpool online -e <span class="keyword">default</span> <span class="number">15286821055422665849</span></span><br></pre></td></tr></table></figure>
+<p>查看default池</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ zpool list <span class="keyword">default</span></span><br><span class="line">NAME SIZE ALLOC FREE CKPOINT EXPANDSZ FRAG CAP DEDUP HEALTH ALTROOT</span><br><span class="line"><span class="keyword">default</span> 99G 399K <span class="number">99.</span>0G - - <span class="number">0</span>% <span class="number">0</span>% <span class="number">1.</span>00x ONLINE -</span><br></pre></td></tr></table></figure>
+<p>可以看到容量已经扩展到了100G</p>
+<p>关闭zpool的自动扩展</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo zpool set autoexpand=off <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+
+<p>lxd端查看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage info <span class="keyword">default</span></span><br><span class="line">info:</span><br><span class="line"> description: <span class="string">&quot;&quot;</span></span><br><span class="line"> driver: zfs</span><br><span class="line"> name: <span class="keyword">default</span></span><br><span class="line"> space used: <span class="number">340.</span>99kB</span><br><span class="line"> total space: <span class="number">102.</span>98GB</span><br><span class="line">used by:</span><br><span class="line"> profiles:</span><br><span class="line"> - <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+
+<p>lxd官方文档给的方案，参见[3]：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo truncate -s +5G /<span class="keyword">var</span>/lib/lxd/disks/&lt;POOL&gt;.img</span><br><span class="line">sudo zpool set autoexpand=on lxd</span><br><span class="line">sudo zpool online -e lxd /<span class="keyword">var</span>/lib/lxd/disks/&lt;POOL&gt;.img</span><br><span class="line">sudo zpool set autoexpand=off lxd</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://discuss.linuxcontainers.org/t/how-to-resize-zfs-used-in-lxd/1333">How to resize ZFS used in LXD</a><br>[2]<a target="_blank" rel="noopener" href="https://tomasz.korwel.net/2014/01/03/growing-zfs-pool/">GROWING ZFS POOL</a><br>[3]<a target="_blank" rel="noopener" href="https://lxd.readthedocs.io/en/latest/storage/">Storage configuration</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/10/ssh-x11forward-from-linux-to-macos/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/10/ssh-x11forward-from-linux-to-macos/" class="post-title-link" itemprop="url">ssh x11forward from linux to macos</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-10 15:35:44" itemprop="dateCreated datePublished" datetime="2019-10-10T15:35:44+08:00">2019-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>MacOS Catalina上使用ssh -Xv 登录远程debian linux进行X11转发时提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">debug1: No xauth program.</span><br><span class="line">Warning: untrusted X11 forwarding setup failed: xauth key data not generated</span><br></pre></td></tr></table></figure>
+<p>这是因为MacOS上的xauth路径与linux上不同，MacOS上使用XQuartZ其xauth路径为/opt/X11/bin/xauth，而debian上为/usr/bin/xauth，所以ssh客户端没有找到xauth，无法生成认证数据。<br>在~/.ssh/config文件中为单个主机，或者在/etc/ssh/ssh_config中为所有主机设置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XAuthLocation /opt/X11/bin/xauth</span><br></pre></td></tr></table></figure>
+
+<p>在远程debian上执行glxinfo有错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ glxinfo</span><br><span class="line">name <span class="keyword">of</span> display: localhost:<span class="number">10.0</span></span><br><span class="line">libGL error: No matching fbConfigs or visuals found</span><br><span class="line">libGL error: failed to load driver: swrast</span><br><span class="line">X <span class="built_in">Error</span> <span class="keyword">of</span> failed request: GLXBadContext</span><br><span class="line"> Major opcode <span class="keyword">of</span> failed request: <span class="number">149</span> (GLX)</span><br><span class="line"> Minor opcode <span class="keyword">of</span> failed request: <span class="number">6</span> (X_GLXIsDirect)</span><br><span class="line"> Serial number <span class="keyword">of</span> failed request: <span class="number">26</span></span><br><span class="line"> Current serial number <span class="keyword">in</span> output stream: <span class="number">25</span></span><br></pre></td></tr></table></figure>
+<p>在MacOS端执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write org.macosforge.xquartz.X11 enable_iglx -bool <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>重启XQuartz 2.7.11，然后就可以了，但是前两行错误继续存在。<br>iglx就是IndirectGLX的缩写，也就是关闭直接渲染。<br>远程debian上开启libgl debug</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> LIBGL_DEBUG=verbose</span><br><span class="line">$ glxgear</span><br><span class="line">libGL: OpenDriver: trying /usr/lib/x86_64-linux-gnu/dri/tls/swrast_dri.so</span><br><span class="line">libGL: OpenDriver: trying /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so</span><br><span class="line">libGL: Can<span class="string">&#x27;t open configuration file /etc/drirc: No such file or directory.</span></span><br><span class="line"><span class="string">libGL: Can&#x27;</span>t open configuration file /home/john/.drirc: No such file or directory.</span><br><span class="line">libGL: Can<span class="string">&#x27;t open configuration file /etc/drirc: No such file or directory.</span></span><br><span class="line"><span class="string">libGL: Can&#x27;</span>t open configuration file /home/john/.drirc: No such file or directory.</span><br><span class="line">libGL error: No matching fbConfigs or visuals found</span><br><span class="line">libGL error: failed to load driver: swrast</span><br></pre></td></tr></table></figure>
+<p>设置环境变量export LIBGL_ALWAYS_INDIRECT=1可以关闭这个错误提示，但是仍然是间接渲染。</p>
+<p>这个问题需要XQuartz来解决，这货已经好久好久没有升级了…</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/10/dnscrypt-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/10/dnscrypt-proxy/" class="post-title-link" itemprop="url">dnscrypt-proxy</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-10 09:38:42" itemprop="dateCreated datePublished" datetime="2019-10-10T09:38:42+08:00">2019-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>端口绑定错误</strong><br>dnscrypt-proxy默认设置是绑定到53端口，1024以下的端口为特权端口，普通用户并无权绑定，启动时提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[FATAL\] listen udp <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">53</span>: bind: permission denied</span><br></pre></td></tr></table></figure>
+<p>尝试authbind无果，/lib/systemd/system/dnscrypt-proxy.service文件中的ExecStart修改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=<span class="regexp">/usr/</span>bin/authbind --deep /usr/sbin/dnscrypt-proxy -config /etc/dnscrypt-proxy/dnscrypt-proxy.toml</span><br></pre></td></tr></table></figure>
+<p>并设置了authbind的byport,byuid,byaddr皆无果，修改User=root了事。</p>
+<p><strong>动态生成blacklist</strong><br>官方提供了一个python脚本<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/tree/master/utils/generate-domains-blacklists">generate-domains-blacklist.py</a>，可以从多个来源动态生成blacklist列表文件。</p>
+<p>下载generate-domains-blacklist.py，domains-blacklist-local-additions.txt，domains-blacklist.conf，domains-time-restricted.txt，domains-whitelist.txt这几个文件，然后执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./generate-domains-blacklist.py &gt; blacklist.txt</span><br></pre></td></tr></table></figure>
+<p>dnscrypt-proxy.toml中配置blacklist使用生成的blacklist.txt文件即可。<br>可以使用cron周期性自动重新生成/更新blacklist.txt文件。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy wiki</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/09/rtorrent-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/09/rtorrent-configuration/" class="post-title-link" itemprop="url">rTorrent配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-09 21:33:05" itemprop="dateCreated datePublished" datetime="2019-10-09T21:33:05+08:00">2019-10-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>[1]是官方新版rTorrent的配置模板，使用0.9.*支持的语法</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/rakshasa/rtorrent/wiki/CONFIG-Template">rTorrent Configuration Template</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/09/umount-offline-nfs-filesystem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/09/umount-offline-nfs-filesystem/" class="post-title-link" itemprop="url">umount已经下线的远程NFS文件系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-09 16:46:19" itemprop="dateCreated datePublished" datetime="2019-10-09T16:46:19+08:00">2019-10-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>如果远程的NFS服务器/文件系统已经奔溃，这时候umount会stuck住，可以用下面的命令行将其卸除掉：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo umount -f -l /mnt/mount_point</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/08/postgresql-11-server-optimisation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/08/postgresql-11-server-optimisation/" class="post-title-link" itemprop="url">PostgreSQL 11数据库参数优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-08 17:07:53" itemprop="dateCreated datePublished" datetime="2019-10-08T17:07:53+08:00">2019-10-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>服务器资源状况：<br>32GB内存<br>4路8核心CPU，逻辑核心32颗</p>
+<p>postgresql.conf配置文件部分参数：</p>
+<p><strong>shared_buffers</strong><br>设置为系统内存的40%，过多无益</p>
+<p><strong>work_mem</strong><br>单个查询排序所用内存，work_mem*所有用户数的全部查询数=占用系统内存，因此如果并发用户很多，此参数不宜设置多大，比如设置为128MB，如果同时有10个并发查询，则会占用1280MB系统内存</p>
+<p><strong>maintenance_work_mem</strong><br>维护类工作使用的内存，比如VACUUM, CREATE INDEX, and ALTER TABLE ADD FOREIGN KEY等，因为每一个数据库session同时只能执行一个此类操作，因为可以将其设置的大一点儿，可以提高此类操作的性能。</p>
+<p><strong>effective_cache_size</strong><br>用于query planner估算系统可用内存，并不是真正的分配内存，可以设置为系统内存的1/2到3/4大小。</p>
+<p>调优参数汇总:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">shared_buffers = 12GB</span><br><span class="line">work_mem = 128MB</span><br><span class="line">maintenance_work_mem = 2GB</span><br><span class="line">effective_cache_size = 24GB</span><br><span class="line">max_connections = <span class="number">2000</span></span><br><span class="line">max_prepared_transactions = <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server">Tuning Your PostgreSQL Server</a><br>[2]<a target="_blank" rel="noopener" href="https://pgtune.leopard.in.ua/#/">PGTune</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">rman configure命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-01 07:33:13" itemprop="dateCreated datePublished" datetime="2019-10-01T07:33:13+08:00">2019-10-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>rman备份时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">03009</span>: failure <span class="keyword">of</span> Control File and SPFILE Autobackup command on ORA_DISK_1 channel at <span class="number">10</span>/<span class="number">01</span>/<span class="number">2019</span> <span class="number">00</span>:<span class="number">31</span>:<span class="number">53</span></span><br><span class="line">ORA-<span class="number">19504</span>: failed to create file <span class="string">&quot;\\\\192.168.0.82\\SHARE\\TT\\CTL_C-1276927241-20191001-00&quot;</span></span><br><span class="line">ORA-<span class="number">27056</span>: could not <span class="keyword">delete</span> file</span><br><span class="line">OSD-<span class="number">04029</span>: unable to get file attributes</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">53</span>) 找不到网络路径。</span><br></pre></td></tr></table></figure>
+<p>是因为rman配置了控制文件自动备份，但是设置的自动备份路径早已经失效了<br>所以需要关闭控制文件自动备份配置，并恢复默认设置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP OFF;</span><br><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>CLEAR用于恢复默认设置，比如控制文件自动备份的默认设置是OFF，所以也可以这样关闭控制文件自动备份：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>查看全部配置选项：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; SHOW ALL;</span><br><span class="line">RMAN configuration parameters are:</span><br><span class="line">CONFIGURE RETENTION POLICY TO REDUNDANCY <span class="number">1</span>;</span><br><span class="line">CONFIGURE BACKUP OPTIMIZATION ON;</span><br><span class="line">CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO &#x27;%F&#x27;; # default</span><br><span class="line">CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default</span><br><span class="line">CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE <span class="number">30</span> G;</span><br><span class="line">CONFIGURE MAXSETSIZE TO UNLIMITED; # default</span><br><span class="line">CONFIGURE ENCRYPTION FOR DATABASE OFF; # default</span><br><span class="line">CONFIGURE ENCRYPTION ALGORITHM &#x27;AES128&#x27;; # default</span><br><span class="line">CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default</span><br><span class="line">CONFIGURE SNAPSHOT CONTROLFILE NAME TO &#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\SNCFORCL.ORA&#x27;; # default</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.juliandyke.com/Research/RMAN/ConfigureCommand.php">RMAN Configure Command</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/30/redis-install-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/30/redis-install-configuration/" class="post-title-link" itemprop="url">redis sentinel主从复制高可用安装配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-30 15:29:29" itemprop="dateCreated datePublished" datetime="2019-09-30T15:29:29+08:00">2019-09-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>redis sentinel与cluster是不同的，虽然都是分布式系统，sentinel只是实现高可用，而cluster则可以进一步实现数据分片和负载均衡。</p>
+<p>sentinel配置至少需要三个节点。<br>后面采用如下的配置,三个独立的节点，数字代表节点编号，M代表Master，S代表Sentinel，R代表Replica</p>
+<pre><code>   +----+
+    M1 
+    S1 
+   +----+</code></pre>
+<p>+—-+        +—-+<br> R2 —-+—- R3<br> S2           S3<br>+—-+         +—-+</p>
+<p>Configuration: quorum = 2</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install redis-server redis-sentinel</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-server配置</strong></p>
+<p>配置文件为/etc/redis/redis.conf<br>所有的server节点注释掉bind本地回环地址这一行，并且将protect-mode设置为no</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br><span class="line">protect-mode no</span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>slave节点2和3需要添加replicaof配置项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replicaof ip_of_master <span class="number">6379</span></span><br></pre></td></tr></table></figure>
+
+<p>diskless配置</p>
+<p>如果redis只是用于存储session，可以无需持久化到硬盘，进一步提高性能</p>
+<p>注释掉配置文件中的所有save行，replica参数设置如下即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># save 900 1</span><br><span class="line"># save 300 10</span><br><span class="line"># save 60 10000</span><br><span class="line">repl-diskless-sync yes</span><br><span class="line">repl-diskless-sync-delay <span class="number">0</span></span><br><span class="line">repl-disable-tcp-nodelay no</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-sentinel配置</strong><br>配置文件为/etc/redis/sentinel.conf<br>注释掉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>sentinel monitor配置为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster ip_of_master <span class="number">6379</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>其他参数，比如down-after-milliseconds，failover-timeout，parallel-syncs等都使用系统默认值即可。</p>
+<p>注意：sentinel启动时会自动生成sentinel myid用于在集群中标识本实例，生成后只要不删除会一直使用这个id，如果其他节点复制本节点的配置文件，注意要注释或删除掉已经生成的myid，因为sentinel集群中所有的实例要有不同的myid</p>
+<p><strong>sentinel集群状态</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli -p <span class="number">26379</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel master mymaster</span><br><span class="line"> <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;mymaster&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;eb70c88ffcf007fd54032e85fc35e500dfbbb2a0&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"><span class="number">10</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"><span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"><span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"><span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"><span class="number">18</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"><span class="number">20</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"><span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"><span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"><span class="number">24</span>) <span class="string">&quot;2289&quot;</span></span><br><span class="line"><span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"><span class="number">26</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"><span class="number">28</span>) <span class="string">&quot;6058526968&quot;</span></span><br><span class="line"><span class="number">29</span>) <span class="string">&quot;config-epoch&quot;</span></span><br><span class="line"><span class="number">30</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">31</span>) <span class="string">&quot;num-slaves&quot;</span></span><br><span class="line"><span class="number">32</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">33</span>) <span class="string">&quot;num-other-sentinels&quot;</span></span><br><span class="line"><span class="number">34</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">35</span>) <span class="string">&quot;quorum&quot;</span></span><br><span class="line"><span class="number">36</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">37</span>) <span class="string">&quot;failover-timeout&quot;</span></span><br><span class="line"><span class="number">38</span>) <span class="string">&quot;180000&quot;</span></span><br><span class="line"><span class="number">39</span>) <span class="string">&quot;parallel-syncs&quot;</span></span><br><span class="line"><span class="number">40</span>) <span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到当前的master节点信息，num-slaves表明有几个replica，num-other-sentinels表明除本节点外有几个其他的sentinel节点。</p>
+<p>relipa节点的信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel slaves mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.18:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;f8213930280bbf28202922474c045bb225ed0685&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;3994&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058776146&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825725&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.17:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.17&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;dc208df92659b72d94e5da0335cc6bc1b9fe814b&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;6361&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058766018&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825169&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>sentinel节点的信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel sentinels mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;493&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;454&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-service优化配置</strong></p>
+<p>1、TCP BACKLOG<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The TCP backlog setting <span class="keyword">of</span> <span class="number">511</span> cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value <span class="keyword">of</span> <span class="number">128.</span></span><br></pre></td></tr></table></figure>
+<p>查看当前配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/sys/net/core/somaxconn</span><br><span class="line"><span class="number">128</span></span><br></pre></td></tr></table></figure>
+<p>显然主机的tcp backlog设置过低了，不能很好的支持大量的并发连接，应该把对应的参数调高<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.core.somaxconn = <span class="number">10240</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>/etc/redis/redis.conf文件中修改tcp-backlog为4096或更高，但不能超过系统参数设置，重启redis后生效。</p>
+<p>2、overcommit_memory<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING overcommit_memory is set to <span class="number">0</span>! Background save may fail under low memory condition. To fix <span class="built_in">this</span> issue add <span class="string">&#x27;vm.overcommit_memory = 1&#x27;</span> to /etc/sysctl.conf and then reboot or run the command <span class="string">&#x27;sysctl vm.overcommit_memory=1&#x27;</span> <span class="keyword">for</span> <span class="built_in">this</span> to take effect.</span><br></pre></td></tr></table></figure>
+<p>一般在低内存条件时，此参数才会派上用场<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.overcommit_memory = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>3、关闭透明巨页<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING you have Transparent Huge Pages (THP) support enabled <span class="keyword">in</span> your kernel. This will create latency and memory usage issues <span class="keyword">with</span> Redis. To fix <span class="built_in">this</span> issue run the command <span class="string">&#x27;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27;</span> <span class="keyword">as</span> root, and add it to your /etc/rc.local <span class="keyword">in</span> order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br></pre></td></tr></table></figure>
+<p>开启透明巨页会有些问题，可以通过grub传递内核参数来关闭透明巨页<br>/etc/default/grub文件中GRUB_CMDLINE_LINUX_DEFAULT中添加transparent_hugepage=never</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet transparent_hugepage=never&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后更新grub配置，重启生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-grub</span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>4、repl-backlog-size参数<br>这个参数是为replica保持数据的缓冲区大小，当replica离线时，使用此缓冲为其保存数据，当replica重新上线可以不用执行full sync，使用partial sync就可以了，默认设置为1MB，显然太小了，可以根据单位时间内业务数据多少、支持replica离线时间、内存大小等因素设置此参数，比如设置为16MB以上。</p>
+<p>5、client-output-buffer-limit参数</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://redis.io/topics/replication">Replication</a><br>[2]<a target="_blank" rel="noopener" href="https://redis.io/topics/sentinel">Redis Sentinel Documentation</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.csdn.net/angjunqiang/article/details/81190562">Redis Sentinel 与 Redis Cluster</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/09/29/standby%E6%95%B0%E6%8D%AE%E5%BA%93rman%E5%A4%87%E4%BB%BD%E9%94%99%E8%AF%AFrman-10006/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/29/standby%E6%95%B0%E6%8D%AE%E5%BA%93rman%E5%A4%87%E4%BB%BD%E9%94%99%E8%AF%AFrman-10006/" class="post-title-link" itemprop="url">standby数据库rman备份错误RMAN-10006</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-29 10:02:49" itemprop="dateCreated datePublished" datetime="2019-09-29T10:02:49+08:00">2019-09-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在物理备库上执行rman备份时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MAN-<span class="number">00601</span>: fatal error <span class="keyword">in</span> recovery manager</span><br><span class="line">RMAN-<span class="number">03004</span>: fatal error during execution <span class="keyword">of</span> command</span><br><span class="line">RMAN-10006: error running SQL statement: select sofar, context, start_time from v$session_longops where (start_time &gt; nvl(:1, sysdate-100) or start_time = nvl(:2, sysdate+100)) and sid = :3 and serial# = :4 and opname like &#x27;RMAN:%&#x27; order by start_time desc, context desc</span><br><span class="line">RMAN-<span class="number">10002</span>: ORACLE error: ORA-<span class="number">00000</span>: normal, successful completion</span><br></pre></td></tr></table></figure>
+
+<p>这是oracle的一个bug</p>
+<p>Metalink NoteID：1080134.1.<br>Cause<br>Unpublished Bug 4230058: FAIL TO CONNECT TO RMAN AFTER PHYSICAL STANDBY IS OPENED READ ONLY</p>
+<p>If the standby database is opened readonly and then managed recovery is restarted without bouncing the database, queries against v$session_longops will fail with:</p>
+<p>ORA-01219: database not open: queries allowed on fixed tables/views only</p>
+<p>RMAN likewise will fail trying to access this view with RMAN-10006 error.</p>
+<p>Solution<br>Restart the standby database after opening it in READ ONLY mode before restarting the Managed Recovery process.</p>
+<p>最简单的解决方案就是重启standby实例，还有一个方法是修改数据库参数，但是如果备库转换为主库，这个参数可能会有影响，所以还是重启实例最简单。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.oracle.com/knowledge/Oracle%20Database%20Products/1080134_1.html">RMAN backup of physical standby fails RMAN-10006 querying v$session_longops (Doc ID 1080134.1)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.linuxidc.com/Linux/2013-09/90095.htm">Standby上执行RMAN报错RMAN-10006错误处理</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.itpub.net/79499/viewspace-616835/">9208物理standby备份报错</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/15/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/15/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/15/bash-dollar-var/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/15/bash-dollar-var/" class="post-title-link" itemprop="url">bash $-变量</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-15 20:01:35" itemprop="dateCreated datePublished" datetime="2018-11-15T20:01:35+08:00">2018-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>$-是bash内置变量，其值为bash shell打开的选项的一个集合</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ echo <span class="string">&quot;$-&quot;</span></span><br><span class="line">himBH</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">H - histexpand</span><br><span class="line">m - monitor</span><br><span class="line">h - hashall</span><br><span class="line">B - braceexpand</span><br><span class="line">i - interactive</span><br></pre></td></tr></table></figure>
+
+<p>可以使用set -/+ options来打开或者关闭这些shell选项</p>
+<p>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/ziyunfei/p/4913758.html">Bash 为何要发明 shopt 命令</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/11/09/macos-missing-xcrun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/09/macos-missing-xcrun/" class="post-title-link" itemprop="url">MacOS missing xcrun问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-09 19:18:42" itemprop="dateCreated datePublished" datetime="2018-11-09T19:18:42+08:00">2018-11-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>升级MacOS后brew upgrade经常会出现如下错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The bottle needs the Apple Command Line Tools to be installed.</span><br><span class="line"> You can install them, <span class="keyword">if</span> desired, <span class="attr">with</span>:</span><br><span class="line"> xcode-select --install</span><br><span class="line"></span><br><span class="line">xcrun: error: invalid active developer path (<span class="regexp">/Library/</span>Developer/CommandLineTools), missing xcrun at: <span class="regexp">/Library/</span>Developer/CommandLineTools/usr/bin/xcrun</span><br></pre></td></tr></table></figure>
+
+<p>是因为系统升级后没有安装相应版本的Apple Command Line Tools<br>解决办法就是像错误提示里说的一样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcode-select --install</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/19/wine-fonts-link/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/19/wine-fonts-link/" class="post-title-link" itemprop="url">wine中文字体链接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-19 08:47:43" itemprop="dateCreated datePublished" datetime="2018-07-19T08:47:43+08:00">2018-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>字体链接</strong></p>
+<p>M$的字体是专有的，有版权的，因此应该使用开源字体。</p>
+<p>Windows支持字体链接：当一种字体中不存在某个字时，可以尝试从另一个字体文件中寻找相应的字形。所以只要把当前系统中的中文字体设为”fallback”字体，汉字通常就能正确显示了。方法也很简单，只需创建一个文本文件，如chn_font.reg如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line"> </span><br><span class="line">\[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\FontLink\\SystemLink\]</span><br><span class="line"><span class="string">&quot;Lucida Sans Unicode&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Microsoft Sans Serif&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;MS Sans Serif&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Tahoma&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Tahoma Bold&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;SimSun&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Arial&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Arial Black&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意请将wqy-microhei.ttc替换为你系统中的字体文件名，如文泉驿正黑是wqy-zenhei.ttc（请在/usr/share/fonts及其子文件夹中寻找相应字体文件）。<br>MacOSX上可以使用PingFang.ttc。</p>
+<p>如果想使用其它字体，也可直接将相应的ttf或ttc文件复制到~/.wine/drive_c/windows/Fonts/，再用其文件名替换上面的wqy-zenhei.ttc即可。</p>
+<p>最后，打开注册表wine regedit，导入上面的注册表文件即可。中文应该都能完美显示了（包括Picasa中文显示为方框、软件安装程序汉字无法显示等问题均可被解决）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wine regedit chn_font.reg</span><br></pre></td></tr></table></figure>
+
+<p>注意上面的注册表键值只能使用字体的文件名，而不能使用字体名，这是由“字体链接”本身的特性决定的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://linux-wiki.cn/wiki/%E8%AE%BE%E7%BD%AEwine%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AD%97%E4%BD%93">Wine的中文显示与字体设置</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/18/systemd-template-unit-file-and-instance-unit-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/18/systemd-template-unit-file-and-instance-unit-file/" class="post-title-link" itemprop="url">systemd的模板单元文件和实例单元文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-18 09:11:23" itemprop="dateCreated datePublished" datetime="2018-07-18T09:11:23+08:00">2018-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>模板单元文件和实例单元文件</strong></p>
+<p>使用模板，一个模板单元(unit)文件可以创建多个实例化的单元文件，从而简化系统配置。</p>
+<p>模板单元文件的文件名中包含一个@符号，@位于单元基本文件名和扩展名之间，比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example@.service</span><br></pre></td></tr></table></figure>
+
+<p>当从模板单元文件创建实例单元文件时，在@符号和单元扩展名(包括符号.)之前加入实例名,比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example@instance1.service</span><br></pre></td></tr></table></figure>
+
+<p>表明实例单元文件<a href="mailto:&#101;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x40;&#105;&#x6e;&#115;&#x74;&#97;&#x6e;&#99;&#101;&#49;&#46;&#115;&#x65;&#114;&#x76;&#x69;&#x63;&#x65;">&#101;&#120;&#x61;&#109;&#112;&#108;&#x65;&#x40;&#105;&#x6e;&#115;&#x74;&#97;&#x6e;&#99;&#101;&#49;&#46;&#115;&#x65;&#114;&#x76;&#x69;&#x63;&#x65;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
+<p>实例单元文件一般是模板单元文件的一个符号链接，符号链接命中包含实例名，systemd就会传递实例名给模板单元文件。</p>
+<p>在相应的target中创建实例单元文件符号链接之后，需要运行一下命令将其装载：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+
+<p><strong>模板标识符/参数</strong></p>
+<p>模板单元文件中可以使用一些标识符，当被实例化为实例单元文件并运行时，systemd会将标识符的实际值传递给对应的标识符，比如在模板单元文件中是用%i，实际运行实例单元文件时，会将实例名传递给%i标识符。</p>
+<p>有以下可用的标识符：</p>
+<blockquote>
+<p>%n: Anywhere where this appears in a template file, the full resulting unit name will be inserted.<br>%N: This is the same as the above, but any escaping, such as those present in file path patterns, will be reversed.<br>%p: This references the unit name prefix. This is the portion of the unit name that comes before the @ symbol.<br>%P: This is the same as above, but with any escaping reversed.<br>%i: This references the instance name, which is the identifier following the @ in the instance unit. This is one of the most commonly used specifiers because it will be guaranteed to be dynamic. The use of this identifier encourages the use of configuration significant identifiers. For example, the port that the service will be run at can be used as the instance identifier and the template can use this specifier to set up the port specification.<br>%I: This specifier is the same as the above, but with any escaping reversed.<br>%f: This will be replaced with the unescaped instance name or the prefix name, prepended with a /.<br>%c: This will indicate the control group of the unit, with the standard parent hierarchy of /sys/fs/cgroup/ssytemd/ removed.<br>%u: The name of the user configured to run the unit.<br>%U: The same as above, but as a numeric UID instead of name.<br>%H: The host name of the system that is running the unit.<br>%%: This is used to insert a literal percentage sign.</p>
+</blockquote>
+<p>References:<br>[1] <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files">Understanding Systemd Units and Unit Files</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/18/install-shadowsocksr-libdev/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/18/install-shadowsocksr-libdev/" class="post-title-link" itemprop="url">安装shadowsocksr-libdev</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-18 09:06:30" itemprop="dateCreated datePublished" datetime="2018-07-18T09:06:30+08:00">2018-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https:<span class="comment">//github.com/shadowsocksrr/shadowsocksr-libev</span></span><br><span class="line">$ cd shadowsocksr-libev</span><br><span class="line">$ sudo apt-get install --no-install-recommends build-essential autoconf libtool libssl-dev \\</span><br><span class="line"> gawk debhelper dh-systemd init-system-helpers pkg-config asciidoc xmlto apg libpcre3-dev</span><br><span class="line">$ dpkg-buildpackage -b -us -uc -i</span><br><span class="line">$ cd ..</span><br><span class="line">$ sudo dpkg -i shadowsocks-libev*.deb</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/07/18/debian-block-package-update/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/18/debian-block-package-update/" class="post-title-link" itemprop="url">debian阻止个别软件包更新</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-18 09:02:52" itemprop="dateCreated datePublished" datetime="2018-07-18T09:02:52+08:00">2018-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>可以单独阻止个别软件包在执行update和dist-update命令时进行更新，也就是不让这些包从源里更新。</p>
+<p>dpkg维护软件包的状态，分别有以下几种状态：</p>
+<p>unknown – 用户并没描述他想对软件包进行什么操作。<br>install – 用户希望对软件包进行安装或升级。<br>remove – 用户希望删除软件包，但不想删除任何配置文件。<br>purge – 用户希望完全删除软件包，包括配置文件。<br>hold – 用户希望软件包保持现状，例如，用户希望保持当前的版本，当前的状态，当前的一切。</p>
+<p>只要将软件包foobar的状态修改为hold就可以阻止更新：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo foobar hold sudo dpkg --set-selections</span><br></pre></td></tr></table></figure>
+
+<p>如果要恢复软件包foobar的更新，只要将状态修改为install就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo foobar install sudo dpkg --set-selections</span><br></pre></td></tr></table></figure>
+
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/20/h3c-nqa-track-static-route-hot-standby/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/20/h3c-nqa-track-static-route-hot-standby/" class="post-title-link" itemprop="url">H3C防火墙使用nqa+track结合静态路由实现双链路热备、主备链路自动切换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-20 14:04:35" itemprop="dateCreated datePublished" datetime="2018-06-20T14:04:35+08:00">2018-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为种种原因，自备机房联通和移动双物理链路接入互联网访问,联通线路经常挂掉，影响互联网访问，使用NQA(network quality analyzer)+track可以根据物理链路是否有效来自动选择静态默认路由。</p>
+<p>两条默认路由的preference是不同的，网通链路优先，当两条链路都有效时，默认路由走联通链路，当联通链路失效时，联通默认路由自动被禁止，从而默认路由走移动链路。</p>
+<p><strong>配置步骤</strong><br>启用nqa,默认是启动状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nqa agent enable</span><br></pre></td></tr></table></figure>
+
+<p>１、配置nqa自动侦测两条物理链路<br>网通链路nqa侦测组(test group)：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">nqa entry admin wangtong #添加nqa侦测项目</span><br><span class="line">type icmp-echo #配置测试例类型为ICMP-echo并进入测试类型视图</span><br><span class="line">　　destination ip 网通网关ip #配置测试操作的目的IP地址,如果网关开启了防ping功能，是ping不通的，必须设置其他一个可以ping通的地址</span><br><span class="line">　　next-hop 网通网关ip #配置IP报文的下一跳IP地址，即网关的ip，若destination设的是网关ip，可以不配置，若destination不是网关ip，则必须配置</span><br><span class="line">　　probe count 3 #配置一次NQA测试中进行探测的次数，默认为1，此处也可以不设置</span><br><span class="line">　　probe timeout 1000 #配置NQA探测超时时间，默认为3000ms,可以不设置，用默认的</span><br><span class="line">　　frequency 1000 #测试频率为1000ms既测试组连续两次测试开始时间的时间间隔为1秒，最好设置下</span><br><span class="line">　　reaction 2 checked-element probe-fail threshold-type consecutive 3 action-type trigger-only #建立联动项2，既如果连续测试3次失败则触发相关动作。每个测试组可以有多条reaction，分别指定不同的编号即可。</span><br></pre></td></tr></table></figure>
+<p>移动链路nqa侦测组(test group)：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">nqa entry admin yidong #添加nqa侦测项目</span><br><span class="line">type icmp-echo #配置测试例类型为ICMP-echo并进入测试类型视图</span><br><span class="line">　　destination ip 移动网关ip #配置测试操作的目的IP地址,如果网关开启了防ping功能，是ping不通的，必须设置其他一个可以ping通的地址</span><br><span class="line">　　next-hop 移动网关ip #配置IP报文的下一跳IP地址，即网关的ip，若destination设的是网关ip，可以不配置，若destination不是网关ip，则必须配置</span><br><span class="line">　　probe count 3 #配置一次NQA测试中进行探测的次数，默认为1，此处也可以不设置</span><br><span class="line">　　probe timeout 1000 #配置NQA探测超时时间，默认为3000ms,可以不设置，用默认的</span><br><span class="line">　　frequency 1000 #测试频率为1000ms既测试组连续两次测试开始时间的时间间隔为1秒，最好设置下</span><br><span class="line">　　reaction 1 checked-element probe-fail threshold-type consecutive 3 action-type trigger-only #建立联动项1，既如果连续测试3次失败则触发相关动作</span><br></pre></td></tr></table></figure>
+
+<p>每个nqa侦测可以绑定多个reaction动作，比如reaction 1, reaction 2, reaction 3,…</p>
+<p>2、创建侦测项目中reaction关联的track</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">track <span class="number">1</span> nqa entry admin yidong reaction <span class="number">1</span></span><br><span class="line">track <span class="number">2</span> nqa entry admin wangtong reaction <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>3、启动nqa侦测组</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nqa schedule admin wangtong start-time now lifetime forever #启动网通链路探测组</span><br><span class="line">nqa schedule admin yidong start-time now lifetime forever #启动移动链路探测组</span><br></pre></td></tr></table></figure>
+
+<p>可以用undo来停止侦测组</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">undo nqa schedule admin wangtong #停止网通链路侦测组</span><br><span class="line">undo nqa schedule admin yidong #停止移动链路侦测组</span><br></pre></td></tr></table></figure>
+
+<p>4、设置track联动的静态默认路由</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip route-static 0.0.0.0 0.0.0.0 222.132.*.* track 2 #联通链路,默认preferece为60,低于80，所以优先使用联通链路</span><br><span class="line">ip route-static 0.0.0.0 0.0.0.0 218.201.*.* track 1 preference 80 #移动链路，备份线路</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看状态</strong></p>
+<p>查看track</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">display track all #或者查看指定的track: display track 1</span><br><span class="line">Track ID: <span class="number">1</span></span><br><span class="line"> Status: Positive</span><br><span class="line"> Notification delay: Positive <span class="number">0</span>, Negative <span class="number">0</span> (<span class="keyword">in</span> seconds)</span><br><span class="line"> Reference object:</span><br><span class="line"> NQA entry: admin yidong</span><br><span class="line"> Reaction: <span class="number">1</span></span><br><span class="line">Track ID: <span class="number">2</span></span><br><span class="line"> Status: Negative</span><br><span class="line"> Notification delay: Positive <span class="number">0</span>, Negative <span class="number">0</span> (<span class="keyword">in</span> seconds)</span><br><span class="line"> Reference object:</span><br><span class="line"> NQA entry: admin wangtong</span><br><span class="line"> Reaction: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到网通链路挂了，移动链路是有效的。</p>
+<p>查看nqa统计</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">display nqa statistics</span><br><span class="line">NQA entry(admin admin, tag yidong) test statistics:</span><br><span class="line"> NO. : <span class="number">1</span></span><br><span class="line"> Destination IP address: <span class="number">218.201</span>.*.* </span><br><span class="line"> Start time: <span class="number">2000</span>-<span class="number">10</span>-<span class="number">16</span> <span class="number">15</span>:<span class="number">00</span>:<span class="number">37.9</span> </span><br><span class="line"> Life time: <span class="number">3520</span> </span><br><span class="line"> Send operation times: <span class="number">33633</span> Receive response times: <span class="number">33628</span> </span><br><span class="line"> Min/Max/Average round trip time: <span class="number">1</span>/<span class="number">5</span>/<span class="number">1</span> </span><br><span class="line"> Square-Sum <span class="keyword">of</span> round trip time: <span class="number">33773</span> </span><br><span class="line"> Extended results:</span><br><span class="line"> Packet lost <span class="keyword">in</span> test: <span class="number">0</span>% </span><br><span class="line"> Failures due to timeout: <span class="number">5</span></span><br><span class="line"> Failures due to disconnect: <span class="number">0</span> </span><br><span class="line"> Failures due to no connection: <span class="number">0</span></span><br><span class="line"> Failures due to sequence error: <span class="number">0</span> </span><br><span class="line"> Failures due to internal error: <span class="number">0</span></span><br><span class="line"> Failures due to other errors: <span class="number">0</span></span><br><span class="line"> Packet(s) arrived late: <span class="number">0</span></span><br><span class="line"> NQA entry(admin admin, tag wangtong) test statistics:</span><br><span class="line"> NO. : <span class="number">1</span></span><br><span class="line"> Destination IP address: <span class="number">222.132</span>.*.* </span><br><span class="line"> Start time: <span class="number">2000</span>-<span class="number">10</span>-<span class="number">16</span> <span class="number">15</span>:<span class="number">00</span>:<span class="number">07</span><span class="number">.6</span> </span><br><span class="line"> Life time: <span class="number">3549</span> </span><br><span class="line"> Send operation times: <span class="number">1099</span> Receive response times: <span class="number">0</span> </span><br><span class="line"> Min/Max/Average round trip time: <span class="number">0</span>/<span class="number">0</span>/<span class="number">0</span> </span><br><span class="line"> Square-Sum <span class="keyword">of</span> round trip time: <span class="number">0</span> </span><br><span class="line"> Extended results:</span><br><span class="line"> Packet lost <span class="keyword">in</span> test: <span class="number">100</span>% </span><br><span class="line"> Failures due to timeout: <span class="number">1099</span></span><br><span class="line"> Failures due to disconnect: <span class="number">0</span> </span><br><span class="line"> Failures due to no connection: <span class="number">0</span></span><br><span class="line"> Failures due to sequence error: <span class="number">0</span> </span><br><span class="line"> Failures due to internal error: <span class="number">0</span></span><br><span class="line"> Failures due to other errors: <span class="number">0</span></span><br><span class="line"> Packet(s) arrived late: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>可以看到网通链路是无效的。</p>
+<p>查看当前路由表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">display ip routing-table</span><br><span class="line">Routing Tables: Public</span><br><span class="line"> Destinations : <span class="number">419</span> Routes : <span class="number">419</span></span><br><span class="line"></span><br><span class="line">Destination/Mask Proto Pre Cost NextHop Interface</span><br><span class="line"></span><br><span class="line"><span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span> Static <span class="number">80</span> <span class="number">0</span> <span class="number">218.201</span>.*.* Vlan200</span><br><span class="line"><span class="number">2.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">8</span> Direct <span class="number">0</span> <span class="number">0</span> <span class="number">2.0</span><span class="number">.0</span><span class="number">.59</span> Vlan300</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以看到当前默认路由走的是移动链路。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.iyunv.com/thread-70703-1-1.html">H3C防火墙/路由器通过Track实现双线接入的链路备份</a><br>[2]<a target="_blank" rel="noopener" href="http://www.h3c.com.hk/Technical_Support___Documents/Technical_Documents/Security_Products/H3C_SecPath_F1000-E/Configuration/Operation_Manual/H3C_SecPath_High-End_OM(F3169_F3207)-5PW106/05/201109/725892_1285_0.htm">H3C NQA Configuration</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/11/mplayer-play-audio-cd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/11/mplayer-play-audio-cd/" class="post-title-link" itemprop="url">mplayer播放audio cd</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-11 10:24:26" itemprop="dateCreated datePublished" datetime="2018-06-11T10:24:26+08:00">2018-06-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>从头顺序播放：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mplayer -cdrom-device /dev/sr0 cdda:<span class="comment">// -cache 5000</span></span><br></pre></td></tr></table></figure>
+
+<p>播放指定音轨：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mplayer -cdrom-device /dev/sr0 cdda:<span class="comment">//5 -cache 5000</span></span><br></pre></td></tr></table></figure>
+
+<p>播放部分音轨：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mplayer -cdrom-device /dev/sr0 cdda:<span class="comment">//6-13 -cache 5000</span></span><br></pre></td></tr></table></figure>
+
+<p>一定要加cache参数，因为读取CDROM是很慢的，不缓存会爆音。</p>
+<p>References:<br>[1] <a target="_blank" rel="noopener" href="https://www.cyberciti.biz/faq/linux-unix-mplayer-playing-audio-dvd-cd-using-bash-shell/">Mplayer: Play Audio CD Using Linux Command Line</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/02/lets-encrypt-wildcard-ssl-cert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/02/lets-encrypt-wildcard-ssl-cert/" class="post-title-link" itemprop="url">申请Let’s Encrypt统配SSL证书</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-02 12:29:05" itemprop="dateCreated datePublished" datetime="2018-06-02T12:29:05+08:00">2018-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>安装certbot</strong></p>
+<p>stretch源里的版本太低，因此需要配置stretch backports源，然后用以下命令安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install certbot -t stretch-backports</span><br></pre></td></tr></table></figure>
+
+<p>或者直接去官方下载安装使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//dl.eff.org/certbot-auto</span></span><br><span class="line">$ chmod a+x ./certbot-auto</span><br><span class="line">$ ./certbot-auto --help</span><br></pre></td></tr></table></figure>
+
+<p><strong>申请统配证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo certbot certonly \\</span><br><span class="line">--server https:<span class="comment">//acme-v02.api.letsencrypt.org/directory \\</span></span><br><span class="line">--manual --preferred-challenges dns \\</span><br><span class="line">-d *.openwares.net</span><br></pre></td></tr></table></figure>
+<p>或者如果手工安装certbot的话请用certbot-auto命令<br>这里只是申请证书，并不会自动安装，需要手工配置应用服务器，那些自动部署证书的插件并不是很好用。</p>
+<p>要申请wildcard子域统配证书，certbot必须为0.22.0或以上版本，而且要使用ACMEv2服务器申请证书。</p>
+<p>然后会有一通问题，看清楚回答即可，后面会要求为申请证书的域名配置TXT记录，类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Please deploy a DNS TXT record under the name</span><br><span class="line">_acme-challenge.openwares.net <span class="keyword">with</span> the following value:</span><br><span class="line"></span><br><span class="line">ZvjRBkEYcMVZSEslsuj*******************</span><br><span class="line"></span><br><span class="line">Before continuing, verify the record is deployed.</span><br></pre></td></tr></table></figure>
+<p>按照要求配置域名TXT记录，确认TXT记录生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ host -t TXT _acme-challenge.openwares.net</span><br><span class="line">_acme-challenge.openwares.net descriptive text <span class="string">&quot;ZvjRBkEYcMVZSEslsu************&quot;</span></span><br></pre></td></tr></table></figure>
+<p>TXT记录生效可能稍微会需要一些时间，确认生效后继续,如果通过验证则会生成证书</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Waiting <span class="keyword">for</span> verification...</span><br><span class="line">Cleaning up challenges</span><br><span class="line"></span><br><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at:</span><br><span class="line"> /etc/letsencrypt/live/openwares.net/fullchain.pem</span><br><span class="line"> Your key file has been saved at:</span><br><span class="line"> /etc/letsencrypt/live/openwares.net/privkey.pem</span><br><span class="line"> Your cert will expire on <span class="number">2018</span>-<span class="number">08</span>-<span class="number">31.</span> To obtain a <span class="keyword">new</span> or tweaked</span><br><span class="line"> version <span class="keyword">of</span> <span class="built_in">this</span> certificate <span class="keyword">in</span> the future, simply run certbot</span><br><span class="line"> again. To non-interactively renew *all* <span class="keyword">of</span> your certificates, run</span><br><span class="line"> <span class="string">&quot;certbot renew&quot;</span></span><br><span class="line"> - If you like Certbot, please consider supporting our work by:</span><br><span class="line"></span><br><span class="line"> Donating to ISRG / Let<span class="string">&#x27;s Encrypt: https://letsencrypt.org/donate</span></span><br><span class="line"><span class="string"> Donating to EFF: https://eff.org/donate-le</span></span><br></pre></td></tr></table></figure>
+
+<p>现在已经有了wildcard证书了，将证书配置到你的web服务器中就ok了。</p>
+<p>证书的有效期只有三个月，距离失效期30日内，可以简单的执行以下命令来更新证书：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo certbot renew</span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/05/21/amdgpu-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/05/21/amdgpu-setup/" class="post-title-link" itemprop="url">amdgpu setup</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-05-21 10:22:20" itemprop="dateCreated datePublished" datetime="2018-05-21T10:22:20+08:00">2018-05-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ubuntu 16.04.4<br>amdgpu-pro 17.40-492261</p>
+<p>before install amdgpu-pro<br>UEFI:<br>peg0 -&gt; gen2<br>peg1 -&gt; gen2<br>pci latency time -&gt; 96<br>above 4G memory -&gt; disable<br>hd audio controller -&gt; disable<br>intel serial i/o -&gt; disable<br>legacy usb support -&gt; enable<br>fastboot -&gt; disable<br>boot mode -&gt; legacy + uefi<br>comm port -&gt; disable<br>LPT port -&gt; disable</p>
+<p>install <a target="_blank" rel="noopener" href="https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx">amdgpu-pro</a><br>$&gt; sudo update-pciids</p>
+<p>reboot</p>
+<p>UEFI:<br>above 4G memory -&gt; enable</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

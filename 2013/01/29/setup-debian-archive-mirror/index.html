@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="内网的linux服务器越来越多,有必要搭建一个内网debian源镜像服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建debian源镜像服务器">
+<meta property="og:url" content="http://example.com/2013/01/29/setup-debian-archive-mirror/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="内网的linux服务器越来越多,有必要搭建一个内网debian源镜像服务器">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2013-01-29T04:46:24.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.487Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2013/01/29/setup-debian-archive-mirror/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>搭建debian源镜像服务器 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get-install-rsync"><span class="nav-number">1.</span> <span class="nav-text">apt-get install rsync</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wget-http-ftp-master-debian-org-ftpsync-tar-gz"><span class="nav-number">2.</span> <span class="nav-text">wget http:&#x2F;&#x2F;ftp-master.debian.org&#x2F;ftpsync.tar.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get-install-apache2"><span class="nav-number">3.</span> <span class="nav-text">apt-get install apache2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rm-000-default"><span class="nav-number">4.</span> <span class="nav-text">rm 000-default</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ln-sf-etc-apache2-sites-available-debian-mirror-000-default"><span class="nav-number">5.</span> <span class="nav-text">ln -sf &#x2F;etc&#x2F;apache2&#x2F;sites-available&#x2F;debian_mirror 000-default</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#etc-init-d-apache2-reload"><span class="nav-number">6.</span> <span class="nav-text">&#x2F;etc&#x2F;init.d&#x2F;apache2 reload</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/01/29/setup-debian-archive-mirror/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          搭建debian源镜像服务器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-01-29 12:46:24" itemprop="dateCreated datePublished" datetime="2013-01-29T12:46:24+08:00">2013-01-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>内网的linux服务器越来越多,有必要搭建一个内网debian源镜像服务器</p>
+<a id="more"></a>
+<p>debian官方提供了建设源镜像的脚本<a target="_blank" rel="noopener" href="http://ftp-master.debian.org/ftpsync.tar.gz">ftpsync</a>,而且有<a target="_blank" rel="noopener" href="http://www.debian.org/mirror/ftpmirror">详细的源镜像设置说明</a></p>
+<p><strong>准备工作</strong></p>
+<p>ftpsync使用rsync程序进行源镜像</p>
+<h1 id="apt-get-install-rsync"><a href="#apt-get-install-rsync" class="headerlink" title="apt-get install rsync"></a>apt-get install rsync</h1><p>从官方下载ftpsync脚本</p>
+<h1 id="wget-http-ftp-master-debian-org-ftpsync-tar-gz"><a href="#wget-http-ftp-master-debian-org-ftpsync-tar-gz" class="headerlink" title="wget http://ftp-master.debian.org/ftpsync.tar.gz"></a>wget <a target="_blank" rel="noopener" href="http://ftp-master.debian.org/ftpsync.tar.gz">http://ftp-master.debian.org/ftpsync.tar.gz</a></h1><p><strong>配置ftpsync</strong></p>
+<p>ftpsync使用环境变量BASEDIR来定位程序文件、配置文件和日志文件等的存放路径，BASEDIR默认取值${HOME},可以将ftpsync放置到用户主目录下</p>
+<p>在用户主目录下新建bin,etc,log目录，解压ftpsync,</p>
+<p>$ tar zxvf ftpsync.tar.gz<br>$ cp distrib/bin/ftpsync ~/bin<br>$ cp distrib/etc/ftpsync.conf.sample ~/etc/ftpsync.conf<br>$ cp distrib/etc/common ~/etc/common</p>
+<p>建立存放镜像文件的单独目录，各种架构需要的<a target="_blank" rel="noopener" href="http://www.debian.org/mirror/size">磁盘空间</a>，当前镜像all,amd64和source总共约需要190G硬盘空间。<br>可以在任何位置存放镜像，只要运行ftpsync的用户对目录有读写权限即可。此处使用/srv/mirrors/debian存放镜像文件，将目录的所有者和所属组设置为当前用户。</p>
+<p>最后打开~/etc/ftpsync.conf,修改以下内容：</p>
+<p>TO=”/srv/mirrors/debian/“ ##镜像源存放位置<br>RSYNC_HOST=”ftp.cn.debian.org” ##镜像自哪个外部源,debian中国官方源镜像是最佳选择，当然ftp.tw.debian.org,ftp.kr.debian.org和ftp.jp.debian.org速度也很快，<a target="_blank" rel="noopener" href="http://lug.ustc.edu.cn/blog/2011/05/ftp-cn-debian-org-comes/">中国官方源镜像</a>由中国科技大学维护<br>ARCH_EXCLUDE=”alpha arm armel armhf hppa hurd-i386 i386 ia64 kfreebsd-amd64 kfreebsd-i386 m68k mipsel mips powerpc s390 s390x sh sparc source” ##排除的架构，此处只保留amd64源，source源也排除，只镜像必要的，尽量节省硬盘空间。</p>
+<p><strong>注</strong>：当前脚本排除source镜像会提示错误：<br>Unexpected remote arg: ftp.cd.debian.org::debian<br>rsync error: syntax or usage error (code 1) at main.c(1232) [sender=3.0.9]<br>不要排除source可解决此错误。</p>
+<p><strong>推送模式镜像服务器</strong></p>
+<p>当档案库有变化时，上游源镜像服务器会主动向下游镜像服务器推送同步通知,然后下游源镜像服务器就可以及时的更新自己的档案库，这就是<a target="_blank" rel="noopener" href="http://www.debian.org/mirror/push_mirroring">推模式镜像</a>。debian的主服务器与下游镜像服务器之间即采用此种模式。</p>
+<p>此种模式需要下游镜像服务器配置ssh服务，上游镜像服务器使用ssh来通知下游服务器。可以使用一个普通用户来接受通知，将上游镜像服务器的公钥保存在~/.ssh/authorized_keys文件中，并且在此文件中添加如下语句以限制上游镜像服务器的权限</p>
+<p>no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty,command=”~/bin/ftpsync”,from=”ip_address”</p>
+<p>此处ip_address即上游镜像服务器的IP地址。<br>而且上游upstream镜像服务器还可以通过用户名/密码来授权谁可以向某些下游镜像服务器进行推送，并且这些用户名/密码是与系统隔离的，并不是使用/etc/passwd,进一步增强安全性。</p>
+<p>使用推送模式同步需要将下游downstream服务器地址，ssh端口和使用的用户告知上游源镜像服务器维护者</p>
+<p>对于企业内部的源镜像服务器，没有必要使用推模式，只要在空闲时段定时与上游源镜像服务器同步即可。</p>
+<p><strong>让ftpsync自动运行</strong> </p>
+<p>使用cron让ftpsync定时自动运行，/etc/cron.d/目录下添加文件ftpsync,内容如下：</p>
+<p>SHELL=/bin/bash<br>PATH=/home/username/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</p>
+<p>#minute hour day_of_month month day_of_week user command<br>01 * **username ftpsync</p>
+<p>username为运行ftpsync脚本的用户,每天凌晨1点自动运行ftpsync脚本与上游源镜像服务器同步</p>
+<p><strong>源镜像http配置</strong></p>
+<p>内网其他用户需要通过http或者ftp协议从本地源镜像服务器更新系统，此处使用apache来提供http方式的源镜像服务</p>
+<h1 id="apt-get-install-apache2"><a href="#apt-get-install-apache2" class="headerlink" title="apt-get install apache2"></a>apt-get install apache2</h1><p>/etc/apache2/sites-available/目录下添加文件debian_mirror,内容如下：</p>
+<p> 1 &lt;VirtualHost *:80&gt;<br> 2<br> 3     DocumentRoot /srv/mirrors/debian<br> 4     #<Directory /><br> 5     #    Options FollowSymLinks<br> 6     #    AllowOverride None<br> 7     #</Directory><br> 8     &lt;Directory /srv/mirrors/debian&gt;<br> 9         Options Indexes SymlinksIfOwnerMatch FollowSymLinks MultiViews<br>10         IndexOptions NameWidth=* SuppressDescription<br>11         AllowOverride None<br>12         Order allow,deny<br>13         allow from all<br>14     </Directory><br>15<br>16     ErrorLog ${APACHE_LOG_DIR}/debian_mirror_error.log<br>17<br>18     # Possible values include: debug, info, notice, warn, error, crit,<br>19     # alert, emerg.<br>20     LogLevel warn<br>21<br>22     CustomLog ${APACHE_LOG_DIR}/debian_mirror_access.log combined<br>23 </VirtualHost> </p>
+<p>然后/etc/apache2/sites-enabled目录下新建符号链接,此处将其设置为默认网站，也可以使用虚拟主机</p>
+<h1 id="rm-000-default"><a href="#rm-000-default" class="headerlink" title="rm 000-default"></a>rm 000-default</h1><h1 id="ln-sf-etc-apache2-sites-available-debian-mirror-000-default"><a href="#ln-sf-etc-apache2-sites-available-debian-mirror-000-default" class="headerlink" title="ln -sf /etc/apache2/sites-available/debian_mirror 000-default"></a>ln -sf /etc/apache2/sites-available/debian_mirror 000-default</h1><p>最后</p>
+<h1 id="etc-init-d-apache2-reload"><a href="#etc-init-d-apache2-reload" class="headerlink" title="/etc/init.d/apache2 reload"></a>/etc/init.d/apache2 reload</h1><p><strong>使用本地源镜像服务</strong></p>
+<p>编辑/etc/apt/source.list,添加<br>deb <a target="_blank" rel="noopener" href="http://mirror_ip/">http://mirror_ip</a> wheezy main contrib non-free<br>deb <a target="_blank" rel="noopener" href="http://mirror_ip/">http://mirror_ip</a> wheezy-updates main contrib non-free<br>deb <a target="_blank" rel="noopener" href="http://mirror_ip/">http://mirror_ip</a> wheezy-proposed-updates main contrib non-free</p>
+<p>mirror_ip即是新建的源镜像服务器的IP地址。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/01/28/debian-mount-smb-cifs-share/" rel="prev" title="linux挂载windows共享目录/磁盘">
+                  <i class="fa fa-chevron-left"></i> linux挂载windows共享目录/磁盘
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/01/30/debian-hosts-127-0-1-1/" rel="next" title="debian hosts文件中的 127.0.1.1 主机地址">
+                  debian hosts文件中的 127.0.1.1 主机地址 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

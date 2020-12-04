@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/3/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/03/pgadmin4-server-deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/03/pgadmin4-server-deployment/" class="post-title-link" itemprop="url">以服务方式部署pgadmin4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-03 20:46:14" itemprop="dateCreated datePublished" datetime="2020-02-03T20:46:14+08:00">2020-02-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在debian buster系统上以服务方式部署pgadmin4</p>
+<p><strong>配置</strong></p>
+<p>/usr/share/pgadmin4/web目录下添加config_local.py文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOG_FILE = <span class="string">&#x27;/var/log/pgadmin/pgadmin4.log&#x27;</span></span><br><span class="line">SQLITE_PATH = <span class="string">&#x27;/var/lib/pgadmin/pgadmin4.db&#x27;</span></span><br><span class="line">SESSION_DB_PATH = <span class="string">&#x27;/var/lib/pgadmin/sessions&#x27;</span></span><br><span class="line">STORAGE_DIR = <span class="string">&#x27;/var/lib/pgadmin/storage&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后执行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python3 setup.py</span><br></pre></td></tr></table></figure>
+<p>配置过程中输入用户登录认证信息，email和password，访问服务时需要提供</p>
+<p><strong>运行</strong></p>
+<p>使用gunicorn来运行python服务，先安装gunicorn</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install gunicorn3</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gunicorn3 --bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">80</span> \\</span><br><span class="line"> --workers=<span class="number">1</span> \\</span><br><span class="line"> --threads=<span class="number">25</span> \\</span><br><span class="line"> --chdir /usr/share/pgadmin4/web \\</span><br><span class="line"> pgAdmin4:app</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，输入服务所在的ip地址即可。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.pgadmin.org/docs/pgadmin4/latest/server_deployment.html">Server Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/02/02/ssh-x11-forward-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/02/ssh-x11-forward-tips/" class="post-title-link" itemprop="url">ssh x11 forward点滴</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-02 16:54:48" itemprop="dateCreated datePublished" datetime="2020-02-02T16:54:48+08:00">2020-02-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>firefox</strong></p>
+<p>加速X11 forward速度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -XC4 user@host firefox --no-remote</span><br></pre></td></tr></table></figure>
+
+<p><strong>chrome</strong></p>
+<p>直接下载chrome for linux amd64 latest</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</span></span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i google-chrome-stable_current_amd64.deb</span><br><span class="line">$ sudo apt install -f </span><br><span class="line">$ sudo apt install upower</span><br></pre></td></tr></table></figure>
+
+<p>chrome会将自己设置为x和gnome默认的浏览器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/x-www-browser (x-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/gnome-www-browser (gnome-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/google-chrome (google-chrome) <span class="keyword">in</span> auto mode</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -YC4 user@host google-chrome --disable-gpu --temp-profile</span><br></pre></td></tr></table></figure>
+<p>但仍然无法运行成功，会不停的出现GCM通道请求失败错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="number">17069</span>:<span class="number">17069</span>:<span class="number">0202</span>/<span class="number">170630.407817</span>:ERROR:gcm_channel_status_request.cc(<span class="number">145</span>)\] GCM channel request failed.</span><br></pre></td></tr></table></figure>
+<p>GCM是Google Cloud Messaging,google推出firebase云后，更名为FCM(Firebase Cloud Messaging)，看样子是Great Fucking Wall的锅</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/28/macos-compile-install-rtorrent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/28/macos-compile-install-rtorrent/" class="post-title-link" itemprop="url">macos编译安装rtorrent</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-28 16:08:54" itemprop="dateCreated datePublished" datetime="2020-01-28T16:08:54+08:00">2020-01-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>确保安装xcode和brew</p>
+<p>安装编译工具和部分依赖</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install automake libtool boost curl lzlib libsigc++ openssl xmlrpc-c</span><br></pre></td></tr></table></figure>
+
+<p>编译安装libtorrent</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https:<span class="comment">//github.com/rakshasa/libtorrent.git</span></span><br><span class="line">$ cd libtorrent</span><br><span class="line">$ ./autogen.sh</span><br><span class="line">$ CC=clang CXX=clang++ CXXFLAGS=<span class="string">&quot;-Wno-deprecated-declarations -O3 -std=c++11 -stdlib=libc++ -I/usr/local/opt/openssl/include&quot;</span> LDFLAGS=<span class="string">&quot;-L/usr/local/opt/openssl/lib&quot;</span> ./configure</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<p>libtorrent安装到/usr/local/lib</p>
+<p>编译安装rtorrent</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https:<span class="comment">//github.com/rakshasa/rtorrent.git</span></span><br><span class="line">$ cd rtorrent</span><br><span class="line">$ ./autogen.sh</span><br><span class="line">$ <span class="keyword">export</span> PKG_CONFIG_PATH=<span class="regexp">/usr/</span>local/lib/pkgconfig</span><br><span class="line">$ CC=clang CXX=clang++ CXXFLAGS=<span class="string">&quot;-Wno-deprecated-declarations -O3 -std=c++11 -stdlib=libc++ -I/usr/local/opt/openssl/include&quot;</span> LDFLAGS=<span class="string">&quot;-L/usr/local/opt/openssl/lib&quot;</span> ./configure --<span class="keyword">with</span>-xmlrpc-c</span><br><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<p>rtorrent安装到/usr/local/bin</p>
+<p>运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rtorrent</span><br></pre></td></tr></table></figure>
+<p>默认配置文件为~/.rtorrent.rc</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://gist.github.com/doctorpangloss/ecfbe70c61de9332698d4d4445848f81">libtorrent and rtorrent on mac.sh</a><br>[2]<a target="_blank" rel="noopener" href="https://devhints.io/rtorrent">rTorrent cheatsheet</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/rakshasa/rtorrent/wiki/User-Guide#navigating">Navigating</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/26/macos-lsof-netstat-port-inuse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/26/macos-lsof-netstat-port-inuse/" class="post-title-link" itemprop="url">macos显示占用端口的应用程序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-26 16:49:38" itemprop="dateCreated datePublished" datetime="2020-01-26T16:49:38+08:00">2020-01-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>macos版本的netstat并不支持-p选项以显示打开端口的应用程序，可以使用lsof(list open files)来达到同样的目的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lsof -nP -iTCP -sTCP:LISTEN</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://tonydeng.github.io/2016/07/07/use-lsof-to-replace-netstat/">使用 lsof 代替 Mac OS X 中的 netstat 查看占用端口的程序</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/14/alacritty-use-im/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/14/alacritty-use-im/" class="post-title-link" itemprop="url">alacritty无法使用输入法问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-14 14:29:03" itemprop="dateCreated datePublished" datetime="2020-01-14T14:29:03+08:00">2020-01-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>alacritty在使用wayland的系统上无法切换出中文输入法，将alacritty菜单项执行的命令更改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env WINIT_UNIX_BACKEND=x11 alacritty</span><br></pre></td></tr></table></figure>
+<p>这样将渲染后端更改为x11</p>
+<p>比如~/.local/share/applications/alacritty.desktop</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">\[Desktop Entry\]</span><br><span class="line">Type=Application</span><br><span class="line">TryExec=alacritty</span><br><span class="line">Exec=env WINIT_UNIX_BACKEND=x11 alacritty</span><br><span class="line">Icon=Alacritty</span><br><span class="line">Terminal=<span class="literal">false</span></span><br><span class="line">Categories=System;TerminalEmulator;</span><br><span class="line"></span><br><span class="line">Name=Alacritty</span><br><span class="line">GenericName=Terminal</span><br><span class="line">Comment=A cross-platform, GPU enhanced terminal emulator</span><br><span class="line">StartupWMClass=Alacritty</span><br><span class="line">Actions=New;</span><br><span class="line"></span><br><span class="line">\[Desktop Action New\]</span><br><span class="line">Name=New Terminal</span><br><span class="line">Exec=alacritty</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/01/14/debian-buster-install-sogou-im/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/01/14/debian-buster-install-sogou-im/" class="post-title-link" itemprop="url">debian buster安装搜狗输入法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-01-14 13:36:39" itemprop="dateCreated datePublished" datetime="2020-01-14T13:36:39+08:00">2020-01-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>下载</strong></p>
+<p>下载64位<a target="_blank" rel="noopener" href="https://pinyin.sogou.com/linux/?r=pinyin">安装包</a></p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install libqt4-declarative</span><br><span class="line">$ sudo dpkg -i sogoupinyin_2<span class="number">.3</span><span class="number">.1</span>.0112_amd64.deb</span><br><span class="line">$ sudo apt install -f</span><br></pre></td></tr></table></figure>
+
+<p>如果不安装libqt4-declarative，搜狗输入法无法正常使用，并且会报<br>“搜狗输入法异常：删除~/.config/SogouPY并重新启动”，<br>如果终端内输入命令sogou-qimpanel，会提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sogou-qimpanel</span><br><span class="line">sogou-qimpanel: error <span class="keyword">while</span> loading shared libraries: libQtDeclarative.so<span class="number">.4</span>: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置</strong><br>安装完毕后，运行fcitx-config-gtk3或者fcitx-configtool，然后在input method页签内点击+号添加sogou pinyin输入法，搜索输入法时去掉“only show current language”选项。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/26/force-remove-broken-package/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/12/26/force-remove-broken-package/" class="post-title-link" itemprop="url">手动强制卸载broken包</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-12-26 10:10:33" itemprop="dateCreated datePublished" datetime="2019-12-26T10:10:33+08:00">2019-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mv /<span class="keyword">var</span>/lib/dpkg/info/PACKAGE_NAME.* <span class="regexp">/tmp/</span></span><br><span class="line">$ sudo dpkg --remove --force-remove-reinstreq PACKAGE_NAME</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/15/dd-io-performance-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/15/dd-io-performance-test/" class="post-title-link" itemprop="url">dd命令测试磁盘IO性能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-15 13:46:02" itemprop="dateCreated datePublished" datetime="2019-11-15T13:46:02+08:00">2019-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ time dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/tmp/</span>test.img bs=1G count=<span class="number">1</span> oflag=dsync</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/14/prometheus-grafan-alertmanager-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/prometheus-grafan-alertmanager-config/" class="post-title-link" itemprop="url">prometheus grafana alertmanager 监控报警基本配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-14 15:16:24" itemprop="dateCreated datePublished" datetime="2019-11-14T15:16:24+08:00">2019-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>此配置主要用于监控主机状态,prometheus还可以监控各种服务的状态,只要使用相应的exporter即可。</p>
+<p><strong>prometheus</strong></p>
+<p>监控节点安装prometheus,被监控节点只需安装prometheus-node-exporter</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus</span><br></pre></td></tr></table></figure>
+<p>/etc/prometheus/prometheus.yml文件中添加被监控节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- job_name: node</span><br><span class="line"> # If prometheus-node-exporter is installed, grab stats about the local</span><br><span class="line"> # machine by default.</span><br><span class="line"> static_configs:</span><br><span class="line"> # 被监控节点,默认</span><br><span class="line"> - targets: \[<span class="string">&#x27;localhost:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmin&#x27;</span></span><br><span class="line"> # 被监控节点</span><br><span class="line"> - targets: \[<span class="string">&#x27;10.100.0.31:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmsvr02&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>添加主机名标签，方便管理。<br>通过监控主机的9090端口访问prometheus,<code>http://ip_of_monitor:9090/</code></p>
+<p><strong>alertmanager</strong><br>在监控主机安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus-alertmanager</span><br></pre></td></tr></table></figure>
+
+<p>添加节点监控规则文件/etc/prometheus/node-alert.rules:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># hostStatsAlert</span><br><span class="line">groups:</span><br><span class="line">- name: hostStatsAlert</span><br><span class="line"> rules:</span><br><span class="line"> - alert: InstanceDown</span><br><span class="line"> expr: up == <span class="number">0</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123;$labels.instance&#125;&#125; down&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123;$labels.instance&#125;&#125; of job &#123;&#123;$labels.job&#125;&#125; has been down for more than 5 minutes.&quot;</span></span><br><span class="line"> - alert: hostCpuUsageAlert</span><br><span class="line"> expr: sum(avg without (cpu)(irate(node_cpu_seconds_total&#123;mode!=<span class="string">&#x27;idle&#x27;</span>&#125;\[5m\]))) by (instance) &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; CPU usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; CPU usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: hostMemUsageAlert</span><br><span class="line"> expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; MEM usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; MEM usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: filesystemUsageAlert</span><br><span class="line"> expr: <span class="number">100</span> - ((node_filesystem_avail_bytes&#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125; * <span class="number">100</span>) / node_filesystem_size_bytes &#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125;) &gt; <span class="number">85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; root DISK usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; root DISK usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br></pre></td></tr></table></figure>
+<p>此规则文件主要监测主机在线状态，cpu、memory和filesystem使用率</p>
+<p>/etc/prometheus/prometheus.yml引用此规则文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule_files:</span><br><span class="line"> - <span class="string">&quot;node-alert.rules&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>alertmanager配置邮件报警/etc/prometheus/alertmanager.yml:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">global</span>:</span><br><span class="line"> # The smarthost and SMTP sender used for mail notifications.</span><br><span class="line"> smtp_smarthost: <span class="string">&#x27;smtp.163.com:25&#x27;</span></span><br><span class="line"> smtp_from: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_username: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_password: <span class="string">&#x27;password&#x27;</span></span><br><span class="line">...</span><br><span class="line"> # A default receiver</span><br><span class="line"> receiver: team-X-mails</span><br><span class="line">...</span><br><span class="line">receivers:</span><br><span class="line">- name: <span class="string">&#x27;team-X-mails&#x27;</span></span><br><span class="line"> email_configs:</span><br><span class="line"> - to: <span class="string">&#x27;123@163.com&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>重新装载prometheus和alertmanager服务,停止一个被监控节点的监控服务，就可以收到报警邮件了。</p>
+<p><strong>grafana</strong></p>
+<p>可以使用grafana来展示prometheus监控信息<br>安装grafana</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y software-properties-common</span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://packages.grafana.com/oss/deb stable main&quot;</span></span><br><span class="line">$ wget -q -O - https:<span class="comment">//packages.grafana.com/gpg.key sudo apt-key add -</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install grafana</span><br></pre></td></tr></table></figure>
+
+<p>通过http 3000端口来访问grafana，然后添加prometheus数据源，添加展示prometheus数据的dashboard</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://aeric.io/post/prometheus-alertmanager-config/">Prometheus Alertmanager 基本配置</a><br>[2]<a target="_blank" rel="noopener" href="https://www.kancloud.cn/huyipow/prometheus/527563">alertmanager报警规则详解</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/14/ceph-remove-osds/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/ceph-remove-osds/" class="post-title-link" itemprop="url">ceph集群移除osd,mon,mdr,mds节点</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-14 10:50:22" itemprop="dateCreated datePublished" datetime="2019-11-14T10:50:22+08:00">2019-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>移除osd节点</strong></p>
+<p>查看当前osd状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd tree</span><br><span class="line">ID CLASS WEIGHT TYPE NAME STATUS REWEIGHT PRI-AFF </span><br><span class="line">-<span class="number">1</span> <span class="number">9.74405</span> root <span class="keyword">default</span> </span><br><span class="line">-<span class="number">9</span> <span class="number">0.95409</span> host bank1 </span><br><span class="line"> <span class="number">3</span> hdd <span class="number">0.95409</span> osd<span class="number">.3</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">3</span> <span class="number">5.99799</span> host vm01 </span><br><span class="line"> <span class="number">0</span> hdd <span class="number">5.99799</span> osd<span class="number">.0</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">5</span> <span class="number">1.81929</span> host vm02 </span><br><span class="line"> <span class="number">1</span> hdd <span class="number">1.81929</span> osd<span class="number">.1</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">7</span> <span class="number">0.97269</span> host web </span><br><span class="line"> <span class="number">2</span> hdd <span class="number">0.97269</span> osd<span class="number">.2</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br></pre></td></tr></table></figure>
+
+<p>将osd标记为out，准备踢出集群，{osd-num}为osd编号,比如osd.2</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
+
+<p>集群会进行重新平衡和数据迁移，查看 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph -w</span><br></pre></td></tr></table></figure>
+<p><code>ceps -s</code>也可以查看进度，当完成时集群状态会重新回归到actice+clean状态<br>如果卡在active+clean+remapped或者active+remapped状态,先将osd回归集群</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd <span class="keyword">in</span> &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
+<p>等集群恢复到active+clean状态后，执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd crush reweight osd.&#123;osd-num&#125; <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>等集群状态再次变成active+clean状态后，将osd标记为out,并停止ceph-osd服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br><span class="line">$ sudo systemctl stop ceph-osd@<span class="number">2.</span>service</span><br></pre></td></tr></table></figure>
+
+<p>移除osd</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd purge osd.&#123;osd-num&#125; --yes-i-really-mean-it</span><br><span class="line">purged osd<span class="number">.2</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mon节点</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph mon remove &#123;mon-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mgr节点</strong><br>在将要被移除的mgr节点上执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mgr/ceph-&#123;mgr-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mds节点</strong><br>在将要被移除的mds节点上执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mds/ceph-&#123;mds-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-osds/">ADDING/REMOVING OSDS</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

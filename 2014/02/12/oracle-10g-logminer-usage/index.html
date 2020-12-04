@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="LogMiner用于分析REDO日志,既可以分析online redo log file,也可以分析archive redo log file。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle 10g 日志分析工具LogMiner简单使用">
+<meta property="og:url" content="http://example.com/2014/02/12/oracle-10g-logminer-usage/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="LogMiner用于分析REDO日志,既可以分析online redo log file,也可以分析archive redo log file。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-02-12T14:10:34.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.381Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/02/12/oracle-10g-logminer-usage/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>oracle 10g 日志分析工具LogMiner简单使用 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/02/12/oracle-10g-logminer-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          oracle 10g 日志分析工具LogMiner简单使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-02-12 22:10:34" itemprop="dateCreated datePublished" datetime="2014-02-12T22:10:34+08:00">2014-02-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>LogMiner用于分析REDO日志,既可以分析online redo log file,也可以分析archive redo log file。</p>
+<a id="more"></a>
+<p>最近因为要分析一个数据库的表结构,所以想起了logminer。这个数据库没有表结构说明,应用程序也只有一部分源代码,想了解库结构,logminer正好派上用场了。</p>
+<p>先切换日志,然后在应用程序中做一些操作,然后分析当前redo日志,就可以看到哪些表的哪些字段做了修改。</p>
+<p>这里使用的是windows平台上的oracle 10g 10.2.0.4数据库(一个服务器上的测试环境)。</p>
+<p><strong>简单步骤</strong></p>
+<ol>
+<li> <strong>安装logmnr包</strong></li>
+</ol>
+<p>安装logminer的两个包DBMS_LOGMNR和DBMS_LOGMNR_D,系统默认安装自带了logminer包。<br>[sql]</p>
+<blockquote>
+<p>conn / as sysdba<br>SQL&gt; @D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\dbmslm.sql<br>SQL&gt; @D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\dbmslmd.sql<br>SQL&gt; @D:\oracle\product\10.2.0\db_1\RDBMS\ADMIN\dbmslms.sql<br>[/sql]<br>2.  <strong>添加附加日志支持</strong></p>
+</blockquote>
+<p>打开Supplemental Logging,可以获得更多的日志信息<br>使用下面的语句之一开启Supplemental Logging的不同程度的支持:<br>[sql]SQL&gt;ALTER DATABASE ADD SUPPLEMENTAL LOG DATA (PRIMARY KEY, UNIQUE INDEX) COLUMNS;[/sql]<br>或者<br>[sql]SQL&gt;ALTER DATABASE ADD SUPPLEMENTAL LOG DATA (ALL) COLUMNS;[/sql]</p>
+<ol start="3">
+<li> <strong>创建数据字典</strong><br>[sql]<br>SQL&gt; alter system set utl_file_dir=’d:\oracle\logmnr’ scope=spfile;<br>SQL&gt; EXECUTE dbms_logmnr_d.build(‘dictionary.ora’,’d:\oracle\logmnr’);<br>SQL&gt; shutdown immediate;<br>SQL&gt; startup;<br>[/sql]<br>如果logminer数据库与被分析的日志文件都在同一个数据库中,也可以使用在线数据字典。</li>
+<li> <strong>添加要分析的日志文件</strong></li>
+</ol>
+<p>切换日志,做一些操作后,就可以将日志文件添加到logminer进行分析<br>[sql]<br>SQL&gt; ALTER SYSTEM SWITCH LOGFILE;<br>…<br>SQL&gt; EXECUTE dbms_logmnr.add_logfile(LogFileName=&gt;’D:\oracle\product\10.2.0\<br>oradata\orcl\REDO03.log’,Options=&gt;dbms_logmnr.new);<br>[/sql]<br>注意第一个添加的日志使用参数dbms_logmnr.new,后续添加的日志使用dbms_logmnr.addfile,如:<br>[sql]<br>EXECUTE dbms_logmnr.add_logfile(LogFileName=&gt;’D:\oracle\product\10.2.0\oradata\orcl\<br>REDO01.log’,Options=&gt;dbms_logmnr.addfile);<br>[/sql]<br>去掉要分析的日志文件使用如下命令:<br>[sql]<br>SQL&gt;execute dbms_logmnr.remove_logfile(logfilename=&gt;’\path\to\redofile’);<br>[/sql]<br>5.  <strong>分析日志文件</strong></p>
+<p>使用生成的字典分析日志文件:<br>[sql]<br>SQL&gt; execute dbms_logmnr.start_logmnr(dictfilename=&gt;’d:\oracle\logmnr\dictionary.ora’);<br>[/sql]<br>使用在线字典分析日志文件:<br>[sql]<br>SQL&gt; execute dbms_logmnr.start_logmnr(Options =&gt; DBMS_LOGMNR.DICT_FROM_ONLINE_CATALOG);<br>[/sql]</p>
+<p>可以通过指定时间段或SCN段来限定日志分析范围,提高分析速度:<br>[sql]SQL&gt;execute dbms_logmnr.start_logmnr (dictfilename =&gt;’dictionary.ora’，<br>starttime =&gt;to_date(‘01-Aug-2013 08:30:00’, ‘DD-MON-YYYY HH:MI S’),<br>endtime =&gt; to_date(‘01-Aug-2013 08:50:00’, ‘DD-MON-YYYY HH:MI S’));[/sql]<br>或<br>[sql]<br>SQL&gt; execute dbms_logmnr.start_logmnr (dictfilename =&gt;’dictionary.ora’,<br>startscn =&gt;1000,endscn =&gt;1050);<br>[/sql]<br>6.  <strong>查询结果</strong></p>
+<p>分析结果在表v$logmnr_contents中,表中关键的字段有:<br>sql_redo - 所做的sql语句<br>username - 执行sql的数据库用户名<br>operation - sql操作类型,比如INSERT,DELETE等<br>table_name - sql操作的表名字<br>比如根据特征字符串这样查询:<br>[sql]<br>SQL&gt; select sql_redo,table_name from v$logmnr_contents<br>where operation=’INSERT’ and sql_redo like ‘%foobar%’;<br>[/sql]</p>
+<p>可以使用DESC获取v$logmnr_contents完整的字段列表。</p>
+<ol start="7">
+<li> <strong>退出logminer</strong></li>
+</ol>
+<p>[sql]SQL&gt; execute dbms_logmnr.end_logmnr;[/sql]</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/01/26/4998/" rel="prev" title="Untitled Post - 37">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 37
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/02/13/oracle-type/" rel="next" title="oracle 自定义数据类型对象">
+                  oracle 自定义数据类型对象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

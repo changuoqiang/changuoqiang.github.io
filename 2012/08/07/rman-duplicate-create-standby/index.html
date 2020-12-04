@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Oracle推荐使用rman来创建物理备库,可以在不影响主库的情况下,轻松完成物理备库的创建。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RMAN DUPLICATE创建DataGuard物理备库">
+<meta property="og:url" content="http://example.com/2012/08/07/rman-duplicate-create-standby/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Oracle推荐使用rman来创建物理备库,可以在不影响主库的情况下,轻松完成物理备库的创建。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-08-07T07:27:10.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.472Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/08/07/rman-duplicate-create-standby/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>RMAN DUPLICATE创建DataGuard物理备库 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/08/07/rman-duplicate-create-standby/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RMAN DUPLICATE创建DataGuard物理备库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-08-07 15:27:10" itemprop="dateCreated datePublished" datetime="2012-08-07T15:27:10+08:00">2012-08-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Oracle推荐使用rman来创建物理备库,可以在不影响主库的情况下,轻松完成物理备库的创建。</p>
+<a id="more"></a>
+<p>这里只记叙物理备库与主库位于不用的主机,并且数据库的目录结构一致的情况,这应该也是Dataguard环境比较常见的部署方式,这种方式也比较简单。</p>
+<p>系统运行环境为windows 2003 server 64bits + oracle 10g 10.2.0.4 64bits。<br> <strong>一、创建物理备库实例(物理备库端)</strong></p>
+<p>1、安装oracle 10g</p>
+<p>只安装软件,不创建数据库。</p>
+<p>2、创建空闲实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; oradim -<span class="keyword">new</span> -sid orcl</span><br></pre></td></tr></table></figure>
+
+<p>此处指定的实例名为orcl,同时会创建系统服务OracleServiceorcl和OracleJobSchedulerorcl。<br>之后即可使用sqlplus / as sysdba连接到这个空闲实例。</p>
+<p>3、创建standby的初始化参数文件</p>
+<p>从主库创建pfile根据物理备库的实际情况进行相应修改即可</p>
+<p>主库端执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; create pfile=<span class="string">&#x27;d:\\INITorcl.ora&#x27;</span> <span class="keyword">from</span> spfile;</span><br></pre></td></tr></table></figure>
+
+<p>将生成的INITorcl.ora拷贝到物理备机的$ORACLE_HOME/database目录下,并做相应修改,参见<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">Oracle 10g DataGuard手记之基础配置</a></p>
+<p>然后通过针对standby修改的INITorcl.ora为物理备库生成spfile</p>
+<p>备库端执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; create spfile <span class="keyword">from</span> pfile; <span class="comment">//也可以指定pfile的详细位置pfile=&#x27;/path/to/pfile&#x27;,此处使用的默认位置和默认文件名</span></span><br></pre></td></tr></table></figure>
+
+<p>4、创建物理备库<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_passwd_file.html">密码文件</a></p>
+<p>备库必须通过Oracle NEt并以SYSDBA权限访问,因此密码文件是必须的,因为不能使用OS认证。</p>
+<p>备库端执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; orapwd file=PWDorcl.ora password=yourpasswd</span><br></pre></td></tr></table></figure>
+
+<p>这会在备库的$ORACLE_HOME/database目录下生成密码文件PWDorcl.ora</p>
+<p>也可以直接从主库$ORACLE_HOME/database目录下将PWDorcl.ora拷贝到物理备库相应的目录下，这样更简单。</p>
+<p>5、启动备库到nomount</p>
+<p>备库端：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; startup nomount</span><br></pre></td></tr></table></figure>
+
+<p>因为此时尚没有控制文件和数据文件,因此只能启动到nomount状态</p>
+<p>如果已经mount了，可以执行以下sql命令切换到nomount状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database dismount;</span><br></pre></td></tr></table></figure>
+
+<p>这是可能会有错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">02778</span>: Name given <span class="keyword">for</span> the log directory is invalid</span><br></pre></td></tr></table></figure>
+<p>这是因为dump文件存储路径尚未建立,根据你参数文件的设置建立相关的dump路径,这里建立了这几个路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\admin\\orcl\\&#123;adump,bdump,cdump,udump&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; startup nomount</span><br></pre></td></tr></table></figure>
+
+<p>还有可能会有错误提示:<br>ORA-01261: Parameter db_recovery_file_dest destination string cannot be translated<br>ORA-01263: Name given for file destination directory is invalid<br>OSD-04018: Unable to access the specified directory or device.<br>O/S-Error: (OS 2) 系统找不到指定的文件。<br>这是因为参数db_recovery_file_dest指向的路径没有建立起来,这里根据参数文件创建目录<br>E:\oracle\product\10.2.0\flash_recovery_area</p>
+<p>6、配置监听文件,创建监听服务<br>可以从主库拷贝$ORACLE_HOME/NETWORK/ADMIN/目录下的文件tnsname.ora,listener.ora,sqlnet.ora到备库相同的位置,并作相应的修改,特别要注意主机名部分。<br>只安装默认没有创建监听服务,lsnrctl命令可以在没有监听服务时自动创建监听服务</p>
+<p>备库端：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CMD&gt; lsnrctl</span><br><span class="line">LSNRCTL&gt; status</span><br><span class="line">Connecting to (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=<span class="number">1521</span>))</span><br><span class="line">TNS-<span class="number">12541</span>: TNS:no listener</span><br><span class="line"> TNS-<span class="number">12560</span>: TNS:protocol adapter error</span><br><span class="line"> TNS-<span class="number">00511</span>: No listener</span><br><span class="line"> <span class="number">64</span>-bit Windows <span class="built_in">Error</span>: <span class="number">61</span>: Unknown error</span><br></pre></td></tr></table></figure>
+
+<p>启动监听:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">LSNRCTL&gt; start</span><br><span class="line">Starting tnslsnr: please wait...</span><br><span class="line"></span><br><span class="line">Failed to open service &lt;OracleOraDb10g_home1TNSListener&gt;, error <span class="number">1060.</span></span><br><span class="line">TNSLSNR <span class="keyword">for</span> <span class="number">64</span>-bit Windows: Version <span class="number">10.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span> - Production</span><br><span class="line">Log messages written to E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\db_1\\network\\log\\listener.log</span><br><span class="line">Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localdb)(PORT=<span class="number">1521</span>)))</span><br><span class="line"></span><br><span class="line">Connecting to (ADDRESS=(PROTOCOL=tcp)(HOST=)(PORT=<span class="number">1521</span>))</span><br><span class="line">STATUS <span class="keyword">of</span> the LISTENER</span><br><span class="line">------------------------</span><br><span class="line">Alias LISTENER</span><br><span class="line">Version TNSLSNR <span class="keyword">for</span> <span class="number">64</span>-bit Windows: Version <span class="number">10.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span> - Production</span><br><span class="line">Start <span class="built_in">Date</span> <span class="number">07</span>-AUG-<span class="number">2012</span> <span class="number">15</span>:<span class="number">32</span>:<span class="number">42</span></span><br><span class="line">Uptime <span class="number">0</span> days <span class="number">0</span> hr. <span class="number">0</span> min. <span class="number">7</span> sec</span><br><span class="line">Trace Level off</span><br><span class="line">Security ON: Local OS Authentication</span><br><span class="line">SNMP OFF</span><br><span class="line">Listener Log File E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\db_1\\network\\log\\listener.log</span><br><span class="line">Listening Endpoints Summary...</span><br><span class="line"> (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=localdb)(PORT=<span class="number">1521</span>)))</span><br><span class="line">The listener supports no services</span><br><span class="line">The command completed successfully</span><br></pre></td></tr></table></figure>
+
+<p>这样会建立起tns监听系统服务OracleOraDb10g_home1TNSListener</p>
+<p>7、提前创建控制文件所在的目录<br>参数文件中有记载的控制文件详细路径，参数名称为*.control_files。物理备库需要根据此参数的设置提前建立好控制文件所需要的上层各级目录,比如提前建立好如下目录层次:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\oradata\\orcl</span><br></pre></td></tr></table></figure>
+<p>否则执行duplicate命令时会出现如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">00571</span>: ===========================================================</span><br><span class="line">RMAN-<span class="number">00569</span>: =============== ERROR MESSAGE STACK FOLLOWS ===============</span><br><span class="line">RMAN-<span class="number">00571</span>: ===========================================================</span><br><span class="line">RMAN-<span class="number">03002</span>: failure <span class="keyword">of</span> Duplicate Db command at </span><br><span class="line">RMAN-<span class="number">05501</span>: aborting duplication <span class="keyword">of</span> target database</span><br><span class="line">RMAN-<span class="number">03015</span>: error occurred <span class="keyword">in</span> stored script Memory Script</span><br><span class="line">RMAN-<span class="number">06026</span>: some targets not found - aborting restore</span><br><span class="line">RMAN-<span class="number">06024</span>: no backup or copy <span class="keyword">of</span> the control file found to restore</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、RMAN全备主库并为备库生成控制文件</strong></p>
+<p>1、对主库执行全备份<br>RMAN正常全备主库,可以使用也可以不使用恢复目录,最重要一点,在物理备库上要可以以相同的路径访问到主库的全备份。可以在备库上建立相同的备份文件存放路径,然后通过ftp等方式将主库全备份拷贝至备库主机相同位置。也可以使用NFS等网络路径,这样可以避免在主备库之间拷贝全备份。<br>比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; BACKUP DATABASE FORMAT <span class="string">&#x27;\\\\cifs_server\\RMAN\\bak_%U&#x27;</span> </span><br><span class="line"> INCLUDE CURRENT CONTROLFILE FOR STANDBY </span><br><span class="line"> PLUS ARCHIVELOG FORMAT <span class="string">&#x27;\\\\cifs_server\\RMAN\\ARC_%U&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>2、创建物理备库控制文件</p>
+<p>有多种方式为物理备库生成控制文件。</p>
+<ul>
+<li><p>备份主库时同时为备库生成控制文件</p>
+<p>  通过使用INCLUDE CURRENT CONTROLFILE FOR STANDBY语句,可以在备份集中生成备库的控制文件,类似如下：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; BACKUP DATABASE FORMAT <span class="string">&#x27;D:\\RMAN\\bak_%U&#x27;</span> </span><br><span class="line"> INCLUDE CURRENT CONTROLFILE FOR STANDBY </span><br><span class="line"> PLUS ARCHIVELOG FORMAT <span class="string">&#x27;D:\\RMAN\\ARC_%U&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>使用RMAN COPY命令</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; COPY CURRENT CONTROLFILE FOR STANDBY TO <span class="string">&#x27;D:\\RMAN\\control01.ctl&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用alter database语句</p>
+<p>  sqlplus登录主库端执行</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database create standby controlfile <span class="keyword">as</span> <span class="string">&#x27;d:\\rman\\control01.ctl&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>  然后rman连接target(主库)和catalog恢复目录(如果使用的话),然后执行</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;CATALOG CONTROLFILECOPY <span class="string">&#x27;d:\\rman\\control01.ctl&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>  这样RMAN就知道去那里找物理备库的控制文件了。</p>
+</li>
+</ul>
+<p><strong>注意:物理备库中控制文件所在路径必须提前建立起来。</strong></p>
+<p><strong>三、创建物理备库</strong></p>
+<p>1、用RMAN连接主库、物理备库和恢复目录,使用target关键字连接主库,使用auxiliary关键字连接待创建的物理备库,catalog关键字连接恢复目录数据库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/passwd@primarydb auxiliary sys/passwd@standbydb catalog user/passwd@catalogdb</span><br><span class="line">...</span><br><span class="line">connected to target database: ORCL (DBID=<span class="number">1276927241</span>)</span><br><span class="line">connected to recovery catalog database</span><br><span class="line">connected to auxiliary database: ORCL (not mounted)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>然后执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rman&gt; duplicate target database <span class="keyword">for</span> standby nofilenamecheck;</span><br></pre></td></tr></table></figure>
+
+<p>因为是异机相同目录结构复制到备库,所以必须指定参数nofilenamecheck,不然rman会晕菜。<br>如果不指定dorecover选项,则不进行日志恢复,物理备库创建完成后打开日志恢复自然就可以同步到主库一致的状态了。<br>如果RMAN数据库备份有增量备份，则应该打开DORECOVER选项以便恢复增量备份集。</p>
+<p>如果指定了DORECOVER选项,可能会遇到如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">06026</span>: some targets not found - aborting restore </span><br><span class="line">RMAN-<span class="number">06024</span>: no backup or copy <span class="keyword">of</span> the control file found to restore</span><br></pre></td></tr></table></figure>
+
+<p>具体原因和解决办法参见[2].</p>
+<p>备库创建完成后rman将其置于mounted状态。</p>
+<p>2、创建备库时并不会将主库的online redo log files和standby redo log files拷贝到备库,但是控制文件中包含了这些信息。</p>
+<p>“因为在备份前主库创建了standby redo log，备库是根据主库的信息创建的，一开始它是包含了主库的standby redo log信息，如果主库设置的日志传送方式是LGWR，当主库发生日志切换时，备库的RFS会尝试使用standby redo log来存储主库传送过来的日志，因为此时备库实际上是不存在standby redo log的，所以备库会报错。当备库尝试打开字典信息的所有standby redo log失败以后，备库会自动把日志传送方式转为ARCN，并同时清除数据字典中的standby redo log信息。”参见<a target="_blank" rel="noopener" href="http://space6212.itpub.net/post/12157/299427">DG使用中遇到的几个错误</a>。</p>
+<p>因此如果需要开启实时redo apply的话,需要手动提前<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_10g_windows_x64_dataguard.html">添加standby redo log文件</a>,如下:<br>备库端:<br>[sql]<br>SQL&gt;alter database add standby logfile group 4 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO01.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 5 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO02.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 6 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO03.LOG’) size 50M;<br>Database altered.<br>SQL&gt;alter database add standby logfile group 7 (‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\STDBYREDO04.LOG’) size 50M;<br>Database altered.<br>[/sql]<br>然后就可以打开realtime redo apply了,如下打开实时日志应用:<br>备库端:<br>[sql]<br>SQL&gt;ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT FROM SESSION;<br>[/sql]</p>
+<p>3、此时会后台日志文件中会报如下错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">19527</span>: physical standby redo log must be renamed</span><br></pre></td></tr></table></figure>
+<p>物理standby并不需要在线redo日志,因为其并不以读写方式打开。但当物理standby要switch over成为主库时是必须要使用在线redo log的,在switch over之前,oracle会清除online redo log文件,为了加快switch over进度,oracle会在开启日志应用之时提前将物理standby的online redo log文件clear。oracle为了防止意外清除了主库的online redo log文件,即使物理standby与主库不在同一台主机上,只要其路径相同则必须明确的设置log_file_name_convert参数,这样才能避免此错误提示。<br>因此可以通过alter system set log_file_name_convert更改此参数设置或者在备库初始化文件中添加此参数并重新生成spfile启动数据库</p>
+<p>pfile中添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.log_file_name_convert=<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo01.log&#x27;</span>,<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo01.log&#x27;</span>,<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo02.log&#x27;</span>,<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo02.log&#x27;</span>,<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo03.log&#x27;</span>,<span class="string">&#x27;E:\\oracle\\product\\10.2.0\\oradata\\orcl\\redo03.log&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>4、检查下两边的日志同步情况<br>[sql]<br>SQL&gt;select sequence# from v$archived_log where applied=’YES’;<br>[/sql]</p>
+<p>如果oracle后台日志出现类似错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">00313</span>: open failed <span class="keyword">for</span> members <span class="keyword">of</span> log group <span class="number">4</span> <span class="keyword">of</span> thread <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>只要将对应的日志组clear就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;ALTER DATABASE RECOVER MANAGED STANDBY DATABASE CANCEL; #如果正在应用redo日志，需要先取消</span><br><span class="line">SQL&gt;ALTER DATABASE CLEAR LOGFILE GROUP <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+
+<p>物理备库创建完成。</p>
+<p>备注:如果重新启动物理备库，只能以mount方式打开，否则会出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; startup</span><br><span class="line">ORACLE instance started.</span><br><span class="line"></span><br><span class="line">Total System Global Area <span class="number">1.9327E+10</span> bytes</span><br><span class="line">Fixed Size <span class="number">2198344</span> bytes</span><br><span class="line">Variable Size <span class="number">2273014968</span> bytes</span><br><span class="line">Database Buffers <span class="number">1.7046E+10</span> bytes</span><br><span class="line">Redo Buffers <span class="number">6488064</span> bytes</span><br><span class="line">Database mounted.</span><br><span class="line">ORA-<span class="number">16004</span>: backup database requires recovery</span><br><span class="line">ORA-<span class="number">01196</span>: file <span class="number">1</span> is inconsistent due to a failed media recovery session</span><br><span class="line">ORA-<span class="number">01110</span>: data file <span class="number">1</span>: <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\SYSTEM01.DBF&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>关闭后重新以mount方式打开即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown immediate;</span><br><span class="line">SQL&gt; startup mount;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/server.102/b14239/rcmbackp.htm#i639101">Creating a Standby Database with Recovery Manager</a><br>[2]<a target="_blank" rel="noopener" href="http://www.dba-oracle.com/t_rman_06026.htm">RMAN-06026 tips</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/08/01/multipath-tools-upgrade-fail-solution/" rel="prev" title="Debian multipath-tools升级失败解决办法">
+                  <i class="fa fa-chevron-left"></i> Debian multipath-tools升级失败解决办法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/09/11/samba-remove-printers/" rel="next" title="debian samba去掉默认打印机共享">
+                  debian samba去掉默认打印机共享 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

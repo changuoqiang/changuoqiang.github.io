@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/9/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/09/mariadb-purge-mysql-bin-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/09/mariadb-purge-mysql-bin-files/" class="post-title-link" itemprop="url">mariadb清除mysql-bin文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-09 21:12:09" itemprop="dateCreated datePublished" datetime="2019-07-09T21:12:09+08:00">2019-07-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>如果/etc/mysql/my.cnf中打开了log-bin选项，即使没有做主从复制，数据目录下仍然会持续的生成大量的mysql-bin.0000*文件，这玩意儿就像归档日志吧。</p>
+<p>如果你做了主从复制，下面就不要看了。<br>没做主从复制的话，可以先清除掉这些文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; reset master;</span><br></pre></td></tr></table></figure>
+<p>这样会删除掉所有的log-bin，重新生成一个mysql-bin.000001<br>然后修改/etc/mysql/my.cnf，注释掉下面的行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#log-bin=mysql-bin</span><br></pre></td></tr></table></figure>
+<p>重新启动mariadb服务，以后就不会再生成这些文件了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/08/ssh-download-partial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/08/ssh-download-partial/" class="post-title-link" itemprop="url">ssh断点续传</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-08 22:30:25" itemprop="dateCreated datePublished" datetime="2019-07-08T22:30:25+08:00">2019-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>scp是不支持断点续传的，传输大文件意外中断会很痛苦。<br>rsync支持断点续传，也支持使用ssh协议传输数据，所以可以这样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -P --rsh=ssh nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
+
+<p>这里linode是为一个ssh服务器配置的别名，而且支持tab补全，很好用。</p>
+<p>可以在.bashrc中设置一个alias</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias scpr=<span class="string">&quot;rsync -P --rsh=ssh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>就可以这样用了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scpr nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
+
+<p>注意，客户端和服务器都要安装rsync。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/08/transfer-sh-share-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/08/transfer-sh-share-files/" class="post-title-link" itemprop="url">transfer.sh快速分享文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-08 21:21:12" itemprop="dateCreated datePublished" datetime="2019-07-08T21:21:12+08:00">2019-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><a target="_blank" rel="noopener" href="https://transfer.sh/">transfer.sh</a>可以使用命令行快速的分享文件，最大可以上传10G，有效期最长14天，也可以设定下载次数和有效期。</p>
+<p>上传文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl --upload-file ./go.sh https:<span class="comment">//transfer.sh/go.sh</span></span><br><span class="line">https:<span class="comment">//transfer.sh/Pyg2a/go.sh #生成的下载链接</span></span><br></pre></td></tr></table></figure>
+
+<p>设定下载次数和最大天数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl -H <span class="string">&quot;Max-Downloads: 1&quot;</span> -H <span class="string">&quot;Max-Days: 5&quot;</span> --upload-file ./hello.txt https:<span class="comment">//transfer.sh/hello.txt </span></span><br><span class="line">https:<span class="comment">//transfer.sh/66nb8/hello.txt </span></span><br></pre></td></tr></table></figure>
+
+<p>添加.bashrc命令行别名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">transfer</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line"> curl --progress-bar --upload-file <span class="string">&quot;$1&quot;</span> https:<span class="comment">//transfer.sh/$(basename &quot;$1&quot;) tee /dev/null;</span></span><br><span class="line"> echo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">alias transfer=transfer</span><br></pre></td></tr></table></figure>
+<p>然后可以这样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ transfer hello.txt</span><br></pre></td></tr></table></figure>
+<p>是不是很简单，很好用，但是，不要用来传输敏感文件，传输敏感文件请使用onionshare或加密后再传输。<br>还有一点儿要注意，github上的tansfer.sh项目与<a target="_blank" rel="noopener" href="http://transfer.sh网站并无关系./">http://transfer.sh网站并无关系。</a></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/dutchcoders/transfer.sh">Easy and fast file sharing from the command-line</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/08/oh-onionshare/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/08/oh-onionshare/" class="post-title-link" itemprop="url">oh OnionShare</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-08 19:31:57" itemprop="dateCreated datePublished" datetime="2019-07-08T19:31:57+08:00">2019-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><a target="_blank" rel="noopener" href="https://onionshare.org/">OnionShare</a>是一个安全匿名的开源文件分享工具，可以使用它在本地机器通过tor网络发布共享服务，生成一个不可猜测的onion地址，通过这个地址其他人可以使用tor browser来获取分享的文件。只要生成的onion地址没有泄露，文件就是安全的。文件传输的过程不会被任何第三方窃取。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install onionshare</span><br></pre></td></tr></table></figure>
+
+<p><strong>分享文件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ onionshare go.sh </span><br><span class="line">Onionshare <span class="number">1.3</span><span class="number">.2</span> https:<span class="comment">//onionshare.org/</span></span><br><span class="line">Connecting to the Tor network: <span class="number">100</span>% - Done</span><br><span class="line">Configuring onion service on port <span class="number">17620.</span></span><br><span class="line">Starting ephemeral Tor onion service and awaiting publication</span><br><span class="line">Settings saved to /home/xxx/.config/onionshare/onionshare.json</span><br><span class="line">Preparing files to share.</span><br><span class="line"> * Serving Flask app <span class="string">&quot;onionshare.web&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line"> WARNING: Do not use the development server <span class="keyword">in</span> a production environment.</span><br><span class="line"> Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http:<span class="comment">//127.0.0.1:17620/ (Press CTRL+C to quit)</span></span><br><span class="line">Give <span class="built_in">this</span> address to the person you<span class="string">&#x27;re sending the file to:</span></span><br><span class="line"><span class="string">http://huq64ocyu666ecom.onion/negligee-easing</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Press Ctrl-C to stop server</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>获取文件</strong></p>
+<p>将生成的连接通过安全路径发送，然后在tor browser中打开连接即可，简单可靠又安全，美中不足，速度慢慢慢。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/08/tls-alpn-01-deploy-lets-encrypt-ssl-cert/" class="post-title-link" itemprop="url">使用tls-alpn-01部署Let’s Encrypt证书</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-08 18:41:39" itemprop="dateCreated datePublished" datetime="2019-07-08T18:41:39+08:00">2019-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>TLS-SNI-01已经deprecated，但certbot尚不支持tls-alpn-01验证方法，因此可以使用dehydrated或者acme.sh通过https来获取Let’s Encrypt证书。</p>
+<p>使用TLS_ALPN获取证书，需要使用443端口进行验证，借助nginx的ngx_stream_ssl_preread_module模块，可以路由来自443的请求到不同的处理后端。</p>
+<p><strong>确保nginx支持ssl_preread特性</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V <span class="number">2</span>&gt;&amp;<span class="number">1</span> grep -o ssl_preread</span><br><span class="line">ssl_preread</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置nginx</strong><br>/etc/nginx/nginx.conf文件最后添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stream &#123;</span><br><span class="line"> map $ssl_preread_alpn_protocols $tls_port &#123;</span><br><span class="line"> ~\\bacme-tls/<span class="number">1</span>\\b <span class="number">10443</span>;</span><br><span class="line"> <span class="keyword">default</span> <span class="number">8443</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">443</span>;</span><br><span class="line"> listen \[::\]:<span class="number">443</span>;</span><br><span class="line"> proxy_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:$tls_port;</span><br><span class="line"> ssl_preread on;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样来自签发证书时的验证请求会被路由到10443端口，而其他对443端口的访问会被路由到8443端口，所以虚拟主机应该在8443端口上监听ssl连接。</p>
+<p>reload nginx使新配置生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<p><strong>申请证书</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># acme.sh --issue --alpn --tlsport 10443 -d openwares.net</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">**安装证书**</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"># acme.sh --installcert -d openwares.net \\</span><br><span class="line"> --key-file /etc/nginx/ssl/openwares.net.key \\</span><br><span class="line"> --fullchain-file /etc/nginx/ssl/fullchain.cer \\</span><br><span class="line"> --reloadcmd <span class="string">&quot;systemctl force-reload nginx&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>更新证书</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># acme.sh --renew -d openwares.net --force</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意(updated 02/29/2020)：</strong><br>如果<a target="_blank" rel="noopener" href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">启用了proxy_protocol</a>以获取客户端的真实地址，申请或者更新证书时会出现错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Verify error:<span class="built_in">Error</span> getting validation data</span><br></pre></td></tr></table></figure>
+<p>因此申请或更新证书时需要临时禁止proxy_protocol协议。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://medium.com/@decrocksam/deploying-lets-encrypt-certificates-using-tls-alpn-01-https-18b9b1e05edf">Deploying Let’s Encrypt certificates using tls-alpn-01 (https)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.wuzhiyuan.com/2018/11/18/tls-alpn/">使用TLS-ALPN-01验证签发证书</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh/wiki/TLS-ALPN-without-downtime">TLS ALPN without downtime</a><br>[4]<a target="_blank" rel="noopener" href="https://raymii.org/s/tutorials/nginx_1.15.2_ssl_preread_protocol_multiplex_https_and_ssh_on_the_same_port.html">ssl_preread_protocol, multiplex HTTPS and SSH on the same port</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/07/nginx-ssl-reverse-proxy-wordpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/07/nginx-ssl-reverse-proxy-wordpress/" class="post-title-link" itemprop="url">nginx ssl 反向代理wordpress</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-07 19:49:02" itemprop="dateCreated datePublished" datetime="2019-07-07T19:49:02+08:00">2019-07-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>wordpress部署在docker上，使用http协议，现在部署https协议，增设一个nginx服务器，反向代理http协议的wordpress</p>
+<p>nginx反向代理需要增设协议头</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_set_header X-Forwarded-Proto $scheme; </span><br></pre></td></tr></table></figure>
+<p>完整的nginx反向代理设置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">server_nameopenwares.net;</span><br><span class="line">listen8443 ssl http2;</span><br><span class="line"></span><br><span class="line">ssl_certificate /etc/nginx/ssl/fullchain.cer;</span><br><span class="line">ssl_certificate_key /etc/nginx/ssl/openwares.net.key;</span><br><span class="line">ssl_protocols TLSv1<span class="number">.3</span>;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">proxy_pass http:<span class="comment">//localhost/;</span></span><br><span class="line">proxy_set_header Host $host;</span><br><span class="line"> proxy_set_header X-Forwarded-Proto $scheme; </span><br><span class="line"> proxy_set_header Accept-Encoding <span class="string">&quot;gzip&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编辑wordpress的wp-config.php文件，在文件前面添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">&#x27;FORCE_SSL_ADMIN&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">if</span> ($_SERVER\[<span class="string">&#x27;HTTP_X_FORWARDED_PROTO&#x27;</span>\] == <span class="string">&#x27;https&#x27;</span>)</span><br><span class="line"> $_SERVER\[<span class="string">&#x27;HTTPS&#x27;</span>\]=<span class="string">&#x27;on&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后需要参考[3]将数据库中的链接从http修改为https。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wordpress.org/support/article/administration-over-ssl/">Administration Over SSL</a><br>[2]<a target="_blank" rel="noopener" href="https://zhihu.websoft9.com/6408/wordpress%E4%BD%BF%E7%94%A8nginx%E5%81%9A%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84ssl%E8%AE%BE%E7%BD%AE">WordPress使用Nginx做反向代理的SSL设置</a><br>[3]<a target="_blank" rel="noopener" href="https://isabelcastillo.com/mysql-wordpress-http-to-https">MySQL Queries To Change WordPress From HTTP to HTTPS In The Database</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/03/debian-buster-multipath-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/03/debian-buster-multipath-configuration/" class="post-title-link" itemprop="url">debian buster multipath 多路径设备配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-03 17:40:55" itemprop="dateCreated datePublished" datetime="2019-07-03T17:40:55+08:00">2019-07-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install multipath-tools</span><br></pre></td></tr></table></figure>
+
+<p>查看多路径配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -ll</span><br></pre></td></tr></table></figure>
+<p>没有信息输出，多路径没有自动配置好，需要手工配置</p>
+<p>查看路径信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -v3</span><br><span class="line">ul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> set open fds limit to <span class="number">1048576</span>/<span class="number">1048576</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libchecktur.so checker</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> checker tur: message table size = <span class="number">3</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libprioconst.so prioritizer</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> foreign library <span class="string">&quot;nvme&quot;</span> loaded successfully</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: dev_t = <span class="number">8</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: size = <span class="number">1167966208</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: product = ServeRAID M5015</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: rev = <span class="number">2.12</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: h:b:t:l = <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: tgt_node_name = </span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: <span class="number">7166</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: serial = 00f8ec7f2abe47c318d0451a04b00506</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> failed to issue vpd inquiry <span class="keyword">for</span> pgc9</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: path_checker = tur (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: checker timeout = <span class="number">90</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: tur state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: uid = 3600605b0041a45d018c347be2a7fecf8 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: prio = <span class="keyword">const</span> (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: prio args = <span class="string">&quot;&quot;</span> (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: <span class="keyword">const</span> prio = <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sr0: blacklisted, udev property missing</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: dev_t = <span class="number">8</span>:<span class="number">16</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: size = <span class="number">10538188800</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: product = <span class="number">1814</span> FAStT</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rev = <span class="number">1060</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: h:b:t:l = <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> SCSI target <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span> -&gt; FC rport <span class="number">1</span>:<span class="number">0</span>-<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: tgt_node_name = <span class="number">0x20040080e52c8d92</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: <span class="number">65535</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: serial = SQ22101119</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libcheckrdac.so checker</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> checker rdac: message table size = <span class="number">9</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: path_checker = rdac (setting: storage device autodetected)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: checker timeout = <span class="number">30</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rdac state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: uid = 360080e50002c8d920000146c5d1bca10 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> loading <span class="comment">//lib/multipath/libpriordac.so prioritizer</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: prio = rdac (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: prio args = <span class="string">&quot;&quot;</span> (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: rdac prio = <span class="number">14</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: mask = <span class="number">0x1f</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: dev_t = <span class="number">8</span>:<span class="number">32</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: size = <span class="number">10538188800</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: vendor = IBM</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: product = <span class="number">1814</span> FAStT</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rev = <span class="number">1060</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: h:b:t:l = <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> SCSI target <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span> -&gt; FC rport <span class="number">4</span>:<span class="number">0</span>-<span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: tgt_node_name = <span class="number">0x20040080e52c8d92</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: path state = running</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: <span class="number">65535</span> cyl, <span class="number">255</span> heads, <span class="number">63</span> sectors/track, start at <span class="number">0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: serial = SQ22101611</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: get_state</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: detect_checker = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: path_checker = rdac (setting: storage device autodetected)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: checker timeout = <span class="number">30</span> s (setting: kernel sysfs)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rdac state = up</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: uid_attribute = ID_SERIAL (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: uid = 360080e50002c8d920000146c5d1bca10 (udev)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: detect_prio = yes (setting: multipath internal)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: prio = rdac (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: prio args = <span class="string">&quot;&quot;</span> (setting: storage device configuration)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: rdac prio = <span class="number">9</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> libdevmapper version <span class="number">1.02</span><span class="number">.155</span> (<span class="number">2018</span>-<span class="number">12</span>-<span class="number">18</span>)</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> DM multipath kernel driver v1<span class="number">.13</span><span class="number">.0</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 3600605b0041a45d018c347be2a7fecf8 not <span class="keyword">in</span> wwids file, skipping sda</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sda: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> <span class="keyword">const</span> prioritizer refcount <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 360080e50002c8d920000146c5d1bca10 not <span class="keyword">in</span> wwids file, skipping sdb</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdb: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> rdac prioritizer refcount <span class="number">2</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: udev property ID_WWN whitelisted</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> wwid 360080e50002c8d920000146c5d1bca10 not <span class="keyword">in</span> wwids file, skipping sdc</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> sdc: orphan path, only one path</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> rdac prioritizer refcount <span class="number">1</span></span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading rdac prioritizer</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading <span class="keyword">const</span> prioritizer</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading rdac checker</span><br><span class="line">Jul <span class="number">03</span> <span class="number">15</span>:<span class="number">22</span>:<span class="number">38</span> unloading tur checker</span><br><span class="line">===== paths list =====</span><br><span class="line">uuid hcil dev dev_t pri dm_st chk_st vend/prod</span><br><span class="line">3600605b0041a45d018c347be2a7fecf8 <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span> sda <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span> undef undef IBM,Serve</span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdb <span class="number">8</span>:<span class="number">16</span> <span class="number">14</span> undef undef IBM,<span class="number">1814</span> </span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdc <span class="number">8</span>:<span class="number">32</span> <span class="number">9</span> undef undef IBM,<span class="number">1814</span> </span><br></pre></td></tr></table></figure>
+
+
+<p>或者可以直接查看存在的路径</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -d -v3 <span class="number">2</span>&gt;<span class="regexp">/dev/</span><span class="literal">null</span></span><br><span class="line">===== paths list =====</span><br><span class="line">uuid hcil dev dev_t pri dm_st chk_st vend/prod</span><br><span class="line">3600605b0041a45d018c347be2a7fecf8 <span class="number">0</span>:<span class="number">2</span>:<span class="number">0</span>:<span class="number">0</span> sda <span class="number">8</span>:<span class="number">0</span> <span class="number">1</span> undef undef IBM,Serve</span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">1</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdb <span class="number">8</span>:<span class="number">16</span> <span class="number">14</span> undef undef IBM,<span class="number">1814</span> </span><br><span class="line">360080e50002c8d920000146c5d1bca10 <span class="number">4</span>:<span class="number">0</span>:<span class="number">0</span>:<span class="number">0</span> sdc <span class="number">8</span>:<span class="number">32</span> <span class="number">9</span> undef undef IBM,<span class="number">1814</span> </span><br></pre></td></tr></table></figure>
+
+<p>可以看到有两条路径有相同的wwid，添加此wwid到系统/etc/multipath/wwids配置文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -a 360080e50002c8d920000146c5d1bca10</span><br><span class="line">wwid <span class="string">&#x27;360080e50002c8d920000146c5d1bca10&#x27;</span> added</span><br></pre></td></tr></table></figure>
+
+<p>重新启动multipathd服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart multipathd.service</span><br></pre></td></tr></table></figure>
+
+<p>可以看到有多路径设备dm-0了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo multipath -l</span><br><span class="line">360080e50002c8d920000146c5d1bca10 dm-<span class="number">0</span> IBM,<span class="number">1814</span> FAStT</span><br><span class="line">size=<span class="number">4.</span>9T features=<span class="string">&#x27;5 queue_if_no_path pg_init_retries 50 queue_mode mq&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=<span class="number">0</span> status=enabled</span><br><span class="line"> \<span class="string">`- 1:0:0:0 sdb 8:16 active undef running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;service-time 0&#x27; prio=0 status=enabled</span></span><br><span class="line"><span class="string"> \`- 4:0:0:0 sdc 8:32 active undef running</span></span><br></pre></td></tr></table></figure>
+
+<p>还不好，设备没有别名，访问起来很麻烦，添加一个多路径配置文件/etc/multipath/conf.d/multipath.conf,内容如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">multipaths &#123;</span><br><span class="line">multipath &#123;</span><br><span class="line">wwid 360080e50002c8d920000146c5d1bca10</span><br><span class="line">alias data</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后重新查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart multipathd.service</span><br><span class="line"></span><br><span class="line">$ sudo multipath -l</span><br><span class="line">data (360080e50002c8d920000146c5d1bca10) dm-<span class="number">0</span> IBM,<span class="number">1814</span> FAStT</span><br><span class="line">size=<span class="number">4.</span>9T features=<span class="string">&#x27;5 queue_if_no_path pg_init_retries 50 queue_mode mq&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=<span class="number">14</span> status=active</span><br><span class="line"> \<span class="string">`- 1:0:0:0 sdb 8:16 active ready running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;service-time 0&#x27; prio=9 status=enabled</span></span><br><span class="line"><span class="string"> \`- 4:0:0:0 sdc 8:32 active ready running</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$ ls -l /dev/mapper/</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">crw------- 1 root root 10, 236 Jul 3 14:55 control</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data -&gt; ../dm-0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data-part1 -&gt; ../dm-1</span></span><br></pre></td></tr></table></figure>
+
+<p>/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1</p>
+<p>格式化为ext4文件系统，<strong>注意会破坏分区上的所有数据</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkfs.ext4 /dev/mapper/data-part1 </span><br><span class="line">mke2fs <span class="number">1.44</span><span class="number">.5</span> (<span class="number">15</span>-Dec-<span class="number">2018</span>)</span><br><span class="line">Creating filesystem <span class="keyword">with</span> <span class="number">1317273339</span> 4k blocks and <span class="number">164659200</span> inodes</span><br><span class="line">Filesystem UUID: b60f85e2-<span class="number">5813</span>-48d7-856b-2f8dc7c1aad0</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line"> <span class="number">32768</span>, <span class="number">98304</span>, <span class="number">163840</span>, <span class="number">229376</span>, <span class="number">294912</span>, <span class="number">819200</span>, <span class="number">884736</span>, <span class="number">1605632</span>, <span class="number">2654208</span>, </span><br><span class="line"> <span class="number">4096000</span>, <span class="number">7962624</span>, <span class="number">11239424</span>, <span class="number">20480000</span>, <span class="number">23887872</span>, <span class="number">71663616</span>, <span class="number">78675968</span>, </span><br><span class="line"> <span class="number">102400000</span>, <span class="number">214990848</span>, <span class="number">512000000</span>, <span class="number">550731776</span>, <span class="number">644972544</span></span><br><span class="line"></span><br><span class="line">Allocating group tables: done </span><br><span class="line">Writing inode tables: done </span><br><span class="line">Creating journal (<span class="number">262144</span> blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: </span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">$ blkid /dev/mapper/data-part1 </span><br><span class="line">/dev/mapper/data-part1: UUID=<span class="string">&quot;b60f85e2-5813-48d7-856b-2f8dc7c1aad0&quot;</span> TYPE=<span class="string">&quot;ext4&quot;</span> PARTUUID=<span class="string">&quot;ba6bcf54-89e3-4852-a993-4f44d8839531&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>自动挂载/etc/fstab添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/dev/mapper/data-part1 /mnt/data ext4 defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>挂载后</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem Size Used Avail Use% Mounted on</span><br><span class="line">udev 16G <span class="number">0</span> 16G <span class="number">0</span>% /dev</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">9.</span>3M <span class="number">3.</span>2G <span class="number">1</span>% /run</span><br><span class="line">/dev/sda2 516G <span class="number">1.</span>4G 488G <span class="number">1</span>% /</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/dev/</span>shm</span><br><span class="line">tmpfs <span class="number">5.</span>0M <span class="number">0</span> <span class="number">5.</span>0M <span class="number">0</span>% <span class="regexp">/run/</span>lock</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/sys/</span>fs/cgroup</span><br><span class="line">/dev/sda1 511M <span class="number">5.</span>1M 506M <span class="number">1</span>% <span class="regexp">/boot/</span>efi</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">0</span> <span class="number">3.</span>2G <span class="number">0</span>% <span class="regexp">/run/u</span>ser/<span class="number">1000</span></span><br><span class="line">/dev/mapper/data-part1 <span class="number">4.</span>9T 89M <span class="number">4.</span>7T <span class="number">1</span>% <span class="regexp">/mnt/</span>data</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/26/7z-compatibility-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/26/7z-compatibility-issue/" class="post-title-link" itemprop="url">7z版本兼容性问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-26 10:43:09" itemprop="dateCreated datePublished" datetime="2019-06-26T10:43:09+08:00">2019-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>有一个7z格式分卷压缩的备份文件，使用7z解压缩时出现错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ 7z x db_2019_06_25.7z<span class="number">.001</span> </span><br><span class="line"></span><br><span class="line"><span class="number">7</span>-Zip \[<span class="number">64</span>\] <span class="number">16.02</span> : Copyright (c) <span class="number">1999</span>-<span class="number">2016</span> Igor Pavlov : <span class="number">2016</span>-<span class="number">05</span>-<span class="number">21</span></span><br><span class="line">p7zip Version <span class="number">16.02</span> (locale=en_US.UTF-<span class="number">8</span>,Utf16=on,HugeFiles=on,<span class="number">64</span> bits,<span class="number">4</span> CPUs Intel(R) Core(TM) i5-<span class="number">6400</span> CPU @ <span class="number">2.</span>70GHz (<span class="number">506E3</span>),ASM,AES-NI)</span><br><span class="line"></span><br><span class="line">Scanning the drive <span class="keyword">for</span> archives:</span><br><span class="line"><span class="number">1</span> file, <span class="number">4697620480</span> bytes (<span class="number">4480</span> MiB)</span><br><span class="line"></span><br><span class="line">Extracting archive: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">ERROR: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">db_2019_06_25.7z</span><br><span class="line">Open ERROR: Can not open the file <span class="keyword">as</span> \[7z\] archive</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">Can<span class="string">&#x27;t open as archive: 1</span></span><br><span class="line"><span class="string">Files: 0</span></span><br><span class="line"><span class="string">Size: 0</span></span><br><span class="line"><span class="string">Compressed: 0</span></span><br><span class="line"><span class="string">$ file db_2019_06_25.7z.001</span></span><br><span class="line"><span class="string">db_2019_06_25.7z.001: 7-zip archive data, version 0.3</span></span><br></pre></td></tr></table></figure>
+
+<p>因为这个备份文件是在一个debian jessie服务器上使用7-Zip [64] 9.20分卷压缩的，7z archive 版本为0.3<br>而解压缩的机器使用的是7-Zip [64] 16.02，7z archive版本为0.4<br>使用7z 9.20解压缩此文档没有问题，这是7z的向后兼容性问题</p>
+<p>备份服务器升级到debian stretch, 7z版本升级到了7-Zip [64] 16.02，这个问题就不存在了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/" class="post-title-link" itemprop="url">使用JMX逐节点迁移集群的compaction策略</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-23 17:32:18" itemprop="dateCreated datePublished" datetime="2019-06-23T17:32:18+08:00">2019-06-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>这里使用交互式jmx命令行客户端<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">jmxterm</a>来与mbeans交互。</p>
+<p>下载uber依赖自包含版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>使用很简单</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar -h</span><br><span class="line">\[USAGE\]</span><br><span class="line"> jmxterm &lt;OPTIONS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Main executable <span class="keyword">of</span> JMX terminal CLI tool</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -a --appendtooutput With <span class="built_in">this</span> flag, the outputfile is preserved and content is appended to it</span><br><span class="line"> -e --exitonfailure With <span class="built_in">this</span> flag, terminal exits <span class="keyword">for</span> any Exception</span><br><span class="line"> -h --help Show usage <span class="keyword">of</span> <span class="built_in">this</span> command line</span><br><span class="line"> -i --input &lt;value&gt; Input script file. There can only be one input file. <span class="string">&quot;stdin&quot;</span> is the <span class="keyword">default</span> value which means <span class="built_in">console</span> input</span><br><span class="line"> -n --noninteract Non interactive mode. Use <span class="built_in">this</span> mode <span class="keyword">if</span> input doesn<span class="string">&#x27;t come from human or jmxterm is embedded</span></span><br><span class="line"><span class="string"> -o --output &lt;value&gt; Output file, stdout or stderr. Default value is stdout</span></span><br><span class="line"><span class="string"> -p --password &lt;value&gt; Password for user/password authentication</span></span><br><span class="line"><span class="string"> -s --sslrmiregistry Whether the server&#x27;</span>s RMI registry is protected <span class="keyword">with</span> SSL/TLS</span><br><span class="line"> -l --url &lt;value&gt; Location <span class="keyword">of</span> MBean service. It can be &lt;host&gt;:&lt;port&gt; or full service URL.</span><br><span class="line"> -u --user &lt;value&gt; User name <span class="keyword">for</span> user/password authentication</span><br><span class="line"> -v --verbose &lt;value&gt; Verbose level, could be silentbriefverbose. Default value is brief</span><br><span class="line">\[NOTE\]</span><br><span class="line"> Without any option, <span class="built_in">this</span> command opens an interactive command line based <span class="built_in">console</span>. With a given input file, commands <span class="keyword">in</span> file will be executed and process ends after file is processed</span><br><span class="line"></span><br><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar</span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;help</span><br><span class="line">#following commands are available to use:</span><br><span class="line">about - Display about page</span><br><span class="line">bean - Display or set current selected MBean. </span><br><span class="line">beans - List available beans under a domain or all domains</span><br><span class="line">bye - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">close - Close current JMX connection</span><br><span class="line">domain - Display or set current selected domain. </span><br><span class="line">domains - List all available domain names</span><br><span class="line">exit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">get - Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">help - Display available commands or usage <span class="keyword">of</span> a command</span><br><span class="line">info - Display detail information about an MBean</span><br><span class="line">jvms - List all running local JVM processes</span><br><span class="line">open - Open JMX session or display current connection</span><br><span class="line">option - <span class="built_in">Set</span> options <span class="keyword">for</span> command session</span><br><span class="line">quit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">run - Invoke an MBean operation</span><br><span class="line">set - <span class="built_in">Set</span> value <span class="keyword">of</span> an MBean attribute</span><br><span class="line">subscribe - Subscribe to the notifications <span class="keyword">of</span> a bean</span><br><span class="line">unsubscribe - Unsubscribe the notifications <span class="keyword">of</span> an earlier subscribed bean</span><br><span class="line">watch - Watch the value <span class="keyword">of</span> one MBean attribute constantly</span><br><span class="line">$&gt;help get</span><br><span class="line">\[USAGE\]</span><br><span class="line"> get &lt;OPTIONS&gt; &lt;ARGS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -b --bean &lt;value&gt; MBean name where the attribute is. Optional <span class="keyword">if</span> bean has been set</span><br><span class="line"> -l --delimiter &lt;value&gt; Sets an optional delimiter to be printed after the value</span><br><span class="line"> -d --domain &lt;value&gt; Domain <span class="keyword">of</span> bean, optional</span><br><span class="line"> -h --help Display usage</span><br><span class="line"> -i --info Show detail information <span class="keyword">of</span> each attribute</span><br><span class="line"> -q --quots Quotation marks around value</span><br><span class="line"> -s --simple Print simple expression <span class="keyword">of</span> value without full expression</span><br><span class="line"> -n --singleLine Prints result without a newline - <span class="keyword">default</span> is <span class="literal">false</span></span><br><span class="line">\[ARGS\]</span><br><span class="line"> &lt;attr&gt;... Name <span class="keyword">of</span> attributes to select</span><br><span class="line">\[NOTE\]</span><br><span class="line"> * stands <span class="keyword">for</span> all attributes. eg. get Attribute1 Attribute2 or get *</span><br></pre></td></tr></table></figure>
+
+<p>设置compaction策略为LCS</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar --url localhost:<span class="number">7199</span></span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;domain org.apache.cassandra.db #设置当前domain</span><br><span class="line">#domain is set to org.apache.cassandra.db</span><br><span class="line">$&gt;bean org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies #设置当前mbean</span><br><span class="line">#bean is set to org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">$&gt;info #显示当前mbean的信息</span><br><span class="line">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">#<span class="class"><span class="keyword">class</span> <span class="title">name</span> </span>= org.apache.cassandra.db.ColumnFamilyStore</span><br><span class="line"># attributes</span><br><span class="line"> %<span class="number">0</span> - AutoCompactionDisabled (boolean, r)</span><br><span class="line"> %<span class="number">1</span> - BuiltIndexes (java.util.List, r)</span><br><span class="line"> %<span class="number">2</span> - ColumnFamilyName (java.lang.String, r)</span><br><span class="line"> %<span class="number">3</span> - CompactionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">4</span> - CompactionParametersJson (java.lang.String, rw)</span><br><span class="line"> %<span class="number">5</span> - CompactionStrategyClass (java.lang.String, rw)</span><br><span class="line"> %<span class="number">6</span> - CompressionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">7</span> - CrcCheckChance (double, w)</span><br><span class="line"> %<span class="number">8</span> - DroppableTombstoneRatio (double, r)</span><br><span class="line"> %<span class="number">9</span> - MaximumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">10</span> - MinimumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">11</span> - SSTableCountPerLevel (\[I, r)</span><br><span class="line"> %<span class="number">12</span> - UnleveledSSTables (int, r)</span><br><span class="line"># operations</span><br><span class="line"> %<span class="number">0</span> - <span class="keyword">void</span> beginLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">1</span> - long estimateKeys()</span><br><span class="line"> %<span class="number">2</span> - javax.management.openmbean.CompositeData finishLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">3</span> - <span class="keyword">void</span> forceMajorCompaction(boolean p1)</span><br><span class="line"> %<span class="number">4</span> - java.util.List getSSTablesForKey(java.lang.String p1)</span><br><span class="line"> %<span class="number">5</span> - <span class="keyword">void</span> loadNewSSTables()</span><br><span class="line"> %<span class="number">6</span> - <span class="keyword">void</span> setCompactionThresholds(int p1,int p2)</span><br><span class="line"> %<span class="number">7</span> - long trueSnapshotsSize()</span><br><span class="line">#there<span class="string">&#x27;s no notifications</span></span><br><span class="line"><span class="string">$&gt;get CompactionStrategyClass # 查询compaction当前策略类</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=mytable,keyspace=mykeyspace,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionStrategyClass = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy;</span></span><br><span class="line"><span class="string">$&gt;set CompactionStrategyClass &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot; #设置compaction策略类为LCS</span></span><br><span class="line"><span class="string">#Value of attribute CompactionStrategyClass is set to &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot;</span></span><br><span class="line"><span class="string">$&gt;get CompactionParametersJson #查询LCS的CompactionParametersJson参数</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionParametersJson = &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;160&quot;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$&gt;set CompactionParametersJson #设置LCS的CompactionParametersJson参数 \\&#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;\\&#125;</span></span><br><span class="line"><span class="string">#Value of attribute CompactionParametersJson is set to &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;&#125; </span></span><br></pre></td></tr></table></figure>
+
+<p>在逐节点compaction策略转换过程中不要alter table，alter table会将jmx对节点的设置扩散到所有的其他节点。</p>
+<p>所有节点转换完成后,使用alter table永久的改变compaction策略，否则节点重启后会用table的schema定义覆盖掉jmx对table的修改。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/213370546-Change-CompactionStrategy-and-sub-properties-via-JMX">Change CompactionStrategy and sub-properties via JMX</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.alteroot.org/articles/2015-04-20/change-cassandra-compaction-strategy-on-production-cluster.html">How to change Cassandra compaction strategy on a production cluster</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">JMXTERM</a><br>[4]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm/user-manual">LAUNCH JMXTERM</a><br>[5]<a target="_blank" rel="noopener" href="https://github.com/jiaqi/jmxterm">Interactive command line JMX client</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/22/cassandra-compaction-strategy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/22/cassandra-compaction-strategy/" class="post-title-link" itemprop="url">cassandra compaction strategy</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-22 11:29:53" itemprop="dateCreated datePublished" datetime="2019-06-22T11:29:53+08:00">2019-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra更新或删除rows时并不会真正的更新或删除原先的rows，只是添加新的rows并将原rows打上tombstone标记，所以cassandra需要周期性的运行compaction来整理数据库。</p>
+<p>compaction有三种策略，SizeTieredCompactionStrategy (STCS)、LeveledCompactionStrategy (LCS)和DateTieredCompactionStrategy (DTCS)，默认的compaction策略是STCS。</p>
+<p>当前使用的集群在compaction时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[CompactionExecutor:<span class="number">41367</span>\] <span class="number">2019</span>-<span class="number">06</span>-<span class="number">22</span> <span class="number">11</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">063</span> CassandraDaemon.java:<span class="number">185</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">41367</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">1</span>, expected write size = <span class="number">678107716200</span></span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">275</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">118</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">256</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要600多G的空间来compaction，昏！</p>
+<p>是的，有一个数据文件达到了600多G，默认的SizeTieredCompactionStrategy压缩策略需要比数据文件大一些的空闲空间来执行compaction，但是磁盘剩余空间只有不到400G了，so.</p>
+<p>“SizeTieredCompactionStrategy Compaction requires a lot of temporary space: In worst case, we need to merge all existing SSTables into one, so we need half the disk to be empty to write the output file and only later can delete the old SSTables”</p>
+<p>使用STCS compaction策略，cassandra节点一般要保持50%以上的剩余空间，对于大数据集来讲，太可怕了，几个T的数据，需要额外几个T的剩余空间才能正常运行, WTF!</p>
+<p>STCS策略会在达到min_threshold(默认为4)时，将这几个SSTABLE合并为一个大的SSTABLE，这个SSTABLE并不会有上限大小的限制，初期数据少的时候并不会有什么问题。但是目前2T的节点，已经有3个600G的SSTABLE了，下一步compaction要生成单个2T以上的SSTABLE了，看来默认的STCS策略并不太适合大数据集。</p>
+<p>LeveledCompactionStrategy压缩策略只使用很少的空间来执行压缩，只要10 * sstable_size_in_mb的空间，目前默认的sstable_size_in_mb为160MB，10倍的话差不多2个G的样子，不过官方也讲最好保持10G以上的剩余空间。</p>
+<p>sstable_size_in_mb是LeveledCompactionStrategy bean的一个RW attribute来控制compaction后生成的sstable的大小，一般使用当前默认的160M或设置为200M都是适合的。对于大数据集LCS会生成数量很多的sstables。</p>
+<p><strong>当前表的compaction</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; desc TABLE image;</span><br><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH bloom_filter_fp_chance = <span class="number">0.01</span></span><br><span class="line"> AND caching = <span class="string">&#x27;&#123;&quot;keys&quot;:&quot;ALL&quot;, &quot;rows_per_partition&quot;:&quot;NONE&quot;&#125;&#x27;</span></span><br><span class="line"> AND comment = <span class="string">&#x27;&#x27;</span></span><br><span class="line"> AND compaction = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy&#x27;</span>&#125;</span><br><span class="line"> AND compression = &#123;<span class="string">&#x27;sstable_compression&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.io.compress.LZ4Compressor&#x27;</span>&#125;</span><br><span class="line"> AND dclocal_read_repair_chance = <span class="number">0.1</span></span><br><span class="line"> AND default_time_to_live = <span class="number">0</span></span><br><span class="line"> AND gc_grace_seconds = <span class="number">864000</span></span><br><span class="line"> AND max_index_interval = <span class="number">2048</span></span><br><span class="line"> AND memtable_flush_period_in_ms = <span class="number">0</span></span><br><span class="line"> AND min_index_interval = <span class="number">128</span></span><br><span class="line"> AND read_repair_chance = <span class="number">0.0</span></span><br><span class="line"> AND speculative_retry = <span class="string">&#x27;99.0PERCENTILE&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>果然是SizeTieredCompactionStrategy</p>
+<p><strong>修改compaction策略</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt;ALTER TABLE image WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>,<span class="string">&#x27;sstable_size_in_mb&#x27;</span>:<span class="string">&#x27;200&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里虽然将compaction策略由STCS修改成了LCS，但是要完成一次完整的转换仍然需要巨大的剩余磁盘空间，因为在完整的转换为LCS之前，那些大的sstable,当前有3个600G以上的，会一直保留在磁盘上，完整转换完毕后才能删除，只剩下数量众多的小sstabel，之后的compaction就不会需要这么多的剩余磁盘空间了。</p>
+<p>official documnet: “While a merge of several SSTables is ongoing, the request path continues to read the old SSTables. Ideally, the old SSTables would be deleted as soon as the merge is done, but we must not delete an SSTable that still has in-progress reads.”</p>
+<p>还有一个问题，直接alter table修改compaction策略，会使所有的集群节点开始转换到LCS的compaction动作，集群的负载会高居不下，所以也可以使用jmx来逐个节点的迁移到LCS策略。</p>
+<p>当然也可以关闭节点的自动compaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool disableautocompation -- keyspacename tablename </span><br></pre></td></tr></table></figure>
+
+<p>修改完table的compaction策略后，手动逐个执行compaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool compact -- keyspacename tablename</span><br></pre></td></tr></table></figure>
+
+<p>最后再打开autocompaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool enableautocompaction</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建新表时</strong><br>可以直接指定compaction策略</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/dml/dmlHowDataMaintain.html">How is data maintained?</a><br>[2]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/leveled-compaction-in-apache-cassandra">Leveled Compaction in Apache Cassandra</a><br>[3]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/when-to-use-leveled-compaction">When to Use Leveled Compaction</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/didda/p/4728588.html">Cassandra 的压缩策略STCS，LCS 和 DTCS</a><br>[5]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/gpcuster/archive/2010/05/27/1745859.html">介绍CASSANDRA中的压缩</a><br>[6]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45419041/cancelling-ongoing-compaction-jobs-in-cassandra">Cancelling ongoing compaction jobs in Cassandra</a><br>[7]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/tools/toolsSetCompactionThreshold.html">nodetool setcompactionthreshold</a><br>[8]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sing1ee/archive/2012/05/24/2765042.html">被忽视的Compaction策略-有关NoSQL Compaction策略的一点思考</a><br>[9]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29392153/cassandra-control-sstable-size">Cassandra control SSTable size</a><br>[10]<a target="_blank" rel="noopener" href="https://github.com/scylladb/scylla/wiki/SSTable-compaction-and-compaction-strategies">SSTable compaction and compaction strategies</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

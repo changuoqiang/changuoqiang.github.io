@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/60/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/60/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/03/postfix-fundmental-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/01/03/postfix-fundmental-setup/" class="post-title-link" itemprop="url">postfix邮件系统之基础配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-03 09:33:29" itemprop="dateCreated datePublished" datetime="2014-01-03T09:33:29+08:00">2014-01-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>电子邮件系统结构图</strong><br>图片来自网络</p>
+<p><img src="/downloads/email.png" alt="email architecture"></p>
+<p><strong>基本概念</strong><br>电子邮件系统有几个基本的概念:</p>
+<ul>
+<li>  MUA<br>邮件用户代理(Mail User Agent),邮件系统的客户端,用户用来收发邮件的软件,常见的有linux下的mail,mutt,windows平台下的outlook express等。</li>
+<li>  MSA<br>邮件提交代理(Mail Submmission Agent),MSA居于MUA和MTA之间,MSA一般使用587端口向MTA提交邮件。</li>
+<li>  MTA<br>邮件传输代理(Mail Transfer Agent),负责邮件的存储和转发,是邮件系统的核心,一般也称之为邮件服务器,常见的有postfix,sendmail,qmail,exim4等。MTA之间使用25端口交换邮件信息。</li>
+<li>  MDA<br>邮件投递代理(Mail Dlivery Agent),MTA接收到自己管理的域上用户的邮件后,使用MDA将邮件投递给本地用户。常见的MDA有maildrop,procmail等。</li>
+<li>  MRA<br>邮件访问代理(Mail Retrieval Agent),将用户连接到系统邮件，使用POP3或IMAP协议收取邮件,比如fetchmail等。</li>
+</ul>
+<p>通常这些代理角色分的并不是很清楚,也不太容易区分。经常一个程序实现多个代理角色。对这几个代理角色更详尽的描述见<a target="_blank" rel="noopener" href="http://dev.mutt.org/trac/wiki/MailConcept/Flow">这里</a>。</p>
+<p>一封电子邮件在各个代理之间的流动大体是这样的:<br>MUA → MSA → MTA → … → MTA → MDA → MRA → MUA</p>
+<p><strong>安装</strong></p>
+<h1 id="apt-get-install-postfix-postfix-mysql"><a href="#apt-get-install-postfix-postfix-mysql" class="headerlink" title="apt-get install postfix postfix-mysql"></a>apt-get install postfix postfix-mysql</h1><p><strong>基本配置</strong><br>postfix主配置文件有两个/etc/postfix/main.cf和master.cf</p>
+<p>main.cf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">myhostname = mail.openwares.net #指定主机名</span><br><span class="line">mydomain = openwares.net #指定域名</span><br><span class="line">myorigin = $mydomain #本邮件服务器所发送邮件的域名后缀</span><br><span class="line"></span><br><span class="line">#本地投递的域名,所有发送给user@mydestination的邮件都在本地交付</span><br><span class="line">mydestination = localhost.localdomain localhost </span><br><span class="line"></span><br><span class="line">#为来自哪些网络的客户转发邮件(forward,relay),默认为邮件服务器所连接的子网,如果邮件服务器连接在广域网上,</span><br><span class="line">#那么默认设置就太open了。</span><br><span class="line">mynetworks = <span class="number">127.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">8</span> \[::ffff:<span class="number">127.0</span><span class="number">.0</span><span class="number">.0</span>\]/<span class="number">104</span> \[::<span class="number">1</span>\]/<span class="number">128</span> </span><br><span class="line">relay_domains = #拒绝为陌生人转发邮件</span><br><span class="line">relayhost = #直接通过互联网发送邮件</span><br><span class="line">inet_interfaces = all #postfix监听的接口</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>理解虚拟域</strong><br>postfix有两种域,一种是<strong>本地域</strong>, 另一种就是虚拟域。</p>
+<p>本地域: </p>
+<p> 本地域一般包括postfix运行的机器上的主机名和ip地址,main.cf中用mydestination指名本地域。本地域上的所有用户都有对应的unix账户。如果采用mbox邮箱格式,则用户的邮箱是/var/mail目录下的用户名同名文件，如果采用Maildir邮箱格式,比如在main.cf中设置home_mailbox = Maildir/,则用户的邮箱就是用户主目录的Maildir目录。</p>
+<p>虚拟域:</p>
+<p> 除了本地域之外,postfix还可以管理其他域,这就是虚拟域。虚拟域分为两种,一种是<strong>虚拟别名域</strong>,另一种是<strong>虚拟邮箱域</strong>。</p>
+<ul>
+<li>  虚拟别名域<br>使用virtual_alias_domain指定虚拟别名域,然后通过虚拟别名映射virtual_alias_maps将,虚拟域的用户帐号映射到本地unix账户或者远程mail地址</li>
+<li>  虚拟邮箱域<br>使用virtual_mailbox_domains指定虚拟邮箱域,通过virtual_mailbox_maps等配置参数为虚拟域的用户映射邮箱地址。虚拟邮箱域的账户不必有对应的unix系统账户。</li>
+</ul>
+<p>一个域要么是本地域,要么是虚拟域;一个虚拟域要么是虚拟别名域,要么是虚拟邮箱域。也就是<strong>本地域,虚拟别名域,虚拟邮箱域是互斥的</strong>。</p>
+<p>那么一个postfix邮件系统要添加一个额外的域,有这么几种选择,几个实例如下：</p>
+<ul>
+<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#x6e;&#x66;&#x6f;&#64;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;">&#105;&#x6e;&#x66;&#x6f;&#64;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
+<li>加入虚拟别名域<br>/etc/postfix/main.cf:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> virtual_alias_domains = example.com</span><br><span class="line"> virtual_alias_maps = hash:<span class="regexp">/etc/</span>postfix/virtual</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"> /etc/postfix/virtual:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"> postmaster@example.com postmaster</span><br><span class="line"> info@example.com joe</span><br><span class="line"> sales@example.com jane</span><br><span class="line"> # Uncomment entry below to implement a catch-all address</span><br><span class="line"> # @example.com jim #example.com域上的所有其他用户的邮件都发送给jim,这样可能会有垃圾邮件的困扰</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>也可以将虚拟别名域上的用户映射到远程账户,只是作为转发之用。</p>
+<ul>
+<li>加入虚拟邮箱域<br>/etc/postfix/main.cf:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> virtual_mailbox_domains = example.com </span><br><span class="line"> virtual_mailbox_base = /var/mail/vhosts #指定虚拟邮箱域内所有用户邮箱相对的基本目录</span><br><span class="line"> virtual_mailbox_maps = hash:<span class="regexp">/etc/</span>postfix/vmailbox</span><br><span class="line"> virtual_minimum_uid = 100 #邮箱文件(mbox)或目录(Mailbox)的最小owner id</span><br><span class="line"> virtual_uid_maps = static:5000 #静态映射邮箱所有者uid</span><br><span class="line"> #静态映射邮箱所有者gid。uid和gid也可以指定查找表,通过邮件地址来查找对应的gid或uid</span><br><span class="line"> virtual_gid_maps = <span class="keyword">static</span>:<span class="number">5000</span> </span><br><span class="line"> virtual_alias_maps = hash:/etc/postfix/virtual #虚拟邮箱域也可以使用别名映射</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"> /etc/postfix/vmailbox:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"> #mbox邮箱格式,完整的邮箱地址为/<span class="keyword">var</span>/mail/vhosts/example.com/info</span><br><span class="line"> info@example.com example.com/info </span><br><span class="line"> #Maildir邮箱格式,完整的邮箱地址为/<span class="keyword">var</span>/mail/vhosts/example.com/sales/</span><br><span class="line"> sales@example.com example.com/sales/ </span><br><span class="line"> # Comment out the entry below to implement a catch-all.</span><br><span class="line"> # @example.com example.com/catchall</span><br><span class="line"> #...virtual mailboxes for more domains...</span><br></pre></td></tr></table></figure>
+/etc/postfix/virtual:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postmaster@example.com postmaster #虚拟邮箱域用户映射到本地unix用户</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>postfix支持丰富的查找表类型, hash,ldap,mysql等,一般使用数据库比较方便。</p>
+<p><strong>虚拟邮箱域mysql数据库配置</strong><br>这里使用mysql数据库来设置openwares.net虚拟邮箱域</p>
+<p><em>创建数据库</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE DATABASE mail;</span><br><span class="line">mysql&gt; GRANT ALL ON mail.* TO <span class="string">&#x27;postfix&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> IDENTIFIED BY <span class="string">&#x27;postfix&#x27;</span>;</span><br><span class="line">mysql&gt; GRANT ALL ON mail.* TO <span class="string">&#x27;postfix&#x27;</span>@<span class="string">&#x27;localhost.localdomain&#x27;</span> IDENTIFIED BY <span class="string">&#x27;postfix&#x27;</span>;</span><br><span class="line">mysql&gt; FLUSH PRIVILEGES;</span><br><span class="line">mysql&gt; USE mail;</span><br><span class="line">mysql&gt; CREATE TABLE users (</span><br><span class="line">email varchar(<span class="number">80</span>) NOT NULL,</span><br><span class="line">password varchar(<span class="number">20</span>) NOT NULL,</span><br><span class="line">PRIMARY KEY (email)</span><br><span class="line">);</span><br><span class="line">mysql&gt; quit;</span><br></pre></td></tr></table></figure>
+
+<p><em>创建postfix配置文件</em><br>/etc/postfix/mysql_virtual_mailboxes.cf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">user = postfix</span><br><span class="line">password = postfix</span><br><span class="line">dbname = mail</span><br><span class="line">query = SELECT CONCAT(SUBSTRING_INDEX(email,<span class="string">&#x27;@&#x27;</span>,-<span class="number">1</span>),<span class="string">&#x27;/&#x27;</span>,SUBSTRING_INDEX(email,<span class="string">&#x27;@&#x27;</span>,<span class="number">1</span>),<span class="string">&#x27;/&#x27;</span>) FROM users WHERE email=<span class="string">&#x27;%s&#x27;</span></span><br><span class="line">hosts = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+
+<p>query语句从user表动态构建出用户对应的Maildir目录,格式为domain.tld/username/</p>
+<p>/etc/postfix/main.cf中添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">virtual_mailbox_domains = openwares.net</span><br><span class="line">virtual_mailbox_maps = mysql:<span class="regexp">/etc/</span>postfix/mysql_virtual_mailboxes.cf</span><br><span class="line">virtual_mailbox_base = <span class="regexp">/var/m</span>ail/vmail</span><br><span class="line">virtual_minimum_uid = <span class="number">5000</span></span><br><span class="line">virtual_uid_maps = <span class="keyword">static</span>:<span class="number">5000</span></span><br><span class="line">virtual_gid_maps = <span class="keyword">static</span>:<span class="number">5000</span></span><br></pre></td></tr></table></figure>
+<p><em>创建虚拟邮箱文件夹的所有者</em></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># groupadd -g 5000 vmail</span><br><span class="line"># useradd -g vmail -u 5000 vmail -d /var/mail/vmail -m</span><br></pre></td></tr></table></figure>
+<p>在users表里添加用户</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into users values (<span class="string">&#x27;test@openwares.net&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>就可以使用<a href="mailto:&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#x61;&#x72;&#101;&#x73;&#x2e;&#110;&#x65;&#x74;">&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#x61;&#x72;&#101;&#x73;&#x2e;&#110;&#x65;&#x74;</a>邮箱了。</p>
+<p><strong>别名设置</strong></p>
+<p>/etc/aliases为postfix的本地别名数据库,可以为本地收件人重定向邮件，这种重定向由本地交付代理(local delivery agent)处理。可以添加一个重定向将root重定向到自己的用户,从而所有的系统邮件都会发给你。比如在文件中添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root: yourname</span><br></pre></td></tr></table></figure>
+<p>修改/etc/aliases之后,需要执行命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># newaliases</span><br></pre></td></tr></table></figure>
+<p>使修改生效。</p>
+<p><strong>TLS加密</strong></p>
+<p>如果不开启TLS,则邮件客户端与服务器之间是明文传输的,包括邮件内容和smtp认证的用户名和密码都容易被中间节点截获。因此如果需要更安全的电子邮件系统,则需要为postfix配置TLS加密。</p>
+<p>启用TLS,需要为服务器创建私钥和数字证书(签名的公钥),公私钥必须是PEM格式,并且私钥不能添加passphrase。<br>数字证书需要受信任的证书颁发机构(CA)签发才被别人认可,虽然自签也能使用,但不一定为大多数的客户端所支持。<br>当前免费的CA机构有<a href="www.cacert.org">CACert</a>和<a href="www.startssl.com">StartSSL</a>,但被支持的程度还都不高,CACert在开源世界得到广泛支持。</p>
+<p>生成自签X.509证书</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /etc/postfix</span><br><span class="line">$ openssl req -<span class="keyword">new</span> -outform PEM -out smtpd.cert -newkey rsa:<span class="number">2048</span> -nodes -keyout smtpd.key -keyform PEM -days <span class="number">365</span> -x509</span><br></pre></td></tr></table></figure>
+
+<p>一般使用RSA证书就可以了。有了证书后,在main.cf中添加如下设置:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">smtpd_tls_cert_file = /etc/postfix/smtpd.cert #证书</span><br><span class="line">smtpd_tls_key_file = /etc/postfix/smtpd.key #私钥 </span><br><span class="line">smtpd_tls_security_level = may # may 不强制客户端使用TLS, encrypt 则强制客户端使用TLS</span><br><span class="line">#smtpd_use_tls = yes #这是已经废弃的参数,新版本postfix不再使用</span><br></pre></td></tr></table></figure>
+
+<p>通常来讲未机密服务和加密服务使用不同的端口号,比如http使用80,https使用443。smtp使用25,smtps使用465。<br>但是使用两个端口有些太浪费了,smtp支持STARTSSL,也就是先在25端口上连接,需要加密连接服务时,可以通过STARTSSL将普通连接升级到SSL加密连接。</p>
+<p>SMTP最初是设计来传输(transfer)邮件而不是提交(submission)邮件的,因此又有了另一个端口587用于消息提交(message submission)。MSA(Mail Submmission Agent)使用这个端口向MTA(Mail Tansfer Agent)提交邮件。</p>
+<p>postfix也可以通过配置直接使用465端口提供加密连接,而不是使用STARTSSL。部分客户端依赖于这种方式,但这种方式是不鼓励使用的。<br>postfix使用wrapper来支持smtps。</p>
+<p><strong>配额quota</strong><br>可以使用<a target="_blank" rel="noopener" href="http://vda.sourceforge.net/">VDA</a>添加配额支持,需要给postfix打补丁。</p>
+<p><strong>UPDATE(01/24/2014):</strong><br>在user表中添加一个用户帐号后,用户的虚拟邮箱目录是尚未建立的,只有当用户收到第一封邮件时,postfix才会为用户建立maildir目录。之后才能使用imap登录用户邮箱,否则imap会有错误提示:</p>
+<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#120;&#120;&#120;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#101;&#x73;&#x2e;&#x6e;&#101;&#116;">&#120;&#120;&#120;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#101;&#x73;&#x2e;&#x6e;&#101;&#116;</a>: No such file or directory</p>
+<p>所以新增邮箱用户后,立马向其发送一个welcome邮件吧。</p>
+<p>参考:<br><a target="_blank" rel="noopener" href="http://www.postfix.org/BASIC_CONFIGURATION_README.html">Postfix Basic Configuration</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/VIRTUAL_README.html">Postfix Virtual Domain Hosting Howto</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/DATABASE_README.html">Postfix Lookup Table Overview</a><br><a target="_blank" rel="noopener" href="http://www.howtoforge.com/virtual-users-and-domains-with-postfix-courier-mysql-and-squirrelmail-ubuntu-12.04-lts">Virtual Users And Domains With Postfix, Courier, MySQL And SquirrelMail (Ubuntu 12.04 LTS)</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/TLS_README.html">Postfix TLS Support</a><br><a target="_blank" rel="noopener" href="https://www.fastmail.fm/help/technology_ssl_vs_tls_starttls.html">SSL vs TLS vs STARTTLS</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/31/4611/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/31/4611/" class="post-title-link" itemprop="url">Untitled Post - 30</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-31 21:31:32" itemprop="dateCreated datePublished" datetime="2013-12-31T21:31:32+08:00">2013-12-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>抽时间写个MyBatis Generator plugin,生成selectBySampleSelective接口和相应的xml select元素。selectBySampleSelective方法使用一个样本实体记录,通过对sample样本存在的字段与表相应字段做相等比较来检索表记录。虽然selectByExample方法完全可以满足要求,但selectByExample实在太重量级了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/31/4608/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/31/4608/" class="post-title-link" itemprop="url">Untitled Post - 29</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-31 21:25:29" itemprop="dateCreated datePublished" datetime="2013-12-31T21:25:29+08:00">2013-12-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>MyBatis Generator自身已经提供了分页代码生成<a target="_blank" rel="noopener" href="http://mybatis.org/generator/reference/plugins.html">插件</a>org.mybatis.generator.plugins.RowBoundsPlugin,还有一个网友实现的oracle方言的<a target="_blank" rel="noopener" href="http://ufopw.iteye.com/blog/1289274">分页插件</a>。JDBC的游标分页和拦截Sql做分页都不如直接在数据库级别作分页靠谱,也就是直接生成查询数据库分页SQL代码。当然不同的数据库分页代码不尽相同。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/31/git-restore-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/31/git-restore-files/" class="post-title-link" itemprop="url">git恢复删除的文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-31 15:22:21" itemprop="dateCreated datePublished" datetime="2013-12-31T15:22:21+08:00">2013-12-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>如果在当前工作区删除了文件,又想恢复回来,可以这样:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- filename</span><br></pre></td></tr></table></figure>
+<p>如果删除了一批文件想恢复回来,可以这样:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git ls-files --deleted xargs git checkout --</span><br></pre></td></tr></table></figure>
+<p>其中git ls-files –deleted是列出所有被删除的文件。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/30/mybatis-generator-table-useactualcolumnnames/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/30/mybatis-generator-table-useactualcolumnnames/" class="post-title-link" itemprop="url">MyBatis Generator配置文件table元素的属性useActualColumnNames</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-30 16:57:15" itemprop="dateCreated datePublished" datetime="2013-12-30T16:57:15+08:00">2013-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>useActualColumnNames用于指定生成实体类时是否使用实际的列名作为实体类的属性名。取值true或false:</p>
+<ul>
+<li>  true<br>MyBatis Generator会使用数据库中实际的字段名字作为生成的实体类的属性名。</li>
+<li>  false<br>这是默认值。如果设置为false,则MyBatis Generator会将数据库中实际的字段名字转换为Camel Case风格作为生成的实体类的属性名。</li>
+</ul>
+<p>如果明确的使用columnOverride元素指定了字段对应的实体的属性名,那么useActualColumnNames会被忽略。</p>
+<p>假设表有一个字段名为start_date,如果这个属性设置为true,则生成的实体类的属性名为start_date,生成的setter/getter为setStart_date/getStart_date。如果useActualColumnNames设置为false,则生成的实体类的属性名为startDate,生成的setter/getter为setStartDate/getStartDate。</p>
+<p>那为什么要在数据库表字段中使用Snake Case下划线风格呢?因为大部分数据库服务器对象的命名是不分大小写的,因此使用Snake Case命名风格还是十分有必要的。MyBatis Generator考虑的还真是仔细,将Snake Case转换为Camel Case以与Java风格保持一致。</p>
+<p>参考:<br><a target="_blank" rel="noopener" href="http://mybatis.org/generator/configreference/table.html">table element</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/30/mybatis-generator-context-defaultmodeltype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/30/mybatis-generator-context-defaultmodeltype/" class="post-title-link" itemprop="url">MyBatis Generator配置文件context元素的defaultModelType属性</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-30 14:25:26" itemprop="dateCreated datePublished" datetime="2013-12-30T14:25:26+08:00">2013-12-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>MyBatis Generator配置文件context元素有一个defaultModelType属性,这个属性的值会影响实体类(或叫domain类,model类)的生成。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/12/30/mybatis-generator-context-defaultmodeltype/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/28/eclipse-autocomplete-crash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/28/eclipse-autocomplete-crash/" class="post-title-link" itemprop="url">Eclipse Kepler自动完成时崩溃问题解决</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-28 19:33:02" itemprop="dateCreated datePublished" datetime="2013-12-28T19:33:02+08:00">2013-12-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Eclipse突然就开始崩溃不止了,估计与系统升级有关吧,总之又遇到坑了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/12/28/eclipse-autocomplete-crash/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/28/netbeans-menu-cannot-drop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/28/netbeans-menu-cannot-drop/" class="post-title-link" itemprop="url">Netbeans 7.4 菜单无法使用问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-28 18:38:45" itemprop="dateCreated datePublished" datetime="2013-12-28T18:38:45+08:00">2013-12-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>为什么Java IDE里到处是坑。Eclipse kepler慢吞吞,崩溃不止,好不容易想换Netbeans试试,菜单竟然无法使用！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/12/28/netbeans-menu-cannot-drop/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/26/mybatis-mapper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/26/mybatis-mapper/" class="post-title-link" itemprop="url">MyBatis mapper文件中的变量引用方式#{var}与${var}</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-26 23:15:00" itemprop="dateCreated datePublished" datetime="2013-12-26T23:15:00+08:00">2013-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>By default, using the #{} syntax will cause MyBatis to generate PreparedStatement properties and set the values safely against the PreparedStatement parameters (e.g. ?). While this is safer, faster and almost always preferred, sometimes you just want to directly inject a string unmodified into the SQL Statement. For example, for ORDER BY, you might use something like this:</p>
+<p>ORDER BY ${columnName}<br>Here MyBatis won’t modify or escape the string.</p>
+<p>NOTE It’s not safe to accept input from a user and supply it to a statement unmodified in this way. This leads to potential SQL Injection attacks and therefore you should either disallow user input in these fields, or always perform your own escapes and checks.</p>
+<p>默认情况下,使用#{}语法,MyBatis会产生PreparedStatement语句中，并且安全的设置PreparedStatement参数，这个过程中MyBatis会进行必要的安全检查和转义。</p>
+<p>有时候可能需要直接插入一个不做任何修改的字符串到SQL语句中。这时候应该使用${}语法。比如，ORDER BY字句</p>
+<p>ORDER BY ${columnName}</p>
+<p>MyBatis会原原本本的将columnName变量的值插入到SQL语句中,不做任何检查和转换。以这种方式将用户的输入直接插入到SQL语句中是不安全的，可能会导致潜在的SQL注入攻击，因此应该禁止直接将用户数据插入这些字段，或者执行必要的转义和检查。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/12/26/k860i-vibe-root-google/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/26/k860i-vibe-root-google/" class="post-title-link" itemprop="url">K860i viberom 1351获取root以及安装google服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-26 20:41:05" itemprop="dateCreated datePublished" datetime="2013-12-26T20:41:05+08:00">2013-12-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>总的来说vibe还算凑合,但是不提供root权限,不提供google服务,这样的rom和垃圾有什么两样！</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2013/12/26/k860i-vibe-root-google/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

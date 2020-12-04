@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="由于license不兼容,ZFS一直无法进入linux kernel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian Wheezy AMD64编译安装原生ZFS文件系统">
+<meta property="og:url" content="http://example.com/2012/04/27/debian-amd64-install-zfs/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="由于license不兼容,ZFS一直无法进入linux kernel">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-27T13:57:40.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.123Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="ZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/04/27/debian-amd64-install-zfs/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Debian Wheezy AMD64编译安装原生ZFS文件系统 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#modprobe-zfs"><span class="nav-number">1.</span> <span class="nav-text">modprobe zfs</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/27/debian-amd64-install-zfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian Wheezy AMD64编译安装原生ZFS文件系统
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-04-27 21:57:40" itemprop="dateCreated datePublished" datetime="2012-04-27T21:57:40+08:00">2012-04-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>由于license不兼容,ZFS一直无法进入linux kernel</p>
+<a id="more"></a>
+<p>ZFS使用CDDL(Common Development and Distribution License)协议分发,而linux kernel则采用了GPL2协议,由于这两个协议存在冲突,因而ZFS无法进入内核主线。</p>
+<p>虽然之前有个用户空间的ZFS实现zfs-fuse,但是性能肯定是无法保证的,玩玩可以,真正使用还是算了吧。</p>
+<p>虽然不能进入内核,但还是有办法将ZFS原生地移植到linux平台,那就是将ZFS作为内核模块来运行,这就是<a target="_blank" rel="noopener" href="http://zfsonlinux.org/">ZFS on Linux</a>项目。ZFS on Linux是由美国能源部(Department of Energy)委托劳伦斯利弗莫尔国家实验室LLNL(Lawrence Livermore National Laboratory)开发的。</p>
+<p>ZFS on Linux只支持64bits平台,包括两个组件SPL(Solaris Porting Layer)和ZFS,当前版本为0.6.0-rc8,支持的zfs pool版本为28,文件系统版本为5。</p>
+<p><strong>安装solaris移植层SPL</strong></p>
+<p>下载spl-0.6.0-rc8.tar.gz,解压生成spl-0.6.0-rc8子目录,进入该目录执行以下操作<br>$ sudo apt-get install build-essential gawk alien fakeroot linux-headers-$(uname -r)<br>$ ./configure<br>$ make deb</p>
+<p>这会在当前目录下生成三个deb包<br>spl_0.6.0-1_amd64.deb<br>spl-modules_0.6.0-1_amd64.deb<br>spl-modules-devel_0.6.0-1_amd64.deb</p>
+<p>安装生成的deb包<br>$sudo dpkg -i *_amd64.deb</p>
+<p><strong>安装ZFS</strong></p>
+<p>下载zfs-0.6.0-rc8.tar.gz,解压缩生成zfs-0.6.0-rc8子目录,进入该目录执行以下操作<br>$ sudo apt-get install zlib1g-dev uuid-dev libblkid-dev libselinux-dev parted lsscsi<br>$ ./configure<br>$ make deb</p>
+<p>这会在当前目录下生成六个deb包<br>zfs_0.6.0-1_amd64.deb<br>zfs-dracut_0.6.0-1_amd64.deb<br>zfs-modules-devel_0.6.0-1_amd64.deb<br>zfs-devel_0.6.0-1_amd64.deb<br>zfs-modules_0.6.0-1_amd64.deb<br>zfs-test_0.6.0-1_amd64.deb</p>
+<p>安装生成的deb包<br>$sudo dpkg -i *_amd64.deb</p>
+<p>让系统启动时自动加载zfs内核模块,编辑/etc/modules文件,zfs作为单独的一行添加到文件中。</p>
+<p><strong>测试</strong></p>
+<p>加载ZFS模块</p>
+<h1 id="modprobe-zfs"><a href="#modprobe-zfs" class="headerlink" title="modprobe zfs"></a>modprobe zfs</h1><p>查看zfs模块信息<br>$ lsmod grep zfs<br>Module Size Used by<br>zfs 791314 0<br>zunicode 324466 1 zfs<br>zavl 13115 1 zfs<br>zcommon 35811 1 zfs<br>znvpair 31373 2 zcommon,zfs<br>spl 120446 6 znvpair,zcommon,zavl,zunicode,zfs,splat</p>
+<p>加载splat(Solaris Porting LAyer Test)模块<br>#modprobe splat</p>
+<p>查看splat使用说明<br>#splat<br>usage: splat [hvla] [-t <a href="subsystem:">subsystem:</a>]<br> –help -h This help<br> –verbose -v Increase verbosity<br> –list -l List all tests in all subsystems<br> –all -a Run all tests in all subsystems<br> –test -t Run ‘test’ in subsystem ‘sub’<br> –exit -x Exit on first test error<br> –nocolor -c Do not colorize output</p>
+<p>Examples:<br> splat -t kmem:all # Runs all kmem tests<br> splat -t taskq:0x201 # Run taskq test 0x201</p>
+<p>执行kmem测试<br>#splat -t kmem:all<br>———–Running SPLAT Tests —————-<br> kmem:kmem_alloc Pass<br> kmem:kmem_zalloc Pass<br> kmem:vmem_alloc Pass<br> kmem:vmem_zalloc Pass<br> kmem:slab_small Pass<br> kmem:slab_large Pass<br> kmem:slab_align Pass<br> kmem:slab_reap Pass<br> kmem:slab_age Pass<br> kmem:slab_lock Pass<br> kmem:slab_overcommit Pass<br> kmem:vmem_size Pass</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/ZFS/" rel="tag"># ZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/04/27/kvm-high-availability/" rel="prev" title="KVM虚拟化环境高可用方案探讨">
+                  <i class="fa fa-chevron-left"></i> KVM虚拟化环境高可用方案探讨
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/04/28/kvm-performance-tuning/" rel="next" title="KVM性能优化">
+                  KVM性能优化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

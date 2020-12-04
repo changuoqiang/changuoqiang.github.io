@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="操作系统为Debian Wheezy(当前仍为testing) AMD64,数据库为oracle 10g 10.2.0.4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手工创建oracle 10g数据库">
+<meta property="og:url" content="http://example.com/2012/04/01/create-database-manual/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="操作系统为Debian Wheezy(当前仍为testing) AMD64,数据库为oracle 10g 10.2.0.4">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-04-01T01:48:31.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.101Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/04/01/create-database-manual/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>手工创建oracle 10g数据库 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/04/01/create-database-manual/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          手工创建oracle 10g数据库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-04-01 09:48:31" itemprop="dateCreated datePublished" datetime="2012-04-01T09:48:31+08:00">2012-04-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>操作系统为Debian Wheezy(当前仍为testing) AMD64,数据库为oracle 10g 10.2.0.4</p>
+<a id="more"></a>
+<p>安装oracle 10g 10.2.0.4时,因为要先安装10.2.0.1,然后再升级到10.2.0.4,所以没有建库,省却升级数据库的麻烦。</p>
+<p>新建oracle数据库可以使用图形化的工具DBCA(Database Configuration Assistant),也可以使用CREATE DATABASE语句手工创建数据库。这里采用后者手工建库。</p>
+<p><strong>手工新建oracle数据库</strong></p>
+<p><strong>1、确定数据库实例标识符并设置相关环境变量,建立相关路径</strong></p>
+<p>为数据库确定一个SID,并设置操作系统环境变量ORACLE_SID,此处新建数据库拟定的SID为catlogdb</p>
+<p>设定环境变量</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> ORACLE_SID=catlogdb</span><br><span class="line"><span class="keyword">export</span> ORACLE_BASE=<span class="regexp">/u01/</span>app/oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=$ORACLE_BASE/product/<span class="number">10.2</span><span class="number">.0</span>/db_1</span><br><span class="line"><span class="keyword">export</span> PATH=$ORACLE_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>创建需要的路径,相关路径设置参照<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/install.102/b15660/app_ofa.htm">Optimal Flexible Architecture for 10.2</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p $ORACLE_BASE/admin/$ORACLE_SID/&#123;a,b,c,u&#125;dump</span><br><span class="line"><span class="comment">//$ mkdir -p $ORACLE_BASE/admin/$ORACLE_SID/pfile</span></span><br><span class="line"><span class="comment">//$ mkdir -p $ORACLE_BASE/admin/$ORACLE_SID/create</span></span><br><span class="line"><span class="comment">//$ mkdir -p $ORACLE_BASE/admin/$ORACLE_SID/arch</span></span><br><span class="line">$ mkdir -p /u01/oradata/$ORACLE_SID</span><br><span class="line">$ mkdir -p $ORACLE_BASE/flash_recovery_area/$ORACLE_SID</span><br></pre></td></tr></table></figure>
+<p><strong>2、创建密码文件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ orapwd file=$ORACLE_HOME/dbs/orapw$ORACLE_SID password=passwd_for_sys force=y</span><br></pre></td></tr></table></figure>
+<p>在目录$ORACLE_HOME/dbs目录下生成<a target="_blank" rel="noopener" href="https://openwares.net/database/oracle_passwd_file.html">密码文件</a>orapwcatlogdb,sys用户的密码为passwd_for_sys</p>
+<p><strong>3、创建初始化参数文件</strong></p>
+<p>oracle提供了一个样例<a target="_blank" rel="noopener" href="https://openwares.net/database/pfile_and_spfile.html">参数文件</a>$ORACLE_HOME/dbs/init.ora,可以根据需要增删修改初始化参数。</p>
+<p>初始化参数命名为initcatlogdb.ora,其内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">db_name=catlogdb</span><br><span class="line">compatible=<span class="number">10.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span></span><br><span class="line"></span><br><span class="line">nls_language=american</span><br><span class="line">nls_territory=america</span><br><span class="line"></span><br><span class="line">control_files=(<span class="regexp">/u01/</span>oradata/catlogdb/control01.ctl,</span><br><span class="line"> /u01/oradata/catlogdb/control02.ctl,</span><br><span class="line"> /u01/oradata/catlogdb/control03.ctl)</span><br><span class="line"></span><br><span class="line">db_block_size=<span class="number">8192</span></span><br><span class="line">sga_target=960M</span><br><span class="line">pga_aggregate_target=270M</span><br><span class="line"></span><br><span class="line">processes=<span class="number">150</span></span><br><span class="line">sessions=<span class="number">150</span></span><br><span class="line">open_cursors=<span class="number">150</span></span><br><span class="line"></span><br><span class="line">undo_management=auto</span><br><span class="line">undo_tablespace=undotbs1</span><br><span class="line"></span><br><span class="line">audit_file_dest=<span class="regexp">/u01/</span>app/oracle/admin/catlogdb/adump</span><br><span class="line">background_dump_dest=<span class="regexp">/u01/</span>app/oracle/admin/catlogdb/bdump</span><br><span class="line">core_dump_dest=<span class="regexp">/u01/</span>app/oracle/admin/catlogdb/cdump</span><br><span class="line">user_dump_dest=<span class="regexp">/u01/</span>app/oracle/admin/catlogdb/udump</span><br><span class="line"></span><br><span class="line">db_recovery_file_dest=<span class="regexp">/u01/</span>app/oracle/flash_recovery_area/catlogdb</span><br><span class="line">db_recovery_file_dest_size=1G</span><br></pre></td></tr></table></figure>
+
+<p>三个控制文件control01.ctl,control02.ctl和control03.ctl内容是完全一样的,最好将其分散到不同的驱动器上以提高控制文件的安全性,这叫做多路镜像multiplexing</p>
+<p><strong>4、创建spfile并启动实例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; create spfile <span class="keyword">from</span> pfile;</span><br></pre></td></tr></table></figure>
+<p>这会在$ORACLE_HOME/dbs/目录下生成spfile参数文件spfilecatlogdb.ora,这是服务器端的参数文件,关于参数文件详见”<a target="_blank" rel="noopener" href="https://openwares.net/database/pfile_and_spfile.html">oracle初始化参数文件pfile和spfile</a>“</p>
+<p>启动实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; startup nomount</span><br></pre></td></tr></table></figure>
+<p><strong>5、创建数据库</strong></p>
+<p>建库脚本createdb.sql如下：<br>[sql]<br>CREATE DATABASE catlogdb<br> USER SYS IDENTIFIED BY oracle<br> USER SYSTEM IDENTIFIED BY oracle<br> LOGFILE GROUP 1 (‘/u01/oradata/catlogdb/redo01.log’) SIZE 100M,<br> GROUP 2 (‘/u01/oradata/catlogdb/redo02.log’) SIZE 100M,<br> GROUP 3 (‘/u01/oradata/catlogdb/redo03.log’) SIZE 100M<br> MAXLOGFILES 5<br> MAXLOGMEMBERS 5<br> MAXLOGHISTORY 1<br> MAXDATAFILES 100<br> MAXINSTANCES 1<br> CHARACTER SET AL32UTF8<br> NATIONAL CHARACTER SET UTF8<br> EXTENT MANAGEMENT LOCAL<br> DATAFILE ‘/u01/oradata/catlogdb/system01.dbf’ SIZE 325M REUSE<br> SYSAUX DATAFILE ‘/u01/oradata/catlogdb/sysaux01.dbf’ SIZE 325M REUSE<br> DEFAULT TABLESPACE users<br> DATAFILE ‘/u01/oradata/catlogdb/users01.dbf’<br> SIZE 500M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED<br> DEFAULT TEMPORARY TABLESPACE tempts1<br> TEMPFILE ‘/u01/oradata/catlogdb/temp01.dbf’<br> SIZE 20M REUSE<br> UNDO TABLESPACE undotbs1<br> DATAFILE ‘/u01/oradata/catlogdb/undo01.dbf’<br> SIZE 200M REUSE AUTOEXTEND ON MAXSIZE UNLIMITED;<br>[/sql]</p>
+<p>执行建库脚本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; @createdb.sql;</span><br><span class="line">Database created.</span><br><span class="line">Tablespace created.</span><br><span class="line">Database altered.</span><br></pre></td></tr></table></figure>
+<p><strong>6、运行系统脚本建立数据字典视图</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; @?<span class="regexp">/rdbms/</span>admin/catalog.sql;</span><br><span class="line">SQL&gt; @?<span class="regexp">/rdbms/</span>admin/catproc.sql;</span><br></pre></td></tr></table></figure>
+<p><strong>7、编辑对外监听配置文件</strong></p>
+<p>监听文件$ORACLE_HOME/network/admin/listener.ora内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SID_LIST_LISTENER =</span><br><span class="line"> (SID_LIST =</span><br><span class="line"> (SID_DESC =</span><br><span class="line"> (GLOBAL_DBNAME = catlogdb)</span><br><span class="line"> (ORACLE_HOME = <span class="regexp">/u01/</span>app/oracle/product/<span class="number">10.2</span><span class="number">.0</span>/db_1)</span><br><span class="line"> (SID_NAME = catlogdb)</span><br><span class="line"> )</span><br><span class="line"> )</span><br><span class="line"> </span><br><span class="line"> LISTENER =</span><br><span class="line"> (DESCRIPTION_LIST =</span><br><span class="line"> (DESCRIPTION =</span><br><span class="line"> (ADDRESS = (PROTOCOL = TCP)(HOST = hostname.domain)(PORT = <span class="number">1521</span>))</span><br><span class="line"> )</span><br><span class="line"> )</span><br></pre></td></tr></table></figure>
+<p>其中hostname为主机名,domain为主机域名,也可以用ip地址来代替hostname.domain字段。</p>
+<p><strong>建库完毕。</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/03/27/multiarch-and-lib-dir/" rel="prev" title="multiarch架构与lib目录">
+                  <i class="fa fa-chevron-left"></i> multiarch架构与lib目录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/04/02/lro-intro/" rel="next" title="LRO(Large receive offload)介绍">
+                  LRO(Large receive offload)介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="PKI体系是数字证书的基础。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成PKI公私密钥对及数字证书">
+<meta property="og:url" content="http://example.com/2014/01/22/pki-key-pair-certificate/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PKI体系是数字证书的基础。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-01-22T11:51:21.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.407Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/01/22/pki-key-pair-certificate/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>生成PKI公私密钥对及数字证书 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/22/pki-key-pair-certificate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          生成PKI公私密钥对及数字证书
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-22 19:51:21" itemprop="dateCreated datePublished" datetime="2014-01-22T19:51:21+08:00">2014-01-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>PKI体系是数字证书的基础。</p>
+<a id="more"></a>
+<p>有些情形只需要公私密钥对就够了, 不需要数字证书,比如私有的SSH服务。但是对于一些要求身份认证的情形,则需要对公钥进行数字签名形成数字证书。</p>
+<p><strong>公私密钥对(key pair)</strong></p>
+<p>有两种常见的工具来生成RSA公私密钥对,ssh-keygen和openssl genrsa。其实ssh-keygen底层也是使用openssl提供的库来生成密钥。</p>
+<p><em>ssh-keygen</em></p>
+<p>生成2048位RSA密钥对,1024已经不算安全了,现在至少要使用2048位的密钥。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -b <span class="number">2048</span> -t rsa -f foo_rsa</span><br><span class="line"></span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter passphrase (empty <span class="keyword">for</span> no passphrase): </span><br><span class="line">Enter same passphrase again: </span><br><span class="line">Your identification has been saved <span class="keyword">in</span> foo_rsa.</span><br><span class="line">Your public key has been saved <span class="keyword">in</span> foo_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">b8:c4:5f:2a:<span class="number">94</span>:fd:b9:<span class="number">56</span>:9d:5b:fd:<span class="number">96</span>:<span class="number">02</span>:5a:7e:b7 user@yoga</span><br><span class="line">The key<span class="string">&#x27;s randomart image is:</span></span><br><span class="line"><span class="string">+--\[ RSA 2048\]----+</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> . + </span></span><br><span class="line"><span class="string"> * S . . ..</span></span><br><span class="line"><span class="string"> o o + +. o o</span></span><br><span class="line"><span class="string"> o o *.. oo</span></span><br><span class="line"><span class="string"> . ..o o.oo</span></span><br><span class="line"><span class="string"> .. . oE.</span></span><br><span class="line"><span class="string">+-----------------+</span></span><br></pre></td></tr></table></figure>
+<p>-b 指定密钥位数<br>-t 指定密钥类型rsa,dsa或者ecdsa。一般常用的就是rsa,据说椭圆曲线ecdsa安全又高效,不过没用过。</p>
+<p>如果密钥对用于ssh,那么习惯上私钥命名为id_rsa,对应的公钥就是id_rsa.pub,然后可以使用ssh-copy-id把密钥追加到远程主机的.ssh/authorized_key文件里。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-copy-id -i ~<span class="regexp">/.ssh/i</span>d_rsa.pub user@host</span><br></pre></td></tr></table></figure>
+
+<p>默认生成的密钥对是RFC 4716/SSH2格式,可以转到PEM格式公其他程序使用:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -f id_rsa.pub -e -m pem</span><br><span class="line">-----BEGIN RSA PUBLIC KEY-----</span><br><span class="line">...</span><br><span class="line">-----END RSA PUBLIC KEY-----</span><br></pre></td></tr></table></figure>
+
+<p>-m 指定转换后的格式,支持RFC4716(RFC 4716/SSH2 public or private key),PKCS8(PEM PKCS8 public key)或PEM(PEM public key)</p>
+<p><em>genrsa</em></p>
+<p>生成2048位rsa私钥:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ openssl genrsa -des3 -out foo_rsa <span class="number">2048</span></span><br><span class="line">Generating RSA private key, <span class="number">2048</span> bit long modulus</span><br><span class="line">...........+++</span><br><span class="line">.................................+++</span><br><span class="line">e is <span class="number">65537</span> (<span class="number">0x10001</span>)</span><br><span class="line">Enter pass phrase <span class="keyword">for</span> foo_rsa:</span><br><span class="line">Verifying - Enter pass phrase <span class="keyword">for</span> foo_rsa:</span><br></pre></td></tr></table></figure>
+
+<p>-des3 用于指定使用三重des加密的私钥访问口令(passphase),每次使用私钥时需要提供正确的口令。</p>
+<p>生成的PEM编码格式的私钥类似这个样子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat foo_rsa</span><br><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">Proc-Type: <span class="number">4</span>,ENCRYPTED</span><br><span class="line">DEK-Info: DES-EDE3-CBC,12C561CAE7D35804</span><br><span class="line"></span><br><span class="line">D/6eomJUqvrCQwOpGuzyF7+NaJmP6xzgFeS30792BX58qk10EtWCNIsa+0HW0+Jp</span><br><span class="line">...</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+
+<p>以上生成的只是私钥,可以进一步根据私钥推导出对应公钥,为什么可以推导出公钥?参见[3]</p>
+<blockquote>
+<p>在Openssl中RSA是内存结构。如果内存结构中有rsa-&gt;n,rsa-&gt;e时，该RSA是公钥RSA。RSA的私钥只要有是rsa-&gt;n, rsa-&gt;d 就可以了。但是，往往在应用中,RSA的私钥是也包括rsa-&gt;p,rsa-&gt;q,rsa-&gt;dmp1,rsa-&gt;dmq1,rsa-&gt;iqmp，你想想,d,n,p,q,p-1,q-1以及(p-1)*(q-1)都有了，推导出e太难吗？人们常说不能从私钥导出公钥，是指产生RSA后，抛弃掉p,q的情况的,没有p,q是无法从公钥中算出私钥的，也无法从私算出公钥的。题外话，公钥是公开的，不必费心思去计算了。</p>
+</blockquote>
+<p>是的,公钥本身就是对外公开,只要私钥还在就没什么大不了的。</p>
+<p>推导出对应的公钥:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl rsa -<span class="keyword">in</span> foo_rsa -pubout &gt; foo_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用ssh-keygen来导出公钥:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -f foo_rsa -y &gt; foo_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>这样导出来的公钥是SSH2格式的。</p>
+<p><strong>自签数字证书</strong></p>
+<p>有了密钥对,还可以进一步申请数字证书。但向CA申请数字证书是要花钱的,so so,如果没有十分的必要,玩个不用建CA的简单自签吧。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -<span class="keyword">new</span> -outform PEM -out foo_rsa.cert -key foo_rsa -inform PEM -days <span class="number">365</span> -x509</span><br><span class="line"></span><br><span class="line">You are about to be asked to enter information that will be incorporated</span><br><span class="line">into your certificate request.</span><br><span class="line">What you are about to enter is what is called a Distinguished Name or a DN.</span><br><span class="line">There are quite a few fields but you can leave some blank</span><br><span class="line">For some fields there will be a <span class="keyword">default</span> value,</span><br><span class="line">If you enter <span class="string">&#x27;.&#x27;</span>, the field will be left blank.</span><br><span class="line">-----</span><br><span class="line">Country Name (<span class="number">2</span> letter code) \[AU\]:California</span><br><span class="line">string is too long, it needs to be less than <span class="number">2</span> bytes long</span><br><span class="line">Country Name (<span class="number">2</span> letter code) \[AU\]:US</span><br><span class="line">State or Province Name (full name) \[Some-State\]:California</span><br><span class="line">Locality Name (eg, city) \[\]:Los Angeles</span><br><span class="line">Organization Name (eg, company) \[Internet Widgits Pty Ltd\]:Some Ltd.</span><br><span class="line">Organizational Unit Name (eg, section) \[\]:</span><br><span class="line">Common Name (e.g. server FQDN or YOUR name) \[\]:domain.tld</span><br><span class="line">Email Address \[\]:admin@domain.tld</span><br></pre></td></tr></table></figure>
+<p>参数:<br>-new 产生一个新的证书请求,会提示用户输入一些相关的信息。如果没有指定-key参数,会生成一个新的RSA私钥。<br>-days 申请证书的有效期<br>-outform 输出证书的编码格式,PEM或DER,默认PEM<br>-key 用户私钥<br>-inform 用户私钥格式,PEM或DER,默认PEM<br>-x509 输出一个自签的证书而不是产生一个证书请求文件。这通常用于产生一个测试证书或者一个自签根CA证书(root CA Cert)。如果要添加扩展需要通过配置文件指定。除非指定-set-serial选项,否则使用0作为证书序列号</p>
+<p>输入一些信息后就可以生成自签的证书foo_rsa.cert了。</p>
+<p>还以一并生成私钥并生成证书,不用提前生成密钥了,不过命令行就更复杂了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -<span class="keyword">new</span> -outform PEM -out bar_rsa.cert -newkey rsa:<span class="number">2048</span> </span><br><span class="line"> -nodes -keyout bar_rsa -keyform PEM -days <span class="number">365</span> -x509</span><br></pre></td></tr></table></figure>
+<p>这里有几个新参数:<br>-newkey rsa:nbits 产生一个新的RSA私钥用于生成证书,私钥的位数用nbits指定<br>-nodes 新产生的私钥不使用des加密的口令,nodes是no des之意。</p>
+<p>更详细的用法参考man req。</p>
+<p><strong>自建CA中心</strong></p>
+<p>自建CA中心,你就可以做CA了,可以签署一系列的数字证书,除了没人内置你的CA root证书之外,一切都不会有问题。<br>不用担心,CA的根证书也都是自签的,只不过信任度有差异而已:-)</p>
+<p>CA的配置文件在/etc/ssl/openssl.cnf,里面指定了建立CA中心需要使用的目录结构和文件。使用默认配置:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~<span class="regexp">/demoCA/</span>&#123;crl,private,newcerts&#125;</span><br><span class="line">$ touch ~<span class="regexp">/demoCA/</span>&#123;serial,crlnumber,index.txt&#125;</span><br><span class="line">$ touch ~<span class="regexp">/demoCA/</span>private/.rand</span><br><span class="line">$ echo <span class="number">01</span> &gt; ~<span class="regexp">/demoCA/</span>serial</span><br></pre></td></tr></table></figure>
+
+<p>将CA的私钥foo_rsa拷贝到demoCA/private/cakey.pem,或直接生成到这个目录,默认配置下名字必须为cakey.pem。</p>
+<p><em>生成证书申请文件CSR:</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -<span class="keyword">new</span> -days <span class="number">365</span> -key ~<span class="regexp">/demoCA/</span>private/cakey.pem -out ca.csr</span><br></pre></td></tr></table></figure>
+
+<p>这里提供的是私钥,回答一些问题就可以生成PEM格式编码的证书请求文件ca.csr了。</p>
+<p><em>自签CA根证书</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ openssl ca -selfsign -<span class="keyword">in</span> ca.csr</span><br><span class="line"></span><br><span class="line">Using configuration <span class="keyword">from</span> /usr/lib/ssl/openssl.cnf</span><br><span class="line">Check that the request matches the signature</span><br><span class="line">Signature ok</span><br><span class="line">The commonName field needed to be supplied and was missing</span><br></pre></td></tr></table></figure>
+<p>因为生成证书请求是没有填写任何信息,所以有最后一句的提示。生成的CA根证书为demoCA/cacert.pem,这样你也成为CA认证中心了:-)。/usr/lib/ssl/openssl.cnf是符号链接,链接到/etc/ssl/openssl.cnf。</p>
+<p>这是<strong>使用自己的私钥为自己的公钥进行数字签名生成数字证书</strong>,其实<strong>所有的CA都是这么干的</strong>。</p>
+<p><em>签署其他证书</em></p>
+<p>有了CA根证书,就可以使用这个根证书来签署其他数字证书了。<br>和签署CA根证书过程基本一样，只是最后签署证书就不要自签了,因为要用CA根证书签署:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl ca -<span class="keyword">in</span> userreq.csr -out usercert.cert</span><br></pre></td></tr></table></figure>
+<p>userreq.csr 为数字证书申请文件<br>usercert.cert 为使用CA根证书签署后的数字证书</p>
+<p><strong>ssh-keygen证书</strong></p>
+<p>ssh-keygen也可以生成证书,但是openssh的证书与X.509证书是不同的,它更简单。ssh-keygen支持用户和主机两种证书。这种证书只是在ssh环境下做用户和主机的认证之用。我们常用的还是X.509证书,关于openssh证书的详细信息参见man ssh-keygen CERTIFICATES节。</p>
+<p>Refereneces:<br>[1]<a target="_blank" rel="noopener" href="http://rhythm-zju.blog.163.com/blog/static/310042008015115718637/">基于 OpenSSL 的 CA 建立及证书签发</a><br>[2]<a target="_blank" rel="noopener" href="http://www.haiyun.me/archives/openssl-ca-cert.html">Openssl生成根证书、服务器证书并签核证书</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.csdn.net/ifree_/article/details/10952331">openssl genrsa 能够单独生成私钥还能推导出公钥的原因</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/01/22/cert-conceptions/" rel="prev" title="数字证书基础概念">
+                  <i class="fa fa-chevron-left"></i> 数字证书基础概念
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/01/23/gerrit-privilege-setup/" rel="next" title="Gerrit项目权限设置">
+                  Gerrit项目权限设置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

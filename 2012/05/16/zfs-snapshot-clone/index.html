@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="快照是文件系统或卷的只读副本,而克隆是可读写的卷或文件系统,克隆只能从快照创建。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZFS文件系统介绍 - 快照和克隆">
+<meta property="og:url" content="http://example.com/2012/05/16/zfs-snapshot-clone/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="快照是文件系统或卷的只读副本,而克隆是可读写的卷或文件系统,克隆只能从快照创建。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2012-05-16T14:18:32.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.606Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta property="article:tag" content="ZFS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2012/05/16/zfs-snapshot-clone/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>ZFS文件系统介绍 - 快照和克隆 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-snapshot-reservoir-data-thursday"><span class="nav-number">1.</span> <span class="nav-text">zfs snapshot reservoir&#x2F;data@thursday</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-list-t-snapshot-NAME-USED-AVAIL-REFER-MOUNTPOINT"><span class="nav-number">2.</span> <span class="nav-text">zfs list -t snapshot NAME                      USED  AVAIL  REFER  MOUNTPOINT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-snapshot-r-reservoir-data-thursday"><span class="nav-number">3.</span> <span class="nav-text">zfs snapshot -r reservoir&#x2F;data@thursday</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-destroy-reservoir-data-thursday"><span class="nav-number">4.</span> <span class="nav-text">zfs destroy reservoir&#x2F;data@thursday</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-rename-reservoir-data-thursday-reservoir-data-thursday1"><span class="nav-number">5.</span> <span class="nav-text">zfs rename reservoir&#x2F;data@thursday reservoir&#x2F;data@thursday1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-rename-reservoir-data-thursday-thursday1"><span class="nav-number">6.</span> <span class="nav-text">zfs rename reservoir&#x2F;data@thursday thursday1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-rollback-reservoir-data-thursday"><span class="nav-number">7.</span> <span class="nav-text">zfs rollback reservoir&#x2F;data@thursday</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cd-reservoir-data"><span class="nav-number">8.</span> <span class="nav-text">cd &#x2F;reservoir&#x2F;data&#x2F;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#touch-file1"><span class="nav-number">9.</span> <span class="nav-text">touch file1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-snapshot-reservoir-data-snap1"><span class="nav-number">10.</span> <span class="nav-text">zfs snapshot reservoir&#x2F;data@snap1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#touch-file2"><span class="nav-number">11.</span> <span class="nav-text">touch file2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-snapshot-reservoir-data-snap2"><span class="nav-number">12.</span> <span class="nav-text">zfs snapshot reservoir&#x2F;data@snap2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-diff-reservoir-data-snap1-reservoir-data-snap2"><span class="nav-number">13.</span> <span class="nav-text">zfs diff reservoir&#x2F;data@snap1 reservoir&#x2F;data@snap2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-clone-reservoir-data-snap2-reservoir-clone-snap2"><span class="nav-number">14.</span> <span class="nav-text">zfs clone reservoir&#x2F;data@snap2 reservoir&#x2F;clone_snap2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-destroy-reservoir-clone-snap2"><span class="nav-number">15.</span> <span class="nav-text">zfs destroy reservoir&#x2F;clone_snap2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-send-reservoir-data-snap1-zfs-receive-reservoir-data-received"><span class="nav-number">16.</span> <span class="nav-text">zfs send reservoir&#x2F;data@snap1 zfs receive reservoir&#x2F;data_received</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-send-i-reservoir-data-snap1-reservoir-data-snap2-zfs-receive-reservoir-data-received"><span class="nav-number">17.</span> <span class="nav-text">zfs send -i reservoir&#x2F;data@snap1 reservoir&#x2F;data@snap2 zfs receive reservoir&#x2F;data_received</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-send-reservoir-data-snap1-ssh-remote-system-zfs-receive-reservoir-data-received"><span class="nav-number">18.</span> <span class="nav-text">zfs send reservoir&#x2F;data@snap1 ssh remote_system zfs receive reservoir&#x2F;data_received</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-send-reservoir-data-snap1-gzip-gt-data-gz"><span class="nav-number">19.</span> <span class="nav-text">zfs send reservoir&#x2F;data@snap1 gzip &gt; data.gz</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zfs-gunzip-c-data-gz-zfs-receive-reservoir-data-recv"><span class="nav-number">20.</span> <span class="nav-text">zfs gunzip -c data.gz zfs receive reservoir&#x2F;data_recv</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2012/05/16/zfs-snapshot-clone/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ZFS文件系统介绍 - 快照和克隆
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2012-05-16 22:18:32" itemprop="dateCreated datePublished" datetime="2012-05-16T22:18:32+08:00">2012-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>快照是文件系统或卷的只读副本,而克隆是可读写的卷或文件系统,克隆只能从快照创建。</p>
+<a id="more"></a>
+<p><strong>ZFS快照</strong></p>
+<p>创建快照几乎没有任何成本,可以即时创建完成,而且快照创建的最初几乎不占用额外的存储池空间，ZFS采用COW策略,快照会与原始文件系统共享快照创建后一直没有变化的存储块。无法直接访问卷的快照,但是可以对它们执行克隆、备份、回滚等操作</p>
+<p><strong>创建ZFS快照</strong></p>
+<p>使用zfs snapshot filesystem@snapname,快照名称由两部分组成,@前面为文件系统名称,@后面为快照标识,二者组成完成的快照名</p>
+<h1 id="zfs-snapshot-reservoir-data-thursday"><a href="#zfs-snapshot-reservoir-data-thursday" class="headerlink" title="zfs snapshot reservoir/data@thursday"></a>zfs snapshot reservoir/data@thursday</h1><p>查看ZFS快照</p>
+<h1 id="zfs-list-t-snapshot-NAME-USED-AVAIL-REFER-MOUNTPOINT"><a href="#zfs-list-t-snapshot-NAME-USED-AVAIL-REFER-MOUNTPOINT" class="headerlink" title="zfs list -t snapshot NAME                      USED  AVAIL  REFER  MOUNTPOINT"></a>zfs list -t snapshot NAME                      USED  AVAIL  REFER  MOUNTPOINT</h1><p>reservoir/data@thursday      0      -    30K  - </p>
+<p>使用-r选项为所有后代文件系统递归创建快照</p>
+<h1 id="zfs-snapshot-r-reservoir-data-thursday"><a href="#zfs-snapshot-r-reservoir-data-thursday" class="headerlink" title="zfs snapshot -r reservoir/data@thursday"></a>zfs snapshot -r reservoir/data@thursday</h1><p><strong>销毁ZFS快照</strong></p>
+<p>使用zfs destroy filesystem@snapname销毁ZFS快照</p>
+<h1 id="zfs-destroy-reservoir-data-thursday"><a href="#zfs-destroy-reservoir-data-thursday" class="headerlink" title="zfs destroy reservoir/data@thursday"></a>zfs destroy reservoir/data@thursday</h1><p>如果数据集(dataset)存在快照,则不能销毁该数据集。也可指定-r选项一起销毁快照和数据集。</p>
+<p><strong>重命名ZFS快照</strong></p>
+<p>可以重命名快照,但是不能跨越池和数据集对它们进行重命名。</p>
+<h1 id="zfs-rename-reservoir-data-thursday-reservoir-data-thursday1"><a href="#zfs-rename-reservoir-data-thursday-reservoir-data-thursday1" class="headerlink" title="zfs rename reservoir/data@thursday reservoir/data@thursday1"></a>zfs rename reservoir/data@thursday reservoir/data@thursday1</h1><p>可以使用更快捷的方式重命名快照</p>
+<h1 id="zfs-rename-reservoir-data-thursday-thursday1"><a href="#zfs-rename-reservoir-data-thursday-thursday1" class="headerlink" title="zfs rename reservoir/data@thursday thursday1"></a>zfs rename reservoir/data@thursday thursday1</h1><p><strong>回滚ZFS快照</strong></p>
+<p>可以使用 zfs rollback 命令放弃自特定快照创建以来对文件系统所做的全部更改。文件系统恢复到创建快照时的状态。缺省情况下,该命令无法回滚到除最新快照以外的快照。<br>要回滚到早期快照,必须销毁所有的中间快照。可以通过指定 -r 选项销毁早期的快照。如果存在任何中间快照的克隆,则还必须指定 -R 选项以销毁克隆。</p>
+<h1 id="zfs-rollback-reservoir-data-thursday"><a href="#zfs-rollback-reservoir-data-thursday" class="headerlink" title="zfs rollback reservoir/data@thursday"></a>zfs rollback reservoir/data@thursday</h1><p>则自此快照之后文件系统的任何改变都会被丢弃。</p>
+<p><strong>ZFS快照差异比较</strong></p>
+<p>可以使用 zfs diff 命令来比较两个ZFS快照之间的差异。</p>
+<p>比如下面的例子</p>
+<h1 id="cd-reservoir-data"><a href="#cd-reservoir-data" class="headerlink" title="cd /reservoir/data/"></a>cd /reservoir/data/</h1><h1 id="touch-file1"><a href="#touch-file1" class="headerlink" title="touch file1"></a>touch file1</h1><h1 id="zfs-snapshot-reservoir-data-snap1"><a href="#zfs-snapshot-reservoir-data-snap1" class="headerlink" title="zfs snapshot reservoir/data@snap1"></a>zfs snapshot reservoir/data@snap1</h1><h1 id="touch-file2"><a href="#touch-file2" class="headerlink" title="touch file2"></a>touch file2</h1><h1 id="zfs-snapshot-reservoir-data-snap2"><a href="#zfs-snapshot-reservoir-data-snap2" class="headerlink" title="zfs snapshot reservoir/data@snap2"></a>zfs snapshot reservoir/data@snap2</h1><h1 id="zfs-diff-reservoir-data-snap1-reservoir-data-snap2"><a href="#zfs-diff-reservoir-data-snap1-reservoir-data-snap2" class="headerlink" title="zfs diff reservoir/data@snap1 reservoir/data@snap2"></a>zfs diff reservoir/data@snap1 reservoir/data@snap2</h1><p>M /reservoir/data/</p>
+<ul>
+<li>/reservoir/data/file2</li>
+</ul>
+<p>M表示目录被修改过了,+表示文件/reservoir/data/file2存在与更新的快照中<br>zfs diff 命令输出符号的含义见下表<br> 文件或目录更改                                          标识符<br>————————————————–      ——<br>文件或目录已被修改,或文件或目录链接已更改               M<br>文件或目录出现在较旧的快照中,但未出现在较新的快照中     -<br>文件或目录出现在较新的快照中,但未出现在较旧的快照中     +<br>文件或目录已重命名                                      R </p>
+<p><strong>ZFS克隆</strong></p>
+<p>克隆是可写入的卷或文件系统,其初始内容与从中创建它的数据集的内容相同。与快照一样,创建克隆几乎是即时的,而且最初不占用其他磁盘空间。此外,还可以创建克隆的快照。克隆只能从快照创建。克隆快照时,会在克隆和快照之间建立隐式相关性。即使克隆是在文件系统分层结构中的其他位置创建的,但只要克隆存在,就无法销毁原始快照。</p>
+<p><strong>创建ZFS克隆</strong></p>
+<p>使用 zfs clone 命令创建克隆,指定从中创建克隆的快照以及新文件系统或卷的名称。新文件系统或卷可以位于ZFS文件系统分层结构中的任意位置。新数据集与从其中创建克隆的快照属同一类型(例如文件系统或卷)。不能在原始文件系统快照所在池以外的池中创建该文件系统的克隆,亦即克隆是不能跨越存储池的。</p>
+<h1 id="zfs-clone-reservoir-data-snap2-reservoir-clone-snap2"><a href="#zfs-clone-reservoir-data-snap2-reservoir-clone-snap2" class="headerlink" title="zfs clone reservoir/data@snap2 reservoir/clone_snap2"></a>zfs clone reservoir/data@snap2 reservoir/clone_snap2</h1><p><strong>销毁ZFS克隆</strong></p>
+<h1 id="zfs-destroy-reservoir-clone-snap2"><a href="#zfs-destroy-reservoir-clone-snap2" class="headerlink" title="zfs destroy reservoir/clone_snap2"></a>zfs destroy reservoir/clone_snap2</h1><p>必须先销毁克隆,才能销毁父快照。</p>
+<p><strong>发送和接收ZFS快照流</strong></p>
+<p>通过使用zfs send命令,可以将 ZFS 文件系统或卷的快照转换为快照流。然后可以通过zfs receive命令使用快照流重新创建 ZFS 文件系统或卷。<br>可以生成两种快照流：<br>完整流 - 包含从创建数据集时开始到指定的快照为止的所有数据集内容。zfs send 命令生成的缺省流是完整流。它包含一个文件系统或卷,直到并包括指定的快照。流不会包含在命令行上指定的快照之外的快照。</p>
+<p>增量流 - 包含一个快照与另一个快照之间的差异。</p>
+<p>使用 zfs send 命令来发送快照流,并在同一系统的另一个池中或用于存储备份数据的不同系统上的另一个池中接收快照流。</p>
+<p>例如</p>
+<h1 id="zfs-send-reservoir-data-snap1-zfs-receive-reservoir-data-received"><a href="#zfs-send-reservoir-data-snap1-zfs-receive-reservoir-data-received" class="headerlink" title="zfs send reservoir/data@snap1 zfs receive reservoir/data_received"></a>zfs send reservoir/data@snap1 zfs receive reservoir/data_received</h1><p>这样通过send和receive发送和接收快照流生成一个新的ZFS文件系统reservoir/data_snap_stream</p>
+<p>使用 zfs send -i 选项可以发送增量数据。</p>
+<p>例如:</p>
+<h1 id="zfs-send-i-reservoir-data-snap1-reservoir-data-snap2-zfs-receive-reservoir-data-received"><a href="#zfs-send-i-reservoir-data-snap1-reservoir-data-snap2-zfs-receive-reservoir-data-received" class="headerlink" title="zfs send -i reservoir/data@snap1 reservoir/data@snap2 zfs receive reservoir/data_received"></a>zfs send -i reservoir/data@snap1 reservoir/data@snap2 zfs receive reservoir/data_received</h1><p>这里snap1是较早的快照,snap2是较晚的快照,而且reservoir/data_received必须已经存在而且已经接收了snap1快照流,增量接收才能成功。</p>
+<p>可以通过SSH将快照流发送到远程系统</p>
+<h1 id="zfs-send-reservoir-data-snap1-ssh-remote-system-zfs-receive-reservoir-data-received"><a href="#zfs-send-reservoir-data-snap1-ssh-remote-system-zfs-receive-reservoir-data-received" class="headerlink" title="zfs send reservoir/data@snap1 ssh remote_system zfs receive reservoir/data_received"></a>zfs send reservoir/data@snap1 ssh remote_system zfs receive reservoir/data_received</h1><p>还可以将快照流压缩归档保存</p>
+<h1 id="zfs-send-reservoir-data-snap1-gzip-gt-data-gz"><a href="#zfs-send-reservoir-data-snap1-gzip-gt-data-gz" class="headerlink" title="zfs send reservoir/data@snap1 gzip &gt; data.gz"></a>zfs send reservoir/data@snap1 gzip &gt; data.gz</h1><p>然后可以接收压缩归档的快照流</p>
+<h1 id="zfs-gunzip-c-data-gz-zfs-receive-reservoir-data-recv"><a href="#zfs-gunzip-c-data-gz-zfs-receive-reservoir-data-recv" class="headerlink" title="zfs gunzip -c data.gz zfs receive reservoir/data_recv"></a>zfs gunzip -c data.gz zfs receive reservoir/data_recv</h1><p>可以将发送接收ZFS快照流以及其增量机制作为备份ZFS文件系统的一种策略,但这种备份方式不能逐个恢复文件,必须恢复整个文件系统。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+              <a href="/tags/ZFS/" rel="tag"># ZFS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/05/14/zfs-filesystem/" rel="prev" title="ZFS文件系统介绍 - 文件系统">
+                  <i class="fa fa-chevron-left"></i> ZFS文件系统介绍 - 文件系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/18/debian-hostname-modify/" rel="next" title="debian修改主机名hostname">
+                  debian修改主机名hostname <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

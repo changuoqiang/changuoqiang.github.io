@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/11/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/11/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/03/lxd-containers-bridged-host-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/03/lxd-containers-bridged-host-network/" class="post-title-link" itemprop="url">lxd容器桥接host网络</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-03 19:54:05" itemprop="dateCreated datePublished" datetime="2019-06-03T19:54:05+08:00">2019-06-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。</p>
+<p><strong>host设置网桥</strong></p>
+<p>安装bridge-utils</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install bridge-utiles</span><br></pre></td></tr></table></figure>
+
+<p>编辑/etc/network/interfaces文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># This file describes the network interfaces available on your system</span><br><span class="line"># and how to activate them. For more information, see interfaces(5).</span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d<span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line"><span class="comment">auto lo</span></span><br><span class="line"><span class="comment">iface lo inet loopback</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line"><span class="comment">auto enp0s3</span></span><br><span class="line"><span class="comment">iface enp0s3 inet manual</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># bridge interface</span></span><br><span class="line"><span class="comment">auto br0 </span></span><br><span class="line"><span class="comment">iface br0 inet static</span></span><br><span class="line"><span class="comment"> address 192.168.3.6/24</span></span><br><span class="line"><span class="comment"> gateway 192.168.3.1</span></span><br><span class="line"><span class="comment"> # bridge options</span></span><br><span class="line"><span class="comment"> bridge_ports enp0s3</span></span><br><span class="line"><span class="comment"> bridge_stp off </span></span><br><span class="line"><span class="comment"> bridge_fd 0</span></span><br><span class="line"><span class="comment"> bridge_maxwait 0</span></span><br><span class="line"><span class="comment"> bridge_waitport 0 </span></span><br></pre></td></tr></table></figure>
+<p>这里配置了host本地网桥br0，需要重新启动网络才能生效。</p>
+<p><strong>配置容器网络接口(方法一)</strong></p>
+<p>为容器添加网络设备eth0，桥接到host本地网络</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config device add bst eth0 nic nictype=bridged parent=br0 name=eth0</span><br></pre></td></tr></table></figure>
+<p>注意，容器原有的重名网络设备eth0会被直接覆盖，这时候容器新添加的网络设备默认使用dhcp获取ip地址，如果需要指定静态ip，请编辑容器的/etc/network/interfaces文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec bst -- vim /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法二)</strong></p>
+<p>通过创建新的profile，并使已有容器或新建容器使用此profile</p>
+<p>查看现有profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+---------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+---------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+---------+---------+</span><br></pre></td></tr></table></figure>
+<p>可以看到有一个容器在使用默认profile，来看一下default profile的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: <span class="keyword">default</span></span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>containers/bst</span><br></pre></td></tr></table></figure>
+<p>其实这就是执行<code>lxd init</code>命令时创建的默认profile</p>
+<p>下面创建新的host桥接网络profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile create hostbridgedprofile</span><br><span class="line">Profile hostbridgedprofile created</span><br></pre></td></tr></table></figure>
+
+<p>编辑新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF lxc profile edit hostbridgedprofile</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>可以确认一下新的profile:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+--------------------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> hostbridgedprofile <span class="number">0</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"></span><br><span class="line">$ lxc profile show hostbridgedprofile</span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">name: hostbridgedprofile</span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
+
+<p>在现有容器bst上叠加新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile assign bst <span class="keyword">default</span>,hostbridgedprofile </span><br><span class="line">Profiles <span class="keyword">default</span>,hostbridgedprofile applied to bst</span><br></pre></td></tr></table></figure>
+<p>注意，这里先使用default，然后用hostbridgedprofile来覆盖默认的网络设置</p>
+<p>新建容器可以指定要使用的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch -p <span class="keyword">default</span> -p hostbridgedprofile images:debian/buster/amd64 new_container</span><br></pre></td></tr></table></figure>
+
+<p>如果一个profile不再使用，可以删除掉，当然不能有容器在使用它才行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile <span class="keyword">delete</span> hostbridgedprofile </span><br><span class="line"><span class="built_in">Error</span>: Profile is currently <span class="keyword">in</span> use</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法三)</strong></p>
+<p>重新初始化lxd,注意在有容器实例存在的情况下，重新初始化网络设置是可以的，但是已经存在的storage pool是不能改动的，当然可以添加新的storage pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Do you want to configure a <span class="keyword">new</span> storage pool? (yes/no) \[<span class="keyword">default</span>=yes\]: no</span><br><span class="line">Would you like to connect to a MAAS server? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like to create a <span class="keyword">new</span> local network bridge? (yes/no) \[<span class="keyword">default</span>=yes\]: no &lt;=这里为no</span><br><span class="line">Would you like to configure LXD to use an existing bridge or host interface? (yes/no) \[<span class="keyword">default</span>=no\]: yes &lt;= 这里为yes</span><br><span class="line">Name <span class="keyword">of</span> the existing bridge or host interface: br0 &lt;= 这里输入主机桥接接口bro</span><br><span class="line">Would you like LXD to be available over the network? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like stale cached images to be updated automatically? (yes/no) \[<span class="keyword">default</span>=yes\] </span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
+<p>这其实是修改的default profile</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://blog.simos.info/how-to-initialize-lxd-again/">How to initialize LXD again</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/02/lxd-container-first/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/02/lxd-container-first/" class="post-title-link" itemprop="url">lxd容器初步</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-02 11:32:04" itemprop="dateCreated datePublished" datetime="2019-06-02T11:32:04+08:00">2019-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>docker为应用级容器技术，容器内只能运行一个主进程，而lxd是lxc的上层包装，是系统级容器技术，可以像虚拟化技术一样在容器内运行一个guest OS，但是更轻量。</p>
+<p>惯例，主机debian，这次版本是buster。</p>
+<p><strong>安装snap</strong></p>
+<p>lxd是ubuntu亲生的,所以除了ubuntu可以直接用apt安装，其他发行版需要用snap安装，忍！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install snapd</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装lxd</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap install lxd --channel=<span class="number">3.0</span>/stable</span><br></pre></td></tr></table></figure>
+<p>这里选择stable版本</p>
+<p><strong>用户权限及sudo</strong></p>
+<p>如果想使用当前普通用户来管理lxd容器，则需要将用户添加到lxd用户组中 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER lxd</span><br></pre></td></tr></table></figure>
+<p>当前用户需要重新登录用户组才能生效</p>
+<p>因为snap安装的lxd并不在任何传统的文件系统中，它奇葩的位于/snap/bin路径下，so需要编辑/etc/sudoer文件，添加/snap/bin到secure_path</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ which lxd</span><br><span class="line">/snap/bin/lxd</span><br></pre></td></tr></table></figure>
+
+<p>下面就可以进入正题了</p>
+<p><strong>初始化lxd</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br></pre></td></tr></table></figure>
+<p>基本上一路enter即可，以后再详细了解每一项的含义吧, go</p>
+<p><strong>创建容器</strong><br>从官方镜像源创建debian buster容器实例bst</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch images:debian/buster/amd64 bst</span><br></pre></td></tr></table></figure>
+
+<p>如果创建ubuntu容器实例ubt，则可以这样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> ubt</span><br></pre></td></tr></table></figure>
+<p>ubuntu的源标签是ubuntu，其他所有发行版的源标签是images，再一次，忍！</p>
+<p><strong>容器列表</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc list</span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> NAME STATE IPV4 IPV6 TYPE SNAPSHOTS </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> bst RUNNING <span class="number">10.132</span><span class="number">.77</span><span class="number">.54</span> (eth0) fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5c (eth0) PERSISTENT <span class="number">0</span> </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看容器实例信息</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ lxc info bst</span><br><span class="line">Name: bst</span><br><span class="line">Remote: unix:<span class="comment">//</span></span><br><span class="line">Architecture: x86_64</span><br><span class="line">Created: <span class="number">2019</span>/<span class="number">06</span>/<span class="number">02</span> <span class="number">03</span>:<span class="number">19</span> UTC</span><br><span class="line">Status: Running</span><br><span class="line">Type: persistent</span><br><span class="line">Profiles: <span class="keyword">default</span></span><br><span class="line">Pid: <span class="number">1166</span></span><br><span class="line">Ips:</span><br><span class="line"> eth0:inet10<span class="number">.132</span><span class="number">.77</span>.54vethKTBXNA</span><br><span class="line"> eth0:inet6fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> eth0:inet6fe80::<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> lo:inet127<span class="number">.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"> lo:inet6::<span class="number">1</span></span><br><span class="line">Resources:</span><br><span class="line"> Processes: <span class="number">6</span></span><br><span class="line"> CPU usage:</span><br><span class="line"> CPU usage (<span class="keyword">in</span> seconds): <span class="number">7</span></span><br><span class="line"> Memory usage:</span><br><span class="line"> Memory (current): <span class="number">211.</span>66MB</span><br><span class="line"> Memory (peak): <span class="number">297.</span>09MB</span><br><span class="line"> Network usage:</span><br><span class="line"> eth0:</span><br><span class="line"> Bytes received: <span class="number">1.</span>43MB</span><br><span class="line"> Bytes sent: <span class="number">69.</span>46kB</span><br><span class="line"> Packets received: <span class="number">966</span></span><br><span class="line"> Packets sent: <span class="number">902</span></span><br><span class="line"> lo:</span><br><span class="line"> Bytes received: 0B</span><br><span class="line"> Bytes sent: 0B</span><br><span class="line"> Packets received: <span class="number">0</span></span><br><span class="line"> Packets sent: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>容器交互</strong><br>获取容器的shell</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
+
+<p>或者执行一次性命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- apt install procps</span><br></pre></td></tr></table></figure>
+<p>源里的镜像很干净，基本的工具都需要自己安装，比如procps包里提供了free, kill, pkill, pgrep, pmap, ps, pwdx, skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, 和 watch等基本命令行工具</p>
+<p>从容器内部往外拉取文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file pull first/etc/hosts .</span><br></pre></td></tr></table></figure>
+<p>从外部向容器推送文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push hosts first/etc/</span><br></pre></td></tr></table></figure>
+
+<p>向容器推送文件夹</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push -r folder first/path/to</span><br></pre></td></tr></table></figure>
+
+<p><strong>停止容器</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop bst</span><br></pre></td></tr></table></figure>
+
+<p><strong>彻底删除容器</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc <span class="keyword">delete</span> bst</span><br></pre></td></tr></table></figure>
+
+<p><strong>管理远程lxd服务器</strong><br>lxc命令行工具既可以管理本地lxd服务器，也可以管理远程lxd服务器，这里的服务器是指运行的用于管理容器的lxd服务</p>
+<p>要管理远程lxd服务器，首先在远程lxd服务器上执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config set core.https_address <span class="string">&quot;\[::\]&quot;</span></span><br><span class="line">$ lxc config set core.trust_password some-password</span><br></pre></td></tr></table></figure>
+
+<p>第一条命令使lxd服务在所有本地地址上监听8443端口<br>第二条命令设定访问的密码凭证</p>
+<p>然后就可以在本地添加远程的lxd服务器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add host-a &lt;ip address or DNS name&gt;</span><br></pre></td></tr></table></figure>
+<p>会提示服务器指纹，并要求提供上一步设置的密码，完成之后就可以像管理本地lxd服务一样来管理远程lxd服务，除了要明确的指定远程lxd服务区的别名之外：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec host-a:bst -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
+<p>这就是在本地管理远程lxd服务器的容器实例了。</p>
+<p>后面继续探索…</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/02/mount-virtualbox-share-folders/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/02/mount-virtualbox-share-folders/" class="post-title-link" itemprop="url">挂载virtualbox共享文件夹</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-02 10:11:27" itemprop="dateCreated datePublished" datetime="2019-06-02T10:11:27+08:00">2019-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>首先需要<a target="_blank" rel="noopener" href="https://openwares.net/2019/06/02/guiless-install-virtualbox-guest-additions/">安装guest addtions</a></p>
+<p>主机端：</p>
+<p>为客户机配置共享文件夹，略。</p>
+<p>客户机：</p>
+<p>列出可用的share folders</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo VBoxControl sharedfolder list</span><br><span class="line">Oracle VM VirtualBox Guest Additions Command Line Management Interface Version <span class="number">6.0</span><span class="number">.8</span></span><br><span class="line">(C) <span class="number">2008</span>-<span class="number">2019</span> Oracle Corporation</span><br><span class="line">All rights reserved.</span><br><span class="line"></span><br><span class="line">Shared Folder mappings (<span class="number">1</span>):</span><br><span class="line"></span><br><span class="line"><span class="number">01</span> - Downloads \[idRoot=<span class="number">0</span> writable auto-mount host-icase guest-icase mnt-pt=<span class="regexp">/media/</span>host/\]</span><br></pre></td></tr></table></figure>
+
+<p>如果设定了自动挂装, virtualbox会自动挂载之，否则可以手动挂载：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount -t vboxsf Downloads /media/host</span><br></pre></td></tr></table></figure>
+
+<p>访问权限问题，将当前用户加入vboxsf组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER vboxsf</span><br></pre></td></tr></table></figure>
+
+<p>然后注销重新登录，或者使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ newgrp vboxsf</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/02/guiless-install-virtualbox-guest-additions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/02/guiless-install-virtualbox-guest-additions/" class="post-title-link" itemprop="url">无GUI安装Virtualbox Guest Additions</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-02 09:53:26" itemprop="dateCreated datePublished" datetime="2019-06-02T09:53:26+08:00">2019-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>没有GUI的debian buster安装virtualbox guest additions</p>
+<p>主机端：</p>
+<p>启动客户机，点击菜单Devices-&gt;Insert Guest Additons Image…</p>
+<p>客户机端：</p>
+<p>安装内核模块build依赖:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install -y dkms build-essential linux-headers-$(uname -r)</span><br></pre></td></tr></table></figure>
+
+<p>挂载cdrom，安装客户附加组件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount /dev/cdrom /media/cdrom</span><br><span class="line">$ cd /media/cdrom</span><br><span class="line">$ sudo su</span><br><span class="line"># ./VBoxLinuxAdditions.run </span><br><span class="line">Verifying archive integrity... All good.</span><br><span class="line">Uncompressing VirtualBox <span class="number">6.0</span><span class="number">.8</span> Guest Additions <span class="keyword">for</span> Linux........</span><br><span class="line">VirtualBox Guest Additions installer</span><br><span class="line">Removing installed version <span class="number">6.0</span><span class="number">.8</span> <span class="keyword">of</span> VirtualBox Guest Additions...</span><br><span class="line">Copying additional installer modules ...</span><br><span class="line">Installing additional modules ...</span><br><span class="line">VirtualBox Guest Additions: Starting.</span><br><span class="line">VirtualBox Guest Additions: Building the VirtualBox Guest Additions kernel </span><br><span class="line">modules. This may take a <span class="keyword">while</span>.</span><br><span class="line">VirtualBox Guest Additions: To build modules <span class="keyword">for</span> other installed kernels, run</span><br><span class="line">VirtualBox Guest Additions: <span class="regexp">/sbin/</span>rcvboxadd quicksetup &lt;version&gt;</span><br><span class="line">VirtualBox Guest Additions: or</span><br><span class="line">VirtualBox Guest Additions: <span class="regexp">/sbin/</span>rcvboxadd quicksetup all</span><br><span class="line">VirtualBox Guest Additions: Building the modules <span class="keyword">for</span> kernel <span class="number">4.19</span><span class="number">.0</span>-<span class="number">5</span>-amd64.</span><br><span class="line">update-initramfs: Generating /boot/initrd.img-<span class="number">4.19</span><span class="number">.0</span>-<span class="number">5</span>-amd64</span><br><span class="line">VirtualBox Guest Additions: Running kernel modules will not be replaced until </span><br><span class="line">the system is restarted</span><br></pre></td></tr></table></figure>
+
+<p>reboot客户机</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># reboot</span><br></pre></td></tr></table></figure>
+
+<p>校验安装:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lsmod grep vboxguest</span><br><span class="line">vboxguest <span class="number">348160</span> <span class="number">2</span> vboxsf</span><br></pre></td></tr></table></figure>
+
+<p>安装成功</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.techrepublic.com/article/how-to-install-virtualbox-guest-additions-on-a-gui-less-ubuntu-server-host/">How to install VirtualBox Guest Additions on a GUI-less Ubuntu server host</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/06/01/ecc-memory-defect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/01/ecc-memory-defect/" class="post-title-link" itemprop="url">ECC 内存故障</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-01 16:18:08" itemprop="dateCreated datePublished" datetime="2019-06-01T16:18:08+08:00">2019-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>一台很老旧的服务器terminal不断吐出一些错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\[ <span class="number">1250.944486</span>\] mce: \[Hardware <span class="built_in">Error</span>\]: Machine check events logged</span><br><span class="line">\[ <span class="number">1250.944493</span>\] \[Hardware <span class="built_in">Error</span>\]: Corrected error, no action required.</span><br><span class="line">\[ <span class="number">1250.948666</span>\] \[Hardware <span class="built_in">Error</span>\]: CPU:<span class="number">24</span> (<span class="number">10</span>:<span class="number">9</span>:<span class="number">1</span>) MC4_STATUS\[OverCEMiscV-AddrVCECC\]: <span class="number">0xdc0a400079080a13</span></span><br><span class="line">\[ <span class="number">1250.952631</span>\] \[Hardware <span class="built_in">Error</span>\]: <span class="built_in">Error</span> Addr: <span class="number">0x00000004abffce80</span></span><br><span class="line">\[ <span class="number">1250.952633</span>\] \[Hardware <span class="built_in">Error</span>\]: MC4 <span class="built_in">Error</span> (node <span class="number">6</span>): DRAM ECC error detected on the NB.</span><br><span class="line">\[ 1250.952654\] EDAC MC6: 1 CE on mc#6csrow#3channel#0 (csrow:3 channel:0 page:0x4abffc offset:0xe80 grain:0 syndrome:0x7914)</span><br><span class="line">\[ <span class="number">1250.952656</span>\] \[Hardware <span class="built_in">Error</span>\]: cache level: L3/GEN, mem/io: MEM, mem-tx: RD, part-proc: RES (no timeout)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到是内存出现了错误，不过错误被纠正了，但内存显然是出现故障了。</p>
+<p>先看看系统cpu节点信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ lscpu</span><br><span class="line">Architecture: x86_64</span><br><span class="line">CPU op-mode(s): <span class="number">32</span>-bit, <span class="number">64</span>-bit</span><br><span class="line">Byte Order: Little Endian</span><br><span class="line">Address sizes: <span class="number">48</span> bits physical, <span class="number">48</span> bits virtual</span><br><span class="line">CPU(s): <span class="number">32</span></span><br><span class="line">On-line CPU(s) list: <span class="number">0</span>-<span class="number">31</span></span><br><span class="line">Thread(s) per core: <span class="number">1</span></span><br><span class="line">Core(s) per socket: <span class="number">8</span></span><br><span class="line">Socket(s): <span class="number">4</span></span><br><span class="line">NUMA node(s): <span class="number">8</span></span><br><span class="line">Vendor ID: AuthenticAMD</span><br><span class="line">CPU family: <span class="number">16</span></span><br><span class="line">Model: <span class="number">9</span></span><br><span class="line">Model name: AMD Opteron(tm) Processor <span class="number">6128</span></span><br><span class="line">Stepping: <span class="number">1</span></span><br><span class="line">CPU MHz: <span class="number">800.000</span></span><br><span class="line">CPU max MHz: <span class="number">2000.0000</span></span><br><span class="line">CPU min MHz: <span class="number">800.0000</span></span><br><span class="line">BogoMIPS: <span class="number">4000.04</span></span><br><span class="line">Virtualization: AMD-V</span><br><span class="line">L1d cache: 64K</span><br><span class="line">L1i cache: 64K</span><br><span class="line">L2 cache: 512K</span><br><span class="line">L3 cache: 5118K</span><br><span class="line">NUMA node0 CPU(s): <span class="number">0</span>-<span class="number">3</span></span><br><span class="line">NUMA node1 CPU(s): <span class="number">4</span>-<span class="number">7</span></span><br><span class="line">NUMA node2 CPU(s): <span class="number">8</span>-<span class="number">11</span></span><br><span class="line">NUMA node3 CPU(s): <span class="number">12</span>-<span class="number">15</span></span><br><span class="line">NUMA node4 CPU(s): <span class="number">16</span>-<span class="number">19</span></span><br><span class="line">NUMA node5 CPU(s): <span class="number">20</span>-<span class="number">23</span></span><br><span class="line">NUMA node6 CPU(s): <span class="number">24</span>-<span class="number">27</span></span><br><span class="line">NUMA node7 CPU(s): <span class="number">28</span>-<span class="number">31</span></span><br><span class="line">Flags: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm 3dnowext 3dnow constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid amd_dcm pni monitor cx16 popcnt lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt nodeid_msr hw_pstate vmmcall npt lbrv svm_lock nrip_save pausefilter</span><br></pre></td></tr></table></figure>
+
+<p>共有四个socket，四颗cpu，每颗CPU有八个核心，总共是32核心，对于NUMA结构的机器，一般来讲每颗CPU应该至少有一个本地的内存控制器</p>
+<p>安装edac-util，查看内存控制器信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install edac-utils</span><br><span class="line">$ edac-util -vs</span><br><span class="line">edac-util: EDAC drivers are loaded. <span class="number">4</span> MCs detected:</span><br><span class="line"> mc0:F10h</span><br><span class="line"> mc2:F10h</span><br><span class="line"> mc4:F10h</span><br><span class="line"> mc6:F10h</span><br></pre></td></tr></table></figure>
+<p>可以看到有四个内存控制器，再查看每个内存控制器可能存在的错误</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ edac-util -v</span><br><span class="line">mc0: <span class="number">0</span> Uncorrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc0: <span class="number">0</span> Corrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc0: csrow2: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc0: csrow2: mc#0csrow#2channel#0: 0 Corrected Errors</span><br><span class="line">mc0: csrow3: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc0: csrow3: mc#0csrow#3channel#0: 0 Corrected Errors</span><br><span class="line">mc2: <span class="number">0</span> Uncorrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc2: <span class="number">0</span> Corrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc2: csrow2: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc2: csrow2: mc#2csrow#2channel#0: 0 Corrected Errors</span><br><span class="line">mc2: csrow3: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc2: csrow3: mc#2csrow#3channel#0: 0 Corrected Errors</span><br><span class="line">mc4: <span class="number">0</span> Uncorrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc4: <span class="number">0</span> Corrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc4: csrow2: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc4: csrow2: mc#4csrow#2channel#0: 0 Corrected Errors</span><br><span class="line">mc4: csrow3: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc4: csrow3: mc#4csrow#3channel#0: 0 Corrected Errors</span><br><span class="line">mc6: <span class="number">0</span> Uncorrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc6: <span class="number">0</span> Corrected Errors <span class="keyword">with</span> no DIMM info</span><br><span class="line">mc6: csrow2: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc6: csrow2: mc#6csrow#2channel#0: 2 Corrected Errors</span><br><span class="line">mc6: csrow3: <span class="number">0</span> Uncorrected Errors</span><br><span class="line">mc6: csrow3: mc#6csrow#3channel#0: 4 Corrected Errors</span><br></pre></td></tr></table></figure>
+
+<p>或者这样查看:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ grep \[<span class="number">0</span>-<span class="number">9</span>\] /sys/devices/system/edac/mc/mc*<span class="regexp">/csrow*/</span>*ce_count</span><br><span class="line">/sys/devices/system/edac/mc/mc0/csrow2/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc0/csrow2/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc0/csrow3/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc0/csrow3/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc2/csrow2/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc2/csrow2/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc2/csrow3/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc2/csrow3/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc4/csrow2/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc4/csrow2/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc4/csrow3/ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc4/csrow3/ch0_ce_count:<span class="number">0</span></span><br><span class="line">/sys/devices/system/edac/mc/mc6/csrow2/ce_count:<span class="number">3</span></span><br><span class="line">/sys/devices/system/edac/mc/mc6/csrow2/ch0_ce_count:<span class="number">3</span></span><br><span class="line">/sys/devices/system/edac/mc/mc6/csrow3/ce_count:<span class="number">6</span></span><br><span class="line">/sys/devices/system/edac/mc/mc6/csrow3/ch0_ce_count:<span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到出现错误的内存位于MC6,csrow2和csrow3，也就是问题出现在第四个(CPU的)内存控制器的0通道DIMM0内存这里。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://fibrevillage.com/sysadmin/240-how-to-identify-defective-dimm-from-edac-error-on-linux-2">How to identify defective DIMM from EDAC error on Linux</a><br>[2]<a target="_blank" rel="noopener" href="http://lzz5235.github.io/2015/04/21/memory.html">内存条物理结构分析</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/31/virtualbox-headless-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/05/31/virtualbox-headless-mode/" class="post-title-link" itemprop="url">virtualbox headless模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-05-31 22:40:24" itemprop="dateCreated datePublished" datetime="2019-05-31T22:40:24+08:00">2019-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>以下示例中只有一台客户机，名称为”buster”，术语虚拟机等同于客户机</p>
+<p>虚拟机列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage list vms</span><br><span class="line"><span class="string">&quot;buster&quot;</span> &#123;6c18ec7b-<span class="number">5730</span>-4e8e-a7d1-768dd0601be1&#125;</span><br></pre></td></tr></table></figure>
+
+<p>无头模式启动虚拟机，自动进入后台模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage startvm buster --type headless</span><br><span class="line">Waiting <span class="keyword">for</span> VM <span class="string">&quot;buster&quot;</span> to power on...</span><br><span class="line">VM <span class="string">&quot;buster&quot;</span> has been successfully started.</span><br></pre></td></tr></table></figure>
+
+<p>无头模式启动虚拟机，前台模式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxHeadless -s buster</span><br><span class="line">Oracle VM VirtualBox Headless Interface <span class="number">6.0</span><span class="number">.8</span></span><br><span class="line">(C) <span class="number">2008</span>-<span class="number">2019</span> Oracle Corporation</span><br><span class="line">All rights reserved.</span><br></pre></td></tr></table></figure>
+
+<p>正在运行的客户机列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage list runningvms</span><br><span class="line"><span class="string">&quot;buster&quot;</span> &#123;6c18ec7b-<span class="number">5730</span>-4e8e-a7d1-768dd0601be1&#125;</span><br></pre></td></tr></table></figure>
+
+<p>关闭客户机电源</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage controlvm buster poweroff</span><br><span class="line"><span class="number">0</span>%..<span class="number">.10</span>%..<span class="number">.20</span>%..<span class="number">.30</span>%..<span class="number">.40</span>%..<span class="number">.50</span>%..<span class="number">.60</span>%..<span class="number">.70</span>%..<span class="number">.80</span>%..<span class="number">.90</span>%..<span class="number">.100</span>%</span><br></pre></td></tr></table></figure>
+
+<p>使用VirtualBox图形界面也可以headless模式启动客户机，选择Start-&gt;Headless Start即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/05/05/ntpdate-error-no-server-suitable-for-synchronization-found/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/05/05/ntpdate-error-no-server-suitable-for-synchronization-found/" class="post-title-link" itemprop="url">ntpdate错误: no server suitable for synchronization found</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-05-05 15:04:56" itemprop="dateCreated datePublished" datetime="2019-05-05T15:04:56+08:00">2019-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>客户端执行ntpdate同步时间时发生错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate\[<span class="number">10877</span>\]: no server suitable <span class="keyword">for</span> synchronization found</span><br></pre></td></tr></table></figure>
+
+<p>debug模式运行ntpdate:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># ntpdate -d 192.168.0.3</span><br><span class="line">ntpdate -d <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span></span><br><span class="line"> <span class="number">5</span> May <span class="number">14</span>:<span class="number">52</span>:<span class="number">58</span> ntpdate\[<span class="number">10877</span>\]: ntpdate <span class="number">4.2</span>.6p5@<span class="number">1.2349</span>-o Fri Jul <span class="number">22</span> <span class="number">17</span>:<span class="number">30</span>:<span class="number">52</span> UTC <span class="number">2016</span> (<span class="number">1</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line"><span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>: Server dropped: Leap not <span class="keyword">in</span> sync</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>, port <span class="number">123</span></span><br><span class="line">stratum <span class="number">3</span>, precision -<span class="number">23</span>, leap <span class="number">11</span>, trust <span class="number">000</span></span><br><span class="line">refid \[<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>\], delay <span class="number">0.02617</span>, dispersion <span class="number">0.00005</span></span><br><span class="line">transmitted <span class="number">4</span>, <span class="keyword">in</span> filter <span class="number">4</span></span><br><span class="line">reference time: e07906ca.595bf596 Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">52</span>:<span class="number">58.349</span></span><br><span class="line">originate timestamp: e07906d0.bb8e930a Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span><span class="number">.732</span></span><br><span class="line">transmit timestamp: e07906d0.84432bb9 Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span><span class="number">.516</span></span><br><span class="line">filter delay: <span class="number">0.02632</span> <span class="number">0.02621</span> <span class="number">0.02617</span> <span class="number">0.02617</span> </span><br><span class="line"> <span class="number">0.00000</span> <span class="number">0.00000</span> <span class="number">0.00000</span> <span class="number">0.00000</span> </span><br><span class="line">filter offset: <span class="number">0.215621</span> <span class="number">0.215522</span> <span class="number">0.215512</span> <span class="number">0.215605</span></span><br><span class="line"> <span class="number">0.000000</span> <span class="number">0.000000</span> <span class="number">0.000000</span> <span class="number">0.000000</span></span><br><span class="line">delay <span class="number">0.02617</span>, dispersion <span class="number">0.00005</span></span><br><span class="line">offset <span class="number">0.215512</span></span><br><span class="line"></span><br><span class="line"> <span class="number">5</span> May <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span> ntpdate\[<span class="number">10877</span>\]: no server suitable <span class="keyword">for</span> synchronization found</span><br></pre></td></tr></table></figure>
+
+<p>提示错误Server dropped: Leap not in sync</p>
+<p>在ntp服务器上与上游强制同步一次时间即可</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># service ntp stop</span><br><span class="line"># ntpdate -b pool.ntp.org</span><br><span class="line"># service ntp start</span><br></pre></td></tr></table></figure>
+
+<p>然后再在客户端上重新进行时间同步</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ntpdate 192.168.0.3</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/06/acpi-pad-high-cpu-util/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/04/06/acpi-pad-high-cpu-util/" class="post-title-link" itemprop="url">acpi_pad导致高cpu占用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-04-06 22:24:23" itemprop="dateCreated datePublished" datetime="2019-04-06T22:24:23+08:00">2019-04-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>服务器上突然出现很多acpi_pad/*进程,*为0,1,2,3,…，每个进程都占用100%CPU，导致系统极度缓慢</p>
+<p>解决办法就是移除acpi_pad模块</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rmmod acpi_pad</span><br></pre></td></tr></table></figure>
+<p>并将其加入模块blacklist，/etc/modprobe.d/blacklist.conf文件中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacklist acpi_pad</span><br></pre></td></tr></table></figure>
+
+<p>或者<br>在 grub 的 kernel 配置后面，添加 acpi_pad.disable=1 重启机器之后，开机就不会自动加载 acpi_pad 模块</p>
+<p>注：早上跑到机房一看，空调自己关闭了，环境温度40几度，服务器、机柜一片报警，赶快打开两个空调降温，acpi_pad的问题是不是与环境温度过高有关呢？</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/04/06/postgresql-stop-archiving/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/04/06/postgresql-stop-archiving/" class="post-title-link" itemprop="url">postgresql停止归档</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-04-06 22:23:21" itemprop="dateCreated datePublished" datetime="2019-04-06T22:23:21+08:00">2019-04-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为存储归档文件的服务器硬件故障宕机，写入不成功导致postgresql无法归档。这时候可以临时修改配置文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>然后reload postgresql</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql reload</span><br></pre></td></tr></table></figure>
+<p>这时服务器不会发送归档日志文件，但是服务器在继续累积产生的WAL日志文档，直到提供一个合适的归档命令，重新开始归档，这样不会丢失WAL日志文档。</p>
+<p>如果提供如下归档命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;/bin/true&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样归档进程总是认为归档成功，但实际上并没有真正写归档文件，但服务器上的WAL会被删除掉(与参数wal_keep_segments有关)，当硬件恢复或者换用其他硬件时，必须重新制作基础备份，因为WAL归档日志文件已经缺失了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/16/linux-amd64-memory-mapping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/16/linux-amd64-memory-mapping/" class="post-title-link" itemprop="url">linux amd64 memory mapping</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-16 14:40:21" itemprop="dateCreated datePublished" datetime="2019-02-16T14:40:21+08:00">2019-02-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>amd64架构linux kernel使用四级页表映射结构，但是存在两套terminology来描述这个事情</p>
+<p>其一：</p>
+<p>PML4(Page Map Leve4)(Level 4) -&gt; PDP(Page Directory Pointer) (Level 3) -&gt; PD(Page Directory) (Level 2) -&gt; PTE(Page Table Entry)(Level 1)</p>
+<p>另一：</p>
+<p>PGD(Page Global Directory)(Level 4) -&gt; PUD(Page Upper Directory)(Level 3) -&gt; PMD(Page Middle Directory)(Level 2) -&gt; PTE(Page Table Entry) (Level 1)</p>
+<p>这两套术语其实表达的都是一样的东西,CR3寄存器保存Level 4表的物理地址，Level 4只有一页，4K大小，总共512个表项，每个表项可以寻址512GB内存，总共可以寻址256TB内存。<br>当前amd64处理器只是用了64位中的48位来寻址，因此使用四级页表时，虚拟地址的低48位为9+9+9+9+12映射结构，每个物理页框(Page Frame)为4K，4K地址对齐。<br>当使用2M的大页/巨页时，使用三级页表映射，虚拟地址的低48位为9+9+9+21映射结构，每个物理页框为2M,2M地址对齐。</p>
+<p>参见下面两图：</p>
+<p>4K页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image004.gif" alt="4K页面地址转换"></p>
+<p>2M 页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image006.gif" alt="2M 页面地址转换"></p>
+<p>为了支持更大的线性地址空间，以后的CPU会扩展到57位虚拟地址寻址。linux目前已经提供5级页表映射，如果启用5级页表，会在PGD和PUD之间插入新的一级页表，叫做P4D(Page 4 Directory)，这样PGD会成为第五级页表,参见[1]。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lwn.net/Articles/717293/">Five-level page tables</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

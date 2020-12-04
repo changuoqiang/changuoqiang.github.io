@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="盒模型一图胜千言： HTML元素实际占据content部分，外围是padding填充，再往外是border边框，最外面为margin空白。padding又叫内边距,margin又叫外边距。 可以这样想象CSS盒模型： 有一个存储货物的仓库，货物用纸箱包装起来，因为货物很贵重，所以在货物和纸箱之间我们要加一些泡沫填充材料。货物就是HTML元素，填充的塑料泡沫就是padding,而纸箱本身就是bor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS盒模型和定位模型">
+<meta property="og:url" content="http://example.com/2013/11/25/w3c-box-layout/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="盒模型一图胜千言： HTML元素实际占据content部分，外围是padding填充，再往外是border边框，最外面为margin空白。padding又叫内边距,margin又叫外边距。 可以这样想象CSS盒模型： 有一个存储货物的仓库，货物用纸箱包装起来，因为货物很贵重，所以在货物和纸箱之间我们要加一些泡沫填充材料。货物就是HTML元素，填充的塑料泡沫就是padding,而纸箱本身就是bor">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/downloads/box-model.png">
+<meta property="article:published_time" content="2013-11-25T02:37:18.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.577Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/downloads/box-model.png">
+
+
+<link rel="canonical" href="http://example.com/2013/11/25/w3c-box-layout/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>CSS盒模型和定位模型 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%92%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">盒模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">定位模型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D-position"><span class="nav-number">2.1.</span> <span class="nav-text">定位(position)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B5%AE%E5%8A%A8-float"><span class="nav-number">2.2.</span> <span class="nav-text">浮动(float)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#z-index"><span class="nav-number">2.3.</span> <span class="nav-text">z-index</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2013/11/25/w3c-box-layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CSS盒模型和定位模型
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-11-25 10:37:18" itemprop="dateCreated datePublished" datetime="2013-11-25T10:37:18+08:00">2013-11-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Internet/" itemprop="url" rel="index"><span itemprop="name">Internet</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<h5 id="盒模型"><a href="#盒模型" class="headerlink" title="盒模型"></a>盒模型</h5><p>一图胜千言：<br><img src="/downloads/box-model.png" alt="box model"></p>
+<p>HTML元素实际占据content部分，外围是padding填充，再往外是border边框，最外面为margin空白。<br>padding又叫内边距,margin又叫外边距。</p>
+<p>可以这样想象CSS盒模型：</p>
+<p>有一个存储货物的仓库，货物用纸箱包装起来，因为货物很贵重，所以在货物和纸箱之间我们要加一些泡沫填充材料。货物就是HTML元素，填充的塑料泡沫就是padding,而纸箱本身就是border。因为货物很贵重，不能将箱子直接叠放在一起，所以我们有了margin,也就是箱子与箱子之间的空白。</p>
+<p>而这些padding,border,margin都是可以调整的，如果货物比较廉价，那就不用太在意，直接将货物堆放在一起就可以了，这时候padding,border和margin就都为零了。</p>
+<h5 id="定位模型"><a href="#定位模型" class="headerlink" title="定位模型"></a>定位模型</h5><p>HTML文档默认采用流式布局。</p>
+<p><strong>块元素(block)和行内元素(inline)</strong></p>
+<p>所有的HTML标签都遵守CSS Box Model,都是盒子，但是在HTML的流式布局中分为两种显示类型。</p>
+<p>一种是<strong>块元素</strong>(block)，比如div,p,h1等。这种元素在默认的流式布局中会独占一行，前后都会有断行符。</p>
+<p>另一种是<strong>行内元素</strong>(inline),比如span,strong,input等。这种元素在在默认的流式布局只会占据必要的宽度，而且不会自动断行，会与其他行内元素和平共处，共享同一行(line box)。</p>
+<p>可以使用水平方向的内边距(padding)、边框(border)和外边距(margin)调整行内元素的间距。但是，垂直方向内边距、边框和外边距不影响行内元素的高度。行的高度总是足以容纳它包含的所有内联元素，也可以通过设置行高增加这个行的高度。</p>
+<p>HTML元素有默认的显示类型，block或inline。但可以通过使用display属性显式的更改它们的显示类型，比如将典型的块级元素div,设置为行内元素<br>[html]<br>div {display:inline;}<br>[/html]</p>
+<p>如果将元素的display属性设置为none,则元素根本就不会显示。</p>
+<h6 id="定位-position"><a href="#定位-position" class="headerlink" title="定位(position)"></a>定位(position)</h6><p>HTML元素可以有4种不同的定位类型,使用positon元素来进行定位。</p>
+<ul>
+<li>  <strong>static</strong><br>这是默认的定位类型。元素在正常文档流中布局，块级元素生成一个矩形框，作为文档流的一部分，行内元素则会存在于行内。<br>元素的top,bottom,left,right还有z-index属性都会被忽略。</li>
+<li>  <strong>relative</strong><br>元素相对于其在正常文档流中的位置(这个元素为static定位方式所应该占据的位置)定位。元素在正常文档流中的位置会保留，元素生成框的位置由’top’, ‘right’, ‘bottom’和’left’属性和包含块决定。如果不指定这些影响定位的属性,那么relative看起来与static没有差别,其实还是有差别的,比如可以作为absolute定位元素的相对定位父元素,而static元素则不可。</li>
+<li>  <strong>absolute</strong><br>元素从正常文档流中删除，不保留其位置。然后相对于第一个非static定位的父级元素(祖先)进行定位。从元素自身逐级上溯查找父级元素，直到找到第一个非static定位的元素，如果没有找到非static定位的父元素，则其定位相对于顶级容器元素(html in standards compliant mode; body in quirks rendering mode)body进行定位。但是absolute定位的元素会跟随定位的父元素移动。元素生成框的位置由’top’, ‘right’, ‘bottom’和’left’属性和包含块决定。</li>
+</ul>
+<p>如果不指定其位置属性(top,bottom等),则元素会跟随在上一个正常文档流(没有被删除的,包括保留位置的relative定位元素)的位置之后定位,但其宽度只能容纳其实际内容,不会自动伸展。</p>
+<p>虽然绝对定位框有外边距，这些外边距不与其他外边距折叠(Collapse)。</p>
+<ul>
+<li>  <strong>fixed</strong><br>元素相对于浏览器窗口(screen’s viewport)定位，就是绝对定位,fixed定位的元素不会随浏览器窗口滚动而移动。元素生成框的位置由’top’, ‘right’, ‘bottom’和’left’属性和包含块决定。</li>
+</ul>
+<h6 id="浮动-float"><a href="#浮动-float" class="headerlink" title="浮动(float)"></a>浮动(float)</h6><p>浮动可以让某个元素脱离正常的文档流，漂浮在正常的文档流之外。浮动元素在正常文档流中的位置不会保留。浮动的设置有两个属性,float和clear。</p>
+<p>float可以设置为left,right和none值，用于指定元素的浮动类型。</p>
+<ul>
+<li>  left<br>元素向左侧浮动</li>
+<li>  right<br>元素向右侧浮动</li>
+<li>  none<br>默认值。元素不浮动，并会显示在其在正常文档流中应该出现的位置。</li>
+</ul>
+<p>根据HTML代码中元素定义的顺序，如果浮动元素的上一个元素不是浮动的，则当前浮动元素紧随上一个非浮动元素的下一个元素位置(下一个元素的位置依据非浮动元素的显示类型而有所不同)处布局，根据float属性，靠左侧或右侧浮动。<br>如果浮动元素的上一个元素也是浮动元素，则当前浮动元素会紧随上一个元素在同一个行内进行浮动。</p>
+<p>而clear则用于清除浮动,取值为left,right,both和none。</p>
+<ul>
+<li>  left<br>不允许左侧有浮动元素</li>
+<li>  right<br>不允许右侧有浮动元素</li>
+<li>  both<br>左右两侧均不允许有浮动元素</li>
+<li>  none<br>默认值。允许两边都可以有浮动元素</li>
+</ul>
+<p>对于CSS的清除浮动(clear)，有一点要注意，清除浮动只能影响使用清除的元素本身，不能影响其他元素。也就是说，比如想让A浮动元素右侧的B浮动元素移动到下一行，应该设置B浮动元素的clear属性为left，而不是在A元素中设置clear属性为right。也就是不能通过一个元素的clear属性强迫另一个元素移动，只能通过clear属性让自己移动。</p>
+<h6 id="z-index"><a href="#z-index" class="headerlink" title="z-index"></a>z-index</h6><p>CSS不但可以平面布局，还可以通过指定元素的堆叠次序来进行垂直布局(深度方向),这个属性就是z-index。(x,y)是平面，而z是垂直于平面的第三维。</p>
+<p>只有非静态定位(static)的定位元素可以使用z-index属性，也就是只有position:absolute, position:relative, 或者position:fixed的元素可以使用z-index指定堆叠次序。</p>
+<p><strong>box-sizing</strong></p>
+<p>如果所有的浏览器都遵守W3C规范就不会有这个属性。不用看我,我说的就是你,低版本的IE!</p>
+<p>CSS属性box-sizing用于更改默认的CSS盒模型来计算元素的宽度和高度。可以用这个属性来模拟没有正确支持CSS盒模型的浏览器。</p>
+<p>这个属性的取值如下:</p>
+<ul>
+<li>  content-box<br>CSS标准默认值。元素的宽度和高度属性只包含content,不包含padding,border和margin,</li>
+<li>  padding-box<br>元素的宽度和高度属性包含content和padding,但不包含border和margin。目前这个属性只有firefox支持。</li>
+<li>  border-box<br>元素的宽度和高度属性包含content,padding和border,但不包含margin。这种盒模型只在IE的怪异模式(Quirks mode)下使用。<br>IE在版本6之前使用不规范的CSS盒模型,也就是现在所说的border-box,I6之后使用符合规范的CSS盒模型,但使用Quirks mode来支持之前的不规范盒模型,直到IE9。</li>
+</ul>
+<p>不推荐使用这个属性,保持其默认值即可。</p>
+<p><strong>IE 10+才算是现代浏览器,之前的版本都应该被抛弃！</strong></p>
+<p>参考:<br>1、<a target="_blank" rel="noopener" href="http://www.w3schools.com/css/css_boxmodel.asp">CSS Box Model</a><br>2、<a target="_blank" rel="noopener" href="http://www.w3schools.com/css/css_positioning.asp">CSS Positioning</a><br>3、<a target="_blank" rel="noopener" href="http://www.w3schools.com/css/css_display_visibility.asp">CSS Display and Visibility</a><br>4、<a target="_blank" rel="noopener" href="http://www.w3schools.com/cssref/pr_pos_z-index.asp">CSS z-index Property</a><br>5、<a target="_blank" rel="noopener" href="http://www.kuqin.com/webpagedesign/20090106/32686.html">理解绝对定位和相对定位布局</a><br>5、<a target="_blank" rel="noopener" href="http://developer.51cto.com/art/201303/386884.htm#585532-tsina-1-5185-7e393678b940a4d55500bf3feae3d2e9">CSS浮动(float,clear)经验分享</a><br>6、<a target="_blank" rel="noopener" href="http://zh.html.net/tutorials/css/lesson15.php">用z-index进行层次堆叠</a><br>7、<a target="_blank" rel="noopener" href="http://www.w3school.com.cn/css/pr_class_float.asp">CSS float 属性</a><br>8、<a target="_blank" rel="noopener" href="http://www.w3school.com.cn/css/pr_class_clear.asp">CSS clear 属性</a><br>[9]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing">box-sizing</a><br>[10]<a target="_blank" rel="noopener" href="http://www.w3school.com.cn/jsref/prop_style_display.asp">HTML DOM display 属性</a><br>[11]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/CSS/position">position</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+              <a href="/tags/CSS/" rel="tag"># CSS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/11/24/4316/" rel="prev" title="Untitled Post - 17">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 17
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/11/25/4353/" rel="next" title="Untitled Post - 18">
+                  Untitled Post - 18 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

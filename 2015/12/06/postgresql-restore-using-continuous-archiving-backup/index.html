@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="当数据库因为各种原因损坏时，连续归档备份就派上用场了，不过这种恢复在对停机时间很苛刻的环境下并不是很合适。如果数据库很大的话，恢复时间可能是不可接受的，这时候就应该配置高可用实时复制系统，比如配置warm&#x2F;hot standby备用机。 此文中的$PG_VERISON代表postgresql的主次版本号，比如当前为9.4。 数据恢复   停止服务器如果服务器还在运行中，应该先将其停止。如果硬件故">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL使用连续归档备份恢复数据库">
+<meta property="og:url" content="http://example.com/2015/12/06/postgresql-restore-using-continuous-archiving-backup/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="当数据库因为各种原因损坏时，连续归档备份就派上用场了，不过这种恢复在对停机时间很苛刻的环境下并不是很合适。如果数据库很大的话，恢复时间可能是不可接受的，这时候就应该配置高可用实时复制系统，比如配置warm&#x2F;hot standby备用机。 此文中的$PG_VERISON代表postgresql的主次版本号，比如当前为9.4。 数据恢复   停止服务器如果服务器还在运行中，应该先将其停止。如果硬件故">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-12-06T13:29:27.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.432Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PostgresQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2015/12/06/postgresql-restore-using-continuous-archiving-backup/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>PostgreSQL使用连续归档备份恢复数据库 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2015/12/06/postgresql-restore-using-continuous-archiving-backup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PostgreSQL使用连续归档备份恢复数据库
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-06 21:29:27" itemprop="dateCreated datePublished" datetime="2015-12-06T21:29:27+08:00">2015-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>当数据库因为各种原因损坏时，连续归档备份就派上用场了，不过这种恢复在对停机时间很苛刻的环境下并不是很合适。<br>如果数据库很大的话，恢复时间可能是不可接受的，这时候就应该配置高可用实时复制系统，比如配置warm/hot standby备用机。</p>
+<p>此文中的$PG_VERISON代表postgresql的主次版本号，比如当前为9.4。</p>
+<p><strong>数据恢复</strong></p>
+<ol>
+<li> 停止服务器<br>如果服务器还在运行中，应该先将其停止。如果硬件故障已无法开机，则可以在异机恢复。这里以异机恢复为例讲解。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql stop</span><br></pre></td></tr></table></figure></li>
+<li> 删除现有集群数据<br>将当前postgresql集群数据目录下的所有文件删除，删除debian默认安装postgresql集群数据：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main<span class="comment">/*</span></span><br></pre></td></tr></table></figure></li>
+<li> 恢复基础备份<br>将最近的基础备份恢复到集群的数据目录：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres tar jxvf <span class="number">20151207.</span>tbz2 -C /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main/</span><br></pre></td></tr></table></figure>
+一定要注意恢复的数据文件的属主是运行PostgreSQL服务的系统用户，debian系统上为postgres,还应该保持原来的权限。</li>
+<li> pg_xlog目录<br>如果进行基础备份时，pg_xlog目录下有未归档日志，恢复后应将目录下的所有文件删除，因为这些文件已经过时。如果没有pg_xlog目录则建立此目录，注意目录的属主和权限。<br>主服务器崩溃后如果尚未归档的WAL日志还能访问，则应将其拷贝到pg_xlog目录，以尽最大可能恢复数据。</li>
+<li> 配置recovery.conf文件<br>如果使用pg_basebackup命令进行备份时使用了-R(–write-recovery-conf)参数,则恢复后的数据目录中已经有了一个recovery.conf文件。如果没有，则可以拷贝一个模板到数据目录：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres cp /usr/share/postgresql/$PG_VERSION/recovery.conf.sample /<span class="keyword">var</span>/lib/postgresql/$PG_VERSION/main/</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>然后修改文件中的restore_command为适当的shell脚本以在恢复时可以读取到归档的WAL日志：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">restore_command = <span class="string">&#x27;cp /var/backups/postgresql/archive/%f %p&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为此案例没有使用流复制，因此应该注释掉primary_conninfo参数。</p>
+<p>恢复期间还应该修改pg_hba.conf文件或其他途径以阻止客户端连接。<br>6.  启动服务器，开始恢复</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql start</span><br></pre></td></tr></table></figure>
+<p>当所有的归档WAL恢复完毕,无法读取到其他更新的归档日志后，恢复就会自动结束，并且recovery.conf会被更名为recovery.done,防止意外重新进入restore过程。<br>恢复完毕后，可以允许客户端连接到服务器。<br>注意，恢复的最后阶段，日志中会出现No such file or directory字样的提示，这是正常的，因为恢复过程已经无法读取到其他的归档日志文件或时间线history文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">5</span>\] LOG: consistent recovery state reached at <span class="number">1</span>/<span class="number">86008798</span></span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">000000010000000100000087</span>’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">6</span>\] LOG: redo done at <span class="number">1</span>/<span class="number">86008798</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">7</span>\] LOG: last completed transaction was at log time <span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">08</span>:<span class="number">57</span>:<span class="number">51.075265</span>+<span class="number">08</span></span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">8</span>\] LOG: restored log file <span class="string">&quot;000000010000000100000086&quot;</span> <span class="keyword">from</span> archive</span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">00000002</span>.history’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">9</span>\] LOG: selected <span class="keyword">new</span> timeline ID: <span class="number">2</span></span><br><span class="line">cp: cannot stat ‘/<span class="keyword">var</span>/backups/postgresql/archive/<span class="number">00000001</span>.history’: No such file or directory</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">10</span>\] LOG: archive recovery complete</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4906</span>-<span class="number">11</span>\] LOG: MultiXact member wraparound protections are now enabled</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4924</span>-<span class="number">1</span>\] LOG: autovacuum launcher started</span><br><span class="line"><span class="number">2015</span>-<span class="number">12</span>-<span class="number">07</span> <span class="number">09</span>:<span class="number">24</span>:<span class="number">42</span> CST \[<span class="number">4905</span>-<span class="number">1</span>\] LOG: database system is ready to accept connections</span><br></pre></td></tr></table></figure>
+
+<p><strong>时间点恢复Point-in-Time Recovery (PITR)</strong></p>
+<p>默认情况下，恢复过程会一直持续到最后一个可用的WAL归档日志。<br>但是也可以在recovery.conf中设置参数来控制恢复到的目标点，这四个参数recovery_target,recovery_target_name，recovery_target_time和recovery_target_xid可以用来指定恢复的目标点，但同时只能有一个生效，如果指定多个，则以最后一个为准。</p>
+<p>这几个参数的含义如下：</p>
+<ul>
+<li>  recovery_target<br>该参数目前只有一个取值’immediate’,指示恢复应该在达到一直状态后尽快的结束。对于连续归档备份来说，基础备份结束时就处于一致状态。</li>
+<li>  recovery_target_name<br>指定使用pg_create_restore_point()函数设定的恢复点名称。pg_create_restore_point()可以创建一个命名的恢复日志记录作为恢复目标，此函数只有超级用户可以访问。</li>
+<li>  recovery_target_time<br>指定恢复所要到达的时间戳。注意，recovery_target_time 设置的时间格式,使用pg的now函数输出的格式。比如：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recovery_target_time = <span class="string">&#x27;2015-02-13 20:04:49.63197+08&#x27;</span> </span><br></pre></td></tr></table></figure></li>
+<li>  recovery_target_xid<br>指定恢复过程要到达的事务id。要注意，事务id在事务开始时顺序赋值，但每个事务的完成不一定会遵循先后顺序，因此指定这个参数，只有那些在此事务id之前启动的事务会被恢复。</li>
+</ul>
+<p>还有几个参数会影响恢复目标的设定以及到达恢复目标时的动作：</p>
+<ul>
+<li>  recovery_target_inclusive<br>此参数只影响recovery_target_time和recovery_target_xid参数。当设定为true时，会包含恢复目标，而设定为false时，会恢复到恢复目标之前而不包含恢复目标。此参数默认为true。</li>
+<li>  recovery_target_timeline<br>指定在一个特定的时间线上恢复。默认在与制作基础备份相同的时间线上恢复。设置为latest会在归档日志中最新的时间线上恢复。</li>
+<li>  pause_at_recovery_target<br>指定当到达恢复目标是是否应该暂停，默认为true。此参数的意图是允许查询数据库来检查当前的恢复目标是否是想要的恢复点。<br>如果当前恢复目标并不是想要的，可以停止服务器，修改恢复目标设置，重新开始恢复数据库。<br>可以使用pg_xlog_replay_resume()函数来结束暂停继续恢复数据库，此时会一直恢复到最后的一致状态。</li>
+</ul>
+<p>没有指定恢复目标，或者没有处于hot_standby状态时，这个参数并不生效。</p>
+<p><strong>恢复时间线timeline</strong></p>
+<p>在做数据恢复时，如果能像时间旅行或者并行宇宙中那样来来回回随意穿梭就好了。比如，恢复一次之后，发现不满意，可以从头再来，直到找到满意的恢复点为止。</p>
+<p>幸好，PostgreSQL支持时间线timeline，正好支持了这种“超能力”。如果没有时间线，每次恢复之后新产生的WAL日志极有可能会将部分之前的WAL日志覆盖，从而再也无法恢复到那些状态。</p>
+<p>时间线是这样的，无论何时，一个恢复完成后，会创建一个新的时间线来标识此次恢复之后产生的WAL日志。时间线的id号是WAL日志文件名字的一部分，因此不会覆盖其他时间线上的WAL日志文件。</p>
+<p>每次创建一个新的时间线时，PostgreSQL会创建一个新的时间线历史文件，后缀为.history。历史文件会标识此时间线是什么时候从那个时间线分支而来的。有了时间线历史文件，PostgreSQL就可以在含有多个时间线的归档文件中找到正确的WAL归档日志。</p>
+<p>虽然时间线看起来的确很高能，但是无论如何也不可能恢复到制作基础备份之前的时间。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.2/static/continuous-archiving.html">24.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/recovery-target-settings.html">26.2. Recovery Target Settings</a><br>[3]<a target="_blank" rel="noopener" href="http://my.oschina.net/hippora/blog/378415">postgresql在线备份与恢复(三)</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PostgresQL/" rel="tag"># PostgresQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/12/04/postgresql-continuous-archiving-pitr/" rel="prev" title="PostgreSQL连续归档备份">
+                  <i class="fa fa-chevron-left"></i> PostgreSQL连续归档备份
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/12/08/postgresql-ha-log-shiping-based-hot-standby/" rel="next" title="PostgreSQL高可用之log-shiping based hot standby">
+                  PostgreSQL高可用之log-shiping based hot standby <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

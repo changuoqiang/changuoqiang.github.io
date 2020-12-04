@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/8/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/27/nginx-add-upstream-health-check-module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/27/nginx-add-upstream-health-check-module/" class="post-title-link" itemprop="url">nginx添加upstream健康检查模块</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-27 16:12:56" itemprop="dateCreated datePublished" datetime="2019-07-27T16:12:56+08:00">2019-07-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>nginx社区版仅支持十分有限的upstream健康检查，其他高级特性需要商业订阅。<br>github上有个开源的upstream检查模块<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">nginx_upstream_check_module</a></p>
+<p><strong>安装</strong></p>
+<p>安装必要的编译环境</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1<span class="number">.1</span> libssl-dev</span><br></pre></td></tr></table></figure>
+
+<p>下载最新的nginx stable 1.16版本，clone nginx_upstream_check_module master分支</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
+
+<p>为源码打补丁</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf nginx-<span class="number">1.16</span><span class="number">.1</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.16</span><span class="number">.1</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.14</span><span class="number">.0</span>+.patch</span><br></pre></td></tr></table></figure>
+
+<p>配置、编译、安装nginx</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --add-<span class="built_in">module</span>=../nginx_upstream_check_module --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-stream_ssl_preread_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-stream</span><br><span class="line">...</span><br><span class="line">Configuration summary</span><br><span class="line"> + using system PCRE library</span><br><span class="line"> + using system OpenSSL library</span><br><span class="line"> + using system zlib library</span><br><span class="line"></span><br><span class="line"> nginx path prefix: <span class="string">&quot;/usr/local/nginx&quot;</span></span><br><span class="line"> nginx binary file: <span class="string">&quot;/usr/local/nginx/sbin/nginx&quot;</span></span><br><span class="line"> nginx modules path: <span class="string">&quot;/usr/local/nginx/modules&quot;</span></span><br><span class="line"> nginx configuration prefix: <span class="string">&quot;/usr/local/nginx/conf&quot;</span></span><br><span class="line"> nginx configuration file: <span class="string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"> nginx pid file: <span class="string">&quot;/usr/local/nginx/logs/nginx.pid&quot;</span></span><br><span class="line"> nginx error log file: <span class="string">&quot;/usr/local/nginx/logs/error.log&quot;</span></span><br><span class="line"> nginx http access log file: <span class="string">&quot;/usr/local/nginx/logs/access.log&quot;</span></span><br><span class="line"> nginx http client request body temporary files: <span class="string">&quot;client_body_temp&quot;</span></span><br><span class="line"> nginx http proxy temporary files: <span class="string">&quot;proxy_temp&quot;</span></span><br><span class="line"> nginx http fastcgi temporary files: <span class="string">&quot;fastcgi_temp&quot;</span></span><br><span class="line"> nginx http uwsgi temporary files: <span class="string">&quot;uwsgi_temp&quot;</span></span><br><span class="line"> nginx http scgi temporary files: <span class="string">&quot;scgi_temp&quot;</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<p>安装目录位于/usr/local/nginx</p>
+<p>添加systemd服务nginx.service<br>将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># Stop dance for nginx</span><br><span class="line"># =======================</span><br><span class="line">#</span><br><span class="line"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span><br><span class="line"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span><br><span class="line"># and sends SIGTERM (fast shutdown) to the main process.</span><br><span class="line"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span><br><span class="line"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span><br><span class="line">#</span><br><span class="line"># nginx signals reference doc:</span><br><span class="line"># http://nginx.org/en/docs/control.html</span><br><span class="line">#</span><br><span class="line">\[Unit\]</span><br><span class="line">Description=A high performance web server and a reverse proxy server</span><br><span class="line">Documentation=man:nginx(<span class="number">8</span>)</span><br><span class="line">After=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">\[Service\]</span><br><span class="line">Type=forking</span><br><span class="line">PIDFile=<span class="regexp">/usr/</span>local/nginx/logs/nginx.pid</span><br><span class="line">ExecStartPre=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecStart=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecReload=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line">ExecStop=-<span class="regexp">/sbin/</span>start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line">TimeoutStopSec=<span class="number">5</span></span><br><span class="line">KillMode=mixed</span><br><span class="line"></span><br><span class="line">\[Install\]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<p>enable服务并启动</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable nginx.service </span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.</span><br><span class="line">$ sudo systemctl start nginx.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>健康检查配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> upstream cluser &#123;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.17</span>:<span class="number">8080</span>;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.18</span>:<span class="number">8080</span>;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.19</span>:<span class="number">8080</span>;</span><br><span class="line"></span><br><span class="line">check interval=<span class="number">1000</span> fall=<span class="number">1</span> rise=<span class="number">2</span> timeout=<span class="number">1000</span> default_down=<span class="literal">true</span> type=http;</span><br><span class="line">check_http_send <span class="string">&quot;HEAD /aurl/ HTTP/1.0\\r\\n\\r\\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">80</span>;</span><br><span class="line"> server_name localhost;</span><br><span class="line"></span><br><span class="line"> location /aurl/ &#123;</span><br><span class="line">proxy_pass http:<span class="comment">//cluser/aurl/;</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> location /status &#123;</span><br><span class="line"> check_status;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>设置的检查间隔为1000毫秒，一次没有响应就标记节点down(fall)了，接连两次检查有响应节点才算up(rise)，没有检查之前节点的默认状态为down，使用http方式检查，检查的超时时间为1000毫秒，总之1000毫秒没有应答就是无响应。</p>
+<p>使用_http方式_检查upstream服务的_业务入口/aurl/_是否已经就绪</p>
+<p><strong>upstream状态</strong></p>
+<p>访问<a target="_blank" rel="noopener" href="http://your_ip/status%E6%9F%A5%E7%9C%8B%E6%A3%80%E6%9F%A5%E7%BB%93%E6%9E%9C">http://your_ip/status查看检查结果</a><br>Nginx http upstream check status<br>Check upstream server number: 3, generation: 1</p>
+<p>Index</p>
+<p>Upstream</p>
+<p>Name</p>
+<p>Status</p>
+<p>Rise counts</p>
+<p>Fall counts</p>
+<p>Check type</p>
+<p>Check port</p>
+<p>0</p>
+<p>cluser</p>
+<p>192.168.0.17:8080</p>
+<p>up</p>
+<p>30</p>
+<p>0</p>
+<p>tcp</p>
+<p>0</p>
+<p>1</p>
+<p>cluser</p>
+<p>192.168.0.18:8080</p>
+<p>up</p>
+<p>19</p>
+<p>0</p>
+<p>tcp</p>
+<p>0</p>
+<p>2</p>
+<p>cluser</p>
+<p>192.168.0.19:8080</p>
+<p>up</p>
+<p>15</p>
+<p>0</p>
+<p>tcp</p>
+<p>0</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/24/%E7%83%BD%E7%81%ABhg2201u%E6%94%B9%E6%A1%A5%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/24/%E7%83%BD%E7%81%ABhg2201u%E6%94%B9%E6%A1%A5%E6%8E%A5/" class="post-title-link" itemprop="url">烽火HG2201U改桥接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-24 19:02:00" itemprop="dateCreated datePublished" datetime="2019-07-24T19:02:00+08:00">2019-07-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>拿到配置文件就可以破译管理员密码了，只是base64编码了一下下，秒解码。<br>有两种方法可以拿到配置文件</p>
+<p><strong>telnet方法</strong></p>
+<p>用光猫后面提供的user密码登录，然后访问<a target="_blank" rel="noopener" href="http://192.168.1.1/servmngr.html%EF%BC%8C%E7%95%8C%E9%9D%A2%E5%87%A0%E4%B9%8E%E6%98%AF%E5%85%A8%E7%99%BD%E7%9A%84%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%8B%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%A4%A7%E9%83%A8%E5%88%86%E5%86%85%E5%AE%B9%E4%BA%86%EF%BC%8C%E5%90%AF%E7%94%A8telnet%E5%B9%B6%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%9C%A8LAN%E7%BD%91%E7%BB%9C%E7%9B%91%E5%90%AC%EF%BC%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E6%98%AFadmin/admin%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BF%AE%E6%94%B9%EF%BC%8C%E7%84%B6%E5%90%8E">http://192.168.1.1/servmngr.html，界面几乎是全白的，选择一下就可以看到大部分内容了，启用telnet并设置为在LAN网络监听，默认账号密码是admin/admin，可以修改，然后</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ telnet <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">&gt; help</span><br><span class="line">&gt; dumpcfg</span><br></pre></td></tr></table></figure>
+<p>找到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Web&gt;</span><br><span class="line"> &lt;UserPassword&gt;NXB1c2RmbTQA&lt;/UserPassword&gt;</span><br><span class="line"> &lt;AdminPassword&gt;Y3VhZG1pbxxxxxxNTgwAA==&lt;/AdminPassword&gt;</span><br><span class="line">&lt;/Web&gt;</span><br></pre></td></tr></table></figure>
+<p>这一段，UserPassword就是光猫后面印刷的user账户的密码，AdminPassword就是管理员的密码了，都是base64编码的，随便找个在线服务解码一下好了。</p>
+<p>telnet模式还可以执行sh获的shell，可以慢慢研究一下，跑的就是个linux系统</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; sh</span><br><span class="line">BusyBox v1<span class="number">.17</span><span class="number">.2</span> (<span class="number">2018</span>-<span class="number">09</span>-<span class="number">04</span> <span class="number">20</span>:<span class="number">22</span>:<span class="number">42</span> CST) built-<span class="keyword">in</span> shell (ash)</span><br><span class="line">Enter <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> a list <span class="keyword">of</span> built-<span class="keyword">in</span> commands.</span><br><span class="line"></span><br><span class="line"># uname -a</span><br><span class="line">Linux (none) 3.4.11-rt19 #1 SMP PREEMPT Tue Sep 4 18:24:42 CST 2018 mips GNU/Linux</span><br></pre></td></tr></table></figure>
+<p>获得是特权shell，切记不要乱删东西。</p>
+<p><strong>工程账号方法</strong></p>
+<p>访问<a target="_blank" rel="noopener" href="http://192.168.1.1/logoffaccount.html%EF%BC%8C%E9%9A%90%E8%97%8F%E8%B4%A6%E6%88%B7%E9%80%89%E6%8B%A9%E2%80%9C%E5%90%AF%E7%94%A8%E2%80%9D%EF%BC%8C&quot;%E4%BF%9D%E5%AD%98/%E5%BA%94%E7%94%A8&quot;%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%B7%B3%E8%BD%AC%E5%88%B0http://192.168.1.1/logoffaccount.cmd?enableFactoryAccount=1%EF%BC%8C%E5%9C%A8%E6%AD%A4%E7%95%8C%E9%9D%A2%E4%B8%8B%E8%BE%93%E5%85%A5%E5%B7%A5%E5%8E%82%E8%B4%A6%E5%8F%B7%E7%9A%84%E5%AF%86%E7%A0%81%E2%80%9Chg2x0%E2%80%9D%E8%BF%9B%E5%85%A5%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F">http://192.168.1.1/logoffaccount.html，隐藏账户选择“启用”，&quot;保存/应用&quot;之后，跳转到http://192.168.1.1/logoffaccount.cmd?enableFactoryAccount=1，在此界面下输入工厂账号的密码“hg2x0”进入工厂模式</a></p>
+<p>然后访问<a target="_blank" rel="noopener" href="http://192.168.1.1/backupsettings.html%E9%A1%B5%E9%9D%A2,%E7%82%B9%E5%87%BB%E2%80%9C%E4%BF%9D%E5%AD%98/%E5%BA%94%E7%94%A8%E2%80%9D%E4%B8%8B%E8%BD%BD%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%EF%BC%8C%E5%90%8E%E9%9D%A2%E5%B0%B1%E5%92%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%E4%BA%86%E3%80%82">http://192.168.1.1/backupsettings.html页面,点击“保存/应用”下载当前配置文件到本地电脑，后面就和第一个方法一样了。</a></p>
+<p><strong>桥接模式</strong></p>
+<p>访问<a target="_blank" rel="noopener" href="http://192.168.1.1/cu.html%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%BD%BF%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E7%99%BB%E5%BD%95%E5%85%89%E7%8C%AB%EF%BC%8C&quot;%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE&quot;-&gt;&quot;%E5%AE%BD%E5%B8%A6%E9%85%8D%E7%BD%AE&quot;%E7%95%8C%E9%9D%A2%E9%80%89%E6%8B%A9%E2%80%9C*_INTERNET_R_VID_*%E2%80%9D%E8%BF%99%E4%B8%AA%E8%BF%9E%E6%8E%A5%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%94%B9%E4%B8%BA%E6%A1%A5%E6%8E%A5%E5%B0%B1%E5%A5%BD%E4%BA%86%EF%BC%8C%E6%AF%94%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E7%AE%80%E5%8D%95%E4%B8%8D%E6%98%93%E5%87%BA%E9%94%99%E3%80%82">http://192.168.1.1/cu.html页面，使用管理员账户登录光猫，&quot;基本配置&quot;-&gt;&quot;宽带配置&quot;界面选择“*_INTERNET_R_VID_*”这个连接名称，改为桥接就好了，比修改配置文件上传的方式简单不易出错。</a></p>
+<p>据说user用户登录后，直接访问<a target="_blank" rel="noopener" href="http://192.168.1.1/fbctwanconfig.html%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BF%AE%E6%94%B9%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%EF%BC%8C%E8%83%BD%E7%9C%8B%E5%88%B0%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2%EF%BC%8C%E6%B2%A1%E6%9C%89%E5%B0%9D%E8%AF%95%E3%80%82">http://192.168.1.1/fbctwanconfig.html也可以修改桥接模式，能看到配置界面，没有尝试。</a></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://flyfish.im/liferecords/1698.html">上海联通光猫烽火HG2201U改桥接，路由拨号上网并做解析</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.acesheep.com/index.php/archives/608/">烽火HG2201U 5.0/5.01 版本 光猫改桥接 设置IPV6 超级管理员获取</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/20/dns-over-https/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/20/dns-over-https/" class="post-title-link" itemprop="url">DNS over HTTPS</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-20 14:50:53" itemprop="dateCreated datePublished" datetime="2019-07-20T14:50:53+08:00">2019-07-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>DNS over HTTPS用于解决DNS解析的隐私问题</p>
+<p><strong>Debian</strong><br>可以使用<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy</a></p>
+<p><strong>MacOSX</strong><br>建议使用<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy</a></p>
+<p><em>安装cloudflared</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ brew install cloudflare/cloudflare/cloudflared</span><br><span class="line">$ cloudflared --version</span><br><span class="line">cloudflared version <span class="number">2019.7</span><span class="number">.0</span> (built <span class="number">2019</span>-<span class="number">07</span>-<span class="number">11</span>-<span class="number">1655</span> UTC)</span><br></pre></td></tr></table></figure>
+
+<p><em>添加配置文件config.yaml</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /usr/local/etc/cloudflared</span><br><span class="line">$ cat &lt;&lt; EOF &gt; <span class="regexp">/usr/</span>local/etc/cloudflared/config.yml</span><br><span class="line">proxy-dns: <span class="literal">true</span></span><br><span class="line">proxy-dns-upstream:</span><br><span class="line"> - https:<span class="comment">//1.1.1.1/dns-query</span></span><br><span class="line"> - https:<span class="comment">//1.0.0.1/dns-query</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p><em>安装服务</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cloudflared service install</span><br><span class="line">INFO\[<span class="number">0000</span>\] Installing Argo Tunnel client <span class="keyword">as</span> a system launch daemon. Argo Tunnel client will run at boot </span><br><span class="line">INFO\[<span class="number">0000</span>\] Outputs are logged to /Library/Logs/com.cloudflare.cloudflared.err.log and /Library/Logs/com.cloudflare.cloudflared.out.log</span><br></pre></td></tr></table></figure>
+
+<p><em>卸载cloudflare</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cloudflared service uninstall</span><br><span class="line">$ brew uninstall cloudflare/cloudflare/cloudflared</span><br></pre></td></tr></table></figure>
+
+<p><em>校验</em></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ dig +short @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> cloudflare.com A</span><br><span class="line"><span class="number">198.41</span><span class="number">.214</span><span class="number">.162</span></span><br><span class="line"><span class="number">198.41</span><span class="number">.215</span><span class="number">.162</span></span><br><span class="line">$ dig +short @<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> cloudflare.com AAAA</span><br><span class="line"><span class="number">2606</span>:<span class="number">4700</span>::c629:d7a2</span><br><span class="line"><span class="number">2606</span>:<span class="number">4700</span>::c629:d6a2</span><br></pre></td></tr></table></figure>
+
+<p><em>设置系统dns</em></p>
+<p>将系统DNS设置为127.0.0.1</p>
+<p><strong>Firefox浏览器</strong></p>
+<p><em>DOH设置</em></p>
+<p>地址栏输入about:config进入配置界面，修改以下参数配置DOH：</p>
+<p>network.trr.mode = 3<br>#3为只使用DOH，1为关闭DOH特性，2为优先使用DOH，还可以fallback到传统dns</p>
+<p>network.trr.uri = <a target="_blank" rel="noopener" href="https://1.1.1.1/dns-query">https://1.1.1.1/dns-query</a><br>#cloudflare提供的DOH公共服务器</p>
+<p><em>ESNI设置</em></p>
+<p>同一个IP地址可以托管很多的站点,在建立TLS链接时<a target="_blank" rel="noopener" href="https://openwares.net/2009/09/21/server_name_indication/">SNI</a>域名会明文发送，Encrypted SNI就是为了解决这个问题，防止第三方窃取隐私。</p>
+<p>network.security.esni.enabled设置为true打开Encrypted SNI浏览器支持</p>
+<p><em>服务器端</em></p>
+<p>OpenSSL尚未支持ESNI，因此下游的nginx当前亦不支持，相信很快就会支持。<br><a target="_blank" rel="noopener" href="https://defo.ie/">DEfO</a>是一个为OpenSSL添加ENSI支持的项目<a target="_blank" rel="noopener" href="https://github.com/sftcd/openssl/tree/master/esnistuff">github地址</a>。</p>
+<p><strong>chrome浏览器</strong></p>
+<p>即将支持:-(，参考[5]<br>今年10月晚期发布的chrome 78会开始实验性的支持DOH，参见[9]<br>ESNI一样尚未支持</p>
+<p>版本78以后，打开Secure DNS lookups<br>（chrome://flags/#dns-over-https）标志，并将系统dns设置为1.1.1.1和/或1.0.0.1</p>
+<p><strong>References:</strong><br>[1]<a target="_blank" rel="noopener" href="https://program-think.blogspot.com/2018/10/Comparison-of-DNS-Protocols.html">对比4种强化域名安全的协议——DNSSEC，DNSCrypt，DNS over TLS，DNS over HTTPS</a><br>[2]<a target="_blank" rel="noopener" href="https://www.cloudflare.com/ssl/encrypted-sni/">Browsing Experience Security Check</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/curl/curl/wiki/DNS-over-HTTPS">DNS over HTTPS</a><br>[4]<a target="_blank" rel="noopener" href="https://wiki.mozilla.org/Trusted_Recursive_Resolver">Trusted Recursive Resolver</a><br>[5]<a target="_blank" rel="noopener" href="https://chromium-review.googlesource.com/c/chromium/src/+/1639663">Add DNS-over-HTTPS to chrome://flags</a><br>[6]<a target="_blank" rel="noopener" href="https://developers.cloudflare.com/1.1.1.1/dns-over-https/cloudflared-proxy/">Running a DNS over HTTPS Client</a><br>[7]<a target="_blank" rel="noopener" href="https://github.com/jedisct1/dnscrypt-proxy">dnscrypt-proxy</a><br>[8]<a target="_blank" rel="noopener" href="https://blog.ysoup.org/tech/doh.html">MacOS 开启 DNS over HTTPS (DoH)</a><br>[9]<a target="_blank" rel="noopener" href="https://www.zdnet.com/article/google-to-run-dns-over-https-doh-experiment-in-chrome/">Google to run DNS-over-HTTPS (DoH) experiment in Chrome</a><br>[10]<a target="_blank" rel="noopener" href="https://wiki.mozilla.org/Trusted_Recursive_Resolver">Trusted Recursive Resolver</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/16/debian-buster-find-hba-wwn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/16/debian-buster-find-hba-wwn/" class="post-title-link" itemprop="url">debian buster查看hba卡wwn序号</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-16 15:14:44" itemprop="dateCreated datePublished" datetime="2019-07-16T15:14:44+08:00">2019-07-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>存储配置主机映射时，需要指定主机HBA(Host Bus Adapter)卡端口的WWN(World Wide Name)<br>因此需要从主机端查看这些WWN,Debian buster系统中这样查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat /sys/<span class="class"><span class="keyword">class</span>/<span class="title">fc_host</span>/<span class="title">host</span>*/<span class="title">port_name</span></span></span><br><span class="line"><span class="class">0<span class="title">x10000090fa181673</span></span></span><br><span class="line"><span class="class">0<span class="title">x10000090fa181ad6</span></span></span><br></pre></td></tr></table></figure>
+<p>表明有两个HBA端口，其WWN分别为0x10000090fa181673和0x10000090fa181ad6<br>存储中配置完成后，分别是这个样的10:00:00:90:fa:18:16:73和10:00:00:90:fa:18:1a:d6</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/15/bash-alias-for-wine-apps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/15/bash-alias-for-wine-apps/" class="post-title-link" itemprop="url">bash alias for wine apps</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-15 20:52:00" itemprop="dateCreated datePublished" datetime="2019-07-15T20:52:00+08:00">2019-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>terminal下运行wine apps比较繁琐，可以在.bashrc中添加alias</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias ssmc=<span class="string">&quot;(cd $HOME/.wine/drive_c/Program\\ Files/StorageManager/client/ &amp;&amp; WINEPREFIX=$HOME/.wine wine start SANtricity\\ Storage\\ Manager\\ Client.exe &gt;/dev/null 2&gt;&amp;1)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样终端下只要执行ssmc就可以了，不会破坏当前的工作目录和stdout</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/15/cassandra-fix-corrupt-sstables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/15/cassandra-fix-corrupt-sstables/" class="post-title-link" itemprop="url">cassandra修复损坏的sstables</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-15 15:21:08" itemprop="dateCreated datePublished" datetime="2019-07-15T15:21:08+08:00">2019-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>由于磁盘阵列Unreadable Sectors错误，强制修复后导致cassandra的一个sstable损坏，cassandra启动时报错:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[CompactionExecutor:<span class="number">2</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">15</span> <span class="number">15</span>:<span class="number">03</span>:<span class="number">27</span>,<span class="number">161</span> DefaultFSErrorHandler.java:<span class="number">92</span> - Exiting forcefully due to file system exception on startup, disk failure policy <span class="string">&quot;stop&quot;</span></span><br><span class="line">org.apache.cassandra.io.FSReadError: org.apache.cassandra.io.sstable.CorruptSSTableException: Corrupted: <span class="regexp">/mnt/</span>data/cassandra/reis/image-6a85c44086a711e5aef4b53617129a2a/lb-<span class="number">47344</span>-big-Data.db</span><br><span class="line">at org.apache.cassandra.io.util.RandomAccessReader.readBytes(RandomAccessReader.java:<span class="number">365</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.ByteBufferUtil.read(ByteBufferUtil.java:<span class="number">361</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.ByteBufferUtil.readWithLength(ByteBufferUtil.java:<span class="number">324</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.ColumnSerializer.deserializeColumnBody(ColumnSerializer.java:<span class="number">132</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.OnDiskAtom$Serializer.deserializeFromSSTable(OnDiskAtom.java:<span class="number">92</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.AbstractCell$1.computeNext(AbstractCell.java:<span class="number">52</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br></pre></td></tr></table></figure>
+<p>lb-47344-big-Data.db这个sstable被破坏了。<br>因为节点已经无法启动了，所以下面的尝试无可避免的失败了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool scrub</span><br><span class="line">nodetool: Failed to connect to <span class="string">&#x27;127.0.0.1:7199&#x27;</span> - ConnectException: <span class="string">&#x27;Connection refused (Connection refused)&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>尝试离线修复，如果数据量很大，记得开启screen会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra sstablescrub reis image</span><br></pre></td></tr></table></figure>
+<p>注意cassandra数据目录的权限，这里使用cassandra用户来执行scrub<br>执行结束后，删除掉已经损坏的sstable，scrub时cassandra会将损坏的sstable保持原样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mv lb-<span class="number">47344</span>* backups/</span><br></pre></td></tr></table></figure>
+
+<p>启动cassandra</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start cassandra</span><br></pre></td></tr></table></figure>
+
+<p>确认系统运行正常</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool status </span><br></pre></td></tr></table></figure>
+
+<p>之后可以删除sstablescrub自动创建的快照，释放掉已经无用的sstables</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool clearsnapshot</span><br><span class="line">Requested clearing snapshot(s) <span class="keyword">for</span> \[all keyspaces\]</span><br></pre></td></tr></table></figure>
+
+<p>最后需要repair本节点，修复节点数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool repair -local -- reis image</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/dse/5.1/dse-admin/datastax_enterprise/tools/toolsSStables/toolsSSTableScrub.html">sstablescrub</a><br>[2]<a target="_blank" rel="noopener" href="https://engineering.gosquared.com/dealing-corrupt-sstable-cassandra">Dealing with a corrupt SSTable in Cassandra</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.pythian.com/so-you-have-a-broken-cassandra-sstable-file/">So You Have A Broken Cassandra SSTable File?</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/15/ds5020-unreadable-sectors-fix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/15/ds5020-unreadable-sectors-fix/" class="post-title-link" itemprop="url">DS5020存储Unreadable Sectors故障修复</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-15 14:46:01" itemprop="dateCreated datePublished" datetime="2019-07-15T14:46:01+08:00">2019-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>一台IBM DS5020(1814-20 FAStT) RAID5存储阵列，OS报错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\[ 274.331664\] sd 4:0:0:0: \[sdc\] tag#5206 Add. Sense: Unrecovered read error</span><br><span class="line">\[ <span class="number">274.331673</span>\] print_req_error: critical medium error, dev sdc, sector <span class="number">177668608</span></span><br><span class="line">\[ <span class="number">274.331752</span>\] print_req_error: critical medium error, dev dm-<span class="number">0</span>, sector <span class="number">177668608</span></span><br><span class="line">\[ 274.371749\] sd 4:0:0:0: \[sdc\] tag#5206 Add. Sense: Unrecovered read error</span><br><span class="line">\[ <span class="number">274.371757</span>\] print_req_error: critical medium error, dev sdc, sector <span class="number">177668632</span></span><br><span class="line">\[ <span class="number">274.371848</span>\] print_req_error: critical medium error, dev dm-<span class="number">0</span>, sector <span class="number">177668632</span></span><br></pre></td></tr></table></figure>
+
+<p>连上存储，有报警信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Failure Entry <span class="number">1</span>: USM_UNREADABLE_SECTORS_EXIST-Recovery Failure Type Code: <span class="number">75</span></span><br><span class="line">Storage array: Unnamed</span><br><span class="line">Unreadable sectors detected: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>有两个不可读取的扇区，可以进一步看到这两个扇区位于哪个磁盘驱动器，这种故障一般就是硬盘不稳定了，该换就换吧。</p>
+<p>存储管理EMW(Enterprise Manage Window)窗口找到存储阵列，右击弹出context菜单中选择“Exectute script…”</p>
+<p>脚本窗口中执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show storageArray unreadableSectors;</span><br></pre></td></tr></table></figure>
+<p>结果窗口输出:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Executing script...</span><br><span class="line">Volume LUN Accessible By <span class="built_in">Date</span>/Time Volume LBA Drive Location Drive LBA Failure Type </span><br><span class="line"><span class="number">1</span> <span class="number">0</span> Host Group ibm <span class="number">7</span>/<span class="number">11</span>/<span class="number">19</span> <span class="number">3</span>:<span class="number">07</span>:<span class="number">58</span> AM <span class="number">0xa97021e</span> Tray <span class="number">85</span>, Slot <span class="number">2</span> <span class="number">0x12d391e</span> Logical </span><br><span class="line"><span class="number">1</span> <span class="number">0</span> Host Group ibm <span class="number">7</span>/<span class="number">11</span>/<span class="number">19</span> <span class="number">3</span>:<span class="number">07</span>:<span class="number">58</span> AM <span class="number">0xa97061e</span> Tray <span class="number">85</span>, Slot <span class="number">6</span> <span class="number">0x12d391e</span> Physical </span><br><span class="line"></span><br><span class="line">Script execution complete.</span><br></pre></td></tr></table></figure>
+<p>可以看到这两个扇区的详细状况，然后继续执行命令清除这两个扇区</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear allVolumes unreadableSectors;</span><br></pre></td></tr></table></figure>
+
+<p>最后重新查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show storageArray unreadableSectors;</span><br><span class="line">Executing script...</span><br><span class="line">There are currently no unreadable sectors on the storage array.</span><br><span class="line">Script execution complete.</span><br></pre></td></tr></table></figure>
+<p>可以看到已经没有不可读取的扇区了，阵列的报警灯也恢复正常。<br>注意，那两个扇区的数据应该是丢失了，应用程序如果需要这些数据应该通过其他途径恢复数据。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/15/debian-buster-install-wine-devel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/15/debian-buster-install-wine-devel/" class="post-title-link" itemprop="url">debian buster安装wine-devel</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-15 12:12:13" itemprop="dateCreated datePublished" datetime="2019-07-15T12:12:13+08:00">2019-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>wine是个伟大的工程。</p>
+<p>wine有三个分支wine-stable,wine-devel和wine-staging，就好像debian的三个分支stable,testing和sid，devel分支其实很稳定的，也能支持更多的应用程序</p>
+<p>但是debian buster上安装wine-devel出现依赖问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wine-devel : Depends: wine-devel-amd64 (= <span class="number">4.12</span><span class="number">.1</span>~buster) but it is not going to be installed</span><br><span class="line"> Depends: wine-devel-i386 (= <span class="number">4.12</span><span class="number">.1</span>~buster)</span><br><span class="line">wine-devel-amd64 : Depends: libfaudio0 but it is not installable</span><br></pre></td></tr></table></figure>
+<p>从wine4.5开始，wine-devel依赖libfaudio0,但是debian官方源并没有提供这个包，因此可以从参考[2]给出的链接下载amd64和i386两个架构的安装包libfaudio0_19.07-0_buster_amd64.deb和libfaudio0_19.07-0_buster_i386.deb<br>并手工安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i libfaudio0_19<span class="number">.07</span>-0_buster_amd64.deb</span><br><span class="line">$ sudo dpkg -i libfaudio0_19<span class="number">.07</span>-0_buster_i386.deb</span><br></pre></td></tr></table></figure>
+
+<p>然后再安装wine-devel</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt -y install wine-devel</span><br></pre></td></tr></table></figure>
+
+<p>注意wine-devel安装到/opt/wine-devel目录，因此要使用wine-devel需要在.bashrc中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PATH=<span class="regexp">/opt/</span>wine-devel/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.winehq.org/Debian">Installing WineHQ packages</a><br>[2]<a target="_blank" rel="noopener" href="https://forum.winehq.org/viewtopic.php?f=8&t=32192">FAudio for Debian and Ubuntu</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/11/xterm-on-gnome-wayland/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/11/xterm-on-gnome-wayland/" class="post-title-link" itemprop="url">xterm on gnome wayland</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-11 14:26:38" itemprop="dateCreated datePublished" datetime="2019-07-11T14:26:38+08:00">2019-07-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian buster gnome桌面默认启用wayland，当前仍然可以切换回Xorg<br>wayland兼容性还是有一些小问题，wayland并不加载profile环境配置文件，<br>也不理会Xsession，导致.xinitrc,.Xresources等无法加载<br>系统及用户的Xresources是由/etc/X11/Xsession.d/30x11-common_xresources脚本加载的，在wayland面前失效了，直接后果就是每次重启机器xterm就会被打回原形，只能手工重新加载~/.Xresources<br>回到gnome on xorg则xterm恢复正常<br>发现一个跨平台GPU加速的terminale emulator <a target="_blank" rel="noopener" href="https://github.com/jwilm/alacritty">alacritty</a>看起来很不错，可以试用一番。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lwn.net/Articles/709769/">GNOME, Wayland, and environment variables</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/07/09/macosx-sed-i-parameter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/09/macosx-sed-i-parameter/" class="post-title-link" itemprop="url">macosx sed的-i参数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-09 21:20:24" itemprop="dateCreated datePublished" datetime="2019-07-09T21:20:24+08:00">2019-07-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>macosx上自带的很多命令行工具都是bsd版本的，包括sed</p>
+<p>sed的参数-i与gnu版本稍有不同,其-i参数后面的备份文件扩展名不可省略，即使是空字符串，也就是不要备份，而gnu版本不要备份的话是可以忽略掉的。<br>bsd版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;&#x27;</span> <span class="string">&#x27;s/123/456/&#x27;</span> test</span><br></pre></td></tr></table></figure>
+
+<p>gnu版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/123/456/&#x27;</span> test</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

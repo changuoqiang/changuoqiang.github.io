@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="Debian 6.0 OpenVPN服务器端安装配置简单手记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Debian Suqeeze安装配置OpenVPN服务器端">
+<meta property="og:url" content="http://example.com/2011/04/08/debian-suqeeze-openvpn-install-config/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Debian 6.0 OpenVPN服务器端安装配置简单手记">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-04-08T08:01:02.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.153Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Debian">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2011/04/08/debian-suqeeze-openvpn-install-config/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>Debian Suqeeze安装配置OpenVPN服务器端 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2011/04/08/debian-suqeeze-openvpn-install-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Debian Suqeeze安装配置OpenVPN服务器端
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-04-08 16:01:02" itemprop="dateCreated datePublished" datetime="2011-04-08T16:01:02+08:00">2011-04-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Debian 6.0 OpenVPN服务器端安装配置简单手记</p>
+<a id="more"></a>
+<p><strong>安装</strong></p>
+<p>$sudo apt-get install openvpn</p>
+<p><strong>生成服务器和客户端证书</strong></p>
+<ul>
+<li>  初始化</li>
+</ul>
+<p>$cd /usr/share/doc/openvpn/examples/easy-rsa/2.0<br>$sudo su<br>#source vars<br>#./clean-all</p>
+<ul>
+<li>  生成ca</li>
+</ul>
+<p>#./build-ca<br>所有的问题回车默认即可,在/usr/share/doc/openvpn/examples/easy-rsa/2.0/keys目录下生ca.crt,ca.key两个文件</p>
+<ul>
+<li>  生成服务器端证书</li>
+</ul>
+<p>#./build-key-server server<br>一路回车,后面两个问题Sign the certificate输入y,1 out of 1 certificate requests certified, commit?输入y,keys目录下生成server.crt,server.csr和server.key</p>
+<ul>
+<li>  生成客户端证书</li>
+</ul>
+<p>./build-key client1<br>一路回车，最后面两个问题Sign the certificate输入y,1 out of 1 certificate requests certified, commit?输入y,keys目录下生成client1.crt,client1.csr和client1.key,为其他客户端生成证书时选择不同的客户端名字即可，比如client2,client3…</p>
+<ul>
+<li>  创建DH(Diffie Hellman)</li>
+</ul>
+<p>#./build-dh<br>keys目录下生成dh1024.pem文件</p>
+<ul>
+<li>  将keys目录移动到/etc/openvpn目录下</li>
+</ul>
+<p>#mv /usr/share/doc/openvpn/examples/easy-rsa/2.0/keys /etc/openvpn/</p>
+<p><strong>编辑服务器端配置文件</strong></p>
+<p>#cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz /etc/openvpn/<br>#cd /etc/openvpn<br>#gunzip server.conf.gz</p>
+<p>打开server.conf修改相应配置,配置样例文件如下：<br> 23 # Which local IP address should OpenVPN<br> 24 # listen on? (optional)<br> 25 ;local a.b.c.d<br> 26 #服务器IP地址<br> 27 local x.x.x.x<br> 28<br> 29 # Which TCP/UDP port should OpenVPN listen on?<br> 30 # If you want to run multiple OpenVPN instances<br> 31 # on the same machine, use a different port<br> 32 # number for each one.  You will need to<br> 33 # open up this port on your firewall.\<br> 34 #openvpn使用的端口号<br> 35 port 6194<br> 36<br> 37 # TCP or UDP server?<br> 38 ;proto tcp<br> 39 #使用UDP协议<br> 40 proto udp<br> 41<br> 42 # “dev tun” will create a routed IP tunnel,<br> 43 # “dev tap” will create an ethernet tunnel.<br> 44 # Use “dev tap0” if you are ethernet bridging<br> 45 # and have precreated a tap0 virtual interface<br> 46 # and bridged it with your ethernet interface.<br> 47 # If you want to control access policies<br> 48 # over the VPN, you must create firewall<br> 49 # rules for the the TUN/TAP interface.<br> 50 # On non-Windows systems, you can give<br> 51 # an explicit unit number, such as tun0.<br> 52 # On Windows, use “dev-node” for this.<br> 53 # On most systems, the VPN will not function<br> 54 # unless you partially or fully disable<br> 55 # the firewall for the TUN/TAP interface.<br> 56 ;dev tap<br> 57 #使用tunnel设备<br> 58 dev tun<br> 59<br> 60 # Windows needs the TAP-Win32 adapter name<br> 61 # from the Network Connections panel if you<br> 62 # have more than one.  On XP SP2 or higher,<br> 63 # you may need to selectively disable the<br> 64 # Windows firewall for the TAP adapter.<br> 65 # Non-Windows systems usually don’t need this.<br> 66 ;dev-node MyTap<br> 67<br> 68 # SSL/TLS root certificate (ca), certificate<br> 69 # (cert), and private key (key).  Each client<br> 70 # and the server must have their own cert and<br> 71 # key file.  The server and all clients will<br> 72 # use the same ca file.<br> 73 #<br> 74 # See the “easy-rsa” directory for a series<br> 75 # of scripts for generating RSA certificates<br> 76 # and private keys.  Remember to use<br> 77 # a unique Common Name for the server<br> 78 # and each of the client certificates.<br> 79 #<br> 80 # Any X509 key management system can be used.<br> 81 # OpenVPN can also use a PKCS #12 formatted key file<br> 82 # (see “pkcs12” directive in man page).<br> 83 #指定CA及服务器端证书<br> 84 ca /etc/openvpn/keys/ca.crt<br> 85 cert /etc/openvpn/keys/server.crt<br> 86 key /etc/openvpn/keys/server.key  # This file should be kept secret<br> 87<br> 88 # Diffie hellman parameters.<br> 89 # Generate your own with:<br> 90 #   openssl dhparam -out dh1024.pem 1024<br> 91 # Substitute 2048 for 1024 if you are using<br> 92 # 2048 bit keys.<br> 93 #指定DH文件<br> 94 dh /etc/openvpn/keys/dh1024.pem<br> 95<br> 96 # Configure server mode and supply a VPN subnet<br> 97 # for OpenVPN to draw client addresses from.<br> 98 # The server will take 10.8.0.1 for itself,<br> 99 # the rest will be made available to clients.<br>100 # Each client will be able to reach the server<br>101 # on 10.8.0.1. Comment this line out if you are<br>102 # ethernet bridging. See the man page for more info.<br>103 #分配给客户端使用的IP地址段<br>104 server 10.8.0.0 255.255.255.0<br>105<br>106 # Maintain a record of client &lt;-&gt; virtual IP address<br>107 # associations in this file.  If OpenVPN goes down or<br>108 # is restarted, reconnecting clients can be assigned<br>109 # the same virtual IP address from the pool that was<br>110 # previously assigned.<br>111 ifconfig-pool-persist ipp.txt<br>112<br>113 # Configure server mode for ethernet bridging.<br>114 # You must first use your OS’s bridging capability<br>115 # to bridge the TAP interface with the ethernet<br>116 # NIC interface.  Then you must manually set the<br>117 # IP/netmask on the bridge interface, here we<br>118 # assume 10.8.0.4/255.255.255.0.  Finally we<br>119 # must set aside an IP range in this subnet<br>120 # (start=10.8.0.50 end=10.8.0.100) to allocate<br>121 # to connecting clients.  Leave this line commented<br>122 # out unless you are ethernet bridging.<br>123 ;server-bridge 10.8.0.4 255.255.255.0 10.8.0.50 10.8.0.100<br>124<br>125 # Configure server mode for ethernet bridging<br>126 # using a DHCP-proxy, where clients talk<br>127 # to the OpenVPN server-side DHCP server<br>128 # to receive their IP address allocation<br>129 # and DNS server addresses.  You must first use<br>130 # your OS’s bridging capability to bridge the TAP<br>131 # interface with the ethernet NIC interface.<br>132 # Note: this mode only works on clients (such as<br>133 # Windows), where the client-side TAP adapter is<br>134 # bound to a DHCP client.<br>135 ;server-bridge<br>136<br>137 # Push routes to the client to allow it<br>138 # to reach other private subnets behind<br>139 # the server.  Remember that these<br>140 # private subnets will also need<br>141 # to know to route the OpenVPN client<br>142 # address pool (10.8.0.0/255.255.255.0)<br>143 # back to the OpenVPN server.<br>144 ;push “route 192.168.10.0 255.255.255.0”<br>145 ;push “route 192.168.20.0 255.255.255.0”<br>146<br>147 # To assign specific IP addresses to specific<br>148 # clients or if a connecting client has a private<br>149 # subnet behind it that should also have VPN access,<br>150 # use the subdirectory “ccd” for client-specific<br>151 # configuration files (see man page for more info).<br>152<br>153 # EXAMPLE: Suppose the client<br>154 # having the certificate common name “Thelonious”<br>155 # also has a small subnet behind his connecting<br>156 # machine, such as 192.168.40.128/255.255.255.248.<br>157 # First, uncomment out these lines:<br>158 ;client-config-dir ccd<br>159 ;route 192.168.40.128 255.255.255.248<br>160 # Then create a file ccd/Thelonious with this line:<br>161 #   iroute 192.168.40.128 255.255.255.248<br>162 # This will allow Thelonious’ private subnet to<br>163 # access the VPN.  This example will only work<br>164 # if you are routing, not bridging, i.e. you are<br>165 # using “dev tun” and “server” directives.<br>166<br>167 # EXAMPLE: Suppose you want to give<br>168 # Thelonious a fixed VPN IP address of 10.9.0.1.<br>169 # First uncomment out these lines:<br>170 ;client-config-dir ccd<br>171 ;route 10.9.0.0 255.255.255.252<br>172 # Then add this line to ccd/Thelonious:<br>173 #   ifconfig-push 10.9.0.1 10.9.0.2<br>174<br>175 # Suppose that you want to enable different<br>176 # firewall access policies for different groups<br>177 # of clients.  There are two methods:<br>178 # (1) Run multiple OpenVPN daemons, one for each<br>179 #     group, and firewall the TUN/TAP interface<br>180 #     for each group/daemon appropriately.<br>181 # (2) (Advanced) Create a script to dynamically<br>182 #     modify the firewall in response to access<br>183 #     from different clients.  See man<br>184 #     page for more info on learn-address script.<br>185 ;learn-address ./script<br>186<br>187 # If enabled, this directive will configure<br>188 # all clients to redirect their default<br>189 # network gateway through the VPN, causing<br>190 # all IP traffic such as web browsing and<br>191 # and DNS lookups to go through the VPN<br>192 # (The OpenVPN server machine may need to NAT<br>193 # or bridge the TUN/TAP interface to the internet<br>194 # in order for this to work properly).<br>195 push “redirect-gateway def1 bypass-dhcp”<br>196<br>197 # Certain Windows-specific network settings<br>198 # can be pushed to clients, such as DNS<br>199 # or WINS server addresses.  CAVEAT:<br>200 # <a target="_blank" rel="noopener" href="http://openvpn.net/faq.html#dhcpcaveats">http://openvpn.net/faq.html#dhcpcaveats</a><br>201 # The addresses below refer to the public<br>202 # DNS servers provided by opendns.com.<br>203 push “dhcp-option DNS 208.67.222.222”<br>204 push “dhcp-option DNS 8.8.8.8”<br>205 ;push “dhcp-option DNS 208.67.220.220”<br>206<br>207 # Uncomment this directive to allow different<br>208 # clients to be able to “see” each other.<br>209 # By default, clients will only see the server.<br>210 # To force clients to only see the server, you<br>211 # will also need to appropriately firewall the<br>212 # server’s TUN/TAP interface.<br>213 ;client-to-client<br>214<br>215 # Uncomment this directive if multiple clients<br>216 # might connect with the same certificate/key<br>217 # files or common names.  This is recommended<br>218 # only for testing purposes.  For production use,<br>219 # each client should have its own certificate/key<br>220 # pair.<br>221 #<br>222 # IF YOU HAVE NOT GENERATED INDIVIDUAL<br>223 # CERTIFICATE/KEY PAIRS FOR EACH CLIENT,<br>224 # EACH HAVING ITS OWN UNIQUE “COMMON NAME”,<br>225 # UNCOMMENT THIS LINE OUT.<br>226 ;duplicate-cn<br>227<br>228 # The keepalive directive causes ping-like<br>229 # messages to be sent back and forth over<br>230 # the link so that each side knows when<br>231 # the other side has gone down.<br>232 # Ping every 10 seconds, assume that remote<br>233 # peer is down if no ping received during<br>234 # a 120 second time period.<br>235 keepalive 10 120<br>236<br>237 # For extra security beyond that provided<br>238 # by SSL/TLS, create an “HMAC firewall”<br>239 # to help block DoS attacks and UDP port flooding.<br>240 #<br>241 # Generate with:<br>242 #   openvpn –genkey –secret ta.key<br>243 #<br>244 # The server and each client must have<br>245 # a copy of this key.<br>246 # The second parameter should be ‘0’<br>247 # on the server and ‘1’ on the clients.<br>248 ;tls-auth ta.key 0 # This file is secret<br>249<br>250 # Select a cryptographic cipher.<br>251 # This config item must be copied to<br>252 # the client config file as well.<br>253 ;cipher BF-CBC        # Blowfish (default)<br>254 ;cipher AES-128-CBC   # AES<br>255 ;cipher DES-EDE3-CBC  # Triple-DES<br>256<br>257 # Enable compression on the VPN link.<br>258 # If you enable it here, you must also<br>259 # enable it in the client config file.<br>260 #压缩数据流<br>261 comp-lzo<br>262<br>263 # The maximum number of concurrently connected<br>264 # clients we want to allow.<br>265 ;max-clients 100<br>266<br>267 # It’s a good idea to reduce the OpenVPN<br>268 # daemon’s privileges after initialization.<br>269 #<br>270 # You can uncomment this out on<br>271 # non-Windows systems.<br>272 ;user nobody<br>273 ;group nogroup<br>274<br>275 # The persist options will try to avoid<br>276 # accessing certain resources on restart<br>277 # that may no longer be accessible because<br>278 # of the privilege downgrade.<br>279 persist-key<br>280 persist-tun<br>281<br>282 # Output a short status file showing<br>283 # current connections, truncated<br>284 # and rewritten every minute.<br>285 status openvpn-status.log<br>286<br>287 # By default, log messages will go to the syslog (or<br>288 # on Windows, if running as a service, they will go to<br>289 # the “\Program Files\OpenVPN\log” directory).<br>290 # Use log or log-append to override this default.<br>291 # “log” will truncate the log file on OpenVPN startup,<br>292 # while “log-append” will append to it.  Use one<br>293 # or the other (but not both).<br>294 ;log         openvpn.log<br>295 ;log-append  openvpn.log<br>296<br>297 # Set the appropriate level of log<br>298 # file verbosity.<br>299 #<br>300 # 0 is silent, except for fatal errors<br>301 # 4 is reasonable for general usage<br>302 # 5 and 6 can help to debug connection problems<br>303 # 9 is extremely verbose<br>304 verb 3<br>305<br>306 # Silence repeating messages.  At most 20<br>307 # sequential messages of the same message<br>308 # category will be output to the log.<br>309 ;mute 20  </p>
+<p><strong>服务器端网络设置</strong></p>
+<p>因为vpn使用了一个虚拟的私有网段,需要将数据包转发到服务器物理网卡上才可以让客户端正常访问网络，打开/etc/sysctl.conf文件,去掉net.ipv4.ip_forward=1前面的注释变为<br>net.ipv4.ip_forward=1</p>
+<p>在/etc/network/if-up.d目录下新建文件iptables,输入以下内容:<br>1 #!/bin/sh<br>2<br>3 iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE  </p>
+<p><strong>最后</strong></p>
+<p>1 $sudo /etc/init.d/networking restart <br>2 $sudo /etc/init.d/openvpn restart</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/04/06/debian-lnmp-one-click-install/" rel="prev" title="Debian Squeeze lnmp一键安装脚本">
+                  <i class="fa fa-chevron-left"></i> Debian Squeeze lnmp一键安装脚本
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/04/08/openvpn-settings-manual/" rel="next" title="使用OpenVPN Settings管理Android OpenVPN客户端">
+                  使用OpenVPN Settings管理Android OpenVPN客户端 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

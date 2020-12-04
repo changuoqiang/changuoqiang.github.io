@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="thunk是什么？查字典只能让人一头雾水。thunk是一段插入程序中实现特定功能的二进制代码，这个定义是我下的，对不对各位看官请自己斟酌，呵呵。 我这里要讲的是窗口回调专用thunk，thunk的核心是调用栈动态修改技术。地球人都知道，windows的窗口回调函数是一个全局函数，类成员函数 是不可以作为窗口回调函数的，因为它有this指针，这给我们用C++来包装窗口带来不小的麻烦。你说什么？用一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GUI之窗口过程thunk">
+<meta property="og:url" content="http://example.com/2009/06/04/gui-wndproc-thunk/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="thunk是什么？查字典只能让人一头雾水。thunk是一段插入程序中实现特定功能的二进制代码，这个定义是我下的，对不对各位看官请自己斟酌，呵呵。 我这里要讲的是窗口回调专用thunk，thunk的核心是调用栈动态修改技术。地球人都知道，windows的窗口回调函数是一个全局函数，类成员函数 是不可以作为窗口回调函数的，因为它有this指针，这给我们用C++来包装窗口带来不小的麻烦。你说什么？用一个">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2009-06-04T13:50:20.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.214Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="KWinUI">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2009/06/04/gui-wndproc-thunk/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>GUI之窗口过程thunk | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2009/06/04/gui-wndproc-thunk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GUI之窗口过程thunk
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-06-04 21:50:20" itemprop="dateCreated datePublished" datetime="2009-06-04T21:50:20+08:00">2009-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/KWinUI/" itemprop="url" rel="index"><span itemprop="name">KWinUI</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>thunk是什么？查字典只能让人一头雾水。thunk是一段插入程序中实现特定功能的二进制代码，这个定义是我下的，对不对各位看官请自己斟酌，呵呵。</p>
+<p>我这里要讲的是窗口回调专用thunk，thunk的核心是调用栈动态修改技术。地球人都知道，windows的窗口回调函数是一个全局函数，类成员函数 是不可以作为窗口回调函数的，因为它有this指针，这给我们用C++来包装窗口带来不小的麻烦。你说什么？用一个全局函数或类的静态成员函数来做窗口回 调函数？这肯定没问题。但是这样带来的麻烦也许比你想象的要多，想想我们的GUI Framework不会只有一个类，而是一个类层级结构，会有许许多许多、形形色色的widget，每个都是一个窗口。对象与窗口之间的映射可能就是个不 小的问题，像MFC那样搞？太落伍了吧！用thunk就要简单的多。WTL用了thunk，但是不够彻底。<br>废话少说，先贴出thunk核心代码。</p>
+<a id="more"></a>
+<p> 20 /*<br> 21  *  thunk with DEP support<br> 22  *<br> 23  *  author:proguru<br> 24  *  July 9,2008<br> 25 <em>/<br> 26 /</em><br> 27  *  modify x64 thunk code according to the feedback from Loaden<br> 28  *  “<a target="_blank" rel="noopener" href="http://topic.csdn.net/u/20090322/08/b6bf82ca-8ba2-452b-92f8-bb2adb05a1ef.html">http://topic.csdn.net/u/20090322/08/b6bf82ca-8ba2-452b-92f8-bb2adb05a1ef.html</a>“<br> 29  *  maybe also “<a target="_blank" rel="noopener" href="http://www.qpsoft.com/blog/x64-thunk-callback-conversion/">http://www.qpsoft.com/blog/x64-thunk-callback-conversion/</a>“<br> 30 *<br> 31  *  proguru<br> 32  *  June 04,2009<br> 33 <em>/<br> 34<br> 35 #ifndef <strong>KTHUNK_H__<br> 36 #define __KTHUNK_H</strong><br> 37 #include “windows.h”<br> 38  <br> 39 <strong>namespace</strong> kwinui{<br> 40<br> 41 //#define USE_THISCALL_CONVENTION   //turn it off for c++ builder compatibility<br> 42<br> 43 #ifdef USE_THISCALL_CONVENTION<br> 44 #define WNDPROC_THUNK_LENGTH 29 //For __thiscall calling convention ONLY,assign m_hWnd by thunk<br> 45 #define GENERAL_THUNK_LENGTH 10<br> 46 #define KCALLBACK //__thiscall is default<br> 47 #else<br> 48 #define WNDPROC_THUNK_LENGTH 22 //__stdcall calling convention ONLY,assign m_hWnd by thunk<br> 49 #define GENERAL_THUNK_LENGTH 16<br> 50     #define KCALLBACK __stdcall<br> 51 #endif<br> 52<br> 53 #define WNDPROC_THUNK_LENGTH_X64 28<br> 54 #define GENERAL_THUNK_LENGTH_X64 34<br> 55<br> 56 <strong>static</strong> HANDLE g_hHeapExecutable;<br> 57<br> 58 <strong>class</strong> KThunkBase{<br> 59 <strong>public</strong>:<br> 60     KThunkBase(SIZE_T size){<br> 61         <strong>if</strong>(!g_hHeapExecutable){       //first thunk,create the executable heap<br> 62             g_hHeapExecutable=::HeapCreate(HEAP_CREATE_ENABLE_EXECUTE,0,0);<br> 63             //if (!g_hHeapExecutable) abort<br> 64         }<br> 65         m_szMachineCode=(<strong>unsigned</strong> <strong>char</strong></em>)::HeapAlloc(g_hHeapExecutable,HEAP_ZERO_MEMORY,size);<br> 66     }<br> 67     ~KThunkBase(){<br> 68         <strong>if</strong>(g_hHeapExecutable)<br> 69             ::HeapFree(g_hHeapExecutable,0,(<strong>void*<strong>)m_szMachineCode);<br> 70     }<br> 71     **inline</strong> *<em>void</em></strong> GetThunkedCodePtr(){<strong>return</strong> &amp;m_szMachineCode[0];}<br> 72 <strong>protected</strong>:<br> 73     <strong>unsigned</strong> *<em>char**</em> m_szMachineCode;<br> 74 };<br> 75<br> 76 <strong>class</strong> KWndProcThunk : <strong>public</strong> KThunkBase{<br> 77 <strong>public</strong>:<br> 78 #ifndef _WIN64<br> 79     KWndProcThunk():KThunkBase(WNDPROC_THUNK_LENGTH){}<br> 80 #else   //_WIN64<br> 81     KWndProcThunk():KThunkBase(WNDPROC_THUNK_LENGTH_X64){}<br> 82 #endif<br> 83<br> 84     <strong>void</strong> Init(INT_PTR pThis, INT_PTR ProcPtr){<br> 85 #ifndef _WIN64<br> 86 #pragma warning(disable: 4311)<br> 87         DWORD dwDistance =(DWORD)(ProcPtr) - (DWORD)(&amp;m_szMachineCode[0]) - WNDPROC_THUNK_LENGTH;<br> 88         #pragma warning(<strong>default</strong>: 4311)<br> 89<br> 90     #ifdef USE_THISCALL_CONVENTION<br> 91         /*<br> 92         For __thiscall, the default calling convention used by Microsoft VC++, The thing needed is<br> 93         just set ECX with the value of ‘this pointer’<br> 94<br> 95         machine code                    assembly instruction        comment<br> 96         —————————     ————————-   ———-<br> 97         B9 ?? ?? ?? ??                  mov ecx, pThis              ;Load ecx with this pointer<br> 98 50                              PUSH EAX<br> 99         8B 44 24 08                     MOV EAX, DWORD PTR[ESP+8]   ;EAX=hWnd<br>100         89 01                           MOV DWORD PTR [ECX], EAX    ;[pThis]=[ECX]=hWnd<br>101         8B 44 24 04                     mov eax,DWORD PTR [ESP+04H] ;eax=(return address)<br>102         89 44 24 08                     mov DWORD PTR [ESP+08h],eax ;hWnd=(return address)<br>103 58                              POP EAX<br>104 83 C4 04                        add ESP,04h<br>105<br>106         E9 ?? ?? ?? ??                  jmp ProcPtr                 ;Jump to target message handler<br>107 <em>/<br>108         m_szMachineCode[0]                = 0xB9;<br>109         <em>((DWORD</em>)&amp;m_szMachineCode[1] ) =(DWORD)pThis;<br>110         <em>((DWORD</em>)&amp;m_szMachineCode[5] )   =0x24448B50;  <br>111         <em>((DWORD</em>)&amp;m_szMachineCode[9] )   =0x8B018908;<br>112         <em>((DWORD</em>)&amp;m_szMachineCode[13])   =0x89042444;<br>113         <em>((DWORD</em>)&amp;m_szMachineCode[17])   =0x58082444;<br>114         <em>((DWORD</em>)&amp;m_szMachineCode[21])   =0xE904C483;<br>115         <em>((DWORD</em>)&amp;m_szMachineCode[25]) =dwDistance;  <br>116     #else  <br>117         /</em><br>118          * 01/26/2008 modify<br>119         For __stdcall calling convention, replace ‘HWND’ with ‘this pointer’<br>120<br>121         Stack frame before inserting            Stack frame after inserting<br>122<br>123         :      …      :                       :       …      :<br>124         —————                       —————-<br>125 lParam                                lParam<br>126         —————                       —————-<br>127 wParam                                wParam<br>128         —————                       —————-<br>129 uMsg                                  uMsg<br>130         —————                       —————-<br>131              hWnd                             <this pointer><br>132         —————                       —————-<br>133          (Return Addr) &lt;- ESP                 (Return Addr)   &lt;-ESP<br>134         —————                       —————-<br>135 :      …      :                       :       …<br>136<br>137         machine code        assembly instruction            comment<br>138         ——————- —————————-    ————–<br>139         51                  push ecx<br>140         B8 ?? ?? ?? ??      mov  eax,pThis                  ;eax=this;<br>141         8B 4C 24 08         mov  ecx,dword ptr [esp+08H]    ;ecx=hWnd;<br>142 89 08               mov  dword ptr [eax],ecx        ;[this]=hWnd,if has vftbl shound [this+4]=hWnd<br>143         89 44 24 08         mov  dword ptr [esp+08H], eax   ;Overwite the ‘hWnd’ with ‘this pointer’<br>144         59                  pop  ecx<br>145         E9 ?? ?? ?? ??      jmp  ProcPtr                    ; Jump to target message handler<br>146 <em>/<br>147<br>148         *((WORD  *) &amp;m_szMachineCode[ 0]) = 0xB851;<br>149         *((DWORD *) &amp;m_szMachineCode[ 2]) = (DWORD)pThis;<br>150         *((DWORD *) &amp;m_szMachineCode[ 6]) = 0x08244C8B;<br>151         *((DWORD *) &amp;m_szMachineCode[10]) = 0x44890889;<br>152         *((DWORD *) &amp;m_szMachineCode[14]) = 0xE9590824;<br>153         *((DWORD *) &amp;m_szMachineCode[18]) = (DWORD)dwDistance;<br>154     #endif //USE_THISCALL_CONVENTION<br>155 #else   //_WIN64<br>156         /</em><br>157         For x64 calling convention, RCX hold the ‘HWND’,copy the ‘HWND’ to Window object,<br>158 then insert ‘this pointer’ into RCX,so perfectly!!!<br>159<br>160         Stack frame before modify               Stack frame after modify<br>161<br>162         :      …      :                       :       …      :<br>163         —————                       —————-<br>164                        &lt;-R9(lParam)                           &lt;-R9(lParam)<br>165         —————                       —————-<br>166                        &lt;-R8(wParam)                           &lt;-R8(wParam)<br>167         —————                       —————-<br>168                        &lt;-RDX(msg)                             &lt;-RDX(msg)<br>169         —————                       —————-<br>170                        &lt;-RCX(hWnd)                            &lt;-RCX(this)<br>171         —————                       —————-<br>172          (Return Addr) &lt;-RSP                 (Return Addr)   &lt;-RSP<br>173         —————                       —————-<br>174         :      …      :                       :   …  :<br>175<br>176         machine code            assembly instruction    comment<br>177         ——————-     ———————– —-<br>178         48B8 ????????????????   mov RAX,pThis<br>179         #4808                   mov qword ptr [RAX],RCX ;m_hWnd=[this]=RCX<br>180         488908                  mov qword ptr [RAX],RCX ;m_hWnd=[this]=RCX //feedback from Loaden<br>181         4889C1                  mov RCX,RAX             ;RCX=pThis (488BC8 ?)<br>182         48B8 ????????????????   mov RAX,ProcPtr<br>183 FFE0                    jmp RAX<br>184 <em>/<br>185         <em>((WORD   *)&amp;m_szMachineCode[0] ) =0xB848;<br>186         *((INT_PTR</em>)&amp;m_szMachineCode[2] ) =pThis;<br>187         //</em>((DWORD  <em>)&amp;m_szMachineCode[10])   =0x89480848;<br>188         *((DWORD  *)&amp;m_szMachineCode[10]) =0x48088948;<br>189         //</em>((DWORD  <em>)&amp;m_szMachineCode[14])   =0x00B848C1;<br>190         *((DWORD  *)&amp;m_szMachineCode[14]) =0xB848C189;<br>191         //</em>((INT_PTR*)&amp;m_szMachineCode[17])   =ProcPtr;<br>192         <em>((INT_PTR</em>)&amp;m_szMachineCode[18]) =ProcPtr;<br>193         //*((WORD   *)&amp;m_szMachineCode[25])   =0xE0FF;<br>194         *((WORD   *)&amp;m_szMachineCode[26]) =0xE0FF;<br>195 #endif<br>196     }<br>197 };  </p>
+<p>是不是有些头晕？且待我慢慢分解。<br>类成员函数有两种调用约定，MS VC++默认采用thiscall调用约定，而Borland C++默认采用stdcall调用约定。thiscall采用ECX寄存器来传递this指针，而stdcall则通过栈来传递this指针，this指 针是成员函数隐藏的第一个参数。而到了x64平台，则问题有了新的变化。为了充分利用寄存器，提高效率，函数的前四个参数默认用寄存器传递，分别是 RCX,RDX,R8和R9。对于成员函数，其this指针通过RCX传递。x64 thunk代码我并未测试过，因为一直未使用x64平台，不过应该不会有太大问题。</p>
+<p>在这里，我只分析x86平台上使用stdcall调用习惯的thunk代码。因为这段代码将窗口回调函数调用栈上的HWND直接修改this指针，所以有两个问题需要提前了解一下。<br>第一、我将回调函数的signature修改为如下形式：<br>LRESULT KCALLBACK KWndProc(UINT uMsg, WPARAM wParam, LPARAM lParam) ;<br>请注意这是个成员函数，而且没有HWND hWnd这个参数。<br>第二、窗口类的第一个数据成员必须是窗口句柄变量，我的是HWND m_hWnd.至于为什么要这样，后面会有提及。<br>现在请看代码第85行开始的图形，前一个是修改前windows调用我们提供的回调函数的栈结构，后一个则是为了适应我们的需求修改过后的调用栈。首先， 我们的回调函数需要一个this指针，而且要放到栈上第一个参数的位置上，这是通过第46行的thunk初始化函数Init传递进来的。其次我们的窗口对象必须要得到自己所对应的窗口句柄，不然一切都是空谈。</p>
+<p>那么我们可以用thunk来修改调用栈。首先用初始栈上的第一个参数，也就是实际的窗口句柄，传递给窗口对象。如何传递呢？因为m_hWnd成员是对象的 第一个数据成员，那么很简单，如果没有虚函数的存在，那么这个m_hWnd就静静地待在对象的最开始处，就是this指针所指向的位置。如果有虚函数的存 在，那么事情也不是太复杂，对象的起始处现在是VPTR,m_hWnd紧随其后，代码略作调整即可。其次用this指针覆盖栈上的第一个参数，也就是窗口 句柄HWND。下面是逐条注释的汇编格式指令：<br>1 push ecx                        ;保护ecx，后面会用到<br>2 mov  eax,pThis                  ;传送this指针到eax. eax=this;<br>3 mov  ecx,dword ptr [esp+08H]    ;把调用栈上的第一个参数送ecx. ecx=hWnd<br>4 mov  dword ptr [eax],ecx        ;把窗口句柄赋予窗口对象数据成员m_hWnd.<br>5                                 ;[this]=hWnd,if has vftbl shound [this+4]=hWnd<br>6 mov  dword ptr [esp+08H], eax   ;用this指针覆盖调用栈上的第一个参数即窗口句柄<br>7                                 ;Overwite the ‘hWnd’ with ‘this pointer’<br>8 pop  ecx                        ;弹出先前ecx<br>9 jmp  ProcPtr                    ;跳转到消息处理函数.Jump to target message handler  </p>
+<p>这样就把窗口(句柄)和窗口对象完美的绑定到一起，不需要一个对应查找表，不使用任何全局或静态的数据，满足thread safe。</p>
+<p>至于汇编格式指令翻译到机器码的问题，下载intel的指令手册，查查表就可以了。<br>下面的代码展示了thunk的使用(删除了不相干的代码)：<br> 1 <strong>template</strong> &lt;**typename** T,**typename** TBase=KWindow&gt;<br> 2 <strong>class</strong> KWindowRoot : <strong>public</strong> TBase{<br> 3 <strong>public</strong>:<br> 4     KWindowRoot():TBase(){<br> 5         T* pT=<strong>static_cast</strong>&lt;T*&gt;(<strong>this</strong>);<br> 6         m_thunk.Init((INT_PTR)pT, pT-&gt;GetMessageProcPtr());<br> 7     }<br> 8  <br> 9     INT_PTR GetMessageProcPtr(){<br>10         <strong>typedef</strong> LRESULT (KCALLBACK T::<em>KWndProc_t)(UINT,WPARAM,LPARAM);<br>11         <br>12         <strong>union</strong>{<br>13             KWndProc_t     wndproc;<br>14             INT_PTR        dwProcAddr;<br>15         }u;<br>16         u.wndproc=&amp;T::KWndProc;<br>17         <strong>return</strong> u.dwProcAddr;<br>18     }<br>19  <br>20     LRESULT KCALLBACK KWndProc(UINT uMsg, WPARAM wParam, LPARAM lParam){<br>21         T</em> pT=<strong>static_cast</strong>&lt;T*&gt;(<strong>this</strong>);<br>22         <strong>return</strong> pT-&gt;ProcessWindowMessage(uMsg,wParam,lParam);<br>23     }<br>24  <br>25 <strong>protected</strong>:<br>26     KWndProcThunk   m_thunk;<br>27     <strong>inline</strong> INT_PTR GetThunkedProcPtr(){<strong>return</strong> (INT_PTR)m_thunk.GetThunkedCodePtr();}<br>28 };  </p>
+<p>在基类KWindow中HWND m_hWnd是其第一个数据成员。因为使用了模板的静态多态特性，故对象没有VPTR指针。<br>到了这里事情还没有结束。既然使用thunk就不得不面对DEP。DEP会阻止没有执行权限的内存执行代码。如果我们的thunk分配在栈上或new出来的堆上，则会被DEP阻止，程序执行失败。因此可以申请一个具有执行权限的堆来解决这个问题：<br>1 KThunkBase(SIZE_T size){<br>2     <strong>if</strong>(!g_hHeapExecutable){        //first thunk,create the executable heap<br>3         g_hHeapExecutable=::HeapCreate(HEAP_CREATE_ENABLE_EXECUTE,0,0);<br>4         //if (!g_hHeapExecutable) abort<br>5     }<br>6     m_szMachineCode=(<strong>unsigned</strong> *<em>char**</em>)::HeapAlloc(g_hHeapExecutable,HEAP_ZERO_MEMORY,size);<br>7 }  </p>
+<p>总的来讲thunk的空间和时间开销都是足够小的，甚至可以忽略不计。但是却带来了极大的便利。<br>thunk只是开了一个头。</p>
+<p>PS:<a target="_blank" rel="noopener" href="http://www.cppblog.com/proguru/archive/2008/08/24/59831.html">原文</a>早先发表于cppblog。根据 Loaden的反馈做了关于x64的修订。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KWinUI/" rel="tag"># KWinUI</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/06/01/boost-1-39-regex-solutions/" rel="prev" title="Visual C++ 2008 Express编译boost 1.39 regex库遇到的问题及解决办法">
+                  <i class="fa fa-chevron-left"></i> Visual C++ 2008 Express编译boost 1.39 regex库遇到的问题及解决办法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2009/06/04/likely-unlikely/" rel="next" title="likely,unlikely宏与GCC内建函数__builtin_expect()">
+                  likely,unlikely宏与GCC内建函数__builtin_expect() <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

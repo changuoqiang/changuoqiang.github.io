@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。 1、配置gitolite用户 jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”gitolite v3安装配置“。只要记住jenkins的用户主目录在&#x2F;var&#x2F;lib&#x2F;jenkins就可以了，与普通用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins集成gitolite提交自动构建发布">
+<meta property="og:url" content="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。 1、配置gitolite用户 jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”gitolite v3安装配置“。只要记住jenkins的用户主目录在&#x2F;var&#x2F;lib&#x2F;jenkins就可以了，与普通用户">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-18T12:14:12.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.266Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>jenkins集成gitolite提交自动构建发布 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/07/18/jenkins-gitolite-push-auto-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          jenkins集成gitolite提交自动构建发布
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-07-18 20:14:12" itemprop="dateCreated datePublished" datetime="2014-07-18T20:14:12+08:00">2014-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+<p>jenkins可以集成gitolite,这样代码推到仓库后,jenkins可以立即构建工程，并可以自动发布。</p>
+<p><strong>1、配置gitolite用户</strong></p>
+<p>jenkins要执行构建任务,必须可以从gitolite仓库获取代码，因此需要为jenkins配置访问gitolite的用户。可以参考”<a target="_blank" rel="noopener" href="https://openwares.net/linux/gitolite_v3_install_setup.html">gitolite v3安装配置</a>“。只要记住jenkins的用户主目录在/var/lib/jenkins就可以了，与普通用户的配置并无二致。同样可以在用户主目录下的.ssh目录下添加config来访问gitolite,注意known_hosts中要添加gitolite主机的fingerprint。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host gitsvr</span><br><span class="line"> Hostname *.*.*.*</span><br><span class="line"> User git </span><br><span class="line"> Port <span class="number">2022</span></span><br><span class="line"> IdentityFile /<span class="keyword">var</span>/lib/jenkins/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<p>这里配置的gitolie访问别名为gitsvr,然后jenkins使用如gitsvr:project就可以访问到gitolite管理的仓库project了。</p>
+<p><strong>2、配置gitolite hook</strong> </p>
+<p>jenkins的git插件目前只支持定时poll，虽然设置一个较短时间的轮询间隔也能满足要求，但总觉不太爽利。幸好git和<br>gitolite都支持hook，而且jenkins的git插件提供了一个url接收通知来进行构建。所以使用gitolite的post-receive<br>钩子通知jenkins构建就可以了。</p>
+<p>gitolite用户的~/.gitolite/hooks/common/post-receive添加如下脚本:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">JENKINS_URL=http:<span class="comment">//*.*.*.*:8082</span></span><br><span class="line">GIT_URL=gitsvr</span><br><span class="line">echo -n <span class="string">&quot;Notifying Jenkins...&quot;</span></span><br><span class="line">wget -q $JENKINS_URL/git/notifyCommit\\?url=$GIT_URL:$GL_REPO -O /dev/<span class="literal">null</span></span><br><span class="line">echo <span class="string">&quot;done.&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>gitolite自动设置了一个环境变量GL_REPO,这个变量的值是当前操作的仓库的名字。为post-receive脚本添加执行权限，然后执行gitolite setup就可以了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod +x post-receive</span><br><span class="line">$ gitolite setup</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、配置jenkins job</strong></p>
+<p>现在就可以添加jenkins job了</p>
+<p>几个关键的地方:</p>
+<p>源代码管理选择git后,设置Repository URL为配置好的别名加仓库名就可以，比如gitsvr:project</p>
+<p>构建触发器(build trigger)要选择poll SCM，但不要输入任何值，保持空白即可。</p>
+<p>这里采用gradle进行构建，选择Invoke Gradle,如果构建文件名字采用默认的build.gradle，则除了tasks那里填写build,其他字段空着使用默认值即可。</p>
+<p>构建后在自动发布到tomcat7,因此这里选择”Deploy war/ear to a container”,然后选择tomcat7。WAR/EAR files填写相对于当前job的workspace目录的需要部署的文件的名字，比如build/libs/project.war。Context path输入自己想使用的访问路径，比如输入foo,则需要这样访问应用程序<a target="_blank" rel="noopener" href="http://domain.tld/foo%E3%80%82%E5%85%B6%E4%BB%96%E5%AD%97%E6%AE%B5%E4%B8%BAtomcat7%E7%9A%84%E7%AE%A1%E7%90%86%E7%94%A8%E6%88%B7%E8%B4%A6%E5%8F%B7%E5%92%8C%E8%AE%BF%E9%97%AEtomcat7%E7%9A%84URL%E3%80%82">http://domain.tld/foo。其他字段为tomcat7的管理用户账号和访问tomcat7的URL。</a></p>
+<p>如果想将应用程序部署到root context,只需在Context path里输入”/“即可,这样访问应用程序时就更简单了，<a target="_blank" rel="noopener" href="http://domain.tld/%E5%B0%B1%E6%98%AF%E8%AE%BF%E9%97%AE%E7%9A%84root">http://domain.tld/就是访问的root</a> context。</p>
+<p>这样jenkins就算配置完了，可以通过手动构建进行测试。</p>
+<p><strong>4、其他问题</strong></p>
+<ul>
+<li><p>由于项目使用了myBatis,因此有一些xml资源文件分散在dao接口目录中,所以需要在build.gradle脚本中添加资源目录，否则这些xml文件不会被打包，从而出现错误:</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sourceSets &#123;</span><br><span class="line"> main &#123;</span><br><span class="line"> resources.srcDirs = \[<span class="string">&#x27;src/main/java&#x27;</span>\]</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  如果不指定资源目录，则需要将资源放入src/main/resources目录。</p>
+</li>
+<li><p>gradle war插件默认生成的war包名字格式为:<br>  ${baseName}-${appendix}-${version}-${classifier}.${extension}<br>  也就是war.archiveName变量的默认值。</p>
+<p>  gradle自动构建时生成的war包名字可能不是你想要的，因此可以明确的指定war包名字，比如在build.gradle文件中添加如下行：<br>  war.archiveName = ‘project.war’</p>
+</li>
+<li><p>用于tomcat7自动部署的管理用户必须具有manager-script角色,manager-gui角色是不够的，不然会有错误出现：<br>  The username you provided is not allowed to use the text-based Tomcat Manager (error 403)</p>
+<p>  在/etc/tomcat7/tomcat-users.xml文件中为管理用户添加manager-script角色即可。</p>
+</li>
+</ul>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://meschbach.com/kb/gitolite-jenkins-hook.html">Gitolite to Jenkins Post Commit Kick</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/07/17/detect-new-input-type/" rel="prev" title="检测浏览器对HTML5新input类型的支持">
+                  <i class="fa fa-chevron-left"></i> 检测浏览器对HTML5新input类型的支持
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/07/19/bash-fastcgi-content-type/" rel="next" title="bash fastcgi输出内容类型">
+                  bash fastcgi输出内容类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

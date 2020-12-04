@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="dataguard环境下适用于primary和&#x2F;或standby的初始化参数介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DataGuard相关的初始化参数">
+<meta property="og:url" content="http://example.com/2011/11/06/dataguard-init-paras/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="dataguard环境下适用于primary和&#x2F;或standby的初始化参数介绍">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2011-11-06T02:56:27.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.113Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2011/11/06/dataguard-init-paras/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>DataGuard相关的初始化参数 | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2011/11/06/dataguard-init-paras/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DataGuard相关的初始化参数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-11-06 10:56:27" itemprop="dateCreated datePublished" datetime="2011-11-06T10:56:27+08:00">2011-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>dataguard环境下适用于primary和/或standby的初始化参数介绍</p>
+<a id="more"></a>
+<p><strong>ARCHIVE_LAG_TARGET</strong></p>
+<p>适用: primary<br>格式: ARCHIVE_LAG_TARGET = <em>seconds</em><br>描述: 可选。按设定时间间隔seconds强制日志切换,单位秒。可减少日志丢失。<br>样例: ARCHIVE_LAG_TARGET = 1800</p>
+<p><strong>COMPATIBLE</strong></p>
+<p>适用: primary,physical standby,logical standby<br>格式: COMPATIBLE = _release_number_<br>描述: 控制数据库兼容性。DataGuard需要的最小值为9.2.0.1,将此参数设置为10.2.0.0以上可以利用10g 新特性。primary和standby需要设置同样的参数。<br>样例： COMPATIBLE = ‘10.2.0.0’</p>
+<p><strong>CONTROL_FILE_RECORD_KEEP_TIME</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： CONTROL_FILE_RECORD_KEEP_TIME = <em>number_of_days</em><br>描述： 可选。在指定的天数内不可以覆盖控制文件中的可重用记录。这个参数的范围为0-365天,如果这个参数设置为0,系统会在需要的时候覆盖可重用的记录。<br>样例： CONTROL_FILE_RECORD_KEEP_TIME = 20</p>
+<p><strong>CONTROL_FILES</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： CONTROL_FILES = <em>(‘control_file_name’,’control_file_name2’,…)</em><br>描述： 指定控制文件的名字,包括完整的路径。<br>样例： CONTROL_FILES = (‘/u01/oracle/oradata/control01.ctl’,<br>‘/u01/oracle/oradata/control02.ctl”)</p>
+<p><strong>DB_FILE_NAME_CONVERT</strong></p>
+<p>适用： physical standby<br>格式： DB_FILE_NAME_CONVERT = <em>(‘location_of_primary_database_datafile’,’location_of_standby_database_datafile’,…)</em><br>描述： 如果standby与primary在同一个系统上,或者standby的数据文件位置与primary的数据文件位置不同,必须设置此参数。这个参数必须指定成对的字符串,第一个字符串指定primary的数据文件位置,第二个字符串指定standby对应的数据文件位置,可以设置多对参数。<br>样例： 从primary的/dbs/t1/,转换到standby的/dbs/t1/standby<br>DB_FILE_NAME_CONVERT = (‘/dbs/t1/‘,’/dbs/t1/standby’)</p>
+<p><strong>DB_NAME</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： DB_NAME = _database_name_<br>描述： 指定最多8个字符的数据库名。对于physical standby,把DB_NAME设置成与primary数据库初始化参数文件中相同的名字,也就是此参数physical standby与primary保持一致。但是对于logical standby,此参数不能与primary设置相同,可用DBNEWID(nid)为logical standby设置DB_NAME。<br>样例： DB_NAME = orcl</p>
+<p><strong>DB_UNIQUE_NAME</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： DB_UNIQUE_NAME = <em>unique_service_provider_name_for_this_database</em><br>描述： 为本数据库指定一个独一无二的名字,primary和standby中此参数不能相同,此参数一般设置为oracle service name。<br>样例： DB_UNIQUE_NAME = primaryDB</p>
+<p><strong>FAL_CLIENT与FAL_SERVER</strong>参数详见”<a target="_blank" rel="noopener" href="https://openwares.net/database/fal_client_fal_server.html">FAL_CLIENT和FAL_SERVER参数详解</a>“</p>
+<p><strong>LOG_ARCHIVE_CONFIG</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_CONFIG = _’DG_CONFIG(db_unique_name,db_unique_name,…)’_<br>描述： 使用DG_CONFIG属性标识出Data Guard配置中的primary数据库和各个standby数据库的DB_UNIQUE_NAME。此参数使primary发送redo日志到standby数据库,使standby数据库接收primary发送来的redo日志。<br>样例： LOG_ARCHIVE_CONFIG =’DG_CONFIG(PrimaryDB,StandbyDB1,StandbyDB2,…)’</p>
+<p><strong>LOG_ARCHIVE_DEST_n</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_DEST_n = ‘LOCATION=path_name SERVICE=service_name, attribute,attribute’<br>描述： 必需。定义最多10个归档日志目的地。LOCATION用来指定本地归档日志路径,SERVICE用来指定远程归档目的地。<br>样例： LOG_ARCHIVE_DEST_1 = ‘SERVICE=StandbyDB OPTIONAL REOPEN=180’</p>
+<p><strong>LOG_ARCHIVE_DEST_STATE_n</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_DEST_STATE_n = ENABLE DEFER ALTERNATE<br>描述： 用来指定由参数LOG_ARCHIVE_DEST_n定义的目的地的状态,每一个LOG_ARCHIVE_DEST_n参数都必须顶一个对应的LOG_ARCHIVE_DEST_STATE_n参数。<br>ENABLE - 指定该归档目的地可用<br>DEFER - 归档目的地不可用<br>ALTERNATE - 指定目的地不可用，但当其他目的地都失败时，这个目的地变为可用。<br>样例： LOG_ARCHIVE_DEST_STATE_1 = ENABLE</p>
+<p><strong>LOG_ARCHIVE_FORMAT</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_FORMAT = log%d_%t_%s_%r.arc<br>描述： 如果指定了STANDBY_ARCHIVE_DEST参数,则需要指定此参数,此参数指定了归档redo日志文件名的格式。这个参数与STANDBY_ARCHIVE_DEST组合在一起形成standby数据库端完整的归档日志文件名。%d为database ID，%t为归档线程的thread id,%s为归档序列号。<br>样例： LOG_ARCHIVE_FORMAT = ‘log%d_%t_%s.arc’</p>
+<p><strong>LOG_ARCHIVE_MAX_PROCESSES</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_MAX_PROCESSES = integer<br>描述： 指定数据库服务器调用的背景归档日志进程的数目，可设置值为1-30,缺省值是4。<br>样例： LOG_ARCHIVE_MAX_PROCESSES = 2</p>
+<p><strong>LOG_ARCHIVE_MIN_SUCCEED_DEST</strong></p>
+<p>适用： primary<br>格式： LOG_ARCHIVE_MIN_SUCCEED_DEST = integer<br>描述： 指定primary日志写进程在重新利用在线redo log文件之前必须成功接收redo log文件的目的地(LOG_ARCHIVE_DEST_n)的最小数目<br>样例： LOG_ARCHIVE_MIN_SUCCEED_DEST = 2</p>
+<p><strong>LOG_ARCHIVE_TRACE</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： LOG_ARCHIVE_TRACE = integer<br>描述： 设置该参数来追踪redo log向standby数据库的传送,有效的参数值为0,1,2,4,8,16,32,64,128,256,512,1024,2048<br>样例： LOG_ARCHIVE_TRACE = 1</p>
+<p><strong>LOG_FILE_NAME_CONVERT</strong></p>
+<p>适用： physical standby<br>格式： LOG_FILE_NAME_CONVERT = (‘location_of_primary_redo_logs’,’location_of_standby_redo_logs’,…)<br>描述： 当standby与primary在同一个系统中,或者standby与primary的redo logs位置不同，这个参数用于在primary和standby之间转换red logs文件的路径。<br>样例： LOG_FILE_NAME_CONVERT = (‘/dbs/t1/‘,’/dbs/t1/stdby’,’dbs/t2/ ‘,’dbs/t2/stdby’)</p>
+<p><strong>STANDBY_ARCHIVE_DEST</strong></p>
+<p>适用： physical standby,logical standby<br>格式： STANDBY_ARCHIVE_DEST = path_to_received_redo_logs_of_standby<br>描述： 指定standby从primary接收的归档日志存放路径。此参数覆盖LOG_ARCHIVE_DEST_n参数设置的目录位置，STANDBY_ARCHIVE_DEST与LOG_ARCHIVE_FORMAT组合在一起形成standby端redo logs的文件名。<br>样例： STANDBY_ARCHIVE_DEST = ‘/u01/oracle/oradata/archive’</p>
+<p><strong>STANDBY_FILE_MANAGEMENT</strong></p>
+<p>适用： primary,physical standby<br>格式： STANDBY_FILE_MANAGEMENT = AUTO MANUAL<br>描述： 当此参数设置为AUTO，当primary增加或删除数据文件时，standby自动执行与primary相同的动作，如果设置为MANUAL则需要DBA在standby手动处理数据文件的变动。推荐设置为AUTO。<br>样例： STANDBY_FILE_MANAGEMENT = AUTO</p>
+<p><strong>USER_DUMP_DEST</strong></p>
+<p>适用： primary,physical standby,logical standby<br>格式： USER_DUMP_DEST = path_name_of_trace_files<br>描述： 指定服务器写debug trace文件的路径名<br>样例： USER_DUMP_DEST = ‘/u01/oracle/oradata/utrc’</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/11/03/pfile-and-spfile/" rel="prev" title="oracle初始化参数文件pfile和spfile">
+                  <i class="fa fa-chevron-left"></i> oracle初始化参数文件pfile和spfile
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/11/12/mrp-lsp-and-rfs/" rel="next" title="名词：MRP,LSP和RFS进程">
+                  名词：MRP,LSP和RFS进程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

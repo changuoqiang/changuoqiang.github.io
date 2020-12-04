@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="所有的数据库都会遇到更新丢失(覆盖)的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL防止更新丢失(覆盖)">
+<meta property="og:url" content="http://example.com/2014/01/10/postgresql-updata-lost/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="所有的数据库都会遇到更新丢失(覆盖)的问题。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-01-10T14:11:04.000Z">
+<meta property="article:modified_time" content="2020-12-04T12:01:09.438Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="PostgresQL">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2014/01/10/postgresql-updata-lost/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>PostgreSQL防止更新丢失(覆盖) | Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2014/01/10/postgresql-updata-lost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PostgreSQL防止更新丢失(覆盖)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-10 22:11:04" itemprop="dateCreated datePublished" datetime="2014-01-10T22:11:04+08:00">2014-01-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>所有的数据库都会遇到更新丢失(覆盖)的问题。</p>
+<a id="more"></a>
+<p>更新丢失(覆盖)的详细描述见<a target="_blank" rel="noopener" href="https://openwares.net/database/transaction_isolation_level.html">数据库事务隔离级别</a>。</p>
+<p>发生更新丢失(覆盖)问题的关键在于”读取,计算,写回”这个过程中,当前事务使用了过期的(stale)数据,没有将其他并发事务对数据的修改纳入到计算结果中,从而在写回时将其他事务的更新覆盖了。</p>
+<p><strong>防止更新丢失(覆盖)的方法</strong></p>
+<ul>
+<li>  悲观锁</li>
+</ul>
+<p>事务中对需要修改的结果集加行锁,常用的就是select for update,或者lock table对整个表加锁。加锁之后,当前事务未处理完成之前,其他所有需要访问锁定行的事务都必须等待。这虽然能解决更新丢失(覆盖)的问题,但很明显会影响数据库的并发性能。</p>
+<p>如果并发事务冲突的几率很高,则采用悲观锁可以减少事务回滚并重试的开销。</p>
+<ul>
+<li>  乐观锁</li>
+</ul>
+<p>乐观锁不锁定任何行,当更新数据时再做检查数据是否已经发生了变化。多版本并发控制MVCC(Multiversion concurrency control)可以实现乐观锁。<br>PostgreSQL使用MVCC实现并发控制。PostgreSQL的默认事务隔离级别为读已提交(Read Commited),在这个级别上会发生不可重复读现象,这个隔离级别是无法防止更新丢失(覆盖)的。</p>
+<p>但是在可重复读(Repeatable Read)事务隔离级别,可以完全防止更新丢失(覆盖)的问题,如果当前事务读取了某行,这期间其他并发事务修改了这一行并提交了,然后当前事务试图更新该行时,PostgreSQL会提示:<br>ERROR: could not serialize access due to concurrent update<br>事务会被回滚,只能重新开始。</p>
+<p>由于使用的是MVCC机制的乐观锁,内部有版本号(这个字段名字叫xmin)来控制并发,所以不会对数据集上锁,对性能的影响是很小的。但如果并发事务冲突的几率比较大,那么事务回滚的开销就比较大了。</p>
+<p>总的来说,如果并发事务冲突的几率很低那么应该选择乐观锁,对于PostgreSQL来说,将事务隔离级别提高到Repeatable Read即可。如果事务并发冲突的几率很高,那么可以谨慎的使用悲观锁。</p>
+<p>还有一种防止更新丢失(覆盖)的方法叫条件更新,也就是在更新时指定where子句,检测指定的条件是否已经变化来决定是否进行更新。这不是一种通用的解决方案,只能根据业务逻辑来选择特定的检测条件,并不能防止这些检测条件之外的可能存在的更新丢失问题。而且有些情况下可能很难选择合适的更新检测条件,比如一个银行账户,关键的字段有账户号和余额,很难通过WHERE条件来检测当前事务执行期间是否有其他并发事务已经修改了余额并做了提交。所以这种方法只在特定的逻辑环境下有一定的用途。</p>
+<p><strong>PostgreSQL可重复读隔离级小实验</strong></p>
+<p>先建一张表,并插入一条记录:<br>[sql]<br>create table sometable (id integer, whatever varchar(20));<br>insert into sometable values(1,’initial’);<br>[/sql]</p>
+<p>下面演示两个事务并发的几种情况,左边为事务A,右边为事务B。</p>
+<p>第一种情况:</p>
+<p>[sql gutter=”false”]<br>begin transaction isolation level repeatable read ;<br>select whatever from sometable where id=1;<br> begin transaction isolation level repeatable read;<br> update sometable set whatever=’second’ where id=1;<br> commit;<br>update sometable set whatever=’first’ where id=1;<br>&lt;ERROR:could not serialize access due to concurrent update&gt;</p>
+<p>[/sql]</p>
+<p>第二种情况:<br>[sql gutter=”false”]<br>begin transaction isolation level repeatable read ;<br> begin transaction isolation level repeatable read;<br> update sometable set whatever=’second’ where id=1;<br>update sometable set whatever=’first’ where id=1;<br><blocked><br> commit;<br>&lt;ERROR:could not serialize access due to concurrent update&gt;</p>
+<p>[/sql]</p>
+<p>第三种情况:<br>[sql gutter=”false”]<br>begin transaction isolation level repeatable read ;<br> begin transaction isolation level repeatable read;<br> update sometable set whatever=’second’ where id=1;<br> commit;<br>update sometable set whatever=’first’ where id=1;<br>commit; </p>
+<p>[/sql]</p>
+<p>为什么第三种情况下,两个并发事务全部成功完成了,B事务的更新丢失了吗?答案是没有。所有的三种情形都没有更新丢失发生。<br>在可重复读隔离级下,事务第一次读取数据时,同样是读取的已经提交的数据,只要是在当前读取动作之前的提交都会看到。也就是说,并不是在开始repeatable read隔离级的那个时点上,事务能访问到的数据已经固定了,而是在事务访问特定的行时,从那个时点起,事务每次访问该行都会返回同样版本的数据,无论其他事务如何修改这一行。</p>
+<p>那么第三种情况就容易理解了,A事务之前并没有访问任何行,当A事务要修改id=1的行时,它实际上获取到的是该行最新的版本,也就是B事务已经修改提交的版本。所以这是很正常的,没有更新丢失的问题,因为A事务看到了id=1这一行的最新版本。</p>
+<p>通过下面的第四个实验可以清楚看到repeatable read隔离级读取到了其他事务在后来更新提交的数据。</p>
+<p>[sql gutter=”false”]<br>update sometable set whatever=’initial’ where id=1; </p>
+<p>begin transaction isolation level repeatable read ;<br> begin transaction isolation level repeatable read;<br> update sometable set whatever=’second’ where id=1;<br> commit;<br>select whatever from sometable where id=1;<br>whatever </p>
+<hr>
+<p>second<br>(1 row) </p>
+<p>update sometable set whatever=’first’ where id=1;<br>commit;<br>[/sql]</p>
+<p>可以看到事务A在第一个访问id=1的行时读取到了后来的并发事务B更新并提交的数据,然后事务A也正确的更新这一行并成功提交。</p>
+<p>在可重复读(Repeatable Read)事务隔离级别下,完全不用担心更新丢失(覆盖)的问题,而且对性能的影响也是很小的。</p>
+<p>PostgreSQL真的是太酷了。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PostgresQL/" rel="tag"># PostgresQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2014/01/10/4745/" rel="prev" title="Untitled Post - 31">
+                  <i class="fa fa-chevron-left"></i> Untitled Post - 31
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2014/01/11/vim-column-edit/" rel="next" title="VIM列编辑模式">
+                  VIM列编辑模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/page/5/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Hexo</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">979</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/24/lxd-container-mount-nfs-cifs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/24/lxd-container-mount-nfs-cifs/" class="post-title-link" itemprop="url">lxd容器挂载NFS/CIFS文件系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-24 19:06:14" itemprop="dateCreated datePublished" datetime="2019-10-24T19:06:14+08:00">2019-10-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd容器内挂载NFS文件系统时出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount -t nfs <span class="number">192.168</span><span class="number">.0</span><span class="number">.62</span>:<span class="regexp">/srv/</span>homes/upload /mnt/nfs/</span><br><span class="line">mount.nfs: Operation not permitted</span><br><span class="line">$ sudo mount -t nfs -v <span class="number">192.168</span><span class="number">.0</span><span class="number">.62</span>:<span class="regexp">/srv/</span>homes/upload /mnt/nfs/</span><br><span class="line">mount.nfs: timeout set <span class="keyword">for</span> Thu Oct <span class="number">24</span> <span class="number">19</span>:<span class="number">05</span>:<span class="number">41</span> <span class="number">2019</span></span><br><span class="line">mount.nfs: trying text-based options <span class="string">&#x27;vers=4.2,addr=192.168.0.62,clientaddr=10.100.0.20&#x27;</span></span><br><span class="line">mount.nfs: mount(<span class="number">2</span>): Operation not permitted</span><br><span class="line">mount.nfs: trying text-based options <span class="string">&#x27;addr=192.168.0.62&#x27;</span></span><br><span class="line">mount.nfs: prog <span class="number">100003</span>, trying vers=<span class="number">3</span>, prot=<span class="number">6</span></span><br><span class="line">mount.nfs: trying <span class="number">192.168</span><span class="number">.0</span><span class="number">.62</span> prog <span class="number">100003</span> vers <span class="number">3</span> prot TCP port <span class="number">2049</span></span><br><span class="line">mount.nfs: prog <span class="number">100005</span>, trying vers=<span class="number">3</span>, prot=<span class="number">17</span></span><br><span class="line">mount.nfs: trying <span class="number">192.168</span><span class="number">.0</span><span class="number">.62</span> prog <span class="number">100005</span> vers <span class="number">3</span> prot UDP port <span class="number">39588</span></span><br><span class="line">mount.nfs: mount(<span class="number">2</span>): Operation not permitted</span><br><span class="line">mount.nfs: Operation not permitted</span><br></pre></td></tr></table></figure>
+<p>总之就是权限问题，因为容器是非特权容器，在容器内使用root并不是真正的特权用户，因此仍然无法挂载NFS文件系统，CIFS也是一样的问题。<br>简单的解决办法就是将容器设置为特权容器：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config set container raw.lxc <span class="string">&quot;lxc.apparmor.profile=unconfined&quot;</span></span><br><span class="line">$ lxc config set container security.privileged <span class="literal">true</span></span><br><span class="line">$ lxc restart container</span><br></pre></td></tr></table></figure>
+<p>restart容器之后挂载一切如常。<br><strong>注意一定要同时关闭apparmor</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/24/lxd-container-dmesg-permission/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/24/lxd-container-dmesg-permission/" class="post-title-link" itemprop="url">lxd容器运行dmesg权限问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-24 18:08:00" itemprop="dateCreated datePublished" datetime="2019-10-24T18:08:00+08:00">2019-10-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>默认配置的非特权lxd容器内，即使以特权用户运行dmesg</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># dmesg</span><br><span class="line">dmesg: read kernel buffer failed: Operation not permitted</span><br></pre></td></tr></table></figure>
+<p>也是不允许访问内核缓冲区的，这是因为目前容器尚不能做到只读取自己相关的dmesg信息，如果允许容器运行dmesg,容器则会读取到主机全部的信息，包括主机和其他容器以及apparmor的信息，这是安全问题，lxd以后应该会支持每容器的dmesg信息，现在只能在主机上简单粗暴的设置内核参数kernel.dmesg_restrict，特权容器不受此参数限制。</p>
+<p>如果允许容器运行dmesg，则需要关闭此参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl kernel.dmesg_restrict=<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/lxc/lxd/issues/1397">deny access to dmesg or use SYSLOG namespace</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/bash-alias-in-scripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/20/bash-alias-in-scripts/" class="post-title-link" itemprop="url">bash alias in scripts</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-20 11:29:18" itemprop="dateCreated datePublished" datetime="2019-10-20T11:29:18+08:00">2019-10-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>bash在非交互式模式下是不扩展alias定义的，除非明确指定shell选项expand_aliases</p>
+<p>因此要在脚本中使用alias定义，可以这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shopt -s expand_aliases</span><br><span class="line">source ~/.bash_aliases</span><br><span class="line">alias ll=<span class="string">&#x27;ls -lht&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.thegeekdiary.com/how-to-make-alias-command-work-in-bash-script-or-bashrc-file/">How to make alias command work in bash script or bashrc file</a><br>[2]<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/1496/why-doesnt-my-bash-script-recognize-aliases">Why doesn’t my Bash script recognize aliases?</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/20/ssh-packet-write-wait-broken-pipe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/20/ssh-packet-write-wait-broken-pipe/" class="post-title-link" itemprop="url">ssh packet_write_wait Broken pipe</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-20 10:12:07" itemprop="dateCreated datePublished" datetime="2019-10-20T10:12:07+08:00">2019-10-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ssh连接空闲一段时间后出现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packet_write_wait: Connection to UNKNOWN port <span class="number">65535</span>: Broken pipe</span><br></pre></td></tr></table></figure>
+<p>这是连接超时，需要设置一个保持心跳的参数，客户端是ServerAliveInterval，服务器端是ClientAliveInterval，参数值单位为second，还可以在.ssh/config中为每用户、每连接设置此参数</p>
+<p>客户端：<br>/etc/ssh/ssh_config文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">ServerAliveInterval <span class="number">45</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/127369/how-to-prevent-write-failed-broken-pipe-on-ssh-connection">How to prevent “Write Failed: broken pipe” on SSH connection?</a><br>[2]<a target="_blank" rel="noopener" href="https://www.logcg.com/archives/897.html">当SSH遇到“Write failed: Broken pipe”</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/18/debian-buster-tomcat9-no-stdout-log-catalina-out/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/18/debian-buster-tomcat9-no-stdout-log-catalina-out/" class="post-title-link" itemprop="url">debian buster tomcat9缺少控制台输出日志catalina.out</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-18 21:54:44" itemprop="dateCreated datePublished" datetime="2019-10-18T21:54:44+08:00">2019-10-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat9 on debian buster没有catalina.out日志文件，修改/usr/share/tomcat9/bin/catalina.sh文件，大约380多行处</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">elif \[ <span class="string">&quot;$1&quot;</span> = <span class="string">&quot;run&quot;</span> \]; then</span><br><span class="line"></span><br><span class="line"> shift</span><br><span class="line"> #行添加开始</span><br><span class="line"> <span class="keyword">if</span> \[ -z <span class="string">&quot;$CATALINA_OUT_CMD&quot;</span> \] ; then</span><br><span class="line"> touch <span class="string">&quot;$CATALINA_OUT&quot;</span></span><br><span class="line"> catalina_out_command=<span class="string">&quot;&gt;&gt; \\&quot;</span>$CATALINA_OUT\\<span class="string">&quot; 2&gt;&amp;1&quot;</span></span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line"> catalina_out_command=<span class="string">&quot; $CATALINA_OUT_CMD&quot;</span></span><br><span class="line"> fi</span><br><span class="line"> #行添加结束</span><br><span class="line"> <span class="keyword">if</span> \[ <span class="string">&quot;$1&quot;</span> = <span class="string">&quot;-security&quot;</span> \] ; then</span><br><span class="line"> <span class="keyword">if</span> \[ $have_tty -eq <span class="number">1</span> \]; then</span><br><span class="line"> echo <span class="string">&quot;Using Security Manager&quot;</span></span><br><span class="line"> fi</span><br><span class="line"> shift</span><br><span class="line"> <span class="built_in">eval</span> exec <span class="string">&quot;\\&quot;</span>$_RUNJAVA\\<span class="string">&quot;&quot;</span> <span class="string">&quot;\\&quot;</span>$LOGGING_CONFIG\\<span class="string">&quot;&quot;</span> $LOGGING_MANAGER $JAVA_OPTS $CATALINA_OPTS \\</span><br><span class="line"> -D$ENDORSED_PROP=<span class="string">&quot;\\&quot;</span>$JAVA_ENDORSED_DIRS\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -classpath <span class="string">&quot;\\&quot;</span>$CLASSPATH\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Djava.security.manager \\</span><br><span class="line"> -Djava.security.policy==<span class="string">&quot;\\&quot;</span>$CATALINA_BASE/policy/catalina.policy\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Dcatalina.base=<span class="string">&quot;\\&quot;</span>$CATALINA_BASE\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Dcatalina.home=<span class="string">&quot;\\&quot;</span>$CATALINA_HOME\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Djava.io.tmpdir=<span class="string">&quot;\\&quot;</span>$CATALINA_TMPDIR\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> #行尾添加$catalina_out_command</span><br><span class="line"> org.apache.catalina.startup.Bootstrap <span class="string">&quot;$@&quot;</span> start $catalina_out_command</span><br><span class="line"> <span class="keyword">else</span></span><br><span class="line"> <span class="built_in">eval</span> exec <span class="string">&quot;\\&quot;</span>$_RUNJAVA\\<span class="string">&quot;&quot;</span> <span class="string">&quot;\\&quot;</span>$LOGGING_CONFIG\\<span class="string">&quot;&quot;</span> $LOGGING_MANAGER $JAVA_OPTS $CATALINA_OPTS \\</span><br><span class="line"> -D$ENDORSED_PROP=<span class="string">&quot;\\&quot;</span>$JAVA_ENDORSED_DIRS\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -classpath <span class="string">&quot;\\&quot;</span>$CLASSPATH\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Dcatalina.base=<span class="string">&quot;\\&quot;</span>$CATALINA_BASE\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Dcatalina.home=<span class="string">&quot;\\&quot;</span>$CATALINA_HOME\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> -Djava.io.tmpdir=<span class="string">&quot;\\&quot;</span>$CATALINA_TMPDIR\\<span class="string">&quot;&quot;</span> \\</span><br><span class="line"> #行尾添加$catalina_out_command</span><br><span class="line"> org.apache.catalina.startup.Bootstrap <span class="string">&quot;$@&quot;</span> start $catalina_out_command</span><br><span class="line"> fi</span><br></pre></td></tr></table></figure>
+
+<p>最后重新启动tomcat9服务就可以。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/16/ceph-cluster-deploy-monitors/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/16/ceph-cluster-deploy-monitors/" class="post-title-link" itemprop="url">Ceph集群部署-monitors配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-16 22:26:56" itemprop="dateCreated datePublished" datetime="2019-10-16T22:26:56+08:00">2019-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ceph官方仓库尚未提供debian 10 buster版本的ceph nautilus，而debian官方仓库里也只有ceph 12版本，可以使用三方仓库在debian buster上安装ceph nautilus</p>
+<p>proxmox仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ echo <span class="string">&#x27;deb \[arch=amd64\] http://download.proxmox.com/debian/ceph-nautilus buster main&#x27;</span> sudo tee /etc/apt/sources.list.d/proxmox-ceph.list</span><br><span class="line">$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7BF2812E8A6E88E0</span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install ceph</span><br></pre></td></tr></table></figure>
+
+<p>croit.io仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl https:<span class="comment">//mirror.croit.io/keys/release.asc sudo apt-key add -</span></span><br><span class="line">$ echo <span class="string">&#x27;deb https://mirror.croit.io/debian-nautilus/ buster main&#x27;</span> sudo tee /etc/apt/sources.list.d/croit-ceph.list</span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install ceph</span><br></pre></td></tr></table></figure>
+
+<p><strong>Updated(2020/02/01):</strong> 现在可以使用buster-backports仓库来安装ceph nautilus</p>
+<p>ceph集群安装的第一步是monitor自举</p>
+<p><strong>一、monitor bootstrapping</strong><br>1、添加配置文件/etc/ceph/ceph.conf<br>这里集群的名字使用默认的ceph,ceph.conf文件名中的基本名ceph也是集群名。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="built_in">global</span>\]</span><br><span class="line"># 使用uuidgen生成,debian请安装uuid-runtime包</span><br><span class="line">fsid = 0238426D-78D6-48CD-AF64-B6A8407996C6</span><br><span class="line"># 使用主机名,可以用hostname -s命令获取</span><br><span class="line">mon initial members = node8</span><br><span class="line"># ip地址,支持messenger v1和v2</span><br><span class="line">mon_host = <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span></span><br><span class="line">#mon_host = v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span></span><br><span class="line"># public network可以指定逗号分割的多个子网</span><br><span class="line">public network = <span class="number">192.168</span><span class="number">.3</span><span class="number">.0</span>/<span class="number">24</span></span><br><span class="line"># 使用cephx认证</span><br><span class="line">auth cluster required = cephx</span><br><span class="line">auth service required = cephx</span><br><span class="line">auth client required = cephx</span><br><span class="line">osd journal size = <span class="number">1024</span></span><br><span class="line"># 副本策略,副本数量</span><br><span class="line">osd pool <span class="keyword">default</span> size = <span class="number">3</span></span><br><span class="line"># 降级状态最小副本数量,低于此数量会失败</span><br><span class="line">osd pool <span class="keyword">default</span> min size = <span class="number">2</span></span><br><span class="line"># 默认placement group数量</span><br><span class="line">osd pool <span class="keyword">default</span> pg num = <span class="number">333</span></span><br><span class="line"># 默认placement groups for placement数量</span><br><span class="line">osd pool <span class="keyword">default</span> pgp num = <span class="number">333</span></span><br><span class="line">osd crush chooseleaf type = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>2、创建集群keyring,生成monitor密钥</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon <span class="string">&#x27;allow *&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>3、创建管理keyring,生成client.admin用户并加入keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --cap mon <span class="string">&#x27;allow *&#x27;</span> --cap osd <span class="string">&#x27;allow *&#x27;</span> --cap mds <span class="string">&#x27;allow *&#x27;</span> --cap mgr <span class="string">&#x27;allow *&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>4、创建bootstrap-osd keyring,生成client.bootstrap-osd用户并加入keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool --create-keyring /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring --gen-key -n client.bootstrap-osd --cap mon <span class="string">&#x27;profile bootstrap-osd&#x27;</span> --cap mgr <span class="string">&#x27;allow r&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>5、将生成的key添加到ceph.mon.keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-authtool /tmp/ceph.mon.keyring --<span class="keyword">import</span>-keyring /etc/ceph/ceph.client.admin.keyring</span><br><span class="line">$ sudo ceph-authtool /tmp/ceph.mon.keyring --<span class="keyword">import</span>-keyring /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring</span><br></pre></td></tr></table></figure>
+
+<p>6、生成monitor map</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monmaptool --create --add node8 <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span> --fsid 0238426D-78D6-48CD-AF64-B6A8407996C6 /tmp/monmap</span><br></pre></td></tr></table></figure>
+<p>注意此处指定的节点名称、ip地址和fsid要与/etc/ceph/ceph.conf中指定的一致,ip地址还可以使用新的格式指定v2:192.168.3.8:3300/0,v1:192.168.3.8:6789/0</p>
+<p>map文件是二进制格式的，可以这样查看生成的map内容</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ monmaptool --print /tmp/monmap</span><br><span class="line">monmaptool: monmap file /tmp/monmap</span><br><span class="line">epoch <span class="number">0</span></span><br><span class="line">fsid 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line">last_changed <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">24</span>:<span class="number">58.156493</span></span><br><span class="line">created <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">24</span>:<span class="number">58.156493</span></span><br><span class="line">min_mon_release <span class="number">0</span> (unknown)</span><br><span class="line"><span class="number">0</span>: v1:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span> mon.node8</span><br></pre></td></tr></table></figure>
+
+<p>7、创建monitor数据目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mon/ceph-node8</span><br></pre></td></tr></table></figure>
+<p>目录名字格式为{cluster-name}-{hostname}</p>
+<p>8、修改ceph.mon.keyring访问权限</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chmod o+r /tmp/ceph.mon.keyring</span><br></pre></td></tr></table></figure>
+<p>不然会因为ceph用户无法读取/tmp/ceph.mon.keyring而抛出如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">54.149</span> 7eff2ff1f440 -<span class="number">1</span> mon.node8@-<span class="number">1</span>(???) e0 unable to find a keyring file on /tmp/ceph.mon.keyring: (<span class="number">13</span>) Permission denied</span><br><span class="line"><span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">43</span>:<span class="number">54.149</span> 7eff2ff1f440 -<span class="number">1</span> ceph-mon: error creating monfs: (<span class="number">2</span>) No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>9、初始化monitor数据结构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph ceph-mon --mkfs -i node8 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring</span><br></pre></td></tr></table></figure>
+
+<p>10、启动ceph monitor</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ sudo ln -sf /lib/systemd/system/ceph-mon@.service /etc/systemd/system/multi-user.target.wants/ceph-mon@node8.service</span></span><br><span class="line"><span class="comment">//$ sudo systemctl daemon-reload</span></span><br><span class="line">$ sudo systemctl enable ceph-mon@node8.service</span><br><span class="line">$ sudo systemctl start ceph-mon@node8.service</span><br></pre></td></tr></table></figure>
+<p>生成monitor实例自启动systemd服务文件并开启服务</p>
+<p>11、查看集群状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_WARN</span><br><span class="line"> <span class="number">1</span> monitors have not enabled msgr2</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">1</span> daemons, quorum node8 (age 12m)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+
+<p>12、启用messenger v2协议</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon enable-msgr2</span><br><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">1</span> daemons, quorum node8 (age 67m)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+<p>集群健康状态成为HEALTH_OK<br>dump集群配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon dump</span><br><span class="line">dumped monmap epoch <span class="number">2</span></span><br><span class="line">epoch <span class="number">2</span></span><br><span class="line">fsid 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line">last_changed <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">20</span>:<span class="number">15</span>:<span class="number">02</span><span class="number">.687549</span></span><br><span class="line">created <span class="number">2019</span>-<span class="number">10</span>-<span class="number">28</span> <span class="number">19</span>:<span class="number">51</span>:<span class="number">04</span><span class="number">.486571</span></span><br><span class="line">min_mon_release <span class="number">14</span> (nautilus)</span><br><span class="line"><span class="number">0</span>: \[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span>\] mon.node8</span><br></pre></td></tr></table></figure>
+
+<p><strong>二、添加其他monitor</strong></p>
+<p>一个monitor可以运行ceph集群，但是在生产环境推荐至少要运行三个monitor实例或以上，而且数量最好是奇数，这是因为容错时需要大多数实例达成一致的原因。monitor可以与OSD实例运行在一台物理机器上，但推荐是分开部署。</p>
+<p>以下操作皆是在将要添加的monitor机器上执行</p>
+<p>1、拷贝初始monitor配置文件</p>
+<p>将集群第一个monitor的配置文件目录/etc/ceph整个拷贝到新monitor相同路径，注意保持文件属性不变。之后，新monitor节点虽然尚未初始化，但已经可以访问ceph集群。</p>
+<p>2、创建目录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mon/ceph-node6</span><br></pre></td></tr></table></figure>
+
+<p>3、获取monitor keyring</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get mon. -o /tmp/ceph.mon.keyring</span><br><span class="line">exported keyring <span class="keyword">for</span> mon.</span><br></pre></td></tr></table></figure>
+<p>注意检查/tmp/ceph.mon.keyring文件的访问权限，确保ceph用户可以读取。</p>
+<p>4、获取集群monitor map</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon getmap -o /tmp/ceph.mon.map</span><br><span class="line">got monmap epoch <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>5、初始化新monitor</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph ceph-mon --mkfs -i node6 --monmap /tmp/ceph.mon.map --keyring /tmp/ceph.mon.keyring</span><br><span class="line">$ sudo systemctl enable ceph-mon@node6.service</span><br><span class="line">$ sudo systemctl start ceph-mon@node6.service</span><br><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">2</span> daemons, quorum node8,node6 (age <span class="number">0.</span>16939s)</span><br><span class="line"> mgr: no daemons active</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
+
+<p>可以看到集群已经有了两个monitor<br>查看集群monitor状态信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mon stat</span><br><span class="line">e3: <span class="number">2</span> mons at &#123;node6=\[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.6</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.6</span>:<span class="number">6789</span>/<span class="number">0</span>\],node8=\[v2:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">3300</span>/<span class="number">0</span>,<span class="attr">v1</span>:<span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="number">6789</span>/<span class="number">0</span>\]&#125;, election epoch <span class="number">26</span>, leader <span class="number">0</span> node8, quorum <span class="number">0</span>,<span class="number">1</span> node8,node6</span><br></pre></td></tr></table></figure>
+
+<p>添加其他新monitor重复以上步骤。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/">Ceph Docs</a><br>[2]<a target="_blank" rel="noopener" href="https://croit.io/2019/07/07/2019-07-07-debian-mirror">Debian stable and Ceph are great</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/install/manual-deployment/">MANUAL DEPLOYMENT</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/netant-cg/p/10696205.html">ceph nautilus版本手动安装</a><br>[5]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[6]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/rados/configuration/network-config-ref/">NETWORK CONFIGURATION REFERENCE</a><br>[7]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-mons/">ADDING/REMOVING MONITORS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/16/postgresql-11-streaming-replication-ha/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/16/postgresql-11-streaming-replication-ha/" class="post-title-link" itemprop="url">PostgreSQL 11 流复制Hot Standby HA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-16 21:36:25" itemprop="dateCreated datePublished" datetime="2019-10-16T21:36:25+08:00">2019-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>PostgreSQL 11 on Debian buster使用带有复制槽的流复制实现高可用只读热备库</p>
+<p><strong>主库端操作</strong></p>
+<p>1、主库参数配置<br>配置文件/etc/postgresql/11/main/postgresql.conf</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># wal_level = replica #默认配置即可</span><br><span class="line"># max_wal_senders = 10 #默认配置即可</span><br><span class="line">wal_keep_segments = 100 #虽然使用复制槽，但仍然防御性设置此参数，防止建立备库的过程中需要的wal log被循环覆盖</span><br><span class="line"># max_replication_slots = 10 # 默认配置即可</span><br></pre></td></tr></table></figure>
+
+<p>2、主库复制用户认证配置</p>
+<p>使用超级用户postgres或者新建一个具有replication权限的用户作为备库连接到主库进行复制的用户<br>创建用于复制的用户repl_usr</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">postgres=# create role repl_usr with login replication password &#x27;repl_passwd&#x27;;</span><br><span class="line">CREATE ROLE</span><br></pre></td></tr></table></figure>
+<p>修改/etc/postgresql/11/main/pg_hba.conf文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host replication repl_usr <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span> md5</span><br></pre></td></tr></table></figure>
+<p>postgres用户默认没有启用密码，只能本地peer方式访问，如果需要远程使用此用户，需要先启用密码访问。</p>
+<p>3、创建复制槽<br>名字设定为repl_slot_1</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">postgres=# SELECT * FROM pg_create_physical_replication_slot(&#x27;repl_slot_1&#x27;);</span><br><span class="line">slot_name lsn </span><br><span class="line">-------------+-----</span><br><span class="line"> repl_slot_1 </span><br><span class="line">(<span class="number">1</span> row)</span><br><span class="line">postgres=# SELECT slot_name, slot_type, active FROM pg_replication_slots;</span><br><span class="line"> slot_name slot_type active </span><br><span class="line">-------------+-----------+--------</span><br><span class="line"> repl_slot_1 physical f</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p><strong>备库端操作</strong></p>
+<p>1、使用基础备份恢复数据库作为备库</p>
+<p>a. 停止备库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop postgresql</span><br></pre></td></tr></table></figure>
+
+<p>b. 删除备库现有集群数据<br>将备库postgresql集群数据目录下的所有文件删除，删除debian默认安装postgresql集群数据：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rm -rf /var/lib/postgresql/11/main/*</span><br></pre></td></tr></table></figure>
+
+<p>c. 恢复基础备份</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres tar zxvf baseback20191019.tgz -C /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main/</span><br></pre></td></tr></table></figure>
+<p>一定要注意恢复的数据文件的属主是运行PostgreSQL服务的系统用户，debian系统上为postgres,还应该保持原来的权限。<br>这里使用的基础备份包含了备份完成时所有需要的WAL日志，所以可以不配置restore_command进行日志恢复，而且wal_keep_segments设置了较大的数值，基础备份之后生成的WAL日志可以通过流复制从master获取。</p>
+<p>2、参数配置<br>配置文件/etc/postgresql/11/main/postgresql.conf</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># hot_standby = on #默认配置</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">配置文件/var/lib/postgresql/11/main/recovery.conf</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">standby_mode = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">primary_conninfo = <span class="string">&#x27;host=192.168.3.6 port=5432 user=repl_usr password=repl_passwd&#x27;</span></span><br><span class="line">primary_slot_name = <span class="string">&#x27;repl_slot_1&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>3、启动备库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start postgresql.service</span><br></pre></td></tr></table></figure>
+
+<p><strong>检查复制状态</strong></p>
+<p>1、主库端<br>检查复制槽状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# SELECT slot_name, slot_type, active FROM pg_replication_slots;</span><br><span class="line"> slot_name slot_type active </span><br><span class="line">-------------+-----------+--------</span><br><span class="line"> repl_slot_1 physical t</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>可以看到复制槽repl_slot_1已经处于活动状态。</p>
+<p>当前WAL日志的位置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_current_wal_lsn();</span><br><span class="line"> pg_current_wal_lsn </span><br><span class="line">--------------------</span><br><span class="line"> <span class="number">0</span>/D000140</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>复制状态：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">postgres=# \\x</span><br><span class="line">Expanded display is on.</span><br><span class="line">postgres=# select * from pg_stat_replication;</span><br><span class="line">-\[ RECORD <span class="number">1</span> \]----+------------------------------</span><br><span class="line">pid <span class="number">1567</span></span><br><span class="line">usesysid <span class="number">16386</span></span><br><span class="line">usename repl_usr</span><br><span class="line">application_name walreceiver</span><br><span class="line">client_addr <span class="number">192.168</span><span class="number">.3</span><span class="number">.7</span></span><br><span class="line">client_hostname </span><br><span class="line">client_port <span class="number">58492</span></span><br><span class="line">backend_start <span class="number">2019</span>-<span class="number">10</span>-<span class="number">20</span> <span class="number">17</span>:<span class="number">36</span>:<span class="number">05</span><span class="number">.768654</span>+<span class="number">08</span></span><br><span class="line">backend_xmin </span><br><span class="line">state streaming</span><br><span class="line">sent_lsn <span class="number">0</span>/D000140</span><br><span class="line">write_lsn <span class="number">0</span>/D000140</span><br><span class="line">flush_lsn <span class="number">0</span>/D000140</span><br><span class="line">replay_lsn <span class="number">0</span>/D000140</span><br><span class="line">write_lag </span><br><span class="line">flush_lag </span><br><span class="line">replay_lag </span><br><span class="line">sync_priority <span class="number">0</span></span><br><span class="line">sync_state <span class="keyword">async</span></span><br></pre></td></tr></table></figure>
+
+<p>2、备库端<br>最后一个收到的WAL日志</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_last_wal_receive_lsn();</span><br><span class="line"> pg_last_wal_receive_lsn </span><br><span class="line">-------------------------</span><br><span class="line"> <span class="number">0</span>/D000140</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/high-availability.html">Chapter 26. High Availability, Load Balancing, and Replication</a><br>[2]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/hot-standby.html">26.5. Hot Standby</a><br>[3]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/warm-standby-failover.html">Failover</a><br>[4]<a target="_blank" rel="noopener" href="https://blog.51cto.com/heyiyi/1917655">PostgreSQL Switchover vs. Failover</a><br>[5]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lottu/p/7490759.html">PostgreSQL主备切换</a><br>[6]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43303221/article/details/85777529">PostgreSQL 流复制的主备切换</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/16/postgresql-11-continuous-archiving/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/16/postgresql-11-continuous-archiving/" class="post-title-link" itemprop="url">PostgreSQL 11 连续归档备份</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-16 21:34:12" itemprop="dateCreated datePublished" datetime="2019-10-16T21:34:12+08:00">2019-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>主配置路径/etc/postgresql/11/main/postgresql.conf<br>连续归档备份主要涉及三个参数</p>
+<p><strong>参数配置</strong></p>
+<p>wal_level<br>默认值为replica，支持WAL归档，replication以及hot standby，所以此参数保持默认值即可。</p>
+<p>archive_mode<br>归档模式，默认为off，关闭状态，还有两个选项值on和always。on表示打开归档模式，always表示在日志恢复和replication状态下，仍然会将恢复的日志继续进行归档，所以一般设置为on就可以了。</p>
+<p>archive_command<br>归档命令,指定一个shell命令字符串来保存WAL文档，其中%p代表归档文件路径，%f代表归档文件的名字，不包含路径。归档命令返回0表示归档成功，非0表示归档失败，服务器会保留未归档的WAL日志文档，直到重新归档成功，或者服务器耗尽存储空间，进入panic关闭状态。<br>不要将WAL归档日志存储在本机，可以挂载NFS或其他远程文件系统来存储日志，也可以使用scp拷贝到远程服务器，总之archive_command十分灵活。<br>下面的命令写入挂载在本地/mnt/wals目录的远程NFS文件系统</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">要注意archive_command是以运行postgresql数据库的postgres用户来执行的，要注意权限问题，所以/mnt/wals目录postgres用户要有写入权限。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">wal_keep_segments</span></span><br><span class="line"><span class="string">指定在pg_wal目录下保留的wal日志数量。如果replication使用log ship方式可以防止standby跟不上primary产生wal log的速度导致standby需要的日志被循环覆盖而失效。如果流复制replication时使用复制槽则不会存在这个问题，只要wal log没有被standby apply则primay永远不会删除这些wal log,此参数是没有影响的。还有就是pg_basebackup时如果同时备份需要的wal log则，需要设置此参数以防止需要备份的wal log被循环覆盖。</span></span><br><span class="line"><span class="string">这是设置为100</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">wal_keep_segments = <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>修改wal_level、archive_mode、wal_keep_segments需要重新启动postgresql才能生效。</p>
+<p>查看归档设置是否生效:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">psql (<span class="number">11.5</span> (Debian <span class="number">11.5</span>-<span class="number">1</span>+deb10u1))</span><br><span class="line">Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> help.</span><br><span class="line"></span><br><span class="line">postgres=# select name, setting from pg_catalog.pg_settings where name like &#x27;archive%&#x27; or name = &#x27;wal_level&#x27;;</span><br><span class="line"> name setting </span><br><span class="line">-----------------+----------------------------------------------</span><br><span class="line"> archive_command test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f</span><br><span class="line"> archive_mode on</span><br><span class="line"> archive_timeout <span class="number">0</span></span><br><span class="line"> wal_level replica</span><br><span class="line">(<span class="number">4</span> rows)</span><br></pre></td></tr></table></figure>
+
+<p>手动切换WAL日志测试归档是否成功:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_current_wal_lsn();</span><br><span class="line"> pg_current_wal_lsn </span><br><span class="line">--------------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659450</span></span><br><span class="line">(<span class="number">1</span> row)</span><br><span class="line"></span><br><span class="line">postgres=# select pg_switch_wal();</span><br><span class="line"> pg_switch_wal </span><br><span class="line">---------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659468</span></span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>查看/mnt/wals目录下是否有了新归档的WAL日志文件</p>
+<p><strong>基础备份</strong></p>
+<p>开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。<br>这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pg_basebackup: cannot stream write-ahead logs <span class="keyword">in</span> tar mode to stdout</span><br><span class="line">Try <span class="string">&quot;pg_basebackup --help&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
+<p>这是因为pg_basebackup有一个参数<code>-X --wal-method</code>默认设置为s，但此方法与tar格式写入stdout不兼容,可见postgresql源代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (format == <span class="string">&#x27;t&#x27;</span> &amp;&amp; includewal == STREAM_WAL &amp;&amp; strcmp(basedir, <span class="string">&quot;-&quot;</span>) == <span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> pg_log_error(<span class="string">&quot;cannot stream write-ahead logs in tar mode to stdout&quot;</span>);</span><br><span class="line"> fprintf(stderr, _(<span class="string">&quot;Try \\&quot;</span>%s --help\\<span class="string">&quot; for more information.\\n&quot;</span>),</span><br><span class="line"> progname);</span><br><span class="line"> exit(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>-X --wal-method</code>参数可以使pg_basebackup直接包含恢复需要的WAL日志文档，形成一个完整的直接用于恢复的备份，不需要再单独拷贝归档日志文件。但是要注意，wal_keep_segments参数要设置的大一些，防止在备份期间生成的归档日志被循环覆盖，这样基本备份会失败。每个WAL日志有16MB大小，wal_keep_segments设置数乘以16MB就是服务器保存这些wal log需要使用的额外存储空间。<br>当然<code>-X --wal-method</code>参数也可以设置为n，这样恢复时需手动管理自基础备份以来的生成的WAL日志。</p>
+<p>在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+<p>pg_basebackup备份时会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。生成的备份文档内也有一个文件叫做backup_label，与此文件内容相同。<br>此文件的内容类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">0</span>/<span class="number">6000028</span> (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">STOP WAL LOCATION: <span class="number">0</span>/60000F8 (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">0</span>/<span class="number">6000060</span></span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">44</span> CST </span><br><span class="line">LABEL: <span class="number">20191019</span></span><br><span class="line">START TIMELINE: <span class="number">1</span></span><br><span class="line">STOP TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">45</span> CST </span><br><span class="line">STOP TIMELINE: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以远程使用pg_basebackup制作基础备份，pg_basebackup使用复制协议，因此需要配置pg_hba.conf文件以允许replication连接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host replication all <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> </span><br></pre></td></tr></table></figure>
+
+<p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份，postgresql 11默认设置为10，够用了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/continuous-archiving.html">25.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-wal.html">19.5. Write Ahead Log</a><br>[3]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-replication.html">19.6. Replication</a><br>[4]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/app-pgbasebackup.html">pg_basebackup</a><br>[5]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/functions-admin.html">9.26. System Administration Functions</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/15/postgresql-compatible-distributed-newsql-database-cockroachdb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/15/postgresql-compatible-distributed-newsql-database-cockroachdb/" class="post-title-link" itemprop="url">兼容PostgreSQL的分布式NewSQL数据库CockroachDB</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-15 21:47:23" itemprop="dateCreated datePublished" datetime="2019-10-15T21:47:23+08:00">2019-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.cockroachlabs.com/docs/stable/">CockroachDB Docs</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.wolfogre.com/posts/setup-of-cockroachdb-cluster/">用于生产环境的 CockroachDB 集群搭建教程</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/10/15/ip-local-port-range-prefer-different-parity-for-start-end-values/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/15/ip-local-port-range-prefer-different-parity-for-start-end-values/" class="post-title-link" itemprop="url">ip_local_port_range: prefer different parity for start/end values</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-15 13:46:44" itemprop="dateCreated datePublished" datetime="2019-10-15T13:46:44+08:00">2019-10-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>dmesg有提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip_local_port_range: prefer different parity <span class="keyword">for</span> start/end values</span><br></pre></td></tr></table></figure>
+
+<p>查询本地端口范围</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/sys/net/ipv4/ip_local_port_range</span><br><span class="line"><span class="number">1024</span> <span class="number">65000</span></span><br></pre></td></tr></table></figure>
+<p>起始与结束端口都是偶数,打开/etc/sysctl.conf添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_local_port_range = <span class="number">1024</span> <span class="number">65535</span></span><br></pre></td></tr></table></figure>
+<p>开始端口与结束端口奇偶不同就可以了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
