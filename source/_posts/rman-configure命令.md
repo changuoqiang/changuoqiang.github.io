@@ -1,0 +1,54 @@
+---
+title: rman configure命令
+tags: []
+id: '8758'
+categories:
+  - - Database
+  - - GNU/Linux
+date: 2019-10-01 07:33:13
+---
+
+
+<!-- more -->
+rman备份时出现错误:
+```js
+RMAN-03009: failure of Control File and SPFILE Autobackup command on ORA_DISK_1 channel at 10/01/2019 00:31:53
+ORA-19504: failed to create file "\\\\192.168.0.82\\SHARE\\TT\\CTL_C-1276927241-20191001-00"
+ORA-27056: could not delete file
+OSD-04029: unable to get file attributes
+O/S-Error: (OS 53) 找不到网络路径。
+```
+是因为rman配置了控制文件自动备份，但是设置的自动备份路径早已经失效了
+所以需要关闭控制文件自动备份配置，并恢复默认设置：
+```js
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP OFF;
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;
+```
+
+CLEAR用于恢复默认设置，比如控制文件自动备份的默认设置是OFF，所以也可以这样关闭控制文件自动备份：
+```js
+RMAN> CONFIGURE CONTROLFILE AUTOBACKUP CLEAR;
+```
+
+查看全部配置选项：
+```js
+RMAN> SHOW ALL;
+RMAN configuration parameters are:
+CONFIGURE RETENTION POLICY TO REDUNDANCY 1;
+CONFIGURE BACKUP OPTIMIZATION ON;
+CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default
+CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%F'; # default
+CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default
+CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default
+CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE 30 G;
+CONFIGURE MAXSETSIZE TO UNLIMITED; # default
+CONFIGURE ENCRYPTION FOR DATABASE OFF; # default
+CONFIGURE ENCRYPTION ALGORITHM 'AES128'; # default
+CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default
+CONFIGURE SNAPSHOT CONTROLFILE NAME TO 'E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\SNCFORCL.ORA'; # default
+```
+
+References:
+\[1\][RMAN Configure Command](http://www.juliandyke.com/Research/RMAN/ConfigureCommand.php)
