@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,171 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/03/flexbox-layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/03/03/flexbox-layout/" class="post-title-link" itemprop="url">FlexBox布局模型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-03-03 22:27:32" itemprop="dateCreated datePublished" datetime="2014-03-03T22:27:32+08:00">2014-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Lang/" itemprop="url" rel="index"><span itemprop="name">Lang</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>一直以来我们都是使用float,position还有早期的table来做页面布局。现在几乎没有人会用table布局了,但float和position仍然是布局的中坚力量。</p>
+<p>虽然table,float,position可以用来布局, 但它们都不是布局元素,只是用它们来做布局比较方便罢了。这都是trick。</p>
+<p>float的本意是图文混排时的环绕,而position则用于针对单个元素的定位,table则用于展示表格。不过运用一些巧妙的手段(所以叫做trick)可以做到页面布局而已。<br>但无疑这种布局方式是繁琐的,要经过复杂的计算,填各种浏览器的各种坑,最后得到的布局极有可能自适应性也是很差的。</p>
+<p>那么什么叫布局(layout)呢?布局关心的不是单个的元素,布局着眼于如何从整体上划分页面,让划分后页面的各个部分自然的相互联系在一起。如果布局容器的尺寸发生变化,其子页面通过重排会自动的适应这种变化,无需任何额外的计算。设计布局时只要指定好布局的各项属性就可以了。</p>
+<p>其实布局管理器的概念在桌面开发中已经出现了好多年了,比如java,gtk等都有各种可用的布局管理器。这二者的概念是比较相近的。</p>
+<p>那么为什么要用table,float和position等来做布局呢？因为在以往没有其他更好的选择。但是现在不一样了,最新的CSS标准提供了几个真正的布局模块。其中当前已经可用的而且十分好用的是flex伸缩布局(Flexible Box Layout)。</p>
+<p>flex伸缩布局已于09/18/2012进入CR(Candidate Recommendation)状态,当前各大浏览器对flex布局的支持已经基本上十分完善。IE10使用旧版的flex语法,<br>firefox要到版本28才支持flex多行布局,也就是支持flex-wrap属性的wrap和wrap-reverse。safari还在使用浏览器前缀-webkit-,opera则完整的支持最新的语法。firefox 28差不多两周就可以发布了。如果不考虑那些老旧的、到处是坑的IE浏览器,现在已经可以正式的使用flex布局了。拥抱标准,大胆的抛弃那些“上古神兵”吧！</p>
+<p><strong>flex伸缩布局</strong></p>
+<p><strong>基础概念</strong></p>
+<ul>
+<li>  布局轴线<br>传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:<br><img src="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png" alt="flex axis"><br><img src="https://developer.mozilla.org/files/3739/flex_terms.png" alt="flex axis"><br>主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。</li>
+<li>  flex布局容器(container)<br>flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:<br>[css]<br>display: flex;<br>display: -webkit-flex<br>[/css]</li>
+<li>  flex子元素(items)<br>在flex容器内部的子元素按指定的规则进行排列。直接包含在flex容器内的文本自动的被一个匿名flex item包裹,如果匿名的flex子元素只包含空白,那么这个匿名子元素是不显示的,被指定属性display:none。<br>相邻flex子元素的margin不会被折叠(collapse)</li>
+</ul>
+<p><strong>flex布局容器属性</strong></p>
+<ul>
+<li><p>  flex-direction<br>指定flex容器主轴的方向,取值:</p>
+</li>
+<li><p>  row<br>主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。</p>
+</li>
+<li><p>  row-reverse<br>主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。</p>
+</li>
+<li><p>  column<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。</p>
+</li>
+<li><p>  column-reverse<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。</p>
+</li>
+<li><p>  flex-wrap<br>指定flex容器是否可以换行,取值:</p>
+</li>
+<li><p>  nowrap<br>不能换行,如果flex items过宽则溢出容器。</p>
+</li>
+<li><p>  wrap<br>flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。</p>
+</li>
+<li><p>  wrap-reverse<br>flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。</p>
+</li>
+<li><p>  justify-content<br>主轴方向上对齐flex items,取值:</p>
+</li>
+<li><p>  flex-start<br>flex items沿主轴起始方向按指定顺序排列</p>
+</li>
+<li><p>  flex-end<br>flex items靠主轴结束方向按指定顺序排列</p>
+</li>
+<li><p>  center<br>flex items在主轴方向上靠容器中间按指定顺序排列</p>
+</li>
+<li><p>  space-between<br>容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。</p>
+</li>
+<li><p>  space-around<br>容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。</p>
+</li>
+<li><p>  align-items<br>侧轴方向上对齐flex items,取值:</p>
+</li>
+<li><p>  flex-start<br>flex items沿侧轴起始方向排列。</p>
+</li>
+<li><p>  flex-end<br>flex items沿侧轴结束方向排列。</p>
+</li>
+<li><p>  center<br>flex items沿侧轴居中排列。</p>
+</li>
+<li><p>  baseline<br>flex items沿侧轴方向依照其基线排列。</p>
+</li>
+<li><p>  stretch<br>flex items沿侧轴拉伸排列。</p>
+</li>
+<li><p>  align-content<br>当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:</p>
+</li>
+<li><p>  flex-start<br>容器内的多行靠测轴起始方向并排排列。</p>
+</li>
+<li><p>  flex-end<br>容器内的多行靠侧轴结束方向并排排列。</p>
+</li>
+<li><p>  center<br>容器内的多行沿测轴居中并排排列。</p>
+</li>
+<li><p>  space-between<br>侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。</p>
+</li>
+<li><p>  space-around<br>侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。</p>
+</li>
+<li><p>  stretch<br>容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。</p>
+</li>
+<li><p>  flex-flow<br>flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:<br>[css]<br>flex-flow: flex-direction flex-wrap;<br>[/css]</p>
+</li>
+</ul>
+<p><strong>flex布局子元素属性</strong></p>
+<ul>
+<li>  order<br>指定flex item在容器内的显示顺序。无需修改html源代码即可为flex item指定新的显示次序,但是语音与导航仍然使用源代码中的顺序,因此这个属性有可能会破坏文档的可访问性(accessibility)。</li>
+<li>  flex<br>指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:<br>[css]<br>flex: flex-grow flex-shrink flex-basis<br>[/css]<br>flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。<br>flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。<br>flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。<br>flex属性是这三个属性的组合缩写,也可以单独指定这些属性。</li>
+<li>  align-self<br>子元素覆盖容器的align-items属性,如果子元素在侧轴方向的margin设置为auto,则此属性被忽略。</li>
+<li>  margin<br>margin指定为auto会合并剩余的空间,可以使item水平和垂直都居中。也可以通过在容器上使用align-items:center;justify-content:center;来使item水平垂直居中。</li>
+</ul>
+<p><strong>不影响flex布局的公共属性</strong><br>float,clear,vertical-align属性对flex items没有影响。对item指定float属性只是使其display值计算为block。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes">Using CSS flexible boxes</a><br>[2]<a target="_blank" rel="noopener" href="http://hikejun.com/blog/2013/05/03/%E4%B8%80%E8%A7%88css%E5%B8%83%E5%B1%80%E6%A0%87%E5%87%86/">一览CSS布局标准</a><br>[3]<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ie/hh673531(v=vs.85).aspx">Internet Explorer 10 中弹性框（“Flexbox”）布局</a><br>[4]<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ie/dn265027(v=vs.85).aspx">弹性框（“Flexbox”）布局更新</a><br>[5]<a target="_blank" rel="noopener" href="http://zh.learnlayout.com/">学习CSS布局</a><br>[6]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css3/using-flexbox.html">使用Flexbox：新旧语法混用实现最佳浏览器兼容</a><br>[7]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yansi/p/3335916.html">flexbox 布局使用体会</a><br>[8]<a target="_blank" rel="noopener" href="http://dev.oupeng.com/articles/advanced-cross-browser-flexbox">跨浏览器弹性布局进阶教程</a><br>[9]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css/master-new-css-layout-properties.html">Hold住CSS布局新属性</a><br>[10]<a target="_blank" rel="noopener" href="http://the-echoplex.net/flexyboxes/">Flexy Boxes</a><br>[11]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css3/responsive-design-of-the-future-with-flexbox.html">响应式设计的未来——Flexbox</a><br>[12]<a target="_blank" rel="noopener" href="http://dev.oupeng.com/articles/flexbox-basics">伸缩布局 — 打开布局天堂之门？</a></p>
+<p>===<br><strong>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1022,88 +1187,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/26/4998/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/01/26/4998/" class="post-title-link" itemprop="url">Untitled Post - 37</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-01-26 10:10:02" itemprop="dateCreated datePublished" datetime="2014-01-26T10:10:02+08:00">2014-01-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>想编辑已经存在的PDF文件？如果你使用Libreoffice的话,那么很简单,安装libreoffice-pdfimport包就可以导入PDF进行编辑了,完成后还可以导出PDF。这其实就是安装了libreoffice扩展pdf import。#Debian#</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/55/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><span class="page-number current">56</span><a class="page-number" href="/page/57/">57</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/57/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/55/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><span class="page-number current">56</span><a class="page-number" href="/page/57/">57</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/57/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

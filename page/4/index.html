@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,111 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/prometheus-grafan-alertmanager-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/14/prometheus-grafan-alertmanager-config/" class="post-title-link" itemprop="url">prometheus grafana alertmanager 监控报警基本配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-14 15:16:24" itemprop="dateCreated datePublished" datetime="2019-11-14T15:16:24+08:00">2019-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>此配置主要用于监控主机状态,prometheus还可以监控各种服务的状态,只要使用相应的exporter即可。</p>
+<p><strong>prometheus</strong></p>
+<p>监控节点安装prometheus,被监控节点只需安装prometheus-node-exporter</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus</span><br></pre></td></tr></table></figure>
+<p>/etc/prometheus/prometheus.yml文件中添加被监控节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- job_name: node</span><br><span class="line"> # If prometheus-node-exporter is installed, grab stats about the local</span><br><span class="line"> # machine by default.</span><br><span class="line"> static_configs:</span><br><span class="line"> # 被监控节点,默认</span><br><span class="line"> - targets: \[<span class="string">&#x27;localhost:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmin&#x27;</span></span><br><span class="line"> # 被监控节点</span><br><span class="line"> - targets: \[<span class="string">&#x27;10.100.0.31:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmsvr02&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>添加主机名标签，方便管理。<br>通过监控主机的9090端口访问prometheus,<code>http://ip_of_monitor:9090/</code></p>
+<p><strong>alertmanager</strong><br>在监控主机安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus-alertmanager</span><br></pre></td></tr></table></figure>
+
+<p>添加节点监控规则文件/etc/prometheus/node-alert.rules:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># hostStatsAlert</span><br><span class="line">groups:</span><br><span class="line">- name: hostStatsAlert</span><br><span class="line"> rules:</span><br><span class="line"> - alert: InstanceDown</span><br><span class="line"> expr: up == <span class="number">0</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123;$labels.instance&#125;&#125; down&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123;$labels.instance&#125;&#125; of job &#123;&#123;$labels.job&#125;&#125; has been down for more than 5 minutes.&quot;</span></span><br><span class="line"> - alert: hostCpuUsageAlert</span><br><span class="line"> expr: sum(avg without (cpu)(irate(node_cpu_seconds_total&#123;mode!=<span class="string">&#x27;idle&#x27;</span>&#125;\[5m\]))) by (instance) &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; CPU usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; CPU usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: hostMemUsageAlert</span><br><span class="line"> expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; MEM usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; MEM usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: filesystemUsageAlert</span><br><span class="line"> expr: <span class="number">100</span> - ((node_filesystem_avail_bytes&#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125; * <span class="number">100</span>) / node_filesystem_size_bytes &#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125;) &gt; <span class="number">85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; root DISK usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; root DISK usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br></pre></td></tr></table></figure>
+<p>此规则文件主要监测主机在线状态，cpu、memory和filesystem使用率</p>
+<p>/etc/prometheus/prometheus.yml引用此规则文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule_files:</span><br><span class="line"> - <span class="string">&quot;node-alert.rules&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>alertmanager配置邮件报警/etc/prometheus/alertmanager.yml:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">global</span>:</span><br><span class="line"> # The smarthost and SMTP sender used for mail notifications.</span><br><span class="line"> smtp_smarthost: <span class="string">&#x27;smtp.163.com:25&#x27;</span></span><br><span class="line"> smtp_from: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_username: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_password: <span class="string">&#x27;password&#x27;</span></span><br><span class="line">...</span><br><span class="line"> # A default receiver</span><br><span class="line"> receiver: team-X-mails</span><br><span class="line">...</span><br><span class="line">receivers:</span><br><span class="line">- name: <span class="string">&#x27;team-X-mails&#x27;</span></span><br><span class="line"> email_configs:</span><br><span class="line"> - to: <span class="string">&#x27;123@163.com&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>重新装载prometheus和alertmanager服务,停止一个被监控节点的监控服务，就可以收到报警邮件了。</p>
+<p><strong>grafana</strong></p>
+<p>可以使用grafana来展示prometheus监控信息<br>安装grafana</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y software-properties-common</span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://packages.grafana.com/oss/deb stable main&quot;</span></span><br><span class="line">$ wget -q -O - https:<span class="comment">//packages.grafana.com/gpg.key sudo apt-key add -</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install grafana</span><br></pre></td></tr></table></figure>
+
+<p>通过http 3000端口来访问grafana，然后添加prometheus数据源，添加展示prometheus数据的dashboard</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://aeric.io/post/prometheus-alertmanager-config/">Prometheus Alertmanager 基本配置</a><br>[2]<a target="_blank" rel="noopener" href="https://www.kancloud.cn/huyipow/prometheus/527563">alertmanager报警规则详解</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1168,139 +1273,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/31/ceph-deploy-mgr-osd-mds/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/31/ceph-deploy-mgr-osd-mds/" class="post-title-link" itemprop="url">Ceph集群部署-mgr-osd-mds配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-31 20:04:42" itemprop="dateCreated datePublished" datetime="2019-10-31T20:04:42+08:00">2019-10-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>一、添加manager</strong></p>
-<p>通常每一个运行monitor的机器上同时运行一个manager,以获取同样的可用性，但是manager不涉及到选举，运行于primary/standby模式。</p>
-<p>1、创建mgr认证keyring</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mgr.node6 mon <span class="string">&#x27;allow profile mgr&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span></span><br><span class="line">\[mgr.node6\]</span><br><span class="line">key = AQDAzLpdq7HzDRAAkRLSSkRO/1aLZU+87FcN5g==</span><br></pre></td></tr></table></figure>
-<p>这里mgr的名字仍然选用主机名,也就是mgr.$(hostname -s)</p>
-<p>2、创建mgr实例的目录</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u ceph mkdir /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/</span><br></pre></td></tr></table></figure>
-
-<p>3、导出mgr keyring到ngr实例目录</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get mgr.node6 -o /<span class="keyword">var</span>/lib/ceph/mgr/ceph-node6/keyring</span><br><span class="line">exported keyring <span class="keyword">for</span> mgr.node6</span><br></pre></td></tr></table></figure>
-
-<p>4、运行mgr实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mgr@node6.service</span><br><span class="line">$ sudo systemctl start ceph-mgr@node6.service</span><br><span class="line">$ sudo ceph -s</span><br><span class="line">cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, starting, since <span class="number">0.</span>109568s)</span><br><span class="line"> osd: <span class="number">0</span> osds: <span class="number">0</span> up, <span class="number">0</span> <span class="keyword">in</span></span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">0</span> B used, <span class="number">0</span> B / <span class="number">0</span> B avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
-<p>可以看到mgr活动实例启动了，重复以上步骤添加其他mgr实例。</p>
-<p><strong>二、添加OSD</strong></p>
-<p>OSD(Object Storage Device)是真正存储数据的组件，一般生产环境至少要部署3个OSD,参数文件/etc/ceph/ceph.conf中<code>osd pool default size = 3</code>设定为3，至少需要3个osd进程，集群才能达到active + clean状态。</p>
-<p>OSD有几种后端存储，建议使用bluestore提高系统稳定性和效率，bluestore只能使用逻辑卷、磁盘或分区，注意初始化OSD时指定的逻辑卷、磁盘或者分区上的数据会全部被抹掉。一般建议OSD使用单独的机器部署，并且与OS分别使用不同的驱动器。</p>
-<p>1、导出client.bootstrap-osd keyring<br>如果本地机器上没有此keyring,则需要先从集群导出到本地</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get client.bootstrap-osd -o /<span class="keyword">var</span>/lib/ceph/bootstrap-osd/ceph.keyring</span><br></pre></td></tr></table></figure>
-
-<p>2、创建OSD</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm create --data /dev/sdb</span><br></pre></td></tr></table></figure>
-<p>注意要使用正确的底层设备,lsblk可以查看系统块存储设备。<br>如果提示错误：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ceph-volume lvm create: error: GPT headers found, they must be removed on: <span class="regexp">/dev/</span>sdb</span><br><span class="line">...</span><br><span class="line">stderr: Device /dev/sdc excluded by a filter.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>需要先清除掉分区表:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo partprobe -s /dev/sdb</span><br><span class="line">$ sudo dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/dev/</span>sdb bs=<span class="number">512</span> count=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p><strong>注意：</strong>这些操作是破坏性的，一定要确认是在正确的块设备上进行操作。</p>
-<p>3、运行OSD</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-volume lvm list</span><br><span class="line"></span><br><span class="line">====== osd<span class="number">.0</span> =======</span><br><span class="line"></span><br><span class="line"> \[block\] /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"></span><br><span class="line"> block device /dev/ceph-f67dd26c-f5d8-44ca-a9da-fe6b6fccec65/osd-block-bf952b83-7ffe-<span class="number">49e2</span>-bdd7-d2fd3faacafb</span><br><span class="line"> block uuid jYMJc5-jjUe-hgPk-Wlhk-yo9y-t6JF-r8SqNa</span><br><span class="line"> cephx lockbox secret </span><br><span class="line"> cluster fsid 0238426D-78D6-48CD-AF64-B6A8407996C6</span><br><span class="line"> cluster name ceph</span><br><span class="line"> crush device <span class="class"><span class="keyword">class</span> <span class="title">None</span></span></span><br><span class="line"><span class="class"> <span class="title">encrypted</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">fsid</span> <span class="title">bf952b83</span>-7<span class="title">ffe</span>-49<span class="title">e2</span>-<span class="title">bdd7</span>-<span class="title">d2fd3faacafb</span></span></span><br><span class="line"><span class="class"> <span class="title">osd</span> <span class="title">id</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">type</span> <span class="title">block</span></span></span><br><span class="line"><span class="class"> <span class="title">vdo</span> 0</span></span><br><span class="line"><span class="class"> <span class="title">devices</span> /<span class="title">dev</span>/<span class="title">sdb</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">enable</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br><span class="line"><span class="class">//<span class="title">sudo</span> <span class="title">systemctl</span> <span class="title">start</span> <span class="title">ceph</span>-<span class="title">osd</span>@0.<span class="title">service</span></span></span><br></pre></td></tr></table></figure>
-<p>先查找osd实例的名称，然后启用相应的实例服务,ceph-volume会自动创建相应的服务并启动它们。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 37m)</span><br><span class="line"> mgr: node6(active, since 25m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> osd: <span class="number">1</span> osds: <span class="number">1</span> up (since 85s), <span class="number">1</span> <span class="keyword">in</span> (since 85s)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">0</span> pools, <span class="number">0</span> pgs</span><br><span class="line"> objects: <span class="number">0</span> objects, <span class="number">0</span> B</span><br><span class="line"> usage: <span class="number">1.0</span> GiB used, <span class="number">6.0</span> GiB / <span class="number">7</span> GiB avail</span><br><span class="line"> pgs: </span><br></pre></td></tr></table></figure>
-<p>可以看到运行了一个osd实例，重复以上步骤添加其他OSD实例。</p>
-<p><strong>三、添加mds</strong><br>如果要使用CephFS文件系统才需要设置mds实例，对象存储和块设备存储无需mds实例。</p>
-<p>1、创建mds实例目录</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph mkdir -p /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6</span><br></pre></td></tr></table></figure>
-<p>目录格式为{cluster-name}-{id}，按照惯例这里id仍然取主机名$(hostname -s)</p>
-<p>2、创建mds实例keyring</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u ceph ceph-authtool --create-keyring /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring --gen-key -n mds.node6</span><br></pre></td></tr></table></figure>
-
-<p>3、将mds实例keyring导入集群并设置caps权限</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth add mds.node6 osd <span class="string">&quot;allow rwx&quot;</span> mds <span class="string">&quot;allow&quot;</span> mon <span class="string">&quot;allow profile mds&quot;</span> -i /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br><span class="line">added key <span class="keyword">for</span> mds.node6</span><br></pre></td></tr></table></figure>
-<p>或者2,3步合并为一步：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph auth get-or-create mds.node6 mon <span class="string">&#x27;allow profile mds&#x27;</span> mgr <span class="string">&#x27;allow profile mds&#x27;</span> mds <span class="string">&#x27;allow *&#x27;</span> osd <span class="string">&#x27;allow *&#x27;</span> sudo -u ceph tee /<span class="keyword">var</span>/lib/ceph/mds/ceph-node6/keyring</span><br></pre></td></tr></table></figure>
-
-<p>4、编辑/etc/ceph/ceph.conf添加mds实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[mds.node6\]</span><br><span class="line">host = node6</span><br></pre></td></tr></table></figure>
-
-<p>5、启动mds实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mds@node6</span><br><span class="line">$ sudo systemctl start ceph-mds@node6</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master//cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,154 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/09/30/redis-install-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/30/redis-install-configuration/" class="post-title-link" itemprop="url">redis sentinel主从复制高可用安装配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-30 15:29:29" itemprop="dateCreated datePublished" datetime="2019-09-30T15:29:29+08:00">2019-09-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>redis sentinel与cluster是不同的，虽然都是分布式系统，sentinel只是实现高可用，而cluster则可以进一步实现数据分片和负载均衡。</p>
+<p>sentinel配置至少需要三个节点。<br>后面采用如下的配置,三个独立的节点，数字代表节点编号，M代表Master，S代表Sentinel，R代表Replica</p>
+<pre><code>   +----+
+    M1 
+    S1 
+   +----+</code></pre>
+<p>+—-+        +—-+<br> R2 —-+—- R3<br> S2           S3<br>+—-+         +—-+</p>
+<p>Configuration: quorum = 2</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install redis-server redis-sentinel</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-server配置</strong></p>
+<p>配置文件为/etc/redis/redis.conf<br>所有的server节点注释掉bind本地回环地址这一行，并且将protect-mode设置为no</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br><span class="line">protect-mode no</span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>slave节点2和3需要添加replicaof配置项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replicaof ip_of_master <span class="number">6379</span></span><br></pre></td></tr></table></figure>
+
+<p>diskless配置</p>
+<p>如果redis只是用于存储session，可以无需持久化到硬盘，进一步提高性能</p>
+<p>注释掉配置文件中的所有save行，replica参数设置如下即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># save 900 1</span><br><span class="line"># save 300 10</span><br><span class="line"># save 60 10000</span><br><span class="line">repl-diskless-sync yes</span><br><span class="line">repl-diskless-sync-delay <span class="number">0</span></span><br><span class="line">repl-disable-tcp-nodelay no</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-sentinel配置</strong><br>配置文件为/etc/redis/sentinel.conf<br>注释掉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>sentinel monitor配置为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster ip_of_master <span class="number">6379</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>其他参数，比如down-after-milliseconds，failover-timeout，parallel-syncs等都使用系统默认值即可。</p>
+<p>注意：sentinel启动时会自动生成sentinel myid用于在集群中标识本实例，生成后只要不删除会一直使用这个id，如果其他节点复制本节点的配置文件，注意要注释或删除掉已经生成的myid，因为sentinel集群中所有的实例要有不同的myid</p>
+<p><strong>sentinel集群状态</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli -p <span class="number">26379</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel master mymaster</span><br><span class="line"> <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;mymaster&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;eb70c88ffcf007fd54032e85fc35e500dfbbb2a0&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"><span class="number">10</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"><span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"><span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"><span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"><span class="number">18</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"><span class="number">20</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"><span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"><span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"><span class="number">24</span>) <span class="string">&quot;2289&quot;</span></span><br><span class="line"><span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"><span class="number">26</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"><span class="number">28</span>) <span class="string">&quot;6058526968&quot;</span></span><br><span class="line"><span class="number">29</span>) <span class="string">&quot;config-epoch&quot;</span></span><br><span class="line"><span class="number">30</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">31</span>) <span class="string">&quot;num-slaves&quot;</span></span><br><span class="line"><span class="number">32</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">33</span>) <span class="string">&quot;num-other-sentinels&quot;</span></span><br><span class="line"><span class="number">34</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">35</span>) <span class="string">&quot;quorum&quot;</span></span><br><span class="line"><span class="number">36</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">37</span>) <span class="string">&quot;failover-timeout&quot;</span></span><br><span class="line"><span class="number">38</span>) <span class="string">&quot;180000&quot;</span></span><br><span class="line"><span class="number">39</span>) <span class="string">&quot;parallel-syncs&quot;</span></span><br><span class="line"><span class="number">40</span>) <span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到当前的master节点信息，num-slaves表明有几个replica，num-other-sentinels表明除本节点外有几个其他的sentinel节点。</p>
+<p>relipa节点的信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel slaves mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.18:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;f8213930280bbf28202922474c045bb225ed0685&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;3994&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058776146&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825725&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.17:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.17&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;dc208df92659b72d94e5da0335cc6bc1b9fe814b&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;6361&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058766018&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825169&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>sentinel节点的信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel sentinels mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;493&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;454&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-service优化配置</strong></p>
+<p>1、TCP BACKLOG<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The TCP backlog setting <span class="keyword">of</span> <span class="number">511</span> cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value <span class="keyword">of</span> <span class="number">128.</span></span><br></pre></td></tr></table></figure>
+<p>查看当前配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/sys/net/core/somaxconn</span><br><span class="line"><span class="number">128</span></span><br></pre></td></tr></table></figure>
+<p>显然主机的tcp backlog设置过低了，不能很好的支持大量的并发连接，应该把对应的参数调高<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.core.somaxconn = <span class="number">10240</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>/etc/redis/redis.conf文件中修改tcp-backlog为4096或更高，但不能超过系统参数设置，重启redis后生效。</p>
+<p>2、overcommit_memory<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING overcommit_memory is set to <span class="number">0</span>! Background save may fail under low memory condition. To fix <span class="built_in">this</span> issue add <span class="string">&#x27;vm.overcommit_memory = 1&#x27;</span> to /etc/sysctl.conf and then reboot or run the command <span class="string">&#x27;sysctl vm.overcommit_memory=1&#x27;</span> <span class="keyword">for</span> <span class="built_in">this</span> to take effect.</span><br></pre></td></tr></table></figure>
+<p>一般在低内存条件时，此参数才会派上用场<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.overcommit_memory = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>3、关闭透明巨页<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING you have Transparent Huge Pages (THP) support enabled <span class="keyword">in</span> your kernel. This will create latency and memory usage issues <span class="keyword">with</span> Redis. To fix <span class="built_in">this</span> issue run the command <span class="string">&#x27;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27;</span> <span class="keyword">as</span> root, and add it to your /etc/rc.local <span class="keyword">in</span> order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br></pre></td></tr></table></figure>
+<p>开启透明巨页会有些问题，可以通过grub传递内核参数来关闭透明巨页<br>/etc/default/grub文件中GRUB_CMDLINE_LINUX_DEFAULT中添加transparent_hugepage=never</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet transparent_hugepage=never&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后更新grub配置，重启生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-grub</span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>4、repl-backlog-size参数<br>这个参数是为replica保持数据的缓冲区大小，当replica离线时，使用此缓冲为其保存数据，当replica重新上线可以不用执行full sync，使用partial sync就可以了，默认设置为1MB，显然太小了，可以根据单位时间内业务数据多少、支持replica离线时间、内存大小等因素设置此参数，比如设置为16MB以上。</p>
+<p>5、client-output-buffer-limit参数</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://redis.io/topics/replication">Replication</a><br>[2]<a target="_blank" rel="noopener" href="https://redis.io/topics/sentinel">Redis Sentinel Documentation</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.csdn.net/angjunqiang/article/details/81190562">Redis Sentinel 与 Redis Cluster</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1143,116 +1291,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/31/split-sstables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/31/split-sstables/" class="post-title-link" itemprop="url">拆分sstables</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-31 17:43:32" itemprop="dateCreated datePublished" datetime="2019-07-31T17:43:32+08:00">2019-07-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>因为使用默认的compaction策略SizeTieredCompactionStrategy，导致产生了几个巨大的sstable，虽然已经更改为了LeveledCompactionStrategy策略，但是cassadra自动进行major compaction的时候因为需要巨大的空闲存储空间出错了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">WARN \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">726</span> CompactionTask.java:<span class="number">298</span> - Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">ERROR \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">727</span> CassandraDaemon.java:<span class="number">195</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">6</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">299</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">119</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">257</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1149</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">624</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.lang.Thread.run(Thread.java:<span class="number">748</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br></pre></td></tr></table></figure>
-
-<p>所有可以借助离线工具sstablesplit拆分大的sstables，拆分后使用LCS策略进行compaction就不需要那么多的空闲磁盘空间了。</p>
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install cassandra-tools</span><br></pre></td></tr></table></figure>
-<p>cassandra-tools包中包含sstablesplit和sstablemeta等工具</p>
-<p><strong>停止cassandra</strong></p>
-<p>要注意，拆分sstable一定要在离线状态下进行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop cassandra</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo kill -sigterm &lt;pid_of_cassandra&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>拆分</strong></p>
-<p>sstablesplit帮助信息</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sstablesplit -h</span><br><span class="line">usage: sstablesplit \[options\] &lt;filename&gt; \[&lt;filename&gt;\]*</span><br><span class="line">--</span><br><span class="line">Split the provided sstables files <span class="keyword">in</span> sstables <span class="keyword">of</span> maximum provided filesize (see option --size).</span><br><span class="line">--</span><br><span class="line">Options are:</span><br><span class="line"> --debug display stack traces</span><br><span class="line"> -h,--help display <span class="built_in">this</span> help message</span><br><span class="line"> --no-snapshot don<span class="string">&#x27;t snapshot the sstables before splitting</span></span><br><span class="line"><span class="string"> -s,--size &lt;size&gt; maximum size in MB for the output sstables (default:</span></span><br><span class="line"><span class="string"> 50)</span></span><br></pre></td></tr></table></figure>
-
-<p>sstablesplit按给定的文件尺寸拆分指定的sstables，可以一次指定多个。注意文件权限的问题，使用cassandra用户来执行操作，下面是一个例子，：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra sstablesplit -s <span class="number">256</span> /<span class="keyword">var</span>/lib/cassandra/data/keyspace/table-xxxx/la-xxxx-big-Data.db</span><br></pre></td></tr></table></figure>
-
-<p>拆分完成后cassandra可以重新上线。</p>
-<p>sstablesplit设定的默认堆内存只有256M，拆分过程中出现了OOM错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Direct buffer memory</span><br><span class="line"> at java.nio.Bits.reserveMemory(Bits.java:<span class="number">694</span>)</span><br><span class="line"> at java.nio.DirectByteBuffer.&lt;init&gt;(DirectByteBuffer.java:<span class="number">123</span>)</span><br><span class="line"> at java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:<span class="number">311</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.BufferType$2.allocate(BufferType.java:<span class="number">35</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.CompressedSequentialWriter.&lt;init&gt;(CompressedSequentialWriter.java:<span class="number">70</span>)</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">168</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigTableWriter.&lt;init&gt;(BigTableWriter.java:<span class="number">75</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigFormat$WriterFactory.open(BigFormat.java:<span class="number">107</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.SSTableWriter.create(SSTableWriter.java:<span class="number">84</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.writers.MaxSSTableSizeWriter.append(MaxSSTableSizeWriter.java:<span class="number">83</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">186</span>)</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.SSTableSplitter.split(SSTableSplitter.java:<span class="number">44</span>)</span><br><span class="line"> at org.apache.cassandra.tools.StandaloneSplitter.main(StandaloneSplitter.java:<span class="number">156</span>)</span><br></pre></td></tr></table></figure>
-
-<p>修改/usr/bin/sstablesplit脚本中的<code>MAX_HEAP_SIZE=&quot;256M&quot;</code>为<code>MAX_HEAP_SIZE=&quot;8192M&quot;</code>，重启一下cassandra会自动清除掉临时的sstables，<code>nodetool clearsnapshot</code>清除掉sstablesplit自动生成的快照，最后停止cassandra再重新拆分。</p>
-<p><strong>删除再repair</strong></p>
-<p>拆分大sstable需要离线操作，重新上线后应该需要repair,其实还有一种最小离线时间的方法，那就是”停止节点-&gt;删除大sstable-&gt;启动节点-&gt;repair节点”，这也是一种可行的方法。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsSSTableSplit.html">sstablesplit</a><br>[2]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/115005668426-FAQ-How-to-split-large-SSTables-on-another-server">FAQ - How to split large SSTables on another server</a><br>[3]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42042665/do-sstablesplit-on-the-side">do sstablesplit on the side</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

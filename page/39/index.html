@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/06/uwsgi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/06/uwsgi/" class="post-title-link" itemprop="url">uWSGI简介</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-06 22:31:50" itemprop="dateCreated datePublished" datetime="2015-04-06T22:31:50+08:00">2015-04-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>为了实现动态web,我们发展出了各式各样的技术，那真是五花八门，乱花渐欲迷人眼。</p>
+<p>各种网关接口协议，从最古老的<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a>(Common Gateway Interface)到<a target="_blank" rel="noopener" href="http://python.ca/scgi/protocol.txt">SCGI</a>(Simple Common Gateway Interface),<a target="_blank" rel="noopener" href="http://www.fastcgi.com/drupal/">FastCGI</a>,<a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0333/">WSGI</a>(Python Web Server Gateway Interface),<a target="_blank" rel="noopener" href="http://plackperl.org/">PSGI</a>(Perl Web Server Gateway Interface),<a target="_blank" rel="noopener" href="http://rack.github.io/">rack</a>,<a target="_blank" rel="noopener" href="http://keplerproject.github.io/wsapi/">WSAPI</a>(Lua Web Server API),甚至还出现了JWSGI(Java Web Server Gateway Interface)等,当然还有HTTP协议。这些协议大部分已经标准化，还有许许多多的私有协议。只有协议是不够的，所以又有了对协议的各种各样的实现，比如<a target="_blank" rel="noopener" href="http://php-fpm.org/">php-fpm</a>,<a target="_blank" rel="noopener" href="http://redmine.lighttpd.net/projects/spawn-fcgi/wiki">spawn-fcgi</a>,<a target="_blank" rel="noopener" href="http://wiki.nginx.org/Fcgiwrap">fcgiwrap</a>,<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/index.html#">uWSGI</a>等</p>
+<p>web server也通过很多内置的模块来直接实现对动态web支持，比如<a target="_blank" rel="noopener" href="https://perl.apache.org/">mod_perl</a>,<a target="_blank" rel="noopener" href="http://modpython.org/">mod_python</a>,mod_php,<a target="_blank" rel="noopener" href="http://httpd.apache.org/docs/trunk/mod/mod_lua.html">mod_lua</a>等。</p>
+<p>传统的web server，比如apache,nginx等，自身处理静态资源请求，然后将动态资源请求通过内置模块或者支持相关网关协议的application server转发到相应的应用程序来处理。当然也有tomcat此类的应用服务器，可以通过http来与传统的web服务器进行集成，甚至自身完全担当起application server和web server两种角色。有很多web框架自己也提供了http服务器。但一般来讲传统的web server除了处理静态资源性能上的优势，还有其他很多丰富的功能，比如访问控制，反向代理，负载均衡等等。</p>
+<p>为什么会有这么多的协议，这么多的模块？应该讲主要还是性能方面的考量，动态web从无到有，从小规模到大规模，还要面对各种各样的后端开发技术，有这么多的协议和模块也是无可避免的。</p>
+<p>一般来讲，部署一个动态应用可以有多种不同的选择。比如部署php应用可以使用php-fpm,也可以使用mod_php,甚至也可以使用其他的FCGI服务器，只要FCGI服务器实现了对PHP的支持即可。</p>
+<p><strong>uWSGI是个什么东东?</strong></p>
+<p>uWSGI是一个应用服务器，支持几乎所有现有的网关接口协议，同时自己也实现了另一个网关接口协议，叫做<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/Protocol.html">uwsgi</a>。这么多接口了，为什么再造一个？据说还是性能，据说uwsgi比fastcgi和wsgi都快的多。</p>
+<p>且不论uWSGI的性能有多高，只是能支持几乎所有的网关接口协议就已经很不错了。nginx已经内置支持uWSGI,这样nginx + uWSGI这种组合可以应对各种各样的后端应用，部署和管理起来都方便的多。</p>
+<p>nginx不支持CGI,只能通过<a href="https://openwares.net/internet/fastcgi_intro.html">FastCGI</a>来调用CGI程序。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/index.html">uWSGI</a><br>[2]<a target="_blank" rel="noopener" href="http://metz.gehn.net/2013/02/running-anything-on-nginx-with-uwsgi/">Running (almost) anything on Nginx with uWSGI</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1100,110 +1192,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/26/git-ignore-tracked-files/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/03/26/git-ignore-tracked-files/" class="post-title-link" itemprop="url">GIT忽略已跟踪文件的修改</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-03-26 13:28:34" itemprop="dateCreated datePublished" datetime="2015-03-26T13:28:34+08:00">2015-03-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>忽略未纳入版本管理的文件或文件夹</strong></p>
-<p>我们知道可以通过几种方法来配置git忽略对某些未跟踪文件的跟踪。</p>
-<ol>
-<li> .gitignore<br>版本库中的每个目录层级都可以有一个.gitignore文件，这个文件每一行保存了一个匹配的规则,如：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># build生成文件</span><br><span class="line">build/</span><br><span class="line">root/WEB-INF/classes/</span><br><span class="line">*.class</span><br><span class="line"></span><br><span class="line"># lib文件和meta文件</span><br><span class="line">#root/WEB-INF/lib/</span><br><span class="line">root/META-INF/</span><br><span class="line"></span><br><span class="line"># vim交换文件</span><br><span class="line">*.swp</span><br><span class="line"></span><br><span class="line"># eclipse工程文件</span><br><span class="line">#.classpath</span><br><span class="line">#.project</span><br><span class="line">#.settings/</span><br><span class="line"></span><br><span class="line"># netbeans工程文件</span><br><span class="line">#build.xml</span><br><span class="line">#nbproject/</span><br><span class="line"></span><br><span class="line">#gradle</span><br><span class="line">.gradle</span><br><span class="line"></span><br><span class="line">#python cache folder</span><br><span class="line">__pycache__</span><br></pre></td></tr></table></figure>
-.gitignore文件本身是纳入版本库管理的。</li>
-<li> 全局ignore文件<br>可以为自己配置一个全局的ignore文件，位于任何版本库之外：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="built_in">global</span> core.excludesfile ~/.gitignoreglobal</span><br></pre></td></tr></table></figure>
-其语法与.gitignore一样</li>
-<li> exclude<br>git还提供了另一种exclude方法来排除文件。.gitignore用来保存的是公共的需要排除的文件,<br>而.git/info/exclude文件里设置的则是你自己本地需要排除的文件,他不会影响到其他人,也不会提交到版本库中去。</li>
-</ol>
-<p><strong>忽略已纳入版本管理的文件或文件夹</strong></p>
-<p>以上这些方法对于尚未被git跟踪管理的文件是有效的，如果想忽略已经被git纳入版本库管理的文件的修改，则需要另外的方法。</p>
-<p>告诉git忽略对已经纳入版本管理的文件.classpath的修改,git会一直忽略此文件直到重新告诉git可以再次跟踪此文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --assume-unchanged .classpath</span><br></pre></td></tr></table></figure>
-
-<p>告诉git恢复跟踪.classpath</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --no-assume-unchanged .classpath</span><br></pre></td></tr></table></figure>
-
-<p>查看当前被忽略的、已经纳入版本库管理的文件：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git ls-files -v grep -e <span class="string">&quot;^\[hsmrck\]&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/pylemon/archive/2012/07/16/2593112.html">在 git 中忽略文件 gitignore 与 exclude</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

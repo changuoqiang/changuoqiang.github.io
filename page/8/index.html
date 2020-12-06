@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,114 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/31/split-sstables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/31/split-sstables/" class="post-title-link" itemprop="url">拆分sstables</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-31 17:43:32" itemprop="dateCreated datePublished" datetime="2019-07-31T17:43:32+08:00">2019-07-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为使用默认的compaction策略SizeTieredCompactionStrategy，导致产生了几个巨大的sstable，虽然已经更改为了LeveledCompactionStrategy策略，但是cassadra自动进行major compaction的时候因为需要巨大的空闲存储空间出错了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">WARN \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">726</span> CompactionTask.java:<span class="number">298</span> - Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">ERROR \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">727</span> CassandraDaemon.java:<span class="number">195</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">6</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">299</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">119</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">257</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1149</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">624</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.lang.Thread.run(Thread.java:<span class="number">748</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br></pre></td></tr></table></figure>
+
+<p>所有可以借助离线工具sstablesplit拆分大的sstables，拆分后使用LCS策略进行compaction就不需要那么多的空闲磁盘空间了。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install cassandra-tools</span><br></pre></td></tr></table></figure>
+<p>cassandra-tools包中包含sstablesplit和sstablemeta等工具</p>
+<p><strong>停止cassandra</strong></p>
+<p>要注意，拆分sstable一定要在离线状态下进行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop cassandra</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo kill -sigterm &lt;pid_of_cassandra&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>拆分</strong></p>
+<p>sstablesplit帮助信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sstablesplit -h</span><br><span class="line">usage: sstablesplit \[options\] &lt;filename&gt; \[&lt;filename&gt;\]*</span><br><span class="line">--</span><br><span class="line">Split the provided sstables files <span class="keyword">in</span> sstables <span class="keyword">of</span> maximum provided filesize (see option --size).</span><br><span class="line">--</span><br><span class="line">Options are:</span><br><span class="line"> --debug display stack traces</span><br><span class="line"> -h,--help display <span class="built_in">this</span> help message</span><br><span class="line"> --no-snapshot don<span class="string">&#x27;t snapshot the sstables before splitting</span></span><br><span class="line"><span class="string"> -s,--size &lt;size&gt; maximum size in MB for the output sstables (default:</span></span><br><span class="line"><span class="string"> 50)</span></span><br></pre></td></tr></table></figure>
+
+<p>sstablesplit按给定的文件尺寸拆分指定的sstables，可以一次指定多个。注意文件权限的问题，使用cassandra用户来执行操作，下面是一个例子，：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra sstablesplit -s <span class="number">256</span> /<span class="keyword">var</span>/lib/cassandra/data/keyspace/table-xxxx/la-xxxx-big-Data.db</span><br></pre></td></tr></table></figure>
+
+<p>拆分完成后cassandra可以重新上线。</p>
+<p>sstablesplit设定的默认堆内存只有256M，拆分过程中出现了OOM错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Direct buffer memory</span><br><span class="line"> at java.nio.Bits.reserveMemory(Bits.java:<span class="number">694</span>)</span><br><span class="line"> at java.nio.DirectByteBuffer.&lt;init&gt;(DirectByteBuffer.java:<span class="number">123</span>)</span><br><span class="line"> at java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:<span class="number">311</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.BufferType$2.allocate(BufferType.java:<span class="number">35</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.CompressedSequentialWriter.&lt;init&gt;(CompressedSequentialWriter.java:<span class="number">70</span>)</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">168</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigTableWriter.&lt;init&gt;(BigTableWriter.java:<span class="number">75</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigFormat$WriterFactory.open(BigFormat.java:<span class="number">107</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.SSTableWriter.create(SSTableWriter.java:<span class="number">84</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.writers.MaxSSTableSizeWriter.append(MaxSSTableSizeWriter.java:<span class="number">83</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">186</span>)</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.SSTableSplitter.split(SSTableSplitter.java:<span class="number">44</span>)</span><br><span class="line"> at org.apache.cassandra.tools.StandaloneSplitter.main(StandaloneSplitter.java:<span class="number">156</span>)</span><br></pre></td></tr></table></figure>
+
+<p>修改/usr/bin/sstablesplit脚本中的<code>MAX_HEAP_SIZE=&quot;256M&quot;</code>为<code>MAX_HEAP_SIZE=&quot;8192M&quot;</code>，重启一下cassandra会自动清除掉临时的sstables，<code>nodetool clearsnapshot</code>清除掉sstablesplit自动生成的快照，最后停止cassandra再重新拆分。</p>
+<p><strong>删除再repair</strong></p>
+<p>拆分大sstable需要离线操作，重新上线后应该需要repair,其实还有一种最小离线时间的方法，那就是”停止节点-&gt;删除大sstable-&gt;启动节点-&gt;repair节点”，这也是一种可行的方法。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsSSTableSplit.html">sstablesplit</a><br>[2]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/115005668426-FAQ-How-to-split-large-SSTables-on-another-server">FAQ - How to split large SSTables on another server</a><br>[3]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42042665/do-sstablesplit-on-the-side">do sstablesplit on the side</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1176,90 +1284,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/11/xterm-on-gnome-wayland/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/11/xterm-on-gnome-wayland/" class="post-title-link" itemprop="url">xterm on gnome wayland</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-11 14:26:38" itemprop="dateCreated datePublished" datetime="2019-07-11T14:26:38+08:00">2019-07-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>debian buster gnome桌面默认启用wayland，当前仍然可以切换回Xorg<br>wayland兼容性还是有一些小问题，wayland并不加载profile环境配置文件，<br>也不理会Xsession，导致.xinitrc,.Xresources等无法加载<br>系统及用户的Xresources是由/etc/X11/Xsession.d/30x11-common_xresources脚本加载的，在wayland面前失效了，直接后果就是每次重启机器xterm就会被打回原形，只能手工重新加载~/.Xresources<br>回到gnome on xorg则xterm恢复正常<br>发现一个跨平台GPU加速的terminale emulator <a target="_blank" rel="noopener" href="https://github.com/jwilm/alacritty">alacritty</a>看起来很不错，可以试用一番。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lwn.net/Articles/709769/">GNOME, Wayland, and environment variables</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

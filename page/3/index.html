@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,128 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/xpra-intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/04/xpra-intro/" class="post-title-link" itemprop="url">Xpra入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-04 18:49:22" itemprop="dateCreated datePublished" datetime="2020-02-04T18:49:22+08:00">2020-02-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ssh x11 forward太慢了，真的。</p>
+<p>Xpra除了很快，还可以后台运行gui应用，被称为screen for X11。还可以远程运行整个桌面。</p>
+<p>下面使用macos远程使用debian buster系统上的gui application</p>
+<p><strong>安装</strong></p>
+<p>debian端:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q https:<span class="comment">//xpra.org/gpg.asc -O- sudo apt-key add -</span></span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://xpra.org/ buster main&quot;</span></span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install xpra -y</span><br></pre></td></tr></table></figure>
+
+<p>mac端：<br>下载<a target="_blank" rel="noopener" href="https://xpra.org/dists/osx/x86_64/Xpra.pkg">Xpra.pkg</a>安装即可。<br>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install xpra</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行</strong></p>
+<p>通过ssh隧道运行</p>
+<p>linux/macos平台:</p>
+<p>一次性运行gui应用，结束时自动关闭xpra服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p>启动gui应用,结束时不关闭xpra服务，可以再次附加到gui应用程序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo</span></span><br></pre></td></tr></table></figure>
+
+<p>断开后可以重新附加到已经运行的gui应用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra attach ssh:<span class="comment">//user@host</span></span><br></pre></td></tr></table></figure>
+
+<p>windows平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; xpra_cmd start ssh:<span class="comment">//user@host --ssh=&quot;C:\\\\Program Files\\\\putty\\\\Plink.exe -ssh -noagent -i c:\\\\***.ppk -P 22&quot; --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>其他命令</strong></p>
+<p>列出所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra list</span><br></pre></td></tr></table></figure>
+
+<p>终止所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra stop</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入法</strong><br>服务器上安装ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ibus-pinyin</span><br></pre></td></tr></table></figure>
+
+<p>配置ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-setup&quot;</span></span><br></pre></td></tr></table></figure>
+<p>运行firefox，同时启动ibus输入法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=firefox --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-daemon -x -d -r&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他请参考<code>xpra --help</code></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://xpra.org/trac/browser/xpra/trunk/src/man/xpra.1">manual</a><br>[2]<a target="_blank" rel="noopener" href="https://xpra.org/trac/wiki/FAQ">FAQ</a><br>[3]<a target="_blank" rel="noopener" href="https://medium.com/@summitkwan/guide-work-remotely-on-a-linux-server-from-local-mac-windows-f05cdc6db0e0">GUIDE: Work remotely on a Linux server from local Mac</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1054,113 +1176,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/prometheus-grafan-alertmanager-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/14/prometheus-grafan-alertmanager-config/" class="post-title-link" itemprop="url">prometheus grafana alertmanager 监控报警基本配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-14 15:16:24" itemprop="dateCreated datePublished" datetime="2019-11-14T15:16:24+08:00">2019-11-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>此配置主要用于监控主机状态,prometheus还可以监控各种服务的状态,只要使用相应的exporter即可。</p>
-<p><strong>prometheus</strong></p>
-<p>监控节点安装prometheus,被监控节点只需安装prometheus-node-exporter</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus</span><br></pre></td></tr></table></figure>
-<p>/etc/prometheus/prometheus.yml文件中添加被监控节点</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- job_name: node</span><br><span class="line"> # If prometheus-node-exporter is installed, grab stats about the local</span><br><span class="line"> # machine by default.</span><br><span class="line"> static_configs:</span><br><span class="line"> # 被监控节点,默认</span><br><span class="line"> - targets: \[<span class="string">&#x27;localhost:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmin&#x27;</span></span><br><span class="line"> # 被监控节点</span><br><span class="line"> - targets: \[<span class="string">&#x27;10.100.0.31:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmsvr02&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>添加主机名标签，方便管理。<br>通过监控主机的9090端口访问prometheus,<code>http://ip_of_monitor:9090/</code></p>
-<p><strong>alertmanager</strong><br>在监控主机安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus-alertmanager</span><br></pre></td></tr></table></figure>
-
-<p>添加节点监控规则文件/etc/prometheus/node-alert.rules:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># hostStatsAlert</span><br><span class="line">groups:</span><br><span class="line">- name: hostStatsAlert</span><br><span class="line"> rules:</span><br><span class="line"> - alert: InstanceDown</span><br><span class="line"> expr: up == <span class="number">0</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123;$labels.instance&#125;&#125; down&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123;$labels.instance&#125;&#125; of job &#123;&#123;$labels.job&#125;&#125; has been down for more than 5 minutes.&quot;</span></span><br><span class="line"> - alert: hostCpuUsageAlert</span><br><span class="line"> expr: sum(avg without (cpu)(irate(node_cpu_seconds_total&#123;mode!=<span class="string">&#x27;idle&#x27;</span>&#125;\[5m\]))) by (instance) &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; CPU usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; CPU usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: hostMemUsageAlert</span><br><span class="line"> expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; MEM usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; MEM usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: filesystemUsageAlert</span><br><span class="line"> expr: <span class="number">100</span> - ((node_filesystem_avail_bytes&#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125; * <span class="number">100</span>) / node_filesystem_size_bytes &#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125;) &gt; <span class="number">85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; root DISK usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; root DISK usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br></pre></td></tr></table></figure>
-<p>此规则文件主要监测主机在线状态，cpu、memory和filesystem使用率</p>
-<p>/etc/prometheus/prometheus.yml引用此规则文件：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule_files:</span><br><span class="line"> - <span class="string">&quot;node-alert.rules&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>alertmanager配置邮件报警/etc/prometheus/alertmanager.yml:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">global</span>:</span><br><span class="line"> # The smarthost and SMTP sender used for mail notifications.</span><br><span class="line"> smtp_smarthost: <span class="string">&#x27;smtp.163.com:25&#x27;</span></span><br><span class="line"> smtp_from: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_username: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_password: <span class="string">&#x27;password&#x27;</span></span><br><span class="line">...</span><br><span class="line"> # A default receiver</span><br><span class="line"> receiver: team-X-mails</span><br><span class="line">...</span><br><span class="line">receivers:</span><br><span class="line">- name: <span class="string">&#x27;team-X-mails&#x27;</span></span><br><span class="line"> email_configs:</span><br><span class="line"> - to: <span class="string">&#x27;123@163.com&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>重新装载prometheus和alertmanager服务,停止一个被监控节点的监控服务，就可以收到报警邮件了。</p>
-<p><strong>grafana</strong></p>
-<p>可以使用grafana来展示prometheus监控信息<br>安装grafana</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y software-properties-common</span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://packages.grafana.com/oss/deb stable main&quot;</span></span><br><span class="line">$ wget -q -O - https:<span class="comment">//packages.grafana.com/gpg.key sudo apt-key add -</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install grafana</span><br></pre></td></tr></table></figure>
-
-<p>通过http 3000端口来访问grafana，然后添加prometheus数据源，添加展示prometheus数据的dashboard</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://aeric.io/post/prometheus-alertmanager-config/">Prometheus Alertmanager 基本配置</a><br>[2]<a target="_blank" rel="noopener" href="https://www.kancloud.cn/huyipow/prometheus/527563">alertmanager报警规则详解</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,122 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/31/nginx-tomcat-memcached-session-share-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/31/nginx-tomcat-memcached-session-share-cluster/" class="post-title-link" itemprop="url">nginx,tomcat,memcached会话共享集群配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-31 20:40:19" itemprop="dateCreated datePublished" datetime="2016-05-31T20:40:19+08:00">2016-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat自身支持会话复制的集群。</p>
+<p>此post主要讲使用memcached存储会话，使用msm(memcached-session-manager)来管理会话复制。</p>
+<p>通过配置共享会话的tomcat集群，可以提高服务的高可用性，并可以做到不停机连续更新应用程序。</p>
+<p>示例配置采用两台机器，ip分别为10.100.0.20和10.100.0.21。每台机器分别部署nginx,tomcat和memcached。两个tomcat实例和两个memcached实例通过msm组成一个会话共享集群，前端由nginx做负载均衡。</p>
+<p>还可以在nginx之前做DNS负载均衡。</p>
+<p><strong>nginx配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">upstream servers &#123;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.20</span>:<span class="number">8080</span>;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.21</span>:<span class="number">8080</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//servers;</span></span><br><span class="line"> proxy_set_header Accept-Encoding <span class="string">&quot;gzip&quot;</span>;</span><br><span class="line"></span><br><span class="line"> # proxy websocket reverse</span><br><span class="line"> proxy_http_version <span class="number">1.1</span>;</span><br><span class="line"> proxy_set_header Upgrade $http_upgrade;</span><br><span class="line"> proxy_set_header Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>nginx会将客户请求分发到后端服务器组</p>
+<p><strong>memcached配置</strong><br>安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install memcached</span><br></pre></td></tr></table></figure>
+
+<p>memcached默认安装只监听本地回环地址，更改/etc/memcached.conf，注释掉下面的行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#-l 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>重启memcached服务会监听所有本地接口。</p>
+<p><strong>msm和tomcat配置</strong></p>
+<p>kiro序列化性能较高，因此这里使用kiro序列化器。</p>
+<p>将msm基础包memcached-session-manager-${version}.jar，memcached-session-manager-tc8-${version}.jar和spymemcached-2.11.1.jar，以及kryo序列化支持jar包拷贝到$CATALINA_HOME/lib/目录。</p>
+<p>debian系统中tomcat8的lib目录位于/usr/share/tomcat8/lib/</p>
+<p>还有一个包<a target="_blank" rel="noopener" href="http://objenesis.org/download.html">Objenesis</a>也需要下载安装到此目录中。</p>
+<p><strong>sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line"> memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line"> failoverNodes=<span class="string">&quot;n1&quot;</span></span><br><span class="line"> requestUriIgnorePattern=<span class="string">&quot;.*\\.(icopnggifjpgcssjs)$&quot;</span></span><br><span class="line"> transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line"> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>msm默认处于sticky模式，因此不用显式指定sticky参数。failoverNodes参数指定本机memcached节点名称,这样正常情况下msm会存储会话到其他memcached节点，当没有其他节点可用时才会使用failoverNodes。</p>
+<p><strong>non-sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line">memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line">sticky=<span class="string">&quot;false&quot;</span></span><br><span class="line">sessionBackupAsync=<span class="string">&quot;false&quot;</span></span><br><span class="line">lockingMode=<span class="string">&quot;auto&quot;</span></span><br><span class="line">transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里明确指定sticky参数为false，注意不要设置requestUriIgnorePattern参数，否则当前配置下会出现问题，无法完成session共享。</p>
+<p>sticky会话模式就是将用户“粘”在某一个服务器节点上，即同一个会话中的请求必须被转发到同一个节点上，除非该节点宕机才转发到故障转移节点。</p>
+<p>non-sticky会话模式则是每一次请求都可能转发到不同节点。</p>
+<p>sticky会话模式性能更好。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/magro/memcached-session-manager/wiki/SetupAndConfiguration">SetupAndConfiguration</a><br>[2]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic4.html">分布式session</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1204,103 +1320,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/25/serial-console-access-kvm-guest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/25/serial-console-access-kvm-guest/" class="post-title-link" itemprop="url">通过串行控制台访问kvm客户机</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-25 11:20:37" itemprop="dateCreated datePublished" datetime="2016-04-25T11:20:37+08:00">2016-04-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>当ssh,vnc都不能访问客户机时,serial console可以提供另一种访问客户机的途径。</p>
-<p><strong>客户机serial console配置</strong></p>
-<p>/etc/inittab文件打开或添加如下行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T0:<span class="number">23</span>:respawn:<span class="regexp">/sbin/g</span>etty -L ttyS0 <span class="number">38400</span> vt100</span><br></pre></td></tr></table></figure>
-
-<p>/etc/securetty文件中确保列出了ttyS0:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ttyS0</span><br></pre></td></tr></table></figure>
-
-<p>/etc/default/grub文件添加:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=<span class="string">&#x27;console=tty0 console=ttyS0,38400n8&#x27;</span></span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_SERIAL_COMMAND=<span class="string">&quot;serial --speed=38400 --unit=0 --word=8 --parity=no --stop=1&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>波特率是38400，没有奇偶校验，停止位是1</p>
-<p>使用virsh来连接客户机串行控制台比较简单，应该也可以重定向客户机的串行端口到主机。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/howto-setup-serial-console-on-debian-linux/">Debian Linux: Set a Serial Console</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/working_with_the_serial_console">Working with the serial console</a><br>[3]<a target="_blank" rel="noopener" href="https://blackdot.be/2013/07/qemu-kvm-monitor-and-serial-console-over-sockets-with-minicom/">qemu(-kvm) monitor and serial console over sockets with minicom</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

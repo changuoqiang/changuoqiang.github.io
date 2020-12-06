@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/09/20/regex-posix-gnu-compatibility/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/09/20/regex-posix-gnu-compatibility/" class="post-title-link" itemprop="url">规则表达式regex的posix标准,gnu扩展以及兼容性问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-09-20 11:46:59" itemprop="dateCreated datePublished" datetime="2014-09-20T11:46:59+08:00">2014-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>regex(Regular Expression)的posix标准是unix平台共同遵守的,而gnu对regex做了大量扩展,使regex更好用,但不是所有的平台都支持gnu扩展。</p>
+<p>Mac OS X平台就只支持posix标准而不支持gnu扩展,因此使用gnu扩展的脚本在Mac OS X平台上运行时就会遇到兼容性问题。</p>
+<p>比如匹配所有空白字符的<code>\s</code>就是gnu扩展,如果要在Mac OS X上匹配所有空白字符要使用<code>[[:space:]]</code>。</p>
+<p>下面是几个常见的GNU扩展对应的posix表达:<br>\w - [[:alnum:]_]<br>\W - [^[:alnum:]_]<br>\s - [[:space:]]<br>\S - [^[:space:]]</p>
+<p>更多详细信息见参考文档。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.regular-expressions.info/posix.html">POSIX Basic Regular Expressions</a><br>[2]<a target="_blank" rel="noopener" href="http://www.regular-expressions.info/posixbrackets.html">POSIX Bracket Expressions</a><br>[3]<a target="_blank" rel="noopener" href="http://www.regular-expressions.info/gnu.html">GNU Regular Expression Extensions</a><br>[4]<a target="_blank" rel="noopener" href="http://people.freebsd.org/~lofi/reference.html">Regular Expressions Reference Sheet</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -990,106 +1077,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/08/15/mac-os-x-pypyodbc-access-mdb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/08/15/mac-os-x-pypyodbc-access-mdb/" class="post-title-link" itemprop="url">Mac OS X使用pypyodbc访问mdb数据库</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-08-15 10:41:41" itemprop="dateCreated datePublished" datetime="2014-08-15T10:41:41+08:00">2014-08-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>首先使用brew安装unixodbc和mdbtools,unixodbc是odbc驱动管理器,mdbtools提供了一组mdb操作工具,更重要的是mdbtools提供了mdb驱动程序。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install unixodbc</span><br><span class="line">$ brew install mdbtools</span><br></pre></td></tr></table></figure>
-
-<p>但是安装完成后发现/usr/local/lib目录中没有mdbtools驱动动态链接库libmdbodbc.dylib<br>查看mdbtools选项可以发现:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ brew options mdbtools</span><br><span class="line">--<span class="keyword">with</span>-man-pages</span><br><span class="line"> Build manual pages</span><br></pre></td></tr></table></figure>
-<p>mdbtools formula并没有提供<code>--with-unixodbc</code>选项,默认也没有build mdb驱动,因此需要手动来编译安装mdbtools提供的mdb driver</p>
-<p><strong>编译安装libmdbodbc</strong><br>brew安装mdbtools时已经将mdbtools的源码包下载到了目录/Library/Caches/Homebrew/,所以直接使用这个源码包编译安装就可以了。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf mdbtools-<span class="number">0.7</span><span class="number">.1</span></span><br><span class="line">$ cd mdbtools-<span class="number">0.7</span><span class="number">.1</span></span><br><span class="line">$ autoreconf -i -f</span><br><span class="line">$ ./configure --<span class="keyword">with</span>-unixodbc=<span class="regexp">/usr/</span>local --disable-man</span><br><span class="line">$ make</span><br><span class="line">$ cd src/odbc</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
-
-<p>这样libmdbodbc驱动程序就安装到了/usr/local/lib目录下。libmdbodbc的源代码就在src/odbc目录下。</p>
-<p><strong>配置unixodbc</strong></p>
-<p>因为brew的所有包都安装在/usr/local下面,因此这里配置unixodbc应该使用/usr/local/etc/目录下的odbcinst.ini和odbc.ini文件。<br>odbcinst.ini配置如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\[MDBTools\]</span><br><span class="line">Description=MDBTools Driver</span><br><span class="line">Driver=libmdbodbc.dylib</span><br><span class="line">Setup=libmdbodbc.dylib</span><br><span class="line">FileUsage=<span class="number">1</span></span><br><span class="line">UsageCount=<span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>然后就可以像linux平台上一样来访问mdb文件了。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ python3</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> pypyodbc</span><br><span class="line">&gt;&gt;&gt; conn=pypyodbc.connect(<span class="string">&#x27;Driver=MDBTools;DBQ=/path/to/record.mdb&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>因为这里也是使用mdbtools提供的odbc驱动,所以和pypyodbc配合使用时仍然存在<a href="https://openwares.net/linux/pypyodbc_gb_mdb_mess.html">中文字符编码转换的问题</a>,和linux平台上一样<a href="https://openwares.net/linux/pypyodbc_gb_mdb_mess.html">处理</a>即可。</p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/46/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><span class="page-number current">47</span><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/48/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/46/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/46/">46</a><span class="page-number current">47</span><a class="page-number" href="/page/48/">48</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/48/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

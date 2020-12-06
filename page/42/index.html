@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/01/19/debian-change-java-jdk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/01/19/debian-change-java-jdk/" class="post-title-link" itemprop="url">debian更改默认java环境</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-01-19 10:10:23" itemprop="dateCreated datePublished" datetime="2015-01-19T10:10:23+08:00">2015-01-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>首先查看系统当前java版本和当前已经安装的java版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$java -version</span><br><span class="line">java version <span class="string">&quot;1.7.0_65&quot;</span></span><br><span class="line">OpenJDK Runtime Environment (IcedTea <span class="number">2.5</span><span class="number">.3</span>) (7u71-<span class="number">2.5</span><span class="number">.3</span>-<span class="number">2</span>)</span><br><span class="line">OpenJDK <span class="number">64</span>-Bit Server VM (build <span class="number">24.65</span>-b04, mixed mode)</span><br><span class="line"></span><br><span class="line">$ update-java-alternatives -l</span><br><span class="line">java-<span class="number">1.7</span><span class="number">.0</span>-openjdk-amd64 <span class="number">1071</span> /usr/lib/jvm/java-<span class="number">1.7</span><span class="number">.0</span>-openjdk-amd64</span><br><span class="line">jdk-<span class="number">8</span>-oracle-x64 <span class="number">318</span> /usr/lib/jvm/jdk-<span class="number">8</span>-oracle-x64</span><br></pre></td></tr></table></figure>
+
+<p>可以看到系统当前java版本为openjdk 7,系统当前安装了两个java版本，分别是openjdk 7和 oracle jdk 8</p>
+<p>然后更改系统默认java为oracle jdk 8</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># update-java-alternatives -s jdk-8-oracle-x64</span><br><span class="line">update-alternatives: error: no alternatives <span class="keyword">for</span> iceweasel-javaplugin.so</span><br></pre></td></tr></table></figure>
+
+<p>因为没有使用iceweasel,所以忽略错误即可。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1085,96 +1174,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/12/25/cassandra-openjdk-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/12/25/cassandra-openjdk-issues/" class="post-title-link" itemprop="url">Cassandra竟然歧视OpenJDK</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-12-25 20:08:34" itemprop="dateCreated datePublished" datetime="2014-12-25T20:08:34+08:00">2014-12-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>cassandra 2.1.2的启动日志中出现如下字样:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARN \[main\] <span class="number">2013</span>-<span class="number">11</span>-<span class="number">24</span> <span class="number">10</span>:<span class="number">54</span>:<span class="number">30</span>,<span class="number">423</span> CassandraDaemon.java (line <span class="number">155</span>) OpenJDK is not recommended. Please upgrade to the newest Oracle Java release</span><br></pre></td></tr></table></figure>
-
-<p>查看CassandraDaemon.java源代码,有如下行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="built_in">String</span> javaVmName = System.getProperty(<span class="string">&quot;java.vm.name&quot;</span>);</span><br><span class="line">logger.info(<span class="string">&quot;JVM vendor/version: &#123;&#125;/&#123;&#125;&quot;</span>, javaVmName, javaVersion);</span><br><span class="line"><span class="keyword">if</span> (javaVmName.contains(<span class="string">&quot;OpenJDK&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line"> <span class="comment">// There is essentially no QA done on OpenJDK builds, and</span></span><br><span class="line"> <span class="comment">// clusters running OpenJDK have seen many heap and load issues.</span></span><br><span class="line"> logger.warn(<span class="string">&quot;OpenJDK is not recommended. Please upgrade to the newest Oracle Java release&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (!javaVmName.contains(<span class="string">&quot;HotSpot&quot;</span>))</span><br><span class="line">&#123;</span><br><span class="line"> logger.warn(<span class="string">&quot;Non-Oracle JVM detected. Some features, such as immediate unmap of compacted SSTables, may not work as intended&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>OpenJDK没这么差吧！</p>
-<p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/41/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><span class="page-number current">42</span><a class="page-number" href="/page/43/">43</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/43/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

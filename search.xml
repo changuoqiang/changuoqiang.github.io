@@ -24880,4 +24880,34 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>KWinUI</tag>
       </tags>
   </entry>
+  <entry>
+    <title>hexo-multi-devices-sync</title>
+    <url>/2020/12/06/hexo-multi-devices-sync/</url>
+    <content><![CDATA[<p>在笔记本上搭建好了hexo github pages博客，同时有用其他设备更新博客的需求，记录配置过程</p>
+<!-- more --->
+
+<p>hexo部署的时候只是将生成的博客发布到githubs的远程分支，所有的发布内容都在.deploy_git目录下，blog源文件并没有使用git管理。</p>
+<p>为了在多设备之间同步，可以使用git来管理源代码，发布到github pages仓库的其他分支，这里分支名字设定为hexo。</p>
+<p>但要注意，如果源代码中有私密信息，就不适合这样管理了，因为发布到github pages仓库中的信息是可以完全公开访问，切记。</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>在博客目录下，使用git管理源代码，并上传到github pages仓库的hexo分支。<br>注意目录下的.gitignore文件，忽略掉不需要跟踪的文件和目录</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">.DS_Store</span><br><span class="line">Thumbs.db</span><br><span class="line">db.json</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line">public/</span><br><span class="line">.deploy*/</span><br></pre></td></tr></table></figure>
+
+<p>然后初始化git仓库，创建新分支hexo，并将所有源代码添加到仓库，提交并推送到github</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin git@github.com:your_username/your_username.github.io</span><br><span class="line">git checkout -b hexo</span><br><span class="line">git add .</span><br><span class="line">git commit</span><br><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="在新设备上使用hexo"><a href="#在新设备上使用hexo" class="headerlink" title="在新设备上使用hexo"></a>在新设备上使用hexo</h3><p>安装好node和git，并配置好git访问github仓库，然后克隆hexo分支到本地</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git clone -b hexo git@github.com:your_username/your_username.github.io </span><br></pre></td></tr></table></figure>
+
+<p>然后进入your_username.github.io目录</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<h3 id="在多个设备上撰写的日常流程"><a href="#在多个设备上撰写的日常流程" class="headerlink" title="在多个设备上撰写的日常流程"></a>在多个设备上撰写的日常流程</h3><p>在撰写新的博客时要先pull跟新本地hexo分支</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+
+<p>然后正常撰写新博客，博客发布后不要忘了把源代码提交到github pages</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">&#x27;new post&#x27;</span></span><br><span class="line">$ git push</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>misc</tag>
+      </tags>
+  </entry>
 </search>

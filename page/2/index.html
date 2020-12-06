@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,96 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/" class="post-title-link" itemprop="url">cassandra跨数据中心、多网络接口部署</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-14 12:36:06" itemprop="dateCreated datePublished" datetime="2020-06-14T12:36:06+08:00">2020-06-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra集群以前运行于本地机房，现在需要扩展到云端，云主机添加为集群的新数据中心。因为并不是公有云，所有没有启动SSL认证和加密。</p>
+<p>本地机房与云机房通过专线连接，并且本地只有两个互联ip地址可用。本地机房原集群内节点只使用私有网络地址，无法被云端访问。云端主机使用私有地址，云平台将私有地址映射到专线可以访问的“公有地址”，这里并不是真正的“公有地址”，仍然是一个大的私有网络，不过本地机房和云机房通过这些地址可以互访，所有这里也叫做“公有地址”</p>
+<p>因此集群的本地机房节点通过NAT映射，将私有地址的7000和9042端口映射到公有地址，从而可以被云主机访问，同时做了端口回流，保证本地机房其他机器也可以通过公有地址访问节点。<br>如果不做或不能做端口回流，应该也可以使用iptables/nftables在集群内节点以及需要访问集群的客户机器上添加nat转换规则,从公有ip转换到对应的私有ip，这个没试。</p>
+<p>这样本地机房和云机房的节点都有私有地址和映射后的公有地址，cassandra集群节点需要使用公有地址进行互访，但cassandra都无法直接监听公有地址。这需要配置cassandra.yaml,设置listen_address和rpc_address为私有地址，设置broadcast_address和broadcast_rpc_address为公有ip地址，但是listen_on_broadcast_address设置为false，因为各个节点并不能在公有ip上监听。这样当跨数据中心时使用公有ip通讯，但在本地网络内部可以使用私有网络。</p>
+<p>cassandra-rackdc.properties配置文件可以打开prefer_local选项，这样可以优先使用本地网络，降低网络延迟。</p>
+<p>配置实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listen_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line">rpc_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_rpc_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line"></span><br><span class="line">seed_provider:</span><br><span class="line"> # Addresses of hosts that are deemed contact points. </span><br><span class="line"> # Cassandra nodes use this list of hosts to find each other and learn</span><br><span class="line"> # the topology of the ring. You must change this if you are running</span><br><span class="line"> # multiple nodes!</span><br><span class="line"> - class_name: org.apache.cassandra.locator.SimpleSeedProvider</span><br><span class="line"> parameters:</span><br><span class="line"> # seeds is actually a comma-delimited list of addresses.</span><br><span class="line"> # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;</span><br><span class="line"> - seeds: <span class="string">&quot;59.206.31.152,10.160.4.196,10.160.4.197&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样本地数据中心和云数据中心就可以通过公有ip相互通讯了。<br><strong>备注：</strong>rpc并不是必须的，只使用cql是可行的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/configMultiNetworks.html">Using multiple network interfaces</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1127,130 +1217,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/xpra-intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/04/xpra-intro/" class="post-title-link" itemprop="url">Xpra入门</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-04 18:49:22" itemprop="dateCreated datePublished" datetime="2020-02-04T18:49:22+08:00">2020-02-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>ssh x11 forward太慢了，真的。</p>
-<p>Xpra除了很快，还可以后台运行gui应用，被称为screen for X11。还可以远程运行整个桌面。</p>
-<p>下面使用macos远程使用debian buster系统上的gui application</p>
-<p><strong>安装</strong></p>
-<p>debian端:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q https:<span class="comment">//xpra.org/gpg.asc -O- sudo apt-key add -</span></span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://xpra.org/ buster main&quot;</span></span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install xpra -y</span><br></pre></td></tr></table></figure>
-
-<p>mac端：<br>下载<a target="_blank" rel="noopener" href="https://xpra.org/dists/osx/x86_64/Xpra.pkg">Xpra.pkg</a>安装即可。<br>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install xpra</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行</strong></p>
-<p>通过ssh隧道运行</p>
-<p>linux/macos平台:</p>
-<p>一次性运行gui应用，结束时自动关闭xpra服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
-
-<p>启动gui应用,结束时不关闭xpra服务，可以再次附加到gui应用程序</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo</span></span><br></pre></td></tr></table></figure>
-
-<p>断开后可以重新附加到已经运行的gui应用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra attach ssh:<span class="comment">//user@host</span></span><br></pre></td></tr></table></figure>
-
-<p>windows平台：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; xpra_cmd start ssh:<span class="comment">//user@host --ssh=&quot;C:\\\\Program Files\\\\putty\\\\Plink.exe -ssh -noagent -i c:\\\\***.ppk -P 22&quot; --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>其他命令</strong></p>
-<p>列出所有会话</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra list</span><br></pre></td></tr></table></figure>
-
-<p>终止所有会话</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra stop</span><br></pre></td></tr></table></figure>
-
-<p><strong>输入法</strong><br>服务器上安装ibus</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ibus-pinyin</span><br></pre></td></tr></table></figure>
-
-<p>配置ibus</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-setup&quot;</span></span><br></pre></td></tr></table></figure>
-<p>运行firefox，同时启动ibus输入法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=firefox --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-daemon -x -d -r&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>其他请参考<code>xpra --help</code></p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://xpra.org/trac/browser/xpra/trunk/src/man/xpra.1">manual</a><br>[2]<a target="_blank" rel="noopener" href="https://xpra.org/trac/wiki/FAQ">FAQ</a><br>[3]<a target="_blank" rel="noopener" href="https://medium.com/@summitkwan/guide-work-remotely-on-a-linux-server-from-local-mac-windows-f05cdc6db0e0">GUIDE: Work remotely on a Linux server from local Mac</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

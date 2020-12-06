@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">980</span>
+          <span class="site-state-item-count">981</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,103 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/" class="post-title-link" itemprop="url">使用JMX逐节点迁移集群的compaction策略</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-23 17:32:18" itemprop="dateCreated datePublished" datetime="2019-06-23T17:32:18+08:00">2019-06-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>这里使用交互式jmx命令行客户端<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">jmxterm</a>来与mbeans交互。</p>
+<p>下载uber依赖自包含版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>使用很简单</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar -h</span><br><span class="line">\[USAGE\]</span><br><span class="line"> jmxterm &lt;OPTIONS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Main executable <span class="keyword">of</span> JMX terminal CLI tool</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -a --appendtooutput With <span class="built_in">this</span> flag, the outputfile is preserved and content is appended to it</span><br><span class="line"> -e --exitonfailure With <span class="built_in">this</span> flag, terminal exits <span class="keyword">for</span> any Exception</span><br><span class="line"> -h --help Show usage <span class="keyword">of</span> <span class="built_in">this</span> command line</span><br><span class="line"> -i --input &lt;value&gt; Input script file. There can only be one input file. <span class="string">&quot;stdin&quot;</span> is the <span class="keyword">default</span> value which means <span class="built_in">console</span> input</span><br><span class="line"> -n --noninteract Non interactive mode. Use <span class="built_in">this</span> mode <span class="keyword">if</span> input doesn<span class="string">&#x27;t come from human or jmxterm is embedded</span></span><br><span class="line"><span class="string"> -o --output &lt;value&gt; Output file, stdout or stderr. Default value is stdout</span></span><br><span class="line"><span class="string"> -p --password &lt;value&gt; Password for user/password authentication</span></span><br><span class="line"><span class="string"> -s --sslrmiregistry Whether the server&#x27;</span>s RMI registry is protected <span class="keyword">with</span> SSL/TLS</span><br><span class="line"> -l --url &lt;value&gt; Location <span class="keyword">of</span> MBean service. It can be &lt;host&gt;:&lt;port&gt; or full service URL.</span><br><span class="line"> -u --user &lt;value&gt; User name <span class="keyword">for</span> user/password authentication</span><br><span class="line"> -v --verbose &lt;value&gt; Verbose level, could be silentbriefverbose. Default value is brief</span><br><span class="line">\[NOTE\]</span><br><span class="line"> Without any option, <span class="built_in">this</span> command opens an interactive command line based <span class="built_in">console</span>. With a given input file, commands <span class="keyword">in</span> file will be executed and process ends after file is processed</span><br><span class="line"></span><br><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar</span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;help</span><br><span class="line">#following commands are available to use:</span><br><span class="line">about - Display about page</span><br><span class="line">bean - Display or set current selected MBean. </span><br><span class="line">beans - List available beans under a domain or all domains</span><br><span class="line">bye - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">close - Close current JMX connection</span><br><span class="line">domain - Display or set current selected domain. </span><br><span class="line">domains - List all available domain names</span><br><span class="line">exit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">get - Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">help - Display available commands or usage <span class="keyword">of</span> a command</span><br><span class="line">info - Display detail information about an MBean</span><br><span class="line">jvms - List all running local JVM processes</span><br><span class="line">open - Open JMX session or display current connection</span><br><span class="line">option - <span class="built_in">Set</span> options <span class="keyword">for</span> command session</span><br><span class="line">quit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">run - Invoke an MBean operation</span><br><span class="line">set - <span class="built_in">Set</span> value <span class="keyword">of</span> an MBean attribute</span><br><span class="line">subscribe - Subscribe to the notifications <span class="keyword">of</span> a bean</span><br><span class="line">unsubscribe - Unsubscribe the notifications <span class="keyword">of</span> an earlier subscribed bean</span><br><span class="line">watch - Watch the value <span class="keyword">of</span> one MBean attribute constantly</span><br><span class="line">$&gt;help get</span><br><span class="line">\[USAGE\]</span><br><span class="line"> get &lt;OPTIONS&gt; &lt;ARGS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -b --bean &lt;value&gt; MBean name where the attribute is. Optional <span class="keyword">if</span> bean has been set</span><br><span class="line"> -l --delimiter &lt;value&gt; Sets an optional delimiter to be printed after the value</span><br><span class="line"> -d --domain &lt;value&gt; Domain <span class="keyword">of</span> bean, optional</span><br><span class="line"> -h --help Display usage</span><br><span class="line"> -i --info Show detail information <span class="keyword">of</span> each attribute</span><br><span class="line"> -q --quots Quotation marks around value</span><br><span class="line"> -s --simple Print simple expression <span class="keyword">of</span> value without full expression</span><br><span class="line"> -n --singleLine Prints result without a newline - <span class="keyword">default</span> is <span class="literal">false</span></span><br><span class="line">\[ARGS\]</span><br><span class="line"> &lt;attr&gt;... Name <span class="keyword">of</span> attributes to select</span><br><span class="line">\[NOTE\]</span><br><span class="line"> * stands <span class="keyword">for</span> all attributes. eg. get Attribute1 Attribute2 or get *</span><br></pre></td></tr></table></figure>
+
+<p>设置compaction策略为LCS</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar --url localhost:<span class="number">7199</span></span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;domain org.apache.cassandra.db #设置当前domain</span><br><span class="line">#domain is set to org.apache.cassandra.db</span><br><span class="line">$&gt;bean org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies #设置当前mbean</span><br><span class="line">#bean is set to org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">$&gt;info #显示当前mbean的信息</span><br><span class="line">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">#<span class="class"><span class="keyword">class</span> <span class="title">name</span> </span>= org.apache.cassandra.db.ColumnFamilyStore</span><br><span class="line"># attributes</span><br><span class="line"> %<span class="number">0</span> - AutoCompactionDisabled (boolean, r)</span><br><span class="line"> %<span class="number">1</span> - BuiltIndexes (java.util.List, r)</span><br><span class="line"> %<span class="number">2</span> - ColumnFamilyName (java.lang.String, r)</span><br><span class="line"> %<span class="number">3</span> - CompactionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">4</span> - CompactionParametersJson (java.lang.String, rw)</span><br><span class="line"> %<span class="number">5</span> - CompactionStrategyClass (java.lang.String, rw)</span><br><span class="line"> %<span class="number">6</span> - CompressionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">7</span> - CrcCheckChance (double, w)</span><br><span class="line"> %<span class="number">8</span> - DroppableTombstoneRatio (double, r)</span><br><span class="line"> %<span class="number">9</span> - MaximumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">10</span> - MinimumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">11</span> - SSTableCountPerLevel (\[I, r)</span><br><span class="line"> %<span class="number">12</span> - UnleveledSSTables (int, r)</span><br><span class="line"># operations</span><br><span class="line"> %<span class="number">0</span> - <span class="keyword">void</span> beginLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">1</span> - long estimateKeys()</span><br><span class="line"> %<span class="number">2</span> - javax.management.openmbean.CompositeData finishLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">3</span> - <span class="keyword">void</span> forceMajorCompaction(boolean p1)</span><br><span class="line"> %<span class="number">4</span> - java.util.List getSSTablesForKey(java.lang.String p1)</span><br><span class="line"> %<span class="number">5</span> - <span class="keyword">void</span> loadNewSSTables()</span><br><span class="line"> %<span class="number">6</span> - <span class="keyword">void</span> setCompactionThresholds(int p1,int p2)</span><br><span class="line"> %<span class="number">7</span> - long trueSnapshotsSize()</span><br><span class="line">#there<span class="string">&#x27;s no notifications</span></span><br><span class="line"><span class="string">$&gt;get CompactionStrategyClass # 查询compaction当前策略类</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=mytable,keyspace=mykeyspace,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionStrategyClass = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy;</span></span><br><span class="line"><span class="string">$&gt;set CompactionStrategyClass &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot; #设置compaction策略类为LCS</span></span><br><span class="line"><span class="string">#Value of attribute CompactionStrategyClass is set to &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot;</span></span><br><span class="line"><span class="string">$&gt;get CompactionParametersJson #查询LCS的CompactionParametersJson参数</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionParametersJson = &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;160&quot;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$&gt;set CompactionParametersJson #设置LCS的CompactionParametersJson参数 \\&#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;\\&#125;</span></span><br><span class="line"><span class="string">#Value of attribute CompactionParametersJson is set to &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;&#125; </span></span><br></pre></td></tr></table></figure>
+
+<p>在逐节点compaction策略转换过程中不要alter table，alter table会将jmx对节点的设置扩散到所有的其他节点。</p>
+<p>所有节点转换完成后,使用alter table永久的改变compaction策略，否则节点重启后会用table的schema定义覆盖掉jmx对table的修改。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/213370546-Change-CompactionStrategy-and-sub-properties-via-JMX">Change CompactionStrategy and sub-properties via JMX</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.alteroot.org/articles/2015-04-20/change-cassandra-compaction-strategy-on-production-cluster.html">How to change Cassandra compaction strategy on a production cluster</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">JMXTERM</a><br>[4]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm/user-manual">LAUNCH JMXTERM</a><br>[5]<a target="_blank" rel="noopener" href="https://github.com/jiaqi/jmxterm">Interactive command line JMX client</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1117,122 +1214,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-images/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/04/lxd-images/" class="post-title-link" itemprop="url">lxd镜像/映像</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-04 19:17:08" itemprop="dateCreated datePublished" datetime="2019-06-04T19:17:08+08:00">2019-06-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>lxd使用镜像来生成容器，可以有几种不同的方式来使用镜像</p>
-<p><strong>内建映像服务</strong></p>
-<p>lxd内建三个映像服务，分别是<br>ubuntu - 提供稳定版ubuntu镜像<br>ubuntu-daily - 提供每日构建版ubuntu镜像<br>images - 提供其他发行版镜像</p>
-<p>这样使用内置镜像服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> my-ubuntu</span><br><span class="line">$ lxc launch ubuntu-daily:<span class="number">19.04</span> my-ubuntu-dev</span><br><span class="line">$ lxc launch images:debian/buster/amd64 my-debian</span><br></pre></td></tr></table></figure>
-
-<p>显示镜像列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list ubuntu:</span><br><span class="line">$ lxc image list ubuntu-daily:</span><br><span class="line">$ lxc image list images:</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用远程lxd实例的镜像</strong></p>
-<p>添加远程lxd实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add my-images <span class="number">192.168</span><span class="number">.0</span>.x</span><br></pre></td></tr></table></figure>
-
-<p>使用远程lxd实例的镜像实例化容器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-images:image-name your-container</span><br></pre></td></tr></table></figure>
-
-<p>远程lxd实例上的镜像列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list my-images:</span><br></pre></td></tr></table></figure>
-
-<p>其实lxd内建的镜像服务就是lxd实例，无非其remote的名字为ubuntu, ubuntu-daily和images而已。</p>
-<p><strong>手动导入镜像文件</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image <span class="keyword">import</span> &lt;file&gt; --alias my-alias</span><br></pre></td></tr></table></figure>
-
-<p>使用此导入的镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-alias my-container</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用容器或快照创建镜像</strong></p>
-<p>使用容器创建镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc my-container stop</span><br><span class="line">$ lxc publish my-container --alias test-image</span><br></pre></td></tr></table></figure>
-
-<p>使用快照创建镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc publish my-container/my-snap --alias test-image2</span><br></pre></td></tr></table></figure>
-
-<p>之后就可以正常的使用这些镜像来生成容器了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/98/">98</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
