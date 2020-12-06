@@ -281,7 +281,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/06/hexo-multi-devices-sync/" class="post-title-link" itemprop="url">hexo-multi-devices-sync</a>
+          <a href="/2020/12/06/hexo-multi-devices-sync/" class="post-title-link" itemprop="url">hexo github pages 多设备同步</a>
         </h2>
 
         <div class="post-meta-container">
@@ -293,7 +293,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2020-12-06 14:37:12 / Modified: 14:59:32" itemprop="dateCreated datePublished" datetime="2020-12-06T14:37:12+08:00">2020-12-06</time>
+      <time title="Created: 2020-12-06 14:37:12 / Modified: 15:15:09" itemprop="dateCreated datePublished" datetime="2020-12-06T14:37:12+08:00">2020-12-06</time>
     </span>
 
   
@@ -307,28 +307,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>在笔记本上搭建好了hexo github pages博客，同时有用其他设备更新博客的需求，记录配置过程</p>
-<!-- more --->
-
-<p>hexo部署的时候只是将生成的博客发布到githubs的远程分支，所有的发布内容都在.deploy_git目录下，blog源文件并没有使用git管理。</p>
-<p>为了在多设备之间同步，可以使用git来管理源代码，发布到github pages仓库的其他分支，这里分支名字设定为hexo。</p>
-<p>但要注意，如果源代码中有私密信息，就不适合这样管理了，因为发布到github pages仓库中的信息是可以完全公开访问，切记。</p>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>在博客目录下，使用git管理源代码，并上传到github pages仓库的hexo分支。<br>注意目录下的.gitignore文件，忽略掉不需要跟踪的文件和目录</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.DS_Store</span><br><span class="line">Thumbs.db</span><br><span class="line">db.json</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line">public/</span><br><span class="line">.deploy*/</span><br></pre></td></tr></table></figure>
-
-<p>然后初始化git仓库，创建新分支hexo，并将所有源代码添加到仓库，提交并推送到github</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote add origin git@github.com:your_username/your_username.github.io</span><br><span class="line">git checkout -b hexo</span><br><span class="line">git add .</span><br><span class="line">git commit</span><br><span class="line">git push --set-upstream origin hexo</span><br></pre></td></tr></table></figure>
-
-<h3 id="在新设备上使用hexo"><a href="#在新设备上使用hexo" class="headerlink" title="在新设备上使用hexo"></a>在新设备上使用hexo</h3><p>安装好node和git，并配置好git访问github仓库，然后克隆hexo分支到本地</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone -b hexo git@github.com:your_username/your_username.github.io </span><br></pre></td></tr></table></figure>
-
-<p>然后进入your_username.github.io目录</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
-
-<h3 id="在多个设备上撰写的日常流程"><a href="#在多个设备上撰写的日常流程" class="headerlink" title="在多个设备上撰写的日常流程"></a>在多个设备上撰写的日常流程</h3><p>在撰写新的博客时要先pull跟新本地hexo分支</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
-
-<p>然后正常撰写新博客，博客发布后不要忘了把源代码提交到github pages</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">&#x27;new post&#x27;</span></span><br><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/12/06/hexo-multi-devices-sync/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -367,7 +353,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/04/migrate-to-hexo/" class="post-title-link" itemprop="url">migrate-to-hexo</a>
+          <a href="/2020/12/04/migrate-to-hexo/" class="post-title-link" itemprop="url">博客从wordpress迁移到hexo github pages平台</a>
         </h2>
 
         <div class="post-meta-container">
@@ -377,10 +363,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2020-12-04 21:12:27 / Modified: 22:25:33" itemprop="dateCreated datePublished" datetime="2020-12-04T21:12:27+08:00">2020-12-04</time>
+      <time title="Created: 2020-12-04 21:12:27" itemprop="dateCreated datePublished" datetime="2020-12-04T21:12:27+08:00">2020-12-04</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-06 15:15:51" itemprop="dateModified" datetime="2020-12-06T15:15:51+08:00">2020-12-06</time>
+      </span>
 
   
 </div>
