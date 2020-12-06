@@ -1,12 +1,12 @@
 ---
-title: hexo-multi-devices-sync
+title: hexo github pages 多设备同步
 date: 2020-12-06 14:37:12
 tags:
     - misc
 ---
 
 在笔记本上搭建好了hexo github pages博客，同时有用其他设备更新博客的需求，记录配置过程
-<!-- more --->
+<!-- more -->
 
 hexo部署的时候只是将生成的博客发布到githubs的远程分支，所有的发布内容都在.deploy_git目录下，blog源文件并没有使用git管理。
 

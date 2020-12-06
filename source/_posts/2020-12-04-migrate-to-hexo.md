@@ -1,5 +1,5 @@
 ---
-title: migrate-to-hexo
+title: 博客从wordpress迁移到hexo github pages平台
 date: 2020-12-04 21:12:27
 tags:
     - misc
