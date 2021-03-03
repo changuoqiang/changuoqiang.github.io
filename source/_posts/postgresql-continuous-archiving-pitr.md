@@ -130,7 +130,7 @@ host replication postgres 192.168.0.0/24 md5
 
 然后执行以下命令:
 ```js
-$ sudo -u postgres pg_basebackup -RPv　-D baseback20151205-1
+$ sudo -u postgres pg_basebackup -RPv　-X fetch -D baseback20151205-1 
 transaction log start point: 1/72000028 on timeline 1
 498974/498974 kB (100%), 1/1 tablespace 
 transaction log end point: 1/72000430
@@ -139,9 +139,9 @@ pg_basebackup: base backup completed
 
 这会生成一个备份目录，其目录结构与数据库集群的目录结构一致。如果要将数据打包到一个bz2文件，可以执行如下命令:
 ```js
-$ cd /var/lib/postgresql
-$ sudo -u postgres sh -c 'pg_basebackup -RPv -Ft -D - bzip2 > baseback20151205-1.tbz2'
+$ sudo -u postgres sh -c 'pg_basebackup -RPv -Ft -D - -X fetch | bzip2 > baseback20151205-1.tbz2'
 ```
+请注意输出文件的写入权限
 
 pg_basebackup命令同样会在备份中生成backup_label文件和.backup归档日志文件。
 其.backup文件内容类似如下:
@@ -163,6 +163,3 @@ pg_basebackup的详细参数见man pg_basebackup或参考\[2\]。
 References:
 \[1\][24.3. Continuous Archiving and Point-in-Time Recovery (PITR)](http://www.postgresql.org/docs/current/static/continuous-archiving.html)
 \[2\][pg_basebackup](http://www.postgresql.org/docs/9.4/static/app-pgbasebackup.html)
-
-===
-\[erq\]
