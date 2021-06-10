@@ -1057,7 +1057,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2021-06-10 18:02:43" itemprop="dateModified" datetime="2021-06-10T18:02:43+08:00">2021-06-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1081,7 +1081,7 @@
     <div class="post-body" itemprop="articleBody">
           <a id="more"></a>
 <p>不用其他监控套件，只是用nodetool工具借助netstats指令简单的监控收发数据流进度：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">watch -n <span class="number">10</span> <span class="string">&#x27;nodetool netstats grep &quot;Receiving\\Sending&quot; gawk &#123;&#x27;</span><span class="string">&quot;&#x27;&quot;</span><span class="string">&#x27; print $1&quot; - &quot;$11/$4*100&quot;% Complete, &quot;($4-$11)/1024/1024/1024&quot; GB remaining&quot; &#x27;</span><span class="string">&quot;&#x27;&quot;</span><span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n <span class="number">10</span> <span class="string">&#x27;nodetool netstats | grep &quot;Receiving\|Sending&quot; | gawk &#123;&#x27;</span><span class="string">&quot;&#x27;&quot;</span><span class="string">&#x27; print $1&quot; - &quot;$11/$4*100&quot;% Complete, &quot;($4-$11)/1024/1024/1024&quot; GB remaining&quot; &#x27;</span><span class="string">&quot;&#x27;&quot;</span><span class="string">&#x27;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://anthonyfisk.blogspot.com/2016/05/on-cassandra-stream-monitoring.html">On Cassandra Stream Monitoring</a></p>
 
@@ -1238,7 +1238,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

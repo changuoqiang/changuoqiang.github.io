@@ -759,7 +759,7 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2021-06-10 17:56:14" itemprop="dateModified" datetime="2021-06-10T17:56:14+08:00">2021-06-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -826,18 +826,17 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 
 <p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份。<br>修改两个参数文件后，重新启动postgresql。</p>
 <p>然后执行以下命令:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres pg_basebackup -RPv　-D baseback20151205-<span class="number">1</span></span><br><span class="line">transaction log start point: <span class="number">1</span>/<span class="number">72000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">498974</span>/<span class="number">498974</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">transaction log end point: <span class="number">1</span>/<span class="number">72000430</span></span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres pg_basebackup -RPv　-X fetch -D baseback20151205-<span class="number">1</span> </span><br><span class="line">transaction log start point: <span class="number">1</span>/<span class="number">72000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">498974</span>/<span class="number">498974</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">transaction log end point: <span class="number">1</span>/<span class="number">72000430</span></span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
 
 <p>这会生成一个备份目录，其目录结构与数据库集群的目录结构一致。如果要将数据打包到一个bz2文件，可以执行如下命令:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd /<span class="keyword">var</span>/lib/postgresql</span><br><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -RPv -Ft -D - bzip2 &gt; baseback20151205-1.tbz2&#x27;</span></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -RPv -Ft -D - -X fetch | bzip2 &gt; baseback20151205-1.tbz2&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>请注意输出文件的写入权限</p>
 <p>pg_basebackup命令同样会在备份中生成backup_label文件和.backup归档日志文件。<br>其.backup文件内容类似如下:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">1</span>/7C000028 (file 00000001000000010000007C)</span><br><span class="line">STOP WAL LOCATION: <span class="number">1</span>/7C000998 (file 00000001000000010000007C)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">1</span>/7C000550</span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">52</span>:<span class="number">23</span> CST </span><br><span class="line">LABEL: pg_basebackup base backup</span><br><span class="line">STOP TIME: <span class="number">2015</span>-<span class="number">12</span>-<span class="number">05</span> <span class="number">22</span>:<span class="number">53</span>:<span class="number">20</span> CST </span><br></pre></td></tr></table></figure>
 
 <p>可以远程使用pg_basebackup来进行基础备份。</p>
 <p>pg_basebackup的详细参数见man pg_basebackup或参考[2]。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/current/static/continuous-archiving.html">24.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.4/static/app-pgbasebackup.html">pg_basebackup</a></p>
-<p>===<br>[erq]</p>
 
       
     </div>
@@ -1364,7 +1363,7 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

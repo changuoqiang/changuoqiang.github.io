@@ -31,7 +31,7 @@
 <meta property="og:description" content="安装 1$ sudo apt install multipath-tools  查看多路径配置 1$ sudo multipath -ll 没有信息输出，多路径没有自动配置好，需要手工配置 查看路径信息 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-07-03T09:40:55.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.129Z">
+<meta property="article:modified_time" content="2021-06-10T10:04:19.502Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Debian">
 <meta name="twitter:card" content="summary">
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2021-06-10 18:04:19" itemprop="dateModified" datetime="2021-06-10T18:04:19+08:00">2021-06-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -354,7 +354,7 @@
 <p>然后重新查看</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart multipathd.service</span><br><span class="line"></span><br><span class="line">$ sudo multipath -l</span><br><span class="line">data (360080e50002c8d920000146c5d1bca10) dm-<span class="number">0</span> IBM,<span class="number">1814</span> FAStT</span><br><span class="line">size=<span class="number">4.</span>9T features=<span class="string">&#x27;5 queue_if_no_path pg_init_retries 50 queue_mode mq&#x27;</span> hwhandler=<span class="string">&#x27;1 rdac&#x27;</span> wp=rw</span><br><span class="line">-+- policy=<span class="string">&#x27;service-time 0&#x27;</span> prio=<span class="number">14</span> status=active</span><br><span class="line"> \<span class="string">`- 1:0:0:0 sdb 8:16 active ready running</span></span><br><span class="line"><span class="string">\`-+- policy=&#x27;service-time 0&#x27; prio=9 status=enabled</span></span><br><span class="line"><span class="string"> \`- 4:0:0:0 sdc 8:32 active ready running</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$ ls -l /dev/mapper/</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">crw------- 1 root root 10, 236 Jul 3 14:55 control</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data -&gt; ../dm-0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 7 Jul 3 15:45 data-part1 -&gt; ../dm-1</span></span><br></pre></td></tr></table></figure>
 
-<p>/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1</p>
+<p>/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1,如果没有，可以使用fdisk为其分区。</p>
 <p>格式化为ext4文件系统，<strong>注意会破坏分区上的所有数据</strong>。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkfs.ext4 /dev/mapper/data-part1 </span><br><span class="line">mke2fs <span class="number">1.44</span><span class="number">.5</span> (<span class="number">15</span>-Dec-<span class="number">2018</span>)</span><br><span class="line">Creating filesystem <span class="keyword">with</span> <span class="number">1317273339</span> 4k blocks and <span class="number">164659200</span> inodes</span><br><span class="line">Filesystem UUID: b60f85e2-<span class="number">5813</span>-48d7-856b-2f8dc7c1aad0</span><br><span class="line">Superblock backups stored on blocks: </span><br><span class="line"> <span class="number">32768</span>, <span class="number">98304</span>, <span class="number">163840</span>, <span class="number">229376</span>, <span class="number">294912</span>, <span class="number">819200</span>, <span class="number">884736</span>, <span class="number">1605632</span>, <span class="number">2654208</span>, </span><br><span class="line"> <span class="number">4096000</span>, <span class="number">7962624</span>, <span class="number">11239424</span>, <span class="number">20480000</span>, <span class="number">23887872</span>, <span class="number">71663616</span>, <span class="number">78675968</span>, </span><br><span class="line"> <span class="number">102400000</span>, <span class="number">214990848</span>, <span class="number">512000000</span>, <span class="number">550731776</span>, <span class="number">644972544</span></span><br><span class="line"></span><br><span class="line">Allocating group tables: done </span><br><span class="line">Writing inode tables: done </span><br><span class="line">Creating journal (<span class="number">262144</span> blocks): done</span><br><span class="line">Writing superblocks and filesystem accounting information: </span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">$ blkid /dev/mapper/data-part1 </span><br><span class="line">/dev/mapper/data-part1: UUID=<span class="string">&quot;b60f85e2-5813-48d7-856b-2f8dc7c1aad0&quot;</span> TYPE=<span class="string">&quot;ext4&quot;</span> PARTUUID=<span class="string">&quot;ba6bcf54-89e3-4852-a993-4f44d8839531&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -363,6 +363,7 @@
 
 <p>挂载后</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem Size Used Avail Use% Mounted on</span><br><span class="line">udev 16G <span class="number">0</span> 16G <span class="number">0</span>% /dev</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">9.</span>3M <span class="number">3.</span>2G <span class="number">1</span>% /run</span><br><span class="line">/dev/sda2 516G <span class="number">1.</span>4G 488G <span class="number">1</span>% /</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/dev/</span>shm</span><br><span class="line">tmpfs <span class="number">5.</span>0M <span class="number">0</span> <span class="number">5.</span>0M <span class="number">0</span>% <span class="regexp">/run/</span>lock</span><br><span class="line">tmpfs 16G <span class="number">0</span> 16G <span class="number">0</span>% <span class="regexp">/sys/</span>fs/cgroup</span><br><span class="line">/dev/sda1 511M <span class="number">5.</span>1M 506M <span class="number">1</span>% <span class="regexp">/boot/</span>efi</span><br><span class="line">tmpfs <span class="number">3.</span>2G <span class="number">0</span> <span class="number">3.</span>2G <span class="number">0</span>% <span class="regexp">/run/u</span>ser/<span class="number">1000</span></span><br><span class="line">/dev/mapper/data-part1 <span class="number">4.</span>9T 89M <span class="number">4.</span>7T <span class="number">1</span>% <span class="regexp">/mnt/</span>data</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -428,7 +429,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
