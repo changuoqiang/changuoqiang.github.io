@@ -192,7 +192,7 @@ lrwxrwxrwx 1 root root 7 Jul 3 15:45 data -> ../dm-0
 lrwxrwxrwx 1 root root 7 Jul 3 15:45 data-part1 -> ../dm-1
 ```
 
-/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1
+/dev/mapper/data就是映射后的多路径块设备，和/dev/sda等一样操作就好了，其上存在一个分区/dev/mapper/data-part1,如果没有，可以使用fdisk为其分区。
 
 格式化为ext4文件系统，**注意会破坏分区上的所有数据**。
 ```js

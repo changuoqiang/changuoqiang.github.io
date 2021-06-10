@@ -13,8 +13,7 @@ date: 2018-11-24 10:37:55
 不用其他监控套件，只是用nodetool工具借助netstats指令简单的监控收发数据流进度：
 
 ```js
-watch -n 10 'nodetool netstats grep "Receiving\\Sending" gawk {'"'"' print $1" - "$11/$4*100"% Complete, "($4-$11)/1024/1024/1024" GB remaining" '"'"'}'
-
+watch -n 10 'nodetool netstats | grep "Receiving\|Sending" | gawk {'"'"' print $1" - "$11/$4*100"% Complete, "($4-$11)/1024/1024/1024" GB remaining" '"'"'}'
 ```
 
 References:

@@ -46,7 +46,7 @@ $ nodetool rebuild -- name_of_existing_data_center
 
 查看rebuild进度
 ```js
-$ watch -n 10 'nodetool netstats grep "Receiving\\Sending" gawk {'"'"' print $1" - "$11/$4*100"% Complete, "($4-$11)/1024/1024/1024" GB remaining" '"'"'}'
+watch -n 10 'nodetool netstats | grep "Receiving\|Sending" | gawk {'"'"' print $1" - "$11/$4*100"% Complete, "($4-$11)/1024/1024/1024" GB remaining" '"'"'}'
 ```
 
 等nodetool rebuild结束重建就算完成了，其实这与添加新的节点差别不大,不过就是原来的环境，所有的配置都不用动罢了。
