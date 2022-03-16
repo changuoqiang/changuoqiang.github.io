@@ -173,7 +173,9 @@ $ lxc exec host-a:bst -- /bin/bash
 
 **Updated(03/16/2022):**
 
-更新到当前的LTS Stable Release
+如果使用zfs后端存储，OpenZFS(zfs-dmks)更新后需要将lxd更新到4.0.x稳定版，不然会有各种问题。
+
+更新到当前的LTS Stable Release 4.0.x
 
 ```js
 $ sudo snap refresh lxd --channel=4.0/stable
