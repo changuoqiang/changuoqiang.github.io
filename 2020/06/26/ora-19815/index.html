@@ -25,13 +25,13 @@
   </script>
 <meta name="description" content="客户端连接失败，提示ORA-19815，alert.log有以下提示：Errors in file &#x2F;u01&#x2F;app&#x2F;oracle&#x2F;admin&#x2F;orcl&#x2F;bdump&#x2F;orcl_arc0_2734.trc:ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 rem">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ORA-19815">
+<meta property="og:title" content="ORA-19815归档日志磁盘空间占满">
 <meta property="og:url" content="https://openwares.net/2020/06/26/ora-19815/index.html">
 <meta property="og:site_name" content="openwares.net">
 <meta property="og:description" content="客户端连接失败，提示ORA-19815，alert.log有以下提示：Errors in file &#x2F;u01&#x2F;app&#x2F;oracle&#x2F;admin&#x2F;orcl&#x2F;bdump&#x2F;orcl_arc0_2734.trc:ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 rem">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-26T00:11:38.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.378Z">
+<meta property="article:modified_time" content="2022-03-16T11:20:59.656Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Oracle">
 <meta name="twitter:card" content="summary">
@@ -49,7 +49,7 @@
     lang   : 'en'
   };
 </script>
-<title>ORA-19815 | openwares.net</title>
+<title>ORA-19815归档日志磁盘空间占满 | openwares.net</title>
   
 
 
@@ -285,7 +285,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ORA-19815
+          ORA-19815归档日志磁盘空间占满
         </h1>
 
         <div class="post-meta-container">
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-03-16 19:20:59" itemprop="dateModified" datetime="2022-03-16T19:20:59+08:00">2022-03-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,8 +335,11 @@
 <li>Add disk space and increase db_recovery_file_dest_size parameter to<br>reflect the new space.</li>
 <li>Delete unnecessary files using RMAN DELETE command. If an operating<br>system command was used to delete files, then use RMAN CROSSCHECK and<br>DELETE EXPIRED commands.</li>
 </ol>
-<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
+<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。<br>比如删除系统时间1天以前的归档日志</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;<span class="keyword">delete</span> archivelog all completed before <span class="string">&#x27;sysdate-1&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">rman&gt; crosscheck archivelog all;</span><br><span class="line">rman&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -402,7 +405,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

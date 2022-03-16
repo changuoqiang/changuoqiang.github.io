@@ -795,7 +795,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-03-16 19:23:26" itemprop="dateModified" datetime="2022-03-16T19:23:26+08:00">2022-03-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -819,7 +819,7 @@
     <div class="post-body" itemprop="articleBody">
           <a id="more"></a>
 <p>lxd集群使用ceph后端共享存储，多个host共同管理一组容器，可以提高lxd容器的可用性，但当前版本的lxd集群功能还不够完善，不支持lxd容器在集群host之间live migration，故障迁移支持也不完善。<br>lxd集群部署ceph后端，数据丢失的风险大大降低，集群中host掉线，可以将lxd容器快速移动到其他host继续提供服务。</p>
-<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不用的集群要使用不用的ceph pool。</p>
+<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不同的集群要使用不同的ceph pool。</p>
 <p><strong>其他节点配置</strong></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">What name should be used to identify <span class="built_in">this</span> node <span class="keyword">in</span> the cluster? \[<span class="keyword">default</span>=web\]: </span><br><span class="line">What IP address or DNS name should be used to reach <span class="built_in">this</span> node? \[<span class="keyword">default</span>=<span class="number">10.100</span><span class="number">.0</span><span class="number">.80</span>\]: </span><br><span class="line">Are you joining an existing cluster? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">IP address or FQDN <span class="keyword">of</span> an existing cluster node: <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span></span><br><span class="line">Cluster fingerprint: 79ec4bdfa32501a664b1adde03a2296f7d663a43676a422781668df1bec2ee12</span><br><span class="line">You can validate <span class="built_in">this</span> fingerprint by running <span class="string">&quot;lxc info&quot;</span> locally on an existing node.</span><br><span class="line">Is <span class="built_in">this</span> the correct fingerprint? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">Cluster trust password: </span><br><span class="line">All existing data is lost when joining a cluster, <span class="keyword">continue</span>? (yes/no) \[<span class="keyword">default</span>=no\] yes</span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
 
@@ -1308,7 +1308,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
