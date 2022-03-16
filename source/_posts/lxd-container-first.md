@@ -170,3 +170,11 @@ $ lxc exec host-a:bst -- /bin/bash
 这就是在本地管理远程lxd服务器的容器实例了。
 
 后面继续探索...
+
+**Updated(03/16/2022):**
+
+更新到当前的LTS Stable Release
+
+```js
+$ sudo snap refresh lxd --channel=4.0/stable
+```
