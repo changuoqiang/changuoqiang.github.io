@@ -31,9 +31,9 @@
 <meta property="og:description" content="一直以来我们都是使用float,position还有早期的table来做页面布局。现在几乎没有人会用table布局了,但float和position仍然是布局的中坚力量。 虽然table,float,position可以用来布局, 但它们都不是布局元素,只是用它们来做布局比较方便罢了。这都是trick。 float的本意是图文混排时的环绕,而position则用于针对单个元素的定位,table则">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png">
-<meta property="og:image" content="https://developer.mozilla.org/files/3739/flex_terms.png">
+<meta property="og:image" content="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox/flex_terms.png">
 <meta property="article:published_time" content="2014-03-03T14:27:32.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.184Z">
+<meta property="article:modified_time" content="2022-04-14T14:01:34.370Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary">
@@ -306,7 +306,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-04-14 22:01:34" itemprop="dateModified" datetime="2022-04-14T22:01:34+08:00">2022-04-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,81 +339,41 @@
 <p><strong>flex伸缩布局</strong></p>
 <p><strong>基础概念</strong></p>
 <ul>
-<li>  布局轴线<br>传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:<br><img src="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png" alt="flex axis"><br><img src="https://developer.mozilla.org/files/3739/flex_terms.png" alt="flex axis"><br>主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。</li>
-<li>  flex布局容器(container)<br>flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:<br>[css]<br>display: flex;<br>display: -webkit-flex<br>[/css]</li>
+<li>  布局轴线<br>传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:<br><img src="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png" alt="flex axis"><br><img src="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox/flex_terms.png" alt="flex axis"><br>主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。</li>
+<li>  flex布局容器(container)<br>flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">display: flex;</span><br><span class="line">display: -webkit-flex</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>  flex子元素(items)<br>在flex容器内部的子元素按指定的规则进行排列。直接包含在flex容器内的文本自动的被一个匿名flex item包裹,如果匿名的flex子元素只包含空白,那么这个匿名子元素是不显示的,被指定属性display:none。<br>相邻flex子元素的margin不会被折叠(collapse)</li>
 </ul>
 <p><strong>flex布局容器属性</strong></p>
+<p><strong><em>flex-direction</em></strong><br>指定flex容器主轴的方向,取值:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">row</span><br><span class="line">主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。</span><br><span class="line">row-reverse</span><br><span class="line">主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。</span><br><span class="line">column</span><br><span class="line">主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。</span><br><span class="line">column-reverse</span><br><span class="line">主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。</span><br></pre></td></tr></table></figure>
+<p><strong><em>flex-wrap</em></strong><br>指定flex容器是否可以换行,取值:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nowrap</span><br><span class="line">不能换行,如果flex items过宽则溢出容器。</span><br><span class="line">wrap</span><br><span class="line">flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。</span><br><span class="line">wrap-reverse</span><br><span class="line">flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>  flex-direction<br>指定flex容器主轴的方向,取值:</p>
-</li>
-<li><p>  row<br>主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。</p>
-</li>
-<li><p>  row-reverse<br>主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。</p>
-</li>
-<li><p>  column<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。</p>
-</li>
-<li><p>  column-reverse<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。</p>
-</li>
-<li><p>  flex-wrap<br>指定flex容器是否可以换行,取值:</p>
-</li>
-<li><p>  nowrap<br>不能换行,如果flex items过宽则溢出容器。</p>
-</li>
-<li><p>  wrap<br>flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。</p>
-</li>
-<li><p>  wrap-reverse<br>flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。</p>
-</li>
-<li><p>  justify-content<br>主轴方向上对齐flex items,取值:</p>
-</li>
-<li><p>  flex-start<br>flex items沿主轴起始方向按指定顺序排列</p>
-</li>
-<li><p>  flex-end<br>flex items靠主轴结束方向按指定顺序排列</p>
-</li>
-<li><p>  center<br>flex items在主轴方向上靠容器中间按指定顺序排列</p>
-</li>
-<li><p>  space-between<br>容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。</p>
-</li>
-<li><p>  space-around<br>容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。</p>
-</li>
-<li><p>  align-items<br>侧轴方向上对齐flex items,取值:</p>
-</li>
-<li><p>  flex-start<br>flex items沿侧轴起始方向排列。</p>
-</li>
-<li><p>  flex-end<br>flex items沿侧轴结束方向排列。</p>
-</li>
-<li><p>  center<br>flex items沿侧轴居中排列。</p>
-</li>
-<li><p>  baseline<br>flex items沿侧轴方向依照其基线排列。</p>
-</li>
-<li><p>  stretch<br>flex items沿侧轴拉伸排列。</p>
-</li>
-<li><p>  align-content<br>当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:</p>
-</li>
-<li><p>  flex-start<br>容器内的多行靠测轴起始方向并排排列。</p>
-</li>
-<li><p>  flex-end<br>容器内的多行靠侧轴结束方向并排排列。</p>
-</li>
-<li><p>  center<br>容器内的多行沿测轴居中并排排列。</p>
-</li>
-<li><p>  space-between<br>侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。</p>
-</li>
-<li><p>  space-around<br>侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。</p>
-</li>
-<li><p>  stretch<br>容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。</p>
-</li>
-<li><p>  flex-flow<br>flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:<br>[css]<br>flex-flow: flex-direction flex-wrap;<br>[/css]</p>
+<li>  justify-content<br>主轴方向上对齐flex items,取值:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flex-start</span><br><span class="line">flex items沿主轴起始方向按指定顺序排列</span><br><span class="line">flex-end</span><br><span class="line">flex items靠主轴结束方向按指定顺序排列</span><br><span class="line">center</span><br><span class="line">flex items在主轴方向上靠容器中间按指定顺序排列</span><br><span class="line">space-between</span><br><span class="line">容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。</span><br><span class="line">space-around</span><br><span class="line">容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。</span><br></pre></td></tr></table></figure></li>
+<li>*<em>align-items**</em><br>侧轴方向上对齐flex items,取值:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">flex-start</span><br><span class="line">flex items沿侧轴起始方向排列。</span><br><span class="line">flex-end</span><br><span class="line">flex items沿侧轴结束方向排列。</span><br><span class="line">center</span><br><span class="line">flex items沿侧轴居中排列。</span><br><span class="line">baseline</span><br><span class="line">flex items沿侧轴方向依照其基线排列。</span><br><span class="line">stretch</span><br><span class="line">flex items沿侧轴拉伸排列。</span><br></pre></td></tr></table></figure></li>
+<li>*<em>align-content**</em><br>当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">flex-start</span><br><span class="line">容器内的多行靠测轴起始方向并排排列。</span><br><span class="line">flex-end</span><br><span class="line">容器内的多行靠侧轴结束方向并排排列。</span><br><span class="line">center</span><br><span class="line">容器内的多行沿测轴居中并排排列。</span><br><span class="line">space-between</span><br><span class="line">侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。</span><br><span class="line">space-around</span><br><span class="line">侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。</span><br><span class="line">stretch</span><br><span class="line">容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。</span><br></pre></td></tr></table></figure></li>
+<li>*<em>flex-flow**</em><br>flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex-flow: flex-direction flex-wrap;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 <p><strong>flex布局子元素属性</strong></p>
 <ul>
 <li>  order<br>指定flex item在容器内的显示顺序。无需修改html源代码即可为flex item指定新的显示次序,但是语音与导航仍然使用源代码中的顺序,因此这个属性有可能会破坏文档的可访问性(accessibility)。</li>
-<li>  flex<br>指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:<br>[css]<br>flex: flex-grow flex-shrink flex-basis<br>[/css]<br>flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。<br>flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。<br>flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。<br>flex属性是这三个属性的组合缩写,也可以单独指定这些属性。</li>
+<li>  flex<br>指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flex: flex-grow flex-shrink flex-basis</span><br></pre></td></tr></table></figure>
+
+<p>flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。<br>flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。<br>flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。<br>flex属性是这三个属性的组合缩写,也可以单独指定这些属性。</p>
+<ul>
 <li>  align-self<br>子元素覆盖容器的align-items属性,如果子元素在侧轴方向的margin设置为auto,则此属性被忽略。</li>
 <li>  margin<br>margin指定为auto会合并剩余的空间,可以使item水平和垂直都居中。也可以通过在容器上使用align-items:center;justify-content:center;来使item水平垂直居中。</li>
 </ul>
 <p><strong>不影响flex布局的公共属性</strong><br>float,clear,vertical-align属性对flex items没有影响。对item指定float属性只是使其display值计算为block。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes">Using CSS flexible boxes</a><br>[2]<a target="_blank" rel="noopener" href="http://hikejun.com/blog/2013/05/03/%E4%B8%80%E8%A7%88css%E5%B8%83%E5%B1%80%E6%A0%87%E5%87%86/">一览CSS布局标准</a><br>[3]<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ie/hh673531(v=vs.85).aspx">Internet Explorer 10 中弹性框（“Flexbox”）布局</a><br>[4]<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/zh-cn/library/ie/dn265027(v=vs.85).aspx">弹性框（“Flexbox”）布局更新</a><br>[5]<a target="_blank" rel="noopener" href="http://zh.learnlayout.com/">学习CSS布局</a><br>[6]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css3/using-flexbox.html">使用Flexbox：新旧语法混用实现最佳浏览器兼容</a><br>[7]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yansi/p/3335916.html">flexbox 布局使用体会</a><br>[8]<a target="_blank" rel="noopener" href="http://dev.oupeng.com/articles/advanced-cross-browser-flexbox">跨浏览器弹性布局进阶教程</a><br>[9]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css/master-new-css-layout-properties.html">Hold住CSS布局新属性</a><br>[10]<a target="_blank" rel="noopener" href="http://the-echoplex.net/flexyboxes/">Flexy Boxes</a><br>[11]<a target="_blank" rel="noopener" href="http://www.w3cplus.com/css3/responsive-design-of-the-future-with-flexbox.html">响应式设计的未来——Flexbox</a><br>[12]<a target="_blank" rel="noopener" href="http://dev.oupeng.com/articles/flexbox-basics">伸缩布局 — 打开布局天堂之门？</a></p>
-<p>===<br><strong>[erq]</strong></p>
 
     </div>
 

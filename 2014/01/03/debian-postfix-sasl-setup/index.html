@@ -379,7 +379,7 @@
 <p>/etc/postfix/sasl_access:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Use this when smtpd_sasl_local_domain is empty.</span><br><span class="line">username HOLD</span><br><span class="line"># Use this when smtpd_sasl_local_domain=example.com.</span><br><span class="line">username@example.com HOLD</span><br></pre></td></tr></table></figure>
 
-<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#106;&#111;&#x68;&#110;&#64;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;&#109;">&#106;&#111;&#x68;&#110;&#64;&#101;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;&#109;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
+<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#x6a;&#x6f;&#x68;&#x6e;&#64;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#46;&#99;&#111;&#x6d;">&#x6a;&#x6f;&#x68;&#x6e;&#64;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#101;&#46;&#99;&#111;&#x6d;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
 <p><em>隐藏sasl认证</em><br>可以为部分客户或网络隐藏SASL认证,因为有些不需要认证的客户如果发现服务提供SASL认证能力,那么他们会试图去认证,但客户端有没有提供认证信息,这样客户就一直处于认证失败状态。</p>
 <p>/etc/postfix/main.cf:<br> smtpd_sasl_exceptions_networks = !192.0.2.171/32, 192.0.2.0/24</p>
 <p><em>添加sasl登录名到邮件头</em></p>
