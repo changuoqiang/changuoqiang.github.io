@@ -71,7 +71,7 @@ flex items可以在容器内换行,新行的方向与writtng-mode指定的方向
 wrap-reverse
 flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。
 ```
-*   justify-content
+***justify-content***
 主轴方向上对齐flex items,取值:
 ```
 flex-start
@@ -117,6 +117,7 @@ stretch
 ```
 ***flex-flow***
 flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:
+
 ```
 flex-flow: flex-direction flex-wrap;
 ```
