@@ -33,91 +33,93 @@ firefox要到版本28才支持flex多行布局,也就是支持flex-wrap属性的
 *   布局轴线
 传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:
 ![flex axis](http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png)
-![flex axis](https://developer.mozilla.org/files/3739/flex_terms.png)
+![flex axis](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox/flex_terms.png)
 主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。
 *   flex布局容器(container)
 flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:
-\[css\]
+
+```
 display: flex;
 display: -webkit-flex
-\[/css\]
+```
+
 *   flex子元素(items)
 在flex容器内部的子元素按指定的规则进行排列。直接包含在flex容器内的文本自动的被一个匿名flex item包裹,如果匿名的flex子元素只包含空白,那么这个匿名子元素是不显示的,被指定属性display:none。
 相邻flex子元素的margin不会被折叠(collapse)
 
 **flex布局容器属性**
 
-*   flex-direction
+***flex-direction***
 指定flex容器主轴的方向,取值:
-
-*   row
+```
+row
 主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。
-*   row-reverse
+row-reverse
 主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。
-*   column
+column
 主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。
-*   column-reverse
+column-reverse
 主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。
-
-*   flex-wrap
+```
+***flex-wrap***
 指定flex容器是否可以换行,取值:
-
-*   nowrap
+```
+nowrap
 不能换行,如果flex items过宽则溢出容器。
-*   wrap
+wrap
 flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。
-*   wrap-reverse
+wrap-reverse
 flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。
-
+```
 *   justify-content
 主轴方向上对齐flex items,取值:
-
-*   flex-start
+```
+flex-start
 flex items沿主轴起始方向按指定顺序排列
-*   flex-end
+flex-end
 flex items靠主轴结束方向按指定顺序排列
-*   center
+center
 flex items在主轴方向上靠容器中间按指定顺序排列
-*   space-between
+space-between
 容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。
-*   space-around
+space-around
 容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。
-
-*   align-items
+```
+***align-items***
 侧轴方向上对齐flex items,取值:
-
-*   flex-start
+```
+flex-start
 flex items沿侧轴起始方向排列。
-*   flex-end
+flex-end
 flex items沿侧轴结束方向排列。
-*   center
+center
 flex items沿侧轴居中排列。
-*   baseline
+baseline
 flex items沿侧轴方向依照其基线排列。
-*   stretch
+stretch
 flex items沿侧轴拉伸排列。
-
-*   align-content
+```
+***align-content***
 当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:
-
-*   flex-start
+```
+flex-start
 容器内的多行靠测轴起始方向并排排列。
-*   flex-end
+flex-end
 容器内的多行靠侧轴结束方向并排排列。
-*   center
+center
 容器内的多行沿测轴居中并排排列。
-*   space-between
+space-between
 侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。
-*   space-around
+space-around
 侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。
-*   stretch
+stretch
 容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。
-
-*   flex-flow
+```
+***flex-flow***
 flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:
-\[css\]
+```
 flex-flow: flex-direction flex-wrap;
-\[/css\]
+```
 
 **flex布局子元素属性**
 
@@ -125,9 +127,11 @@ flex-flow: flex-direction flex-wrap;
 指定flex item在容器内的显示顺序。无需修改html源代码即可为flex item指定新的显示次序,但是语音与导航仍然使用源代码中的顺序,因此这个属性有可能会破坏文档的可访问性(accessibility)。
 *   flex
 指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:
-\[css\]
+
+```
 flex: flex-grow flex-shrink flex-basis
-\[/css\]
+```
+
 flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。
 flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。
 flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。
@@ -153,6 +157,3 @@ References:
 \[10\][Flexy Boxes](http://the-echoplex.net/flexyboxes/)
 \[11\][响应式设计的未来——Flexbox](http://www.w3cplus.com/css3/responsive-design-of-the-future-with-flexbox.html)
 \[12\][伸缩布局 — 打开布局天堂之门？](http://dev.oupeng.com/articles/flexbox-basics)
-
-===
-**\[erq\]**
