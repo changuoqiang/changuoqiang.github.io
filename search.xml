@@ -102,6 +102,19 @@
       </tags>
   </entry>
   <entry>
+    <title>lxd_reset</title>
+    <url>/2022/04/25/lxd-reset/</url>
+    <content><![CDATA[<p>lxd reset/reinit with snap</p>
+<p>first delete all container instances and all images<br>then execute:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo snap remove --purge lxd</span><br></pre></td></tr></table></figure>
+
+<p>then</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo snap install lxd --channel&#x3D;4.0&#x2F;stable</span><br></pre></td></tr></table></figure>
+
+<p>last</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">lxd init</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>Untitled Post - 1</title>
     <url>/2013/11/04/3781/</url>
     <content><![CDATA[<p>kernel 3.12 released!</p>
@@ -1541,18 +1554,18 @@
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 156</title>
-    <url>/2015/11/16/6923/</url>
-    <content><![CDATA[<p>When updating to a new minor release, the safest policy is to update the standby servers first — a new minor release is more likely to be able to read WAL files from a previous minor release than vice versa. — postgresql high availability</p>
+    <title>Untitled Post - 155</title>
+    <url>/2015/11/15/6912/</url>
+    <content><![CDATA[<p>默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行 git push origin [tagname] 即可。如果要一次推送所有本地新增的标签上去，可以使用 - -tags 选项，运行git push origin - -tags</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 155</title>
-    <url>/2015/11/15/6912/</url>
-    <content><![CDATA[<p>默认情况下，git push 并不会把标签传送到远端服务器上，只有通过显式命令才能分享标签到远端仓库。其命令格式如同推送分支，运行 git push origin [tagname] 即可。如果要一次推送所有本地新增的标签上去，可以使用 - -tags 选项，运行git push origin - -tags</p>
+    <title>Untitled Post - 156</title>
+    <url>/2015/11/16/6923/</url>
+    <content><![CDATA[<p>When updating to a new minor release, the safest policy is to update the standby servers first — a new minor release is more likely to be able to read WAL files from a previous minor release than vice versa. — postgresql high availability</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -2240,7 +2253,7 @@
     <url>/2009/09/27/antibanned/</url>
     <content><![CDATA[<p>tor was banned recently by “some fucking reason”,all tor tcp connections stay at SYN_SENT state,that is,the packets is eated somewhere,so the connections can’t be established.oh fuck! </p>
 <p>to reslove this fucking matter,following the steps list below.</p>
-<p>step 1:<br>send a mail with subject and content all “get bridges” to <a href="mailto:&#98;&#x72;&#105;&#x64;&#x67;&#101;&#115;&#64;&#x74;&#x6f;&#x72;&#x70;&#114;&#111;&#x6a;&#x65;&#99;&#x74;&#46;&#111;&#x72;&#x67;">&#98;&#x72;&#105;&#x64;&#x67;&#101;&#115;&#64;&#x74;&#x6f;&#x72;&#x70;&#114;&#111;&#x6a;&#x65;&#99;&#x74;&#46;&#111;&#x72;&#x67;</a>,after a moment,the bridges list will be delivered to your mailbox.the bridges list looks like this</p>
+<p>step 1:<br>send a mail with subject and content all “get bridges” to <a href="mailto:&#98;&#x72;&#x69;&#x64;&#103;&#101;&#115;&#x40;&#116;&#111;&#114;&#112;&#114;&#x6f;&#x6a;&#x65;&#99;&#x74;&#x2e;&#x6f;&#114;&#x67;">&#98;&#x72;&#x69;&#x64;&#103;&#101;&#115;&#x40;&#116;&#111;&#114;&#112;&#114;&#x6f;&#x6a;&#x65;&#99;&#x74;&#x2e;&#x6f;&#114;&#x67;</a>,after a moment,the bridges list will be delivered to your mailbox.the bridges list looks like this</p>
 <p>bridge ip:port</p>
 <p>it can be more than one bridges.</p>
 <p>step 2:<br>open the /etc/tor/torrc file,add tow lines with contents “UseBridges 1” and “UpdateBridgesFromAuthority 1” separately at the last.whereafter,add the bridges you received.finally looks like this<br>UseBridges 1<br>UpdateBridgesFromAuthority 1<br>bridge ip:port</p>
@@ -3170,32 +3183,6 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
-    <title>cassandra copy导入数据时batch too large错误</title>
-    <url>/2016/07/15/cassandra-copy-batch-too-large%E9%94%99%E8%AF%AF/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>执行COPY命令时,出现Batch too large错误:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">11</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">16</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">18</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>/var/log/cassandra/system.log文件中可见:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ERROR \[SharedPool-Worker-<span class="number">1</span>\] <span class="number">2016</span>-<span class="number">07</span>-<span class="number">15</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">20</span>,<span class="number">725</span> BatchStatement.java:<span class="number">267</span> - Batch <span class="keyword">of</span> prepared statements <span class="keyword">for</span> \[reis.image\] is <span class="keyword">of</span> size <span class="number">2732525</span>, exceeding specified threshold <span class="keyword">of</span> <span class="number">614400</span> by <span class="number">2118125.</span> (see batch_size_fail_threshold_in_kb)</span><br></pre></td></tr></table></figure>
-
-<p>batch就是批量执行DML语句. 因为我的image表中有大字段,用于存储图片,每个图片不超过500K,所以遭遇了batch too large错误.</p>
-<p>/etc/cassandra/cassandra.yaml文件中,参数batch_size_fail_threshold_in_kb的默认值只有50,一条DML语句就超过了这个阈值.<br>所以将此参数设置为600</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">batch_size_fail_threshold_in_kb: <span class="number">600</span></span><br></pre></td></tr></table></figure>
-<p>然后将COPY命令的批操作限制为1:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span> WITH MAXBATCHSIZE = <span class="number">1</span> and MINBATCHSIZE = <span class="number">1</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Processed: <span class="number">826</span> rows; Rate: <span class="number">30</span> rows/s; Avg. rate: <span class="number">60</span> rows/s</span><br><span class="line"><span class="number">826</span> rows imported <span class="keyword">from</span> <span class="number">1</span> files <span class="keyword">in</span> <span class="number">13.682</span> seconds (<span class="number">0</span> skipped).</span><br></pre></td></tr></table></figure>
-
-<p>顺利的导入了所有数据.</p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>Database</category>
-      </categories>
-      <tags>
-        <tag>cassandra</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>cassandra compaction strategy</title>
     <url>/2019/06/22/cassandra-compaction-strategy/</url>
     <content><![CDATA[<a id="more"></a>
@@ -3241,6 +3228,32 @@ $_SESSION\["submitid"\] += 1;
       </categories>
       <tags>
         <tag>Debian</tag>
+        <tag>cassandra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cassandra copy导入数据时batch too large错误</title>
+    <url>/2016/07/15/cassandra-copy-batch-too-large%E9%94%99%E8%AF%AF/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>执行COPY命令时,出现Batch too large错误:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">11</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">16</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">18</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>/var/log/cassandra/system.log文件中可见:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ERROR \[SharedPool-Worker-<span class="number">1</span>\] <span class="number">2016</span>-<span class="number">07</span>-<span class="number">15</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">20</span>,<span class="number">725</span> BatchStatement.java:<span class="number">267</span> - Batch <span class="keyword">of</span> prepared statements <span class="keyword">for</span> \[reis.image\] is <span class="keyword">of</span> size <span class="number">2732525</span>, exceeding specified threshold <span class="keyword">of</span> <span class="number">614400</span> by <span class="number">2118125.</span> (see batch_size_fail_threshold_in_kb)</span><br></pre></td></tr></table></figure>
+
+<p>batch就是批量执行DML语句. 因为我的image表中有大字段,用于存储图片,每个图片不超过500K,所以遭遇了batch too large错误.</p>
+<p>/etc/cassandra/cassandra.yaml文件中,参数batch_size_fail_threshold_in_kb的默认值只有50,一条DML语句就超过了这个阈值.<br>所以将此参数设置为600</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">batch_size_fail_threshold_in_kb: <span class="number">600</span></span><br></pre></td></tr></table></figure>
+<p>然后将COPY命令的批操作限制为1:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span> WITH MAXBATCHSIZE = <span class="number">1</span> and MINBATCHSIZE = <span class="number">1</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Processed: <span class="number">826</span> rows; Rate: <span class="number">30</span> rows/s; Avg. rate: <span class="number">60</span> rows/s</span><br><span class="line"><span class="number">826</span> rows imported <span class="keyword">from</span> <span class="number">1</span> files <span class="keyword">in</span> <span class="number">13.682</span> seconds (<span class="number">0</span> skipped).</span><br></pre></td></tr></table></figure>
+
+<p>顺利的导入了所有数据.</p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>Database</category>
+      </categories>
+      <tags>
         <tag>cassandra</tag>
       </tags>
   </entry>
@@ -3698,47 +3711,6 @@ $_SESSION\["submitid"\] += 1;
       </categories>
   </entry>
   <entry>
-    <title>ceph集群移除osd,mon,mdr,mds节点</title>
-    <url>/2019/11/14/ceph-remove-osds/</url>
-    <content><![CDATA[<a id="more"></a>
-<p><strong>移除osd节点</strong></p>
-<p>查看当前osd状态</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd tree</span><br><span class="line">ID CLASS WEIGHT TYPE NAME STATUS REWEIGHT PRI-AFF </span><br><span class="line">-<span class="number">1</span> <span class="number">9.74405</span> root <span class="keyword">default</span> </span><br><span class="line">-<span class="number">9</span> <span class="number">0.95409</span> host bank1 </span><br><span class="line"> <span class="number">3</span> hdd <span class="number">0.95409</span> osd<span class="number">.3</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">3</span> <span class="number">5.99799</span> host vm01 </span><br><span class="line"> <span class="number">0</span> hdd <span class="number">5.99799</span> osd<span class="number">.0</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">5</span> <span class="number">1.81929</span> host vm02 </span><br><span class="line"> <span class="number">1</span> hdd <span class="number">1.81929</span> osd<span class="number">.1</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">7</span> <span class="number">0.97269</span> host web </span><br><span class="line"> <span class="number">2</span> hdd <span class="number">0.97269</span> osd<span class="number">.2</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br></pre></td></tr></table></figure>
-
-<p>将osd标记为out，准备踢出集群，{osd-num}为osd编号,比如osd.2</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
-
-<p>集群会进行重新平衡和数据迁移，查看 </p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph -w</span><br></pre></td></tr></table></figure>
-<p><code>ceps -s</code>也可以查看进度，当完成时集群状态会重新回归到actice+clean状态<br>如果卡在active+clean+remapped或者active+remapped状态,先将osd回归集群</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd <span class="keyword">in</span> &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
-<p>等集群恢复到active+clean状态后，执行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd crush reweight osd.&#123;osd-num&#125; <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>等集群状态再次变成active+clean状态后，将osd标记为out,并停止ceph-osd服务</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br><span class="line">$ sudo systemctl stop ceph-osd@<span class="number">2.</span>service</span><br></pre></td></tr></table></figure>
-
-<p>移除osd</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd purge osd.&#123;osd-num&#125; --yes-i-really-mean-it</span><br><span class="line">purged osd<span class="number">.2</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mon节点</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph mon remove &#123;mon-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mgr节点</strong><br>在将要被移除的mgr节点上执行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mgr/ceph-&#123;mgr-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mds节点</strong><br>在将要被移除的mds节点上执行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mds/ceph-&#123;mds-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-osds/">ADDING/REMOVING OSDS</a><br>[2]<a href="https://docs.ceph.com/docs/master/cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ceph集群部署-mgr-osd-mds配置</title>
     <url>/2019/10/31/ceph-deploy-mgr-osd-mds/</url>
     <content><![CDATA[<a id="more"></a>
@@ -3793,6 +3765,47 @@ $_SESSION\["submitid"\] += 1;
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl enable ceph-mds@node6</span><br><span class="line">$ sudo systemctl start ceph-mds@node6</span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a href="https://docs.ceph.com/docs/master/mgr/administrator/#mgr-administrator-guide">CEPH-MGR ADMINISTRATOR’S GUIDE</a><br>[2]<a href="https://docs.ceph.com/docs/master//cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ceph集群移除osd,mon,mdr,mds节点</title>
+    <url>/2019/11/14/ceph-remove-osds/</url>
+    <content><![CDATA[<a id="more"></a>
+<p><strong>移除osd节点</strong></p>
+<p>查看当前osd状态</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd tree</span><br><span class="line">ID CLASS WEIGHT TYPE NAME STATUS REWEIGHT PRI-AFF </span><br><span class="line">-<span class="number">1</span> <span class="number">9.74405</span> root <span class="keyword">default</span> </span><br><span class="line">-<span class="number">9</span> <span class="number">0.95409</span> host bank1 </span><br><span class="line"> <span class="number">3</span> hdd <span class="number">0.95409</span> osd<span class="number">.3</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">3</span> <span class="number">5.99799</span> host vm01 </span><br><span class="line"> <span class="number">0</span> hdd <span class="number">5.99799</span> osd<span class="number">.0</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">5</span> <span class="number">1.81929</span> host vm02 </span><br><span class="line"> <span class="number">1</span> hdd <span class="number">1.81929</span> osd<span class="number">.1</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">7</span> <span class="number">0.97269</span> host web </span><br><span class="line"> <span class="number">2</span> hdd <span class="number">0.97269</span> osd<span class="number">.2</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br></pre></td></tr></table></figure>
+
+<p>将osd标记为out，准备踢出集群，{osd-num}为osd编号,比如osd.2</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
+
+<p>集群会进行重新平衡和数据迁移，查看 </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph -w</span><br></pre></td></tr></table></figure>
+<p><code>ceps -s</code>也可以查看进度，当完成时集群状态会重新回归到actice+clean状态<br>如果卡在active+clean+remapped或者active+remapped状态,先将osd回归集群</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd <span class="keyword">in</span> &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
+<p>等集群恢复到active+clean状态后，执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd crush reweight osd.&#123;osd-num&#125; <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>等集群状态再次变成active+clean状态后，将osd标记为out,并停止ceph-osd服务</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br><span class="line">$ sudo systemctl stop ceph-osd@<span class="number">2.</span>service</span><br></pre></td></tr></table></figure>
+
+<p>移除osd</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph osd purge osd.&#123;osd-num&#125; --yes-i-really-mean-it</span><br><span class="line">purged osd<span class="number">.2</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mon节点</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ceph mon remove &#123;mon-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mgr节点</strong><br>在将要被移除的mgr节点上执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mgr/ceph-&#123;mgr-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>移除mds节点</strong><br>在将要被移除的mds节点上执行</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mds/ceph-&#123;mds-name&#125;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-osds/">ADDING/REMOVING OSDS</a><br>[2]<a href="https://docs.ceph.com/docs/master/cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -6247,7 +6260,7 @@ $_SESSION\["submitid"\] += 1;
 <p>/etc/postfix/sasl_access:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># Use this when smtpd_sasl_local_domain is empty.</span><br><span class="line">username HOLD</span><br><span class="line"># Use this when smtpd_sasl_local_domain=example.com.</span><br><span class="line">username@example.com HOLD</span><br></pre></td></tr></table></figure>
 
-<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#x6a;&#111;&#x68;&#110;&#64;&#101;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#109;">&#x6a;&#111;&#x68;&#110;&#64;&#101;&#x78;&#97;&#109;&#112;&#x6c;&#101;&#x2e;&#99;&#111;&#109;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
+<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#x6a;&#111;&#x68;&#110;&#64;&#x65;&#x78;&#x61;&#109;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#109;">&#x6a;&#111;&#x68;&#110;&#64;&#x65;&#x78;&#x61;&#109;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#109;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
 <p><em>隐藏sasl认证</em><br>可以为部分客户或网络隐藏SASL认证,因为有些不需要认证的客户如果发现服务提供SASL认证能力,那么他们会试图去认证,但客户端有没有提供认证信息,这样客户就一直处于认证失败状态。</p>
 <p>/etc/postfix/main.cf:<br> smtpd_sasl_exceptions_networks = !192.0.2.171/32, 192.0.2.0/24</p>
 <p><em>添加sasl登录名到邮件头</em></p>
@@ -6295,9 +6308,9 @@ $_SESSION\["submitid"\] += 1;
 <p>modules_enabled = {<br>…<br>“register”; – Allow users to register on this server using a client and change passwords<br>…<br>}</p>
 <p>然后设置参数<br>allow_registration = true</p>
 <p><strong>手动添加账户</strong></p>
-<p>#prosodyctl adduser <a href="mailto:&#117;&#x73;&#101;&#114;&#x6e;&#x61;&#109;&#101;&#x40;&#x64;&#x6f;&#109;&#97;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#117;&#x73;&#101;&#114;&#x6e;&#x61;&#109;&#101;&#x40;&#x64;&#x6f;&#109;&#97;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
-<p>删除账户<br>#prosodyctl deluser <a href="mailto:&#x75;&#115;&#x65;&#114;&#x6e;&#x61;&#x6d;&#x65;&#64;&#100;&#x6f;&#109;&#97;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x75;&#115;&#x65;&#114;&#x6e;&#x61;&#x6d;&#x65;&#64;&#100;&#x6f;&#109;&#97;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#111;&#x6d;</a></p>
-<p>更改用户密码<br>#prosodyctl passwd <a href="mailto:&#x75;&#x73;&#101;&#x72;&#110;&#x61;&#109;&#x65;&#64;&#100;&#x6f;&#109;&#x61;&#105;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#111;&#109;">&#x75;&#x73;&#101;&#x72;&#110;&#x61;&#109;&#x65;&#64;&#100;&#x6f;&#109;&#x61;&#105;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#111;&#109;</a></p>
+<p>#prosodyctl adduser <a href="mailto:&#117;&#115;&#101;&#114;&#110;&#97;&#x6d;&#x65;&#64;&#100;&#x6f;&#x6d;&#97;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#46;&#x63;&#x6f;&#x6d;">&#117;&#115;&#101;&#114;&#110;&#97;&#x6d;&#x65;&#64;&#100;&#x6f;&#x6d;&#97;&#x69;&#110;&#110;&#x61;&#x6d;&#101;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>删除账户<br>#prosodyctl deluser <a href="mailto:&#x75;&#115;&#101;&#114;&#x6e;&#97;&#109;&#x65;&#64;&#x64;&#x6f;&#x6d;&#97;&#x69;&#110;&#x6e;&#97;&#109;&#101;&#46;&#x63;&#x6f;&#x6d;">&#x75;&#115;&#101;&#114;&#x6e;&#97;&#109;&#x65;&#64;&#x64;&#x6f;&#x6d;&#97;&#x69;&#110;&#x6e;&#97;&#109;&#101;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>更改用户密码<br>#prosodyctl passwd <a href="mailto:&#117;&#115;&#101;&#x72;&#x6e;&#x61;&#109;&#101;&#64;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#46;&#99;&#111;&#109;">&#117;&#115;&#101;&#x72;&#x6e;&#x61;&#109;&#101;&#64;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#46;&#99;&#111;&#109;</a></p>
 <h2 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a><strong>端口映射</strong></h2><p>XMPP服务器的著名端口为TCP/5222,XMPP服务器间互联的著名端口为TCP/5269</p>
 <p><strong>XMPP/JABBER客户端</strong></p>
 <p>只要符合XMPP协议标准的客户端都可以连接到prosody服务器。推荐开源跨平台的XMPP客户端<a href="http://psi-im.org/">Psi</a>,Psi界面使用QT开发,可以在Linux/MacOS/Windows等平台上运行。其他常见的客户端还有,<a href="http://gajim.org/downloads.php?lang=en">Gajim</a>(GTK+开发),<a href="http://pandion.im/">Pandion</a>等。</p>
@@ -7814,81 +7827,42 @@ $_SESSION\["submitid"\] += 1;
 <p><strong>flex伸缩布局</strong></p>
 <p><strong>基础概念</strong></p>
 <ul>
-<li>  布局轴线<br>传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:<br><img src="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png" alt="flex axis"><br><img src="https://developer.mozilla.org/files/3739/flex_terms.png" alt="flex axis"><br>主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。</li>
-<li>  flex布局容器(container)<br>flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:<br>[css]<br>display: flex;<br>display: -webkit-flex<br>[/css]</li>
+<li>  布局轴线<br>传统上，行内布局采用水平轴,而块布局使用垂直轴。flex伸缩布局使用了完全不同的概念。flex采用主轴(main axis)和侧轴(cross axis)来管理布局,而且主轴和侧轴的方向并不是固定的。看下面的两张图:<br><img src="http://www.w3.org/html/ig/zh/wiki/images/b/bf/Flex-direction-terms-new.zh-hans.png" alt="flex axis"><br><img src="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox/flex_terms.png" alt="flex axis"><br>主轴有可能是水平的也有可能是垂直的,而侧轴一定时垂直于主轴的。主轴的水平/垂直方向由flex-direction决定,取值row和row-reverse时,主轴是水平的。此时水平的主轴还有从左到右和从右到左之分,这依赖于writing-mode的取值。一般来讲,常见的文字都是left to right方向的,此时主轴的方向是从左到右的。第一张图就是最常见的情形,主轴水平从左到右,所有的flex子元素沿主轴排列布局。</li>
+<li>  flex布局容器(container)<br>flex布局需要一个布局容器,容器内的子元素按既定规则在容器内排列。flex支持多层嵌套布局,也就是flex容器内的子元素也可以成为其子元素的布局容器。声明一个flex布局容器十分简单:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">display: flex;</span><br><span class="line">display: -webkit-flex</span><br></pre></td></tr></table></figure>
+
+<ul>
 <li>  flex子元素(items)<br>在flex容器内部的子元素按指定的规则进行排列。直接包含在flex容器内的文本自动的被一个匿名flex item包裹,如果匿名的flex子元素只包含空白,那么这个匿名子元素是不显示的,被指定属性display:none。<br>相邻flex子元素的margin不会被折叠(collapse)</li>
 </ul>
 <p><strong>flex布局容器属性</strong></p>
-<ul>
-<li><p>  flex-direction<br>指定flex容器主轴的方向,取值:</p>
-</li>
-<li><p>  row<br>主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。</p>
-</li>
-<li><p>  row-reverse<br>主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。</p>
-</li>
-<li><p>  column<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。</p>
-</li>
-<li><p>  column-reverse<br>主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。</p>
-</li>
-<li><p>  flex-wrap<br>指定flex容器是否可以换行,取值:</p>
-</li>
-<li><p>  nowrap<br>不能换行,如果flex items过宽则溢出容器。</p>
-</li>
-<li><p>  wrap<br>flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。</p>
-</li>
-<li><p>  wrap-reverse<br>flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。</p>
-</li>
-<li><p>  justify-content<br>主轴方向上对齐flex items,取值:</p>
-</li>
-<li><p>  flex-start<br>flex items沿主轴起始方向按指定顺序排列</p>
-</li>
-<li><p>  flex-end<br>flex items靠主轴结束方向按指定顺序排列</p>
-</li>
-<li><p>  center<br>flex items在主轴方向上靠容器中间按指定顺序排列</p>
-</li>
-<li><p>  space-between<br>容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。</p>
-</li>
-<li><p>  space-around<br>容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。</p>
-</li>
-<li><p>  align-items<br>侧轴方向上对齐flex items,取值:</p>
-</li>
-<li><p>  flex-start<br>flex items沿侧轴起始方向排列。</p>
-</li>
-<li><p>  flex-end<br>flex items沿侧轴结束方向排列。</p>
-</li>
-<li><p>  center<br>flex items沿侧轴居中排列。</p>
-</li>
-<li><p>  baseline<br>flex items沿侧轴方向依照其基线排列。</p>
-</li>
-<li><p>  stretch<br>flex items沿侧轴拉伸排列。</p>
-</li>
-<li><p>  align-content<br>当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:</p>
-</li>
-<li><p>  flex-start<br>容器内的多行靠测轴起始方向并排排列。</p>
-</li>
-<li><p>  flex-end<br>容器内的多行靠侧轴结束方向并排排列。</p>
-</li>
-<li><p>  center<br>容器内的多行沿测轴居中并排排列。</p>
-</li>
-<li><p>  space-between<br>侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。</p>
-</li>
-<li><p>  space-around<br>侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。</p>
-</li>
-<li><p>  stretch<br>容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。</p>
-</li>
-<li><p>  flex-flow<br>flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:<br>[css]<br>flex-flow: flex-direction flex-wrap;<br>[/css]</p>
-</li>
-</ul>
+<p><strong><em>flex-direction</em></strong><br>指定flex容器主轴的方向,取值:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">row</span><br><span class="line">主轴为水平的,其水平上的方向依赖于writing-mode指定的值,默认为left to right,子元素按水平上的方向依次排列。</span><br><span class="line">row-reverse</span><br><span class="line">主轴为水平的,其水平上的方向与writing-mode指定的值刚好相反。比如writing-mode指定为left to right,则其主轴水平方向为从右到左。子元素则从右到左依次排列。</span><br><span class="line">column</span><br><span class="line">主轴为垂直的,其垂直上的方向与writting-mode指定的方向相同。</span><br><span class="line">column-reverse</span><br><span class="line">主轴为垂直的,其垂直上的方向与writting-mode指定的方向相反。</span><br></pre></td></tr></table></figure>
+<p><strong><em>flex-wrap</em></strong><br>指定flex容器是否可以换行,取值:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nowrap</span><br><span class="line">不能换行,如果flex items过宽则溢出容器。</span><br><span class="line">wrap</span><br><span class="line">flex items可以在容器内换行,新行的方向与writtng-mode指定的方向相同。firefox从版本28开始才支持。</span><br><span class="line">wrap-reverse</span><br><span class="line">flex items可以在容器内换行,新行的方向与writting-mode指定的方向相反。firefox从版本28开始才支持。</span><br></pre></td></tr></table></figure>
+<p><strong><em>justify-content</em></strong><br>主轴方向上对齐flex items,取值:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flex-start</span><br><span class="line">flex items沿主轴起始方向按指定顺序排列</span><br><span class="line">flex-end</span><br><span class="line">flex items靠主轴结束方向按指定顺序排列</span><br><span class="line">center</span><br><span class="line">flex items在主轴方向上靠容器中间按指定顺序排列</span><br><span class="line">space-between</span><br><span class="line">容器内剩余的空间在flex items之间平均分配,第一个flex item和最后一个flex item与容器边缘之间没有空隙。</span><br><span class="line">space-around</span><br><span class="line">容器内剩余的空间在flex items以及flex item与容器边缘之间平均分配。也就是所有flex items之间,flex item与容器边缘之间都有相同的空隙。</span><br></pre></td></tr></table></figure>
+<p><strong><em>align-items</em></strong><br>侧轴方向上对齐flex items,取值:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flex-start</span><br><span class="line">flex items沿侧轴起始方向排列。</span><br><span class="line">flex-end</span><br><span class="line">flex items沿侧轴结束方向排列。</span><br><span class="line">center</span><br><span class="line">flex items沿侧轴居中排列。</span><br><span class="line">baseline</span><br><span class="line">flex items沿侧轴方向依照其基线排列。</span><br><span class="line">stretch</span><br><span class="line">flex items沿侧轴拉伸排列。</span><br></pre></td></tr></table></figure>
+<p><strong><em>align-content</em></strong><br>当在侧轴上有空间时,如何对齐flex容器内的多行flex items,如果flex容器内只有单行子元素,则此属性无效。取值:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flex-start</span><br><span class="line">容器内的多行靠测轴起始方向并排排列。</span><br><span class="line">flex-end</span><br><span class="line">容器内的多行靠侧轴结束方向并排排列。</span><br><span class="line">center</span><br><span class="line">容器内的多行沿测轴居中并排排列。</span><br><span class="line">space-between</span><br><span class="line">侧轴方向的空白平均分配到容器内的多行之间,第一行与容器边缘以及最后一行与容器边缘之间没有空隙。</span><br><span class="line">space-around</span><br><span class="line">侧轴方向的空白平均分配到各行以及行与容器边缘之间,子元素行与行之间,已经行与容器边缘之间有相同的空隙。</span><br><span class="line">stretch</span><br><span class="line">容器内的行沿侧轴方向拉伸,自由空间平均分配到各行。</span><br></pre></td></tr></table></figure>
+<p><strong><em>flex-flow</em></strong><br>flex-flow为flex-direction和flex-wrap的组合缩写属性,其格式为:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flex-flow: flex-direction flex-wrap;</span><br></pre></td></tr></table></figure>
+
 <p><strong>flex布局子元素属性</strong></p>
 <ul>
 <li>  order<br>指定flex item在容器内的显示顺序。无需修改html源代码即可为flex item指定新的显示次序,但是语音与导航仍然使用源代码中的顺序,因此这个属性有可能会破坏文档的可访问性(accessibility)。</li>
-<li>  flex<br>指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:<br>[css]<br>flex: flex-grow flex-shrink flex-basis<br>[/css]<br>flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。<br>flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。<br>flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。<br>flex属性是这三个属性的组合缩写,也可以单独指定这些属性。</li>
+<li>  flex<br>指定子元素的扩展因子,收缩因子和伸缩基准值。其格式为:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flex: flex-grow flex-shrink flex-basis</span><br></pre></td></tr></table></figure>
+
+<p>flex-grow为正向伸展比例因子,主轴方向上的剩余空间会按比例分配到各个flex itme。初始值为0,指定负数无效。<br>flex-shrink为负向收缩比例因子,当flex items在主轴方向上将会溢出容器时,每个item会按指定的收缩比例因子进行收缩,从而防止items溢出容器。初始值为1,指定负数无效。<br>flex-basis指定子元素的伸缩基准值。在伸缩基准值的基础上,剩余空间或空间不足时按伸展比例因子或收缩比例因子进行按比例伸缩。<br>flex属性是这三个属性的组合缩写,也可以单独指定这些属性。</p>
+<ul>
 <li>  align-self<br>子元素覆盖容器的align-items属性,如果子元素在侧轴方向的margin设置为auto,则此属性被忽略。</li>
 <li>  margin<br>margin指定为auto会合并剩余的空间,可以使item水平和垂直都居中。也可以通过在容器上使用align-items:center;justify-content:center;来使item水平垂直居中。</li>
 </ul>
 <p><strong>不影响flex布局的公共属性</strong><br>float,clear,vertical-align属性对flex items没有影响。对item指定float属性只是使其display值计算为block。</p>
 <p>References:<br>[1]<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes">Using CSS flexible boxes</a><br>[2]<a href="http://hikejun.com/blog/2013/05/03/%E4%B8%80%E8%A7%88css%E5%B8%83%E5%B1%80%E6%A0%87%E5%87%86/">一览CSS布局标准</a><br>[3]<a href="http://msdn.microsoft.com/zh-cn/library/ie/hh673531(v=vs.85).aspx">Internet Explorer 10 中弹性框（“Flexbox”）布局</a><br>[4]<a href="http://msdn.microsoft.com/zh-cn/library/ie/dn265027(v=vs.85).aspx">弹性框（“Flexbox”）布局更新</a><br>[5]<a href="http://zh.learnlayout.com/">学习CSS布局</a><br>[6]<a href="http://www.w3cplus.com/css3/using-flexbox.html">使用Flexbox：新旧语法混用实现最佳浏览器兼容</a><br>[7]<a href="http://www.cnblogs.com/yansi/p/3335916.html">flexbox 布局使用体会</a><br>[8]<a href="http://dev.oupeng.com/articles/advanced-cross-browser-flexbox">跨浏览器弹性布局进阶教程</a><br>[9]<a href="http://www.w3cplus.com/css/master-new-css-layout-properties.html">Hold住CSS布局新属性</a><br>[10]<a href="http://the-echoplex.net/flexyboxes/">Flexy Boxes</a><br>[11]<a href="http://www.w3cplus.com/css3/responsive-design-of-the-future-with-flexbox.html">响应式设计的未来——Flexbox</a><br>[12]<a href="http://dev.oupeng.com/articles/flexbox-basics">伸缩布局 — 打开布局天堂之门？</a></p>
-<p>===<br><strong>[erq]</strong></p>
 ]]></content>
       <categories>
         <category>Lang</category>
@@ -7981,110 +7955,6 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
-    <title>Gerrit2安装配置</title>
-    <url>/2014/01/16/gerrit2-setup/</url>
-    <content><![CDATA[<p>Gerrit是用于Git版本控制系统的代码审核系统。</p>
-<a id="more"></a>
-<p><strong>下载</strong></p>
-<p>当前最新版本的gerrit为2.8.1,从<a href="http://gerrit-releases.storage.googleapis.com/index.html">官方下载</a>二进制war包即可。</p>
-<p><strong>数据库设置</strong></p>
-<p>gerrit可以使用H2,PostgreSQL,MySql和Oracle数据库。这个安装使用PostgreSQL数据库。</p>
-<p>创建gerrit使用的用户和数据库:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ createuser --username=postgres -RDIElPS gerrit2</span><br><span class="line">$ createdb --username=postgres -E UTF-<span class="number">8</span> -O gerrit2 reviewdb</span><br></pre></td></tr></table></figure>
-<p>这里使用PostgreSQL提供的shell工具,也可以登录PostgreSQL使用psql来CREATE ROLE和CREATE DATABASE。</p>
-<p><strong>创建用户</strong></p>
-<p>为gerrit创建单独的用户gerrit2,用于运行gerrit,但是禁止gerrit2用户登录系统。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># adduser gerrit2</span><br><span class="line"># passwd --delete gerrit2</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装</strong></p>
-<p>切换到gerrit2用户,使用gerrit2主目录下的review目录作为gerrit site的根目录</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># sudo su - gerrit2</span><br><span class="line"># java -jar gerrit-2.8.1.war init -d review</span><br></pre></td></tr></table></figure>
-
-<p>进入交互式安装,具体的安装配置如下:</p>
-<p>[bash gutter=”false”]<br><strong>* Gerrit Code Review 2.8.1<br>*</strong> 选项中大写字母为默认选项,如使用默认选项回车即可</p>
-<p>Create ‘/home/gerrit2/review’ [Y/n]? </p>
-<p><strong>* Git Repositories<br>*</strong> gerrit用于存储git仓库的目录,相对于根目录review</p>
-<p>Location of Git repositories [git]: </p>
-<p>*** SQL Database</p>
-<hr>
-<p>Database server type [h2]: postgresql<br>Server hostname [localhost]:<br>Server port [(postgresql default)]:<br>Database name [reviewdb]:<br>Database username [gerrit2]:<br>gerrit2’s password :<br> confirm password : </p>
-<p><strong>* User Authentication<br>*</strong> 使用HTTP认证,OPENID需要服务器连接互联网,还可以使用LDAP认证服务</p>
-<p>Authentication method [OPENID/?]: http<br>Get username from custom HTTP header [y/N]?<br>SSO logout URL : </p>
-<p><strong>* Email Delivery<br>*</strong> gerrit发送邮件设置,可以使用本地或远程SMTP服务器,<br>*** 只要在smtp服务器上有帐号即可。</p>
-<p>SMTP server hostname [localhost]: mail.openwares.net<br>SMTP server port [(default)]: 25<br>SMTP encryption [NONE/?]: tls<br>SMTP username [gerrit2]: <a href="mailto:&#x67;&#x65;&#114;&#x72;&#x69;&#116;&#x32;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#x65;&#115;&#46;&#110;&#x65;&#116;">&#x67;&#x65;&#114;&#x72;&#x69;&#116;&#x32;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#x65;&#115;&#46;&#110;&#x65;&#116;</a><br><a href="mailto:&#x67;&#x65;&#114;&#114;&#105;&#x74;&#50;&#x40;&#111;&#x70;&#101;&#x6e;&#x77;&#97;&#x72;&#101;&#x73;&#x2e;&#110;&#x65;&#116;">&#x67;&#x65;&#114;&#114;&#105;&#x74;&#50;&#x40;&#111;&#x70;&#101;&#x6e;&#x77;&#97;&#x72;&#101;&#x73;&#x2e;&#110;&#x65;&#116;</a>‘s password :<br> confirm password : </p>
-<p><strong>* Container Process<br>*</strong> 使用gerrit2用户运行gerrit</p>
-<p>Run as [gerrit2]:<br>Java runtime [/usr/lib/jvm/java-7-openjdk-amd64/jre]:<br>Copy gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war [Y/n]?<br>Copying gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war</p>
-<p><strong>* SSH Daemon<br>*</strong> gerrit自带的ssh服务,与服务器自身的ssh服务无关,监听默认端口即可<br>*** 注意:如要使用低于1024的特权端口,需authbind授权,否则ssh会绑定端口失败<br>Listen on address [*]:<br>Listen on port [29418]: </p>
-<p>Gerrit Code Review is not shipped with Bouncy Castle Crypto v144<br> If available, Gerrit can take advantage of features<br> in the library, but will also function without it.<br>Download and install it now [Y/n]?<br>Downloading <a href="http://www.bouncycastle.org/download/bcprov-jdk16-144.jar">http://www.bouncycastle.org/download/bcprov-jdk16-144.jar</a> … OK<br>Checksum bcprov-jdk16-144.jar OK<br>Generating SSH host key … rsa… dsa… done</p>
-<p><strong>* HTTP Daemon<br>*</strong> 这里使用nginx反向代理gerrit,所以只在loop接口监听即可。<br>*** 如果使用域名访问gerrit,最好将规范URL设置为域名形式,发送校验邮件时会使用到</p>
-<p>Behind reverse proxy [y/N]? y<br>Proxy uses SSL (https://) [y/N]?<br>Subdirectory on proxy server [/]:<br>Listen on address [*]: 127.0.0.1<br>Listen on port [8081]:<br>Canonical URL [<a href="http://127.0.0.1//]:http://review.domain.tld/">http://127.0.0.1/\]:http://review.domain.tld/</a></p>
-<p><strong>* Plugins<br>*</strong> 选装插件</p>
-<p>Install plugin download-commands version v2.8.1 [y/N]?<br>Install plugin reviewnotes version v2.8.1 [y/N]?<br>Install plugin replication version v2.8.1 [y/N]?<br>Install plugin commit-message-length-validator version v2.8.1 [y/N]? </p>
-<p>Initialized /home/gerrit2/review<br>Executing /home/gerrit2/review/bin/gerrit.sh start<br>Starting Gerrit Code Review:<br><strong>* 因为为ssh服务选在了低于1024的端口,且没有authbind端口授权,所以会出现如下错误,高于1024端口不会。<br>*</strong> FAILED<br><strong>* error: cannot start Gerrit: exit status 1<br>Waiting for server on 127.0.0.1:80 … OK<br>*</strong> 服务器上没有X,所以使用浏览器打开连接失败<br>Opening <a href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a> …FAILED<br>Open Gerrit with a JavaScript capable browser:<br> <a href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a></p>
-<p>*** 交互式安装完毕</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">**gerrit自启动服务**</span><br><span class="line"></span><br><span class="line">添加&#x2F;etc&#x2F;default&#x2F;gerritcodereview文件,其内容如下:</span><br><span class="line">GERRIT_SITE&#x3D;&#x2F;path&#x2F;to&#x2F;gerrit</span><br><span class="line"></span><br><span class="line">然后</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line"># ln -sf &#x2F;home&#x2F;gerrit2&#x2F;review&#x2F;bin&#x2F;gerrit.sh &#x2F;etc&#x2F;init.d&#x2F;gerrit</span><br><span class="line"># ln -sf &#x2F;etc&#x2F;init.d&#x2F;gerrit &#x2F;etc&#x2F;rc3.d&#x2F;S90gerrit</span><br></pre></td></tr></table></figure>
-
-<p><strong>nginx配置</strong></p>
-<p>使用nginx反向代理gerrit,并且nginx承担http认证,gerrit不会对用户进行认证。gerrit将http认证成功后第一个登录的用户作为管理员,其他用户皆为普通用户。用户第一次http认证成功后,gerrit会为用户生成同名的gerrit用户,只要进一步完善账户即可。比如添加email和公钥。管理员为其他普通用户授权。</p>
-<p><em>nginx反向代理配置</em></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server &#123; </span><br><span class="line"> listen <span class="number">80</span>;</span><br><span class="line"> server_name review.domain.tld;</span><br><span class="line"> location / &#123;</span><br><span class="line"> auth_basic <span class="string">&quot;Gerrit2 Code Review&quot;</span>;</span><br><span class="line"> auth_basic_user_file /home/gerrit2/htpasswd.conf;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line"> location /login/ &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><em>http认证文件</em></p>
-<p>使用htpasswd命令为管理云用户生成http认证配置文件,如果没有htpasswd文件需要安装apache2-utils包。</p>
-<h1 id="htpasswd-d-htpasswd-conf-admin"><a href="#htpasswd-d-htpasswd-conf-admin" class="headerlink" title="htpasswd -d htpasswd.conf admin"></a>htpasswd -d htpasswd.conf admin</h1><p>以后添加gerrit用户时,同样需要先为其配置http认证,然后用户登录后gerrit会为其自动生成用户帐号,名字与http认证名字一致。</p>
-<p><strong>账户配置</strong></p>
-<p>第一次成功登录的用户会被gerrit作为管理员用户。登录后点击右上角的”匿名懦夫”Anonymous Coward -&gt; Settings来配置账户。</p>
-<p><em>电子邮件</em></p>
-<p>选择左侧Contact Information页签,添加用户全称。然后注册新邮件Register New Email,输入管理员的邮件地址后,gerrit会向新邮箱发送<br>校验邮件,校验通过后才是有效的邮箱。这时候安装时配置Canonical URL就有用处了,校验邮件的域名部分就是Canonical URL,如果当时配置的是<a href="http://127.0.0.1/,%E9%82%A3%E8%BF%99%E6%97%B6%E5%80%99%E5%B0%B1%E8%A6%81%E6%89%8B%E5%B7%A5%E4%BF%AE%E6%94%B9%E5%9F%9F%E5%90%8D%E9%83%A8%E5%88%86%E5%86%8D%E6%89%A7%E8%A1%8C%E9%AA%8C%E8%AF%81%E4%BA%86%E3%80%82">http://127.0.0.1/,那这时候就要手工修改域名部分再执行验证了。</a></p>
-<p>发送校验邮件有时候不太方便,可以使用gerrit提供的远程ssh shell来为用户添加有效邮箱。当然首先管理员要添加了SSH公钥才能远程访问gerrit的ssh shell。<br>语法如下:</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># ssh review gerrit set-account --add-email username@openwares.net username</span><br></pre></td></tr></table></figure>
-<p>这是review是.ssh/config中配置的远程ssh主机别名。</p>
-<p>也可以通过直接修改gerrit数据库表的方式来添加用户邮件,但这活着实有点儿脏,不建议使用。</p>
-<p><em>SSH公钥</em></p>
-<p>要使用gerrit必须要提供用户的公钥。选择页面左侧的SSH Public Keys为当前用户添加公钥。直接将公钥粘贴到Add SSH Public Key框内,然后点击add即可。<br>之后用户就可以用ssh来访问gerrit了。当然无法登录服务器,只能使用gerrit提供的shell。</p>
-<p><strong>添加其他普通账户</strong></p>
-<p>如果采用http认证,那么添加其他账户时,需要现添加http认证账户。用htpasswd创建的用户时，并没有往gerrit中添加账号，只有当该用户通过web登陆gerrit服务器时,该账号才会被添加进gerrit数据库中。使用http认证方式,不要使用gerrit ssh shell命令来新增用户,通过http认证第一次认证成功的用户,gerrit会为其自动创建账户,之后只要完善账户就可以了。使用ssh shell创建的用户无法与http认证后自动创建的用户关联起来,即是二者的用户名是完全一样的。</p>
-<p>其他用户帐号的配置与管理员的配置方式一样。</p>
-<p><strong>SSH访问gerrit</strong></p>
-<p>添加ssh公钥后就可以使用ssh来使用gerrit了。</p>
-<h1 id="ssh-p-29418-i-ssh-id-rsa-gerrit-x61-100-x6d-x69-x6e-x40-114-101-118-105-101-119-46-100-111-109-97-105-110-x2e-x74-108-x64"><a href="#ssh-p-29418-i-ssh-id-rsa-gerrit-x61-100-x6d-x69-x6e-x40-114-101-118-105-101-119-46-100-111-109-97-105-110-x2e-x74-108-x64" class="headerlink" title="ssh -p 29418 -i ~/.ssh/id_rsa.gerrit &#x61;&#100;&#x6d;&#x69;&#x6e;&#x40;&#114;&#101;&#118;&#105;&#101;&#119;&#46;&#100;&#111;&#109;&#97;&#105;&#110;&#x2e;&#x74;&#108;&#x64;"></a>ssh -p 29418 -i ~/.ssh/id_rsa.gerrit <a href="mailto:&#x61;&#100;&#x6d;&#x69;&#x6e;&#x40;&#114;&#101;&#118;&#105;&#101;&#119;&#46;&#100;&#111;&#109;&#97;&#105;&#110;&#x2e;&#x74;&#108;&#x64;">&#x61;&#100;&#x6d;&#x69;&#x6e;&#x40;&#114;&#101;&#118;&#105;&#101;&#119;&#46;&#100;&#111;&#109;&#97;&#105;&#110;&#x2e;&#x74;&#108;&#x64;</a></h1><p>如果私钥名字为id_rsa可以不用使用-i参数。为ssh主机配置别名访问起来更简单,~/.ssh/config文件中添加:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Host review</span><br><span class="line"> Hostname review.domain.tld</span><br><span class="line"> User admin</span><br><span class="line"> Port <span class="number">29418</span></span><br><span class="line"> #如果私钥名字为id_rsa,可以省略下面一行</span><br><span class="line"> IdentityFile ~<span class="regexp">/.ssh/i</span>d_rsa.gerrit</span><br></pre></td></tr></table></figure>
-
-<p>这样ssh访问gerrit就可以了:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># ssh review</span><br><span class="line">**** Welcome to Gerrit Code Review ****</span><br><span class="line"></span><br><span class="line"> Hi username, you have successfully connected over SSH.</span><br><span class="line"></span><br><span class="line"> Unfortunately, interactive shells are disabled.</span><br><span class="line"> To clone a hosted Git repository, <span class="attr">use</span>:</span><br><span class="line"></span><br><span class="line"> git clone ssh:<span class="comment">//admin@review.domain.tld:29418/REPOSITORY_NAME.git</span></span><br><span class="line"></span><br><span class="line">Connection to review.tafdc.org closed.</span><br></pre></td></tr></table></figure>
-<p>查看gerrit shell帮助</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># ssh review gerrit --help</span><br><span class="line">gerrit \[COMMAND\] \[ARG ...\] \[--\] \[--help (-h)\]</span><br><span class="line"></span><br><span class="line"> -- : end <span class="keyword">of</span> options</span><br><span class="line"> --help (-h) : display <span class="built_in">this</span> help text</span><br><span class="line"></span><br><span class="line">Available commands <span class="keyword">of</span> gerrit are:</span><br><span class="line"></span><br><span class="line"> ban-commit Ban a commit <span class="keyword">from</span> a project<span class="string">&#x27;s repository</span></span><br><span class="line"><span class="string"> create-account Create a new batch/role account</span></span><br><span class="line"><span class="string"> create-group Create a new account group</span></span><br><span class="line"><span class="string"> create-project Create a new project and associated Git repository</span></span><br><span class="line"><span class="string"> flush-caches Flush some/all server caches from memory</span></span><br><span class="line"><span class="string"> gc Run Git garbage collection</span></span><br><span class="line"><span class="string"> gsql Administrative interface to active database</span></span><br><span class="line"><span class="string"> ls-groups List groups visible to the caller</span></span><br><span class="line"><span class="string"> ls-members Lists the members of a given group</span></span><br><span class="line"><span class="string"> ls-projects List projects visible to the caller</span></span><br><span class="line"><span class="string"> ls-user-refs List refs visible to a specific user</span></span><br><span class="line"><span class="string"> plugin </span></span><br><span class="line"><span class="string"> query Query the change database</span></span><br><span class="line"><span class="string"> receive-pack Standard Git server side command for client side git push</span></span><br><span class="line"><span class="string"> rename-group Rename an account group</span></span><br><span class="line"><span class="string"> review Verify, approve and/or submit one or more patch sets</span></span><br><span class="line"><span class="string"> set-account Change an account&#x27;</span>s settings</span><br><span class="line"> set-members Modifies members <span class="keyword">of</span> specific group or number <span class="keyword">of</span> groups</span><br><span class="line"> set-project Change a project<span class="string">&#x27;s settings</span></span><br><span class="line"><span class="string"> set-project-parent Change the project permissions are inherited from</span></span><br><span class="line"><span class="string"> set-reviewers Add or remove reviewers on a change</span></span><br><span class="line"><span class="string"> show-caches Display current cache statistics</span></span><br><span class="line"><span class="string"> show-connections Display active client SSH connections</span></span><br><span class="line"><span class="string"> show-queue Display the background work queues, including replication</span></span><br><span class="line"><span class="string"> stream-events Monitor events occurring in real time</span></span><br><span class="line"><span class="string"> test-submit </span></span><br><span class="line"><span class="string"> version Display gerrit version</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">See &#x27;</span>gerrit COMMAND --help<span class="string">&#x27; for more information.</span></span><br></pre></td></tr></table></figure>
-<p><strong>导入现存git代码库</strong></p>
-<p>最简单的办法就是直接将现在的git裸仓库拷贝到gerrit管理的仓库目录下</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#cp -r /path/to/old.git /path/to/gerrit/git/</span><br></pre></td></tr></table></figure>
-
-<p>或者稍微繁琐一些的方法：在gerrit中新建一个project,不要做init commit,然后将新建的仓库做为已经存在仓库的远程仓库,然后push就可以了。<br>可以设置gerrit该仓库不经过审核,就可以直接将整个仓库push过来了。</p>
-<p><strong>gitweb集成</strong></p>
-<p>debian系统只要安装了gitweb包, gerrit就可以自动关联到gitweb,通过gitweb来浏览git仓库。</p>
-<h1 id="apt-get-install-gitweb"><a href="#apt-get-install-gitweb" class="headerlink" title="apt-get install gitweb"></a>apt-get install gitweb</h1><p><strong>其他问题</strong></p>
-<p><strong>SMTP证书</strong></p>
-<p>如果为gerrit配置的SMTP服务器是SSL/TLS加密的,并且SMTP服务器的证书是自签的,当gerrit试图发送邮件时会抛出异常:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sun.security.validator.ValidatorException: PKIX path building failed: </span><br><span class="line">sun.security.provider.certpath.SunCertPathBuilderException: </span><br><span class="line">unable to find valid certification path to requested target</span><br></pre></td></tr></table></figure>
-
-<p>因为自签的证书是不受信任的,最简单的解决办法就是告诉gerrit不要校验STMP服务的证书:</p>
-<p>编辑~/review/etc/gerrit.config,添加:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">\[sendmail\]</span><br><span class="line"> sslverify=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<p>或者更复杂的解决办法,将SMTP的SSL证书添加到JAVA的truststore里,参考[3]里有对此问题的详细描述。</p>
-<p><strong>Sign Out</strong></p>
-<p>使用http认证登录gerrit后,并无法通过点击”Sign Out”退出登录,只能通过直接关闭浏览器窗口来退出当前会话。</p>
-<p><strong>如果需要重新安装gerrit,记得将数据库drop掉再重新创建。</strong></p>
-<p>References:<br>[1]<a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/index.html">Gerrit Code Review for Git</a><br>[2]<a href="http://blog.csdn.net/benkaoya/article/details/8680886">烤鸭的gerrit使用总结</a><br>[3]<a href="http://blog.163.com/guaiguai_family/blog/static/20078414520124224465323/">代码评审系统 ReviewBoard 和 Gerrit (下)</a> </p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Gerrit工作流</title>
     <url>/2014/01/21/gerrit-workflow/</url>
     <content><![CDATA[<a id="more"></a>
@@ -8138,6 +8008,110 @@ $_SESSION\["submitid"\] += 1;
 
 <p>一般来说为了devel分支的整洁,建议先在个人分支工作,等工作比较成熟后再合并回devel分支,然后再向gerrit服务器推送changes。</p>
 <p>References:<br>[1]<a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/user-upload.html">Gerrit Code Review - Uploading Changes</a><br>[2]<a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/user-changeid.html">Gerrit Code Review - Change-Ids</a></p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Gerrit2安装配置</title>
+    <url>/2014/01/16/gerrit2-setup/</url>
+    <content><![CDATA[<p>Gerrit是用于Git版本控制系统的代码审核系统。</p>
+<a id="more"></a>
+<p><strong>下载</strong></p>
+<p>当前最新版本的gerrit为2.8.1,从<a href="http://gerrit-releases.storage.googleapis.com/index.html">官方下载</a>二进制war包即可。</p>
+<p><strong>数据库设置</strong></p>
+<p>gerrit可以使用H2,PostgreSQL,MySql和Oracle数据库。这个安装使用PostgreSQL数据库。</p>
+<p>创建gerrit使用的用户和数据库:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ createuser --username=postgres -RDIElPS gerrit2</span><br><span class="line">$ createdb --username=postgres -E UTF-<span class="number">8</span> -O gerrit2 reviewdb</span><br></pre></td></tr></table></figure>
+<p>这里使用PostgreSQL提供的shell工具,也可以登录PostgreSQL使用psql来CREATE ROLE和CREATE DATABASE。</p>
+<p><strong>创建用户</strong></p>
+<p>为gerrit创建单独的用户gerrit2,用于运行gerrit,但是禁止gerrit2用户登录系统。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># adduser gerrit2</span><br><span class="line"># passwd --delete gerrit2</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<p>切换到gerrit2用户,使用gerrit2主目录下的review目录作为gerrit site的根目录</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># sudo su - gerrit2</span><br><span class="line"># java -jar gerrit-2.8.1.war init -d review</span><br></pre></td></tr></table></figure>
+
+<p>进入交互式安装,具体的安装配置如下:</p>
+<p>[bash gutter=”false”]<br><strong>* Gerrit Code Review 2.8.1<br>*</strong> 选项中大写字母为默认选项,如使用默认选项回车即可</p>
+<p>Create ‘/home/gerrit2/review’ [Y/n]? </p>
+<p><strong>* Git Repositories<br>*</strong> gerrit用于存储git仓库的目录,相对于根目录review</p>
+<p>Location of Git repositories [git]: </p>
+<p>*** SQL Database</p>
+<hr>
+<p>Database server type [h2]: postgresql<br>Server hostname [localhost]:<br>Server port [(postgresql default)]:<br>Database name [reviewdb]:<br>Database username [gerrit2]:<br>gerrit2’s password :<br> confirm password : </p>
+<p><strong>* User Authentication<br>*</strong> 使用HTTP认证,OPENID需要服务器连接互联网,还可以使用LDAP认证服务</p>
+<p>Authentication method [OPENID/?]: http<br>Get username from custom HTTP header [y/N]?<br>SSO logout URL : </p>
+<p><strong>* Email Delivery<br>*</strong> gerrit发送邮件设置,可以使用本地或远程SMTP服务器,<br>*** 只要在smtp服务器上有帐号即可。</p>
+<p>SMTP server hostname [localhost]: mail.openwares.net<br>SMTP server port [(default)]: 25<br>SMTP encryption [NONE/?]: tls<br>SMTP username [gerrit2]: <a href="mailto:&#x67;&#101;&#114;&#x72;&#105;&#x74;&#50;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#97;&#x72;&#101;&#115;&#x2e;&#110;&#101;&#116;">&#x67;&#101;&#114;&#x72;&#105;&#x74;&#50;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#97;&#x72;&#101;&#115;&#x2e;&#110;&#101;&#116;</a><br><a href="mailto:&#x67;&#x65;&#114;&#x72;&#x69;&#x74;&#50;&#64;&#x6f;&#x70;&#x65;&#110;&#119;&#x61;&#x72;&#x65;&#115;&#x2e;&#x6e;&#101;&#116;">&#x67;&#x65;&#114;&#x72;&#x69;&#x74;&#50;&#64;&#x6f;&#x70;&#x65;&#110;&#119;&#x61;&#x72;&#x65;&#115;&#x2e;&#x6e;&#101;&#116;</a>‘s password :<br> confirm password : </p>
+<p><strong>* Container Process<br>*</strong> 使用gerrit2用户运行gerrit</p>
+<p>Run as [gerrit2]:<br>Java runtime [/usr/lib/jvm/java-7-openjdk-amd64/jre]:<br>Copy gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war [Y/n]?<br>Copying gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war</p>
+<p><strong>* SSH Daemon<br>*</strong> gerrit自带的ssh服务,与服务器自身的ssh服务无关,监听默认端口即可<br>*** 注意:如要使用低于1024的特权端口,需authbind授权,否则ssh会绑定端口失败<br>Listen on address [*]:<br>Listen on port [29418]: </p>
+<p>Gerrit Code Review is not shipped with Bouncy Castle Crypto v144<br> If available, Gerrit can take advantage of features<br> in the library, but will also function without it.<br>Download and install it now [Y/n]?<br>Downloading <a href="http://www.bouncycastle.org/download/bcprov-jdk16-144.jar">http://www.bouncycastle.org/download/bcprov-jdk16-144.jar</a> … OK<br>Checksum bcprov-jdk16-144.jar OK<br>Generating SSH host key … rsa… dsa… done</p>
+<p><strong>* HTTP Daemon<br>*</strong> 这里使用nginx反向代理gerrit,所以只在loop接口监听即可。<br>*** 如果使用域名访问gerrit,最好将规范URL设置为域名形式,发送校验邮件时会使用到</p>
+<p>Behind reverse proxy [y/N]? y<br>Proxy uses SSL (https://) [y/N]?<br>Subdirectory on proxy server [/]:<br>Listen on address [*]: 127.0.0.1<br>Listen on port [8081]:<br>Canonical URL [<a href="http://127.0.0.1//]:http://review.domain.tld/">http://127.0.0.1/\]:http://review.domain.tld/</a></p>
+<p><strong>* Plugins<br>*</strong> 选装插件</p>
+<p>Install plugin download-commands version v2.8.1 [y/N]?<br>Install plugin reviewnotes version v2.8.1 [y/N]?<br>Install plugin replication version v2.8.1 [y/N]?<br>Install plugin commit-message-length-validator version v2.8.1 [y/N]? </p>
+<p>Initialized /home/gerrit2/review<br>Executing /home/gerrit2/review/bin/gerrit.sh start<br>Starting Gerrit Code Review:<br><strong>* 因为为ssh服务选在了低于1024的端口,且没有authbind端口授权,所以会出现如下错误,高于1024端口不会。<br>*</strong> FAILED<br><strong>* error: cannot start Gerrit: exit status 1<br>Waiting for server on 127.0.0.1:80 … OK<br>*</strong> 服务器上没有X,所以使用浏览器打开连接失败<br>Opening <a href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a> …FAILED<br>Open Gerrit with a JavaScript capable browser:<br> <a href="http://127.0.0.1/#/admin/projects/">http://127.0.0.1/#/admin/projects/</a></p>
+<p>*** 交互式安装完毕</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">**gerrit自启动服务**</span><br><span class="line"></span><br><span class="line">添加&#x2F;etc&#x2F;default&#x2F;gerritcodereview文件,其内容如下:</span><br><span class="line">GERRIT_SITE&#x3D;&#x2F;path&#x2F;to&#x2F;gerrit</span><br><span class="line"></span><br><span class="line">然后</span><br><span class="line"></span><br><span class="line">&#96;&#96;&#96;js</span><br><span class="line"># ln -sf &#x2F;home&#x2F;gerrit2&#x2F;review&#x2F;bin&#x2F;gerrit.sh &#x2F;etc&#x2F;init.d&#x2F;gerrit</span><br><span class="line"># ln -sf &#x2F;etc&#x2F;init.d&#x2F;gerrit &#x2F;etc&#x2F;rc3.d&#x2F;S90gerrit</span><br></pre></td></tr></table></figure>
+
+<p><strong>nginx配置</strong></p>
+<p>使用nginx反向代理gerrit,并且nginx承担http认证,gerrit不会对用户进行认证。gerrit将http认证成功后第一个登录的用户作为管理员,其他用户皆为普通用户。用户第一次http认证成功后,gerrit会为用户生成同名的gerrit用户,只要进一步完善账户即可。比如添加email和公钥。管理员为其他普通用户授权。</p>
+<p><em>nginx反向代理配置</em></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">server &#123; </span><br><span class="line"> listen <span class="number">80</span>;</span><br><span class="line"> server_name review.domain.tld;</span><br><span class="line"> location / &#123;</span><br><span class="line"> auth_basic <span class="string">&quot;Gerrit2 Code Review&quot;</span>;</span><br><span class="line"> auth_basic_user_file /home/gerrit2/htpasswd.conf;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line"> location /login/ &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//127.0.0.1:8081;</span></span><br><span class="line"> proxy_set_header X-Forwarded-For $remote_addr;</span><br><span class="line"> proxy_set_header Host $host;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><em>http认证文件</em></p>
+<p>使用htpasswd命令为管理云用户生成http认证配置文件,如果没有htpasswd文件需要安装apache2-utils包。</p>
+<h1 id="htpasswd-d-htpasswd-conf-admin"><a href="#htpasswd-d-htpasswd-conf-admin" class="headerlink" title="htpasswd -d htpasswd.conf admin"></a>htpasswd -d htpasswd.conf admin</h1><p>以后添加gerrit用户时,同样需要先为其配置http认证,然后用户登录后gerrit会为其自动生成用户帐号,名字与http认证名字一致。</p>
+<p><strong>账户配置</strong></p>
+<p>第一次成功登录的用户会被gerrit作为管理员用户。登录后点击右上角的”匿名懦夫”Anonymous Coward -&gt; Settings来配置账户。</p>
+<p><em>电子邮件</em></p>
+<p>选择左侧Contact Information页签,添加用户全称。然后注册新邮件Register New Email,输入管理员的邮件地址后,gerrit会向新邮箱发送<br>校验邮件,校验通过后才是有效的邮箱。这时候安装时配置Canonical URL就有用处了,校验邮件的域名部分就是Canonical URL,如果当时配置的是<a href="http://127.0.0.1/,%E9%82%A3%E8%BF%99%E6%97%B6%E5%80%99%E5%B0%B1%E8%A6%81%E6%89%8B%E5%B7%A5%E4%BF%AE%E6%94%B9%E5%9F%9F%E5%90%8D%E9%83%A8%E5%88%86%E5%86%8D%E6%89%A7%E8%A1%8C%E9%AA%8C%E8%AF%81%E4%BA%86%E3%80%82">http://127.0.0.1/,那这时候就要手工修改域名部分再执行验证了。</a></p>
+<p>发送校验邮件有时候不太方便,可以使用gerrit提供的远程ssh shell来为用户添加有效邮箱。当然首先管理员要添加了SSH公钥才能远程访问gerrit的ssh shell。<br>语法如下:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># ssh review gerrit set-account --add-email username@openwares.net username</span><br></pre></td></tr></table></figure>
+<p>这是review是.ssh/config中配置的远程ssh主机别名。</p>
+<p>也可以通过直接修改gerrit数据库表的方式来添加用户邮件,但这活着实有点儿脏,不建议使用。</p>
+<p><em>SSH公钥</em></p>
+<p>要使用gerrit必须要提供用户的公钥。选择页面左侧的SSH Public Keys为当前用户添加公钥。直接将公钥粘贴到Add SSH Public Key框内,然后点击add即可。<br>之后用户就可以用ssh来访问gerrit了。当然无法登录服务器,只能使用gerrit提供的shell。</p>
+<p><strong>添加其他普通账户</strong></p>
+<p>如果采用http认证,那么添加其他账户时,需要现添加http认证账户。用htpasswd创建的用户时，并没有往gerrit中添加账号，只有当该用户通过web登陆gerrit服务器时,该账号才会被添加进gerrit数据库中。使用http认证方式,不要使用gerrit ssh shell命令来新增用户,通过http认证第一次认证成功的用户,gerrit会为其自动创建账户,之后只要完善账户就可以了。使用ssh shell创建的用户无法与http认证后自动创建的用户关联起来,即是二者的用户名是完全一样的。</p>
+<p>其他用户帐号的配置与管理员的配置方式一样。</p>
+<p><strong>SSH访问gerrit</strong></p>
+<p>添加ssh公钥后就可以使用ssh来使用gerrit了。</p>
+<h1 id="ssh-p-29418-i-ssh-id-rsa-gerrit-97-100-109-105-x6e-64-114-101-118-x69-x65-x77-x2e-x64-111-x6d-97-105-x6e-46-116-x6c-x64"><a href="#ssh-p-29418-i-ssh-id-rsa-gerrit-97-100-109-105-x6e-64-114-101-118-x69-x65-x77-x2e-x64-111-x6d-97-105-x6e-46-116-x6c-x64" class="headerlink" title="ssh -p 29418 -i ~/.ssh/id_rsa.gerrit &#97;&#100;&#109;&#105;&#x6e;&#64;&#114;&#101;&#118;&#x69;&#x65;&#x77;&#x2e;&#x64;&#111;&#x6d;&#97;&#105;&#x6e;&#46;&#116;&#x6c;&#x64;"></a>ssh -p 29418 -i ~/.ssh/id_rsa.gerrit <a href="mailto:&#97;&#100;&#109;&#105;&#x6e;&#64;&#114;&#101;&#118;&#x69;&#x65;&#x77;&#x2e;&#x64;&#111;&#x6d;&#97;&#105;&#x6e;&#46;&#116;&#x6c;&#x64;">&#97;&#100;&#109;&#105;&#x6e;&#64;&#114;&#101;&#118;&#x69;&#x65;&#x77;&#x2e;&#x64;&#111;&#x6d;&#97;&#105;&#x6e;&#46;&#116;&#x6c;&#x64;</a></h1><p>如果私钥名字为id_rsa可以不用使用-i参数。为ssh主机配置别名访问起来更简单,~/.ssh/config文件中添加:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Host review</span><br><span class="line"> Hostname review.domain.tld</span><br><span class="line"> User admin</span><br><span class="line"> Port <span class="number">29418</span></span><br><span class="line"> #如果私钥名字为id_rsa,可以省略下面一行</span><br><span class="line"> IdentityFile ~<span class="regexp">/.ssh/i</span>d_rsa.gerrit</span><br></pre></td></tr></table></figure>
+
+<p>这样ssh访问gerrit就可以了:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># ssh review</span><br><span class="line">**** Welcome to Gerrit Code Review ****</span><br><span class="line"></span><br><span class="line"> Hi username, you have successfully connected over SSH.</span><br><span class="line"></span><br><span class="line"> Unfortunately, interactive shells are disabled.</span><br><span class="line"> To clone a hosted Git repository, <span class="attr">use</span>:</span><br><span class="line"></span><br><span class="line"> git clone ssh:<span class="comment">//admin@review.domain.tld:29418/REPOSITORY_NAME.git</span></span><br><span class="line"></span><br><span class="line">Connection to review.tafdc.org closed.</span><br></pre></td></tr></table></figure>
+<p>查看gerrit shell帮助</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># ssh review gerrit --help</span><br><span class="line">gerrit \[COMMAND\] \[ARG ...\] \[--\] \[--help (-h)\]</span><br><span class="line"></span><br><span class="line"> -- : end <span class="keyword">of</span> options</span><br><span class="line"> --help (-h) : display <span class="built_in">this</span> help text</span><br><span class="line"></span><br><span class="line">Available commands <span class="keyword">of</span> gerrit are:</span><br><span class="line"></span><br><span class="line"> ban-commit Ban a commit <span class="keyword">from</span> a project<span class="string">&#x27;s repository</span></span><br><span class="line"><span class="string"> create-account Create a new batch/role account</span></span><br><span class="line"><span class="string"> create-group Create a new account group</span></span><br><span class="line"><span class="string"> create-project Create a new project and associated Git repository</span></span><br><span class="line"><span class="string"> flush-caches Flush some/all server caches from memory</span></span><br><span class="line"><span class="string"> gc Run Git garbage collection</span></span><br><span class="line"><span class="string"> gsql Administrative interface to active database</span></span><br><span class="line"><span class="string"> ls-groups List groups visible to the caller</span></span><br><span class="line"><span class="string"> ls-members Lists the members of a given group</span></span><br><span class="line"><span class="string"> ls-projects List projects visible to the caller</span></span><br><span class="line"><span class="string"> ls-user-refs List refs visible to a specific user</span></span><br><span class="line"><span class="string"> plugin </span></span><br><span class="line"><span class="string"> query Query the change database</span></span><br><span class="line"><span class="string"> receive-pack Standard Git server side command for client side git push</span></span><br><span class="line"><span class="string"> rename-group Rename an account group</span></span><br><span class="line"><span class="string"> review Verify, approve and/or submit one or more patch sets</span></span><br><span class="line"><span class="string"> set-account Change an account&#x27;</span>s settings</span><br><span class="line"> set-members Modifies members <span class="keyword">of</span> specific group or number <span class="keyword">of</span> groups</span><br><span class="line"> set-project Change a project<span class="string">&#x27;s settings</span></span><br><span class="line"><span class="string"> set-project-parent Change the project permissions are inherited from</span></span><br><span class="line"><span class="string"> set-reviewers Add or remove reviewers on a change</span></span><br><span class="line"><span class="string"> show-caches Display current cache statistics</span></span><br><span class="line"><span class="string"> show-connections Display active client SSH connections</span></span><br><span class="line"><span class="string"> show-queue Display the background work queues, including replication</span></span><br><span class="line"><span class="string"> stream-events Monitor events occurring in real time</span></span><br><span class="line"><span class="string"> test-submit </span></span><br><span class="line"><span class="string"> version Display gerrit version</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">See &#x27;</span>gerrit COMMAND --help<span class="string">&#x27; for more information.</span></span><br></pre></td></tr></table></figure>
+<p><strong>导入现存git代码库</strong></p>
+<p>最简单的办法就是直接将现在的git裸仓库拷贝到gerrit管理的仓库目录下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#cp -r /path/to/old.git /path/to/gerrit/git/</span><br></pre></td></tr></table></figure>
+
+<p>或者稍微繁琐一些的方法：在gerrit中新建一个project,不要做init commit,然后将新建的仓库做为已经存在仓库的远程仓库,然后push就可以了。<br>可以设置gerrit该仓库不经过审核,就可以直接将整个仓库push过来了。</p>
+<p><strong>gitweb集成</strong></p>
+<p>debian系统只要安装了gitweb包, gerrit就可以自动关联到gitweb,通过gitweb来浏览git仓库。</p>
+<h1 id="apt-get-install-gitweb"><a href="#apt-get-install-gitweb" class="headerlink" title="apt-get install gitweb"></a>apt-get install gitweb</h1><p><strong>其他问题</strong></p>
+<p><strong>SMTP证书</strong></p>
+<p>如果为gerrit配置的SMTP服务器是SSL/TLS加密的,并且SMTP服务器的证书是自签的,当gerrit试图发送邮件时会抛出异常:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sun.security.validator.ValidatorException: PKIX path building failed: </span><br><span class="line">sun.security.provider.certpath.SunCertPathBuilderException: </span><br><span class="line">unable to find valid certification path to requested target</span><br></pre></td></tr></table></figure>
+
+<p>因为自签的证书是不受信任的,最简单的解决办法就是告诉gerrit不要校验STMP服务的证书:</p>
+<p>编辑~/review/etc/gerrit.config,添加:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">\[sendmail\]</span><br><span class="line"> sslverify=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>或者更复杂的解决办法,将SMTP的SSL证书添加到JAVA的truststore里,参考[3]里有对此问题的详细描述。</p>
+<p><strong>Sign Out</strong></p>
+<p>使用http认证登录gerrit后,并无法通过点击”Sign Out”退出登录,只能通过直接关闭浏览器窗口来退出当前会话。</p>
+<p><strong>如果需要重新安装gerrit,记得将数据库drop掉再重新创建。</strong></p>
+<p>References:<br>[1]<a href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/index.html">Gerrit Code Review for Git</a><br>[2]<a href="http://blog.csdn.net/benkaoya/article/details/8680886">烤鸭的gerrit使用总结</a><br>[3]<a href="http://blog.163.com/guaiguai_family/blog/static/20078414520124224465323/">代码评审系统 ReviewBoard 和 Gerrit (下)</a> </p>
 <p><strong>===<br>[erq]</strong></p>
 ]]></content>
       <categories>
@@ -8877,6 +8851,24 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
+    <title>gnome shell firefox 自带图标无法显示</title>
+    <url>/2013/09/12/gnome-shell-firefox-icon-disapper/</url>
+    <content><![CDATA[<p>最近手动更新firefox后，无论如何无法设置启动程序图标为firefox自带的图标，使用系统自带图标则没问题。</p>
+<a id="more"></a>
+<p>debian版本为jessie,firefox版本为23.0.1</p>
+<p>将firefox自带图标拷贝到系统图标目录</p>
+<h1 id="cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps"><a href="#cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps" class="headerlink" title="cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/"></a>cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/</h1><p>通过更新图标缓存，注册主题图标</p>
+<h1 id="gtk-update-icon-cache-usr-share-icons-hicolor"><a href="#gtk-update-icon-cache-usr-share-icons-hicolor" class="headerlink" title="gtk-update-icon-cache /usr/share/icons/hicolor/"></a>gtk-update-icon-cache /usr/share/icons/hicolor/</h1><p>gtk-update-icon-cache: Cache file created successfully.</p>
+<p>然后再设置firefox图标为/usr/share/icons/hicolor/128x128/apps/mozicon128.png则可以了。</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>GNOME环境X应用程序自启动</title>
     <url>/2015/11/22/gnome-x-app-autostart/</url>
     <content><![CDATA[<a id="more"></a>
@@ -8890,24 +8882,6 @@ $_SESSION\["submitid"\] += 1;
 <p>或者使用GNOME Tweak Tool -&gt; Startup Applications选择一下就可以了。</p>
 <p>References:<br>[1]<a href="https://wiki.archlinux.org/index.php/Autostarting">Autostarting</a></p>
 <p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gnome shell firefox 自带图标无法显示</title>
-    <url>/2013/09/12/gnome-shell-firefox-icon-disapper/</url>
-    <content><![CDATA[<p>最近手动更新firefox后，无论如何无法设置启动程序图标为firefox自带的图标，使用系统自带图标则没问题。</p>
-<a id="more"></a>
-<p>debian版本为jessie,firefox版本为23.0.1</p>
-<p>将firefox自带图标拷贝到系统图标目录</p>
-<h1 id="cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps"><a href="#cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps" class="headerlink" title="cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/"></a>cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/</h1><p>通过更新图标缓存，注册主题图标</p>
-<h1 id="gtk-update-icon-cache-usr-share-icons-hicolor"><a href="#gtk-update-icon-cache-usr-share-icons-hicolor" class="headerlink" title="gtk-update-icon-cache /usr/share/icons/hicolor/"></a>gtk-update-icon-cache /usr/share/icons/hicolor/</h1><p>gtk-update-icon-cache: Cache file created successfully.</p>
-<p>然后再设置firefox图标为/usr/share/icons/hicolor/128x128/apps/mozicon128.png则可以了。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -12247,7 +12221,7 @@ if (!document.all) {
     <content><![CDATA[<p>查看linux distribution版本信息的命令有以下几个</p>
 <a id="more"></a>
 <p>系统信息<br>1 $uname -a<br>2 Linux debian 2.6.32-5-686 #1 SMP Wed Jan 12 04:01:41 UTC 2011 i686 GNU/Linux  </p>
-<p>详细版本<br>1 $cat /proc/version<br>2 Linux version 2.6.32-5-686 (Debian 2.6.32-30) (<a href="mailto:&#98;&#101;&#110;&#64;&#100;&#101;&#x63;&#97;&#100;&#101;&#110;&#116;&#x2e;&#111;&#114;&#x67;&#46;&#x75;&#107;">&#98;&#101;&#110;&#64;&#100;&#101;&#x63;&#97;&#100;&#101;&#110;&#116;&#x2e;&#111;&#114;&#x67;&#46;&#x75;&#107;</a>) (gcc version 4.3.5 (Debian 4.3.5-4) ) #1 SMP Wed Jan 12 04:01:41 UTC 2011  </p>
+<p>详细版本<br>1 $cat /proc/version<br>2 Linux version 2.6.32-5-686 (Debian 2.6.32-30) (<a href="mailto:&#98;&#x65;&#110;&#64;&#100;&#x65;&#x63;&#97;&#100;&#101;&#110;&#x74;&#x2e;&#111;&#114;&#103;&#46;&#x75;&#x6b;">&#98;&#x65;&#110;&#64;&#100;&#x65;&#x63;&#97;&#100;&#101;&#110;&#x74;&#x2e;&#111;&#114;&#103;&#46;&#x75;&#x6b;</a>) (gcc version 4.3.5 (Debian 4.3.5-4) ) #1 SMP Wed Jan 12 04:01:41 UTC 2011  </p>
 <p>发行版版本信息<br>1 $lsb_release -a<br>2 No LSB modules are available.<br>3 Distributor ID: Debian<br>4 Description:    Debian GNU/Linux 6.0 (squeeze)<br>5 Release:        6.0<br>6 Codename:       squeeze  </p>
 <p><strong>UPDATE(09/19/2013):</strong><br>还有一个配置文件有发行版本信息<br>$ cat /etc/issue<br>Debian GNU/Linux jessie/sid \n \l</p>
 ]]></content>
@@ -12663,7 +12637,7 @@ if (!document.all) {
     <url>/2019/11/11/lxd-clustering-using-ceph-storage-backend/</url>
     <content><![CDATA[<a id="more"></a>
 <p>lxd集群使用ceph后端共享存储，多个host共同管理一组容器，可以提高lxd容器的可用性，但当前版本的lxd集群功能还不够完善，不支持lxd容器在集群host之间live migration，故障迁移支持也不完善。<br>lxd集群部署ceph后端，数据丢失的风险大大降低，集群中host掉线，可以将lxd容器快速移动到其他host继续提供服务。</p>
-<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不用的集群要使用不用的ceph pool。</p>
+<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不同的集群要使用不同的ceph pool。</p>
 <p><strong>其他节点配置</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">What name should be used to identify <span class="built_in">this</span> node <span class="keyword">in</span> the cluster? \[<span class="keyword">default</span>=web\]: </span><br><span class="line">What IP address or DNS name should be used to reach <span class="built_in">this</span> node? \[<span class="keyword">default</span>=<span class="number">10.100</span><span class="number">.0</span><span class="number">.80</span>\]: </span><br><span class="line">Are you joining an existing cluster? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">IP address or FQDN <span class="keyword">of</span> an existing cluster node: <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span></span><br><span class="line">Cluster fingerprint: 79ec4bdfa32501a664b1adde03a2296f7d663a43676a422781668df1bec2ee12</span><br><span class="line">You can validate <span class="built_in">this</span> fingerprint by running <span class="string">&quot;lxc info&quot;</span> locally on an existing node.</span><br><span class="line">Is <span class="built_in">this</span> the correct fingerprint? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">Cluster trust password: </span><br><span class="line">All existing data is lost when joining a cluster, <span class="keyword">continue</span>? (yes/no) \[<span class="keyword">default</span>=no\] yes</span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
 
@@ -12790,6 +12764,10 @@ if (!document.all) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ lxc exec host-a:bst -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
 <p>这就是在本地管理远程lxd服务器的容器实例了。</p>
 <p>后面继续探索…</p>
+<p><strong>Updated(03/16/2022):</strong></p>
+<p>如果使用zfs后端存储，OpenZFS(zfs-dmks)更新后需要将lxd更新到4.0.x稳定版，不然会有各种问题。</p>
+<p>更新到当前的LTS Stable Release 4.0.x</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo snap refresh lxd --channel=<span class="number">4.0</span>/stable</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -16546,7 +16524,7 @@ values (#{name,jdbcType=CHAR}, #{sex,jdbcType=CHAR})
 <p>一个域要么是本地域,要么是虚拟域;一个虚拟域要么是虚拟别名域,要么是虚拟邮箱域。也就是<strong>本地域,虚拟别名域,虚拟邮箱域是互斥的</strong>。</p>
 <p>那么一个postfix邮件系统要添加一个额外的域,有这么几种选择,几个实例如下：</p>
 <ul>
-<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#x69;&#x6e;&#102;&#x6f;&#64;&#x64;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#108;&#100;">&#x69;&#x6e;&#102;&#x6f;&#64;&#x64;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#108;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
+<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#110;&#x66;&#111;&#x40;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#x31;&#x2e;&#x74;&#x6c;&#x64;">&#105;&#110;&#x66;&#111;&#x40;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#x31;&#x2e;&#x74;&#x6c;&#x64;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
 <li>加入虚拟别名域<br>/etc/postfix/main.cf:<figure class="highlight"><table><tr><td class="code"><pre><span class="line"> virtual_alias_domains = example.com</span><br><span class="line"> virtual_alias_maps = hash:<span class="regexp">/etc/</span>postfix/virtual</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"> /etc/postfix/virtual:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"> postmaster@example.com postmaster</span><br><span class="line"> info@example.com joe</span><br><span class="line"> sales@example.com jane</span><br><span class="line"> # Uncomment entry below to implement a catch-all address</span><br><span class="line"> # @example.com jim #example.com域上的所有其他用户的邮件都发送给jim,这样可能会有垃圾邮件的困扰</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -16573,7 +16551,7 @@ values (#{name,jdbcType=CHAR}, #{sex,jdbcType=CHAR})
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line"># groupadd -g 5000 vmail</span><br><span class="line"># useradd -g vmail -u 5000 vmail -d /var/mail/vmail -m</span><br></pre></td></tr></table></figure>
 <p>在users表里添加用户</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mysql&gt; insert into users values (<span class="string">&#x27;test@openwares.net&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>就可以使用<a href="mailto:&#116;&#101;&#115;&#x74;&#x40;&#111;&#112;&#101;&#x6e;&#119;&#97;&#114;&#x65;&#x73;&#46;&#110;&#x65;&#x74;">&#116;&#101;&#115;&#x74;&#x40;&#111;&#112;&#101;&#x6e;&#119;&#97;&#114;&#x65;&#x73;&#46;&#110;&#x65;&#x74;</a>邮箱了。</p>
+<p>就可以使用<a href="mailto:&#x74;&#101;&#115;&#116;&#64;&#111;&#x70;&#101;&#110;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#x65;&#x74;">&#x74;&#101;&#115;&#116;&#64;&#111;&#x70;&#101;&#110;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#x65;&#x74;</a>邮箱了。</p>
 <p><strong>别名设置</strong></p>
 <p>/etc/aliases为postfix的本地别名数据库,可以为本地收件人重定向邮件，这种重定向由本地交付代理(local delivery agent)处理。可以添加一个重定向将root重定向到自己的用户,从而所有的系统邮件都会发给你。比如在文件中添加如下行:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root: yourname</span><br></pre></td></tr></table></figure>
@@ -16594,7 +16572,7 @@ values (#{name,jdbcType=CHAR}, #{sex,jdbcType=CHAR})
 <p>postfix也可以通过配置直接使用465端口提供加密连接,而不是使用STARTSSL。部分客户端依赖于这种方式,但这种方式是不鼓励使用的。<br>postfix使用wrapper来支持smtps。</p>
 <p><strong>配额quota</strong><br>可以使用<a href="http://vda.sourceforge.net/">VDA</a>添加配额支持,需要给postfix打补丁。</p>
 <p><strong>UPDATE(01/24/2014):</strong><br>在user表中添加一个用户帐号后,用户的虚拟邮箱目录是尚未建立的,只有当用户收到第一封邮件时,postfix才会为用户建立maildir目录。之后才能使用imap登录用户邮箱,否则imap会有错误提示:</p>
-<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#x78;&#x78;&#120;&#x40;&#111;&#x70;&#x65;&#110;&#x77;&#97;&#x72;&#101;&#x73;&#x2e;&#110;&#101;&#x74;">&#x78;&#x78;&#120;&#x40;&#111;&#x70;&#x65;&#110;&#x77;&#97;&#x72;&#101;&#x73;&#x2e;&#110;&#101;&#x74;</a>: No such file or directory</p>
+<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#x78;&#120;&#x78;&#x40;&#x6f;&#x70;&#101;&#x6e;&#119;&#x61;&#114;&#x65;&#115;&#46;&#110;&#101;&#x74;">&#x78;&#120;&#x78;&#x40;&#x6f;&#x70;&#101;&#x6e;&#119;&#x61;&#114;&#x65;&#115;&#46;&#110;&#101;&#x74;</a>: No such file or directory</p>
 <p>所以新增邮箱用户后,立马向其发送一个welcome邮件吧。</p>
 <p>参考:<br><a href="http://www.postfix.org/BASIC_CONFIGURATION_README.html">Postfix Basic Configuration</a><br><a href="http://www.postfix.org/VIRTUAL_README.html">Postfix Virtual Domain Hosting Howto</a><br><a href="http://www.postfix.org/DATABASE_README.html">Postfix Lookup Table Overview</a><br><a href="http://www.howtoforge.com/virtual-users-and-domains-with-postfix-courier-mysql-and-squirrelmail-ubuntu-12.04-lts">Virtual Users And Domains With Postfix, Courier, MySQL And SquirrelMail (Ubuntu 12.04 LTS)</a><br><a href="http://www.postfix.org/TLS_README.html">Postfix TLS Support</a><br><a href="https://www.fastmail.fm/help/technology_ssl_vs_tls_starttls.html">SSL vs TLS vs STARTTLS</a></p>
 <p><strong>===<br>[erq]</strong></p>
@@ -18608,6 +18586,77 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
       </tags>
   </entry>
   <entry>
+    <title>减少qcow2虚拟磁盘文件实际占用的存储空间</title>
+    <url>/2012/04/26/reduce-qcow2-image-size-kvm/</url>
+    <content><![CDATA[<p>虚拟磁盘文件占用的空间会越来越大,就算从客户机里面删除了很多文件,但这些空间并未释放出来,qcow2文件仍然占用大量的主机存储空间。</p>
+<a id="more"></a>
+<p>虽然qcow2有一个特点,客户机需要时才分配存储空间,这工作的一直很好。但是当从客户机删除了很多文件,释放了很多空间时,从KVM主机端完全看不到qcow2虚拟磁盘文件有变小的迹象。这是因为现在的文件系统都有一个特点,删除文件时并没有真正的清除文件的内容,只是简单的做了标记,这样删除文件会很迅速,只有当用到这些空间时才重新写入新的数据。这也是反删除甚至反格式化软件存在的基础。所以要想缩小qcow2虚拟磁盘文件的大小,就要真正释放这些未使用的空间才可以。</p>
+<p>不同的客户机类型有不同解决方式,基本思路就是用0填充未使用的客户机磁盘空间,然后用qemu-img转换磁盘镜像文件,转换后的磁盘镜像文件将只包含所有已使用的磁盘空间。</p>
+<p><strong>linux客户机</strong></p>
+<ol>
+<li><p>使用dd命令将客户机未使用的磁盘空间用0填满<br> $dd if=/dev/zero of=~/junk<br> dd: writing to `/home/***/junk’: No space left on device<br> 然后<br> $rm junk<br> 关闭客户机</p>
+</li>
+<li><p>转换磁盘镜像文件<br> $qemu-img convert -O qcow2 debian.qcow2 debian_new.qcow2</p>
+<p> 转换完成后可以看到debian_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件debian_new.qcow2启动客户机即可。</p>
+</li>
+</ol>
+<p><strong>windows客户机</strong></p>
+<ol>
+<li><p> 删除不需要的文件,清理系统垃圾,然后整理磁盘碎片</p>
+</li>
+<li><p>下载<a href="http://technet.microsoft.com/en-us/sysinternals/bb897443">SDelete</a>,借助sdelete用0来填充未使用硬盘空间</p>
+<p> 查看sdelete帮助<br> C:\&gt;sdelete<br> SDelete - Secure Delete v1.6<br> Copyright (C) 1999-2010 Mark Russinovich<br> Sysinternals - <a href="http://www.sysinternals.com/">www.sysinternals.com</a></p>
+<p> usage: sdelete.exe [-p passes] [-s] [-q] …<br>  sdelete.exe [-p passes] [-z-c] [drive letter] …<br>  -a Remove Read-Only attribute<br>  -c Clean free space<br>  -p passes Specifies number of overwrite passes (default is 1)<br>  -q Don’t print errors (Quiet)<br>  -s or -r Recurse subdirectories<br>  -z Zero free space (good for virtual disk optimization)</p>
+<p> 用0填充C分区空闲区域<br> C:\&gt;sdelete -z c</p>
+<p> 关闭客户机</p>
+</li>
+<li><p>最后在KVM主机上转换qcow2磁盘镜像文件</p>
+<p> $qemu-img convert -O qcow2 windows.qcow2 windows_new.qcow2<br> 转换完成后可以看到windows_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件windows_new.qcow2启动客户机即可。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>KVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>拒绝用户登录:/bin/false和/usr/sbin/nologin</title>
+    <url>/2014/01/15/refuse-login/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>要拒绝系统用户登录,可以将其shell设置为/usr/sbin/nologin或者/bin/false</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod -s --shell /usr/sbin/nologin username</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod -s -shell /bin/false username</span><br></pre></td></tr></table></figure>
+<p><strong>/bin/false</strong></p>
+<p>/bin/false什么也不做只是返回一个错误状态,然后立即退出。将用户的shell设置为/bin/false,用户会无法登录,并且不会有任何提示。</p>
+<p><strong>/usr/sbin/nologin</strong></p>
+<p>nologin会礼貌的向用户显示一条信息,并拒绝用户登录:</p>
+<p>This account is currently not available. </p>
+<p>有一些软件,比如一些ftp服务器软件,对于本地非虚拟账户,只有用户有有效的shell才能使用ftp服务。这时候就可以使用nologin使用户即不能登录系统,还能使用一些系统服务,比如ftp服务。/bin/false则不行,这是二者的重要区别之一。</p>
+<p><strong>/etc/nologin</strong></p>
+<p>如果存在/etc/nologin文件,则系统只允许root用户登录,其他用户全部被拒绝登录,并向他们显示/etc/nologin文件的内容。</p>
+<p><strong>锁定用户账户</strong></p>
+<p>锁定用户账户</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -l --lock username</span><br></pre></td></tr></table></figure>
+
+<p>#解锁用户账户</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -u --unlock username</span><br></pre></td></tr></table></figure>
+<p><strong>删除用户密码</strong></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -d --delete username</span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>redis sentinel主从复制高可用安装配置</title>
     <url>/2019/09/30/redis-install-configuration/</url>
     <content><![CDATA[<a id="more"></a>
@@ -18679,77 +18728,6 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 <p>4、repl-backlog-size参数<br>这个参数是为replica保持数据的缓冲区大小，当replica离线时，使用此缓冲为其保存数据，当replica重新上线可以不用执行full sync，使用partial sync就可以了，默认设置为1MB，显然太小了，可以根据单位时间内业务数据多少、支持replica离线时间、内存大小等因素设置此参数，比如设置为16MB以上。</p>
 <p>5、client-output-buffer-limit参数</p>
 <p>References:<br>[1]<a href="https://redis.io/topics/replication">Replication</a><br>[2]<a href="https://redis.io/topics/sentinel">Redis Sentinel Documentation</a><br>[3]<a href="https://blog.csdn.net/angjunqiang/article/details/81190562">Redis Sentinel 与 Redis Cluster</a></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>减少qcow2虚拟磁盘文件实际占用的存储空间</title>
-    <url>/2012/04/26/reduce-qcow2-image-size-kvm/</url>
-    <content><![CDATA[<p>虚拟磁盘文件占用的空间会越来越大,就算从客户机里面删除了很多文件,但这些空间并未释放出来,qcow2文件仍然占用大量的主机存储空间。</p>
-<a id="more"></a>
-<p>虽然qcow2有一个特点,客户机需要时才分配存储空间,这工作的一直很好。但是当从客户机删除了很多文件,释放了很多空间时,从KVM主机端完全看不到qcow2虚拟磁盘文件有变小的迹象。这是因为现在的文件系统都有一个特点,删除文件时并没有真正的清除文件的内容,只是简单的做了标记,这样删除文件会很迅速,只有当用到这些空间时才重新写入新的数据。这也是反删除甚至反格式化软件存在的基础。所以要想缩小qcow2虚拟磁盘文件的大小,就要真正释放这些未使用的空间才可以。</p>
-<p>不同的客户机类型有不同解决方式,基本思路就是用0填充未使用的客户机磁盘空间,然后用qemu-img转换磁盘镜像文件,转换后的磁盘镜像文件将只包含所有已使用的磁盘空间。</p>
-<p><strong>linux客户机</strong></p>
-<ol>
-<li><p>使用dd命令将客户机未使用的磁盘空间用0填满<br> $dd if=/dev/zero of=~/junk<br> dd: writing to `/home/***/junk’: No space left on device<br> 然后<br> $rm junk<br> 关闭客户机</p>
-</li>
-<li><p>转换磁盘镜像文件<br> $qemu-img convert -O qcow2 debian.qcow2 debian_new.qcow2</p>
-<p> 转换完成后可以看到debian_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件debian_new.qcow2启动客户机即可。</p>
-</li>
-</ol>
-<p><strong>windows客户机</strong></p>
-<ol>
-<li><p> 删除不需要的文件,清理系统垃圾,然后整理磁盘碎片</p>
-</li>
-<li><p>下载<a href="http://technet.microsoft.com/en-us/sysinternals/bb897443">SDelete</a>,借助sdelete用0来填充未使用硬盘空间</p>
-<p> 查看sdelete帮助<br> C:\&gt;sdelete<br> SDelete - Secure Delete v1.6<br> Copyright (C) 1999-2010 Mark Russinovich<br> Sysinternals - <a href="http://www.sysinternals.com/">www.sysinternals.com</a></p>
-<p> usage: sdelete.exe [-p passes] [-s] [-q] …<br>  sdelete.exe [-p passes] [-z-c] [drive letter] …<br>  -a Remove Read-Only attribute<br>  -c Clean free space<br>  -p passes Specifies number of overwrite passes (default is 1)<br>  -q Don’t print errors (Quiet)<br>  -s or -r Recurse subdirectories<br>  -z Zero free space (good for virtual disk optimization)</p>
-<p> 用0填充C分区空闲区域<br> C:\&gt;sdelete -z c</p>
-<p> 关闭客户机</p>
-</li>
-<li><p>最后在KVM主机上转换qcow2磁盘镜像文件</p>
-<p> $qemu-img convert -O qcow2 windows.qcow2 windows_new.qcow2<br> 转换完成后可以看到windows_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件windows_new.qcow2启动客户机即可。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>KVM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>拒绝用户登录:/bin/false和/usr/sbin/nologin</title>
-    <url>/2014/01/15/refuse-login/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>要拒绝系统用户登录,可以将其shell设置为/usr/sbin/nologin或者/bin/false</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod -s --shell /usr/sbin/nologin username</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod -s -shell /bin/false username</span><br></pre></td></tr></table></figure>
-<p><strong>/bin/false</strong></p>
-<p>/bin/false什么也不做只是返回一个错误状态,然后立即退出。将用户的shell设置为/bin/false,用户会无法登录,并且不会有任何提示。</p>
-<p><strong>/usr/sbin/nologin</strong></p>
-<p>nologin会礼貌的向用户显示一条信息,并拒绝用户登录:</p>
-<p>This account is currently not available. </p>
-<p>有一些软件,比如一些ftp服务器软件,对于本地非虚拟账户,只有用户有有效的shell才能使用ftp服务。这时候就可以使用nologin使用户即不能登录系统,还能使用一些系统服务,比如ftp服务。/bin/false则不行,这是二者的重要区别之一。</p>
-<p><strong>/etc/nologin</strong></p>
-<p>如果存在/etc/nologin文件,则系统只允许root用户登录,其他用户全部被拒绝登录,并向他们显示/etc/nologin文件的内容。</p>
-<p><strong>锁定用户账户</strong></p>
-<p>锁定用户账户</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -l --lock username</span><br></pre></td></tr></table></figure>
-
-<p>#解锁用户账户</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -u --unlock username</span><br></pre></td></tr></table></figure>
-<p><strong>删除用户密码</strong></p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># passwd -d --delete username</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -20577,63 +20555,6 @@ Disk identifier: 0x0005fc82
       </tags>
   </entry>
   <entry>
-    <title>tomcat 7,spring 3,mybatis 3 配置log4j日志组件</title>
-    <url>/2013/10/16/spring3-mybatis3-log4j/</url>
-    <content><![CDATA[<p>tomcat,spring,mybatis都内置通用的日志输出框架，可以配合各种具体的日志组件实现来输出日志，而log4j是最常用的日志组件。</p>
-<a id="more"></a>
-<p>tomcat和spring都使用JCL(Jakarta Commons Logging)日志框架，而mybatis貌似是自己实现的日志框架，三者都可以使用常见的日志组件来输出日志。</p>
-<p><strong>tomcat 7</strong></p>
-<p>tomcat使用JCL日志框架，默认配置使用JDK提供的JUL(java.util.logging)输出tomcat内部日志。也可以<a href="http://tomcat.apache.org/tomcat-7.0-doc/logging.html">配置使用log4j来输出tomcat内部日志</a>。<br>注意这里是配置tomcat自身日志的输出，在tomcat上运行的应用程序可以单独配置日志输出组件比如log4j，二者互不影响。</p>
-<p>在tomcat上运行的应用程序可以使用以下方式来输出日志：</p>
-<ul>
-<li><p>  使用JAVA API java.util.logging</p>
-</li>
-<li><p>  使用servlet规范提供的API javax.servlet.ServletContext.log(…)</p>
-</li>
-<li><p>  使用自己选择的日志组件，比如使用log4j</p>
-</li>
-</ul>
-<p>tomcat控制台输出</p>
-<p>当在unix like系统上运行tomcat时，控制台输出被重定向到一个名字可配置的文件中，通常这个文件为catalina.out。因此所有写到System.err/out的输出都被写入这个文件中。包括：</p>
-<ul>
-<li><p>  使用java.lang.ThreadGroup.uncaughtException(..)输出的未捕获异常</p>
-</li>
-<li><p>  线程dump</p>
-</li>
-<li><p>  应用程序的System.out/System.err输出，这是不推荐的方式，尽量不要使用，推荐使用日志输出组件</p>
-</li>
-</ul>
-<p><strong>spring 3</strong></p>
-<p>spring 3 使用JCL日志框架，可以动态发现可以使用的日志组件，只要将日志组件的jar包扔到classpath路径里面就可以了，如果不使用其他日志组件，则spring 3使用java.util.logging来输出日志。</p>
-<p>不过<a href="http://spring.io/blog/2009/12/04/logging-dependencies-in-spring">spring工程更倾向于使用SLF4J</a>，历史原因选择了JCL框架。</p>
-<p>spring配置使用log4j也比较简单，只要将log4j-x.x.x.jar包放入classpath，然后提供一个配置文件log4j.properties放置在classpath根路径下，比如WEB-INF/classes目录下即可。</p>
-<p>spring提供了一个listener来配置log4j,可以设置配置文件路径等相关设置，在web.xml中配置此listener：<br>[xml]<br> <!-- web应用程序根路径映射，如果不设置此参数，默认映射到变量webapp.root，log4j.propertiesw文件中
-可以使用${webapp.root}来引用web应用程序根路径 --><br> <context-param><br> <param-name>webAppRootKey</param-name><br> <param-value>webapp.root</param-value><br> </context-param><br> <!-- log4j.properties配置文件路径 --><br> <context-param><br> <param-name>log4jConfigLocation</param-name><br> <param-value>WEB-INF/log4j.properties</param-value><br> </context-param><br> <context-param><br> <param-name>log4jRefreshInterval</param-name><br> <param-value>3000</param-value><br> </context-param><br> <listener><br> <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class><br> </listener><br>[/xml]</p>
-<p>这里将log4j.properties配置到WEB-INF目录下，方便统一管理应用程序的配置文件</p>
-<p><strong>mybatis 3</strong></p>
-<p>mybatis 3 也支持<a href="http://mybatis.github.io/mybatis-3/logging.html">使用log4j日志组件</a>，在spring mybatis集成应用程序中，mybatis直接使用spring的log4j设置即可，只要将mybaits相关的日志配置写入共用的配置文件log4j.properties即可。比如对映射器日志设置如下：</p>
-<p>log4j.logger.net.openwares.test.mapper = TRACE<br>甚至可以对映射器里面映射的语句设置日志数据级别<br>log4j.logger.net.openwares.test.mapper.selectXXX = TRACE</p>
-<p>对于独立使用的mybatis,需要在mybatis-config.xml文件中添加：<br>[xml]<br><configuration><br> <settings><br> …<br> <setting name="logImpl" value="LOG4J"/><br> …<br> </settings><br></configuration><br>[/xml]<br>然后将log4j jar包和log4j.properties文件放入classpath。</p>
-<p><strong>log4j简单配置</strong></p>
-<p>[xml]<br>#Global configuration<br>log4j.rootLogger = DEBUG, stdout, logfile</p>
-<p>log4j.appender.stdout = org.apache.log4j.ConsoleAppender<br>log4j.appender.stdout.layout = org.apache.log4j.PatternLayout<br>log4j.appender.stdout.layout.ConversionPattern = %5p [%t] - %m%n</p>
-<p>log4j.appender.logfile = org.apache.log4j.FileAppender<br>log4j.appender.logfile.File = ${webapp.root}/WEB-INF/logs/debug.log<br>log4j.appender.logfile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logfile.layout.ConversionPattern = %5p [%t] - %m%n</p>
-<p>#Spring config<br>#log4j.logger.org.springframewaork = DEBUG</p>
-<p>#Mybatis config<br>#log4j.logger.org.apache.ibatis = DEBUG<br>log4j.logger.net.openwares.test.mapper = TRACE</p>
-<p>#JDBC config<br>#log4j.logger.java.sql.Connection = DEBUG<br>#log4j.logger.java.sql.Statement = DEBUG<br>#log4j.logger.java.sql.PreparedStatement = DEBUG<br>#log4j.logger.java.sql.ResultSet = DEBUG</p>
-<p>[/xml]</p>
-<p>log4j的主要概念就是logger,appender,layout还有logging level。<br>log4j的详细用法参见<a href="http://logging.apache.org/log4j/1.2/manual.html">官方文档</a>。</p>
-<p><strong>log4j简单使用</strong><br>[java]<br>import org.apache.log4j.Logger;</p>
-<p>public class helloLog {<br> private static Logger logger = Logger.getLogger(helloLog.class.getName());<br> public void MethodXXX(){<br> logger.debug(“xxx”);<br> logger.info(“xxx”);<br> …<br> }<br>}<br>[/java]</p>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring 3 MVC JSON Sample</title>
     <url>/2013/10/12/spring3-mvc-json-sample/</url>
     <content><![CDATA[<p>Spring Framework 3 对 JSON的支持很不错。</p>
@@ -20690,6 +20611,63 @@ Disk identifier: 0x0005fc82
       <categories>
         <category>java</category>
         <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tomcat 7,spring 3,mybatis 3 配置log4j日志组件</title>
+    <url>/2013/10/16/spring3-mybatis3-log4j/</url>
+    <content><![CDATA[<p>tomcat,spring,mybatis都内置通用的日志输出框架，可以配合各种具体的日志组件实现来输出日志，而log4j是最常用的日志组件。</p>
+<a id="more"></a>
+<p>tomcat和spring都使用JCL(Jakarta Commons Logging)日志框架，而mybatis貌似是自己实现的日志框架，三者都可以使用常见的日志组件来输出日志。</p>
+<p><strong>tomcat 7</strong></p>
+<p>tomcat使用JCL日志框架，默认配置使用JDK提供的JUL(java.util.logging)输出tomcat内部日志。也可以<a href="http://tomcat.apache.org/tomcat-7.0-doc/logging.html">配置使用log4j来输出tomcat内部日志</a>。<br>注意这里是配置tomcat自身日志的输出，在tomcat上运行的应用程序可以单独配置日志输出组件比如log4j，二者互不影响。</p>
+<p>在tomcat上运行的应用程序可以使用以下方式来输出日志：</p>
+<ul>
+<li><p>  使用JAVA API java.util.logging</p>
+</li>
+<li><p>  使用servlet规范提供的API javax.servlet.ServletContext.log(…)</p>
+</li>
+<li><p>  使用自己选择的日志组件，比如使用log4j</p>
+</li>
+</ul>
+<p>tomcat控制台输出</p>
+<p>当在unix like系统上运行tomcat时，控制台输出被重定向到一个名字可配置的文件中，通常这个文件为catalina.out。因此所有写到System.err/out的输出都被写入这个文件中。包括：</p>
+<ul>
+<li><p>  使用java.lang.ThreadGroup.uncaughtException(..)输出的未捕获异常</p>
+</li>
+<li><p>  线程dump</p>
+</li>
+<li><p>  应用程序的System.out/System.err输出，这是不推荐的方式，尽量不要使用，推荐使用日志输出组件</p>
+</li>
+</ul>
+<p><strong>spring 3</strong></p>
+<p>spring 3 使用JCL日志框架，可以动态发现可以使用的日志组件，只要将日志组件的jar包扔到classpath路径里面就可以了，如果不使用其他日志组件，则spring 3使用java.util.logging来输出日志。</p>
+<p>不过<a href="http://spring.io/blog/2009/12/04/logging-dependencies-in-spring">spring工程更倾向于使用SLF4J</a>，历史原因选择了JCL框架。</p>
+<p>spring配置使用log4j也比较简单，只要将log4j-x.x.x.jar包放入classpath，然后提供一个配置文件log4j.properties放置在classpath根路径下，比如WEB-INF/classes目录下即可。</p>
+<p>spring提供了一个listener来配置log4j,可以设置配置文件路径等相关设置，在web.xml中配置此listener：<br>[xml]<br> <!-- web应用程序根路径映射，如果不设置此参数，默认映射到变量webapp.root，log4j.propertiesw文件中
+可以使用${webapp.root}来引用web应用程序根路径 --><br> <context-param><br> <param-name>webAppRootKey</param-name><br> <param-value>webapp.root</param-value><br> </context-param><br> <!-- log4j.properties配置文件路径 --><br> <context-param><br> <param-name>log4jConfigLocation</param-name><br> <param-value>WEB-INF/log4j.properties</param-value><br> </context-param><br> <context-param><br> <param-name>log4jRefreshInterval</param-name><br> <param-value>3000</param-value><br> </context-param><br> <listener><br> <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class><br> </listener><br>[/xml]</p>
+<p>这里将log4j.properties配置到WEB-INF目录下，方便统一管理应用程序的配置文件</p>
+<p><strong>mybatis 3</strong></p>
+<p>mybatis 3 也支持<a href="http://mybatis.github.io/mybatis-3/logging.html">使用log4j日志组件</a>，在spring mybatis集成应用程序中，mybatis直接使用spring的log4j设置即可，只要将mybaits相关的日志配置写入共用的配置文件log4j.properties即可。比如对映射器日志设置如下：</p>
+<p>log4j.logger.net.openwares.test.mapper = TRACE<br>甚至可以对映射器里面映射的语句设置日志数据级别<br>log4j.logger.net.openwares.test.mapper.selectXXX = TRACE</p>
+<p>对于独立使用的mybatis,需要在mybatis-config.xml文件中添加：<br>[xml]<br><configuration><br> <settings><br> …<br> <setting name="logImpl" value="LOG4J"/><br> …<br> </settings><br></configuration><br>[/xml]<br>然后将log4j jar包和log4j.properties文件放入classpath。</p>
+<p><strong>log4j简单配置</strong></p>
+<p>[xml]<br>#Global configuration<br>log4j.rootLogger = DEBUG, stdout, logfile</p>
+<p>log4j.appender.stdout = org.apache.log4j.ConsoleAppender<br>log4j.appender.stdout.layout = org.apache.log4j.PatternLayout<br>log4j.appender.stdout.layout.ConversionPattern = %5p [%t] - %m%n</p>
+<p>log4j.appender.logfile = org.apache.log4j.FileAppender<br>log4j.appender.logfile.File = ${webapp.root}/WEB-INF/logs/debug.log<br>log4j.appender.logfile.layout = org.apache.log4j.PatternLayout<br>log4j.appender.logfile.layout.ConversionPattern = %5p [%t] - %m%n</p>
+<p>#Spring config<br>#log4j.logger.org.springframewaork = DEBUG</p>
+<p>#Mybatis config<br>#log4j.logger.org.apache.ibatis = DEBUG<br>log4j.logger.net.openwares.test.mapper = TRACE</p>
+<p>#JDBC config<br>#log4j.logger.java.sql.Connection = DEBUG<br>#log4j.logger.java.sql.Statement = DEBUG<br>#log4j.logger.java.sql.PreparedStatement = DEBUG<br>#log4j.logger.java.sql.ResultSet = DEBUG</p>
+<p>[/xml]</p>
+<p>log4j的主要概念就是logger,appender,layout还有logging level。<br>log4j的详细用法参见<a href="http://logging.apache.org/log4j/1.2/manual.html">官方文档</a>。</p>
+<p><strong>log4j简单使用</strong><br>[java]<br>import org.apache.log4j.Logger;</p>
+<p>public class helloLog {<br> private static Logger logger = Logger.getLogger(helloLog.class.getName());<br> public void MethodXXX(){<br> logger.debug(“xxx”);<br> logger.info(“xxx”);<br> …<br> }<br>}<br>[/java]</p>
+]]></content>
+      <categories>
+        <category>java</category>
       </categories>
       <tags>
         <tag>Java</tag>
@@ -21084,18 +21062,6 @@ Disk identifier: 0x0005fc82
       </categories>
   </entry>
   <entry>
-    <title>C/C++ static语义(semantics)</title>
-    <url>/2009/11/18/static-semantics/</url>
-    <content><![CDATA[<p>　　static可以用来修饰变量(variant)和函数(function)。但static作用于普通变量/函数与类(calss)变量/函数的语义是不一样的。<br>　　static有两种基本的语义，第一种是存储方式(storage)，这种语义只作用于变量，不适用于函数，第二种是访问控制(Access Control)。<br>　　用static修饰一个普通变量有两层含义。其一是表示该变量的值在超出作用域范围后仍然有效，一般编译器将static变量放置到全局静态存储区，比如.data或.bss(Block Started by Symbol)节，这就是存储方式语义。其二是表示该变量只在声明的作用域范围内可以被访问，比如， 声明在一个文件作用域内的变量不能被其他文件访问，这就是访问控制语义。<br>　　用static来修饰普通函数的时候则只有一种语义，即访问控制，因为无论如何，函数总是要被编译器放置到.text节的。也就是说用static修饰的普通函数不能被其他文件内的代码访问。<br>　　C++中用static来修饰成员变量和函数的语义稍有不同，其含义表示这些变量或函数是属于整个类(class)而不特定于任何一个该类的对象(object),即使该类没有一个对象产生，仍然可用使用类来访问这些变量和函数。这是C++对C static语义的扩展。</p>
-]]></content>
-      <categories>
-        <category>Lang</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>关于目录访问权限中的限制删除标志位(sticky位)</title>
     <url>/2009/05/07/sticky/</url>
     <content><![CDATA[<a id="more"></a>
@@ -21110,6 +21076,18 @@ Disk identifier: 0x0005fc82
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C/C++ static语义(semantics)</title>
+    <url>/2009/11/18/static-semantics/</url>
+    <content><![CDATA[<p>　　static可以用来修饰变量(variant)和函数(function)。但static作用于普通变量/函数与类(calss)变量/函数的语义是不一样的。<br>　　static有两种基本的语义，第一种是存储方式(storage)，这种语义只作用于变量，不适用于函数，第二种是访问控制(Access Control)。<br>　　用static修饰一个普通变量有两层含义。其一是表示该变量的值在超出作用域范围后仍然有效，一般编译器将static变量放置到全局静态存储区，比如.data或.bss(Block Started by Symbol)节，这就是存储方式语义。其二是表示该变量只在声明的作用域范围内可以被访问，比如， 声明在一个文件作用域内的变量不能被其他文件访问，这就是访问控制语义。<br>　　用static来修饰普通函数的时候则只有一种语义，即访问控制，因为无论如何，函数总是要被编译器放置到.text节的。也就是说用static修饰的普通函数不能被其他文件内的代码访问。<br>　　C++中用static来修饰成员变量和函数的语义稍有不同，其含义表示这些变量或函数是属于整个类(class)而不特定于任何一个该类的对象(object),即使该类没有一个对象产生，仍然可用使用类来访问这些变量和函数。这是C++对C static语义的扩展。</p>
+]]></content>
+      <categories>
+        <category>Lang</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -21214,24 +21192,6 @@ Disk identifier: 0x0005fc82
       </tags>
   </entry>
   <entry>
-    <title>Github fork 分支与上游同步</title>
-    <url>/2016/11/23/sync-github-fork-brach/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>fork之后上游可能又有了一些更新，在提交pull request之前最好重新同步一下上游主干，解决可能存在的冲突之后再发起pull request</p>
-<p>步骤如下：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git remote add upstream https:<span class="comment">//github.com/jiangwen365/pypyodbc # 添加上游仓库</span></span><br><span class="line">$ git fetch upstream # 获取上游最新更新</span><br><span class="line">$ git checkout master # 切换到本地需要更新的分支头，master或者其他名字的分子都行，看需要</span><br><span class="line">$ git merge upstream/master # 合并上游master分支到本地master分支，分支名字根据需要指定，rebase亦可</span><br><span class="line">$ git push # 将更新后的本地分支推送到github</span><br></pre></td></tr></table></figure>
-
-<p>简单明了。</p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>swift on linux debian</title>
     <url>/2016/04/19/swift-on-linux-debian/</url>
     <content><![CDATA[<a id="more"></a>
@@ -21267,6 +21227,24 @@ Disk identifier: 0x0005fc82
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Github fork 分支与上游同步</title>
+    <url>/2016/11/23/sync-github-fork-brach/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>fork之后上游可能又有了一些更新，在提交pull request之前最好重新同步一下上游主干，解决可能存在的冲突之后再发起pull request</p>
+<p>步骤如下：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git remote add upstream https:<span class="comment">//github.com/jiangwen365/pypyodbc # 添加上游仓库</span></span><br><span class="line">$ git fetch upstream # 获取上游最新更新</span><br><span class="line">$ git checkout master # 切换到本地需要更新的分支头，master或者其他名字的分子都行，看需要</span><br><span class="line">$ git merge upstream/master # 合并上游master分支到本地master分支，分支名字根据需要指定，rebase亦可</span><br><span class="line">$ git push # 将更新后的本地分支推送到github</span><br></pre></td></tr></table></figure>
+
+<p>简单明了。</p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -21426,7 +21404,7 @@ Disk identifier: 0x0005fc82
 <p>当从模板单元文件创建实例单元文件时，在@符号和单元扩展名(包括符号.)之前加入实例名,比如：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">example@instance1.service</span><br></pre></td></tr></table></figure>
 
-<p>表明实例单元文件<a href="mailto:&#101;&#x78;&#x61;&#x6d;&#x70;&#108;&#x65;&#x40;&#x69;&#110;&#115;&#x74;&#97;&#110;&#99;&#101;&#49;&#x2e;&#115;&#101;&#114;&#x76;&#105;&#99;&#x65;">&#101;&#x78;&#x61;&#x6d;&#x70;&#108;&#x65;&#x40;&#x69;&#110;&#115;&#x74;&#97;&#110;&#99;&#101;&#49;&#x2e;&#115;&#101;&#114;&#x76;&#105;&#99;&#x65;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
+<p>表明实例单元文件<a href="mailto:&#x65;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#x40;&#x69;&#110;&#x73;&#x74;&#97;&#x6e;&#x63;&#101;&#49;&#x2e;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#101;">&#x65;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#x40;&#x69;&#110;&#x73;&#x74;&#97;&#x6e;&#x63;&#101;&#49;&#x2e;&#115;&#101;&#x72;&#x76;&#x69;&#x63;&#101;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
 <p>实例单元文件一般是模板单元文件的一个符号链接，符号链接命中包含实例名，systemd就会传递实例名给模板单元文件。</p>
 <p>在相应的target中创建实例单元文件符号链接之后，需要运行一下命令将其装载：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
@@ -21445,20 +21423,6 @@ Disk identifier: 0x0005fc82
       <tags>
         <tag>Debian</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>terminal modes</title>
-    <url>/2020/02/25/terminal-modes/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>The Linux terminals that are provided by the console device drivers include line-mode terminals, block-mode terminals, and full-screen mode terminals.</p>
-<p>On a full-screen mode terminal, pressing any key immediately results in data being sent to the terminal. Also, terminal output can be positioned anywhere on the screen. This feature facilitates advanced interactive capability for terminal-based applications like the vi editor. It works in raw mode default,can set to cbreak mode also.</p>
-<p>On a line-mode terminal, the user first types a full line, and then presses Enter to indicate that the line is complete. The device driver then issues a read to get the completed line, adds a new line, and hands over the input to the generic TTY routines. It works in cooked mode default.</p>
-<p>The terminal that is provided by the 3270 terminal device driver is a traditional IBM® mainframe block-mode terminal. Block-mode terminals provide full-screen output support and users can type input in predefined fields on the screen. Other than on typical full-screen mode terminals, no input is passed on until the user presses Enter. The terminal that is provided by the 3270 terminal device driver provides limited support for full-screen applications. For example, the ned editor is supported, but not vi.</p>
-<p>References:<br>[1]<a href="https://en.wikipedia.org/wiki/Terminal_mode">Terminal mode</a><br>[2]<a href="https://stackoverflow.com/questions/13104460/confusion-about-raw-vs-cooked-terminal-modes">Confusion about raw vs. cooked terminal modes?</a><br>[3]<a href="http://foldoc.org/cooked%20mode">cooked mode</a><br>[4]<a href="https://utcc.utoronto.ca/~cks/space/blog/unix/CBreakAndRaw">What goes into the terminal’s ‘cbreak’ and ‘raw’ modes</a></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
   </entry>
   <entry>
     <title>SyntaxHighlighter Evolved test</title>
@@ -21482,6 +21446,20 @@ Disk identifier: 0x0005fc82
       <tags>
         <tag>Wordpress</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>terminal modes</title>
+    <url>/2020/02/25/terminal-modes/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>The Linux terminals that are provided by the console device drivers include line-mode terminals, block-mode terminals, and full-screen mode terminals.</p>
+<p>On a full-screen mode terminal, pressing any key immediately results in data being sent to the terminal. Also, terminal output can be positioned anywhere on the screen. This feature facilitates advanced interactive capability for terminal-based applications like the vi editor. It works in raw mode default,can set to cbreak mode also.</p>
+<p>On a line-mode terminal, the user first types a full line, and then presses Enter to indicate that the line is complete. The device driver then issues a read to get the completed line, adds a new line, and hands over the input to the generic TTY routines. It works in cooked mode default.</p>
+<p>The terminal that is provided by the 3270 terminal device driver is a traditional IBM® mainframe block-mode terminal. Block-mode terminals provide full-screen output support and users can type input in predefined fields on the screen. Other than on typical full-screen mode terminals, no input is passed on until the user presses Enter. The terminal that is provided by the 3270 terminal device driver provides limited support for full-screen applications. For example, the ned editor is supported, but not vi.</p>
+<p>References:<br>[1]<a href="https://en.wikipedia.org/wiki/Terminal_mode">Terminal mode</a><br>[2]<a href="https://stackoverflow.com/questions/13104460/confusion-about-raw-vs-cooked-terminal-modes">Confusion about raw vs. cooked terminal modes?</a><br>[3]<a href="http://foldoc.org/cooked%20mode">cooked mode</a><br>[4]<a href="https://utcc.utoronto.ca/~cks/space/blog/unix/CBreakAndRaw">What goes into the terminal’s ‘cbreak’ and ‘raw’ modes</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
   </entry>
   <entry>
     <title>TeX,LaTeX,TexLive与LyX</title>
@@ -21914,23 +21892,6 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       </tags>
   </entry>
   <entry>
-    <title>traceroute: 使用纯真IP数据库显示中间路由器以及主机的地理位置</title>
-    <url>/2009/06/15/traceroute-route-qqwry/</url>
-    <content><![CDATA[<p>traceroute是常用的网络诊断和查询工具，但是通常traceroute只能显示中间路由器和主机的ip地址和主机名，如果能输出机器的地理位置是最好不过了。怎么办？重新写一个traceroute？这是windows的思路。traceroute已经足够好了，为什么要重写呢，我们只要把结果加工一下就可以了。不得不佩服UNIX的设计哲学，无疑这种正交的功能，如果硬要搀和在一起，实在是没什么必要和额外的好处。</p>
-<a id="more"></a>
-<p>有了<a href="https://openwares.net/linux/awstats_ip_geo_qqwrypl.html">查询纯真IP数据库的Perl程序</a><a href="/downloads/ip_geo_qqwry.zip">ip_geo_qqwry.pl</a>，让traceroute显示机器的地理位置是十分简单的事情。把traceroute的输出重定向到一个脚本，脚本中将ip替换成对应的地理位置就可以了。下面是这个perl脚本ip2geo.pl的代码：</p>
-<p> 1 #!/usr/bin/perl<br> 2<br> 3 <strong>binmode</strong>(STDOUT, ‘:encoding(utf8)’);<br> 4 <strong>require</strong> “ip_geo/ip_geo_qqwry.pl”;<br> 5<br> 6 <strong>my</strong> $pattern_ip = ‘\(((?:(?:1?[0-9]?[0-9]2(?:[0-4][0-9]5[0-5]))\.){3}(?:1?[0-9]?[0-9]2(?:[0-4][0-9]5[0-5])))\)’;<br> 7 <strong>my</strong> $line,$matches, $match, $ip_geo_addr;<br> 8 <strong>while</strong>($line = <STDIN>){<br> 9     @matches = $line =~ <strong>/</strong>$pattern_ip**/g**;<br>10     <strong>foreach</strong> $match (@matches){<br>11         $ip_geo_addr = &amp;ipwhere($match);<br>12         $line =~ <strong>s/**\($match\)</strong>/<strong>[$ip_geo_addr]</strong>/<strong>;<br>13     }<br>14     **print</strong> $line;<br>15 }<br>16<br>17 1;  </p>
-<p>然后这样traceroute <a href="http://www.google.cn/">www.google.cn</a> ip2geo.pl就可以看到中间路由器和主机的地理位置了。<br>下面是我用PuTTY从远程主机执行该命令行的截图：<a href="/images/2009/06/traceroute.jpg"><img src="/images/2009/06/traceroute-300x141.jpg" alt="traceroute" title="traceroute"></a></p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Perl</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>数据库事务隔离级别</title>
     <url>/2013/10/18/transaction-isolation-level/</url>
     <content><![CDATA[<p>事务隔离级别主要用于事务之间的并发控制，保证事务并发执行时数据正确性。</p>
@@ -21979,6 +21940,23 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       </categories>
       <tags>
         <tag>PostgresQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>traceroute: 使用纯真IP数据库显示中间路由器以及主机的地理位置</title>
+    <url>/2009/06/15/traceroute-route-qqwry/</url>
+    <content><![CDATA[<p>traceroute是常用的网络诊断和查询工具，但是通常traceroute只能显示中间路由器和主机的ip地址和主机名，如果能输出机器的地理位置是最好不过了。怎么办？重新写一个traceroute？这是windows的思路。traceroute已经足够好了，为什么要重写呢，我们只要把结果加工一下就可以了。不得不佩服UNIX的设计哲学，无疑这种正交的功能，如果硬要搀和在一起，实在是没什么必要和额外的好处。</p>
+<a id="more"></a>
+<p>有了<a href="https://openwares.net/linux/awstats_ip_geo_qqwrypl.html">查询纯真IP数据库的Perl程序</a><a href="/downloads/ip_geo_qqwry.zip">ip_geo_qqwry.pl</a>，让traceroute显示机器的地理位置是十分简单的事情。把traceroute的输出重定向到一个脚本，脚本中将ip替换成对应的地理位置就可以了。下面是这个perl脚本ip2geo.pl的代码：</p>
+<p> 1 #!/usr/bin/perl<br> 2<br> 3 <strong>binmode</strong>(STDOUT, ‘:encoding(utf8)’);<br> 4 <strong>require</strong> “ip_geo/ip_geo_qqwry.pl”;<br> 5<br> 6 <strong>my</strong> $pattern_ip = ‘\(((?:(?:1?[0-9]?[0-9]2(?:[0-4][0-9]5[0-5]))\.){3}(?:1?[0-9]?[0-9]2(?:[0-4][0-9]5[0-5])))\)’;<br> 7 <strong>my</strong> $line,$matches, $match, $ip_geo_addr;<br> 8 <strong>while</strong>($line = <STDIN>){<br> 9     @matches = $line =~ <strong>/</strong>$pattern_ip**/g**;<br>10     <strong>foreach</strong> $match (@matches){<br>11         $ip_geo_addr = &amp;ipwhere($match);<br>12         $line =~ <strong>s/**\($match\)</strong>/<strong>[$ip_geo_addr]</strong>/<strong>;<br>13     }<br>14     **print</strong> $line;<br>15 }<br>16<br>17 1;  </p>
+<p>然后这样traceroute <a href="http://www.google.cn/">www.google.cn</a> ip2geo.pl就可以看到中间路由器和主机的地理位置了。<br>下面是我用PuTTY从远程主机执行该命令行的截图：<a href="/images/2009/06/traceroute.jpg"><img src="/images/2009/06/traceroute-300x141.jpg" alt="traceroute" title="traceroute"></a></p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Perl</tag>
       </tags>
   </entry>
   <entry>
@@ -22482,23 +22460,6 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       </tags>
   </entry>
   <entry>
-    <title>unzip解压缩中文名乱码问题</title>
-    <url>/2018/12/07/unzip-gbk-filename/</url>
-    <content><![CDATA[<p>windows平台生成的zip文件名是使用CP936也就是GBK编码的，导致这样的文件在linux平台utf-8环境下解压缩的时候文件名会成为乱码，这个问题由来已久，但并没有从zip那边有个根本性的解决方案。</p>
-<p>可以使用python的zipfile模块来解决这个问题。</p>
-<p>python3版本：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import zipfile</span><br><span class="line"></span><br><span class="line">print(&quot;Processing File &quot; + sys.argv[1])</span><br><span class="line"></span><br><span class="line">file&#x3D;zipfile.ZipFile(sys.argv[1],&quot;r&quot;);</span><br><span class="line">for name in file.namelist():</span><br><span class="line">    utf8name&#x3D;name.encode(&#39;cp437&#39;).decode(&#39;cp936&#39;)</span><br><span class="line">    print(&quot;Extracting &quot; + utf8name)</span><br><span class="line">    pathname &#x3D; os.path.dirname(utf8name)</span><br><span class="line">    if not os.path.exists(pathname) and pathname!&#x3D; &quot;&quot;:</span><br><span class="line">        os.makedirs(pathname)</span><br><span class="line">    data &#x3D; file.read(name)</span><br><span class="line">    if not os.path.exists(utf8name):</span><br><span class="line">        fo &#x3D; open(utf8name, &quot;wb&quot;)</span><br><span class="line">        fo.write(data)</span><br><span class="line">        fo.close</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
-
-<p>因为zipfile把所有非utf-8编码格式的文件名都作为cp437进行处理，因此需要先还原回cp437，然后重新编码为cp936。</p>
-<p>python版本见Reference[1]。</p>
-<p>References:</p>
-<p>[1]<a href="https://www.jianshu.com/p/72bb8d2ed4df">Linux 下 zip 文件解压乱码解决方案</a></p>
-]]></content>
-      <categories>
-        <category>uncategorized</category>
-      </categories>
-  </entry>
-  <entry>
     <title>即将到来的Cassandra  3.0</title>
     <url>/2015/03/12/upcoming-cassandra-3-0/</url>
     <content><![CDATA[<a id="more"></a>
@@ -22519,6 +22480,23 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       <tags>
         <tag>cassandra</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>unzip解压缩中文名乱码问题</title>
+    <url>/2018/12/07/unzip-gbk-filename/</url>
+    <content><![CDATA[<p>windows平台生成的zip文件名是使用CP936也就是GBK编码的，导致这样的文件在linux平台utf-8环境下解压缩的时候文件名会成为乱码，这个问题由来已久，但并没有从zip那边有个根本性的解决方案。</p>
+<p>可以使用python的zipfile模块来解决这个问题。</p>
+<p>python3版本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import zipfile</span><br><span class="line"></span><br><span class="line">print(&quot;Processing File &quot; + sys.argv[1])</span><br><span class="line"></span><br><span class="line">file&#x3D;zipfile.ZipFile(sys.argv[1],&quot;r&quot;);</span><br><span class="line">for name in file.namelist():</span><br><span class="line">    utf8name&#x3D;name.encode(&#39;cp437&#39;).decode(&#39;cp936&#39;)</span><br><span class="line">    print(&quot;Extracting &quot; + utf8name)</span><br><span class="line">    pathname &#x3D; os.path.dirname(utf8name)</span><br><span class="line">    if not os.path.exists(pathname) and pathname!&#x3D; &quot;&quot;:</span><br><span class="line">        os.makedirs(pathname)</span><br><span class="line">    data &#x3D; file.read(name)</span><br><span class="line">    if not os.path.exists(utf8name):</span><br><span class="line">        fo &#x3D; open(utf8name, &quot;wb&quot;)</span><br><span class="line">        fo.write(data)</span><br><span class="line">        fo.close</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
+
+<p>因为zipfile把所有非utf-8编码格式的文件名都作为cp437进行处理，因此需要先还原回cp437，然后重新编码为cp936。</p>
+<p>python版本见Reference[1]。</p>
+<p>References:</p>
+<p>[1]<a href="https://www.jianshu.com/p/72bb8d2ed4df">Linux 下 zip 文件解压乱码解决方案</a></p>
+]]></content>
+      <categories>
+        <category>uncategorized</category>
+      </categories>
   </entry>
   <entry>
     <title>USB stick安装debian</title>
