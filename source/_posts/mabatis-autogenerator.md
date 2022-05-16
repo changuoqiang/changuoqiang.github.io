@@ -18,7 +18,7 @@ Mybatis Generator的核心就一个jar包mybatis-generator-core-1.3.2.jar，可�
 **配置文件**
 
 Mybatis Generator需要一个配置文件来生成代码，下面是配置文件的一个样例：
-\[xml\]
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
 PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 
  </context>
 </generatorConfiguration>
-\[/xml\]
+```
 
 配置文件的详细语法见[官方文档](http://mybatis.org/generator/)。
 
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
 
 _命令行_
 
-$ java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml
+`$ java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml`
 
 _eclipse插件_
 
@@ -85,6 +85,3 @@ _eclipse插件_
 
 可以通过file->new->Mybatis->Mybatis Generator Configuration File 新建配置文件
 在配置文件上右击选择Generate Mybatis/iBatis Artifacts产生mapper接口和实体POJO
-
-**\===
-\[erq\]**
