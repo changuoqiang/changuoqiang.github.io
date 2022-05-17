@@ -62,7 +62,7 @@ c3p0-0.9.2.1.jar
 **配置**
 
 Spring配置文件spring-servlet.xml
-\[xml\]
+```xml
  <!-- C3P0 pooled datasource -->
  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
  destroy-method="close">
@@ -81,24 +81,24 @@ Spring配置文件spring-servlet.xml
 
  <!-- scanning for mappers -->
  <mybatis:scan base-package="net.openwares.test.mapper" />
-\[/xml\]
+```
 其中配置了C3P0 jdbc数据源dataSource，使用刚配置好的spring数据源dataSource配置MyBatis的SqlSessionFactoryBean,用来产生mapper需要的sqlsession,最后是自动扫描包下面的mapper,并生成相应接口的代理实现类。
 不要忘了在spring-servlet.xml中添加mybatis 名字空间，如下：
-\[xml\]
+```xml
 <beans xmlns="http://www.springframework.org/schema/beans"
  xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
  xsi:schemaLocation="
  http://mybatis.org/schema/mybatis-spring
  http://mybatis.org/schema/mybatis-spring.xsd">
-\[/xml\]
+```
 
 WEB-INF/jdbc.properties文件
-\[java\]
+```java
 jdbc.driverClassName=org.postgresql.Driver
 jdbc.url=jdbc:postgresql://localhost/testdb
 jdbc.username=postgres
 jdbc.password=postgres
-\[/java\]
+```
 
 MyBatis的其他配置可以设置在WEB-INF/mybatis.xml文件中,但不用再设置environments元素，因为MyBatis-Spring会使用spring配置的数据库环境包括数据源和事务配置。
 
@@ -112,7 +112,7 @@ MyBatis的其他配置可以设置在WEB-INF/mybatis.xml文件中,但不用再�
 **简单示例代码**
 
 与前面的例子一样，这里只是把前端提交的加数augend和被加数addend存入postgresql数据库，PostgreSQL建库脚本testdb.sql如下：
-\[sql\]
+```sql
 CREATE DATABASE testdb;
 
 \\c testdb;
@@ -121,7 +121,7 @@ CREATE TABLE Attender(
  augend int,
  addend int
 );
-\[/sql\]
+```
 
 然后执行命令行建库,psql的简单使用参见 [PostgreSQL初步](https://openwares.net/database/postgres_first.html)
 ```js
@@ -133,7 +133,7 @@ MyBatis mapper
 mapper分为两部分，一个是java接口，另一个是xml配置文件，这两个文件要放置在一个目录下，而且接口的全限定接口名一定要与xml配置文件中mapper元素的命名空间完全一致。MyBatis会扫描xml为mapper接口生成实现类，并注册到spring容器中，供应用程序使用。这个mapper接口实际上就是一个DAO接口。
 
 先看mapper配置文件
-\[xml\]
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -146,10 +146,10 @@ mapper分为两部分，一个是java接口，另一个是xml配置文件，这�
  insert into attender (augend, addend) values (#{augend},#{addend})
  </insert>
 </mapper>
-\[/xml\]
+```
 
 mapper接口代码：
-\[java\]
+```java
 package net.openwares.test.mapper;
 
 import java.util.List;
@@ -159,13 +159,13 @@ public interface AttenderMapper{
 
  void insertAttender(AttenderPO attender);
 }
-\[/java\]
+```
 
 接口全限定类名和xml配置文件中mapper的命名空间都为net.openwares.test.mapper.AttenderMapper，有了这些信息，无需实现mapper接口,
 mybatis会自动提供接口的实现。
 
 最后使用此接口将客户提交的数据持久化到数据库
-\[java\]
+```java
 @Controller
 public class Persistent{
 
@@ -190,13 +190,10 @@ public class Persistent{
  return outcome;
  }
 }
-\[/java\]
+```
 
 使用@Autowired(required=true)自动注入依赖attenderMapper即可。
 
 因为是简单的示例，这里没有使用事务管理，也没有仔细的分层，将代码直接写入了controller。
 
 [完整的示例代码下载](/downloads/persistent.war)。
-
-**\===
-\[erq\]**
