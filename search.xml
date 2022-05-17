@@ -14155,23 +14155,36 @@ if (!document.all) {
 <ol>
 <li> <strong>简单数据类型</strong></li>
 </ol>
-<p>mapper接口方法:<br>[java]<br>User selectByPrimaryKey(Integer id);<br>[/java]<br>sql映射:<br>[xml]<br> <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" ><br> select<br> <include refid="Base_Column_List" /><br> from base.tb_user<br> where id = #{id,jdbcType=INTEGER}<br> </select><br>[/xml]</p>
+<p>mapper接口方法:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">User <span class="title">selectByPrimaryKey</span><span class="params">(Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>sql映射:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectByPrimaryKey&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.lang.Integer&quot;</span> &gt;</span></span><br><span class="line">select </span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;Base_Column_List&quot;</span> /&gt;</span></span><br><span class="line">from base.tb_user</span><br><span class="line">where id = #&#123;id,jdbcType=INTEGER&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>对于简单数据类型,sql映射语句中直接#{变量名}这种方式引用就行了,其实这里的”变量名”可以是任意的。mapper接口方法传递过来的值,至于其叫什么名字其实是不可考也没必要知道的。<br>而且JAVA反射只能获取方法参数的类型,是无从得知方法参数的名字的。</p>
 <p>比如上面这个示例中,使用#{id}来引用只是比较直观而已,使用其他名字来引用也是一样的。所以当在if元素中test传递的参数时,就必须要用_parameter来引用这个参数了。像这样：</p>
-<p>[xml]<br> <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" ><br> select<br> <include refid="Base_Column_List" /><br> from tb_user<br> <if test="_parameter != 0"><br> where id = #{id,jdbcType=INTEGER}<br> </if><br> </select><br>[/xml]<br>如果test测试条件中使用id就会提示错误,因为这个参数其实没有名字,只是一个值或引用而已,只能使用_parameter来引用。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectByPrimaryKey&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;BaseResultMap&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.lang.Integer&quot;</span> &gt;</span></span><br><span class="line">select </span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;Base_Column_List&quot;</span> /&gt;</span></span><br><span class="line">from tb_user</span><br><span class="line"><span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;_parameter != 0&quot;</span>&gt;</span></span><br><span class="line">where id = #&#123;id,jdbcType=INTEGER&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果test测试条件中使用id就会提示错误,因为这个参数其实没有名字,只是一个值或引用而已,只能使用_parameter来引用。</p>
 <ol start="2">
-<li><strong>对象类型</strong><br>传入JAVA复杂对象类型的话,sql映射语句中就可以直接引用对象的属性名了,这里的属性名是实实在在的真实的名字,不是随意指定的。<br>mapper接口方法:<br>[java]<br>int insert(User user);<br>[/java]<br>sql映射：<br>[xml]<insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-insert into tb_user (name, sex) 
-values (#{name,jdbcType=CHAR}, #{sex,jdbcType=CHAR})
-\[/xml\]
+<li> <strong>对象类型</strong><br>传入JAVA复杂对象类型的话,sql映射语句中就可以直接引用对象的属性名了,这里的属性名是实实在在的真实的名字,不是随意指定的。<br>mapper接口方法:<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">insert</span><span class="params">(User user)</span></span>;</span><br></pre></td></tr></table></figure>
+sql映射：<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insert&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;User&quot;</span> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span>&gt;</span></span><br><span class="line">insert into tb_user (name, sex) </span><br><span class="line">values (#&#123;name,jdbcType=CHAR&#125;, #&#123;sex,jdbcType=CHAR&#125;)</span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
 <p>虽然可以明确的引用对象的属性名了,但如果要在if元素中测试传入的user参数,仍然要使用_parameter来引用传递进来的实际参数,因为传递进来的User对象的名字是不可考的。如果测试对象的属性,则直接引用属性名字就可以了。</p>
-<p>测试user对象:<br>[xml]<br><if test="_parameter != null"><br>[/xml]<br>测试user对象的属性:<br>[xml]<br><if test="name != null"><br>[/xml]<br>3.  <strong>map类型</strong></p>
+<p>测试user对象:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;_parameter != null&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>测试user对象的属性:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;name != null&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li> <strong>map类型</strong></li>
+</ol>
 <p>传入map类型,直接通过#{keyname}就可以引用到键对应的值。使用@param注释的多个参数值也会组装成一个map数据结构,和直接传递map进来没有区别。</p>
-<p>mapper接口:<br>[java]<br>int updateByExample(@Param(“user”) User user, @Param(“example”) UserExample example);<br>[/java]</p>
-<p>sql映射:<br>[xml]<br> <update id="updateByExample" parameterType="map" ><br> update tb_user<br> set id = #{user.id,jdbcType=INTEGER},<br> …<br> <if test="_parameter != null" ><br> <include refid="Update_By_Example_Where_Clause" /><br> </if><br>[/xml]<br>注意这里测试传递进来的map是否为空,仍然使用_parameter</p>
+<p>mapper接口:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">updateByExample</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span> User user, <span class="meta">@Param(&quot;example&quot;)</span> UserExample example)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>sql映射:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">&quot;updateByExample&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;map&quot;</span> &gt;</span></span><br><span class="line">update tb_user</span><br><span class="line">set id = #&#123;user.id,jdbcType=INTEGER&#125;,</span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;_parameter != null&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">&quot;Update_By_Example_Where_Clause&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>注意这里测试传递进来的map是否为空,仍然使用_parameter</p>
 <ol start="4">
 <li> <strong>集合类型</strong></li>
 </ol>
@@ -14180,20 +14193,20 @@ values (#{name,jdbcType=CHAR}, #{sex,jdbcType=CHAR})
 </blockquote>
 <p>可以传递一个List或Array类型的对象作为参数,MyBatis会自动的将List或Array对象包装到一个Map对象中,List类型对象会使用list作为键名,而Array对象会用array作为键名。</p>
 <p>集合类型通常用于构造IN条件，sql映射文件中使用foreach元素来遍历List或Array元素。</p>
-<p>mapper接口:<br>[java]<br>User selectUserInList(List<Interger> idlist);<br>[/java]<br>sql动态语句映射:<br>[xml]<br><select id="selectUserInList" resultType="User"><br> SELECT *<br> FROM USER<br> WHERE ID in<br> <foreach item="item" index="index" collection="list"
- open="(" separator="," close=")"><br> #{item}<br> </foreach><br></select><br>[/xml]</p>
+<p>mapper接口:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">User <span class="title">selectUserInList</span><span class="params">(List&lt;Interger&gt; idlist)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>sql动态语句映射:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectUserInList&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line"> SELECT *</span><br><span class="line"> FROM USER</span><br><span class="line"> WHERE ID in</span><br><span class="line"> <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> <span class="attr">index</span>=<span class="string">&quot;index&quot;</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">open</span>=<span class="string">&quot;(&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span> <span class="attr">close</span>=<span class="string">&quot;)&quot;</span>&gt;</span></span><br><span class="line"> #&#123;item&#125;</span><br><span class="line"> <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <ol start="6">
-<li>对象类型中的集合属性<br>对于单独传递的List或Array,在SQL映射文件中映射时,只能通过list或array来引用。但是如果对象类型有属性的类型为List或Array，则在sql映射文件的foreach元素中,可以直接使用属性名字来引用。<br>mapper接口:<br>[java]<br>List<User> selectByExample(UserExample example);<br>[/java]<br>sql映射文件:<br>[xml]<where >
-<foreach collection="oredCriteria" item="criteria" separator="or" >
-<if test="criteria.valid" >
-\[/xml\]
+<li> 对象类型中的集合属性<br>对于单独传递的List或Array,在SQL映射文件中映射时,只能通过list或array来引用。但是如果对象类型有属性的类型为List或Array，则在sql映射文件的foreach元素中,可以直接使用属性名字来引用。<br>mapper接口:<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">List&lt;User&gt; <span class="title">selectByExample</span><span class="params">(UserExample example)</span></span>;</span><br></pre></td></tr></table></figure>
+sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">where</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;oredCriteria&quot;</span> <span class="attr">item</span>=<span class="string">&quot;criteria&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;or&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;criteria.valid&quot;</span> &gt;</span></span><br></pre></td></tr></table></figure>
 
 </li>
 </ol>
 <p>在这里,UserExample有一个属性叫oredCriteria,其类型为List,所以在foreach元素里直接用属性名oredCriteria引用这个List即可。</p>
 <p>item=”criteria”表示使用criteria这个名字引用每一个集合中的每一个List或Array元素</p>
 <p>参考：<br><a href="http://zhuyuehua.iteye.com/blog/1717525">MYBATIS 的parameter</a></p>
-<p><strong>===<br>[erq]</strong></p>
 ]]></content>
       <categories>
         <category>Database</category>
@@ -20317,21 +20330,14 @@ Disk identifier: 0x0005fc82
 
 <p>以上jar包都放入WEB-INF/lib目录下</p>
 <p><strong>配置</strong></p>
-<p>Spring配置文件spring-servlet.xml<br>[xml]<br> <!-- C3P0 pooled datasource --><br> <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
- destroy-method="close"><br> <property name="driverClass" value="${jdbc.driverClassName}" /><br> <property name="jdbcUrl" value="${jdbc.url}" /><br> <property name="user" value="${jdbc.username}" /><br> <property name="password" value="${jdbc.password}" /><br> </bean><br> &lt;context:property-placeholder location=”WEB-INF/jdbc.properties” /&gt;</p>
- <!-- SqlSessionFactory for MyBatis -->
- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
- <property name="dataSource" ref="dataSource" />
- <property name="configLocation" value="WEB-INF/mybatis.xml" />
- </bean>
+<p>Spring配置文件spring-servlet.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- C3P0 pooled datasource --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span></span></span><br><span class="line"><span class="tag"><span class="attr">destroy-method</span>=<span class="string">&quot;close&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;driverClass&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.driverClassName&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;jdbcUrl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">&quot;WEB-INF/jdbc.properties&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- SqlSessionFactory for MyBatis --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;sqlSessionFactory&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;configLocation&quot;</span> <span class="attr">value</span>=<span class="string">&quot;WEB-INF/mybatis.xml&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- scanning for mappers --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mybatis:scan</span> <span class="attr">base-package</span>=<span class="string">&quot;net.openwares.test.mapper&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>其中配置了C3P0 jdbc数据源dataSource，使用刚配置好的spring数据源dataSource配置MyBatis的SqlSessionFactoryBean,用来产生mapper需要的sqlsession,最后是自动扫描包下面的mapper,并生成相应接口的代理实现类。<br>不要忘了在spring-servlet.xml中添加mybatis 名字空间，如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:mybatis</span>=<span class="string">&quot;http://mybatis.org/schema/mybatis-spring&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://mybatis.org/schema/mybatis-spring</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://mybatis.org/schema/mybatis-spring.xsd&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
- <!-- scanning for mappers -->
-<p> &lt;mybatis:scan base-package=”net.openwares.test.mapper” /&gt;<br>[/xml]<br>其中配置了C3P0 jdbc数据源dataSource，使用刚配置好的spring数据源dataSource配置MyBatis的SqlSessionFactoryBean,用来产生mapper需要的sqlsession,最后是自动扫描包下面的mapper,并生成相应接口的代理实现类。<br>不要忘了在spring-servlet.xml中添加mybatis 名字空间，如下：<br>[xml]<br><beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
- xsi:schemaLocation="
- http://mybatis.org/schema/mybatis-spring
- http://mybatis.org/schema/mybatis-spring.xsd"><br>[/xml]</p>
-<p>WEB-INF/jdbc.properties文件<br>[java]<br>jdbc.driverClassName=org.postgresql.Driver<br>jdbc.url=jdbc:postgresql://localhost/testdb<br>jdbc.username=postgres<br>jdbc.password=postgres<br>[/java]</p>
+<p>WEB-INF/jdbc.properties文件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">jdbc.driverClassName=org.postgresql.Driver</span><br><span class="line">jdbc.url=jdbc:postgresql:<span class="comment">//localhost/testdb</span></span><br><span class="line">jdbc.username=postgres</span><br><span class="line">jdbc.password=postgres</span><br></pre></td></tr></table></figure>
+
 <p>MyBatis的其他配置可以设置在WEB-INF/mybatis.xml文件中,但不用再设置environments元素，因为MyBatis-Spring会使用spring配置的数据库环境包括数据源和事务配置。</p>
 <p>这样配置就算完成了，MyBatis-Spring会自动扫描类classpath下包net.openwares.test.mapper里面的mapper配置xml和接口,生成mapper接口的代理实现类，并自动注入sqlSessionFactory为mapper提供可用的sqlSession。<br>如果有多个包需要扫描，只需用逗号或分号分隔包名即可。这是设置mapper bean最简单的方式。</p>
 <p>而且,MyBatis-Spring自动扫描产生的mapper接口实现类是线程安全的,也完全不用再与sqlsession打交道,MyBatis-Spring会在背后默默的处理好这一切。</p>
@@ -20339,34 +20345,27 @@ Disk identifier: 0x0005fc82
 <p>Rather than code data access objects (DAOs) manually using SqlSessionDaoSupport or SqlSessionTemplate, Mybatis-Spring can create a thread safe <a href="http://mybatis.github.io/spring/mappers.html">mapper</a> that you can inject directly into other beans</p>
 </blockquote>
 <p><strong>简单示例代码</strong></p>
-<p>与前面的例子一样，这里只是把前端提交的加数augend和被加数addend存入postgresql数据库，PostgreSQL建库脚本testdb.sql如下：<br>[sql]<br>CREATE DATABASE testdb;</p>
-<p>\c testdb;</p>
-<p>CREATE TABLE Attender(<br> augend int,<br> addend int<br>);<br>[/sql]</p>
+<p>与前面的例子一样，这里只是把前端提交的加数augend和被加数addend存入postgresql数据库，PostgreSQL建库脚本testdb.sql如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> testdb;</span><br><span class="line"></span><br><span class="line">\\c testdb;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Attender(</span><br><span class="line"> augend <span class="built_in">int</span>,</span><br><span class="line"> addend <span class="built_in">int</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
 <p>然后执行命令行建库,psql的简单使用参见 <a href="https://openwares.net/database/postgres_first.html">PostgreSQL初步</a></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ psql -U postgres -h localhost -f testdb.sql</span><br></pre></td></tr></table></figure>
 
 <p>MyBatis mapper</p>
 <p>mapper分为两部分，一个是java接口，另一个是xml配置文件，这两个文件要放置在一个目录下，而且接口的全限定接口名一定要与xml配置文件中mapper元素的命名空间完全一致。MyBatis会扫描xml为mapper接口生成实现类，并注册到spring容器中，供应用程序使用。这个mapper接口实际上就是一个DAO接口。</p>
-<p>先看mapper配置文件<br>[xml]<br><?xml version="1.0" encoding="UTF-8" ?><br><!DOCTYPE mapper
- PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
- "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><br><mapper namespace="net.openwares.test.mapper.AttenderMapper"><br> <select id="selectAttender" parameterType="int" resultType="net.openwares.test.mapper.AttenderPO"><br> select * from attender where augend = #{augend}<br> </select><br> <insert id="insertAttender" parameterType="net.openwares.test.mapper.AttenderPO"><br> insert into attender (augend, addend) values (#{augend},#{addend})<br> </insert><br></mapper><br>[/xml]</p>
-<p>mapper接口代码：<br>[java]<br>package net.openwares.test.mapper;</p>
-<p>import java.util.List;</p>
-<p>public interface AttenderMapper{<br> List<AttenderPO> getAttender(String augend);</p>
-<p> void insertAttender(AttenderPO attender);<br>}<br>[/java]</p>
+<p>先看mapper配置文件</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">mapper</span></span></span><br><span class="line"><span class="meta"> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta"> <span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;net.openwares.test.mapper.AttenderMapper&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectAttender&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;int&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;net.openwares.test.mapper.AttenderPO&quot;</span>&gt;</span></span><br><span class="line"> select * from attender where augend = #&#123;augend&#125;</span><br><span class="line"> <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertAttender&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;net.openwares.test.mapper.AttenderPO&quot;</span>&gt;</span></span><br><span class="line"> insert into attender (augend, addend) values (#&#123;augend&#125;,#&#123;addend&#125;)</span><br><span class="line"> <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>mapper接口代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> net.openwares.test.mapper;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AttenderMapper</span></span>&#123;</span><br><span class="line"> <span class="function">List&lt;AttenderPO&gt; <span class="title">getAttender</span><span class="params">(String augend)</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">insertAttender</span><span class="params">(AttenderPO attender)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>接口全限定类名和xml配置文件中mapper的命名空间都为net.openwares.test.mapper.AttenderMapper，有了这些信息，无需实现mapper接口,<br>mybatis会自动提供接口的实现。</p>
-<p>最后使用此接口将客户提交的数据持久化到数据库<br>[java]<br>@Controller<br>public class Persistent{</p>
-<p> @Autowired<br> private Outcome outcome;</p>
-<p> @Autowired(required=true)<br> private AttenderMapper attenderMapper;</p>
-<p> @RequestMapping(“/ajaxcalc”)<br> public @ResponseBody Outcome getResult(@RequestBody Attender attender){</p>
-<p> //persistent Attender object<br> AttenderPO attenderPO = new AttenderPO();</p>
-<p> attenderPO.setAugend(attender.getAugend());<br> attenderPO.setAddend(attender.getAddend());</p>
-<p> attenderMapper.insertAttender(attenderPO);</p>
-<p> outcome.setResult(attender.getAugend() + attender.getAddend());<br> return outcome;<br> }<br>}<br>[/java]</p>
+<p>最后使用此接口将客户提交的数据持久化到数据库</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Persistent</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Autowired</span></span><br><span class="line"> <span class="keyword">private</span> Outcome outcome;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Autowired(required=true)</span></span><br><span class="line"> <span class="keyword">private</span> AttenderMapper attenderMapper;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@RequestMapping(&quot;/ajaxcalc&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="meta">@ResponseBody</span> <span class="function">Outcome <span class="title">getResult</span><span class="params">(<span class="meta">@RequestBody</span> Attender attender)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//persistent Attender object</span></span><br><span class="line"> AttenderPO attenderPO = <span class="keyword">new</span> AttenderPO();</span><br><span class="line"></span><br><span class="line"> attenderPO.setAugend(attender.getAugend());</span><br><span class="line"> attenderPO.setAddend(attender.getAddend());</span><br><span class="line"></span><br><span class="line"> attenderMapper.insertAttender(attenderPO);</span><br><span class="line"></span><br><span class="line"> outcome.setResult(attender.getAugend() + attender.getAddend());</span><br><span class="line"> <span class="keyword">return</span> outcome;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>使用@Autowired(required=true)自动注入依赖attenderMapper即可。</p>
 <p>因为是简单的示例，这里没有使用事务管理，也没有仔细的分层，将代码直接写入了controller。</p>
 <p><a href="/downloads/persistent.war">完整的示例代码下载</a>。</p>
-<p><strong>===<br>[erq]</strong></p>
 ]]></content>
       <categories>
         <category>java</category>
