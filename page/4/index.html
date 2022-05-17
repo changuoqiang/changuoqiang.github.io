@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/15/dd-io-performance-test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/15/dd-io-performance-test/" class="post-title-link" itemprop="url">dd命令测试磁盘IO性能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-15 13:46:02" itemprop="dateCreated datePublished" datetime="2019-11-15T13:46:02+08:00">2019-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ time dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/tmp/</span>test.img bs=1G count=<span class="number">1</span> oflag=dsync</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1151,110 +1231,6 @@
 <p><strong>lxd集成</strong></p>
 <p>lxd已经内置支持ceph集群存储,执行lxd init时，指定存储后端为ceph即可。<br>也可以使用lxc storage命令创建新的存储池。<br>lxd集群使用ceph后端存储可以创建高可用lxd容器，但是同一时刻只能有一个节点在运行一个容器实例，需要其他机制来自动故障转移。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rbd/">CEPH BLOCK DEVICE</a><br>[2]<a target="_blank" rel="noopener" href="https://amito.me/2018/Using-RBD-in-Ceph/">Ceph 中块设备 RBD 的基本用法</a><br>[3]<a target="_blank" rel="noopener" href="https://ubuntu.com/blog/ceph-storage-driver-in-lxd">Ceph storage driver in LXD</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/31/cephfs-using/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/31/cephfs-using/" class="post-title-link" itemprop="url">使用CephFS文件系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-31 23:01:57" itemprop="dateCreated datePublished" datetime="2019-10-31T23:01:57+08:00">2019-10-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>创建池</strong><br>ceph文件系统需要驻留在pool上，至少需要创建一个data和一个metadata pool</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph osd pool create cephfs_data <span class="number">128</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_data&#x27;</span> created</span><br><span class="line"></span><br><span class="line">$ sudo ceph osd pool create cephfs_metadata <span class="number">128</span></span><br><span class="line"><span class="built_in">Error</span> ERANGE: pg_num <span class="number">128</span> size <span class="number">3</span> would mean <span class="number">768</span> total pgs, which exceeds max <span class="number">750</span> (mon_max_pg_per_osd <span class="number">250</span> * num_in_osds <span class="number">3</span>)</span><br><span class="line">john@node6:~$ sudo ceph osd pool create cephfs_metadata <span class="number">24</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_metadata&#x27;</span> created</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建文件系统</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph fs <span class="keyword">new</span> cephfs cephfs_metadata cephfs_data</span><br><span class="line"><span class="keyword">new</span> fs <span class="keyword">with</span> metadata pool <span class="number">2</span> and data pool <span class="number">1</span></span><br><span class="line">$ sudo ceph fs ls</span><br><span class="line">name: cephfs, metadata pool: cephfs_metadata, data pools: \[cephfs_data \]</span><br></pre></td></tr></table></figure>
-<p>查看mds状态</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mds stat</span><br><span class="line">cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br></pre></td></tr></table></figure>
-<p>没有创建文件系统之前，所有的mds实例都为standby状态<br>集群状态</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, since 11m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> mds: cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br><span class="line"> osd: <span class="number">3</span> osds: <span class="number">3</span> up (since 11m), <span class="number">3</span> <span class="keyword">in</span> (since 3d)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">2</span> pools, <span class="number">152</span> pgs</span><br><span class="line"> objects: <span class="number">22</span> objects, <span class="number">2.2</span> KiB</span><br><span class="line"> usage: <span class="number">3.0</span> GiB used, <span class="number">18</span> GiB / <span class="number">21</span> GiB avail</span><br><span class="line"> pgs: <span class="number">152</span> active+clean</span><br></pre></td></tr></table></figure>
-
-<p><strong>fuse挂载cephfs</strong><br>安装客户端和fuse</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ceph-common ceph-fuse</span><br></pre></td></tr></table></figure>
-<p>将集群配置/etc/ceph/*拷贝到客户机相同位置<br>挂载</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse /path/to/mount</span><br></pre></td></tr></table></figure>
-<p>或者指定monitor地址</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse -m ip_of_monitor /path/to/mount</span><br></pre></td></tr></table></figure>
-<p>/etc/fstab:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">none /mnt/mycephfs fuse.ceph ceph.id=admin,_netdev,defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>这里指定使用admin用户，使用其他用户需要提前建立用户keyring</p>
-<p><strong>内核驱动挂载cephfs</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount.ceph <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/ /m</span>nt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br><span class="line">###or: sudo mount -t ceph 192.168.3.8:6789:/ /mnt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br></pre></td></tr></table></figure>
-<p>如果不指定name选项，默认使用guest用户<br>当前内核驱动使用msgr v1协议与ceph集群通讯，因此应该使用6789端口，指定3300端口无法连接。</p>
-<p><strong>后记：</strong><br>只要/etc/ceph目录下的文件普通用户可以读取，特别是keyring文件，那么普通用户就可以连接到集群使用所有的ceph命令。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/cephfs/createfs/">CREATE A CEPH FILESYSTEM</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/kernel/">MOUNT CEPHFS WITH THE KERNEL DRIVER</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/administration/">CEPHFS ADMINISTRATIVE COMMANDS</a><br>[4]<a target="_blank" rel="noopener" href="https://runsisi.com/2019-02-14/cephx">cephx</a><br>[5]<a target="_blank" rel="noopener" href="https://int32bit.me/2016/05/19/Ceph-Pool%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Ceph Pool操作总结</a><br>[6]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/jewel/rados/operations/pools/">POOLS</a><br>[7]<a target="_blank" rel="noopener" href="https://blog.programster.org/ubuntu-14-04-mount-ceph-filesystem">Mount Ceph Filesystem</a><br>[8]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/man/8/mount.fuse.ceph/">MOUNT CEPHFS IN YOUR FILE SYSTEMS TABLE</a><br>[9]<a target="_blank" rel="noopener" href="https://amito.me/2018/CephFS-Introduction-Installation-and-Configuration/">Ceph 文件系统 CephFS 的介绍与配置</a><br>[10]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/cephfs-shell/">CEPHFS SHELL</a></p>
 
       
     </div>

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/10/10/ora-01654/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/10/10/ora-01654/" class="post-title-link" itemprop="url">恢复目录表空间满导致rman错误ORA-01654</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-10-10 10:18:59" itemprop="dateCreated datePublished" datetime="2014-10-10T10:18:59+08:00">2014-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>查看rman脚本备份日志，发现如下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">starting full resync <span class="keyword">of</span> recovery catalog</span><br><span class="line">RMAN-<span class="number">00571</span>: ===========================================================</span><br><span class="line">RMAN-<span class="number">00569</span>: =============== ERROR MESSAGE STACK FOLLOWS ===============</span><br><span class="line">RMAN-<span class="number">00571</span>: ===========================================================</span><br><span class="line">RMAN-<span class="number">03002</span>: failure <span class="keyword">of</span> crosscheck command at <span class="number">10</span>/<span class="number">10</span>/<span class="number">2014</span> <span class="number">10</span>:<span class="number">26</span>:<span class="number">33</span></span><br><span class="line">RMAN-<span class="number">03014</span>: implicit resync <span class="keyword">of</span> recovery catalog failed</span><br><span class="line">RMAN-<span class="number">03009</span>: failure <span class="keyword">of</span> full resync command on <span class="keyword">default</span> channel at <span class="number">10</span>/<span class="number">10</span>/<span class="number">2014</span> <span class="number">10</span>:<span class="number">26</span>:<span class="number">33</span></span><br><span class="line">ORA-<span class="number">01654</span>: unable to extend index RMAN_USR.RLH_U1 by <span class="number">128</span> <span class="keyword">in</span> tablespace RMAN_TS</span><br></pre></td></tr></table></figure>
+
+<p>rman恢复目录所在表空间无法扩展</p>
+<p>查看表空间利用率<br>[sql]<br>SQL&gt; SELECT * FROM dba_tablespace_usage_metrics ORDER BY used_percent DESC;<br>[/sql]<br>恢复目录所在表空间利用率已经达到96%</p>
+<p>扩大数据文件大小<br>[sql]<br>SQL&gt; alter database datafile ‘/u01/oradata/catlogdb/rman01.dbf’ resize 300M;<br>[/sql]</p>
+<p>重新运行rman,问题解决。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1025,90 +1113,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ echo $BASH_VERSION</span><br><span class="line"><span class="number">4.3</span><span class="number">.24</span>(<span class="number">1</span>)-release</span><br><span class="line"></span><br><span class="line">$ bash --version</span><br><span class="line">GNU bash, version <span class="number">4.3</span><span class="number">.24</span>(<span class="number">1</span>)-release (x86_64-apple-darwin13<span class="number">.3</span><span class="number">.0</span>)</span><br><span class="line">Copyright (C) <span class="number">2013</span> Free Software Foundation, Inc.</span><br><span class="line">License GPLv3+: GNU GPL version <span class="number">3</span> or later &lt;http:<span class="comment">//gnu.org/licenses/gpl.html&gt;</span></span><br><span class="line"></span><br><span class="line">This is free software; you are free to change and redistribute it.</span><br><span class="line">There is NO WARRANTY, to the extent permitted by law.</span><br></pre></td></tr></table></figure>
 
 <p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/09/20/mac-os-x%E5%8D%B8%E8%BD%BDjdk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/09/20/mac-os-x%E5%8D%B8%E8%BD%BDjdk/" class="post-title-link" itemprop="url">Mac OS X卸载JDK</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-09-20 12:54:57" itemprop="dateCreated datePublished" datetime="2014-09-20T12:54:57+08:00">2014-09-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>直接删除jdk目录即可</p>
-<p>JDK所在目录为/Library/Java/JavaVirtualMachines/jdk_major.minor.macro_[_update].jdk</p>
-<p>比如删除以下 jdk 1.8</p>
-<h1 id="rm-rf-Library-Java-JavaVirtualMachines-jdk1-8-0-06-jdk"><a href="#rm-rf-Library-Java-JavaVirtualMachines-jdk1-8-0-06-jdk" class="headerlink" title="rm -rf /Library/Java/JavaVirtualMachines/jdk1.8.0_06.jdk"></a>rm -rf /Library/Java/JavaVirtualMachines/jdk1.8.0_06.jdk</h1><p><strong>===<br>[erq]</strong></p>
 
       
     </div>

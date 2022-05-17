@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,91 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/26/7z-compatibility-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/26/7z-compatibility-issue/" class="post-title-link" itemprop="url">7z版本兼容性问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-26 10:43:09" itemprop="dateCreated datePublished" datetime="2019-06-26T10:43:09+08:00">2019-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>有一个7z格式分卷压缩的备份文件，使用7z解压缩时出现错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ 7z x db_2019_06_25.7z<span class="number">.001</span> </span><br><span class="line"></span><br><span class="line"><span class="number">7</span>-Zip \[<span class="number">64</span>\] <span class="number">16.02</span> : Copyright (c) <span class="number">1999</span>-<span class="number">2016</span> Igor Pavlov : <span class="number">2016</span>-<span class="number">05</span>-<span class="number">21</span></span><br><span class="line">p7zip Version <span class="number">16.02</span> (locale=en_US.UTF-<span class="number">8</span>,Utf16=on,HugeFiles=on,<span class="number">64</span> bits,<span class="number">4</span> CPUs Intel(R) Core(TM) i5-<span class="number">6400</span> CPU @ <span class="number">2.</span>70GHz (<span class="number">506E3</span>),ASM,AES-NI)</span><br><span class="line"></span><br><span class="line">Scanning the drive <span class="keyword">for</span> archives:</span><br><span class="line"><span class="number">1</span> file, <span class="number">4697620480</span> bytes (<span class="number">4480</span> MiB)</span><br><span class="line"></span><br><span class="line">Extracting archive: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">ERROR: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">db_2019_06_25.7z</span><br><span class="line">Open ERROR: Can not open the file <span class="keyword">as</span> \[7z\] archive</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">Can<span class="string">&#x27;t open as archive: 1</span></span><br><span class="line"><span class="string">Files: 0</span></span><br><span class="line"><span class="string">Size: 0</span></span><br><span class="line"><span class="string">Compressed: 0</span></span><br><span class="line"><span class="string">$ file db_2019_06_25.7z.001</span></span><br><span class="line"><span class="string">db_2019_06_25.7z.001: 7-zip archive data, version 0.3</span></span><br></pre></td></tr></table></figure>
+
+<p>因为这个备份文件是在一个debian jessie服务器上使用7-Zip [64] 9.20分卷压缩的，7z archive 版本为0.3<br>而解压缩的机器使用的是7-Zip [64] 16.02，7z archive版本为0.4<br>使用7z 9.20解压缩此文档没有问题，这是7z的向后兼容性问题</p>
+<p>备份服务器升级到debian stretch, 7z版本升级到了7-Zip [64] 16.02，这个问题就不存在了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1095,107 +1180,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config set test8 raw.lxc <span class="string">&quot;lxc.apparmor.profile=unconfined&quot;</span></span><br><span class="line">$ lxc restart test8</span><br></pre></td></tr></table></figure>
 
 <p>然后就可以正常启动tomcat9服务了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-copy-move-containers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/04/lxd-copy-move-containers/" class="post-title-link" itemprop="url">lxd拷贝/迁移容器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-04 22:20:16" itemprop="dateCreated datePublished" datetime="2019-06-04T22:20:16+08:00">2019-06-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>假设有两个lxd host，分别为lxd-l和lxd-r,在lxd-l机器上添加一个remote叫做lxd-r</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add lxd-r &lt;ip <span class="keyword">of</span> lxd-r&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>拷贝容器</strong></p>
-<ol>
-<li>停止容器并拷贝到远程</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop pridns</span><br><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line">$ lxc start pridns</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>制作容器快照，第一个快照为snap0，以此类推，然后拷贝快照到lxd-r</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot my-container</span><br><span class="line">$ lxc copy my-container/snap0 lxd-r:my-container-backup</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>直接拷贝运行中的容器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line"><span class="built_in">Error</span>: Unable to perform container live migration. CRIU isn<span class="string">&#x27;t installed on the source server</span></span><br></pre></td></tr></table></figure>
-<p>直接拷贝运行中的容器叫做live migration，需要将其运行状态一起拷贝到目标容器，保持二者完全一致，这需要CRIU的支持，lxd已经打包了CUIR,需要在本地和远程host上分别启用CRIU</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap set lxd criu.enable=<span class="literal">true</span></span><br><span class="line">$ sudo systemctl reload snap.lxd.daemon</span><br></pre></td></tr></table></figure>
-<p>然后再拷贝</p>
-</li>
-</ol>
-<p>lxc move</p>
 
       
     </div>

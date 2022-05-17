@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/05/07/vim%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E4%B8%8E%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/05/07/vim%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E4%B8%8E%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">vim贪婪匹配与非贪婪匹配</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-05-07 20:10:51" itemprop="dateCreated datePublished" datetime="2015-05-07T20:10:51+08:00">2015-05-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>贪婪匹配模式会尽可能多的匹配结果，非贪婪模式则相反，尽可能少的去匹配。</p>
+<p>以下这些为贪婪匹配,参见:help /\{</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\\&#123;n,m&#125; Matches n to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;n&#125; Matches n <span class="keyword">of</span> the preceding atom</span><br><span class="line">\\&#123;n,&#125; Matches at least n <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible </span><br><span class="line">\\&#123;,m&#125; Matches <span class="number">0</span> to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;&#125; Matches <span class="number">0</span> or more <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible (like *)</span><br></pre></td></tr></table></figure>
+
+<p>以下这些为非贪婪匹配,参见:hep /\{-</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\\&#123;-n,m&#125; matches n to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-n&#125; matches n <span class="keyword">of</span> the preceding atom </span><br><span class="line">\\&#123;-n,&#125; matches at least n <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-,m&#125; matches <span class="number">0</span> to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-&#125; matches <span class="number">0</span> or more <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br></pre></td></tr></table></figure>
+
+<p>因此*<em>.\{-}可以实现.<em>的非贪婪匹配，.\{-1,}可以实现.+的非贪婪匹配</em></em></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -971,94 +1060,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>发现一个不错的git托管开源程序<a target="_blank" rel="noopener" href="http://gogs.io/">Gogs</a>，go语言开发的，据说比gitlab还好用，真的吗?</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/07/setuid-setgid/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/04/07/setuid-setgid/" class="post-title-link" itemprop="url">setuid与setgid</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-04-07 16:16:39" itemprop="dateCreated datePublished" datetime="2015-04-07T16:16:39+08:00">2015-04-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>setuid与setgid使可执行二进制文件(不包括脚本)无论用哪个用户执行都具有文件属主或属组的权限。<br>比如一个文件的属主为root,如果设置了setuid位,则一个非特权用户执行此程序时就可以以root的身份运行此程序，可以访问到非特权用户访问不到的用户资源。setgid与此同。</p>
-<p>setuid</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chmod u+s binary </span><br></pre></td></tr></table></figure>
-
-<p>setgid</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chmod g+s binary</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

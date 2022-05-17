@@ -31,7 +31,7 @@
 <meta property="og:description" content="Mybatis Generator可以自动生成模型实体对象POJO,mapper接口和对应的xml配置文件。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2013-11-23T03:55:35.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.313Z">
+<meta property="article:modified_time" content="2022-05-16T13:30:25.733Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-05-16 21:30:25" itemprop="dateModified" datetime="2022-05-16T21:30:25+08:00">2022-05-16</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -330,61 +330,16 @@
 <p><a target="_blank" rel="noopener" href="http://mybatis.org/generator/">Mybatis Generator</a>提到的模型model其实就是实体entity。</p>
 <p>Mybatis Generator的核心就一个jar包mybatis-generator-core-1.3.2.jar，可以从命令行运行，也有相应的eclipse插件。</p>
 <p><strong>配置文件</strong></p>
-<p>Mybatis Generator需要一个配置文件来生成代码，下面是配置文件的一个样例：<br>[xml]<br><?xml version="1.0" encoding="UTF-8"?><br><!DOCTYPE generatorConfiguration
-PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"></p>
-<generatorConfiguration>
- <classPathEntry location="/path/to/WebRoot/WEB-INF/lib/postgresql-9.2-1003.jdbc4.jar" />
- <context id="BuildingTables" targetRuntime="MyBatis3">
-
- <commentGenerator>
- <property name="suppressAllComments" value="true" />
- <property name="suppressDate" value="true" />
- </commentGenerator>
-
-<p> <jdbcConnection driverClass="org.postgresql.Driver"
- connectionURL="jdbc:postgresql://localhost/dbname"
- userId="xxx"
- password="xxx"><br> </jdbcConnection></p>
- <javaTypeResolver >
- <property name="forceBigDecimals" value="true" />
- </javaTypeResolver>
-
- <javaModelGenerator targetPackage="org.xxx.xxx.entity" targetProject="project_name/src/main">
- <property name="enableSubPackages" value="false" />
- <property name="trimStrings" value="true" />
- </javaModelGenerator>
-
- <sqlMapGenerator targetPackage="org.xxx.xxx.dao" targetProject="project_name/src/main">
- <property name="enableSubPackages" value="false" />
- </sqlMapGenerator>
-
- <javaClientGenerator type="XMLMAPPER" targetPackage="org.xxx.xxx.dao" targetProject="project_name/src/main">
- <property name="enableSubPackages" value="false" />
- </javaClientGenerator>
-
- <table schema="base" tableName="tb_building" domainObjectName="Building" >
- <property name="useActualColumnNames" value="true"/>
- </table>
- <table schema="base" tableName="tb_floor" domainObjectName="Floor" >
- <property name="useActualColumnNames" value="true"/>
- </table>
- <table schema="base" tableName="tb_house" domainObjectName="House" >
- <property name="useActualColumnNames" value="true"/>
- </table>
-
- </context>
-</generatorConfiguration>
-\[/xml\]
+<p>Mybatis Generator需要一个配置文件来生成代码，下面是配置文件的一个样例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">generatorConfiguration</span></span></span><br><span class="line"><span class="meta">PUBLIC <span class="meta-string">&quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;</span></span></span><br><span class="line"><span class="meta"><span class="meta-string">&quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">generatorConfiguration</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">classPathEntry</span> <span class="attr">location</span>=<span class="string">&quot;/path/to/WebRoot/WEB-INF/lib/postgresql-9.2-1003.jdbc4.jar&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">context</span> <span class="attr">id</span>=<span class="string">&quot;BuildingTables&quot;</span> <span class="attr">targetRuntime</span>=<span class="string">&quot;MyBatis3&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suppressAllComments&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suppressDate&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">jdbcConnection</span> <span class="attr">driverClass</span>=<span class="string">&quot;org.postgresql.Driver&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">connectionURL</span>=<span class="string">&quot;jdbc:postgresql://localhost/dbname&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">userId</span>=<span class="string">&quot;xxx&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">password</span>=<span class="string">&quot;xxx&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">jdbcConnection</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">javaTypeResolver</span> &gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;forceBigDecimals&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">javaTypeResolver</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">javaModelGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;org.xxx.xxx.entity&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;project_name/src/main&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;trimStrings&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">javaModelGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">sqlMapGenerator</span> <span class="attr">targetPackage</span>=<span class="string">&quot;org.xxx.xxx.dao&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;project_name/src/main&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">sqlMapGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">javaClientGenerator</span> <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> <span class="attr">targetPackage</span>=<span class="string">&quot;org.xxx.xxx.dao&quot;</span> <span class="attr">targetProject</span>=<span class="string">&quot;project_name/src/main&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;enableSubPackages&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">javaClientGenerator</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">table</span> <span class="attr">schema</span>=<span class="string">&quot;base&quot;</span> <span class="attr">tableName</span>=<span class="string">&quot;tb_building&quot;</span> <span class="attr">domainObjectName</span>=<span class="string">&quot;Building&quot;</span> &gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useActualColumnNames&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">table</span> <span class="attr">schema</span>=<span class="string">&quot;base&quot;</span> <span class="attr">tableName</span>=<span class="string">&quot;tb_floor&quot;</span> <span class="attr">domainObjectName</span>=<span class="string">&quot;Floor&quot;</span> &gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useActualColumnNames&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">table</span> <span class="attr">schema</span>=<span class="string">&quot;base&quot;</span> <span class="attr">tableName</span>=<span class="string">&quot;tb_house&quot;</span> <span class="attr">domainObjectName</span>=<span class="string">&quot;House&quot;</span> &gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;useActualColumnNames&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;/<span class="name">context</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">generatorConfiguration</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>配置文件的详细语法见<a target="_blank" rel="noopener" href="http://mybatis.org/generator/">官方文档</a>。</p>
 <p><strong>运行Mybatis Generator</strong></p>
 <p><em>命令行</em></p>
-<p>$ java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml</p>
+<p><code>$ java -jar mybatis-generator-core-x.x.x.jar -configfile generatorConfig.xml</code></p>
 <p><em>eclipse插件</em></p>
 <p>在eclipse中配置新的安装源<a target="_blank" rel="noopener" href="http://mybatis.googlecode.com/svn/sub-projects/generator/trunk/eclipse/UpdateSite/">http://mybatis.googlecode.com/svn/sub-projects/generator/trunk/eclipse/UpdateSite/</a><br>然后安装即可。</p>
 <p>可以通过file-&gt;new-&gt;Mybatis-&gt;Mybatis Generator Configuration File 新建配置文件<br>在配置文件上右击选择Generate Mybatis/iBatis Artifacts产生mapper接口和实体POJO</p>
-<p><strong>===<br>[erq]</strong></p>
 
     </div>
 

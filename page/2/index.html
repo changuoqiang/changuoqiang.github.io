@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/26/ora-19815/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/26/ora-19815/" class="post-title-link" itemprop="url">ORA-19815归档日志磁盘空间占满</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-26 08:11:38" itemprop="dateCreated datePublished" datetime="2020-06-26T08:11:38+08:00">2020-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-03-16 19:20:59" itemprop="dateModified" datetime="2022-03-16T19:20:59+08:00">2022-03-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>客户端连接失败，提示ORA-19815，alert.log有以下提示：<br>Errors in file /u01/app/oracle/admin/orcl/bdump/orcl_arc0_2734.trc:<br>ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 remaining bytes available.<br>Wed Jun 24 09:02:21 2020</p>
+<hr>
+<p>You have following choices to free up space from flash recovery area:</p>
+<ol>
+<li>Consider changing RMAN RETENTION POLICY. If you are using Data Guard,<br>then consider changing RMAN ARCHIVELOG DELETION POLICY.</li>
+<li>Back up files to tertiary device such as tape using RMAN<br>BACKUP RECOVERY AREA command.</li>
+<li>Add disk space and increase db_recovery_file_dest_size parameter to<br>reflect the new space.</li>
+<li>Delete unnecessary files using RMAN DELETE command. If an operating<br>system command was used to delete files, then use RMAN CROSSCHECK and<br>DELETE EXPIRED commands.</li>
+</ol>
+<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。<br>比如删除系统时间1天以前的归档日志</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;<span class="keyword">delete</span> archivelog all completed before <span class="string">&#x27;sysdate-1&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">rman&gt; crosscheck archivelog all;</span><br><span class="line">rman&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1115,90 +1208,6 @@
 
 <p>重新启动firefox，访问<a target="_blank" rel="noopener" href="https://www.cloudflare.com/ssl/encrypted-sni/">Browsing Experience Security Check</a>检查浏览器设置结果。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Local-DoH">Local DoH</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/07/nginx-ssl-preread-real-client-ip/" class="post-title-link" itemprop="url">nginx启用ssl_preread时获取客户真实ip地址</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-07 16:48:38" itemprop="dateCreated datePublished" datetime="2020-02-07T16:48:38+08:00">2020-02-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>使用ssl_preread分流请求时，真正的服务程序无法获取到真实的客户ip，这时候可以借助<a target="_blank" rel="noopener" href="https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt">proxy_protocol</a>来获取真实的客户ip地址</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> proxy_headers_hash_bucket_size 6400; #添加此行</span><br><span class="line"> include mime.types;</span><br><span class="line"> default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line"> log_format main <span class="string">&#x27;$proxy_protocol_addr - $remote_user \[$time_local\] &quot;$request&quot; &#x27;</span></span><br><span class="line"> <span class="string">&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line"> &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;; #修改此行,用$proxy_protocol_addr替换$remote_addr</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"> listen 8443 ssl http2 proxy_protocol default_server;#此行添加proxy_protocol指令</span><br><span class="line">...</span><br><span class="line"># ssl preread for request certs</span><br><span class="line">stream &#123;</span><br><span class="line"> map $ssl_preread_alpn_protocols $tls_port &#123;</span><br><span class="line"> ~\\bacme-tls/<span class="number">1</span>\\b <span class="number">10443</span>;</span><br><span class="line"> <span class="keyword">default</span> <span class="number">8443</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">443</span>;</span><br><span class="line"> listen \[::\]:<span class="number">443</span>;</span><br><span class="line"> proxy_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:$tls_port;</span><br><span class="line"> proxy_protocol on; #添加此行</span><br><span class="line"> ssl_preread on;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样access日志就可以获取到真实的客户ip地址($proxy_protocol_addr)了，但是nginx的error日志格式无法改变，只能更改日志级别，因此preread之后的错误日志就没办法了。</p>
 
       
     </div>

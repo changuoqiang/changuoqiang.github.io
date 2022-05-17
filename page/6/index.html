@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,123 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/16/postgresql-11-continuous-archiving/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/16/postgresql-11-continuous-archiving/" class="post-title-link" itemprop="url">PostgreSQL 11 连续归档备份</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-16 21:34:12" itemprop="dateCreated datePublished" datetime="2019-10-16T21:34:12+08:00">2019-10-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>主配置路径/etc/postgresql/11/main/postgresql.conf<br>连续归档备份主要涉及三个参数</p>
+<p><strong>参数配置</strong></p>
+<p>wal_level<br>默认值为replica，支持WAL归档，replication以及hot standby，所以此参数保持默认值即可。</p>
+<p>archive_mode<br>归档模式，默认为off，关闭状态，还有两个选项值on和always。on表示打开归档模式，always表示在日志恢复和replication状态下，仍然会将恢复的日志继续进行归档，所以一般设置为on就可以了。</p>
+<p>archive_command<br>归档命令,指定一个shell命令字符串来保存WAL文档，其中%p代表归档文件路径，%f代表归档文件的名字，不包含路径。归档命令返回0表示归档成功，非0表示归档失败，服务器会保留未归档的WAL日志文档，直到重新归档成功，或者服务器耗尽存储空间，进入panic关闭状态。<br>不要将WAL归档日志存储在本机，可以挂载NFS或其他远程文件系统来存储日志，也可以使用scp拷贝到远程服务器，总之archive_command十分灵活。<br>下面的命令写入挂载在本地/mnt/wals目录的远程NFS文件系统</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">要注意archive_command是以运行postgresql数据库的postgres用户来执行的，要注意权限问题，所以/mnt/wals目录postgres用户要有写入权限。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">wal_keep_segments</span></span><br><span class="line"><span class="string">指定在pg_wal目录下保留的wal日志数量。如果replication使用log ship方式可以防止standby跟不上primary产生wal log的速度导致standby需要的日志被循环覆盖而失效。如果流复制replication时使用复制槽则不会存在这个问题，只要wal log没有被standby apply则primay永远不会删除这些wal log,此参数是没有影响的。还有就是pg_basebackup时如果同时备份需要的wal log则，需要设置此参数以防止需要备份的wal log被循环覆盖。</span></span><br><span class="line"><span class="string">这是设置为100</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">wal_keep_segments = <span class="number">100</span></span><br></pre></td></tr></table></figure>
+
+<p>修改wal_level、archive_mode、wal_keep_segments需要重新启动postgresql才能生效。</p>
+<p>查看归档设置是否生效:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">psql (<span class="number">11.5</span> (Debian <span class="number">11.5</span>-<span class="number">1</span>+deb10u1))</span><br><span class="line">Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> help.</span><br><span class="line"></span><br><span class="line">postgres=# select name, setting from pg_catalog.pg_settings where name like &#x27;archive%&#x27; or name = &#x27;wal_level&#x27;;</span><br><span class="line"> name setting </span><br><span class="line">-----------------+----------------------------------------------</span><br><span class="line"> archive_command test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f</span><br><span class="line"> archive_mode on</span><br><span class="line"> archive_timeout <span class="number">0</span></span><br><span class="line"> wal_level replica</span><br><span class="line">(<span class="number">4</span> rows)</span><br></pre></td></tr></table></figure>
+
+<p>手动切换WAL日志测试归档是否成功:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_current_wal_lsn();</span><br><span class="line"> pg_current_wal_lsn </span><br><span class="line">--------------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659450</span></span><br><span class="line">(<span class="number">1</span> row)</span><br><span class="line"></span><br><span class="line">postgres=# select pg_switch_wal();</span><br><span class="line"> pg_switch_wal </span><br><span class="line">---------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659468</span></span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>查看/mnt/wals目录下是否有了新归档的WAL日志文件</p>
+<p><strong>基础备份</strong></p>
+<p>开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。<br>这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pg_basebackup: cannot stream write-ahead logs <span class="keyword">in</span> tar mode to stdout</span><br><span class="line">Try <span class="string">&quot;pg_basebackup --help&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
+<p>这是因为pg_basebackup有一个参数<code>-X --wal-method</code>默认设置为s，但此方法与tar格式写入stdout不兼容,可见postgresql源代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (format == <span class="string">&#x27;t&#x27;</span> &amp;&amp; includewal == STREAM_WAL &amp;&amp; strcmp(basedir, <span class="string">&quot;-&quot;</span>) == <span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> pg_log_error(<span class="string">&quot;cannot stream write-ahead logs in tar mode to stdout&quot;</span>);</span><br><span class="line"> fprintf(stderr, _(<span class="string">&quot;Try \\&quot;</span>%s --help\\<span class="string">&quot; for more information.\\n&quot;</span>),</span><br><span class="line"> progname);</span><br><span class="line"> exit(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>-X --wal-method</code>参数可以使pg_basebackup直接包含恢复需要的WAL日志文档，形成一个完整的直接用于恢复的备份，不需要再单独拷贝归档日志文件。但是要注意，wal_keep_segments参数要设置的大一些，防止在备份期间生成的归档日志被循环覆盖，这样基本备份会失败。每个WAL日志有16MB大小，wal_keep_segments设置数乘以16MB就是服务器保存这些wal log需要使用的额外存储空间。<br>当然<code>-X --wal-method</code>参数也可以设置为n，这样恢复时需手动管理自基础备份以来的生成的WAL日志。</p>
+<p>在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+<p>pg_basebackup备份时会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。生成的备份文档内也有一个文件叫做backup_label，与此文件内容相同。<br>此文件的内容类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">0</span>/<span class="number">6000028</span> (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">STOP WAL LOCATION: <span class="number">0</span>/60000F8 (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">0</span>/<span class="number">6000060</span></span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">44</span> CST </span><br><span class="line">LABEL: <span class="number">20191019</span></span><br><span class="line">START TIMELINE: <span class="number">1</span></span><br><span class="line">STOP TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">45</span> CST </span><br><span class="line">STOP TIMELINE: <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以远程使用pg_basebackup制作基础备份，pg_basebackup使用复制协议，因此需要配置pg_hba.conf文件以允许replication连接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host replication all <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> </span><br></pre></td></tr></table></figure>
+
+<p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份，postgresql 11默认设置为10，够用了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/continuous-archiving.html">25.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-wal.html">19.5. Write Ahead Log</a><br>[3]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-replication.html">19.6. Replication</a><br>[4]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/app-pgbasebackup.html">pg_basebackup</a><br>[5]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/functions-admin.html">9.26. System Administration Functions</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1054,102 +1171,6 @@
 
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server">Tuning Your PostgreSQL Server</a><br>[2]<a target="_blank" rel="noopener" href="https://pgtune.leopard.in.ua/#/">PGTune</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">rman configure命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-01 07:33:13" itemprop="dateCreated datePublished" datetime="2019-10-01T07:33:13+08:00">2019-10-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>rman备份时出现错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">03009</span>: failure <span class="keyword">of</span> Control File and SPFILE Autobackup command on ORA_DISK_1 channel at <span class="number">10</span>/<span class="number">01</span>/<span class="number">2019</span> <span class="number">00</span>:<span class="number">31</span>:<span class="number">53</span></span><br><span class="line">ORA-<span class="number">19504</span>: failed to create file <span class="string">&quot;\\\\192.168.0.82\\SHARE\\TT\\CTL_C-1276927241-20191001-00&quot;</span></span><br><span class="line">ORA-<span class="number">27056</span>: could not <span class="keyword">delete</span> file</span><br><span class="line">OSD-<span class="number">04029</span>: unable to get file attributes</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">53</span>) 找不到网络路径。</span><br></pre></td></tr></table></figure>
-<p>是因为rman配置了控制文件自动备份，但是设置的自动备份路径早已经失效了<br>所以需要关闭控制文件自动备份配置，并恢复默认设置：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP OFF;</span><br><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;</span><br></pre></td></tr></table></figure>
-
-<p>CLEAR用于恢复默认设置，比如控制文件自动备份的默认设置是OFF，所以也可以这样关闭控制文件自动备份：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP CLEAR;</span><br></pre></td></tr></table></figure>
-
-<p>查看全部配置选项：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; SHOW ALL;</span><br><span class="line">RMAN configuration parameters are:</span><br><span class="line">CONFIGURE RETENTION POLICY TO REDUNDANCY <span class="number">1</span>;</span><br><span class="line">CONFIGURE BACKUP OPTIMIZATION ON;</span><br><span class="line">CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO &#x27;%F&#x27;; # default</span><br><span class="line">CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default</span><br><span class="line">CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE <span class="number">30</span> G;</span><br><span class="line">CONFIGURE MAXSETSIZE TO UNLIMITED; # default</span><br><span class="line">CONFIGURE ENCRYPTION FOR DATABASE OFF; # default</span><br><span class="line">CONFIGURE ENCRYPTION ALGORITHM &#x27;AES128&#x27;; # default</span><br><span class="line">CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default</span><br><span class="line">CONFIGURE SNAPSHOT CONTROLFILE NAME TO &#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\SNCFORCL.ORA&#x27;; # default</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.juliandyke.com/Research/RMAN/ConfigureCommand.php">RMAN Configure Command</a></p>
 
       
     </div>

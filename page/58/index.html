@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,137 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/21/gerrit-workflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/01/21/gerrit-workflow/" class="post-title-link" itemprop="url">Gerrit工作流</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-21 20:27:03" itemprop="dateCreated datePublished" datetime="2014-01-21T20:27:03+08:00">2014-01-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>账户配置</strong></p>
+<p>提交到gerrit的changes中的用户名和邮箱地址必须与gerrit用户信息一致,否则会被拒绝,除非有Forge XXX权限。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="built_in">global</span> user.name <span class="string">&quot;username&quot;</span></span><br><span class="line">$ git config --<span class="built_in">global</span> user.email <span class="string">&quot;mailbox@domain.tld&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>克隆gerrit仓库</strong><br>一般来说为ssh主机设置别名可以省很多事,不用每次输入复杂的远程仓库地址了:</p>
+<p>~/.ssh/config文件中添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host cr</span><br><span class="line"> Hostname review.domain.tld</span><br><span class="line"> User admin</span><br><span class="line"> Port <span class="number">29418</span></span><br><span class="line"> #如果私钥名字为id_rsa,可以省略下面一行</span><br><span class="line"> IdentityFile ~<span class="regexp">/.ssh/</span>admin_rsa</span><br></pre></td></tr></table></figure>
+
+<p>然后可以这样克隆远程仓库了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone ssh:<span class="comment">//cr/project</span></span><br></pre></td></tr></table></figure>
+<p>而且以后都可以使用cr这个别名来代替远程gerrit仓库地址</p>
+<p><strong>安装commit-msg钩子</strong></p>
+<p>commit-msg是gerrit提供的钩子脚本,会为每个提交添加Change-Id行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ scp cr:hooks/commit-msg .git/hooks/</span><br></pre></td></tr></table></figure>
+
+<p><strong>提交changes</strong></p>
+<p>首先checkout出devel分支。根据不同的策略,master有可能是禁止推送更新的。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout devel</span><br><span class="line">$ git remote update #更新远程仓库</span><br></pre></td></tr></table></figure>
+
+<p>经过一段时间的工作,有了commit后,就可以将commit提交到服务器接受代码审核。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin HEAD:refs/<span class="keyword">for</span>/devel</span><br></pre></td></tr></table></figure>
+
+<p>直接git push推送到远程devel分支是被禁止的,推送到refs/for/devel会在gerrit服务器上生成新的需要评审的changes。</p>
+<p>可以通过增加一个远程配置来进一步简化命令行:</p>
+<p>.git/config中添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\[remote <span class="string">&quot;review&quot;</span>\]</span><br><span class="line"> url = ssh:<span class="comment">//cr/project</span></span><br><span class="line"> push = HEAD:refs/<span class="keyword">for</span>/devel</span><br></pre></td></tr></table></figure>
+
+<p>之后就可以这样推送changes了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push review</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用git-review</strong></p>
+<p>git-review是针对gerrit的一个命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt-get install git-review</span><br></pre></td></tr></table></figure>
+
+<p>git-review默认使用gerrit远程仓库别名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add gerrit ssh:<span class="comment">//cr/project</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在工程根目录下建立git-review配置文件.gitreview</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\[gerrit\]</span><br><span class="line"> host=review.domain.tld</span><br><span class="line"> port=<span class="number">29418</span></span><br><span class="line"> project=project_name</span><br><span class="line"> defaultbranch=devel #提交changes到devel分支,也就是推送到refs/for/devel</span><br><span class="line"> defaultremote=gerrit #默认即为gerrit</span><br><span class="line"> defaultrebase=0 #默认提交前不执行rebase操作</span><br></pre></td></tr></table></figure>
+<p>最后通过</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git review</span><br></pre></td></tr></table></figure>
+<p>就可以推送changes了。</p>
+<p><strong>verify和code review</strong></p>
+<p>通过不应该通过开发人员进行verify,CI服务器会在changes提交后自动进行verify。<br>Code Review可以通过gerrit web接口进行。通过verify和code review的changes可以通过submit合并到目标分支。</p>
+<p><strong>个人分支</strong></p>
+<p>如果gerrit服务器提供了sandbox个人分支,那么可以将自己的阶段性工作保存在sandbox中而不用提交到gerrit服务器进行评审,直到感觉可以参加评审时再向devel分支提交changes。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout devel</span><br><span class="line">$ git checkout -b sandbox/yourname/foo</span><br><span class="line">$ git push --set-upstream origin sandbox/yourname/foo</span><br><span class="line">...</span><br><span class="line">$ git push</span><br></pre></td></tr></table></figure>
+
+<p>一般来说为了devel分支的整洁,建议先在个人分支工作,等工作比较成熟后再合并回devel分支,然后再向gerrit服务器推送changes。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/user-upload.html">Gerrit Code Review - Uploading Changes</a><br>[2]<a target="_blank" rel="noopener" href="https://gerrit-documentation.storage.googleapis.com/Documentation/2.8.1/user-changeid.html">Gerrit Code Review - Change-Ids</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1055,93 +1186,6 @@
     <div class="post-body" itemprop="articleBody">
           <p>git pull本质上就先git fetch,然后git merge</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/14/authorized-keys-access-control/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/01/14/authorized-keys-access-control/" class="post-title-link" itemprop="url">authorized_keys的访问控制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-01-14 10:29:56" itemprop="dateCreated datePublished" datetime="2014-01-14T10:29:56+08:00">2014-01-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>authorized_keys用于存放用户的公钥,另外它还有访问控制的功能。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/01/14/authorized-keys-access-control/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

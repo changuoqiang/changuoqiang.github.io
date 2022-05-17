@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,102 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">rman configure命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-01 07:33:13" itemprop="dateCreated datePublished" datetime="2019-10-01T07:33:13+08:00">2019-10-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>rman备份时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">03009</span>: failure <span class="keyword">of</span> Control File and SPFILE Autobackup command on ORA_DISK_1 channel at <span class="number">10</span>/<span class="number">01</span>/<span class="number">2019</span> <span class="number">00</span>:<span class="number">31</span>:<span class="number">53</span></span><br><span class="line">ORA-<span class="number">19504</span>: failed to create file <span class="string">&quot;\\\\192.168.0.82\\SHARE\\TT\\CTL_C-1276927241-20191001-00&quot;</span></span><br><span class="line">ORA-<span class="number">27056</span>: could not <span class="keyword">delete</span> file</span><br><span class="line">OSD-<span class="number">04029</span>: unable to get file attributes</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">53</span>) 找不到网络路径。</span><br></pre></td></tr></table></figure>
+<p>是因为rman配置了控制文件自动备份，但是设置的自动备份路径早已经失效了<br>所以需要关闭控制文件自动备份配置，并恢复默认设置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP OFF;</span><br><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>CLEAR用于恢复默认设置，比如控制文件自动备份的默认设置是OFF，所以也可以这样关闭控制文件自动备份：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>查看全部配置选项：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; SHOW ALL;</span><br><span class="line">RMAN configuration parameters are:</span><br><span class="line">CONFIGURE RETENTION POLICY TO REDUNDANCY <span class="number">1</span>;</span><br><span class="line">CONFIGURE BACKUP OPTIMIZATION ON;</span><br><span class="line">CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO &#x27;%F&#x27;; # default</span><br><span class="line">CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default</span><br><span class="line">CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE <span class="number">30</span> G;</span><br><span class="line">CONFIGURE MAXSETSIZE TO UNLIMITED; # default</span><br><span class="line">CONFIGURE ENCRYPTION FOR DATABASE OFF; # default</span><br><span class="line">CONFIGURE ENCRYPTION ALGORITHM &#x27;AES128&#x27;; # default</span><br><span class="line">CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default</span><br><span class="line">CONFIGURE SNAPSHOT CONTROLFILE NAME TO &#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\SNCFORCL.ORA&#x27;; # default</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.juliandyke.com/Research/RMAN/ConfigureCommand.php">RMAN Configure Command</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1182,97 +1278,6 @@
 
 <p>后面再新建容器就会自动使用zfs存储池lxd_zfs了。<br>也可以将default存储池删除掉，重现创建一个default存储池，只要default存储池没有被镜像、容器或profile使用即可。<br>其实default就是一个名字而已，与其他存储池并无任何不同。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://angristan.xyz/lxc-zfs-pool-lxd/">Setup a ZFS pool for your LXC containers with LXD</a><br>[2]<a target="_blank" rel="noopener" href="https://zfsonlinux.org/">zfsonlinux</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/zfsonlinux/zfs/wiki/Debian">debian</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/01/wine-set-windows-path-environment-variables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/01/wine-set-windows-path-environment-variables/" class="post-title-link" itemprop="url">wine set windows PATH environment variables</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-08-01 18:51:36" itemprop="dateCreated datePublished" datetime="2019-08-01T18:51:36+08:00">2019-08-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>wine会将大部分的linux环境变量直接传递给windows程序，但是PATH, SYSTEM和TEMP这几个变量除外，主要还是因为冲突，这些变量需要在windows registry中设置。</p>
-<p><code>js$ wine regedit</code></p>
-<p>打开注册表编辑器，然后在<code>HKEY_CURRENT_USER/Environment</code>下添加或修改PATH等变量就可以了，比如设置PATH为以下值：</p>
-<p><code>jsc:\\windows;c:\\windows\\system32;c:\\Program Files (x86)\\Mozilla Firefox</code></p>
-<p>然后运行程序时就无需指定繁琐的全路径了，比如</p>
-<p><code>js$ wine firefox</code></p>
-<p>就可以运行firefox了。</p>
-<p>另外，macosx下每次运行wine都需要打开app，其实只要在.bashrc中添加几个环境变量就可以在terminal下直接使用wine了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Devel.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line">#<span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Stable.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line"><span class="keyword">export</span> FREETYPE_PROPERTIES=<span class="string">&quot;truetype:interpreter-version=35&quot;</span></span><br><span class="line"><span class="keyword">export</span> DYLD_FALLBACK_LIBRARY_PATH=<span class="string">&quot;/usr/lib:/opt/X11/lib:$DYLD_FALLBACK_LIBRARY_PATH&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.winehq.org/Wine_User%27s_Guide#Setting_Windows.2FDOS_environment_variables">3.6.6 Setting Windows/DOS environment variables</a></p>
 
       
     </div>

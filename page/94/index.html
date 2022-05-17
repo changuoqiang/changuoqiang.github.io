@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/21/remove-link-local-route-entry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/12/21/remove-link-local-route-entry/" class="post-title-link" itemprop="url">ubuntu 9.10 删除link-local 路由表项</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-12-21 21:19:48" itemprop="dateCreated datePublished" datetime="2009-12-21T21:19:48+08:00">2009-12-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>route -n 时你总能看到这样一条路由</p>
+<p>Destination Gateway Genmask Flags Metric Ref Use Iface<br>169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 eth0</p>
+<p>由RFC3330 可知 169.254.0.0/16 为本地链路地址</p>
+<p>“169.254.0.0/16 - This is the “link local” block. It is allocated for<br> communication between hosts on a single link. Hosts obtain these<br> addresses by auto-configuration, such as when a DHCP server may not<br> be found.”</p>
+<p>当系统配置为使用动态地址，而找不到DHCP服务器时，系统会为本机设置一个169.254.X.X的地址。<br>这个路由表项是有zeroconf 协议Daemon 程序添加的,我们一般是用不到的</p>
+<p>只是注释掉/etc/networks 里面的link-local 项是无法去掉该路由表项的,/etc/networks 与/etc/hosts<br>文件的作用差不多,是用来关联网络号(数字格式)和网络名(字符格式)的,注释掉该条目后,只是169.254.0.0<br>无法解析为网络名link-local了.</p>
+<p>可以用以下命令来删除zeroconf 相关的程序包<br>sudo apt-get remove avahi-autoipd –purge<br>下次启动机器后这条路由就不会自动出现了.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -988,86 +1074,6 @@
     <div class="post-body" itemprop="articleBody">
           <p>ubuntu 9.10已经默认安装了ibus，我们只要再安装ibus拼音输入法就可以了<br>sudo apt-get install ibus-pinyin<br>然后运行ibus-setup把拼音输入法增加进来<br>在~/.profile里面增加以下语句<br>export XMODIFIERS=”@im=ibus”<br>export GTK_IM_MODULE=ibus<br>export QT_IM_MODULE=ibus<br>ibus-daemon -d -x &amp;<br>这样就可以了。</p>
 <p>如果输入法状态条无法显示，可以删除掉~/.config/ibus目录然后logout,login试一下。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/10/29/ubuntu-9-10-offical-released/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/10/29/ubuntu-9-10-offical-released/" class="post-title-link" itemprop="url">Ubuntu 9.10(Karmic Koala)官方正式发布啦</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-10-29 22:58:28" itemprop="dateCreated datePublished" datetime="2009-10-29T22:58:28+08:00">2009-10-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>终于等到这一刻，呵呵<br>明天本本T400的系统就全新安装到Ubuntu 9.10 AMD64版本,64位应该很爽吧，除了该死的ATI卡,不行就切换到Intel的卡子了。</p>
 
       
     </div>

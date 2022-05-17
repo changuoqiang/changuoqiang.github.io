@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/01/17/pxe-install-debian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/01/17/pxe-install-debian/" class="post-title-link" itemprop="url">PXE网络安装Debian</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-01-17 15:33:37" itemprop="dateCreated datePublished" datetime="2010-01-17T15:33:37+08:00">2010-01-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>近期收拾一台老本本IBM thinkpad 390X,虽有光驱，但已无法使用。网卡支持PXE(Preboot eXecution Environment)，于是以PXE方式启动安装Debian。<br>　　PXE网络安装或启动需要BOOTP(Bootstrap Protocol)和TFTP(Trivial File Transfer Protocol)服务支持。通过BOOTP服务获取本机IP和启动映像(boot image)所在的网络位置，通过TFTP服务来获取启动映像。DHCP(Dynamic Host Configuration Protocol)是一个更具弹性的，兼容BOOTP的动态主机配置协议，因此在局域网内安装TFTP和DHCP服务器即可。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2010/01/17/pxe-install-debian/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1003,92 +1090,6 @@
           <p>刚购买的<a target="_blank" rel="noopener" href="http://www.diahosting.com/client/aff.php?aff=190">VPS</a>默认安装的系统是CentOS，没想到CentOS现在这么火，很多VPS默认安装这个。但是我只用Debian或FreeBSD，重新安装了一下Debian lenny AMD64，几分钟就完成了。sudo apt-get upgrade时出现错误提示：</p>
 <p>locale: Cannot set LC_CTYPE to default locale: No such file or directory<br>locale: Cannot set LC_MESSAGES to default locale: No such file or directory<br>locale: Cannot set LC_ALL to default locale: No such file or directory</p>
 <p>原来是默认没有设置locale<br>用这个命令dpkg-reconfigure locales配置一下，选个lcoale就好了，我用en_US.UTF-8。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/21/remove-link-local-route-entry/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/12/21/remove-link-local-route-entry/" class="post-title-link" itemprop="url">ubuntu 9.10 删除link-local 路由表项</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-12-21 21:19:48" itemprop="dateCreated datePublished" datetime="2009-12-21T21:19:48+08:00">2009-12-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>route -n 时你总能看到这样一条路由</p>
-<p>Destination Gateway Genmask Flags Metric Ref Use Iface<br>169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 eth0</p>
-<p>由RFC3330 可知 169.254.0.0/16 为本地链路地址</p>
-<p>“169.254.0.0/16 - This is the “link local” block. It is allocated for<br> communication between hosts on a single link. Hosts obtain these<br> addresses by auto-configuration, such as when a DHCP server may not<br> be found.”</p>
-<p>当系统配置为使用动态地址，而找不到DHCP服务器时，系统会为本机设置一个169.254.X.X的地址。<br>这个路由表项是有zeroconf 协议Daemon 程序添加的,我们一般是用不到的</p>
-<p>只是注释掉/etc/networks 里面的link-local 项是无法去掉该路由表项的,/etc/networks 与/etc/hosts<br>文件的作用差不多,是用来关联网络号(数字格式)和网络名(字符格式)的,注释掉该条目后,只是169.254.0.0<br>无法解析为网络名link-local了.</p>
-<p>可以用以下命令来删除zeroconf 相关的程序包<br>sudo apt-get remove avahi-autoipd –purge<br>下次启动机器后这条路由就不会自动出现了.</p>
 
       
     </div>

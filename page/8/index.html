@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/01/wine-set-windows-path-environment-variables/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/01/wine-set-windows-path-environment-variables/" class="post-title-link" itemprop="url">wine set windows PATH environment variables</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-01 18:51:36" itemprop="dateCreated datePublished" datetime="2019-08-01T18:51:36+08:00">2019-08-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>wine会将大部分的linux环境变量直接传递给windows程序，但是PATH, SYSTEM和TEMP这几个变量除外，主要还是因为冲突，这些变量需要在windows registry中设置。</p>
+<p><code>js$ wine regedit</code></p>
+<p>打开注册表编辑器，然后在<code>HKEY_CURRENT_USER/Environment</code>下添加或修改PATH等变量就可以了，比如设置PATH为以下值：</p>
+<p><code>jsc:\\windows;c:\\windows\\system32;c:\\Program Files (x86)\\Mozilla Firefox</code></p>
+<p>然后运行程序时就无需指定繁琐的全路径了，比如</p>
+<p><code>js$ wine firefox</code></p>
+<p>就可以运行firefox了。</p>
+<p>另外，macosx下每次运行wine都需要打开app，其实只要在.bashrc中添加几个环境变量就可以在terminal下直接使用wine了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Devel.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line">#<span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Stable.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line"><span class="keyword">export</span> FREETYPE_PROPERTIES=<span class="string">&quot;truetype:interpreter-version=35&quot;</span></span><br><span class="line"><span class="keyword">export</span> DYLD_FALLBACK_LIBRARY_PATH=<span class="string">&quot;/usr/lib:/opt/X11/lib:$DYLD_FALLBACK_LIBRARY_PATH&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.winehq.org/Wine_User%27s_Guide#Setting_Windows.2FDOS_environment_variables">3.6.6 Setting Windows/DOS environment variables</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1172,100 +1263,6 @@
 <p>最后重新查看</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show storageArray unreadableSectors;</span><br><span class="line">Executing script...</span><br><span class="line">There are currently no unreadable sectors on the storage array.</span><br><span class="line">Script execution complete.</span><br></pre></td></tr></table></figure>
 <p>可以看到已经没有不可读取的扇区了，阵列的报警灯也恢复正常。<br>注意，那两个扇区的数据应该是丢失了，应用程序如果需要这些数据应该通过其他途径恢复数据。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/15/debian-buster-install-wine-devel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/15/debian-buster-install-wine-devel/" class="post-title-link" itemprop="url">debian buster安装wine-devel</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-15 12:12:13" itemprop="dateCreated datePublished" datetime="2019-07-15T12:12:13+08:00">2019-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>wine是个伟大的工程。</p>
-<p>wine有三个分支wine-stable,wine-devel和wine-staging，就好像debian的三个分支stable,testing和sid，devel分支其实很稳定的，也能支持更多的应用程序</p>
-<p>但是debian buster上安装wine-devel出现依赖问题：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wine-devel : Depends: wine-devel-amd64 (= <span class="number">4.12</span><span class="number">.1</span>~buster) but it is not going to be installed</span><br><span class="line"> Depends: wine-devel-i386 (= <span class="number">4.12</span><span class="number">.1</span>~buster)</span><br><span class="line">wine-devel-amd64 : Depends: libfaudio0 but it is not installable</span><br></pre></td></tr></table></figure>
-<p>从wine4.5开始，wine-devel依赖libfaudio0,但是debian官方源并没有提供这个包，因此可以从参考[2]给出的链接下载amd64和i386两个架构的安装包libfaudio0_19.07-0_buster_amd64.deb和libfaudio0_19.07-0_buster_i386.deb<br>并手工安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i libfaudio0_19<span class="number">.07</span>-0_buster_amd64.deb</span><br><span class="line">$ sudo dpkg -i libfaudio0_19<span class="number">.07</span>-0_buster_i386.deb</span><br></pre></td></tr></table></figure>
-
-<p>然后再安装wine-devel</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt -y install wine-devel</span><br></pre></td></tr></table></figure>
-
-<p>注意wine-devel安装到/opt/wine-devel目录，因此要使用wine-devel需要在.bashrc中添加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PATH=<span class="regexp">/opt/</span>wine-devel/bin:$PATH</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.winehq.org/Debian">Installing WineHQ packages</a><br>[2]<a target="_blank" rel="noopener" href="https://forum.winehq.org/viewtopic.php?f=8&t=32192">FAudio for Debian and Ubuntu</a></p>
 
       
     </div>

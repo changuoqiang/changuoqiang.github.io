@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,78 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2022/04/25/lxd-reset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/25/lxd-reset/" class="post-title-link" itemprop="url">lxd_reset</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-25 15:23:58 / Modified: 22:15:32" itemprop="dateCreated datePublished" datetime="2022-04-25T15:23:58+08:00">2022-04-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>lxd reset/reinit with snap</p>
+<p>first delete all container instances and all images<br>then execute:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap remove --purge lxd</span><br></pre></td></tr></table></figure>
+
+<p>then</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo snap install lxd --channel&#x3D;4.0&#x2F;stable</span><br></pre></td></tr></table></figure>
+
+<p>last</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxd init</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1041,99 +1113,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval <span class="number">30</span></span><br><span class="line">ClientAliveCountMax <span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>30秒发送一个心跳探测，超过3次没有回应断开连接。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.redhat.com/sysadmin/sshfs">SSHFS: Mounting a remote file system over SSH</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/SSHFS_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">SSHFS</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/26/ora-19815/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/06/26/ora-19815/" class="post-title-link" itemprop="url">ORA-19815归档日志磁盘空间占满</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-06-26 08:11:38" itemprop="dateCreated datePublished" datetime="2020-06-26T08:11:38+08:00">2020-06-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-03-16 19:20:59" itemprop="dateModified" datetime="2022-03-16T19:20:59+08:00">2022-03-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>客户端连接失败，提示ORA-19815，alert.log有以下提示：<br>Errors in file /u01/app/oracle/admin/orcl/bdump/orcl_arc0_2734.trc:<br>ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 remaining bytes available.<br>Wed Jun 24 09:02:21 2020</p>
-<hr>
-<p>You have following choices to free up space from flash recovery area:</p>
-<ol>
-<li>Consider changing RMAN RETENTION POLICY. If you are using Data Guard,<br>then consider changing RMAN ARCHIVELOG DELETION POLICY.</li>
-<li>Back up files to tertiary device such as tape using RMAN<br>BACKUP RECOVERY AREA command.</li>
-<li>Add disk space and increase db_recovery_file_dest_size parameter to<br>reflect the new space.</li>
-<li>Delete unnecessary files using RMAN DELETE command. If an operating<br>system command was used to delete files, then use RMAN CROSSCHECK and<br>DELETE EXPIRED commands.</li>
-</ol>
-<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。<br>比如删除系统时间1天以前的归档日志</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;<span class="keyword">delete</span> archivelog all completed before <span class="string">&#x27;sysdate-1&#x27;</span>;</span><br></pre></td></tr></table></figure>
-<p>如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">rman&gt; crosscheck archivelog all;</span><br><span class="line">rman&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
 
       
     </div>

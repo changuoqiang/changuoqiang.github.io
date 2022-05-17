@@ -31,7 +31,7 @@
 <meta property="og:description" content="spring,mybatis事务管理配置与@Transactional注解使用">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2013-10-19T16:09:30.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.497Z">
+<meta property="article:modified_time" content="2022-05-17T11:37:56.921Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-05-17 19:37:56" itemprop="dateModified" datetime="2022-05-17T19:37:56+08:00">2022-05-17</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -343,18 +343,24 @@
 <p><strong>自动提交(AutoCommit)与连接关闭时的是否自动提交</strong></p>
 <p><em>自动提交</em></p>
 <p>默认情况下，数据库处于自动提交模式。每一条语句处于一个单独的事务中，在这条语句执行完毕时，如果执行成功则隐式的提交事务，如果<br>执行失败则隐式的回滚事务。</p>
-<p>对于正常的事务管理，是一组相关的操作处于一个事务之中，因此必须关闭数据库的自动提交模式。不过，这个我们不用担心，spring会将底层连接的自动提交特性设置为false。<br>org/springframework/jdbc/datasource/DataSourceTransactionManager.java<br>[java]<br>// switch to manual commit if necessary. this is very expensive in some jdbc drivers,<br>// so we don’t want to do it unnecessarily (for example if we’ve explicitly<br>// configured the connection pool to set it already).<br>if (con.getautocommit()) {<br> txobject.setmustrestoreautocommit(true);<br> if (logger.isdebugenabled()) {<br> logger.debug(“switching jdbc connection [“ + con + “] to manual commit”);<br> }<br> con.setautocommit(false);<br>}<br>[/java]</p>
+<p>对于正常的事务管理，是一组相关的操作处于一个事务之中，因此必须关闭数据库的自动提交模式。不过，这个我们不用担心，spring会将底层连接的自动提交特性设置为false。<br>org/springframework/jdbc/datasource/DataSourceTransactionManager.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// switch to manual commit if necessary. this is very expensive in some jdbc drivers,</span></span><br><span class="line"><span class="comment">// so we don&#x27;t want to do it unnecessarily (for example if we&#x27;ve explicitly</span></span><br><span class="line"><span class="comment">// configured the connection pool to set it already).</span></span><br><span class="line"><span class="keyword">if</span> (con.getautocommit()) &#123;</span><br><span class="line"> txobject.setmustrestoreautocommit(<span class="keyword">true</span>);</span><br><span class="line"> <span class="keyword">if</span> (logger.isdebugenabled()) &#123;</span><br><span class="line"> logger.debug(<span class="string">&quot;switching jdbc connection \[&quot;</span> + con + <span class="string">&quot;\] to manual commit&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> con.setautocommit(<span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>有些数据连接池提供了关闭事务自动提交的设置，最好在设置连接池时就将其关闭。但C3P0没有提供这一特性，只能依靠spring来设置。<br>因为JDBC规范规定，当连接对象建立时应该处于自动提交模式，这是跨DBMS的缺省值，如果需要,必须显式的关闭自动提交。C3P0遵守这一规范，让客户代码来显式的设置需要的提交模式。</p>
 <p><em>连接关闭时的是否自动提交</em></p>
 <p>当一个连接关闭时，如果有未提交的事务应该如何处理？JDBC规范没有提及，C3P0默认的策略是回滚任何未提交的事务。这是一个正确的策略，但JDBC驱动提供商之间对此问题并没有达成一致。<br>C3P0的autoCommitOnClose属性默认是false,没有十分必要不要动它。或者可以显式的设置此属性为false，这样会更明确。</p>
-<p><strong>基于注解的声明式事务管理配置</strong><br>spring-servlet.xml<br>[xml]<br> <!-- transaction support--><br> <!-- PlatformTransactionMnager --><br> <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"><br> <property name="dataSource" ref="dataSource" /><br> </bean><br> <!-- enable transaction annotation support --><br> &lt;tx:annotation-driven transaction-manager=”txManager” /&gt;<br>[/xml]<br>还要在spring-servlet.xml中添加tx名字空间<br>[xml]<br>…<br> xmlns:tx=”<a target="_blank" rel="noopener" href="http://www.springframework.org/schema/tx&quot;">http://www.springframework.org/schema/tx&quot;</a><br> xmlns:aop=”<a target="_blank" rel="noopener" href="http://www.springframework.org/schema/aop&quot;">http://www.springframework.org/schema/aop&quot;</a><br> xsi:schemaLocation=”<br> …<br> <a target="_blank" rel="noopener" href="http://www.springframework.org/schema/tx">http://www.springframework.org/schema/tx</a><br> <a target="_blank" rel="noopener" href="http://www.springframework.org/schema/tx/spring-tx.xsd">http://www.springframework.org/schema/tx/spring-tx.xsd</a><br> …<br>[/xml]</p>
+<p><strong>基于注解的声明式事务管理配置</strong><br>spring-servlet.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- transaction support--&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- PlatformTransactionMnager --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;txManager&quot;</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;dataSource&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;dataSource&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- enable transaction annotation support --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">&quot;txManager&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>还要在spring-servlet.xml中添加tx名字空间</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"> xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</span><br><span class="line"> xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;</span><br><span class="line"> xsi:schemaLocation=&quot;</span><br><span class="line"> ...</span><br><span class="line"> http://www.springframework.org/schema/tx</span><br><span class="line"> http://www.springframework.org/schema/tx/spring-tx.xsd</span><br><span class="line"> ...</span><br></pre></td></tr></table></figure>
+
 <p>MyBatis自动参与到spring事务管理中，无需额外配置，只要org.mybatis.spring.SqlSessionFactoryBean引用的数据源与DataSourceTransactionManager引用的数据源一致即可，否则事务管理会不起作用。</p>
 <p>另外需要下载依赖包<a target="_blank" rel="noopener" href="http://aopalliance.sourceforge.net/">aopalliance</a>.jar放置到WEB-INF/lib目录下。否则spring初始化时会报异常<br>java.lang.NoClassDefFoundError: org/aopalliance/intercept/MethodInterceptor</p>
 <p><strong>spring事务特性</strong></p>
-<p>spring所有的事务管理策略类都继承自org.springframework.transaction.PlatformTransactionManager接口<br>[java]<br>public interface PlatformTransactionManager {</p>
-<p> TransactionStatus getTransaction(TransactionDefinition definition)<br> throws TransactionException;</p>
-<p> void commit(TransactionStatus status) throws TransactionException;</p>
-<p> void rollback(TransactionStatus status) throws TransactionException;<br>}<br>[/java]</p>
+<p>spring所有的事务管理策略类都继承自org.springframework.transaction.PlatformTransactionManager接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PlatformTransactionManager</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="function">TransactionStatus <span class="title">getTransaction</span><span class="params">(TransactionDefinition definition)</span></span></span><br><span class="line"><span class="function"> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">commit</span><span class="params">(TransactionStatus status)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">rollback</span><span class="params">(TransactionStatus status)</span> <span class="keyword">throws</span> TransactionException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>其中TransactionDefinition接口定义以下特性：</p>
 <p><em>事务隔离级别</em></p>
 <p>隔离级别是指若干个并发的事务之间的隔离程度。TransactionDefinition 接口中定义了五个表示隔离级别的常量：</p>
@@ -392,43 +398,67 @@
 <p>还可以编程性的通过setRollbackOnly()方法来指示一个事务必须回滚，在调用完setRollbackOnly()后你所能执行的唯一操作就是回滚。</p>
 <p><strong>@Transactional注解</strong></p>
 <p><em>@Transactional属性</em></p>
-<p>属性</p>
-<p>类型</p>
-<p>描述</p>
-<p>value</p>
-<p>String</p>
-<p>可选的限定描述符，指定使用的事务管理器</p>
-<p>propagation</p>
-<p>enum: Propagation</p>
-<p>可选的事务传播行为设置</p>
-<p>isolation</p>
-<p>enum: Isolation</p>
-<p>可选的事务隔离级别设置</p>
-<p>readOnly</p>
-<p>boolean</p>
-<p>读写或只读事务，默认读写</p>
-<p>timeout</p>
-<p>int (in seconds granularity)</p>
-<p>事务超时时间设置</p>
-<p>rollbackFor</p>
-<p>Class对象数组，必须继承自Throwable</p>
-<p>导致事务回滚的异常类数组</p>
-<p>rollbackForClassName</p>
-<p>类名数组，必须继承自Throwable</p>
-<p>导致事务回滚的异常类名字数组&lt;/td</p>
-<p>noRollbackFor</p>
-<p>Class对象数组，必须继承自Throwable</p>
-<p>不会导致事务回滚的异常类数组</p>
-<p>noRollbackForClassName</p>
-<p>类名数组，必须继承自Throwable</p>
-<p>不会导致事务回滚的异常类名字数组&lt;/td</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>value</td>
+<td>String</td>
+<td>可选的限定描述符，指定使用的事务管理器</td>
+</tr>
+<tr>
+<td>propagation</td>
+<td>enum: Propagation</td>
+<td>可选的事务传播行为设置</td>
+</tr>
+<tr>
+<td>isolation</td>
+<td>enum: Isolation</td>
+<td>可选的事务隔离级别设置</td>
+</tr>
+<tr>
+<td>readOnly</td>
+<td>boolean</td>
+<td>读写或只读事务，默认读写</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>int (in seconds granularity)</td>
+<td>事务超时时间设置</td>
+</tr>
+<tr>
+<td>rollbackFor</td>
+<td>Class对象数组，必须继承自Throwable</td>
+<td>导致事务回滚的异常类数组</td>
+</tr>
+<tr>
+<td>rollbackForClassName</td>
+<td>类名数组，必须继承自Throwable</td>
+<td>导致事务回滚的异常类名字数组</td>
+</tr>
+<tr>
+<td>noRollbackFor</td>
+<td>Class对象数组，必须继承自Throwable</td>
+<td>不会导致事务回滚的异常类数组</td>
+</tr>
+<tr>
+<td>noRollbackForClassName</td>
+<td>类名数组，必须继承自Throwable</td>
+<td>不会导致事务回滚的异常类名字数组</td>
+</tr>
+</tbody></table>
 <p><em>用法</em></p>
 <p>@Transactional 可以作用于接口、接口方法、类以及类方法上。当作用于类上时，该类的所有 public 方法将都具有该类型的事务属性，同时，我们也可以在方法级别使用该标注来覆盖类级别的定义。</p>
 <p>虽然 @Transactional 注解可以作用于接口、接口方法、类以及类方法上，但是 Spring 建议不要在接口或者接口方法上使用该注解，因为这只有在使用基于接口的代理时它才会生效。另外， @Transactional 注解应该只被应用到 public 方法上，这是由 Spring AOP 的本质决定的。如果你在 protected、private 或者默认可见性的方法上使用 @Transactional 注解，这将被忽略，也不会抛出任何异常。</p>
 <p>默认情况下，只有来自外部的方法调用才会被AOP代理捕获，也就是，类内部方法调用本类内部的其他方法并不会引起事务行为，即使被调用方法使用@Transactional注解进行修饰。</p>
-<p>示例代码：<br>[java]<br>@Transactional(readOnly = true)<br>public class DefaultFooService implements FooService {</p>
-<p> public Foo getFoo(String fooName) {<br> // do something<br> }</p>
-<p> // these settings have precedence for this method<br> //方法上注解属性会覆盖类注解上的相同属性<br> @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)<br> public void updateFoo(Foo foo) {<br> // do something<br> }<br>}<br>[/java]</p>
+<p>示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultFooService</span> <span class="keyword">implements</span> <span class="title">FooService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Foo <span class="title">getFoo</span><span class="params">(String fooName)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// do something</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// these settings have precedence for this method</span></span><br><span class="line"> <span class="comment">//方法上注解属性会覆盖类注解上的相同属性</span></span><br><span class="line"> <span class="meta">@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateFoo</span><span class="params">(Foo foo)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// do something</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>参考</strong><br><a target="_blank" rel="noopener" href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/transaction.html">Transaction Management</a></p>
 
     </div>

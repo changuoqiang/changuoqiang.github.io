@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/31/cephfs-using/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/31/cephfs-using/" class="post-title-link" itemprop="url">使用CephFS文件系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-31 23:01:57" itemprop="dateCreated datePublished" datetime="2019-10-31T23:01:57+08:00">2019-10-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>创建池</strong><br>ceph文件系统需要驻留在pool上，至少需要创建一个data和一个metadata pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph osd pool create cephfs_data <span class="number">128</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_data&#x27;</span> created</span><br><span class="line"></span><br><span class="line">$ sudo ceph osd pool create cephfs_metadata <span class="number">128</span></span><br><span class="line"><span class="built_in">Error</span> ERANGE: pg_num <span class="number">128</span> size <span class="number">3</span> would mean <span class="number">768</span> total pgs, which exceeds max <span class="number">750</span> (mon_max_pg_per_osd <span class="number">250</span> * num_in_osds <span class="number">3</span>)</span><br><span class="line">john@node6:~$ sudo ceph osd pool create cephfs_metadata <span class="number">24</span></span><br><span class="line">pool <span class="string">&#x27;cephfs_metadata&#x27;</span> created</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建文件系统</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph fs <span class="keyword">new</span> cephfs cephfs_metadata cephfs_data</span><br><span class="line"><span class="keyword">new</span> fs <span class="keyword">with</span> metadata pool <span class="number">2</span> and data pool <span class="number">1</span></span><br><span class="line">$ sudo ceph fs ls</span><br><span class="line">name: cephfs, metadata pool: cephfs_metadata, data pools: \[cephfs_data \]</span><br></pre></td></tr></table></figure>
+<p>查看mds状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph mds stat</span><br><span class="line">cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br></pre></td></tr></table></figure>
+<p>没有创建文件系统之前，所有的mds实例都为standby状态<br>集群状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph -s</span><br><span class="line"> cluster:</span><br><span class="line"> id: 0238426d-78d6-48cd-af64-b6a8407996c6</span><br><span class="line"> health: HEALTH_OK</span><br><span class="line"> </span><br><span class="line"> services:</span><br><span class="line"> mon: <span class="number">3</span> daemons, quorum node8,node6,node7 (age 11m)</span><br><span class="line"> mgr: node6(active, since 11m), <span class="attr">standbys</span>: node7, node8</span><br><span class="line"> mds: cephfs:<span class="number">1</span> &#123;<span class="number">0</span>=node6=up:active&#125; <span class="number">2</span> up:standby</span><br><span class="line"> osd: <span class="number">3</span> osds: <span class="number">3</span> up (since 11m), <span class="number">3</span> <span class="keyword">in</span> (since 3d)</span><br><span class="line"> </span><br><span class="line"> data:</span><br><span class="line"> pools: <span class="number">2</span> pools, <span class="number">152</span> pgs</span><br><span class="line"> objects: <span class="number">22</span> objects, <span class="number">2.2</span> KiB</span><br><span class="line"> usage: <span class="number">3.0</span> GiB used, <span class="number">18</span> GiB / <span class="number">21</span> GiB avail</span><br><span class="line"> pgs: <span class="number">152</span> active+clean</span><br></pre></td></tr></table></figure>
+
+<p><strong>fuse挂载cephfs</strong><br>安装客户端和fuse</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ceph-common ceph-fuse</span><br></pre></td></tr></table></figure>
+<p>将集群配置/etc/ceph/*拷贝到客户机相同位置<br>挂载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse /path/to/mount</span><br></pre></td></tr></table></figure>
+<p>或者指定monitor地址</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ceph-fuse -m ip_of_monitor /path/to/mount</span><br></pre></td></tr></table></figure>
+<p>/etc/fstab:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">none /mnt/mycephfs fuse.ceph ceph.id=admin,_netdev,defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>这里指定使用admin用户，使用其他用户需要提前建立用户keyring</p>
+<p><strong>内核驱动挂载cephfs</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount.ceph <span class="number">192.168</span><span class="number">.3</span><span class="number">.8</span>:<span class="regexp">/ /m</span>nt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br><span class="line">###or: sudo mount -t ceph 192.168.3.8:6789:/ /mnt/mycephfs -o name=admin,secret=AQBHybZdKRryLRAAY9jTUkPpNcXmeykzFPNTTw==</span><br></pre></td></tr></table></figure>
+<p>如果不指定name选项，默认使用guest用户<br>当前内核驱动使用msgr v1协议与ceph集群通讯，因此应该使用6789端口，指定3300端口无法连接。</p>
+<p><strong>后记：</strong><br>只要/etc/ceph目录下的文件普通用户可以读取，特别是keyring文件，那么普通用户就可以连接到集群使用所有的ceph命令。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/mimic/cephfs/createfs/">CREATE A CEPH FILESYSTEM</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/kernel/">MOUNT CEPHFS WITH THE KERNEL DRIVER</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/administration/">CEPHFS ADMINISTRATIVE COMMANDS</a><br>[4]<a target="_blank" rel="noopener" href="https://runsisi.com/2019-02-14/cephx">cephx</a><br>[5]<a target="_blank" rel="noopener" href="https://int32bit.me/2016/05/19/Ceph-Pool%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Ceph Pool操作总结</a><br>[6]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/jewel/rados/operations/pools/">POOLS</a><br>[7]<a target="_blank" rel="noopener" href="https://blog.programster.org/ubuntu-14-04-mount-ceph-filesystem">Mount Ceph Filesystem</a><br>[8]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/man/8/mount.fuse.ceph/">MOUNT CEPHFS IN YOUR FILE SYSTEMS TABLE</a><br>[9]<a target="_blank" rel="noopener" href="https://amito.me/2018/CephFS-Introduction-Installation-and-Configuration/">Ceph 文件系统 CephFS 的介绍与配置</a><br>[10]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/cephfs-shell/">CEPHFS SHELL</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1165,123 +1269,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_last_wal_receive_lsn();</span><br><span class="line"> pg_last_wal_receive_lsn </span><br><span class="line">-------------------------</span><br><span class="line"> <span class="number">0</span>/D000140</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/high-availability.html">Chapter 26. High Availability, Load Balancing, and Replication</a><br>[2]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/hot-standby.html">26.5. Hot Standby</a><br>[3]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/warm-standby-failover.html">Failover</a><br>[4]<a target="_blank" rel="noopener" href="https://blog.51cto.com/heyiyi/1917655">PostgreSQL Switchover vs. Failover</a><br>[5]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lottu/p/7490759.html">PostgreSQL主备切换</a><br>[6]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43303221/article/details/85777529">PostgreSQL 流复制的主备切换</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/16/postgresql-11-continuous-archiving/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/16/postgresql-11-continuous-archiving/" class="post-title-link" itemprop="url">PostgreSQL 11 连续归档备份</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-16 21:34:12" itemprop="dateCreated datePublished" datetime="2019-10-16T21:34:12+08:00">2019-10-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>主配置路径/etc/postgresql/11/main/postgresql.conf<br>连续归档备份主要涉及三个参数</p>
-<p><strong>参数配置</strong></p>
-<p>wal_level<br>默认值为replica，支持WAL归档，replication以及hot standby，所以此参数保持默认值即可。</p>
-<p>archive_mode<br>归档模式，默认为off，关闭状态，还有两个选项值on和always。on表示打开归档模式，always表示在日志恢复和replication状态下，仍然会将恢复的日志继续进行归档，所以一般设置为on就可以了。</p>
-<p>archive_command<br>归档命令,指定一个shell命令字符串来保存WAL文档，其中%p代表归档文件路径，%f代表归档文件的名字，不包含路径。归档命令返回0表示归档成功，非0表示归档失败，服务器会保留未归档的WAL日志文档，直到重新归档成功，或者服务器耗尽存储空间，进入panic关闭状态。<br>不要将WAL归档日志存储在本机，可以挂载NFS或其他远程文件系统来存储日志，也可以使用scp拷贝到远程服务器，总之archive_command十分灵活。<br>下面的命令写入挂载在本地/mnt/wals目录的远程NFS文件系统</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f&#x27;</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">要注意archive_command是以运行postgresql数据库的postgres用户来执行的，要注意权限问题，所以/mnt/wals目录postgres用户要有写入权限。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">wal_keep_segments</span></span><br><span class="line"><span class="string">指定在pg_wal目录下保留的wal日志数量。如果replication使用log ship方式可以防止standby跟不上primary产生wal log的速度导致standby需要的日志被循环覆盖而失效。如果流复制replication时使用复制槽则不会存在这个问题，只要wal log没有被standby apply则primay永远不会删除这些wal log,此参数是没有影响的。还有就是pg_basebackup时如果同时备份需要的wal log则，需要设置此参数以防止需要备份的wal log被循环覆盖。</span></span><br><span class="line"><span class="string">这是设置为100</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">wal_keep_segments = <span class="number">100</span></span><br></pre></td></tr></table></figure>
-
-<p>修改wal_level、archive_mode、wal_keep_segments需要重新启动postgresql才能生效。</p>
-<p>查看归档设置是否生效:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">psql (<span class="number">11.5</span> (Debian <span class="number">11.5</span>-<span class="number">1</span>+deb10u1))</span><br><span class="line">Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> help.</span><br><span class="line"></span><br><span class="line">postgres=# select name, setting from pg_catalog.pg_settings where name like &#x27;archive%&#x27; or name = &#x27;wal_level&#x27;;</span><br><span class="line"> name setting </span><br><span class="line">-----------------+----------------------------------------------</span><br><span class="line"> archive_command test ! -f /mnt/wals/%f &amp;&amp; cp %p /mnt/wals/%f</span><br><span class="line"> archive_mode on</span><br><span class="line"> archive_timeout <span class="number">0</span></span><br><span class="line"> wal_level replica</span><br><span class="line">(<span class="number">4</span> rows)</span><br></pre></td></tr></table></figure>
-
-<p>手动切换WAL日志测试归档是否成功:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">postgres=# select pg_current_wal_lsn();</span><br><span class="line"> pg_current_wal_lsn </span><br><span class="line">--------------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659450</span></span><br><span class="line">(<span class="number">1</span> row)</span><br><span class="line"></span><br><span class="line">postgres=# select pg_switch_wal();</span><br><span class="line"> pg_switch_wal </span><br><span class="line">---------------</span><br><span class="line"> <span class="number">0</span>/<span class="number">1659468</span></span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
-<p>查看/mnt/wals目录下是否有了新归档的WAL日志文件</p>
-<p><strong>基础备份</strong></p>
-<p>开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。<br>这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>出现错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pg_basebackup: cannot stream write-ahead logs <span class="keyword">in</span> tar mode to stdout</span><br><span class="line">Try <span class="string">&quot;pg_basebackup --help&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
-<p>这是因为pg_basebackup有一个参数<code>-X --wal-method</code>默认设置为s，但此方法与tar格式写入stdout不兼容,可见postgresql源代码</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (format == <span class="string">&#x27;t&#x27;</span> &amp;&amp; includewal == STREAM_WAL &amp;&amp; strcmp(basedir, <span class="string">&quot;-&quot;</span>) == <span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line"> pg_log_error(<span class="string">&quot;cannot stream write-ahead logs in tar mode to stdout&quot;</span>);</span><br><span class="line"> fprintf(stderr, _(<span class="string">&quot;Try \\&quot;</span>%s --help\\<span class="string">&quot; for more information.\\n&quot;</span>),</span><br><span class="line"> progname);</span><br><span class="line"> exit(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>-X --wal-method</code>参数可以使pg_basebackup直接包含恢复需要的WAL日志文档，形成一个完整的直接用于恢复的备份，不需要再单独拷贝归档日志文件。但是要注意，wal_keep_segments参数要设置的大一些，防止在备份期间生成的归档日志被循环覆盖，这样基本备份会失败。每个WAL日志有16MB大小，wal_keep_segments设置数乘以16MB就是服务器保存这些wal log需要使用的额外存储空间。<br>当然<code>-X --wal-method</code>参数也可以设置为n，这样恢复时需手动管理自基础备份以来的生成的WAL日志。</p>
-<p>在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
-<p>pg_basebackup备份时会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。生成的备份文档内也有一个文件叫做backup_label，与此文件内容相同。<br>此文件的内容类似如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">0</span>/<span class="number">6000028</span> (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">STOP WAL LOCATION: <span class="number">0</span>/60000F8 (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">0</span>/<span class="number">6000060</span></span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">44</span> CST </span><br><span class="line">LABEL: <span class="number">20191019</span></span><br><span class="line">START TIMELINE: <span class="number">1</span></span><br><span class="line">STOP TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">45</span> CST </span><br><span class="line">STOP TIMELINE: <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以远程使用pg_basebackup制作基础备份，pg_basebackup使用复制协议，因此需要配置pg_hba.conf文件以允许replication连接</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">host replication all <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span> </span><br></pre></td></tr></table></figure>
-
-<p>还需要设置postgresql.conf文件中的max_wal_senders参数以允许至少一个session连接来进行备份，postgresql 11默认设置为10，够用了。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/continuous-archiving.html">25.3. Continuous Archiving and Point-in-Time Recovery (PITR)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-wal.html">19.5. Write Ahead Log</a><br>[3]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/runtime-config-replication.html">19.6. Replication</a><br>[4]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/app-pgbasebackup.html">pg_basebackup</a><br>[5]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/functions-admin.html">9.26. System Administration Functions</a></p>
 
       
     </div>

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,106 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/06/cassandra-add-new-datacenter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/06/cassandra-add-new-datacenter/" class="post-title-link" itemprop="url">cassandra集群添加新的数据中心</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-06 23:29:46" itemprop="dateCreated datePublished" datetime="2015-11-06T23:29:46+08:00">2015-11-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>可以为现有集群添加一个新的数据中心，要求新添加数据中心的所有节点，要安装与原集群节点相同的cassandra版本。</p>
+<p>操作步骤:</p>
+<ol>
+<li> 使用NetworkTopologyStrategy<br>系统keyspace并没有使用NetworkTopologyStrategy策略，用户的keyspace如果要使用多数据中心就要使用NetworkTopologyStrategy策略。</li>
+<li> 停止节点<br>debian包系统安装的cassandra,安装完成后处于运行状态，而且有默认的集群Test Cluster，因为需要逐一停止新数据中心节点，并清除默认安装的信息：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service cassandra stop</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/cassandra<span class="comment">/*</span></span><br></pre></td></tr></table></figure></li>
+<li> 配置cassandra.yaml<br>新数据中心节点cassandra.yaml文件中添加<code>auto_bootstrap: false</code>。auto_bootstrap默认是true，并且没有在cassandra.yaml文件中列出来。设置其他参数，比如seeds和endpoint_snitch，匹配原有集群的配置。num_tokens参数可以设置与原集群一致，但不要设置initial_token参数。</li>
+<li> 编辑相关配置文件<br>GossipingPropertyFileSnitch使用的配置文件cassandra-rackdc.properties中添加新数据中心和机架。</li>
+<li> 客户端配置<br>如果使用DataStax驱动,负载均衡策略设置为DCAwareRoundRobinPolicy,其他驱动做相应修改，以使客户端与新的集群相适应。<br>如果原来使用一致性级别QUORUM，那么现在重新审视一下，是否LOCAL_QUORUM或者EACH_QUORUM一致性级别更适合现在的多数据中心集群。</li>
+<li> 新节点启动cassandra</li>
+<li> 新节点数据同步<br>当集群中的所有节点都正常运行之后，修改keyspace的属性以便将数据分布到新的数据中心，比如:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; ALTER KEYSPACE system_auth WITH replication = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;DC1&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;DC2&#x27;</span>:<span class="number">1</span>&#125;;</span><br><span class="line">cqlsh&gt; ALTER KEYSPACE system_traces WITH replication = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;DC1&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;DC2&#x27;</span>:<span class="number">1</span>&#125;;</span><br><span class="line">cqlsh&gt; ALTER KEYSPACE system_distributed WITH replication = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;DC1&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;DC2&#x27;</span>:<span class="number">1</span>&#125;;</span><br></pre></td></tr></table></figure>
+在原数据中心或新数中心的任意节点上执行皆可。</li>
+</ol>
+<p>然后新添加数据中心的每一个节点上运行nodetool rebuild,并指定原数据中心的名字:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool rebuild -- name_of_existing_data_center</span><br></pre></td></tr></table></figure>
+<p>多个节点可以同时运行此命令。</p>
+<ol start="9">
+<li> 还原auto_bootstrap参数<br>新添数据中心节点的配置文件cassandra.yaml去掉auto_bootstrap参数或者将其值设置为true。如果新添加的节点是种子节点，则此参数应设置为false,种子节点不需要bootstrap。</li>
+</ol>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://docs.datastax.com/en/cassandra/2.2/cassandra/operations/opsAddDCToCluster.html">Adding a data center to a cluster</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/configMultiNetworks.html">Using multiple network interfaces</a><br>[3]<a target="_blank" rel="noopener" href="https://www.instaclustr.com/apache-cassandra-deployed-on-private-and-public-networks/">Apache Cassandra Deployed on Private and Public Networks</a><br>[4]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/cassandra-oss/2.2/cassandra/operations/opsAddNodeToCluster.html">Adding nodes to an existing cluster</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1036,123 +1136,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.pipe(rename(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line"> path.basename += <span class="string">&#x27;.min&#x27;</span>;</span><br><span class="line"> path.extname = <span class="string">&#x27;.js&#x27;</span>; </span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
 
 <p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/03/gulp-usemin/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/03/gulp-usemin/" class="post-title-link" itemprop="url">gulp usemin</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-11-03 19:17:45" itemprop="dateCreated datePublished" datetime="2015-11-03T19:17:45+08:00">2015-11-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>一般前端页面上线时，需要进行js,css等资源的合并、压缩，以便提高网络性能，而开发版本的html页面中添加了很多未合并压缩前的js,css资源。gulp插件gulp-usemin可以自动化的完成这一切。</p>
-<p>js,css资源的合并、压缩习惯上称做minify，所以替换html文件中js,css的路径顺利成章的就叫做usemin了。</p>
-<p><strong>构建标记块build block</strong></p>
-<p>html文件中需要使用usemin可以识别的注释格式来标记需要压缩、合并和替换的资源</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- build:&lt;pipelineId&gt;(alternate search path) &lt;path&gt; --&gt;</span><br><span class="line">... HTML Markup, list <span class="keyword">of</span> script / link tags.</span><br><span class="line">&lt;!-- endbuild --&gt;</span><br></pre></td></tr></table></figure>
-
-<p>其中:</p>
-<ul>
-<li>  piplelineId<br>调用usemin时，可以通过pipelineId来指定此build block,从而为其指定相应的处理动作。如果piplelineId指定为关键词remove,则将在输出的html文件直接删除掉该构件块。</li>
-<li>  alternate search path<br>默认的输入文件，比如js或css文件，是相对于当前处理的html文件的，alternate search path可以指定搜索路径。</li>
-<li>  path<br>合并、压缩优化之后文件的输出路径。如果不指定path,则将处理之后的输出内联入html文件。</li>
-</ul>
-<p><strong>usemin选项</strong></p>
-<ul>
-<li>  assetsDir<br>输出文件的根目录，build block中path指定的路径就是相对于此路径。</li>
-<li>  path<br>默认的alternate search path，可以被build block中的alternate search path覆盖。</li>
-<li>  pipelineId<br>用于标识build block的标识符</li>
-<li>  outputRelativePath<br>压缩合并后的输出文件相对于html文件的路径</li>
-<li>  enableHtmlComment<br>保留html注释</li>
-</ul>
-<p>比如有如下的目录结构:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+- app</span><br><span class="line"> +- index.html</span><br><span class="line"> +- assets</span><br><span class="line"> +- js</span><br><span class="line"> +- foo.js</span><br><span class="line"> +- bar.js</span><br><span class="line"> +- css</span><br><span class="line"> +- clear.css</span><br><span class="line"> +- main.css</span><br><span class="line">+- dist</span><br></pre></td></tr></table></figure>
-
-<p>我们需要将foo.js和bar.js合并压缩为optimized.js，两个css文件合并压缩为style.css<br>index.html文件是这样定义构件块的:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- build:css_whatever style.css --&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/clear.css&quot;</span>/&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;css/main.css&quot;</span>/&gt;</span><br><span class="line">&lt;!-- endbuild --&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- build:js_whatever js/optimized.js --&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;assets/js/foo.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;assets/js/bar.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;!-- endbuild --&gt;</span><br></pre></td></tr></table></figure>
-
-<p>输出文件路径为dist,gulpfile.js中定义usemin任务如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> usemin = <span class="built_in">require</span>(<span class="string">&#x27;gulp-usemin&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">&#x27;gulp-uglify&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> minifyCss = <span class="built_in">require</span>(<span class="string">&#x27;gulp-minify-css&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;usemin&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(<span class="string">&#x27;./app/index.html&#x27;</span>)</span><br><span class="line"> .pipe(usemin(&#123;</span><br><span class="line"> js_whatever: \[uglify()\],</span><br><span class="line"> css_whatever: \[minifyCSS()\]</span><br><span class="line"> &#125;))</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist/&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>将会产生如下的目录结构:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">+- app</span><br><span class="line"> +- index.html</span><br><span class="line"> +- assets</span><br><span class="line"> +- js</span><br><span class="line"> +- foo.js</span><br><span class="line"> +- bar.js</span><br><span class="line">+- dist</span><br><span class="line"> +- index.html</span><br><span class="line"> +- js</span><br><span class="line"> +- optimized.js</span><br><span class="line"> +- style.css</span><br></pre></td></tr></table></figure>
-
-<p>而dist/index.html将会是这个样子的:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;style.css&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;script src=<span class="string">&quot;js/optimized.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/zont/gulp-usemin">gulp-usemin</a></p>
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

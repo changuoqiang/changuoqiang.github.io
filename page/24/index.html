@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">981</span>
+          <span class="site-state-item-count">982</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,122 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/" class="post-title-link" itemprop="url">pandoc转换markdown为pdf</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-01 21:19:30" itemprop="dateCreated datePublished" datetime="2016-06-01T21:19:30+08:00">2016-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pandoc是一款强悍的文档的转换工具，支持绝大多数文档格式之间的相互转换，而且具有强大的控制能力。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install texlive-xetex pandoc</span><br></pre></td></tr></table></figure>
+
+<p><strong>转换markdown</strong></p>
+<p>默认latex引擎pdflatex不支持中文，需要使用xelatex引擎，并且要指定中文字体</p>
+<p>可以这样查看系统中文字体:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fc-list :lang=zh</span><br></pre></td></tr></table></figure>
+
+<p>然后mkd转换到pdf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc foo.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o foo.pdf</span><br></pre></td></tr></table></figure>
+
+<p>然而对中文的支持还是有些问题，这样会把较长的文本行截断，需要定制template来解决此问题。</p>
+<p>先导出pandoc默认模板：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc -D latex &gt; mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>在生成的模板文件mytemplate.tex文件的第一行后面添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\XeTeXlinebreaklocale <span class="string">&quot;zh&quot;</span></span><br><span class="line">\\XeTeXlinebreakskip = 0pt plus 1pt minus <span class="number">0.</span>1pt</span><br></pre></td></tr></table></figure>
+
+<p>将模板文件mytemplate.lex置于~/.pandoc/templates/路径下，或者置于转换命令当前目录下。</p>
+<p>然后这样转换：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>还有一个小问题，默认生成的pdf边距比较大，可以通过geometry参数来控制边距。</p>
+<p>所以最后的命令行大约是这个样子的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf -V geometry:<span class="string">&quot;top=2cm, bottom=1.5cm, left=1cm, right=1cm&quot;</span> --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>可以用模板文件指定使用的字体，模板文件可以很复杂，嗯，latex太复杂了。</p>
+<p>pandoc转换markdown时，对两个tab缩进支持不好，还没找到好的解决办法。</p>
+<p><strong>Mac OS X</strong></p>
+<p>安装pandoc和mactex</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install pandoc</span><br><span class="line">$ brew cask install mactex</span><br></pre></td></tr></table></figure>
+
+<p>中文字体可以使用苹方简体中文 “PingFang SC”</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc/wiki/Pandoc-With-Chinese-(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Pandoc With Chinese (简体中文)</a><br>[2]<a target="_blank" rel="noopener" href="http://pandoc.org/faqs.html">pandoc faqs</a><br>[3]<a target="_blank" rel="noopener" href="http://tex.stackexchange.com/questions/179926/pandoc-markdown-to-pdf-without-cutting-off-code-block-lines-that-are-too-long">Pandoc: Markdown to PDF, without cutting off code block lines that are too long</a><br>[4]<a target="_blank" rel="noopener" href="https://jdhao.github.io/2017/12/10/pandoc-markdown-with-chinese/">纯文本做笔记 — 使用 Pandoc 与 Markdown 生成 PDF 文件</a><br>[5]<a target="_blank" rel="noopener" href="http://blog.jqian.net/post/xelatex.html">使用xelatex生成中文pdf</a><br>[6]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7f9a9ff053bb">使用pandoc转换md为PDF并添加中文支持</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1213,95 +1329,6 @@
 <p>推荐第一种</p>
 <p>一般crontab运行的脚本中尽量不要依赖环境变量，使用绝对路径为佳。</p>
 <p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/28/oracle-instant-client-and-tnsping/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/28/oracle-instant-client-and-tnsping/" class="post-title-link" itemprop="url">oracle instant client and tnsping</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-28 16:09:31" itemprop="dateCreated datePublished" datetime="2016-04-28T16:09:31+08:00">2016-04-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>最近版本的即时客户端已经没有了tnsping这个命令，可以从相应版本的客户端或服务器bin目录中拷贝此文件，或者用脚本简单的替代：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tnsping &gt;<span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> </span><br><span class="line"> <span class="function"><span class="title">tnsping</span>(<span class="params"></span>)</span> &#123; </span><br><span class="line"> sqlplus -L -S x/x@$<span class="number">1</span> &lt;<span class="regexp">/dev/</span><span class="literal">null</span> grep ORA- (grep -v ORA-<span class="number">01017</span> echo OK) </span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
-
-<p>将此段脚本放入.profile或.bashrc即可。</p>
-<p>又或者直接测试一下服务器的1521端口是否正常开放:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ telnet a.b.c.d <span class="number">1521</span></span><br><span class="line">Trying a.b.c.d...</span><br><span class="line">Connected to a.b.c.d.</span><br><span class="line">Escape character is <span class="string">&#x27;^\]&#x27;</span>.</span><br></pre></td></tr></table></figure>
-
-<p>这样就说明oracle监听是正常的。</p>
-<p>===<br>[erq]</p>
 
       
     </div>
