@@ -14095,27 +14095,31 @@ if (!document.all) {
 <ul>
 <li>  useGeneratedKeys</li>
 </ul>
-<p>这是insert独有的属性，告诉Mybatis使用JDBC的getGeneratedKeys 方法去获取数据库内部产生的key。<br>如果自增键的名字不叫id,还需要设置一个属性keyProperty来告诉Mybaits获取回来的结果设置到那个字段上。<br><strong>最好明确设置keyProperty属性</strong>。<br>[xml]<br><insert id="insert" parameterType="org.xxx.xxx.entity.Building"
- useGeneratedKeys="true" keyProperty="myid"></p>
-<p>INSERT INTO … </p>
-</insert>
-\[/xml\]
+<p>这是insert独有的属性，告诉Mybatis使用JDBC的getGeneratedKeys 方法去获取数据库内部产生的key。<br>如果自增键的名字不叫id,还需要设置一个属性keyProperty来告诉Mybaits获取回来的结果设置到那个字段上。<br><strong>最好明确设置keyProperty属性</strong>。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insert&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;org.xxx.xxx.entity.Building&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">useGeneratedKeys</span>=<span class="string">&quot;true&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;myid&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">INSERT INTO ... </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>使用Mybatis Generator生成mapper文件时,只要在table元素下添加子元素generatedKey即可,如下:<br>[xml]<br><generatedKey column="id" sqlStatement="JDBC"/><br>[/xml]</p>
+<p>使用Mybatis Generator生成mapper文件时,只要在table元素下添加子元素generatedKey即可,如下:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">generatedKey</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">sqlStatement</span>=<span class="string">&quot;JDBC&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>column是自动生成的键,使用JDBC标准生成键方式。<br>最好将generatedKey子元素放到table元素的最后,否则可能会有错误提示。</p>
 <ul>
 <li>  selectKey</li>
 </ul>
 <p>selectKey定义一个子查询，将查询的自增键的结果赋予insert参数的相应字段。selectKey有以下几个属性：</p>
 <p>keyProperty - selectKey子查询的结果应该设置到传入参数的哪个字段上<br>resultType - 查询的结果类型。Mybaits其实可以自己查询出结果类型。<br>order - 插入语句执行之前还是之后执行selectKey子查询，只能取值BEFORE或AFTER<br>statementType - 语句类型。STATEMENT，PREPARED或CALLABLE</p>
-<p>插入语句之后执行selectKey子查询<br>[xml]<br><selectKey order="AFTER" keyProperty="id" resultType="java.lang.Integer"><br> SELECT currval(‘mytable_id_seq’)<br></selectKey><br>[/xml]</p>
-<p>插入语句之前执行selectKey子查询<br>[xml]<br><selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Integer"><br> SELECT nextval(‘mytable_id_seq’)<br></selectKey><br>[/xml]</p>
+<p>插入语句之后执行selectKey子查询</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">order</span>=<span class="string">&quot;AFTER&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;java.lang.Integer&quot;</span>&gt;</span></span><br><span class="line"> SELECT currval(&#x27;mytable_id_seq&#x27;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>插入语句之前执行selectKey子查询</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">selectKey</span> <span class="attr">order</span>=<span class="string">&quot;BEFORE&quot;</span> <span class="attr">keyProperty</span>=<span class="string">&quot;id&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;java.lang.Integer&quot;</span>&gt;</span></span><br><span class="line"> SELECT nextval(&#x27;mytable_id_seq&#x27;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">selectKey</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>PostgreSQL为serial字段生成的sequence名字为: 表名_列名_seq,但是这个序列并不能单独访问，否则会有提示：<br>ERROR: currval of sequence “mytable_id_seq” is not yet defined in this session</p>
 <ul>
 <li>  RETURNING子句</li>
 </ul>
 <p>PostgreSQL的INSERT语句可以有一个RETURNING字句，返回刚插入记录的字段值。而且RETURNING的语法与SELECT是一样的，这个功能还是十分强大的，不过这是PostgreSQL独有的SQL标准之外的扩展特性。</p>
-<p>[xml]<br><insert id="insert" parameterType="org.xxx.xxx.entity.Building" resultType="int"><br>INSERT INTO … VALUES (…) RETURNING id<br></insert><br>[/xml]</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insert&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;org.xxx.xxx.entity.Building&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;int&quot;</span>&gt;</span></span><br><span class="line">INSERT INTO ... VALUES (...) RETURNING id</span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>useGeneratedKeys是最简单的，只要数据库支持就应该使用这个方法。</p>
 <p>无论使用哪个方法，返回的自增键的值都应该从insert方法的参数对应的字段去取，而不是获取insert方法的返回值，insert方法总是返回INSERT INTO语句影响的行数，如果插入成功其值为1，如果插入失败其值为0</p>
 ]]></content>
@@ -20546,51 +20550,40 @@ Disk identifier: 0x0005fc82
 <p>这个例子程序和以前一样，前端为html、javascript,这次后端改为使用spring framework 3.2.4,前后端通过ajax交换json数据，这个例子比只使用servlet 3更简洁，当然配置更复杂一些。</p>
 <p>完整的代码和配置<a href="/downloads/springjson.war">下载</a>。</p>
 <p><strong>配置</strong></p>
-<p>要使用spring framework,首先要在WEB-INF/web.xml中配置spring的DispatcherServlet，由其来接管映射的URL请求，之后就进入spring framework的处理流程。<br>web.xml<br>[xml]<br> <servlet><br> <servlet-name>spring</servlet-name><br> <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><br> <load-on-startup>1</load-on-startup><br> </servlet><br> <servlet-mapping><br> <servlet-name>spring</servlet-name><br> <url-pattern>/</url-pattern><br> </servlet-mapping><br>[/xml]</p>
+<p>要使用spring framework,首先要在WEB-INF/web.xml中配置spring的DispatcherServlet，由其来接管映射的URL请求，之后就进入spring framework的处理流程。<br>web.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>spring<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>spring<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>如果不配置的DispatcherServlet的初始化参数contextConfigLocation，则spring framework会读取WEB-INF/<servlet-name>-servlet.xml作为其context参数文件，在这个配置里，这个文件为spring-servlet.xml,其内容如下：</p>
-<p>[xml]<br><?xml version="1.0" encoding="UTF-8"?><br><beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:p="http://www.springframework.org/schema/p"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:mvc="http://www.springframework.org/schema/mvc"
- xsi:schemaLocation="
- http://www.springframework.org/schema/beans
- http://www.springframework.org/schema/beans/spring-beans.xsd
- http://www.springframework.org/schema/context
- http://www.springframework.org/schema/context/spring-context.xsd
- http://www.springframework.org/schema/mvc
- http://www.springframework.org/schema/mvc/spring-mvc.xsd"></p>
-<p> &lt;context:component-scan base-package=”net.openwares.test” /&gt;<br> &lt;mvc:default-servlet-handler /&gt;<br> &lt;mvc:annotation-driven /&gt;<br></beans><br>[/xml]</p>
-<p>其中<br>[xml]&lt;context:component-scan base-package=”net.openwares.test” /&gt;[/xml]<br>表示从包net.openwares.test里面自动扫描使用注解标示的组件，比如@RqeustMapping,@RequestBody等注解的组件。<br>不过这个地方存在一点问题，spring对jar包的扫描有特殊的要求，用jar -cvf 命令创建的jar包,spring扫描不到其中的组件，而不打包使用层次文件路径则没有问题，这里的路径是WEB-INF/classes/net/openwares/test/。使用<a href="http://kyfxbl.iteye.com/blog/1675368">eclipse打包时有个选项add directory entries</a>，勾选这个选项打出来的包就可以被spring扫描到。现在还没发现如何用jar命令打包才可以让spring扫描到。</p>
-<p>[xml]&lt;mvc:default-servlet-handler /&gt;[/xml]<br>可以将spring framework不处理的其他资源请求路由到容器的default servlet,这样容器就可以继续处理这些请求，而不是被spring framework拦截掉。</p>
-<p>[xml]&lt;mvc:annotation-driven /&gt;[/xml]<br>支持注解，比如@RequestMapping,@PathVariable等。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/mvc</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;net.openwares.test&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">mvc:annotation-driven</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<br><code>&lt;context:component-scan base-package=&quot;net.openwares.test&quot; /&gt;</code><br>表示从包net.openwares.test里面自动扫描使用注解标示的组件，比如@RqeustMapping,@RequestBody等注解的组件。<br>不过这个地方存在一点问题，spring对jar包的扫描有特殊的要求，用jar -cvf 命令创建的jar包,spring扫描不到其中的组件，而不打包使用层次文件路径则没有问题，这里的路径是WEB-INF/classes/net/openwares/test/。使用<a href="http://kyfxbl.iteye.com/blog/1675368">eclipse打包时有个选项add directory entries</a>，勾选这个选项打出来的包就可以被spring扫描到。现在还没发现如何用jar命令打包才可以让spring扫描到。</p>
+<p><code>&lt;mvc:default-servlet-handler /&gt;</code><br>可以将spring framework不处理的其他资源请求路由到容器的default servlet,这样容器就可以继续处理这些请求，而不是被spring framework拦截掉。</p>
+<p><code>&lt;mvc:annotation-driven /&gt;</code><br>支持注解，比如@RequestMapping,@PathVariable等。</p>
 <p>对于这个例子，这个配置就够了。现在spring framework朝着零配置方向又进一步，在servlet 3.0+环境下，也可以不用xml而使用java代码来完成如上配置。</p>
 <p><strong>代码</strong></p>
 <p>前端index.html只是改一下请求的url就可以了</p>
-<p>var url = “/springjson/ajaxcalc”;</p>
-<p>后端SpringJson.java代码：<br>[java]<br>package net.openwares.test;</p>
-<p>import java.io.Writer;<br>import java.io.IOException;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.RequestBody;<br>import org.springframework.web.bind.annotation.ResponseBody;</p>
-<p>import org.springframework.stereotype.Component;<br>import org.springframework.beans.factory.annotation.Autowired;</p>
-<p>@Component<br>class Attender {<br> private int augend, addend;</p>
-<p> public Attender(){}</p>
-<p> public int getAugend(){<br> return augend;<br> }<br> public void setAugend(int augend){<br> this.augend = augend;<br> }</p>
-<p> public int getAddend(){<br> return addend;<br> }<br> public void setAddend(int addend){<br> this.addend = addend;<br> }<br>}</p>
-<p>@Component<br>class Outcome {<br> private int result;</p>
-<p> public Outcome(){}</p>
-<p> public int getResult(){<br> return result;<br> }<br> public void setResult(int result){<br> this.result = result;<br> }<br>}</p>
-<p>@Controller<br>public class SpringJson {</p>
-<p> @Autowired<br> private Outcome outcome;</p>
-<p> @RequestMapping(“/ajaxcalc”)<br> public @ResponseBody Outcome getResult(@RequestBody Attender attender){</p>
-<p> outcome.setResult(attender.getAugend() + attender.getAddend());<br> return outcome;<br> }<br>}<br>[/java]</p>
+<p><code>var url = &quot;/springjson/ajaxcalc&quot;;</code></p>
+<p>后端SpringJson.java代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> net.openwares.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Writer;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Attender</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">int</span> augend, addend;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Attender</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAugend</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> augend;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAugend</span><span class="params">(<span class="keyword">int</span> augend)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.augend = augend;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAddend</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> addend;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddend</span><span class="params">(<span class="keyword">int</span> addend)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.addend = addend;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outcome</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">int</span> result;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Outcome</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> result;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResult</span><span class="params">(<span class="keyword">int</span> result)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.result = result;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringJson</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Autowired</span></span><br><span class="line"> <span class="keyword">private</span> Outcome outcome;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@RequestMapping(&quot;/ajaxcalc&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="meta">@ResponseBody</span> <span class="function">Outcome <span class="title">getResult</span><span class="params">(<span class="meta">@RequestBody</span> Attender attender)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> outcome.setResult(attender.getAugend() + attender.getAddend());</span><br><span class="line"> <span class="keyword">return</span> outcome;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>说明</strong></p>
 <p>只要前端ajax请求将Content-Type设置为application/json,则spring会自动的将请求内容映射到@RequestBody修饰的VO对象，<br>将@ResponseBody修饰的VO对象转换为返回的json数据。spring使用HttpMessageConverters来转换数据，<br>支持json,xml等多种数据类型，还以自定义转换接口。中间如有数据类型转换可能会出现转换问题。</p>
 <p>打包为spingjson.war,部署后访问URL<br><a href="http://127.0.0.1/springjson/ajaxcalc">http://127.0.0.1/springjson/ajaxcalc</a></p>
 <p><strong>依赖</strong></p>
-<p>spring使用jackson来操作json数据，因此需要下载jackson jar包，spring 3.2.4支持jackson 2,直接下载<a href="http://wiki.fasterxml.com/JacksonDownload">最新的jackson包</a>丢到lib目录即可，当前为这个三个文件：<br>jackson-core-2.2.3.jar<br>jackson-annotations-2.2.3<br>jackson-databind-2.2.3.jar</p>
+<p>spring使用jackson来操作json数据，因此需要下载jackson jar包，spring 3.2.4支持jackson 2,直接下载<a href="http://wiki.fasterxml.com/JacksonDownload">最新的jackson包</a>丢到lib目录即可，当前为这个三个文件：</p>
+<p>jackson-core-2.2.3.jar</p>
+<p>jackson-annotations-2.2.3</p>
+<p>jackson-databind-2.2.3.jar</p>
 <p>spring使用<a href="http://commons.apache.org/proper/commons-logging/">apache commons logging</a>组件来输出日志，因此需要依赖包<br>commons-logging-1.1.3.jar</p>
-<p>spring framework现在拆分了jar,不再提供单一的一个大jar包。此样例程序需要依赖以下spring包：<br>spring-core-3.2.4.RELEASE.jar //核心包，所有的spring程序都需要<br>spring-beans-3.2.4.RELEASE.jar //bean管理，依赖注入等核心功能<br>spring-context-3.2.4.RELEASE.jar //基础支持包<br>spring-expression-3.2.4.RELEASE.jar //此包必须，否则spring无法加载context配置文件，从而无法完成初始化<br>spring-web-3.2.4.RELEASE.jar //servlet支持<br>spring-webmvc-3.2.4.RELEASE.jar //MVC支持</p>
+<p>spring framework现在拆分了jar,不再提供单一的一个大jar包。此样例程序需要依赖以下spring包：</p>
+<p>spring-core-3.2.4.RELEASE.jar //核心包，所有的spring程序都需要</p>
+<p>spring-beans-3.2.4.RELEASE.jar //bean管理，依赖注入等核心功能</p>
+<p>spring-context-3.2.4.RELEASE.jar //基础支持包</p>
+<p>spring-expression-3.2.4.RELEASE.jar //此包必须，否则spring无法加载context配置文件，从而无法完成初始化</p>
+<p>spring-web-3.2.4.RELEASE.jar //servlet支持</p>
+<p>spring-webmvc-3.2.4.RELEASE.jar //MVC支持</p>
 <p><strong>后记</strong><br>这个例子和以前的几个例子都是完全用vim编辑，用javac编译，用jar打包的。虽然只是极其简单的小例子，仍然感觉十分繁琐，看来研究下eclipse还是有必要的。</p>
-<p>参考：<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/mvc.html">Spring 3.2.4 MVC文档</a><br> <strong>===<br>[erq]</strong></p>
+<p>参考：<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/mvc.html">Spring 3.2.4 MVC文档</a></p>
 ]]></content>
       <categories>
         <category>java</category>
