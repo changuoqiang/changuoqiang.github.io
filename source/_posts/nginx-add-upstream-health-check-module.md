@@ -21,9 +21,10 @@ github上有个开源的upstream检查模块[nginx_upstream_check_module](https:
 $ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1.1 libssl-dev
 ```
 
-下载最新的nginx stable 1.16版本，clone nginx_upstream_check_module master分支
+下载最新的nginx stable ~~1.16~~ 1.22版本，clone nginx_upstream_check_module master分支
 ```js
-$ wget http://nginx.org/download/nginx-1.16.1.tar.gz
+//$ wget http://nginx.org/download/nginx-1.16.1.tar.gz
+$ wget https://nginx.org/download/nginx-1.22.0.tar.gz
 $ git clone https://github.com/yaoweibin/nginx_upstream_check_module
 ```
 
@@ -31,7 +32,8 @@ $ git clone https://github.com/yaoweibin/nginx_upstream_check_module
 ```js
 $ tar zxvf nginx-1.16.1.tar.gz
 $ cd nginx-1.16.1/
-$ patch -p1 < ../nginx_upstream_check_module/check_1.14.0+.patch
+//$ patch -p1 < ../nginx_upstream_check_module/check_1.14.0+.patch
+$ patch -p1 < ../nginx_upstream_check_module/check_1.20.1+.patch
 ```
 
 配置、编译、安装nginx
