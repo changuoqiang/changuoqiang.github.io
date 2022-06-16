@@ -63,7 +63,7 @@ $ sudo make install
 
 添加systemd服务nginx.service
 将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service
-```js
+```ini
 # Stop dance for nginx
 # =======================
 #
@@ -76,12 +76,12 @@ $ sudo make install
 # nginx signals reference doc:
 # http://nginx.org/en/docs/control.html
 #
-\[Unit\]
+[Unit]
 Description=A high performance web server and a reverse proxy server
 Documentation=man:nginx(8)
 After=network.target nss-lookup.target
 
-\[Service\]
+[Service]
 Type=forking
 PIDFile=/usr/local/nginx/logs/nginx.pid
 ExecStartPre=/usr/local/nginx/sbin/nginx -t -q -g 'daemon on; master_process on;'
@@ -91,7 +91,7 @@ ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/n
 TimeoutStopSec=5
 KillMode=mixed
 
-\[Install\]
+[Install]
 WantedBy=multi-user.target
 ```
 
@@ -139,70 +139,14 @@ proxy_pass http://cluser/aurl/;
 Nginx http upstream check status
 Check upstream server number: 3, generation: 1
 
-Index
-
-Upstream
-
-Name
-
-Status
-
-Rise counts
-
-Fall counts
-
-Check type
-
-Check port
-
-0
-
-cluser
-
-192.168.0.17:8080
-
-up
-
-30
-
-0
-
-tcp
-
-0
-
-1
-
-cluser
-
-192.168.0.18:8080
-
-up
-
-19
-
-0
-
-tcp
-
-0
-
-2
-
-cluser
-
-192.168.0.19:8080
-
-up
-
-15
-
-0
-
-tcp
-
-0
+|Index|Upstream|Name|Status|Rise counts|Fall counts|Check type|Check port|
+|---|---|---|---|---|---|---|---|
+|0|cluser|192.168.0.17:8080|up|30|0|http|0|
+|1|cluser|192.168.0.18:8080|up|19|0|http|0|
+|2|cluser|192.168.0.19:8080|up|15|0|http|0|
 
 References:
+
 \[1\][Health checks upstreams for nginx](https://github.com/yaoweibin/nginx_upstream_check_module)
+
 \[2\][HTTP Health Checks](https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/)
