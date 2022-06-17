@@ -30,9 +30,11 @@ $ git clone https://github.com/yaoweibin/nginx_upstream_check_module
 
 为源码打补丁
 ```js
-$ tar zxvf nginx-1.16.1.tar.gz
-$ cd nginx-1.16.1/
+//$ tar zxvf nginx-1.16.1.tar.gz
+//$ cd nginx-1.16.1/
 //$ patch -p1 < ../nginx_upstream_check_module/check_1.14.0+.patch
+$ tar zxvf nginx-1.22.0.tar.gz
+$ cd nginx-1.22.0/
 $ patch -p1 < ../nginx_upstream_check_module/check_1.20.1+.patch
 ```
 
