@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,121 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/17/javascript-function/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/11/17/javascript-function/" class="post-title-link" itemprop="url">javascript函数声明、函数表达式和函数构造器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-11-17 15:47:42" itemprop="dateCreated datePublished" datetime="2013-11-17T15:47:42+08:00">2013-11-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>函数声明</strong><br><em>命名函数声明</em><br>[javascript]<br>// 函数声明会被提升，所以可以提前调用<br>// 这里只是普通的函数调用,此时this指向Window对象,会为Window对象添加属性b<br>// result的值和类型依赖于Func()函数的返回值,没有return语句默认返回undefined<br>var result = Func(); //Window{…}<br>console.log(result); //undefined<br>console.log(typeof result); //undefined</p>
+<p>// 函数声明<br>function Func(){<br> //局域临时变量，函数执行完即被丢弃，无论是作为普通函数还是构造器调用<br> var a = “a”;</p>
+<p> // 无论是普通函数调用还是作为函数构造器<br> // this指向哪个对象，则为那个对象添加属性b,<br> // 如果作为构造器调用，this指向新创建的对象<br> this.b = “b”;</p>
+<p> // 因为没有使用var声明c,所以c属于全局变量，无论什么时候函数被调用，都会为全局对象添加属性c<br> c=”c”;</p>
+<p> console.log(this);<br>}</p>
+<p>//用户自定义函数的构造器为Function(),所以Func函数的原型链(<strong>proto</strong>)指向Function.prototype<br>console.log(Func); //function Func(){//临时变量…}<br>console.log(typeof Func); //function<br>console.log(Func.<strong>proto</strong>); //function Empty(){}<br>console.log(Func.<strong>proto</strong>===Function.prototype); //true<br>console.log(Func.prototype); //Func{}<br>console.log(Func.prototype.constructor); //function Func(){//临时变量…}<br>console.log(Func.prototype.<strong>proto</strong>===Object.prototype); //true</p>
+<p>// 当对函数施加new运算符时,函数才叫做构造器,new运算符的结果总是一个对象<br>// 函数自身返回对象的优先级高，new运算符新构造对象的优先级低。<br>// new运算符无论如何都会执行构造器函数,如果函数也返回一个对象的话,new运算符新构造的对象会被丢弃。<br>var obj = new Func(); //Func{b: “b”}<br>console.log(obj); // Func{b: “b”}<br>console.log(typeof obj); // object<br>console.log(obj.<strong>proto</strong>); // Func{}<br>console.log(obj.<strong>proto</strong>===Func.prototype); // true<br>console.log(obj.prototype); //undefined</p>
+<p>// 这里只是为Func换了个别名func而已,func和Func都引用同一个命名函数对象Func()<br>// 二者是同一个东西，排名不分先后<br>var func = Func;<br>console.log(func); //function Func(){//临时变量…}<br>console.log(typeof func); //function<br>console.log(func.<strong>proto</strong>); //function Empty(){}<br>console.log(func.prototype); //Func{}<br>[/javascript]</p>
+<p><em>匿名函数声明</em><br>匿名函数不立即执行是没有什么用处的，因为声明之后根本无法引用它，但仍然可以这样声明<br>[javascript]<br>//匿名函数<br>console.log(function(){var a=”a”;this.b=”b”;console.log(this);}) //function (){var a=”a”…}<br>//直接执行,第一次是console.log(this)输出,为Window{…}<br>// 第二次输出为函数返回值输出undefined<br>console.log((function(){var a=”a”;this.b=”b”;console.log(this);})()) //Window{…}; undefined<br>//当作函数构造器执行,第一次是构造函数输出，console.log(this)<br>//第二次是返回的新对象的输出,都是Onject{b: “b”}<br>console.log(new function(){var a=”a”;this.b=”b”;console.log(this);}) //Object{b: “b”}; Object{b: “b”}<br>console.log(function(){var a=”a”;this.b=”b”;console.log(this);}.<strong>proto</strong>) //function Empty(){}<br>// 匿名函数的匿名原型对象<br>console.log(function(){var a=”a”;this.b=”b”;console.log(this);}.prototype) //Object{}<br>console.log(function(){var a=”a”;this.b=”b”;console.log(this);}.prototype==Object.prototype) //false<br>console.log(function(){var a=”a”;this.b=”b”;console.log(this);}.prototype.<strong>proto</strong>===Object.prototype) //true<br>[/javascript]<br><strong>函数表达式</strong></p>
+<p><em>命名函数表达式</em></p>
+<p>[javascript]<br>// 函数表达式中的Func名字只在函数内部可见，不会进入外部名字空间<br>//var result1 = Func(); //Func is not defined</p>
+<p>// 函数表达式不会被提升，所以不能提前调用<br>//var result2 = func(); //func is not a function<br>console.log(func); //undefined</p>
+<p>// 函数表达式,func和Func都指向同一个命名函数对象Func()<br>// 二者是同一个东西，但是Func名字只在函数内部可见<br>var func = function Func(){<br> //临时变量，函数执行完即被丢弃，无论是作为普通函数还是构造器调用<br> var a = “a”;</p>
+<p> // 无论是普通函数调用还是作为函数构造器<br> // this指向哪个对象，则为那个对象添加属性b,<br> this.b = “b”;<br> console.log(this);<br>}</p>
+<p>// 函数表达式不会被提升，所以只能在函数定义之后调用<br>// 普通函数调用,this指向Window对象<br>var result3 = func(); //Window{…}</p>
+<p>//用户自定义函数的构造器为Function(),所以func函数的原型链(<strong>proto</strong>)指向Function.prototype<br>console.log(func); //function Func(){//临时变量…}<br>console.log(typeof func); //function<br>console.log(func.<strong>proto</strong>); //function Empty(){}<br>console.log(func.<strong>proto</strong>===Function.prototype); //true<br>console.log(func.prototype); //Func{}<br>console.log(func.prototype.<strong>proto</strong>===Object.prototype); //true</p>
+<p>// 当对函数施加new运算符时,函数才叫做构造器,new运算符的结果总是一个对象<br>// 函数自身返回对象的优先级高，new运算符新构造对象的优先级低。<br>// new运算符无论如何都会执行构造器函数,如果函数也返回一个对象的话,new运算符新构造的对象会被丢弃。<br>var obj = new func(); //Func{b: “b”}<br>console.log(obj); // Func{b: “b”}<br>console.log(typeof obj); // object<br>console.log(obj.<strong>proto</strong>); // Func{}<br>console.log(obj.<strong>proto</strong>===func.prototype); // true<br>console.log(obj.prototype); //undefined<br>[/javascript]</p>
+<p><em>匿名函数表达式</em></p>
+<p>匿名函数表达式和命名函数表达式的唯一区别是，其prototype属性对象是个匿名对象，而命名函数表达式的prototype属性对象为一个具名对象，比如上个例子中的Func()</p>
+<p>[javascript]<br>// 函数表达式不会被提升，所以不能提前调用<br>//var result2 = func(); //func is not a function<br>console.log(func); //undefined</p>
+<p>// 函数表达式,引擎为其分配了一个不具名的对象作为其原型对象(prototype属性指向的对象)<br>// 其本质上与上个示例中的具名对象Func()是一样的,原型链的上层都是Object<br>// func指向一个匿名函数对象function(){//临时变量…}<br>var func = function(){<br> //临时变量，函数执行完即被丢弃，无论是作为普通函数还是构造器调用<br> var a = “a”;</p>
+<p> // 无论是普通函数调用还是作为函数构造器<br> // this指向哪个对象，则为那个对象添加属性b,<br> this.b = “b”;<br> console.log(this);<br>}</p>
+<p>// 函数表达式不会被提升，所以只能在函数定义之后调用<br>// 普通函数调用,this指向Window对象<br>var result3 = func(); //Window{…}</p>
+<p>//用户自定义函数的构造器为Function(),所以func函数的原型链(<strong>proto</strong>)指向Function.prototype<br>console.log(func); //function(){//临时变量…}<br>console.log(typeof func); //function<br>console.log(func.<strong>proto</strong>); //function Empty(){}<br>console.log(func.<strong>proto</strong>===Function.prototype); //true<br>//func.prototype是一个不具名的对象,其与上个例子中的具名对象Func()是一样的东西<br>//其原型链的上一个对象都是Object.prototype<br>console.log(func.prototype.constructor); // function(){//临时变量…}<br>console.log(func.prototype); // Object{}<br>console.log(Object.prototype); // Object{}<br>//不要被输出迷惑了,这个不具名对象与Object.prototype是不同的对象<br>console.log(func.prototype==Object.prototype); // false<br>//这个不具名对象原型自Object<br>console.log(func.prototype.<strong>proto</strong>===Object.prototype); // true</p>
+<p>// 当对函数施加new运算符时,函数才叫做构造器,new运算符的结果总是一个对象<br>// 函数自身返回对象的优先级高，new运算符新构造对象的优先级低。<br>// new运算符无论如何都会执行构造器函数,如果函数也返回一个对象的话,new运算符新构造的对象会被丢弃。<br>var obj = new func(); //func{b: “b”}<br>console.log(obj); // func{b: “b”}<br>console.log(typeof obj); // object<br>console.log(obj.<strong>proto</strong>); // Object{}<br>console.log(obj.<strong>proto</strong>===func.prototype); // true<br>console.log(obj.prototype); //undefined<br>[/javascript]</p>
+<p><strong>函数构造器</strong></p>
+<p>当对函数施加new运算符时，函数才叫做构造器(constrcutor)，否则就是普通的函数调用。普通的函数调用中，函数返回的对象直接返回给调用者。</p>
+<p><strong>但是当使用new操作符作为构造器调用时，new操作符会构造一个函数构造器(constrcutor)原型对象(constructor.prototype)类型的空对象(是object，不是function)，新对象的__proto__属性指向函数构造器的原型(constructor.prototype),从而新对象从函数构造器原型(constructor.prototype)继承属性。<br>新对象的constructor属性值被赋予原型对象的constructor值(prototype.constructor)，也就是函数构造器(constrcutor)自身。new运算符使用新对象作为this调用函数构造器(constrcutor)。</strong></p>
+<p>返不返回新对象还要视函数的返回值而定。如果函数自身使用return语句明确的返回一个object或function,则直接返回函数的返回值，新<br>创建的对象被丢弃。否则会返回新创建的对象。</p>
+<p>无论返不返回新创建的对象函数构造器(constrcutor)都会被调用。无论如何构造器(使用new操作符)都会返回一个对象，而不是基本类型。</p>
+<p>new操作符创建的新对象只可能是object，不会是其他类型，不会是function。</p>
+<p>new操作符新创建的对象未添加其他属性之前，所有的本地属性都来自于构造函数中使用this添加的属性。</p>
+<p>不同的函数构造器(constrcutor)创建不同的对象。</p>
+<p>到底new运算符做了什么事情，参见MDN文章<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">new</a>。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1076,93 +1191,6 @@
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.uml.org.cn/oobject/200901041.asp">UML图示</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/10/vim-regexp-chinese/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2013/11/10/vim-regexp-chinese/" class="post-title-link" itemprop="url">vim:匹配中文的正则表达式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2013-11-10 15:27:15" itemprop="dateCreated datePublished" datetime="2013-11-10T15:27:15+08:00">2013-11-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>中文在不同的字符集编码中的匹配规则也不同，这里说的是UNICODE字符集中汉字的匹配规则。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2013/11/10/vim-regexp-chinese/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

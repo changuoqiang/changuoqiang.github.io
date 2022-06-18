@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/17/datagurad-error-ora-38500/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/17/datagurad-error-ora-38500/" class="post-title-link" itemprop="url">datagurad实时应用日志错误</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-17 13:44:31" itemprop="dateCreated datePublished" datetime="2016-08-17T13:44:31+08:00">2016-08-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>物理备库执行实时日志应用时有如下错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; ALTER DATABASE RECOVER MANAGED STANDBY DATABASE USING CURRENT LOGFILE DISCONNECT FROM SESSION;</span><br><span class="line">ORA-<span class="number">38500</span>: USING CURRENT LOGFILE option not available without stand</span><br><span class="line"><span class="string">``</span><span class="string">`js</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">是因为没有standby redo log日志组，这次好像是丢失了。</span></span><br><span class="line"><span class="string">查看日志组:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">idle&gt;select member <span class="keyword">from</span> v$logfile;</span><br><span class="line"></span><br><span class="line">MEMBER</span><br><span class="line">----------------------------------------------------------------------------------------------------</span><br><span class="line">E:\\ORACLE\\PRODUCT\\<span class="number">10.2</span><span class="number">.0</span>\\ORADATA\\ORCL\\REDO03.LOG</span><br><span class="line">E:\\ORACLE\\PRODUCT\\<span class="number">10.2</span><span class="number">.0</span>\\ORADATA\\ORCL\\REDO02.LOG</span><br><span class="line">E:\\ORACLE\\PRODUCT\\<span class="number">10.2</span><span class="number">.0</span>\\ORADATA\\ORCL\\REDO01.LOG</span><br></pre></td></tr></table></figure>
+<p>只有online redo日志文件，没有standby redo日志文件，因此添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt;alter database add standby logfile group <span class="number">4</span> (<span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\STDBYREDO01.LOG&#x27;</span>) size 50M;</span><br><span class="line">Database altered.</span><br><span class="line">SQL&gt;alter database add standby logfile group <span class="number">5</span> (<span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\STDBYREDO02.LOG&#x27;</span>) size 50M;</span><br><span class="line">Database altered.</span><br><span class="line">SQL&gt;alter database add standby logfile group <span class="number">6</span> (<span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\STDBYREDO03.LOG&#x27;</span>) size 50M;</span><br><span class="line">Database altered.</span><br><span class="line">SQL&gt;alter database add standby logfile group <span class="number">7</span> (<span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\ORADATA\\ORCL\\STDBYREDO04.LOG&#x27;</span>) size 50M;</span><br><span class="line">Database altered.</span><br></pre></td></tr></table></figure>
+
+<p>重新执行日志实时应用就没问题了。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1121,100 +1208,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gsettings set org.gnome.system.proxy autoconfig-url http:<span class="comment">//myserver/myconfig.pac</span></span><br><span class="line">$ gsettings set org.gnome.system.proxy mode auto</span><br></pre></td></tr></table></figure>
 
 <p>浏览器配置使用系统代理设置就可以自动代理上网了。</p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/15/cassandra-copy-batch-too-large%E9%94%99%E8%AF%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/07/15/cassandra-copy-batch-too-large%E9%94%99%E8%AF%AF/" class="post-title-link" itemprop="url">cassandra copy导入数据时batch too large错误</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-07-15 15:21:12" itemprop="dateCreated datePublished" datetime="2016-07-15T15:21:12+08:00">2016-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>执行COPY命令时,出现Batch too large错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">11</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">16</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">Failed to <span class="keyword">import</span> <span class="number">18</span> rows: InvalidRequest - code=<span class="number">2200</span> \[Invalid query\] message=<span class="string">&quot;Batch too large&quot;</span>, will retry later, attempt <span class="number">1</span> <span class="keyword">of</span> <span class="number">5</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>/var/log/cassandra/system.log文件中可见:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[SharedPool-Worker-<span class="number">1</span>\] <span class="number">2016</span>-<span class="number">07</span>-<span class="number">15</span> <span class="number">15</span>:<span class="number">07</span>:<span class="number">20</span>,<span class="number">725</span> BatchStatement.java:<span class="number">267</span> - Batch <span class="keyword">of</span> prepared statements <span class="keyword">for</span> \[reis.image\] is <span class="keyword">of</span> size <span class="number">2732525</span>, exceeding specified threshold <span class="keyword">of</span> <span class="number">614400</span> by <span class="number">2118125.</span> (see batch_size_fail_threshold_in_kb)</span><br></pre></td></tr></table></figure>
-
-<p>batch就是批量执行DML语句. 因为我的image表中有大字段,用于存储图片,每个图片不超过500K,所以遭遇了batch too large错误.</p>
-<p>/etc/cassandra/cassandra.yaml文件中,参数batch_size_fail_threshold_in_kb的默认值只有50,一条DML语句就超过了这个阈值.<br>所以将此参数设置为600</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">batch_size_fail_threshold_in_kb: <span class="number">600</span></span><br></pre></td></tr></table></figure>
-<p>然后将COPY命令的批操作限制为1:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cqlsh:reis&gt; COPY image FROM <span class="string">&#x27;image.csv&#x27;</span> WITH MAXBATCHSIZE = <span class="number">1</span> and MINBATCHSIZE = <span class="number">1</span>;</span><br><span class="line">Using <span class="number">7</span> child processes</span><br><span class="line"></span><br><span class="line">Starting copy <span class="keyword">of</span> reis.image <span class="keyword">with</span> columns \[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;content&#x27;</span>, <span class="string">&#x27;name&#x27;</span>\].</span><br><span class="line">Processed: <span class="number">826</span> rows; Rate: <span class="number">30</span> rows/s; Avg. rate: <span class="number">60</span> rows/s</span><br><span class="line"><span class="number">826</span> rows imported <span class="keyword">from</span> <span class="number">1</span> files <span class="keyword">in</span> <span class="number">13.682</span> seconds (<span class="number">0</span> skipped).</span><br></pre></td></tr></table></figure>
-
-<p>顺利的导入了所有数据.</p>
 <p><strong>===<br>[erq]</strong></p>
 
       

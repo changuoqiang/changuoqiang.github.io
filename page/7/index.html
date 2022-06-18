@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,101 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/08/postgresql-11-server-optimisation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/08/postgresql-11-server-optimisation/" class="post-title-link" itemprop="url">PostgreSQL 11数据库参数优化</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-08 17:07:53" itemprop="dateCreated datePublished" datetime="2019-10-08T17:07:53+08:00">2019-10-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>服务器资源状况：<br>32GB内存<br>4路8核心CPU，逻辑核心32颗</p>
+<p>postgresql.conf配置文件部分参数：</p>
+<p><strong>shared_buffers</strong><br>设置为系统内存的40%，过多无益</p>
+<p><strong>work_mem</strong><br>单个查询排序所用内存，work_mem*所有用户数的全部查询数=占用系统内存，因此如果并发用户很多，此参数不宜设置多大，比如设置为128MB，如果同时有10个并发查询，则会占用1280MB系统内存</p>
+<p><strong>maintenance_work_mem</strong><br>维护类工作使用的内存，比如VACUUM, CREATE INDEX, and ALTER TABLE ADD FOREIGN KEY等，因为每一个数据库session同时只能执行一个此类操作，因为可以将其设置的大一点儿，可以提高此类操作的性能。</p>
+<p><strong>effective_cache_size</strong><br>用于query planner估算系统可用内存，并不是真正的分配内存，可以设置为系统内存的1/2到3/4大小。</p>
+<p>调优参数汇总:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">shared_buffers = 12GB</span><br><span class="line">work_mem = 128MB</span><br><span class="line">maintenance_work_mem = 2GB</span><br><span class="line">effective_cache_size = 24GB</span><br><span class="line">max_connections = <span class="number">2000</span></span><br><span class="line">max_prepared_transactions = <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.postgresql.org/wiki/Tuning_Your_PostgreSQL_Server">Tuning Your PostgreSQL Server</a><br>[2]<a target="_blank" rel="noopener" href="https://pgtune.leopard.in.ua/#/">PGTune</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1163,122 +1258,6 @@
 
 <p>这样在向目标服务器上copy/move容器时，指定storage_zfs profile就可以了。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc copy container1 remotesvr1: -p storage_zfs</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/08/lxd-zfs-storagepool/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/08/lxd-zfs-storagepool/" class="post-title-link" itemprop="url">lxd容器使用zfs存储池</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-08-08 10:49:49" itemprop="dateCreated datePublished" datetime="2019-08-08T10:49:49+08:00">2019-08-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>lxd支持btrfs,zfs,lvm和ceph存储后端，默认使用btrfs，但在线迁移容器的时候btrfs总是不成功，可以尝试更换到zfs存储后端，zfsonlinux项目已经十分成熟。</p>
-<p><strong>安装</strong></p>
-<p>buster发布后，debian-backports已经启用了，为了安装更新版本的zfs，最好添加这个源：<br>/etc/apt/source.list</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># backports</span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian buster-backports main contrib non-free</span></span><br></pre></td></tr></table></figure>
-<p>/etc/apt/preferences.d/90_zfs</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Package: libnvpair1linux libuutil1linux libzfs2linux libzpool2linux spl-dkms zfs-dkms zfs-test zfsutils-linux zfsutils-linux-dev zfs-zed</span><br><span class="line">Pin: release n=buster-backports</span><br><span class="line">Pin-Priority: <span class="number">990</span></span><br></pre></td></tr></table></figure>
-
-<p>因为需要编译内核模块,先安装内核头文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># apt update</span><br><span class="line"># apt install linux-headers-$(uname -r) linux-image-amd64</span><br></pre></td></tr></table></figure>
-
-<p>安装zfsonlinux</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install zfs-dkms zfsutils-linux</span><br></pre></td></tr></table></figure>
-<p>安装到最后会有一些错误提示，不要害怕，那是因为还没有加载zfs内核模块</p>
-<p>加载内核模块</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># modprobe zfs</span><br></pre></td></tr></table></figure>
-
-<p>然后重新执行上一个安装命令，zfs就会配置成功了。</p>
-<p>系统自动加载内核模块</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># echo &quot;zfs&quot; &gt;&gt; /etc/modules</span><br></pre></td></tr></table></figure>
-
-<p>如果安装zfs之前已经安装了lxd，那么需要将lxd daemon重启一下，否则lxd会报错：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span>: The <span class="string">&quot;zfs&quot;</span> tool is not enabled</span><br></pre></td></tr></table></figure>
-
-<p>重启lxd daemon</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl reload snap.lxd.daemon</span><br></pre></td></tr></table></figure>
-
-<p><strong>存储池</strong></p>
-<p><code>lxd init</code>的时候就可以选择ZFS作为存储后端来新建default storage pool了，默认会使用当前文件系统内的文件来虚拟一个zfs文件系统，也可以使用真实的zfs文件系统来建立存储池。</p>
-<p>也可以使用<code>lxc storage create</code>命令来创建新的使用zfs作为存储后端的存储池。<br>创建zfs存储池lxd_zfs</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage create lxd_zfs zfs size=100GB</span><br></pre></td></tr></table></figure>
-
-<p>将默认配置的存储池设置为lxd_zfs，前提是没有容器在使用default profile的root disk设备。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile device remove <span class="keyword">default</span> root</span><br><span class="line">$ lxc profile device add <span class="keyword">default</span> root disk path=/ pool=lxd_zfs</span><br><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: lxd_zfs</span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
-
-<p>后面再新建容器就会自动使用zfs存储池lxd_zfs了。<br>也可以将default存储池删除掉，重现创建一个default存储池，只要default存储池没有被镜像、容器或profile使用即可。<br>其实default就是一个名字而已，与其他存储池并无任何不同。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://angristan.xyz/lxc-zfs-pool-lxd/">Setup a ZFS pool for your LXC containers with LXD</a><br>[2]<a target="_blank" rel="noopener" href="https://zfsonlinux.org/">zfsonlinux</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/zfsonlinux/zfs/wiki/Debian">debian</a></p>
-
       
     </div>
 

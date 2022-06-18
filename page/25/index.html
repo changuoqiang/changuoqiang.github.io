@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,107 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/10/crontab-environ-vars/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/10/crontab-environ-vars/" class="post-title-link" itemprop="url">crontab环境变量问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-10 21:50:00" itemprop="dateCreated datePublished" datetime="2016-05-10T21:50:00+08:00">2016-05-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>python脚本在shell下运行的好好的，作为crontab任务运行就出错，import cx_Oracle的时候出错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: libclntsh.so<span class="number">.12</span><span class="number">.1</span>: cannot open shared object file: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<p>明显是库路径的问题。</p>
+<p>crontab运行程序时，其环境变量与用户的环境变量是不同的，有自己的变量环境，因此需要为crontab设置正确的环境变量，脚本才能正确运行。</p>
+<p>python脚本中使用os.environ或者os.putenv来设置环境变量是没用的，反正在py脚本中正确设置了LD_LIBRARY_PATH变量，仍然无法解决问题。</p>
+<p>有这么几个方法来设置crontab的环境变量：</p>
+<p><strong>第一种</strong></p>
+<p>可以在crontab配置文件中添加环境变量，但是不能用变量，类似$PATH这种，只能照实写。<br>类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ORACLE_HOME=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">LD_LIBRARY_PATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">PATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">TNS_ADMIN=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">SQLPATH=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">NLS_LANG=AMERICAN_AMERICA.AL32UTF8</span><br></pre></td></tr></table></figure>
+<p><strong>第二种</strong></p>
+<p>写一个bash脚本来中转一下，bash脚本中再调用py脚本，类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=<span class="regexp">/opt/</span>oracle/instantclient_12_1</span><br><span class="line">source /home/xxx/.mybashrc</span><br><span class="line">/home/xxx/py/business_notify.py <span class="string">&quot;$@&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第三种</strong></p>
+<p>直接在crontab配置任务要执行的命令行上添加环境变量，类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*<span class="regexp">/10 * * * * LD_LIBRARY_PATH=/</span>opt/oracle/instantclient_12_1 TNS_ADMIN=<span class="regexp">/opt/</span>oracle/instantclient_12_1 /home/xxx/py/business_notify.py</span><br></pre></td></tr></table></figure>
+
+<p>推荐第一种</p>
+<p>一般crontab运行的脚本中尽量不要依赖环境变量，使用绝对路径为佳。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1098,112 +1199,6 @@
 <p>因为指定的编码为utf-8-sig,sig就是signature,所以不但文件的编码为utf-8格式，同时还会自动输出utf-8的BOM标志0xEFBBBF。这样生成的csv可用用M$ Excel正确打开导入。</p>
 <p>或者更简单点儿，指定encoding为’gb18030’。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/findumars/p/3620078.html">UTF8最好不要带BOM，附许多经典评论</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/01/27/wine-qq/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/01/27/wine-qq/" class="post-title-link" itemprop="url">wine QQ</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-01-27 20:01:43" itemprop="dateCreated datePublished" datetime="2016-01-27T20:01:43+08:00">2016-01-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>这次又试了一下wine安装QQ,发现wine已今非昔比，已堪大用。</p>
-<p><strong>添加i386架构</strong></p>
-<p>因为debian早已是mutiarch架构，所以添加intel子架构i386是很简单的:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg --add-architecture i386</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装wine</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install wine wine64 wine32</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装cabextract</strong></p>
-<p>因为下面的安装会下载cab格式文件并解压缩安装，所以需要安装cabextract包</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install cabextract</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装winetricks-zh</strong><br>这是大名顶顶的winetricks的修改版，支持常见的一些中文windows应用。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line">$ git clone https:<span class="comment">//github.com/hillwoodroc/winetricks-zh.git</span></span><br><span class="line">$ cd winetricks-zh</span><br><span class="line">$ sudo cp winetricks-zh /usr/local/bin</span><br><span class="line">$ cd verb</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装QQ轻聊版(QQLight)</strong></p>
-<p>确认位于下载的winetricks-zh的子目录verb中,执行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ winetricks-zh qqlight</span><br></pre></td></tr></table></figure>
-<p>会下载很多东西，耐心等待安装完成</p>
-<p><strong>菜单项小问题</strong><br>默认生成的桌面菜单项是~/.local/share/applications/wine/Programs/腾讯软件/QQ轻聊版/QQ轻聊版.desktop，打开此文件可以发现Exec项的可执行文件路径有问题，修正为如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Exec=env WINEPREFIX=<span class="regexp">/home/gu</span>oqiang/.local/share/wineprefixes/qqlight wine <span class="string">&quot;C:\\Program Files (x86)\\Tencent\\QQLite\\Bin\\QQScLauncher.exe&quot;</span></span><br></pre></td></tr></table></figure>
-<p>可正常执行QQ轻聊版。</p>
-<p>经简单试用发现十分稳定。wine进步真的很大。</p>
-<p>**注:**如果QQ文本输入框内输入的中文显示为方块，将显示模式从“气泡模式”更改为“文本模式”则可以正常显示中文。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/hillwoodroc/winetricks-zh">winetricks-zh</a><br>[2]<a target="_blank" rel="noopener" href="http://linux-wiki.cn/wiki/zh-hans/Wine%E7%9A%84%E4%B8%AD%E6%96%87%E6%98%BE%E7%A4%BA%E4%B8%8E%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE">Wine的中文显示与字体设置</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

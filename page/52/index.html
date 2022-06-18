@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/05/20/jquery-upgrade/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/05/20/jquery-upgrade/" class="post-title-link" itemprop="url">jQuery 1.x 升级</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-05-20 14:47:16" itemprop="dateCreated datePublished" datetime="2014-05-20T14:47:16+08:00">2014-05-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>jQuery 1.9 删除了一些过时的API,修改了一些API的行为。比如jQuery.browser()已经移除了，推荐使用<a target="_blank" rel="noopener" href="http://modernizr.com/">Modernizr</a>特性检测库，而不是检测特定的浏览器。<br>从jQuery 2+起,不再支持IE6/7/8。</p>
+<p>jQuery提供了迁移插件<a target="_blank" rel="noopener" href="https://github.com/jquery/jquery-migrate/">jquery-migrate</a>来辅助用户平滑升级。<br>jquery-migrate插件恢复了被删除或变化的API,但会在console给出警告(注意:只有开发版才会给出警告)。<br>jquery-migrate插件可以用于jQuery 2.x版本，但这只是个过渡，现有产品应该尽快将源代码迁移到jQuery 2.x上来。</p>
+<p>这样使用jquery-migrate插件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;js/jquery-2.1.1.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;js/jquery-migrate-1.2.1.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>抛弃低版本IE浏览器是大势所趋。IE浏览器从版本11开始才真正算是一个现代浏览器。</p>
+<p>也可以使用<a target="_blank" rel="noopener" href="http://www.quirksmode.org/css/condcom.html">条件注释</a>语句为低版本IE使用低版本的jQuery。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://jquery.com/upgrade-guide/1.9/">jQuery Core 1.9 Upgrade Guide</a><br>[2]<a target="_blank" rel="noopener" href="http://www.css88.com/archives/4564">jQuery 1.9升级指南</a><br>[3]<a target="_blank" rel="noopener" href="http://www.fwolf.com/blog/post/35">jQuery 1.9 移除了 $.browser 的替代方法</a><br>[4]<a target="_blank" rel="noopener" href="http://www.quirksmode.org/css/condcom.html">Conditional comments</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -972,112 +1061,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>firefox在linux下窗口最大化时,tabs bar并不会与title bar合并,所以会比较浪费屏幕空间。如果想最大化的节省屏幕空间可以使用<a target="_blank" rel="noopener" href="http://5digits.org/pentadactyl/">pentadactyl</a>,适合vim控,连地址栏都不会显示。还有一个插件叫<a target="_blank" rel="noopener" href="https://github.com/seleznev/firefox-extension-htitle">HTitle</a>,也可以隐藏掉标题栏。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/24/git-rebase-intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/04/24/git-rebase-intro/" class="post-title-link" itemprop="url">git rebase简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-04-24 11:21:40" itemprop="dateCreated datePublished" datetime="2014-04-24T11:21:40+08:00">2014-04-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>rebase顾名思义re base,重设基准,也就是重设当前分支的基准,rebase又叫做”衍合”。</p>
-<p>git分支都有一个起始点,是从某个commit起始分支出来的。rebase时指定新的分支起始点,git会将当前的分支的所有改变以新的起始点为基准重新计算，计算出相对于新的分支起始点的所有改变之后,将这些改变在新的分支起始点上重放,会生成新的commits,最后将当前分支的头设定到新生成的commits的最后一个上。</p>
-<p>实际上就将当前分支嫁接到了新的分支起始点上。rebase可以使提交历史看起来更干净。</p>
-<p>rebase还可以用来修改当前分支的历史提交信息，修改历史提交代码，合并或拆分提交，调整提交的历史顺序，甚至删除历史提交，总之这个命令是强大无比。</p>
-<p>选定当前分支的一个上游提交,然后使用参数-i进入交互模式Interactive Mode</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase -i &lt;upstream&gt;</span><br></pre></td></tr></table></figure>
-
-<p>然后git会用默认编辑器打开一个调整commit的界面,类似如下:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pick <span class="number">1517205</span> 测试 </span><br><span class="line">pick 5163c4c 测试</span><br><span class="line">pick <span class="number">3e58114</span> 测试</span><br><span class="line">pick fb07146 测试</span><br><span class="line">pick ebd546c 删除测试</span><br><span class="line">pick bf2466e 添加分支流程服务</span><br><span class="line">pick 84e52d3 添加同步流程分布</span><br><span class="line"></span><br><span class="line"># Rebase ebd5cdd..84e52d3 onto ebd5cdd</span><br><span class="line">#</span><br><span class="line"># Commands:</span><br><span class="line"># p, pick = use commit</span><br><span class="line"># r, reword = use commit, but edit the commit message</span><br><span class="line"># e, edit = use commit, but stop for amending</span><br><span class="line"># s, squash = use commit, but meld into previous commit</span><br><span class="line"># f, fixup = like &quot;squash&quot;, but discard this commit&#x27;s log message</span><br><span class="line"># x, exec = run command (the rest of the line) using shell</span><br><span class="line">#</span><br><span class="line"># These lines can be re-ordered; they are executed from top to bottom.</span><br><span class="line">#</span><br><span class="line"># If you remove a line here THAT COMMIT WILL BE LOST.</span><br><span class="line">#</span><br><span class="line"># However, if you remove everything, the rebase will be aborted.</span><br><span class="line">#</span><br><span class="line"># Note that empty commits are commented out</span><br></pre></td></tr></table></figure>
-
-<p>各个命令的解释:</p>
-<ul>
-<li>  pick<br>保留这个提交,不做任何修改</li>
-<li>  reword<br>修改本条提交的提交信息，其他不做修改</li>
-<li>  edit<br>保留这个提交,并修改提交的实际内容</li>
-<li>  squash<br>与上一条提交合并,保留本条提交的提交信息</li>
-<li>  fixup<br>与squash差不多,除了舍弃本条的提交信息</li>
-<li>  exec<br>使用shell执行exec行除exec关键字之后的命令</li>
-</ul>
-<p>如果想删除某个提交，将pick那行完整删除即可。如果将所有的行全部移除，rebase将会终止。<br>参考[2]图文并茂的展示了git rebase的强大威力。</p>
-<p><strong>使用rebase必须遵守的一个规则:</strong></p>
-<blockquote>
-<p>一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行衍合(rebase)操作。<br>如果你遵循这条金科玉律，就不会出差错。否则，人民群众会仇恨你，你的朋友和家人也会嘲笑你，唾弃你。</p>
-</blockquote>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88">分支的衍合</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.yorkxin.org/posts/2011/07/29/git-rebase">Git-rebase 小筆記</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.imtk.me/programming/2012/git_learning_git_rebase_operation.html">Git 学习笔记：git-rebase 命令</a></p>
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

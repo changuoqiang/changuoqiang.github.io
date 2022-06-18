@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/10/28/yosemite-postgresql-boot-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/10/28/yosemite-postgresql-boot-issue/" class="post-title-link" itemprop="url">Yosemite升级导致的postgresql启动问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-10-28 12:35:26" itemprop="dateCreated datePublished" datetime="2014-10-28T12:35:26+08:00">2014-10-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>升级yosemite后，启动postgesql时报以下错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">FATAL: could not open directory <span class="string">&quot;pg_twophase&quot;</span>: No such file or directory</span><br><span class="line">Is the server running locally and accepting</span><br><span class="line">connections on Unix domain socket <span class="string">&quot;/tmp/.s.PGSQL.5432&quot;</span>?</span><br></pre></td></tr></table></figure>
+
+<p>据说可能是因为yosemite删除了pg的一些空目录导致的,所以解决方案也十分简单:</p>
+<p>如果/usr/local/var/postgres/目录下没有pg_tblspc,pg_twophase和pg_stat_tmp子目录,直接新建这几个目录即可。</p>
+<p>然后可以正常启动postgresql</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1022,91 +1109,6 @@
 <p><strong>Duplicate from active database</strong> </p>
 <p>11g以前使用rman创建备库需要先进行备份,然后将备份传输到备库或者可以被备库直接访问到，会大量占用额外的存储空间。<br>11g提供了从运行的主库直接创建备库的功能,这样就不再需要提前rman备份数据库,数据库直接从target拷贝到auxiliary,方便快捷，当然其他的一些设置是省不了的。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://kyle.xlau.org/posts/oracle-data-guard-part1.html">Oracle 11g Data Guard 物理备库快速配置指南（上）</a><br>[2]<a target="_blank" rel="noopener" href="http://kyle.xlau.org/posts/oracle-data-guard-part2.html">Oracle 11g Data Guard 物理备库快速配置指南（下）</a><br>[3]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B28359_01/server.111/b28294/rcmbackp.htm#g648533">Creating a Standby Database with Recovery Manager</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/10/17/ora-01207/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/10/17/ora-01207/" class="post-title-link" itemprop="url">突然掉电导致的ORA-01207错误</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-10-17 12:40:31" itemprop="dateCreated datePublished" datetime="2014-10-17T12:40:31+08:00">2014-10-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>硬件维护的时候有人不小心把生产库的电源断掉了,重新启动盘柜和服务器后,oracle 10g 10.2.0.4 startup时出现错误提示:</p>
-<p>[sql]<br>数据库装载完毕。<br>ORA-01122: 数据库文件 1 验证失败<br>ORA-01110: 数据文件 1: ‘E:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\SYSTEM01.DBF’<br>ORA-01207: 文件比控制文件更新 - 旧的控制文件 (file is more recent than controlfile - old controlfile)<br>[/sql]</p>
-<p>由于时间紧迫，且对此错误不甚熟悉，就先将生产库切到了dataguard物理备库,有时间再研究此问题如何恢复。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.ixdba.net/article/da/363.html">ORA-01207: old control file完全解决方案</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/26/sshfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/26/sshfs/" class="post-title-link" itemprop="url">sshfs</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-26 23:23:06" itemprop="dateCreated datePublished" datetime="2020-06-26T23:23:06+08:00">2020-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-18 21:53:04" itemprop="dateModified" datetime="2022-06-18T21:53:04+08:00">2022-06-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>sshfs可以通过ssh和sftp协议来安全的在本地挂载远程文件系统，比NFS更方便的是无需更改防火墙设置，只要能使用ssh访问远程主机就可以了。</p>
+<p>sshfs使用fuse在用户空间挂载远程文件系统，debian系统直接安装sshfs包，为了方便挂载，最好配置使用公私钥对来访问远程ssh主机，特别是fstab文件不支持ssh的密码访问方式。</p>
+<p>挂载远程文件系统：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>也支持直接使用ssh别名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>支持断线重连和心跳保持<br>具体的sshfs选项参见man</p>
+<p>还有一个fuse文件系统挂载选项allow_other影响挂载的sshfs文件系统访问权限，如果允许除挂载用户之外的其他用户访问文件系统，需要指定此选项，并且需要修改fuse配置文件/etc/fuse.conf，打开user_allow_other选项</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Allow non-root users to specify the allow_other or allow_root mount options.</span></span><br><span class="line">user_allow_other</span><br></pre></td></tr></table></figure>
+
+<p>还可以写入fstab，开机可以自动挂载sshfs<br>/etc/fstab</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user@host:&#x2F;var&#x2F;www&#x2F; &#x2F;var&#x2F;www&#x2F; fuse.sshfs defaults,_netdev,allow_other,follow_symlinks,identityfile&#x3D;&#x2F;home&#x2F;user&#x2F;.ssh&#x2F;id_rsa,reconnect,ServerAliveInterval&#x3D;15,ServerAliveCountMax&#x3D;3 0 0</span><br></pre></td></tr></table></figure>
+<p>在这里，_netdev挂载选项指定挂载sshfs需要有网络支持，follow_symlinks是sshfs的选项，支持符号链接，identityfile选项是ssh的选项，指定登录凭证，也可以通过.ssh/config配置别名来指定登录选项。</p>
+<p>注意：<br>ssh长时间连接会超时，导致出现类似错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
+<p>可以在ssh服务器/etc/ssh/sshd_config中打开客户端心跳探测:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ClientAliveInterval <span class="number">30</span></span><br><span class="line">ClientAliveCountMax <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>30秒发送一个心跳探测，超过3次没有回应断开连接。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.redhat.com/sysadmin/sshfs">SSHFS: Mounting a remote file system over SSH</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/SSHFS_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">SSHFS</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1113,102 +1212,6 @@
           <a id="more"></a>
 <p>insert usb stick, the device name of usb stick is /dev/disk2</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ diskutil list #find device name <span class="keyword">of</span> usb stick</span><br><span class="line">/dev/disk2 (external, physical):</span><br><span class="line"> #: TYPE NAME SIZE IDENTIFIER</span><br><span class="line"> <span class="number">0</span>: GUID_partition_scheme *<span class="number">32.2</span> GB disk2</span><br><span class="line"> <span class="number">1</span>: EFI TAILS <span class="number">8.6</span> GB disk2s1</span><br><span class="line">$ diskutil unmountdisk /dev/disk2</span><br><span class="line">$ sudo dd <span class="keyword">if</span>=tails-amd64-<span class="number">4.3</span>.img <span class="keyword">of</span>=<span class="regexp">/dev/</span>disk2 bs=64m</span><br><span class="line">$ diskutil eject /dev/disk2</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/10/using-dnscrypt-proxy-inbuild-doh-server/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/10/using-dnscrypt-proxy-inbuild-doh-server/" class="post-title-link" itemprop="url">firefox使用dnscrypt-proxy内建doh服务器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-10 10:08:04" itemprop="dateCreated datePublished" datetime="2020-02-10T10:08:04+08:00">2020-02-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>dnscrypt-proxy内建doh服务器，可以为本机或外部提供doh服务</p>
-<p><strong>本地使用</strong></p>
-<p>先生成自签证书</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl req -x509 -nodes -newkey rsa:<span class="number">2048</span> -days <span class="number">5000</span> -sha256 -keyout localhost.pem -out localhost.pem</span><br></pre></td></tr></table></figure>
-
-<p>编辑/usr/local/etc/dnscrypt-proxy.toml，添加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\[local_doh\]</span><br><span class="line"> listen_addresses = \[<span class="string">&#x27;127.0.0.1:3000&#x27;</span>\]</span><br><span class="line"> path = <span class="string">&quot;/dns-query&quot;</span></span><br><span class="line"> cert_file = <span class="string">&quot;localhost.pem&quot;</span></span><br><span class="line"> cert_key_file = <span class="string">&quot;localhost.pem&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>重启dnscrypt-proxy服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo brew services restart dnscrypt-proxy</span><br></pre></td></tr></table></figure>
-
-<p>打开firefox浏览器，访问<a target="_blank" rel="noopener" href="https://127.0.0.1:3000/dns-query%E5%B9%B6%E6%8E%A5%E5%8F%97%E8%87%AA%E7%AD%BE%E8%AF%81%E4%B9%A6">https://127.0.0.1:3000/dns-query并接受自签证书</a><br>然后输入about:config配置如下选项：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">network.trr.custom_uri = https:<span class="comment">//127.0.0.1:3000/dns-query</span></span><br><span class="line">network.trr.uri = https:<span class="comment">//127.0.0.1:3000/dns-query</span></span><br><span class="line">network.trr.resolvers = \[&#123; <span class="string">&quot;name&quot;</span>: <span class="string">&quot;local&quot;</span>, <span class="string">&quot;url&quot;</span>: <span class="string">&quot;https://127.0.0.1:3000/dns-query&quot;</span> &#125;\]</span><br><span class="line">network.trr.mode = <span class="number">3</span></span><br><span class="line">network.security.esni.enabled = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>重新启动firefox，访问<a target="_blank" rel="noopener" href="https://www.cloudflare.com/ssl/encrypted-sni/">Browsing Experience Security Check</a>检查浏览器设置结果。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Local-DoH">Local DoH</a></p>
-
       
     </div>
 

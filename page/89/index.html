@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/03/15/android-font-phonetic-display/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2011/03/15/android-font-phonetic-display/" class="post-title-link" itemprop="url">Android修改系统字体完美显示英文国际音标</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2011-03-15 22:53:06" itemprop="dateCreated datePublished" datetime="2011-03-15T22:53:06+08:00">2011-03-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在推上fo了个toefl单词机器人,没想到很多单词的音标显示成了小方块,那就是android默认的英文字体对某些英语国际音标不支持了,当然我的Galaxy S刷了第三方ROM的，不过从网上的帖子来看，官方的字体存在一样的问题，总而言之是字体的问题了。</p>
+<p>也搜了一些帖子，但没有很好的解决方案，默认的英文字体还是挺美观的，只是某些英语音标的编码位上缺失了相应的字符而已，Anroid使用Java作为默认开发环境,那默认的字体也应该是使用UNICODE UCS编码的，事实证明的却如此。那就很简单了，强大的字体编辑工具FontForge派上用场了。</p>
+<p>Ubuntu仓库里面的版本太低了，可以使用GetDeb仓库来安装最新版本的FontForge。用FontForge打开Android默认的英文字体DroidSans.ttf，果然国际音标编码区域空空如也，英语音标显示不完全也就一点儿不奇怪了。从<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/zh-sg/%E5%9B%BD%E9%99%85%E9%9F%B3%E6%A0%87#Unicode.E7.B7.A8.E7.A2.BC">国际音标wiki</a>上查找到了这写符号的UNICODE编码，从DejaVuSerif.ttf和Gothic.ttf这两个字体里面提取了对应的字形(glyph)插入到DroidSans.ttf相应的BMP(Basic Multilingual Plane)编码位上。当然只补充了英语音标会用到的字符，包括ɑ,ɒ,ɔ,ə,ɛ,ɜ,ɪ,ɵ,ʃ,ʌ,ʒ,ʤ,ʦ,ʧ这几个常用音标字符。默认的字体竟然连重音(primary stress)和次重音(Secondary stress)这两个符号都没有，一并补齐了。</p>
+<p>将制作好的字体覆盖Android默认英文字体/system/fonts/DroidSans.ttf，当然需要root权限，再看英语音标，显示的相当完美了，google dictionary里面的音标也完全没有问题。</p>
+<p>修改后的字体请猛击<a href="/downloads/DroidSans.ttf.zip"><strong>此处</strong></a>下载。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1021,93 +1107,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2011/02/22/x64-oracle-10g-emdbconsole-error/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2011/02/15/oracle-10g-sga-size/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2011/02/15/oracle-10g-sga-size/" class="post-title-link" itemprop="url">oracle 10g 修改SGA,PGA大小</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2011-02-15 20:38:54" itemprop="dateCreated datePublished" datetime="2011-02-15T20:38:54+08:00">2011-02-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>一、概念<br>SGA指系统全局区域(System Global Area),是用于存储数据库信息的内存区，该信息为数据库进程所共享。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2011/02/15/oracle-10g-sga-size/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

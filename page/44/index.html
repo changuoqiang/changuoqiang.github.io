@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/11/18/debian-jessie-console-setup-hang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/11/18/debian-jessie-console-setup-hang/" class="post-title-link" itemprop="url">debian jessie服务器安装时console-setup配置停滞</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-11-18 10:38:29" itemprop="dateCreated datePublished" datetime="2014-11-18T10:38:29+08:00">2014-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>最近使用带有<a target="_blank" rel="noopener" href="http://cdimage.debian.org/cdimage/unofficial/non-free/cd-including-firmware/weekly-builds/amd64/iso-cd/">firmware</a>的debian netinst安装一台服务器时,安装进度到99%配置console-setup时进程停滞了，没有当机，只是进度不动，几个小时都不带动的，一直在：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configuring <span class="built_in">console</span>-setup...</span><br></pre></td></tr></table></figure>
+
+<p>CTRL+ALT+4查看安装日志，也没有错误提示，只是在等待。<br>重启进入rescue安装模式，在instaler环境下执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># dpkg --configure -a</span><br></pre></td></tr></table></figure>
+<p>console-setup配置界面选择# american,安装时就是因为这里自动配置没过去，从而无限停滞了。</p>
+<p>之后执行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># grub-installer</span><br></pre></td></tr></table></figure>
+<p>出现类似如下错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Media change: please insert the disc labeled</span><br><span class="line"> <span class="string">&#x27;Debian GNU/Linux ... Official amd64 CD Binary-1 ...&#x27;</span></span><br><span class="line"><span class="keyword">in</span> the drive <span class="string">&#x27;/media/cdrom/&#x27;</span> and press enter</span><br></pre></td></tr></table></figure>
+<p>无果。</p>
+<p>其实大部分包已经装完了，只是还没有安装grub，配置root用户和添加新用户而已。<br>所以使用<a href="https://openwares.net/linux/debian_grub_install_fail.html">rescuecd引导系统安装grub</a><br>这时候root是没密码的，无法正常登录，grub引导时选择recovery模式，顺利以root登录系统，然后执行passwd命令为root设置密码，之后再添加普通用户即可。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1093,93 +1185,6 @@
     <div class="post-body" itemprop="articleBody">
           <a id="more"></a>
 <p>Rferences:<br>[1]<a target="_blank" rel="noopener" href="https://groups.google.com/forum/#!topic/programmercafe/SuRRACj12LI">Java Lint 工具</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/10/28/yosemite-postgresql-boot-issue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/10/28/yosemite-postgresql-boot-issue/" class="post-title-link" itemprop="url">Yosemite升级导致的postgresql启动问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-10-28 12:35:26" itemprop="dateCreated datePublished" datetime="2014-10-28T12:35:26+08:00">2014-10-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>升级yosemite后，启动postgesql时报以下错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">FATAL: could not open directory <span class="string">&quot;pg_twophase&quot;</span>: No such file or directory</span><br><span class="line">Is the server running locally and accepting</span><br><span class="line">connections on Unix domain socket <span class="string">&quot;/tmp/.s.PGSQL.5432&quot;</span>?</span><br></pre></td></tr></table></figure>
-
-<p>据说可能是因为yosemite删除了pg的一些空目录导致的,所以解决方案也十分简单:</p>
-<p>如果/usr/local/var/postgres/目录下没有pg_tblspc,pg_twophase和pg_stat_tmp子目录,直接新建这几个目录即可。</p>
-<p>然后可以正常启动postgresql</p>
 <p><strong>===<br>[erq]</strong></p>
 
       

@@ -31,7 +31,7 @@
 <meta property="og:description" content="主配置路径&#x2F;etc&#x2F;postgresql&#x2F;11&#x2F;main&#x2F;postgresql.conf连续归档备份主要涉及三个参数 参数配置 wal_level默认值为replica，支持WAL归档，replication以及hot standby，所以此参数保持默认值即可。 archive_mode归档模式，默认为off，关闭状态，还有两个选项值on和always。on表示打开归档模式，always表示在日">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-10-16T13:34:12.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.411Z">
+<meta property="article:modified_time" content="2022-06-18T13:58:05.744Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="PostgresQL">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-06-18 21:58:05" itemprop="dateModified" datetime="2022-06-18T21:58:05+08:00">2022-06-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -346,7 +346,7 @@
 <p>查看/mnt/wals目录下是否有了新归档的WAL日志文件</p>
 <p><strong>基础备份</strong></p>
 <p>开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。<br>这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - | gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>出现错误提示：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pg_basebackup: cannot stream write-ahead logs <span class="keyword">in</span> tar mode to stdout</span><br><span class="line">Try <span class="string">&quot;pg_basebackup --help&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
 <p>这是因为pg_basebackup有一个参数<code>-X --wal-method</code>默认设置为s，但此方法与tar格式写入stdout不兼容,可见postgresql源代码</p>
@@ -354,7 +354,7 @@
 
 <p><code>-X --wal-method</code>参数可以使pg_basebackup直接包含恢复需要的WAL日志文档，形成一个完整的直接用于恢复的备份，不需要再单独拷贝归档日志文件。但是要注意，wal_keep_segments参数要设置的大一些，防止在备份期间生成的归档日志被循环覆盖，这样基本备份会失败。每个WAL日志有16MB大小，wal_keep_segments设置数乘以16MB就是服务器保存这些wal log需要使用的额外存储空间。<br>当然<code>-X --wal-method</code>参数也可以设置为n，这样恢复时需手动管理自基础备份以来的生成的WAL日志。</p>
 <p>在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - | gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
 <p>pg_basebackup备份时会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。生成的备份文档内也有一个文件叫做backup_label，与此文件内容相同。<br>此文件的内容类似如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">0</span>/<span class="number">6000028</span> (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">STOP WAL LOCATION: <span class="number">0</span>/60000F8 (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">0</span>/<span class="number">6000060</span></span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">44</span> CST </span><br><span class="line">LABEL: <span class="number">20191019</span></span><br><span class="line">START TIMELINE: <span class="number">1</span></span><br><span class="line">STOP TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">45</span> CST </span><br><span class="line">STOP TIMELINE: <span class="number">1</span></span><br></pre></td></tr></table></figure>
 

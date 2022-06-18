@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/11/21/pypyodbc-unixodbc-mdbtools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/11/21/pypyodbc-unixodbc-mdbtools/" class="post-title-link" itemprop="url">pypyodbc,unixODBC和mdbtools</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-21 20:29:35" itemprop="dateCreated datePublished" datetime="2016-11-21T20:29:35+08:00">2016-11-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>pypyodbc</strong></p>
+<p>pypyodbc是一个使用纯python实现的跨平台odbc模块，其利用了ctypes来访问底层的odbc驱动，支持python2和python3。<br>虽然跨平台，但其对linux/mac平台上的unixODBC支持存在问题，无法正确显示中文字段名和字段值。</p>
+<p><strong>unixODBC</strong></p>
+<p>unixODBC有几个函数的ansi版本和宽字符版本返回信息比较古怪。</p>
+<p>首先说SQLDescribeCol，其ansi版本，也就是不带后缀W的版本，无论本地locale为何皆直接返回utf-8编码的字符，但是SQLDescribeColW版本在mac平台上返回utf-16编码的字符，linux平台对于中文字符返回的是用zero填充了每一个utf-8编码字节的神一样的编码</p>
+<p>如下面所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;\\xe5\\x00\\x9b\\x00\\xbe\\x00\\xe5\\x00\\xb9\\x00\\x85\\x00\\xe5\\x00\\x8f\\x00\\xb7\\x00\\x00\\x00&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>正确的应该是长这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;\\xe5\\x9b\\xbe\\xe5\\xb9\\x85\\xe5\\x8f\\xb7\\x00</span></span><br></pre></td></tr></table></figure>
+<p>以utf-8解码后对应的中文字符是”图幅号”</p>
+<p>而英文字符返回的是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;B\\x00u\\x00i\\x00l\\x00d\\x00G\\x00e\\x00o\\x00C\\x00o\\x00d\\x00e\\x00\\x00&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>仔细看，这串字符实际上就是”BuildGeoCode”,当然也是utf-8编码无疑。返回的编码以’\x00\x00’作为结束符，它是utf-16吗？它是utf-8吗？<br>这都算天坑了吧，没这样玩的。</p>
+<p>SqlGetData则只有一个版本，无论locale为何都是返回utf-8编码的字符。</p>
+<p>针对这几点问题制作了一个补丁，放在了github上，准备给原作者发一个pull request。修改后的版本，connect函数无论unicode_results为True或False都可以正确的返回中文字符。</p>
+<p>还有一个函数SQLGetInfo(W)，当使用SQL_DRIVER_NAME(值为6)调用时，无论调用哪个版本，都返回SQL_ERROR(值为-1)。</p>
+<p><strong>mdbtools</strong><br>mdbtools是unixODBC上的mdb driver,当前只支持读操作，查询数据时尙不支持group by字句，select得到结果后自行排序吧。</p>
+<p><strong>UPDATE:</strong><br>补丁已经迅速进入<a target="_blank" rel="noopener" href="https://github.com/jiangwen365/pypyodbc">官方主线</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -975,90 +1074,6 @@
 <p>每次写dblink比较麻烦，可以创建一个视图来简化此项工作:<br>[sql]<br>=&gt; CREATE VIEW view_tbl_foo AS<br>select * from dblink(‘host=192.168.0.9 dbname=pgdbname user=pguser password=passwd’,<br>‘select id, land_using_type from reg.tb_relevant_cert where cert_type=1’)<br>as t1 (id integer, land_using_type varchar(50));<br>[/sql]</p>
 <p>然后访问就比较简单了：<br>[sql]<br>=&gt; SELECT * FROM view_tbl_foo;<br>[/sql]</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/9.6/static/dblink.html">F.10. dblink</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/11/10/postgresql-fdw/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/11/10/postgresql-fdw/" class="post-title-link" itemprop="url">postgresql的FDW</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-11-10 21:25:38" itemprop="dateCreated datePublished" datetime="2016-11-10T21:25:38+08:00">2016-11-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>SQL/MED(SQL Management of External Data)是SQL与外部数据交互的标准，postgresql对此的支持就是FDW(Foreign Data Wrapper)，可以支持各种各样的外部数据，从关系数据库、NoSQL数据库到文件，几乎涵盖了常见的各种数据源。有通用的支持关系数据库的FDW,比如JDBC_FDW,ODBC_FDW,也有针对特定数据库的FDW,比如postgres_fdw,oracle_fdw,mysql_fdw，也有对csv,json文件等的支持,file_fdw,josn_fdw。</p>
-<p>postgresql的FDW不但支持查询，现在还可以支持insert,update,delete等操作，还可以下推(pushdown)where,group by,sort,join等。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.postgresql.org/wiki/Fdw">Foreign data wrappers</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

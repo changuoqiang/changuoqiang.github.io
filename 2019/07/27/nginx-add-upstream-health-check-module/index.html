@@ -31,7 +31,7 @@
 <meta property="og:description" content="nginx社区版仅支持十分有限的upstream健康检查，其他高级特性需要商业订阅。github上有个开源的upstream检查模块nginx_upstream_check_module 安装 安装必要的编译环境 1$ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1.1">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-07-27T08:12:56.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.359Z">
+<meta property="article:modified_time" content="2022-06-18T13:53:04.611Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Debian">
 <meta property="article:tag" content="Nginx">
@@ -221,7 +221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -304,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-06-18 21:53:04" itemprop="dateModified" datetime="2022-06-18T21:53:04+08:00">2022-06-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,17 +332,17 @@
 <p>安装必要的编译环境</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1<span class="number">.1</span> libssl-dev</span><br></pre></td></tr></table></figure>
 
-<p>下载最新的nginx stable 1.16版本，clone nginx_upstream_check_module master分支</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
+<p>下载最新的nginx stable <del>1.16</del> 1.22版本，clone nginx_upstream_check_module master分支</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ wget http://nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ wget https:<span class="comment">//nginx.org/download/nginx-1.22.0.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
 
 <p>为源码打补丁</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf nginx-<span class="number">1.16</span><span class="number">.1</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.16</span><span class="number">.1</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.14</span><span class="number">.0</span>+.patch</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ tar zxvf nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="comment">//$ cd nginx-1.16.1/</span></span><br><span class="line"><span class="comment">//$ patch -p1 &lt; ../nginx_upstream_check_module/check_1.14.0+.patch</span></span><br><span class="line">$ tar zxvf nginx-<span class="number">1.22</span><span class="number">.0</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.22</span><span class="number">.0</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.20</span><span class="number">.1</span>+.patch</span><br></pre></td></tr></table></figure>
 
 <p>配置、编译、安装nginx</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --add-<span class="built_in">module</span>=../nginx_upstream_check_module --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-stream_ssl_preread_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-stream</span><br><span class="line">...</span><br><span class="line">Configuration summary</span><br><span class="line"> + using system PCRE library</span><br><span class="line"> + using system OpenSSL library</span><br><span class="line"> + using system zlib library</span><br><span class="line"></span><br><span class="line"> nginx path prefix: <span class="string">&quot;/usr/local/nginx&quot;</span></span><br><span class="line"> nginx binary file: <span class="string">&quot;/usr/local/nginx/sbin/nginx&quot;</span></span><br><span class="line"> nginx modules path: <span class="string">&quot;/usr/local/nginx/modules&quot;</span></span><br><span class="line"> nginx configuration prefix: <span class="string">&quot;/usr/local/nginx/conf&quot;</span></span><br><span class="line"> nginx configuration file: <span class="string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"> nginx pid file: <span class="string">&quot;/usr/local/nginx/logs/nginx.pid&quot;</span></span><br><span class="line"> nginx error log file: <span class="string">&quot;/usr/local/nginx/logs/error.log&quot;</span></span><br><span class="line"> nginx http access log file: <span class="string">&quot;/usr/local/nginx/logs/access.log&quot;</span></span><br><span class="line"> nginx http client request body temporary files: <span class="string">&quot;client_body_temp&quot;</span></span><br><span class="line"> nginx http proxy temporary files: <span class="string">&quot;proxy_temp&quot;</span></span><br><span class="line"> nginx http fastcgi temporary files: <span class="string">&quot;fastcgi_temp&quot;</span></span><br><span class="line"> nginx http uwsgi temporary files: <span class="string">&quot;uwsgi_temp&quot;</span></span><br><span class="line"> nginx http scgi temporary files: <span class="string">&quot;scgi_temp&quot;</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
 <p>安装目录位于/usr/local/nginx</p>
 <p>添加systemd服务nginx.service<br>将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># Stop dance for nginx</span><br><span class="line"># =======================</span><br><span class="line">#</span><br><span class="line"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span><br><span class="line"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span><br><span class="line"># and sends SIGTERM (fast shutdown) to the main process.</span><br><span class="line"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span><br><span class="line"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span><br><span class="line">#</span><br><span class="line"># nginx signals reference doc:</span><br><span class="line"># http://nginx.org/en/docs/control.html</span><br><span class="line">#</span><br><span class="line">\[Unit\]</span><br><span class="line">Description=A high performance web server and a reverse proxy server</span><br><span class="line">Documentation=man:nginx(<span class="number">8</span>)</span><br><span class="line">After=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">\[Service\]</span><br><span class="line">Type=forking</span><br><span class="line">PIDFile=<span class="regexp">/usr/</span>local/nginx/logs/nginx.pid</span><br><span class="line">ExecStartPre=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecStart=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecReload=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line">ExecStop=-<span class="regexp">/sbin/</span>start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line">TimeoutStopSec=<span class="number">5</span></span><br><span class="line">KillMode=mixed</span><br><span class="line"></span><br><span class="line">\[Install\]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Stop dance for nginx</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span><br><span class="line"><span class="comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="comment"># and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span></span><br><span class="line"><span class="comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx signals reference doc:</span></span><br><span class="line"><span class="comment"># http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=A high performance web server and a reverse proxy server</span><br><span class="line"><span class="attr">Documentation</span>=man:nginx(<span class="number">8</span>)</span><br><span class="line"><span class="attr">After</span>=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line"><span class="attr">ExecStop</span>=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line"><span class="attr">TimeoutStopSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">KillMode</span>=mixed</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>enable服务并启动</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable nginx.service </span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.</span><br><span class="line">$ sudo systemctl start nginx.service</span><br></pre></td></tr></table></figure>
@@ -353,39 +353,53 @@
 <p>使用_http方式_检查upstream服务的_业务入口/aurl/_是否已经就绪</p>
 <p><strong>upstream状态</strong></p>
 <p>访问<a target="_blank" rel="noopener" href="http://your_ip/status%E6%9F%A5%E7%9C%8B%E6%A3%80%E6%9F%A5%E7%BB%93%E6%9E%9C">http://your_ip/status查看检查结果</a><br>Nginx http upstream check status<br>Check upstream server number: 3, generation: 1</p>
-<p>Index</p>
-<p>Upstream</p>
-<p>Name</p>
-<p>Status</p>
-<p>Rise counts</p>
-<p>Fall counts</p>
-<p>Check type</p>
-<p>Check port</p>
-<p>0</p>
-<p>cluser</p>
-<p>192.168.0.17:8080</p>
-<p>up</p>
-<p>30</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>1</p>
-<p>cluser</p>
-<p>192.168.0.18:8080</p>
-<p>up</p>
-<p>19</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>2</p>
-<p>cluser</p>
-<p>192.168.0.19:8080</p>
-<p>up</p>
-<p>15</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Upstream</th>
+<th>Name</th>
+<th>Status</th>
+<th>Rise counts</th>
+<th>Fall counts</th>
+<th>Check type</th>
+<th>Check port</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>cluser</td>
+<td>192.168.0.17:8080</td>
+<td>up</td>
+<td>30</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>cluser</td>
+<td>192.168.0.18:8080</td>
+<td>up</td>
+<td>19</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>cluser</td>
+<td>192.168.0.19:8080</td>
+<td>up</td>
+<td>15</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>References:</p>
+<p>[1]<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a></p>
+<p>[2]<a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
 
     </div>
 

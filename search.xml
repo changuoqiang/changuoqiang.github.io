@@ -14564,17 +14564,17 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>安装必要的编译环境</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1<span class="number">.1</span> libssl-dev</span><br></pre></td></tr></table></figure>
 
-<p>下载最新的nginx stable 1.16版本，clone nginx_upstream_check_module master分支</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ wget http:<span class="comment">//nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
+<p>下载最新的nginx stable <del>1.16</del> 1.22版本，clone nginx_upstream_check_module master分支</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//$ wget http://nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ wget https:<span class="comment">//nginx.org/download/nginx-1.22.0.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
 
 <p>为源码打补丁</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ tar zxvf nginx-<span class="number">1.16</span><span class="number">.1</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.16</span><span class="number">.1</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.14</span><span class="number">.0</span>+.patch</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//$ tar zxvf nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="comment">//$ cd nginx-1.16.1/</span></span><br><span class="line"><span class="comment">//$ patch -p1 &lt; ../nginx_upstream_check_module/check_1.14.0+.patch</span></span><br><span class="line">$ tar zxvf nginx-<span class="number">1.22</span><span class="number">.0</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.22</span><span class="number">.0</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.20</span><span class="number">.1</span>+.patch</span><br></pre></td></tr></table></figure>
 
 <p>配置、编译、安装nginx</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ./configure --add-<span class="built_in">module</span>=../nginx_upstream_check_module --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-stream_ssl_preread_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-stream</span><br><span class="line">...</span><br><span class="line">Configuration summary</span><br><span class="line"> + using system PCRE library</span><br><span class="line"> + using system OpenSSL library</span><br><span class="line"> + using system zlib library</span><br><span class="line"></span><br><span class="line"> nginx path prefix: <span class="string">&quot;/usr/local/nginx&quot;</span></span><br><span class="line"> nginx binary file: <span class="string">&quot;/usr/local/nginx/sbin/nginx&quot;</span></span><br><span class="line"> nginx modules path: <span class="string">&quot;/usr/local/nginx/modules&quot;</span></span><br><span class="line"> nginx configuration prefix: <span class="string">&quot;/usr/local/nginx/conf&quot;</span></span><br><span class="line"> nginx configuration file: <span class="string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"> nginx pid file: <span class="string">&quot;/usr/local/nginx/logs/nginx.pid&quot;</span></span><br><span class="line"> nginx error log file: <span class="string">&quot;/usr/local/nginx/logs/error.log&quot;</span></span><br><span class="line"> nginx http access log file: <span class="string">&quot;/usr/local/nginx/logs/access.log&quot;</span></span><br><span class="line"> nginx http client request body temporary files: <span class="string">&quot;client_body_temp&quot;</span></span><br><span class="line"> nginx http proxy temporary files: <span class="string">&quot;proxy_temp&quot;</span></span><br><span class="line"> nginx http fastcgi temporary files: <span class="string">&quot;fastcgi_temp&quot;</span></span><br><span class="line"> nginx http uwsgi temporary files: <span class="string">&quot;uwsgi_temp&quot;</span></span><br><span class="line"> nginx http scgi temporary files: <span class="string">&quot;scgi_temp&quot;</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
 <p>安装目录位于/usr/local/nginx</p>
 <p>添加systemd服务nginx.service<br>将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># Stop dance for nginx</span><br><span class="line"># =======================</span><br><span class="line">#</span><br><span class="line"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span><br><span class="line"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span><br><span class="line"># and sends SIGTERM (fast shutdown) to the main process.</span><br><span class="line"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span><br><span class="line"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span><br><span class="line">#</span><br><span class="line"># nginx signals reference doc:</span><br><span class="line"># http://nginx.org/en/docs/control.html</span><br><span class="line">#</span><br><span class="line">\[Unit\]</span><br><span class="line">Description=A high performance web server and a reverse proxy server</span><br><span class="line">Documentation=man:nginx(<span class="number">8</span>)</span><br><span class="line">After=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">\[Service\]</span><br><span class="line">Type=forking</span><br><span class="line">PIDFile=<span class="regexp">/usr/</span>local/nginx/logs/nginx.pid</span><br><span class="line">ExecStartPre=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecStart=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line">ExecReload=<span class="regexp">/usr/</span>local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line">ExecStop=-<span class="regexp">/sbin/</span>start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line">TimeoutStopSec=<span class="number">5</span></span><br><span class="line">KillMode=mixed</span><br><span class="line"></span><br><span class="line">\[Install\]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Stop dance for nginx</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span><br><span class="line"><span class="comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="comment"># and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span></span><br><span class="line"><span class="comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx signals reference doc:</span></span><br><span class="line"><span class="comment"># http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=A high performance web server and a reverse proxy server</span><br><span class="line"><span class="attr">Documentation</span>=man:nginx(<span class="number">8</span>)</span><br><span class="line"><span class="attr">After</span>=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line"><span class="attr">ExecStop</span>=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line"><span class="attr">TimeoutStopSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">KillMode</span>=mixed</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>enable服务并启动</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl enable nginx.service </span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.</span><br><span class="line">$ sudo systemctl start nginx.service</span><br></pre></td></tr></table></figure>
@@ -14585,39 +14585,53 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>使用_http方式_检查upstream服务的_业务入口/aurl/_是否已经就绪</p>
 <p><strong>upstream状态</strong></p>
 <p>访问<a href="http://your_ip/status%E6%9F%A5%E7%9C%8B%E6%A3%80%E6%9F%A5%E7%BB%93%E6%9E%9C">http://your_ip/status查看检查结果</a><br>Nginx http upstream check status<br>Check upstream server number: 3, generation: 1</p>
-<p>Index</p>
-<p>Upstream</p>
-<p>Name</p>
-<p>Status</p>
-<p>Rise counts</p>
-<p>Fall counts</p>
-<p>Check type</p>
-<p>Check port</p>
-<p>0</p>
-<p>cluser</p>
-<p>192.168.0.17:8080</p>
-<p>up</p>
-<p>30</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>1</p>
-<p>cluser</p>
-<p>192.168.0.18:8080</p>
-<p>up</p>
-<p>19</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>2</p>
-<p>cluser</p>
-<p>192.168.0.19:8080</p>
-<p>up</p>
-<p>15</p>
-<p>0</p>
-<p>tcp</p>
-<p>0</p>
-<p>References:<br>[1]<a href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a><br>[2]<a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Upstream</th>
+<th>Name</th>
+<th>Status</th>
+<th>Rise counts</th>
+<th>Fall counts</th>
+<th>Check type</th>
+<th>Check port</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>cluser</td>
+<td>192.168.0.17:8080</td>
+<td>up</td>
+<td>30</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>cluser</td>
+<td>192.168.0.18:8080</td>
+<td>up</td>
+<td>19</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>cluser</td>
+<td>192.168.0.19:8080</td>
+<td>up</td>
+<td>15</td>
+<td>0</td>
+<td>http</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>References:</p>
+<p>[1]<a href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a></p>
+<p>[2]<a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -16733,7 +16747,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>查看/mnt/wals目录下是否有了新归档的WAL日志文件</p>
 <p><strong>基础备份</strong></p>
 <p>开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。<br>这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft -D - | gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>出现错误提示：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">pg_basebackup: cannot stream write-ahead logs <span class="keyword">in</span> tar mode to stdout</span><br><span class="line">Try <span class="string">&quot;pg_basebackup --help&quot;</span> <span class="keyword">for</span> more information.</span><br></pre></td></tr></table></figure>
 <p>这是因为pg_basebackup有一个参数<code>-X --wal-method</code>默认设置为s，但此方法与tar格式写入stdout不兼容,可见postgresql源代码</p>
@@ -16741,7 +16755,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 
 <p><code>-X --wal-method</code>参数可以使pg_basebackup直接包含恢复需要的WAL日志文档，形成一个完整的直接用于恢复的备份，不需要再单独拷贝归档日志文件。但是要注意，wal_keep_segments参数要设置的大一些，防止在备份期间生成的归档日志被循环覆盖，这样基本备份会失败。每个WAL日志有16MB大小，wal_keep_segments设置数乘以16MB就是服务器保存这些wal log需要使用的额外存储空间。<br>当然<code>-X --wal-method</code>参数也可以设置为n，这样恢复时需手动管理自基础备份以来的生成的WAL日志。</p>
 <p>在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sudo -u postgres sh -c <span class="string">&#x27;pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - | gzip -c &gt; baseback20191019.tgz&#x27;</span></span><br><span class="line">pg_basebackup: initiating base backup, waiting <span class="keyword">for</span> checkpoint to complete</span><br><span class="line">pg_basebackup: checkpoint completed</span><br><span class="line">pg_basebackup: write-ahead log start point: <span class="number">0</span>/<span class="number">6000028</span> on timeline <span class="number">1</span></span><br><span class="line"><span class="number">40157</span>/<span class="number">40157</span> kB (<span class="number">100</span>%), <span class="number">1</span>/<span class="number">1</span> tablespace </span><br><span class="line">pg_basebackup: write-ahead log end point: <span class="number">0</span>/60000F8</span><br><span class="line">pg_basebackup: base backup completed</span><br></pre></td></tr></table></figure>
 <p>pg_basebackup备份时会生成一个.backup文件标识出保证此次备份完整性所需要的最后一个WAL日志，使用此次基础备份恢复系统时，不再需要之前的WAL日志。生成的备份文档内也有一个文件叫做backup_label，与此文件内容相同。<br>此文件的内容类似如下：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">START WAL LOCATION: <span class="number">0</span>/<span class="number">6000028</span> (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">STOP WAL LOCATION: <span class="number">0</span>/60000F8 (file <span class="number">000000010000000000000006</span>)</span><br><span class="line">CHECKPOINT LOCATION: <span class="number">0</span>/<span class="number">6000060</span></span><br><span class="line">BACKUP METHOD: streamed</span><br><span class="line">BACKUP FROM: master</span><br><span class="line">START TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">44</span> CST </span><br><span class="line">LABEL: <span class="number">20191019</span></span><br><span class="line">START TIMELINE: <span class="number">1</span></span><br><span class="line">STOP TIME: <span class="number">2019</span>-<span class="number">10</span>-<span class="number">19</span> <span class="number">20</span>:<span class="number">20</span>:<span class="number">45</span> CST </span><br><span class="line">STOP TIMELINE: <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
@@ -20488,51 +20502,40 @@ Disk identifier: 0x0005fc82
 <p>这个例子程序和以前一样，前端为html、javascript,这次后端改为使用spring framework 3.2.4,前后端通过ajax交换json数据，这个例子比只使用servlet 3更简洁，当然配置更复杂一些。</p>
 <p>完整的代码和配置<a href="/downloads/springjson.war">下载</a>。</p>
 <p><strong>配置</strong></p>
-<p>要使用spring framework,首先要在WEB-INF/web.xml中配置spring的DispatcherServlet，由其来接管映射的URL请求，之后就进入spring framework的处理流程。<br>web.xml<br>[xml]<br> <servlet><br> <servlet-name>spring</servlet-name><br> <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><br> <load-on-startup>1</load-on-startup><br> </servlet><br> <servlet-mapping><br> <servlet-name>spring</servlet-name><br> <url-pattern>/</url-pattern><br> </servlet-mapping><br>[/xml]</p>
+<p>要使用spring framework,首先要在WEB-INF/web.xml中配置spring的DispatcherServlet，由其来接管映射的URL请求，之后就进入spring framework的处理流程。<br>web.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>spring<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>spring<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
 <p>如果不配置的DispatcherServlet的初始化参数contextConfigLocation，则spring framework会读取WEB-INF/<servlet-name>-servlet.xml作为其context参数文件，在这个配置里，这个文件为spring-servlet.xml,其内容如下：</p>
-<p>[xml]<br><?xml version="1.0" encoding="UTF-8"?><br><beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:p="http://www.springframework.org/schema/p"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:mvc="http://www.springframework.org/schema/mvc"
- xsi:schemaLocation="
- http://www.springframework.org/schema/beans
- http://www.springframework.org/schema/beans/spring-beans.xsd
- http://www.springframework.org/schema/context
- http://www.springframework.org/schema/context/spring-context.xsd
- http://www.springframework.org/schema/mvc
- http://www.springframework.org/schema/mvc/spring-mvc.xsd"></p>
-<p> &lt;context:component-scan base-package=”net.openwares.test” /&gt;<br> &lt;mvc:default-servlet-handler /&gt;<br> &lt;mvc:annotation-driven /&gt;<br></beans><br>[/xml]</p>
-<p>其中<br>[xml]&lt;context:component-scan base-package=”net.openwares.test” /&gt;[/xml]<br>表示从包net.openwares.test里面自动扫描使用注解标示的组件，比如@RqeustMapping,@RequestBody等注解的组件。<br>不过这个地方存在一点问题，spring对jar包的扫描有特殊的要求，用jar -cvf 命令创建的jar包,spring扫描不到其中的组件，而不打包使用层次文件路径则没有问题，这里的路径是WEB-INF/classes/net/openwares/test/。使用<a href="http://kyfxbl.iteye.com/blog/1675368">eclipse打包时有个选项add directory entries</a>，勾选这个选项打出来的包就可以被spring扫描到。现在还没发现如何用jar命令打包才可以让spring扫描到。</p>
-<p>[xml]&lt;mvc:default-servlet-handler /&gt;[/xml]<br>可以将spring framework不处理的其他资源请求路由到容器的default servlet,这样容器就可以继续处理这些请求，而不是被spring framework拦截掉。</p>
-<p>[xml]&lt;mvc:annotation-driven /&gt;[/xml]<br>支持注解，比如@RequestMapping,@PathVariable等。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:context</span>=<span class="string">&quot;http://www.springframework.org/schema/context&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xmlns:mvc</span>=<span class="string">&quot;http://www.springframework.org/schema/mvc&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/context</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/context/spring-context.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/mvc</span></span></span><br><span class="line"><span class="tag"><span class="string"> http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;net.openwares.test&quot;</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">mvc:annotation-driven</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<br><code>&lt;context:component-scan base-package=&quot;net.openwares.test&quot; /&gt;</code><br>表示从包net.openwares.test里面自动扫描使用注解标示的组件，比如@RqeustMapping,@RequestBody等注解的组件。<br>不过这个地方存在一点问题，spring对jar包的扫描有特殊的要求，用jar -cvf 命令创建的jar包,spring扫描不到其中的组件，而不打包使用层次文件路径则没有问题，这里的路径是WEB-INF/classes/net/openwares/test/。使用<a href="http://kyfxbl.iteye.com/blog/1675368">eclipse打包时有个选项add directory entries</a>，勾选这个选项打出来的包就可以被spring扫描到。现在还没发现如何用jar命令打包才可以让spring扫描到。</p>
+<p><code>&lt;mvc:default-servlet-handler /&gt;</code><br>可以将spring framework不处理的其他资源请求路由到容器的default servlet,这样容器就可以继续处理这些请求，而不是被spring framework拦截掉。</p>
+<p><code>&lt;mvc:annotation-driven /&gt;</code><br>支持注解，比如@RequestMapping,@PathVariable等。</p>
 <p>对于这个例子，这个配置就够了。现在spring framework朝着零配置方向又进一步，在servlet 3.0+环境下，也可以不用xml而使用java代码来完成如上配置。</p>
 <p><strong>代码</strong></p>
 <p>前端index.html只是改一下请求的url就可以了</p>
-<p>var url = “/springjson/ajaxcalc”;</p>
-<p>后端SpringJson.java代码：<br>[java]<br>package net.openwares.test;</p>
-<p>import java.io.Writer;<br>import java.io.IOException;<br>import org.springframework.stereotype.Controller;<br>import org.springframework.web.bind.annotation.RequestMapping;<br>import org.springframework.web.bind.annotation.RequestBody;<br>import org.springframework.web.bind.annotation.ResponseBody;</p>
-<p>import org.springframework.stereotype.Component;<br>import org.springframework.beans.factory.annotation.Autowired;</p>
-<p>@Component<br>class Attender {<br> private int augend, addend;</p>
-<p> public Attender(){}</p>
-<p> public int getAugend(){<br> return augend;<br> }<br> public void setAugend(int augend){<br> this.augend = augend;<br> }</p>
-<p> public int getAddend(){<br> return addend;<br> }<br> public void setAddend(int addend){<br> this.addend = addend;<br> }<br>}</p>
-<p>@Component<br>class Outcome {<br> private int result;</p>
-<p> public Outcome(){}</p>
-<p> public int getResult(){<br> return result;<br> }<br> public void setResult(int result){<br> this.result = result;<br> }<br>}</p>
-<p>@Controller<br>public class SpringJson {</p>
-<p> @Autowired<br> private Outcome outcome;</p>
-<p> @RequestMapping(“/ajaxcalc”)<br> public @ResponseBody Outcome getResult(@RequestBody Attender attender){</p>
-<p> outcome.setResult(attender.getAugend() + attender.getAddend());<br> return outcome;<br> }<br>}<br>[/java]</p>
+<p><code>var url = &quot;/springjson/ajaxcalc&quot;;</code></p>
+<p>后端SpringJson.java代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> net.openwares.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Writer;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.ResponseBody;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Attender</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">int</span> augend, addend;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Attender</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAugend</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> augend;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAugend</span><span class="params">(<span class="keyword">int</span> augend)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.augend = augend;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAddend</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> addend;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAddend</span><span class="params">(<span class="keyword">int</span> addend)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.addend = addend;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Outcome</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> <span class="keyword">int</span> result;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">Outcome</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getResult</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">return</span> result;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResult</span><span class="params">(<span class="keyword">int</span> result)</span></span>&#123;</span><br><span class="line"> <span class="keyword">this</span>.result = result;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringJson</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Autowired</span></span><br><span class="line"> <span class="keyword">private</span> Outcome outcome;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@RequestMapping(&quot;/ajaxcalc&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="meta">@ResponseBody</span> <span class="function">Outcome <span class="title">getResult</span><span class="params">(<span class="meta">@RequestBody</span> Attender attender)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"> outcome.setResult(attender.getAugend() + attender.getAddend());</span><br><span class="line"> <span class="keyword">return</span> outcome;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><strong>说明</strong></p>
 <p>只要前端ajax请求将Content-Type设置为application/json,则spring会自动的将请求内容映射到@RequestBody修饰的VO对象，<br>将@ResponseBody修饰的VO对象转换为返回的json数据。spring使用HttpMessageConverters来转换数据，<br>支持json,xml等多种数据类型，还以自定义转换接口。中间如有数据类型转换可能会出现转换问题。</p>
 <p>打包为spingjson.war,部署后访问URL<br><a href="http://127.0.0.1/springjson/ajaxcalc">http://127.0.0.1/springjson/ajaxcalc</a></p>
 <p><strong>依赖</strong></p>
-<p>spring使用jackson来操作json数据，因此需要下载jackson jar包，spring 3.2.4支持jackson 2,直接下载<a href="http://wiki.fasterxml.com/JacksonDownload">最新的jackson包</a>丢到lib目录即可，当前为这个三个文件：<br>jackson-core-2.2.3.jar<br>jackson-annotations-2.2.3<br>jackson-databind-2.2.3.jar</p>
+<p>spring使用jackson来操作json数据，因此需要下载jackson jar包，spring 3.2.4支持jackson 2,直接下载<a href="http://wiki.fasterxml.com/JacksonDownload">最新的jackson包</a>丢到lib目录即可，当前为这个三个文件：</p>
+<p>jackson-core-2.2.3.jar</p>
+<p>jackson-annotations-2.2.3</p>
+<p>jackson-databind-2.2.3.jar</p>
 <p>spring使用<a href="http://commons.apache.org/proper/commons-logging/">apache commons logging</a>组件来输出日志，因此需要依赖包<br>commons-logging-1.1.3.jar</p>
-<p>spring framework现在拆分了jar,不再提供单一的一个大jar包。此样例程序需要依赖以下spring包：<br>spring-core-3.2.4.RELEASE.jar //核心包，所有的spring程序都需要<br>spring-beans-3.2.4.RELEASE.jar //bean管理，依赖注入等核心功能<br>spring-context-3.2.4.RELEASE.jar //基础支持包<br>spring-expression-3.2.4.RELEASE.jar //此包必须，否则spring无法加载context配置文件，从而无法完成初始化<br>spring-web-3.2.4.RELEASE.jar //servlet支持<br>spring-webmvc-3.2.4.RELEASE.jar //MVC支持</p>
+<p>spring framework现在拆分了jar,不再提供单一的一个大jar包。此样例程序需要依赖以下spring包：</p>
+<p>spring-core-3.2.4.RELEASE.jar //核心包，所有的spring程序都需要</p>
+<p>spring-beans-3.2.4.RELEASE.jar //bean管理，依赖注入等核心功能</p>
+<p>spring-context-3.2.4.RELEASE.jar //基础支持包</p>
+<p>spring-expression-3.2.4.RELEASE.jar //此包必须，否则spring无法加载context配置文件，从而无法完成初始化</p>
+<p>spring-web-3.2.4.RELEASE.jar //servlet支持</p>
+<p>spring-webmvc-3.2.4.RELEASE.jar //MVC支持</p>
 <p><strong>后记</strong><br>这个例子和以前的几个例子都是完全用vim编辑，用javac编译，用jar打包的。虽然只是极其简单的小例子，仍然感觉十分繁琐，看来研究下eclipse还是有必要的。</p>
-<p>参考：<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/mvc.html">Spring 3.2.4 MVC文档</a><br> <strong>===<br>[erq]</strong></p>
+<p>参考：<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/mvc.html">Spring 3.2.4 MVC文档</a></p>
 ]]></content>
       <categories>
         <category>java</category>
@@ -20973,11 +20976,16 @@ Disk identifier: 0x0005fc82
 <p>sshfs可以通过ssh和sftp协议来安全的在本地挂载远程文件系统，比NFS更方便的是无需更改防火墙设置，只要能使用ssh访问远程主机就可以了。</p>
 <p>sshfs使用fuse在用户空间挂载远程文件系统，debian系统直接安装sshfs包，为了方便挂载，最好配置使用公私钥对来访问远程ssh主机，特别是fstab文件不支持ssh的密码访问方式。</p>
 <p>挂载远程文件系统：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>也支持直接使用ssh别名</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>支持断线重连和心跳保持<br>具体的sshfs选项参见man</p>
+<p>还有一个fuse文件系统挂载选项allow_other影响挂载的sshfs文件系统访问权限，如果允许除挂载用户之外的其他用户访问文件系统，需要指定此选项，并且需要修改fuse配置文件/etc/fuse.conf，打开user_allow_other选项</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Allow non-root users to specify the allow_other or allow_root mount options.</span></span><br><span class="line">user_allow_other</span><br></pre></td></tr></table></figure>
 
-<p>具体的sshfs选项参见man</p>
+<p>还可以写入fstab，开机可以自动挂载sshfs<br>/etc/fstab</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">user@host:&#x2F;var&#x2F;www&#x2F; &#x2F;var&#x2F;www&#x2F; fuse.sshfs defaults,_netdev,allow_other,follow_symlinks,identityfile&#x3D;&#x2F;home&#x2F;user&#x2F;.ssh&#x2F;id_rsa,reconnect,ServerAliveInterval&#x3D;15,ServerAliveCountMax&#x3D;3 0 0</span><br></pre></td></tr></table></figure>
+<p>在这里，_netdev挂载选项指定挂载sshfs需要有网络支持，follow_symlinks是sshfs的选项，支持符号链接，identityfile选项是ssh的选项，指定登录凭证，也可以通过.ssh/config配置别名来指定登录选项。</p>
 <p>注意：<br>ssh长时间连接会超时，导致出现类似错误提示：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
 <p>可以在ssh服务器/etc/ssh/sshd_config中打开客户端心跳探测:</p>
@@ -24879,5 +24887,37 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>Ubuntu</tag>
         <tag>Xterm</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>mysql-gtid-replication-setup</title>
+    <url>/2022/06/07/mysql-gtid-replication-setup/</url>
+    <content><![CDATA[<h1 id="mysql-mariadb-GTID模式主从复制部署"><a href="#mysql-mariadb-GTID模式主从复制部署" class="headerlink" title="mysql/mariadb GTID模式主从复制部署"></a>mysql/mariadb GTID模式主从复制部署</h1><p>主库master版本为mysql 5.7.26，从库slave为mariadb 10.3.17</p>
+<a id="more"></a>
+
+<h2 id="主库端配置-master"><a href="#主库端配置-master" class="headerlink" title="主库端配置(master)"></a>主库端配置(master)</h2><p>1、 mysql配置文件/etc/mysql/mysql.conf.d/mysqld.cnf配置以下内容：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment">#GTID</span></span><br><span class="line"><span class="attr">server_id</span> = <span class="number">51</span></span><br><span class="line"><span class="attr">gtid_mode</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">enforce_gtid_consistency</span> = <span class="literal">on</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#binlog</span></span><br><span class="line"><span class="attr">log_bin</span> = master-bin</span><br><span class="line"><span class="attr">binlog_format</span> = row</span><br><span class="line"><span class="attr">sync-master-info</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">sync_binlog</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">skip_slave_start</span> = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>配置完成后需要重启mysql服务</p>
+<p>查看一下master状态:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; show master status;</span><br><span class="line">...</span><br><span class="line">mysql&gt; show global variables like &#39;%gitd%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>2、新建用户并授予slave复制授权</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; create user &#39;slave&#39;@&#39;%&#39; identified by &#39;passwd&#39;;</span><br><span class="line">mysql&gt; grant replication slave, replication client on *.* to &#39;slave&#39;@&#39;%&#39; identified by &#39;passwd&#39;;</span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">mysql&gt; show grants for slave@&#39;%&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>3、备份需要复制的数据库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ mysqldump --single-transaction --master-data&#x3D;2 --triggers --routines --databases jsb -uroot -ppasswd &gt;  jsb.sql</span><br></pre></td></tr></table></figure>
+
+<h2 id="从库端配置（slave）"><a href="#从库端配置（slave）" class="headerlink" title="从库端配置（slave）"></a>从库端配置（slave）</h2><p>1、配置文件/etc/mysql/mariadb.conf.d/50-server.cnf配置以下内容：</p>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment">#GTID</span></span><br><span class="line"><span class="attr">server_id</span> = <span class="number">153</span></span><br><span class="line"><span class="attr">gtid_mode</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">enforce_gtid_consistency</span> = <span class="literal">on</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#binlog</span></span><br><span class="line"><span class="attr">log_bin</span> = slave-bin</span><br><span class="line"><span class="attr">binlog_format</span> = row</span><br><span class="line"><span class="attr">sync-master-info</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">sync_binlog</span> = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">skip_slave_start</span> = <span class="number">1</span></span><br><span class="line"><span class="attr">read_only</span> = <span class="literal">on</span></span><br><span class="line"><span class="attr">super_read_only</span> = <span class="literal">on</span></span><br></pre></td></tr></table></figure>
+<p>配置完成后需要重启mariadb服务</p>
+<p>2、导入主库备份<br>将备份文件jsb.sql拷贝到从库所在机器</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; source jsb.sql</span><br></pre></td></tr></table></figure>
+
+<p>3、配置从库复制</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; stop slave;</span><br><span class="line">mysql&gt; change master to master_host&#x3D;&#39;*.*.*.*&#39;, master_user&#x3D;&#39;slave&#39;,master_password&#x3D;&#39;passwd&#39;,master_port&#x3D;16033,master_auto_position&#x3D;1;</span><br><span class="line">mysql&gt; start slave;</span><br><span class="line">mysql&gt; show slave status;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主库端查看"><a href="#主库端查看" class="headerlink" title="主库端查看"></a>主库端查看</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysql&gt; show slave hosts;</span><br></pre></td></tr></table></figure>
+
+<p>主库写入数据，验证从库是否正确同步。</p>
+]]></content>
   </entry>
 </search>

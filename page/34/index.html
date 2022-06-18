@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/08/21/jta-atomikos-log-lock-file-path/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/08/21/jta-atomikos-log-lock-file-path/" class="post-title-link" itemprop="url">JTA开源实现atomikos日志和锁文件路径权限问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-08-21 17:07:23" itemprop="dateCreated datePublished" datetime="2015-08-21T17:07:23+08:00">2015-08-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>应用程序启动时有如下错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[localhost-startStop-<span class="number">1</span>\] - Context initialization failed</span><br><span class="line">org.springframework.beans.factory.BeanCreationException: <span class="built_in">Error</span> creating bean <span class="keyword">with</span> name <span class="string">&#x27;atomikosUserTransaction&#x27;</span> defined <span class="keyword">in</span> ServletContext resource \[<span class="regexp">/WEB-INF/</span>conf/spring-servlet.xml.bak\]: <span class="built_in">Error</span> setting property values; nested exception is org.springframework.beans.PropertyBatchUpdateException; nested PropertyAccessExceptions (<span class="number">1</span>) are:</span><br><span class="line">PropertyAccessException <span class="number">1</span>: org.springframework.beans.MethodInvocationException: Property <span class="string">&#x27;transactionTimeout&#x27;</span> threw exception; nested exception is com.atomikos.icatch.SysException: <span class="built_in">Error</span> <span class="keyword">in</span> init(): <span class="regexp">/var/</span>lib/tomcat8/./tm.out.lck</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java: <span class="number">1506</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:<span class="number">1214</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:<span class="number">537</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:<span class="number">476</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:<span class="number">303</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:<span class="number">230</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:<span class="number">299</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:<span class="number">194</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:<span class="number">762</span>)</span><br><span class="line"> at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:<span class="number">757</span>)</span><br><span class="line"> at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:<span class="number">480</span>)</span><br><span class="line"> at org.springframework.web.servlet.FrameworkServlet.configureAndRefreshWebApplicationContext(FrameworkServlet.java:<span class="number">663</span>)</span><br><span class="line"> at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:<span class="number">629</span>)</span><br><span class="line"> at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:<span class="number">677</span>)</span><br><span class="line"> at org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:<span class="number">548</span>)</span><br><span class="line"> at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:<span class="number">489</span>)</span><br><span class="line"> at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:<span class="number">136</span>)</span><br><span class="line"> at javax.servlet.GenericServlet.init(GenericServlet.java:<span class="number">158</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:<span class="number">1241</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:<span class="number">1154</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardWrapper.load(StandardWrapper.java:<span class="number">1041</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardContext.loadOnStartup(StandardContext.java:<span class="number">4969</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:<span class="number">5255</span>)</span><br><span class="line"> at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:<span class="number">150</span>)</span><br><span class="line"> at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:<span class="number">724</span>)</span><br><span class="line"> at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:<span class="number">700</span>)</span><br><span class="line"> at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:<span class="number">714</span>)</span><br><span class="line"> at org.apache.catalina.startup.HostConfig.deployWAR(HostConfig.java:<span class="number">919</span>)</span><br><span class="line"> at org.apache.catalina.startup.HostConfig$DeployWar.run(HostConfig.java:<span class="number">1703</span>)</span><br><span class="line"> at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>)</span><br><span class="line"> at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>)</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br><span class="line">Caused by: org.springframework.beans.PropertyBatchUpdateException; nested PropertyAccessExceptions (<span class="number">1</span>) are:</span><br><span class="line">PropertyAccessException <span class="number">1</span>: org.springframework.beans.MethodInvocationException: Property <span class="string">&#x27;transactionTimeout&#x27;</span> threw exception; nested exception is com.atomikos.icatch.SysException: <span class="built_in">Error</span> <span class="keyword">in</span> init(): <span class="regexp">/var/</span>lib/tomcat8/./tm.out.lck</span><br><span class="line"> at org.springframework.beans.AbstractPropertyAccessor.setPropertyValues(AbstractPropertyAccessor.java:<span class="number">121</span>)</span><br><span class="line"> at org.springframework.beans.AbstractPropertyAccessor.setPropertyValues(AbstractPropertyAccessor.java:<span class="number">75</span>)</span><br><span class="line"> at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java: <span class="number">1502</span>)</span><br><span class="line"> ... <span class="number">33</span> more</span><br></pre></td></tr></table></figure>
+
+<p>这是因为默认情况下,atomikos要在/var/lib/tomcat8目录下生成其日志和锁文件，而/var/lib/tomcat8文件夹的所有者和组都是root,无法写入，所以初始化失败。</p>
+<p>解决方法有二，最简单粗暴的就是将/var/lib/tomcat8目录的所有者和组都更改为tomcat8.</p>
+<p>另一个方法是classpath中添加atomikos配置文件，将其输出文件目录配置到tomcat8有权限写入的目录中，比如/var/log/tomcat8</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">com.atomikos.icatch.service=com.atomikos.icatch.standalone.UserTransactionServiceFactory</span><br><span class="line">com.atomikos.icatch.log_base_name = jdbc</span><br><span class="line">com.atomikos.icatch.log_base_dir = /var/log/tomcat8 # 日志文件输出目录</span><br><span class="line">com.atomikos.icatch.output_dir = /var/log/tomcat8 # 文件输出目录</span><br><span class="line">com.atomikos.icatch.tm_unique_name = com.atomikos.spring.jdbc.tm</span><br><span class="line">com.atomikos.icatch.serializable_logging=<span class="literal">false</span></span><br><span class="line">com.atomikos.icatch.max_timeout=<span class="number">2000000</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1003,86 +1092,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>Postgres-X2试图融合Postgres-XC和Postgres-XL。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/07/22/6534/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/07/22/6534/" class="post-title-link" itemprop="url">Untitled Post - 127</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-07-22 21:49:52" itemprop="dateCreated datePublished" datetime="2015-07-22T21:49:52+08:00">2015-07-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://wiki.postgresql.org/wiki/Pgpool-II">pgpool-II</a>是一个中间件，工作在PostgreSQL服务器和PostgreSQL数据库客户端之间，具有连接池，复制，负载均衡，并行查询和突破连接限制等功能。<br><a target="_blank" rel="noopener" href="http://git.postgresql.org/gitweb/?p=pgpool2.git;a=summary">git代码库</a></p>
 
       
     </div>

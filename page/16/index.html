@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,121 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/06/20/h3c-nqa-track-static-route-hot-standby/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/06/20/h3c-nqa-track-static-route-hot-standby/" class="post-title-link" itemprop="url">H3C防火墙使用nqa+track结合静态路由实现双链路热备、主备链路自动切换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-20 14:04:35" itemprop="dateCreated datePublished" datetime="2018-06-20T14:04:35+08:00">2018-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为种种原因，自备机房联通和移动双物理链路接入互联网访问,联通线路经常挂掉，影响互联网访问，使用NQA(network quality analyzer)+track可以根据物理链路是否有效来自动选择静态默认路由。</p>
+<p>两条默认路由的preference是不同的，网通链路优先，当两条链路都有效时，默认路由走联通链路，当联通链路失效时，联通默认路由自动被禁止，从而默认路由走移动链路。</p>
+<p><strong>配置步骤</strong><br>启用nqa,默认是启动状态</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nqa agent enable</span><br></pre></td></tr></table></figure>
+
+<p>１、配置nqa自动侦测两条物理链路<br>网通链路nqa侦测组(test group)：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">nqa entry admin wangtong #添加nqa侦测项目</span><br><span class="line">type icmp-echo #配置测试例类型为ICMP-echo并进入测试类型视图</span><br><span class="line">　　destination ip 网通网关ip #配置测试操作的目的IP地址,如果网关开启了防ping功能，是ping不通的，必须设置其他一个可以ping通的地址</span><br><span class="line">　　next-hop 网通网关ip #配置IP报文的下一跳IP地址，即网关的ip，若destination设的是网关ip，可以不配置，若destination不是网关ip，则必须配置</span><br><span class="line">　　probe count 3 #配置一次NQA测试中进行探测的次数，默认为1，此处也可以不设置</span><br><span class="line">　　probe timeout 1000 #配置NQA探测超时时间，默认为3000ms,可以不设置，用默认的</span><br><span class="line">　　frequency 1000 #测试频率为1000ms既测试组连续两次测试开始时间的时间间隔为1秒，最好设置下</span><br><span class="line">　　reaction 2 checked-element probe-fail threshold-type consecutive 3 action-type trigger-only #建立联动项2，既如果连续测试3次失败则触发相关动作。每个测试组可以有多条reaction，分别指定不同的编号即可。</span><br></pre></td></tr></table></figure>
+<p>移动链路nqa侦测组(test group)：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#</span><br><span class="line">nqa entry admin yidong #添加nqa侦测项目</span><br><span class="line">type icmp-echo #配置测试例类型为ICMP-echo并进入测试类型视图</span><br><span class="line">　　destination ip 移动网关ip #配置测试操作的目的IP地址,如果网关开启了防ping功能，是ping不通的，必须设置其他一个可以ping通的地址</span><br><span class="line">　　next-hop 移动网关ip #配置IP报文的下一跳IP地址，即网关的ip，若destination设的是网关ip，可以不配置，若destination不是网关ip，则必须配置</span><br><span class="line">　　probe count 3 #配置一次NQA测试中进行探测的次数，默认为1，此处也可以不设置</span><br><span class="line">　　probe timeout 1000 #配置NQA探测超时时间，默认为3000ms,可以不设置，用默认的</span><br><span class="line">　　frequency 1000 #测试频率为1000ms既测试组连续两次测试开始时间的时间间隔为1秒，最好设置下</span><br><span class="line">　　reaction 1 checked-element probe-fail threshold-type consecutive 3 action-type trigger-only #建立联动项1，既如果连续测试3次失败则触发相关动作</span><br></pre></td></tr></table></figure>
+
+<p>每个nqa侦测可以绑定多个reaction动作，比如reaction 1, reaction 2, reaction 3,…</p>
+<p>2、创建侦测项目中reaction关联的track</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">track <span class="number">1</span> nqa entry admin yidong reaction <span class="number">1</span></span><br><span class="line">track <span class="number">2</span> nqa entry admin wangtong reaction <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>3、启动nqa侦测组</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nqa schedule admin wangtong start-time now lifetime forever #启动网通链路探测组</span><br><span class="line">nqa schedule admin yidong start-time now lifetime forever #启动移动链路探测组</span><br></pre></td></tr></table></figure>
+
+<p>可以用undo来停止侦测组</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">undo nqa schedule admin wangtong #停止网通链路侦测组</span><br><span class="line">undo nqa schedule admin yidong #停止移动链路侦测组</span><br></pre></td></tr></table></figure>
+
+<p>4、设置track联动的静态默认路由</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ip route-static 0.0.0.0 0.0.0.0 222.132.*.* track 2 #联通链路,默认preferece为60,低于80，所以优先使用联通链路</span><br><span class="line">ip route-static 0.0.0.0 0.0.0.0 218.201.*.* track 1 preference 80 #移动链路，备份线路</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看状态</strong></p>
+<p>查看track</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">display track all #或者查看指定的track: display track 1</span><br><span class="line">Track ID: <span class="number">1</span></span><br><span class="line"> Status: Positive</span><br><span class="line"> Notification delay: Positive <span class="number">0</span>, Negative <span class="number">0</span> (<span class="keyword">in</span> seconds)</span><br><span class="line"> Reference object:</span><br><span class="line"> NQA entry: admin yidong</span><br><span class="line"> Reaction: <span class="number">1</span></span><br><span class="line">Track ID: <span class="number">2</span></span><br><span class="line"> Status: Negative</span><br><span class="line"> Notification delay: Positive <span class="number">0</span>, Negative <span class="number">0</span> (<span class="keyword">in</span> seconds)</span><br><span class="line"> Reference object:</span><br><span class="line"> NQA entry: admin wangtong</span><br><span class="line"> Reaction: <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到网通链路挂了，移动链路是有效的。</p>
+<p>查看nqa统计</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">display nqa statistics</span><br><span class="line">NQA entry(admin admin, tag yidong) test statistics:</span><br><span class="line"> NO. : <span class="number">1</span></span><br><span class="line"> Destination IP address: <span class="number">218.201</span>.*.* </span><br><span class="line"> Start time: <span class="number">2000</span>-<span class="number">10</span>-<span class="number">16</span> <span class="number">15</span>:<span class="number">00</span>:<span class="number">37.9</span> </span><br><span class="line"> Life time: <span class="number">3520</span> </span><br><span class="line"> Send operation times: <span class="number">33633</span> Receive response times: <span class="number">33628</span> </span><br><span class="line"> Min/Max/Average round trip time: <span class="number">1</span>/<span class="number">5</span>/<span class="number">1</span> </span><br><span class="line"> Square-Sum <span class="keyword">of</span> round trip time: <span class="number">33773</span> </span><br><span class="line"> Extended results:</span><br><span class="line"> Packet lost <span class="keyword">in</span> test: <span class="number">0</span>% </span><br><span class="line"> Failures due to timeout: <span class="number">5</span></span><br><span class="line"> Failures due to disconnect: <span class="number">0</span> </span><br><span class="line"> Failures due to no connection: <span class="number">0</span></span><br><span class="line"> Failures due to sequence error: <span class="number">0</span> </span><br><span class="line"> Failures due to internal error: <span class="number">0</span></span><br><span class="line"> Failures due to other errors: <span class="number">0</span></span><br><span class="line"> Packet(s) arrived late: <span class="number">0</span></span><br><span class="line"> NQA entry(admin admin, tag wangtong) test statistics:</span><br><span class="line"> NO. : <span class="number">1</span></span><br><span class="line"> Destination IP address: <span class="number">222.132</span>.*.* </span><br><span class="line"> Start time: <span class="number">2000</span>-<span class="number">10</span>-<span class="number">16</span> <span class="number">15</span>:<span class="number">00</span>:<span class="number">07</span><span class="number">.6</span> </span><br><span class="line"> Life time: <span class="number">3549</span> </span><br><span class="line"> Send operation times: <span class="number">1099</span> Receive response times: <span class="number">0</span> </span><br><span class="line"> Min/Max/Average round trip time: <span class="number">0</span>/<span class="number">0</span>/<span class="number">0</span> </span><br><span class="line"> Square-Sum <span class="keyword">of</span> round trip time: <span class="number">0</span> </span><br><span class="line"> Extended results:</span><br><span class="line"> Packet lost <span class="keyword">in</span> test: <span class="number">100</span>% </span><br><span class="line"> Failures due to timeout: <span class="number">1099</span></span><br><span class="line"> Failures due to disconnect: <span class="number">0</span> </span><br><span class="line"> Failures due to no connection: <span class="number">0</span></span><br><span class="line"> Failures due to sequence error: <span class="number">0</span> </span><br><span class="line"> Failures due to internal error: <span class="number">0</span></span><br><span class="line"> Failures due to other errors: <span class="number">0</span></span><br><span class="line"> Packet(s) arrived late: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>可以看到网通链路是无效的。</p>
+<p>查看当前路由表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">display ip routing-table</span><br><span class="line">Routing Tables: Public</span><br><span class="line"> Destinations : <span class="number">419</span> Routes : <span class="number">419</span></span><br><span class="line"></span><br><span class="line">Destination/Mask Proto Pre Cost NextHop Interface</span><br><span class="line"></span><br><span class="line"><span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">0</span> Static <span class="number">80</span> <span class="number">0</span> <span class="number">218.201</span>.*.* Vlan200</span><br><span class="line"><span class="number">2.0</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">8</span> Direct <span class="number">0</span> <span class="number">0</span> <span class="number">2.0</span><span class="number">.0</span><span class="number">.59</span> Vlan300</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以看到当前默认路由走的是移动链路。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.iyunv.com/thread-70703-1-1.html">H3C防火墙/路由器通过Track实现双线接入的链路备份</a><br>[2]<a target="_blank" rel="noopener" href="http://www.h3c.com.hk/Technical_Support___Documents/Technical_Documents/Security_Products/H3C_SecPath_F1000-E/Configuration/Operation_Manual/H3C_SecPath_High-End_OM(F3169_F3207)-5PW106/05/201109/725892_1285_0.htm">H3C NQA Configuration</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1035,87 +1150,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># sysctl net.core.default_qdisc</span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line"># sysctl net.ipv4.tcp_available_congestion_control</span><br><span class="line">net.ipv4.tcp_available_congestion_control = bbr cubic reno</span><br><span class="line"></span><br><span class="line">$ lsmod grep bbr</span><br><span class="line">tcp_bbr <span class="number">20480</span> <span class="number">14</span></span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://sb.sb/debian-ubuntu-tcp-bbr/">Debian / Ubuntu 更新内核并开启 TCP BBR 拥塞控制算法</a><br>[2]<a target="_blank" rel="noopener" href="http://www.zphj1987.com/2017/01/24/Linux-kernel-TCP-BBR-better/">Linux 升级内核开启 TCP BBR 有多大好处</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2017/10/28/hello-docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/10/28/hello-docker/" class="post-title-link" itemprop="url">Hello Docker</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2017-10-28 22:32:32" itemprop="dateCreated datePublished" datetime="2017-10-28T22:32:32+08:00">2017-10-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>博客正式迁移到docker平台！</p>
 
       
     </div>

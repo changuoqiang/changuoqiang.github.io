@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/06/11/files-batch-subtitute/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/06/11/files-batch-subtitute/" class="post-title-link" itemprop="url">批量替换多个文件中的字符串</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-06-11 16:23:09" itemprop="dateCreated datePublished" datetime="2014-06-11T16:23:09+08:00">2014-06-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>以替换google在线字体为国内CDN镜像为例：</p>
+<p>1、使用find,sed以及grep</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/fonts\\.googleapis/fonts\\.useso/g&#x27;</span> \<span class="string">`find . xargs grep -rl &#x27;fonts.googleapis&#x27;\`</span></span><br></pre></td></tr></table></figure>
+
+<p>2、使用find和perl</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . xargs perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span> \<span class="string">`find .\`</span></span><br></pre></td></tr></table></figure>
+
+<p>3、不使用find也行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep oldString -rl /path xargs sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> </span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> \<span class="string">`grep oldString -rl /path\`</span></span><br></pre></td></tr></table></figure>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1010,95 +1104,6 @@
 <p>HTML自定义attribute没有对应的DOM对象property。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://stylechen.com/attribute-property.html">attribute和property的区别</a><br>[2]<a target="_blank" rel="noopener" href="http://www.liyao.name/2013/09/differences-between-property-and-attribute-in-javascript.html">JavaScript中的property和attribute的区别</a><br>[3]<a target="_blank" rel="noopener" href="http://www.w3help.org/zh-cn/causes/SD9006">SD9006: IE 混淆了 DOM 对象属性（property）及 HTML 标签属性（attribute），造成了对 setAttribute、getAttribute 的不正确实现</a><br>[4]<a target="_blank" rel="noopener" href="http://www.w3schools.com/jsref/dom_obj_all.asp">The HTML DOM Element Object</a><br>[5]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/wangfupeng1988/p/3631853.html">DOM元素的特性（Attribute）和属性（Property）</a></p>
 <p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/05/20/jquery-upgrade/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/05/20/jquery-upgrade/" class="post-title-link" itemprop="url">jQuery 1.x 升级</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-05-20 14:47:16" itemprop="dateCreated datePublished" datetime="2014-05-20T14:47:16+08:00">2014-05-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>jQuery 1.9 删除了一些过时的API,修改了一些API的行为。比如jQuery.browser()已经移除了，推荐使用<a target="_blank" rel="noopener" href="http://modernizr.com/">Modernizr</a>特性检测库，而不是检测特定的浏览器。<br>从jQuery 2+起,不再支持IE6/7/8。</p>
-<p>jQuery提供了迁移插件<a target="_blank" rel="noopener" href="https://github.com/jquery/jquery-migrate/">jquery-migrate</a>来辅助用户平滑升级。<br>jquery-migrate插件恢复了被删除或变化的API,但会在console给出警告(注意:只有开发版才会给出警告)。<br>jquery-migrate插件可以用于jQuery 2.x版本，但这只是个过渡，现有产品应该尽快将源代码迁移到jQuery 2.x上来。</p>
-<p>这样使用jquery-migrate插件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;js/jquery-2.1.1.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;js/jquery-migrate-1.2.1.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-
-<p>抛弃低版本IE浏览器是大势所趋。IE浏览器从版本11开始才真正算是一个现代浏览器。</p>
-<p>也可以使用<a target="_blank" rel="noopener" href="http://www.quirksmode.org/css/condcom.html">条件注释</a>语句为低版本IE使用低版本的jQuery。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://jquery.com/upgrade-guide/1.9/">jQuery Core 1.9 Upgrade Guide</a><br>[2]<a target="_blank" rel="noopener" href="http://www.css88.com/archives/4564">jQuery 1.9升级指南</a><br>[3]<a target="_blank" rel="noopener" href="http://www.fwolf.com/blog/post/35">jQuery 1.9 移除了 $.browser 的替代方法</a><br>[4]<a target="_blank" rel="noopener" href="http://www.quirksmode.org/css/condcom.html">Conditional comments</a></p>
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

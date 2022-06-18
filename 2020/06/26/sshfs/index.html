@@ -31,7 +31,7 @@
 <meta property="og:description" content="sshfs可以通过ssh和sftp协议来安全的在本地挂载远程文件系统，比NFS更方便的是无需更改防火墙设置，只要能使用ssh访问远程主机就可以了。 sshfs使用fuse在用户空间挂载远程文件系统，debian系统直接安装sshfs包，为了方便挂载，最好配置使用公私钥对来访问远程ssh主机，特别是fstab文件不支持ssh的密码访问方式。 挂载远程文件系统： 1$ sshfs user@host">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-06-26T15:23:06.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.510Z">
+<meta property="article:modified_time" content="2022-06-18T13:53:04.613Z">
 <meta property="article:author" content="changuoqiang">
 <meta property="article:tag" content="Debian">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2022-06-18 21:53:04" itemprop="dateModified" datetime="2022-06-18T21:53:04+08:00">2022-06-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -329,11 +329,16 @@
 <p>sshfs可以通过ssh和sftp协议来安全的在本地挂载远程文件系统，比NFS更方便的是无需更改防火墙设置，只要能使用ssh访问远程主机就可以了。</p>
 <p>sshfs使用fuse在用户空间挂载远程文件系统，debian系统直接安装sshfs包，为了方便挂载，最好配置使用公私钥对来访问远程ssh主机，特别是fstab文件不支持ssh的密码访问方式。</p>
 <p>挂载远程文件系统：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs user@host:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
 <p>也支持直接使用ssh别名</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sshfs hwy-reisdb-<span class="number">3</span>:<span class="regexp">/mnt/</span>data/reis_dump/ <span class="regexp">/mnt/</span>hwy06_reisdb_bak/ -o reconnect,ServerAliveInterval=<span class="number">15</span>,ServerAliveCountMax=<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>支持断线重连和心跳保持<br>具体的sshfs选项参见man</p>
+<p>还有一个fuse文件系统挂载选项allow_other影响挂载的sshfs文件系统访问权限，如果允许除挂载用户之外的其他用户访问文件系统，需要指定此选项，并且需要修改fuse配置文件/etc/fuse.conf，打开user_allow_other选项</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Allow non-root users to specify the allow_other or allow_root mount options.</span></span><br><span class="line">user_allow_other</span><br></pre></td></tr></table></figure>
 
-<p>具体的sshfs选项参见man</p>
+<p>还可以写入fstab，开机可以自动挂载sshfs<br>/etc/fstab</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user@host:&#x2F;var&#x2F;www&#x2F; &#x2F;var&#x2F;www&#x2F; fuse.sshfs defaults,_netdev,allow_other,follow_symlinks,identityfile&#x3D;&#x2F;home&#x2F;user&#x2F;.ssh&#x2F;id_rsa,reconnect,ServerAliveInterval&#x3D;15,ServerAliveCountMax&#x3D;3 0 0</span><br></pre></td></tr></table></figure>
+<p>在这里，_netdev挂载选项指定挂载sshfs需要有网络支持，follow_symlinks是sshfs的选项，支持符号链接，identityfile选项是ssh的选项，指定登录凭证，也可以通过.ssh/config配置别名来指定登录选项。</p>
 <p>注意：<br>ssh长时间连接会超时，导致出现类似错误提示：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client_loop: send disconnect: Broken pipe</span><br></pre></td></tr></table></figure>
 <p>可以在ssh服务器/etc/ssh/sshd_config中打开客户端心跳探测:</p>

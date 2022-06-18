@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">982</span>
+          <span class="site-state-item-count">983</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/05/05/ntpdate-error-no-server-suitable-for-synchronization-found/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/05/05/ntpdate-error-no-server-suitable-for-synchronization-found/" class="post-title-link" itemprop="url">ntpdate错误: no server suitable for synchronization found</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-05-05 15:04:56" itemprop="dateCreated datePublished" datetime="2019-05-05T15:04:56+08:00">2019-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>客户端执行ntpdate同步时间时发生错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate\[<span class="number">10877</span>\]: no server suitable <span class="keyword">for</span> synchronization found</span><br></pre></td></tr></table></figure>
+
+<p>debug模式运行ntpdate:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># ntpdate -d 192.168.0.3</span><br><span class="line">ntpdate -d <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span></span><br><span class="line"> <span class="number">5</span> May <span class="number">14</span>:<span class="number">52</span>:<span class="number">58</span> ntpdate\[<span class="number">10877</span>\]: ntpdate <span class="number">4.2</span>.6p5@<span class="number">1.2349</span>-o Fri Jul <span class="number">22</span> <span class="number">17</span>:<span class="number">30</span>:<span class="number">52</span> UTC <span class="number">2016</span> (<span class="number">1</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">transmit(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line">receive(<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>)</span><br><span class="line"><span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>: Server dropped: Leap not <span class="keyword">in</span> sync</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>, port <span class="number">123</span></span><br><span class="line">stratum <span class="number">3</span>, precision -<span class="number">23</span>, leap <span class="number">11</span>, trust <span class="number">000</span></span><br><span class="line">refid \[<span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span>\], delay <span class="number">0.02617</span>, dispersion <span class="number">0.00005</span></span><br><span class="line">transmitted <span class="number">4</span>, <span class="keyword">in</span> filter <span class="number">4</span></span><br><span class="line">reference time: e07906ca.595bf596 Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">52</span>:<span class="number">58.349</span></span><br><span class="line">originate timestamp: e07906d0.bb8e930a Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span><span class="number">.732</span></span><br><span class="line">transmit timestamp: e07906d0.84432bb9 Sun, May <span class="number">5</span> <span class="number">2019</span> <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span><span class="number">.516</span></span><br><span class="line">filter delay: <span class="number">0.02632</span> <span class="number">0.02621</span> <span class="number">0.02617</span> <span class="number">0.02617</span> </span><br><span class="line"> <span class="number">0.00000</span> <span class="number">0.00000</span> <span class="number">0.00000</span> <span class="number">0.00000</span> </span><br><span class="line">filter offset: <span class="number">0.215621</span> <span class="number">0.215522</span> <span class="number">0.215512</span> <span class="number">0.215605</span></span><br><span class="line"> <span class="number">0.000000</span> <span class="number">0.000000</span> <span class="number">0.000000</span> <span class="number">0.000000</span></span><br><span class="line">delay <span class="number">0.02617</span>, dispersion <span class="number">0.00005</span></span><br><span class="line">offset <span class="number">0.215512</span></span><br><span class="line"></span><br><span class="line"> <span class="number">5</span> May <span class="number">14</span>:<span class="number">53</span>:<span class="number">04</span> ntpdate\[<span class="number">10877</span>\]: no server suitable <span class="keyword">for</span> synchronization found</span><br></pre></td></tr></table></figure>
+
+<p>提示错误Server dropped: Leap not in sync</p>
+<p>在ntp服务器上与上游强制同步一次时间即可</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># service ntp stop</span><br><span class="line"># ntpdate -b pool.ntp.org</span><br><span class="line"># service ntp start</span><br></pre></td></tr></table></figure>
+
+<p>然后再在客户端上重新进行时间同步</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ntpdate 192.168.0.3</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1084,93 +1175,6 @@
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://medium.com/@decrocksam/deploying-lets-encrypt-certificates-using-tls-alpn-01-https-18b9b1e05edf">Deploying Let’s Encrypt certificates using tls-alpn-01 (https)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.wuzhiyuan.com/2018/11/18/tls-alpn/">使用TLS-ALPN-01验证签发证书</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/lukas2511/dehydrated">dehydrated</a><br>[4]<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh">acme.sh</a><br>[5]<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh/wiki/TLS-ALPN-without-downtime">TLS ALPN without downtime</a><br>[6]<a target="_blank" rel="noopener" href="https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E">acme.sh中文说明</a></p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/29/certbot-tls-sni-01-deprecated/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/29/certbot-tls-sni-01-deprecated/" class="post-title-link" itemprop="url">certbot验证方法TLS-SNI-01即将过时</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-29 21:19:22" itemprop="dateCreated datePublished" datetime="2018-12-29T21:19:22+08:00">2018-12-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Let’s Encrypt因为安全性问题已经将TLS-SNI-01验证方法标记为过时，而且很快就不能使用了。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/29/certbot-tls-sni-01-deprecated/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
