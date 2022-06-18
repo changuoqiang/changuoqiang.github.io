@@ -78,7 +78,7 @@ postgres=# select pg_switch_wal();
 开启归档后，应该立即进行一次基础备份，基础备份加上WAL日志可以完整的恢复整个数据库集群。
 这里使用pg_basebackup在本地服务器进行基础备份，使用postgresql用户进行操作，要注意输出文件写入权限问题
 ```js
-$ sudo -u postgres sh -c 'pg_basebackup -l 20191019 -RPv -Ft -D - gzip -c > baseback20191019.tgz'
+$ sudo -u postgres sh -c 'pg_basebackup -l 20191019 -RPv -Ft -D - | gzip -c > baseback20191019.tgz'
 ```
 出现错误提示：
 ```js
@@ -101,7 +101,7 @@ if (format == 't' && includewal == STREAM_WAL && strcmp(basedir, "-") == 0)
 
 在postgres用户的主目录/var/lib/postgresql或postgres可以写的其他目录下执行基础备份完整的命令：
 ```js
-sudo -u postgres sh -c 'pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - gzip -c > baseback20191019.tgz'
+sudo -u postgres sh -c 'pg_basebackup -l 20191019 -RPv -Ft --wal-method=f -D - | gzip -c > baseback20191019.tgz'
 pg_basebackup: initiating base backup, waiting for checkpoint to complete
 pg_basebackup: checkpoint completed
 pg_basebackup: write-ahead log start point: 0/6000028 on timeline 1
