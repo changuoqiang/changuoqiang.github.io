@@ -5,7 +5,7 @@ tags:
 ---
 
 logrotate手动以root执行成功，但是自动运行失败。
-<!--readmore-->
+<!--more-->
 
 systemd日志提示:
 ```
@@ -19,7 +19,7 @@ logrotate: error: error renaming  /usr/local/nginx/logs/site.access.log.7.gz to 
 [Service]
 ProtectSystem=full
 ```
-这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc/文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:
+这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc 文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:
 ```
 [Service]
 ProtectSystem=full
