@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/08/22/tomcat-startup-slow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/08/22/tomcat-startup-slow/" class="post-title-link" itemprop="url">随机数生成导致的tomcat启动缓慢</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-08-22 15:13:43" itemprop="dateCreated datePublished" datetime="2015-08-22T15:13:43+08:00">2015-08-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat 7+依赖于SecureRandom为其session id及其他事项生成随机数，但由于JRE等各方面的因素，可能会导致tomcat启动特别缓慢。<br>catalina.out里会有类似如下提示</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">INFO: Creation <span class="keyword">of</span> SecureRandom instance <span class="keyword">for</span> session ID generation using \[SHA1PRNG\] took \[<span class="number">586</span>,<span class="number">623</span>\] milliseconds.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>通过配置JRE使用非阻塞的熵源，可以解决此问题，但因随机性下降会降低系统安全性。</p>
+<p>为JRE添加如下属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Djava.security.egd=file:<span class="regexp">/dev/</span>./urandom</span><br></pre></td></tr></table></figure>
+
+<p>比如可以在/etc/default/tomcat8中的添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JAVA_OPTS=<span class="string">&quot;-Djava.awt.headless=true -Xmx1280m -XX:+UseConcMarkSweepGC -Djava.security.egd=file:/dev/./urandom&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://wiki.apache.org/tomcat/HowTo/FasterStartUp">How do I make Tomcat startup faster?</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1012,86 +1104,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"># bash</span><br><span class="line">set -o vi</span><br><span class="line">PS1=<span class="string">&#x27;$&#123;debian_chroot:+($debian_chroot)&#125;\\\[\\033\[00;31m\\\]\\u@\\h\\\[\\033\[00m\\\]:\\\[\\033\[00;33m\\\]\\w\\\[\\033\[00m\\\]\\$ \\\[\\033\[00;32m\\\]&#x27;</span></span><br><span class="line"></span><br><span class="line"># bash history</span><br><span class="line"><span class="keyword">export</span> HISTCONTROL=ignoredups</span><br><span class="line">shopt -s histappend</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> PATH=$HOME/bin:<span class="regexp">/sbin:/u</span>sr/sbin:<span class="regexp">/usr/</span>local/sbin:<span class="regexp">/opt/</span>bin:$PATH</span><br><span class="line"></span><br><span class="line"># xterm</span><br><span class="line"><span class="keyword">if</span> \[ <span class="string">&quot;$TERM&quot;</span> == <span class="string">&quot;xterm&quot;</span> \]; then</span><br><span class="line"> <span class="keyword">export</span> TERM=xterm-256color</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"># mac os x</span><br><span class="line"><span class="keyword">if</span> \[ \<span class="string">`uname\` == &quot;Darwin&quot; \]; then</span></span><br><span class="line"><span class="string"> alias ll=&#x27;ls -lh grep ^total &amp;&amp; ls -lh grep ^d &amp;&amp; ls -lh grep -v ^d grep -v ^total&#x27;</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># freebsd</span></span><br><span class="line"><span class="string">if \[ \`uname\` == &quot;FreeBSD&quot; \]; then</span></span><br><span class="line"><span class="string"> # gnuls</span></span><br><span class="line"><span class="string"> alias ls=&#x27;gnuls --color=auto --show-control-chars&#x27;</span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># linux </span></span><br><span class="line"><span class="string">if \[ \`uname\` == &quot;Linux&quot; \]; then</span></span><br><span class="line"><span class="string"> alias ll=&#x27;ls -lh --group-directories-first&#x27;</span></span><br><span class="line"><span class="string"> alias update=&#x27;sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade -y &amp;&amp; sudo apt-get autoremove -y&#x27; </span></span><br><span class="line"><span class="string">fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># general</span></span><br><span class="line"><span class="string">alias la=&#x27;ls -a&#x27;</span></span><br><span class="line"><span class="string">alias ccd=&#x27;clear;cd&#x27;</span></span><br><span class="line"><span class="string">alias :q=&#x27;exit&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># mail</span></span><br><span class="line"><span class="string">export MAIL=$HOME/Maildir</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#oracle</span></span><br><span class="line"><span class="string">alias sqlplus=&#x27;rlwrap sqlplus&#x27;</span></span><br><span class="line"><span class="string">alias rman=&#x27;rlwrap rman&#x27;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#export ORACLE_SID=</span></span><br><span class="line"><span class="string">#export ORACLE_BASE=/u01/app/oracle</span></span><br><span class="line"><span class="string">#export ORACLE_HOME=$ORACLE_BASE/product/10.2.0/db_1</span></span><br><span class="line"><span class="string">#export PATH=$ORACLE_HOME/bin:$PATH</span></span><br><span class="line"><span class="string">#export TNS_ADMIN=$ORACLE_HOME/network/admin</span></span><br><span class="line"><span class="string">#export SQLPATH=$ORACLE_BASE/scripts</span></span><br></pre></td></tr></table></figure>
 
 <p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/07/23/6536/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/07/23/6536/" class="post-title-link" itemprop="url">Untitled Post - 128</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-07-23 22:16:59" itemprop="dateCreated datePublished" datetime="2015-07-23T22:16:59+08:00">2015-07-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Postgres-X2试图融合Postgres-XC和Postgres-XL。</p>
 
       
     </div>

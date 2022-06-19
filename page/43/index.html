@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,113 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/12/28/mac-os-x-cqlsh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/12/28/mac-os-x-cqlsh/" class="post-title-link" itemprop="url">Mac OS X上使用cqlsh命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-12-28 19:30:18" itemprop="dateCreated datePublished" datetime="2014-12-28T19:30:18+08:00">2014-12-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cqlsh是cassandra用于执行cql命令的交互式终端程序,就如postgresql的psql,或者oracle的sql plus。<br>cqlsh是用python编写的,但当前版本5.0.1尚不支持python 3及以上版本,其代码中有如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&#x27;import sys; sys.exit(not (0x020500b0 &lt; sys.hexversion &lt; 0x03000000))&#x27;</span> <span class="number">2</span>&gt;<span class="regexp">/dev/</span><span class="literal">null</span> \\</span><br><span class="line"> &amp;&amp; exec python <span class="string">&quot;$0&quot;</span> <span class="string">&quot;$@&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可见其只支持大于2.5小于3.0的python。</p>
+<p>使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install cassandra</span><br></pre></td></tr></table></figure>
+<p>安装cassandra后,已经自动安装好了cqlsh,直接执行cqlsh会有提示需要安装cassandra-driver</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$cqlsh</span><br><span class="line">Python Cassandra driver not installed, or not on PYTHONPATH.</span><br><span class="line">You might <span class="keyword">try</span> <span class="string">&quot;pip install cassandra-driver&quot;</span>.</span><br><span class="line"></span><br><span class="line">Python: <span class="regexp">/usr/</span>bin/python</span><br><span class="line">Module load path: \[<span class="string">&#x27;/usr/local/Cellar/cassandra/2.1.2/bin&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python27.zip&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-darwin&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/plat-mac/lib-scriptpackages&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-tk&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-old&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/lib-dynload&#x27;</span>, <span class="string">&#x27;/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/PyObjC&#x27;</span>, <span class="string">&#x27;/Library/Python/2.7/site-packages&#x27;</span>\]</span><br><span class="line"></span><br><span class="line"><span class="built_in">Error</span>: No <span class="built_in">module</span> named cassandra</span><br></pre></td></tr></table></figure>
+
+<p>然后安装cassandra-driver</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install cassandra-driver</span><br></pre></td></tr></table></figure>
+
+<p>如果cqlsh仍然提示需要安装cassandra-driver,则是因为系统当前的pip是python3的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ pip show canssandra-driver</span><br><span class="line">---</span><br><span class="line">Name: cassandra-driver</span><br><span class="line">Version: <span class="number">2.1</span><span class="number">.3</span></span><br><span class="line">Location: <span class="regexp">/Library/</span>Frameworks/Python.framework/Versions/<span class="number">3.4</span>/lib/python3<span class="number">.4</span>/site-packages</span><br><span class="line">Requires: futures, six</span><br></pre></td></tr></table></figure>
+
+<p>那么需要安装pip for python 2.x</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install python</span><br></pre></td></tr></table></figure>
+<p>然后为python 2.x 安装cassandra-driver</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ pip2 install cassandra-driver</span><br><span class="line">$ pip2 show cassandra-driver</span><br><span class="line">---</span><br><span class="line">Name: cassandra-driver</span><br><span class="line">Version: <span class="number">2.1</span><span class="number">.3</span></span><br><span class="line">Location: <span class="regexp">/usr/</span>local/lib/python2<span class="number">.7</span>/site-packages</span><br><span class="line">Requires: futures, six</span><br></pre></td></tr></table></figure>
+
+<p>因为brew安装的python库路径在/usr/local/lib/python2.7/site-packages,所以还需要将其添加到python模块搜索路径,.bashrc中添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PYTHONPATH=$PYTHONPATH:<span class="regexp">/usr/</span>local/lib/python2<span class="number">.7</span>/site-packages</span><br></pre></td></tr></table></figure>
+
+<p>然后再执行cqlsh应该就可以了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cqlsh</span><br><span class="line">Connected to Test Cluster at <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9042.</span></span><br><span class="line">\[cqlsh <span class="number">5.0</span><span class="number">.1</span> Cassandra <span class="number">2.1</span><span class="number">.2</span> CQL spec <span class="number">3.2</span><span class="number">.0</span> Native protocol v3\]</span><br><span class="line">Use HELP <span class="keyword">for</span> help.</span><br><span class="line">cqlsh&gt; </span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1035,86 +1142,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>uniq命令隔行重复是不认的，所以对于隔行重复的情况需要先用sort命令进行排序。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/12/06/6063/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/12/06/6063/" class="post-title-link" itemprop="url">Untitled Post - 86</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-12-06 16:50:57" itemprop="dateCreated datePublished" datetime="2014-12-06T16:50:57+08:00">2014-12-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>linux平台上virtualbox客户机如果需要访问主机的usb设备,则必须要将启动virtualbox主机的用户添加到vboxusers用户组。</p>
 
       
     </div>

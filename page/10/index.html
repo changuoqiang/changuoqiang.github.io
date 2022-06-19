@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/07/nginx-ssl-reverse-proxy-wordpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/07/07/nginx-ssl-reverse-proxy-wordpress/" class="post-title-link" itemprop="url">nginx ssl 反向代理wordpress</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-07-07 19:49:02" itemprop="dateCreated datePublished" datetime="2019-07-07T19:49:02+08:00">2019-07-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>wordpress部署在docker上，使用http协议，现在部署https协议，增设一个nginx服务器，反向代理http协议的wordpress</p>
+<p>nginx反向代理需要增设协议头</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_set_header X-Forwarded-Proto $scheme; </span><br></pre></td></tr></table></figure>
+<p>完整的nginx反向代理设置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">server_nameopenwares.net;</span><br><span class="line">listen8443 ssl http2;</span><br><span class="line"></span><br><span class="line">ssl_certificate /etc/nginx/ssl/fullchain.cer;</span><br><span class="line">ssl_certificate_key /etc/nginx/ssl/openwares.net.key;</span><br><span class="line">ssl_protocols TLSv1<span class="number">.3</span>;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line">proxy_pass http:<span class="comment">//localhost/;</span></span><br><span class="line">proxy_set_header Host $host;</span><br><span class="line"> proxy_set_header X-Forwarded-Proto $scheme; </span><br><span class="line"> proxy_set_header Accept-Encoding <span class="string">&quot;gzip&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编辑wordpress的wp-config.php文件，在文件前面添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="string">&#x27;FORCE_SSL_ADMIN&#x27;</span>, <span class="literal">true</span>);</span><br><span class="line"><span class="keyword">if</span> ($_SERVER\[<span class="string">&#x27;HTTP_X_FORWARDED_PROTO&#x27;</span>\] == <span class="string">&#x27;https&#x27;</span>)</span><br><span class="line"> $_SERVER\[<span class="string">&#x27;HTTPS&#x27;</span>\]=<span class="string">&#x27;on&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>最后需要参考[3]将数据库中的链接从http修改为https。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wordpress.org/support/article/administration-over-ssl/">Administration Over SSL</a><br>[2]<a target="_blank" rel="noopener" href="https://zhihu.websoft9.com/6408/wordpress%E4%BD%BF%E7%94%A8nginx%E5%81%9A%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84ssl%E8%AE%BE%E7%BD%AE">WordPress使用Nginx做反向代理的SSL设置</a><br>[3]<a target="_blank" rel="noopener" href="https://isabelcastillo.com/mysql-wordpress-http-to-https">MySQL Queries To Change WordPress From HTTP to HTTPS In The Database</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1115,100 +1206,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(cd /opt/reps &amp;&amp; ./reps)</span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://sb.sb/blog/debian-9-rc-local/">Debian 9 Stretch 解决 /etc/rc.local 开机启动问题</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/11/compile-qemu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/11/compile-qemu/" class="post-title-link" itemprop="url">编译qemu</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-11 20:05:08" itemprop="dateCreated datePublished" datetime="2019-06-11T20:05:08+08:00">2019-06-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>安装编译环境和必要的附加组件</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install dkms build-essential pkg-config libglib2<span class="number">.0</span>-dev libpixman-<span class="number">1</span>-dev libusb-dev libusbredirparser-dev libfdt-dev libbz2-dev flex bison</span><br></pre></td></tr></table></figure>
-
-<p><strong>下载解压源代码</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//download.qemu.org/qemu-4.0.0.tar.xz</span></span><br><span class="line">$ tar xvJf qemu-<span class="number">4.0</span><span class="number">.0</span>.tar.xz</span><br></pre></td></tr></table></figure>
-
-<p><strong>配置并编译</strong></p>
-<p>只编译x86_64架构</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd qemu-<span class="number">4.0</span><span class="number">.0</span></span><br><span class="line">$ mkdir build</span><br><span class="line">$ cd build</span><br><span class="line">$ ../configure --target-list=x86_64-softmmu --enable-debug</span><br><span class="line">$ make -j8</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
-
-<p>目标程序安装在/usr/local/</p>
 
       
     </div>

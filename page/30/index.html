@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/03/database-high-availability/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/03/database-high-availability/" class="post-title-link" itemprop="url">数据库高可用概念(database high availability)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-03 22:13:33" itemprop="dateCreated datePublished" datetime="2015-11-03T22:13:33+08:00">2015-11-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>数据库高可用是为了降低停机时间，提高数据库服务器的持续服务能力，减少数据丢失，减少服务恢复时间。</p>
+<p>大体可以有以下几个分类：</p>
+<ul>
+<li>  cold standby<br>最传统的备份/恢复模式属于此类。主库定期备份，备份数据可以存储到主库以外的其他存储介质上。当主库当机时，启动备机，从备份中恢复主库最近的一次备份，然后接替主库对外提供服务。这种模式数据丢失的风险极大，最后一次备份到当机之间的数据丢失的可能性很大。而且，当数据库很大时，备机的恢复时间可能会相当长，达几个小时甚至几十个小时。</li>
+<li>  warm standby<br>主备库同时运行，主库数据以同步或异步方式复制到备库，主库崩溃时的恢复时间很短，但是备库在正常状态下是无法提供服务的。</li>
+<li>  hot standby<br>主备库同时运行，主库数据以同步或异步方式复制到备库，主库崩溃时的恢复时间很短，备库可以提供只读查询服务。如果是流式复制方式，一般提交的事务都不会丢失。数据丢失的风险很低。</li>
+<li>  active-active<br>这就是传说中的双活或多活，或叫master-master模式，多个数据库互为主备，一起对外提供服务，一个崩溃，不影响系统对外提供服务，只是服务的性能会有下降。这种模式又可以称作负载均衡load balance。</li>
+</ul>
+<p>postgresql对warm standby和hot standby的定义:</p>
+<p>A standby server that cannot be connected to until it is promoted to a master server is called a warm standby server, and one that can accept connections and serves read-only queries is called a hot standby server.</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1037,93 +1128,6 @@
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md">Delete files and folders</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/robrich/gulp-rimraf">gulp-rimraf</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/peter-vilja/gulp-clean">gulp-clean</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/10/27/hello-gulp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/10/27/hello-gulp/" class="post-title-link" itemprop="url">hello gulp</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-10-27 22:30:49" itemprop="dateCreated datePublished" datetime="2015-10-27T22:30:49+08:00">2015-10-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://github.com/gulpjs/gulp">gulp</a>是一个流式构建系统。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2015/10/27/hello-gulp/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

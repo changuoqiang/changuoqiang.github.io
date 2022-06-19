@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,116 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/14/keepalived-postgresql-streaming-replication-auto-failover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/14/keepalived-postgresql-streaming-replication-auto-failover/" class="post-title-link" itemprop="url">keepalived实现PostgreSQL流复制故障自动迁移HA</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-14 21:53:31" itemprop="dateCreated datePublished" datetime="2015-12-14T21:53:31+08:00">2015-12-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>keepalived是一个路由软件，主要用于linux系统上的负载均衡(load balancing)和高可用(high availability)。<br>keepalived基于IPVS(IP Virtual Server)提供四层负载均衡功能，Keepalived提供一组checker根据服务器的健康状况来动态维护负载均衡资源池。</p>
+<p>另一方面，keepalived基于VRRP协议提供高可用功能。可以由多台服务器组成一个热备组,一个热备组使用一个或一组虚拟ip对外提供服务。一个组内只有一台服务器接管虚拟ip对外提供服务，成为master,其余服务器为backup服务器。当master出现问题时，会执行一次选举(election)选出一台新的master服务器来接管虚拟ip对外提供服务。master服务器负责对虚拟ip请求的相应，并定时发出VRRP通告,backup服务器则待时而动。</p>
+<p>keepalived的配置文件中由vrrp_sync_group和vrrp_instance提供高可用配置，由virtual_server_group和virtual_server提供负载均衡配置。</p>
+<p>负载均衡配置提供HTTP_GET，SSL_GET，TCP_CHECK，SMTP_CHECK，MISC_CHECK,ICMP_CHECK等检查器，其中ICMP_CHECK工作在三层，TCP_CHECK工作在四层，而HTTP_GET则工作在七层。</p>
+<p>高可用配置时，keepalive可以检测网络故障和自身运行状态，还可以设定用户脚本来检测服务器状态，从而当master出现故障时，可以通过重新选举来进行主备切换。</p>
+<p><strong>高可用配置</strong></p>
+<p>此处主要讲述高可用配置，下面是由两个服务器组成一个热备组用于PostgreSQL数据库高可用服务的配置:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"># Configuration File for keepalived</span><br><span class="line"></span><br><span class="line">global_defs &#123;</span><br><span class="line"> notification_email &#123;</span><br><span class="line"> admin@domain.tld # 接收通知的email</span><br><span class="line"> &#125;</span><br><span class="line"> notification_email_from admin@domain.tld # 发送通知的email地址</span><br><span class="line"> smtp_server <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> </span><br><span class="line"> smtp_connect_timeout <span class="number">30</span></span><br><span class="line"> router_id vmin # 标识机器,可以使用机器名,主备不能相同</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_script chk_pgsql &#123;</span><br><span class="line"> # script &quot;/path/script.sh&quot;</span><br><span class="line"> script <span class="string">&quot;sudo -u postgres psql -c &#x27;select 1&#x27;&quot;</span></span><br><span class="line"> interval 2 # 2秒检查一次</span><br><span class="line"> weight -2 # 检查失败(返回值非0)时,优先级加-2,其他情况优先级保持不变.默认值为2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line"> state BACKUP # 初始状态,主备可都设置为BACKUP,启动后会自动选举优先级高者为master</span><br><span class="line">　　＃　如果高优先级的服务器设置为MASTER,就算设置了nopreempt,当重新启动keepalived实例时，仍然会抢占vip</span><br><span class="line"> interface br0 # vrrp绑定接口</span><br><span class="line"> #use_vmac # 使用虚拟MAC地址,地址格式为00-00-5E-00-01-&lt;virtual_router_id&gt;,主备设置相同</span><br><span class="line"> #vmac_xmit_base # 不使用虚拟接口收发VRRP报文</span><br><span class="line"> virtual_router_id 50 # 虚拟路由id,主备必须使用相同的配置</span><br><span class="line"> track_interface &#123;</span><br><span class="line"> br0 # 监测的网络接口，当此接口不可用时会引起主备切换,可有多个被监测的接口</span><br><span class="line"> &#125;</span><br><span class="line"> nopreempt # 非抢占模式,master设置为nopreempt,backup不要设置，</span><br><span class="line"> # 当高优先级的master重新恢复上线时，不会抢占当前低优先级的backup</span><br><span class="line"> priority 100 # 初始优先级,取值范围为0-255, master可设置为100, backup设置为99</span><br><span class="line"> advert_int 1 # VRRP 通告时间间隔</span><br><span class="line"> virtual_ipaddress &#123;</span><br><span class="line"> 192.168.0.200 # 对外提供服务器的虚拟地址,主备设置相同</span><br><span class="line"> &#125;</span><br><span class="line"> authentication &#123;</span><br><span class="line"> auth_type PASS # 认证类型,master与backup必须一致</span><br><span class="line"> auth_pass 1234 # 认证密码,只使用前8个字符,master与backup必须一致</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> # 如果使用参数调用的脚本,将脚本及参数用引号包围</span><br><span class="line"> notify_master &quot;/usr/local/bin/notify.sh master&quot; # 状态转移为master时执行的脚本</span><br><span class="line"> notify_backup &quot;/usr/local/bin/notify.sh backup&quot; # 状态转移为backup时执行的脚本</span><br><span class="line"> notify_fault &quot;/usr/local/bin/nofity.sh fault&quot; # 状态转移为故障时执行的脚本</span><br><span class="line"></span><br><span class="line"> # 当发生任何的状态变化时,在nofity_*脚本之后被调用,调用时会提供三个参数:</span><br><span class="line"> # $1 = &quot;GROUP&quot;&quot;INSTANCE&quot;</span><br><span class="line"> # $2 = 组或实例的名字</span><br><span class="line"> # $3 = 变化的目标状态</span><br><span class="line"> # (&quot;MASTER&quot;&quot;BACKUP&quot;&quot;FAULT&quot;)</span><br><span class="line"> nofity <span class="string">&quot;/usr/local/bin/notify.sh&quot;</span></span><br><span class="line"></span><br><span class="line"> # 发送邮件通知,使用global_defs中的定义</span><br><span class="line"> # smtp_alert </span><br><span class="line"></span><br><span class="line"> track_script &#123;</span><br><span class="line"> chk_pgsql # 使用检查脚本</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>MASTER和BACKUP节点的优先级如何调整？</strong></p>
+<p>首先，每个节点有一个初始优先级，由配置文件中的priority配置项指定，MASTER节点的priority应比BAKCUP高。运行过程中keepalived根据vrrp_script的weight设定，增加或减小节点优先级。</p>
+<p>规则如下：</p>
+<ol>
+<li>当weight &gt; 0时，vrrp_script script脚本执行返回0(成功)时优先级为priority + weight, 否则为priority。当BACKUP发现自己的优先级大于MASTER通告的优先级时，进行主从切换。</li>
+<li>当weight &lt; 0时，vrrp_script script脚本执行返回非0(失败)时优先级为priority + weight, 否则为priority。当BACKUP发现自己的优先级大于MASTER通告的优先级时，进行主从切换。 </li>
+<li>当两个节点的优先级相同时，以节点发送VRRP通告的IP作为比较对象，IP较大者为MASTER。</li>
+<li>　优先级并不会不断的提高或降低，只会根据脚本返回结果计算一次。</li>
+</ol>
+<p><strong>什么时候会发生主从切换？</strong></p>
+<p>当监测的网络接口发生故障、keepalived实例关闭或者主备优先级发生变化时，会重新选择新的master服务器来接管服务。</p>
+<p><strong>防止脑裂(brain split)</strong></p>
+<p>将主备服务器都设置为BACKUP状态，并且将master服务器(初始优先级高的服务器)配置为nopreempt,当master因为各种可能原因下线，然后重新恢复上线时，虽然恢复上线的master优先级高于当前master的优先级，但不会去抢夺控制权。</p>
+<p>这样会造成一个问题，除非当前的master网络故障或keepalived实例停止，其优先级就算降低后低于原来的master服务器，因为设置了nopreempt，也不会切换到原来的master。所以原master恢复上线之前，应该降低其优先级，并且要低于当前master的优先级，然后去掉nopreempt,而当前master添加nopreempt。</p>
+<p>如果没有设置nopreempt,当master因为网络原因短暂下线后，backup服务器接管vip,并且PostgreSQL备库升级为主库。当原来的master网络恢复，重新上线时，会重新成为master,而此时就有了两个主库，发生了分裂。</p>
+<p><strong>通知脚本</strong><br>可以在通知脚本中处理PostgeSQL备库提升，主库停止，发送通知等各种事务。</p>
+<p><strong>查看VRRP通告</strong><br>可以使用tcpdump命令监测VRRP通告,可以看到当前的master服务器为192.168.0.3</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ sudo tcpdump -vvv -n -i eth0 host <span class="number">224.0</span><span class="number">.0</span><span class="number">.18</span></span><br><span class="line">tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size <span class="number">262144</span> bytes</span><br><span class="line"><span class="number">23</span>:<span class="number">06</span>:<span class="number">49.974761</span> IP (tos <span class="number">0xc0</span>, ttl <span class="number">255</span>, id <span class="number">373</span>, offset <span class="number">0</span>, flags \[none\], proto VRRP (<span class="number">112</span>), length <span class="number">40</span>)</span><br><span class="line"> <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> &gt; <span class="number">224.0</span><span class="number">.0</span><span class="number">.18</span>: vrrp <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> &gt; <span class="number">224.0</span><span class="number">.0</span><span class="number">.18</span>: VRRPv2, Advertisement, vrid <span class="number">50</span>, prio <span class="number">98</span>, authtype simple, intvl 1s, length <span class="number">20</span>, <span class="attr">addrs</span>: <span class="number">192.168</span><span class="number">.0</span><span class="number">.200</span> auth <span class="string">&quot;1234^@^@^@^@&quot;</span></span><br><span class="line"><span class="number">23</span>:<span class="number">06</span>:<span class="number">50.975113</span> IP (tos <span class="number">0xc0</span>, ttl <span class="number">255</span>, id <span class="number">374</span>, offset <span class="number">0</span>, flags \[none\], proto VRRP (<span class="number">112</span>), length <span class="number">40</span>)</span><br><span class="line"> <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> &gt; <span class="number">224.0</span><span class="number">.0</span><span class="number">.18</span>: vrrp <span class="number">192.168</span><span class="number">.0</span><span class="number">.3</span> &gt; <span class="number">224.0</span><span class="number">.0</span><span class="number">.18</span>: VRRPv2, Advertisement, vrid <span class="number">50</span>, prio <span class="number">98</span>, authtype simple, intvl 1s, length <span class="number">20</span>, <span class="attr">addrs</span>: <span class="number">192.168</span><span class="number">.0</span><span class="number">.200</span> auth <span class="string">&quot;1234^@^@^@^@&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>如果热备组内的服务器跨越子网，则交换路由设备必须开启VRRP多播报文转发。</p>
+<p>References:<br>[1]man keepalived.conf<br>[2]<a target="_blank" rel="noopener" href="http://www.yangfannie.com/26.html">Keepalived在PostgreSQL高可用中的运用</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.csdn.net/zzban/article/details/8483902">Linux集群实现–Keepalived-1.2.7</a><br>[4]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/songyuejie/p/4561089.html">PostgreSQL+pgpooll+Keepalived双机HA方案</a><br>[5]<a target="_blank" rel="noopener" href="http://fengchj.com/?p=2156">keepalived vip漂移基本原理及选举算法</a><br>[6]<a target="_blank" rel="noopener" href="http://fossies.org/linux/keepalived/doc/NOTE_vrrp_vmac.txt">Note on using VRRP with Virtual MAC address</a><br>[7]<a target="_blank" rel="noopener" href="http://blog.jobbole.com/94675/">Keepalived 集群软件高级使用(工作原理和状态通知)</a><br>[8]<a target="_blank" rel="noopener" href="http://www.keepalived.org/">keepalived</a><br>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1169,106 +1279,6 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 
 <p>重新启动机器。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://syntaxionist.rogerhub.com/intel-centrino-wireless-n-2200-ubuntu-1mbps-workaround.html">Intel Centrino Wireless-N 2200 Ubuntu 1Mbps Workaround</a><br>[2]<a target="_blank" rel="noopener" href="http://askubuntu.com/questions/119578/how-to-fix-slow-wireless-on-machines-with-intel-wireless-cards">How to fix slow wireless on machines with Intel wireless cards?</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/25/mac-os-x-ipp-printer-bugs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/25/mac-os-x-ipp-printer-bugs/" class="post-title-link" itemprop="url">Mac OS X连接IPP打印机的那些坑</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-11-25 13:25:39" itemprop="dateCreated datePublished" datetime="2015-11-25T13:25:39+08:00">2015-11-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>Mac OS X 10.11连接linux系统CUPS使用ipp(Internet Printing Protocol)协议共享的打印机时，遇到两个大坑。</p>
-<p><strong>系统打印机配置的坑</strong></p>
-<p>使用mac系统的打印机配置来连接共享打印机<br>从System Preferences-&gt;Printers &amp; Scanners对话框添加ip打印机，选择IPP协议，address输入正确的共享打印机地址:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//printer_server_ip:631/printers/HP_LaserJet_P1008</span></span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">无论使用何种驱动，add时都会有提示:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">Unable to verify the printer on your network.</span><br><span class="line">Unable to connect to ‘printer_server_ip’ due to an error. Would you still like to create the printer?</span><br></pre></td></tr></table></figure>
-<p>如果强制添加，<strong>然而并不能真的打印</strong>。<br>事后发现mac os x 10.11系统打印机配置添加的ipp打印机访问地址是错误的，可以通过cups配置界面看到其错误的地址。</p>
-<p><strong>HP官方驱动的坑</strong></p>
-<p>一直以为官方驱动应该是最靠谱的，不过这次不行。<br>已经提前安装了HP Mac OS X drivers,500多M!</p>
-<p>改用cups来添加共享打印机。<br>mac上的cups默认是没有打开web管理界面的，首先启用web管理界面：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cupsctl WebInterface=yes</span><br></pre></td></tr></table></figure>
-<p>然后访问<a href="http://127.0.0.1:631打开cups管理界面来添加远程ipp协议共享打印机。">http://127.0.0.1:631打开cups管理界面来添加远程ipp协议共享打印机。</a></p>
-<p>Administration-&gt;Printer-&gt;Add Printer-&gt;Other Network Printers-&gt;Internet Printing Protocol(http)</p>
-<p>输入ipp打印机的访问地址：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="comment">//printer_server_ip:631/printers/HP_LaserJet_P1008</span></span><br></pre></td></tr></table></figure>
-
-<p>选择HP提供的P1008官方驱动，添加完成。</p>
-<p><strong>然而并不能打印！</strong></p>
-<p>重新修改已添加打印机配置，Printers-&gt;P1008-&gt;Modify Printer将其驱动更改为cups内置的Generic PostScript Printer</p>
-<p>打印测试页，<strong>success</strong>!</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Internet_Printing_Protocol">Internet Printing Protocol</a><br>[2]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Line_Printer_Daemon_protocol">Line Printer Daemon protocol</a><br>[3]<a target="_blank" rel="noopener" href="https://support.apple.com/en-us/HT201311">About AirPrint</a><br>[4]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/PostScript_Printer_Description">PostScript Printer Description</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/11/11/postgresql-dblink/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/11/11/postgresql-dblink/" class="post-title-link" itemprop="url">PostgreSQL dblink</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-11 08:16:00" itemprop="dateCreated datePublished" datetime="2016-11-11T08:16:00+08:00">2016-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>dblink是postgresql内置的一个扩展模块，支持从当前postgresql数据库连接到其他postgresql数据库来存取数据。<br>除dblink外，还可以使用postgres_fdw来访问外部postgresql,二者功能基本一致，但postgres_fdw更优。</p>
+<p>dblink有一系列的函数，支持连接外部postgresql,执行select,insert,update,delete等语句，以及在外部数据库中执行命令。</p>
+<p><strong>创建</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; CREATE EXTENSION dblink;</span><br></pre></td></tr></table></figure>
+<p>会创建dblink相关的函数</p>
+<p><strong>使用</strong></p>
+<p>dblink的语法：<br>[sql]<br>dblink(text connname, text sql [, bool fail_on_error]) returns setof record<br>dblink(text connstr, text sql [, bool fail_on_error]) returns setof record<br>[/sql]<br>dblink函数可以使用已有的连接，或者直接提供连接字符串来访问外部服务器</p>
+<p>下面的语句直接提供连接串来访问外部postgresql的表：<br>[sql]<br>=&gt; select id, land_using_type from dblink(‘host=192.168.0.9 dbname=pgdbname user=pguser password=passwd’,<br>‘select id, land_using_type from reg.tb_relevant_cert where cert_type=1’)<br>as t1 (id integer, land_using_type varchar(50));<br>[/sql]</p>
+<p>使用dblink访问外部表数据，必须指定alias,下面是个综合的用法，用外部postgresql数据库的表更新本地表的数据：<br>[sql]<br>=&gt; update reg.tb_relevant_cert c set land_using_type=t2.land_using_type<br>from<br>(select id, land_using_type from dblink(‘host=192.168.0.9 dbname=pgdbname user=pguser password=passwd’,<br>‘select id, land_using_type from reg.tb_relevant_cert where cert_type=1’)<br>as t1 (id integer, land_using_type varchar(50))<br>) as t2<br>where c.id=t2.id;<br>[/sql]</p>
+<p><strong>创建视图</strong></p>
+<p>每次写dblink比较麻烦，可以创建一个视图来简化此项工作:<br>[sql]<br>=&gt; CREATE VIEW view_tbl_foo AS<br>select * from dblink(‘host=192.168.0.9 dbname=pgdbname user=pguser password=passwd’,<br>‘select id, land_using_type from reg.tb_relevant_cert where cert_type=1’)<br>as t1 (id integer, land_using_type varchar(50));<br>[/sql]</p>
+<p>然后访问就比较简单了：<br>[sql]<br>=&gt; SELECT * FROM view_tbl_foo;<br>[/sql]</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/9.6/static/dblink.html">F.10. dblink</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1066,113 +1160,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove rkt --purge</span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://coreos.com/rkt/docs/latest/distributions.html">Installing rkt on popular Linux distributions</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/10/04/netcat-iperf3-measuring-bandwidth/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/10/04/netcat-iperf3-measuring-bandwidth/" class="post-title-link" itemprop="url">使用netcat、iperf3测量网络带宽</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-10-04 22:35:29" itemprop="dateCreated datePublished" datetime="2016-10-04T22:35:29+08:00">2016-10-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>netcat大名鼎鼎，功能多样。<br>netcat衍生版本众多，nmap.org提供的版本ncat是其中的佼佼者。</p>
-<p><strong>ncat带宽测量</strong></p>
-<p>机器A:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ncat -l -p <span class="number">2000</span> &gt; <span class="regexp">/dev/</span><span class="literal">null</span></span><br></pre></td></tr></table></figure>
-
-<p>机器B:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero bs=1024M count=<span class="number">1</span> ncat address_of_A <span class="number">2000</span></span><br><span class="line"><span class="number">1</span>+<span class="number">0</span> records <span class="keyword">in</span></span><br><span class="line"><span class="number">1</span>+<span class="number">0</span> records out</span><br><span class="line"><span class="number">1073741824</span> bytes transferred <span class="keyword">in</span> <span class="number">12.486022</span> secs (<span class="number">85995510</span> bytes/sec)</span><br></pre></td></tr></table></figure>
-
-<p>两台机器之间的带宽大约在82MB/s。</p>
-<p><strong>使用pv</strong></p>
-<p>可以更动态、更直观的看到两者之间的速度</p>
-<p>机器A:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ncat -l -p <span class="number">2000</span> pv &gt; <span class="regexp">/dev/</span><span class="literal">null</span></span><br></pre></td></tr></table></figure>
-
-<p>机器B:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero bs=256M pv ncat address_of_A <span class="number">2000</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>iperf3带宽评估</strong></p>
-<p>iperf/iperf3是更为专业的网络吞吐量测工具，使用也很简。<br>服务端:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ iperf3 -s</span><br><span class="line">Server listening on <span class="number">5201</span></span><br></pre></td></tr></table></figure>
-
-<p>客户端</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iperf3 -c ip_of_server</span><br></pre></td></tr></table></figure>
-
-<p>iperf3会有更细致的吞吐量报告。<br>更详细的使用参见man。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://joncraton.org/blog/46/netcat-for-windows/">Netcat for Windows</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

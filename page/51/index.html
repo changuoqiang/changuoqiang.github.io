@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/06/17/jquery-post-send-object-to-json/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/06/17/jquery-post-send-object-to-json/" class="post-title-link" itemprop="url">jQuery使用POST方法以JSON字符串方式发送普通对象</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-06-17 21:40:41" itemprop="dateCreated datePublished" datetime="2014-06-17T21:40:41+08:00">2014-06-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>调用$.ajax函数时，即使设置contentType为’application/json; charset=utf-8’,如果给data属性传递的是一个的对象，这时候jQuery也不会将其自动转换为JSON字符串。jQuery默认会将给data赋予的对象(除字符串之外的任何东西)处理为适用于”application/x-www-form-urlencoded”的请求字符串。</p>
+<p>有一个选项processData来控制默认的自动转换，设置其为false,jQuery就不会自动转换对象。</p>
+<p>所以如果要向服务器传送JSON字符串就只能自力更生了。如果自己能完全控制.ajax请求就简单了，只要使用JSON.stringify将对象转换为JSON字符串再传递给data就好了。</p>
+<p>如果使用第三方库又不想直接修改源代码，可以通过$.ajaxSetup来动态修改传递的数据，看代码：</p>
+<p>[javascript]<br> $.ajaxSetup({<br> processData:false,<br> beforeSend: function(jqXHR, settings){<br> if((settings.contentType.indexOf(‘application/json’) != -1)<br> &amp;&amp; (typeof settings.data != ‘string’)){<br> settings.data = JSON.stringify(settings.data);<br> }<br> }<br> });<br>[/javascript]<br>不过这是修改jQuery ajax请求的全局配置一定要格外小心，比如processData设置为false后，其他ajax请求也不会自动转换请求数据了。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1007,103 +1093,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>Shadow DOM越来越近了,Chrome 35 已经去掉了Shadow DOM API的供应商前缀。下一个支持Shadow DOM的就是firefox 30了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/05/20/dom-property-element-attribute/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/05/20/dom-property-element-attribute/" class="post-title-link" itemprop="url">DOM对象属性(property)与HTML标签特性(attribute)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-05-20 21:10:07" itemprop="dateCreated datePublished" datetime="2014-05-20T21:10:07+08:00">2014-05-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>HTML中property与attribute是极易混淆的两个概念。大多数时候这两个单词都翻译为“属性”,为了区分二者，一般将property翻译为”属性”，attribute翻译为”特性”。</p>
-<p>每一个HTML标签(tag)都对应一个DOM接口HTMLXxxElement,比如Span标签对应的是HTMLSpanElement。这些标签的DOM接口都继承自HTMLElement接口，而HTMLElement又继承自Element。我们知道所有的标签都是一个元素结点,因此Element接口又继承自Node接口。其实HTML文档树中的所有东西都是结点,只不过有不同的结点类型而已。</p>
-<p>property就是DOM对象的属性,就像普通的javascript对象的属性一样一样的,因为DOM对象就是一个地道的javascript对象，也有自己的原型链。<br>而attribute则是HTML标签的特性,比如</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;div1&quot;</span> title=<span class="string">&quot;title1&quot;</span>&gt;test&lt;div&gt;</span><br></pre></td></tr></table></figure>
-<p>这里id和title是HTML标签div的特性,虽然对应的DOM对象HTMLDivElement也有这两个属性，但它们却是完全不一样的东西。有些特性与属性是同步的。</p>
-<p>HTML标签的attribute以<a href="https://openwares.net/js/javascript_array_like_object.html">类数组</a>的形式存储在对应DOM对象的属性attributes中,attributes属性的类型为NamedNodeMap对象。<br>DOM对象提供了方法setAttribute，getAttribute和removeAttribute来操纵HTML标签的特性。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DOMString getAttribute(<span class="keyword">in</span> DOMString name);</span><br><span class="line"><span class="keyword">void</span> setAttribute(<span class="keyword">in</span> DOMString name, <span class="keyword">in</span> DOMString value) raises(DOMException);</span><br></pre></td></tr></table></figure>
-
-<p>HTML标签attribute的名字和值都必须为字符串类型，而DOM对象的property没有此限制，可以是任何类型。</p>
-<p>有些HTML标签的attribute有对应的DOM对象property,但它们的取值却不一定是相同的。一般来说相对应的attribute与property其名字是一样的，但是class特性有所不同，因为class在javascript中为关键字，所以其所对应的property名字为className。</p>
-<p>有些简单的特性,比如id,两者的取值是一样的。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> id1=elem.id;</span><br><span class="line"><span class="keyword">var</span> id2=elem.getAttribute(<span class="string">&#x27;id&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>但对于input的value,使用getAttribute获取的永远是写HTML标签时指定的那个值,而value属性则获取到的是input当前输入的值。<br>而另一些特性比如checked,只要checked特性存在，无论其值是什么，DOM对象的checked属性的值都是true。这里checked属性已经不是字符串而是布尔类型了。</p>
-<p>还有一些特性比如style和onclick,其对应的DOM属性完全是返回一个对象了,比如elem.style属性就返回一个CSSStyleDeclaration对象。</p>
-<p>HTML自定义attribute没有对应的DOM对象property。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://stylechen.com/attribute-property.html">attribute和property的区别</a><br>[2]<a target="_blank" rel="noopener" href="http://www.liyao.name/2013/09/differences-between-property-and-attribute-in-javascript.html">JavaScript中的property和attribute的区别</a><br>[3]<a target="_blank" rel="noopener" href="http://www.w3help.org/zh-cn/causes/SD9006">SD9006: IE 混淆了 DOM 对象属性（property）及 HTML 标签属性（attribute），造成了对 setAttribute、getAttribute 的不正确实现</a><br>[4]<a target="_blank" rel="noopener" href="http://www.w3schools.com/jsref/dom_obj_all.asp">The HTML DOM Element Object</a><br>[5]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/wangfupeng1988/p/3631853.html">DOM元素的特性（Attribute）和属性（Property）</a></p>
-<p>===<br>[erq]</p>
 
       
     </div>

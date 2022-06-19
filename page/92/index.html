@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,96 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/05/20/oracle-9206-database-cold-backup-restore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/05/20/oracle-9206-database-cold-backup-restore/" class="post-title-link" itemprop="url">2003 R2平台oracle 9206数据库冷备份恢复的路径依赖问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-05-20 15:46:37" itemprop="dateCreated datePublished" datetime="2010-05-20T15:46:37+08:00">2010-05-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>windows 2003 R2做oracle数据库冷备份恢复时遇到路径依赖问题，原库oracle安装在F分区，而恢复到的oracle安装在E分区。两边数据库的版本是完全一致的，除了安装路径不同,sid实例名都为orcl。停下服务器后，把原库的控制文件、数据文件、联机日志文件(online redo files)、初始化参数文件(spfile)、密码文件拷贝到了新库安装目录。如果数据库运行于归档模式,还应单独备份归档日志文件。实际上为了省事，把oracle的安装目录整个同步了一遍。拷贝完后oracle服务无法启动，无法启动就对了。这些关键文件的路径都变了，库肯定是打不开了。怎么办？</p>
+<p>两个方法，一是重新安装oracle使其路径与原库一致,二是修改关键文件的路径。第一种没啥意思，就第二种吧。</p>
+<p>因为机器名字不同了，所以要打开\oracle\ora92\network\admin下面的几个文件tnsnames.ora、snmp_ro.ora和listener.ora把里面的机器名改成正确的值,snmp_ro.ora和listener.ora文件里面的文件路径改为正确的值。</p>
+<p>参数文件里面记录了控制文件的路径，要把这些路径更改过来。oracle 9i默认是使用spfile的，而spfile是二进制的，最好不要直接修改，导出pfile，修改控制文件路径后再导回去就ok了</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2010/05/20/oracle-9206-database-cold-backup-restore/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -992,86 +1082,6 @@
 <p>Section “Monitor”<br>Option “DPMS” “false”<br>EndSection</p>
 <p>注意，BlankTime特性是不受DPMS特性控制的。</p>
 <p>这四个参数的详细信息参见<a target="_blank" rel="noopener" href="http://www.x.org/archive/X11R6.8.0/doc/xorg.conf.5.html">xorg配置文件手册</a>。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/01/28/ubuntu-disable-recent-documents/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/01/28/ubuntu-disable-recent-documents/" class="post-title-link" itemprop="url">ubuntu 9.10禁止记录最近使用文档(disable recent documents)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-01-28 22:55:45" itemprop="dateCreated datePublished" datetime="2010-01-28T22:55:45+08:00">2010-01-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在ubuntu 9.10下修改<del>/.recently-used和</del>/..recently-used.xbel文件的属性已经无法阻止gnome记录最近使用文档.正确的做法是在主目录建立.gtk-2.0文件<br> touch ~/.gtk-2.0<br>然后输入<br> gtk-recent-files-max-age=0<br>如果想限制记录最经文档的书录输入<br> gtk-recent-files-limit=3 #比如只记录3个</p>
 
       
     </div>

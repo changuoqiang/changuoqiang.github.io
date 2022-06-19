@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/11/compile-qemu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/11/compile-qemu/" class="post-title-link" itemprop="url">编译qemu</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-11 20:05:08" itemprop="dateCreated datePublished" datetime="2019-06-11T20:05:08+08:00">2019-06-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>安装编译环境和必要的附加组件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install dkms build-essential pkg-config libglib2<span class="number">.0</span>-dev libpixman-<span class="number">1</span>-dev libusb-dev libusbredirparser-dev libfdt-dev libbz2-dev flex bison</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载解压源代码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//download.qemu.org/qemu-4.0.0.tar.xz</span></span><br><span class="line">$ tar xvJf qemu-<span class="number">4.0</span><span class="number">.0</span>.tar.xz</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置并编译</strong></p>
+<p>只编译x86_64架构</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd qemu-<span class="number">4.0</span><span class="number">.0</span></span><br><span class="line">$ mkdir build</span><br><span class="line">$ cd build</span><br><span class="line">$ ../configure --target-list=x86_64-softmmu --enable-debug</span><br><span class="line">$ make -j8</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>目标程序安装在/usr/local/</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1200,103 +1294,6 @@
 
 <p>可以看到出现错误的内存位于MC6,csrow2和csrow3，也就是问题出现在第四个(CPU的)内存控制器的0通道DIMM0内存这里。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://fibrevillage.com/sysadmin/240-how-to-identify-defective-dimm-from-edac-error-on-linux-2">How to identify defective DIMM from EDAC error on Linux</a><br>[2]<a target="_blank" rel="noopener" href="http://lzz5235.github.io/2015/04/21/memory.html">内存条物理结构分析</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/05/31/virtualbox-headless-mode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/31/virtualbox-headless-mode/" class="post-title-link" itemprop="url">virtualbox headless模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-05-31 22:40:24" itemprop="dateCreated datePublished" datetime="2019-05-31T22:40:24+08:00">2019-05-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>以下示例中只有一台客户机，名称为”buster”，术语虚拟机等同于客户机</p>
-<p>虚拟机列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage list vms</span><br><span class="line"><span class="string">&quot;buster&quot;</span> &#123;6c18ec7b-<span class="number">5730</span>-4e8e-a7d1-768dd0601be1&#125;</span><br></pre></td></tr></table></figure>
-
-<p>无头模式启动虚拟机，自动进入后台模式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage startvm buster --type headless</span><br><span class="line">Waiting <span class="keyword">for</span> VM <span class="string">&quot;buster&quot;</span> to power on...</span><br><span class="line">VM <span class="string">&quot;buster&quot;</span> has been successfully started.</span><br></pre></td></tr></table></figure>
-
-<p>无头模式启动虚拟机，前台模式</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxHeadless -s buster</span><br><span class="line">Oracle VM VirtualBox Headless Interface <span class="number">6.0</span><span class="number">.8</span></span><br><span class="line">(C) <span class="number">2008</span>-<span class="number">2019</span> Oracle Corporation</span><br><span class="line">All rights reserved.</span><br></pre></td></tr></table></figure>
-
-<p>正在运行的客户机列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage list runningvms</span><br><span class="line"><span class="string">&quot;buster&quot;</span> &#123;6c18ec7b-<span class="number">5730</span>-4e8e-a7d1-768dd0601be1&#125;</span><br></pre></td></tr></table></figure>
-
-<p>关闭客户机电源</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ VBoxManage controlvm buster poweroff</span><br><span class="line"><span class="number">0</span>%..<span class="number">.10</span>%..<span class="number">.20</span>%..<span class="number">.30</span>%..<span class="number">.40</span>%..<span class="number">.50</span>%..<span class="number">.60</span>%..<span class="number">.70</span>%..<span class="number">.80</span>%..<span class="number">.90</span>%..<span class="number">.100</span>%</span><br></pre></td></tr></table></figure>
-
-<p>使用VirtualBox图形界面也可以headless模式启动客户机，选择Start-&gt;Headless Start即可。</p>
 
       
     </div>

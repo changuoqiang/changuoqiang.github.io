@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">983</span>
+          <span class="site-state-item-count">984</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,113 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/10/04/netcat-iperf3-measuring-bandwidth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="changuoqiang">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/10/04/netcat-iperf3-measuring-bandwidth/" class="post-title-link" itemprop="url">使用netcat、iperf3测量网络带宽</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-10-04 22:35:29" itemprop="dateCreated datePublished" datetime="2016-10-04T22:35:29+08:00">2016-10-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>netcat大名鼎鼎，功能多样。<br>netcat衍生版本众多，nmap.org提供的版本ncat是其中的佼佼者。</p>
+<p><strong>ncat带宽测量</strong></p>
+<p>机器A:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ncat -l -p <span class="number">2000</span> &gt; <span class="regexp">/dev/</span><span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<p>机器B:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero bs=1024M count=<span class="number">1</span> ncat address_of_A <span class="number">2000</span></span><br><span class="line"><span class="number">1</span>+<span class="number">0</span> records <span class="keyword">in</span></span><br><span class="line"><span class="number">1</span>+<span class="number">0</span> records out</span><br><span class="line"><span class="number">1073741824</span> bytes transferred <span class="keyword">in</span> <span class="number">12.486022</span> secs (<span class="number">85995510</span> bytes/sec)</span><br></pre></td></tr></table></figure>
+
+<p>两台机器之间的带宽大约在82MB/s。</p>
+<p><strong>使用pv</strong></p>
+<p>可以更动态、更直观的看到两者之间的速度</p>
+<p>机器A:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ncat -l -p <span class="number">2000</span> pv &gt; <span class="regexp">/dev/</span><span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<p>机器B:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero bs=256M pv ncat address_of_A <span class="number">2000</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>iperf3带宽评估</strong></p>
+<p>iperf/iperf3是更为专业的网络吞吐量测工具，使用也很简。<br>服务端:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ iperf3 -s</span><br><span class="line">Server listening on <span class="number">5201</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ iperf3 -c ip_of_server</span><br></pre></td></tr></table></figure>
+
+<p>iperf3会有更细致的吞吐量报告。<br>更详细的使用参见man。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://joncraton.org/blog/46/netcat-for-windows/">Netcat for Windows</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1057,108 +1164,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>debian安装字体很简单，将字体丢到~/.fonts目录即可，要立即生效可以执行一下fc-cache命令。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/31/debian-nfs-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="changuoqiang">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/08/31/debian-nfs-setup/" class="post-title-link" itemprop="url">debian NFS服务配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-08-31 16:45:30" itemprop="dateCreated datePublished" datetime="2016-08-31T16:45:30+08:00">2016-08-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>服务器安装配置</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install nfs-kernel-server</span><br></pre></td></tr></table></figure>
-
-<p>编辑/etc/exports文件，添加：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/srv/homes <span class="number">10.100</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span>(rw) <span class="number">192.168</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span>(rw)</span><br></pre></td></tr></table></figure>
-
-<p><strong>客户端安装配置</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install nfs-common</span><br></pre></td></tr></table></figure>
-
-<p>客户端查看服务器资源：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># showmount -e 10.100.0.30</span><br><span class="line">Export list <span class="keyword">for</span> <span class="number">10.100</span><span class="number">.0</span><span class="number">.30</span>:</span><br><span class="line">/srv/homes <span class="number">10.100</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">24</span></span><br></pre></td></tr></table></figure>
-
-<p>如果出现错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpc mount <span class="keyword">export</span>: RPC: Authentication error; why = Failed (unspecified error)</span><br></pre></td></tr></table></figure>
-<p>可以查看nfs服务器/etc/hosts.allow和/etc/hosts.deny的配置，是否允许客户机访问nfs资源，可以简单粗暴的允许所有主机访问，在/etc/hosts.allow最末尾添加ALL:ALL</p>
-<p>客户端挂载服务器共享资源：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount 10.100.0.30:/srv/homes /mnt/share</span><br></pre></td></tr></table></figure>
-
-<p>自动挂载编辑/etc/fstab：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># nfs</span><br><span class="line"><span class="number">10.100</span><span class="number">.0</span><span class="number">.30</span>:<span class="regexp">/svr/</span>homes /mnt/share nfs defaults <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>
