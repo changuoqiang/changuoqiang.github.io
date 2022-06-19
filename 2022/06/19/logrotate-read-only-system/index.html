@@ -23,15 +23,15 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="logrotate手动以root执行成功，但是自动运行失败。   systemd日志提示: 1logrotate: error: error renaming  &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.7.gz to &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;s">
+<meta name="description" content="logrotate手动以root执行成功，但是自动运行失败。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="logrotate只读文件系统问题">
 <meta property="og:url" content="https://openwares.net/2022/06/19/logrotate-read-only-system/index.html">
 <meta property="og:site_name" content="openwares.net">
-<meta property="og:description" content="logrotate手动以root执行成功，但是自动运行失败。   systemd日志提示: 1logrotate: error: error renaming  &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.7.gz to &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;s">
+<meta property="og:description" content="logrotate手动以root执行成功，但是自动运行失败。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-06-19T02:51:52.000Z">
-<meta property="article:modified_time" content="2022-06-19T03:07:58.354Z">
+<meta property="article:modified_time" content="2022-06-19T03:15:42.870Z">
 <meta property="article:author" content="changuoqiang">
 <meta name="twitter:card" content="summary">
 
@@ -296,7 +296,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-06-19 10:51:52 / Modified: 11:07:58" itemprop="dateCreated datePublished" datetime="2022-06-19T10:51:52+08:00">2022-06-19</time>
+      <time title="Created: 2022-06-19 10:51:52 / Modified: 11:15:42" itemprop="dateCreated datePublished" datetime="2022-06-19T10:51:52+08:00">2022-06-19</time>
     </span>
 
   
@@ -310,7 +310,7 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>logrotate手动以root执行成功，但是自动运行失败。</p>
-<!--readmore-->
+<a id="more"></a>
 
 <p>systemd日志提示:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">logrotate: error: error renaming  &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.7.gz to &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.8.gz: Read-only file system</span><br></pre></td></tr></table></figure>
@@ -318,7 +318,7 @@
 <p>因为systemd有沙盒sanbox机制，可以限制service unit对文件系统的访问</p>
 <p>/lib/systemd/system/logrotate.service</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ProtectSystem&#x3D;full</span><br></pre></td></tr></table></figure>
-<p>这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc/文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:</p>
+<p>这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc 文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ProtectSystem&#x3D;full</span><br><span class="line">ReadWritePaths&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs</span><br></pre></td></tr></table></figure>
 
 <p>然后</p>

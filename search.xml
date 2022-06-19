@@ -24924,7 +24924,7 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
     <title>logrotate只读文件系统问题</title>
     <url>/2022/06/19/logrotate-read-only-system/</url>
     <content><![CDATA[<p>logrotate手动以root执行成功，但是自动运行失败。</p>
-<!--readmore-->
+<a id="more"></a>
 
 <p>systemd日志提示:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">logrotate: error: error renaming  &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.7.gz to &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs&#x2F;site.access.log.8.gz: Read-only file system</span><br></pre></td></tr></table></figure>
@@ -24932,7 +24932,7 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
 <p>因为systemd有沙盒sanbox机制，可以限制service unit对文件系统的访问</p>
 <p>/lib/systemd/system/logrotate.service</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ProtectSystem&#x3D;full</span><br></pre></td></tr></table></figure>
-<p>这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc/文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:</p>
+<p>这里启用了文件系统保护，当设置为full时，/usr,/boot,/efi,/etc 文件系统是只读的，所以出现了上面的问题。可以添加一个参数来豁免特定的文件系统，让unit对其可以读写，这里unit文件添加以下行:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[Service]</span><br><span class="line">ProtectSystem&#x3D;full</span><br><span class="line">ReadWritePaths&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;logs</span><br></pre></td></tr></table></figure>
 
 <p>然后</p>
