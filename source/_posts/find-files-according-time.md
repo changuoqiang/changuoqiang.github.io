@@ -21,7 +21,8 @@ $ touch -t 201205280000 reference_file
 
 -t参数的格式为
 -t stamp
- use \[\[CC\]YY\]MMDDhhmm\[.ss\] instead of current time
+
+``` use [[CC]YY]MMDDhhmm[.ss] instead of current time```
 
 **查找比参照文件新的所有文件**
 ```js
@@ -33,12 +34,13 @@ $ find . -newer reference_file
 ```js
 $ find . ! -newer reference_file
 ```
-查找结果包含reference_file
+查找结果**包含reference_file**
 
 **查找比参照文件旧的所有文件并删除**
-```js
-$ find . ! -newer reference_file -exec rm {} \\;
-$ find . -maxdepth 1 ! -newer reference_file -a ! -name 'tmp' -exec mv {} tmp/{} \\; /*查找到的文件(不包含tmp目录)移动到当前目录下的tmp目录*/
+```bash
+$ find . ! -newer reference_file -exec rm {} \;
+$ find . -maxdepth 1 -type f ! -newer reference_file -exec rm {} \; //当前目录下文件类型为普通文件比参考文件旧的文件，只查找本级目录，不查找子目录，并删除
+$ find . -maxdepth 1 ! -newer reference_file -a ! -name 'tmp' -exec mv {} tmp/{} \; /*查找到的文件(不包含tmp目录)移动到当前目录下的tmp目录*/
 ```
 查找结果包含reference_file
 
@@ -47,6 +49,3 @@ $ find . -maxdepth 1 ! -newer reference_file -a ! -name 'tmp' -exec mv {} tmp/{}
 $ find . -newer reference_file_older -a ! -newer reference_file_newer
 ```
 查找比reference_file_older新但比reference_file_newer旧的所有文件,查找结果包含reference_file_newer,但不包含reference_file_older
-
-**\===
-\[erq\]**
