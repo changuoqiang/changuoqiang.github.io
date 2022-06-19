@@ -7665,20 +7665,20 @@ $_SESSION\["submitid"\] += 1;
 <p>所以找到一个合适的参照文件就可以按时间或时间段来查找文件,如果没有合适的参照文件,可以用touch来新建一个。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ touch -t <span class="number">201205280000</span> reference_file</span><br></pre></td></tr></table></figure>
 
-<p>-t参数的格式为<br>-t stamp<br> use [[CC]YY]MMDDhhmm[.ss] instead of current time</p>
+<p>-t参数的格式为<br>-t stamp</p>
+<p><code> use [[CC]YY]MMDDhhmm[.ss] instead of current time</code></p>
 <p><strong>查找比参照文件新的所有文件</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . -newer reference_file</span><br></pre></td></tr></table></figure>
 <p>查找结果为比reference_file的mtime更新的文件,但不包含reference_file</p>
 <p><strong>查找比参照文件旧的所有文件</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . ! -newer reference_file</span><br></pre></td></tr></table></figure>
-<p>查找结果包含reference_file</p>
+<p>查找结果<strong>包含reference_file</strong></p>
 <p><strong>查找比参照文件旧的所有文件并删除</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . ! -newer reference_file -exec rm &#123;&#125; \\;</span><br><span class="line">$ find . -maxdepth <span class="number">1</span> ! -newer reference_file -a ! -name <span class="string">&#x27;tmp&#x27;</span> -exec mv &#123;&#125; tmp/&#123;&#125; \\; <span class="comment">/*查找到的文件(不包含tmp目录)移动到当前目录下的tmp目录*/</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ find . ! -newer reference_file -<span class="built_in">exec</span> rm &#123;&#125; \;</span><br><span class="line">$ find . -maxdepth 1 -<span class="built_in">type</span> f ! -newer reference_file -<span class="built_in">exec</span> rm &#123;&#125; \; //当前目录下文件类型为普通文件比参考文件旧的文件，只查找本级目录，不查找子目录，并删除</span><br><span class="line">$ find . -maxdepth 1 ! -newer reference_file -a ! -name <span class="string">&#x27;tmp&#x27;</span> -<span class="built_in">exec</span> mv &#123;&#125; tmp/&#123;&#125; \; /*查找到的文件(不包含tmp目录)移动到当前目录下的tmp目录*/</span><br></pre></td></tr></table></figure>
 <p>查找结果包含reference_file</p>
 <p><strong>查找指定时间段内的文件</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . -newer reference_file_older -a ! -newer reference_file_newer</span><br></pre></td></tr></table></figure>
 <p>查找比reference_file_older新但比reference_file_newer旧的所有文件,查找结果包含reference_file_newer,但不包含reference_file_older</p>
-<p><strong>===<br>[erq]</strong></p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
