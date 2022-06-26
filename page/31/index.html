@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,102 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/10/29/gulp-cleanup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/10/29/gulp-cleanup/" class="post-title-link" itemprop="url">gulp 清理文件/文件夹(cleanup)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-10-29 13:56:08" itemprop="dateCreated datePublished" datetime="2015-10-29T13:56:08+08:00">2015-10-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>删除文件或文件夹时，并不会访问文件的内容，因此没有理由非要使用gulp插件处理此事，因为gulp插件主要是用来处理文件流的。</p>
+<p>gulp-clean和gulp-rimraf都已经deprecated,使用del和vinyl-paths来做此项工作。</p>
+<p><strong>直接删除文件</strong></p>
+<p>安装del</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save-dev del</span><br></pre></td></tr></table></figure>
+
+<p>定义clean任务:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> del(\[<span class="string">&#x27;path1&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;path2&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;!path3&#x27;</span></span><br><span class="line"> \]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:mobile&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
+
+<p>可以为del传递单个路径，也可以传递一个路径数组，支持globbing。</p>
+<p><strong>从pipeline流中删除文件</strong></p>
+<p>如果想在流中处理之后删除某些文件，可以使用vinyl-paths来获取流中的文件路径，然后传递给del</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> stripDebug = <span class="built_in">require</span>(<span class="string">&#x27;gulp-strip-debug&#x27;</span>); <span class="comment">// only as an example</span></span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> vinylPaths = <span class="built_in">require</span>(<span class="string">&#x27;vinyl-paths&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean:tmp&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(<span class="string">&#x27;tmp/*&#x27;</span>)</span><br><span class="line"> .pipe(vinylPaths(del))</span><br><span class="line"> .pipe(stripDebug())</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:tmp&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md">Delete files and folders</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/robrich/gulp-rimraf">gulp-rimraf</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/peter-vilja/gulp-clean">gulp-clean</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1120,117 +1216,6 @@ if (!document.all) {
 
 <p>随便吧。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/">Predictable Network Interface Names</a><br>[2]<a target="_blank" rel="noopener" href="https://lists.archlinux.org/pipermail/arch-dev-public/2013-January/024231.html">network interface naming with systemd 197</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/10/08/wireless-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/10/08/wireless-config/" class="post-title-link" itemprop="url">终端下无线网络配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-10-08 21:13:23" itemprop="dateCreated datePublished" datetime="2015-10-08T21:13:23+08:00">2015-10-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<ul>
-<li><p>查看设备名</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># iwconfig</span><br><span class="line"># iw dev</span><br><span class="line"># ip link</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启动接口</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ifconfig wlan0 up</span><br><span class="line"># ip link set wlan0 up</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>关闭接口</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ifconfig wlan0 down</span><br><span class="line"># ip link set wlan0 down</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>扫描热点</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iwlist wlan0 scan</span><br><span class="line"># iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>连接到WPA/WPA2加密热点</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># wpa_supplicant -i interface -c &lt;(wpa_passphrase your_SSID your_key) -B</span><br><span class="line">-B参数使wpa_supplicant背景运行</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>动态获取IP地址</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># dhclient wlan0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置静态ip地址</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ip addr add 192.168.0.2&#x2F;24 dev wlan0</span><br><span class="line"># ip route add default via 192.168.0.1 </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看接口状态</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># iw dev wlan0 link</span><br><span class="line"># iwconfig wlan0</span><br><span class="line"># ifconfig wlan0</span><br></pre></td></tr></table></figure>
-
-
-</li>
-</ul>
-<p>References:</p>
-<p>[1]: <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Wireless_network_configuration_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Wireless network configuration</a></p>
 <p><strong>===<br>[erq]</strong></p>
 
       

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,87 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/06/14/awstats-utf8-qqwry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/06/14/awstats-utf8-qqwry/" class="post-title-link" itemprop="url">awstats:utf8编码页面使用纯真IP数据库显示地理位置问题的解决办法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-06-14 18:38:55" itemprop="dateCreated datePublished" datetime="2009-06-14T18:38:55+08:00">2009-06-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>utf8是目前最好的多字节编码方案，支持世界上的绝多大多数语言，也是我最喜欢的字符集。debian lenny 上的awstats安装完毕后，默认输出iso-8859-1字符集，对中文支持不友好。打开/usr/lib/cgi-bin/awstats.pl<br>，定位到大约第80、81行将$PageCode变量的内容更改为’UTF-8’,这样awstats就可以吐出utf8编码格式的页面了。修改成utf8字符集还有一个好处，不用加载decodeutfkeys插件就可以正确的显示来自google的中文搜索关键字了。至于百度让它自生自灭去吧！</p>
+<p>awstats通过插件qqhostinfo插件和qqwry.pl库使用纯真IP数据库可以显示来访者的地理位置，是一个不错的解决方案。具体的使用方法网上转载很多，可以google之。纯真IP数据库使用的是gbk/gb2312/gb18030系列编码，而我的awstats使用utf8编码，所以显示出来的物理地址全部是乱码。解决方法也很简单，打开qqwry.pl，在文件前面加上一句”use Encode;”,然后找到”return $ipaddr;”这一行，在其前面加上一句”$ipaddr=decode(“gbk”,$ipaddr);” 就ok了，因为perl 5内部使用的就是utf8编码，所以就不用再encode成utf8了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1023,93 +1104,6 @@
 <p>编译带ICU选项的regex还会遇到一点儿小问题。boost.regex期望的icui18n.lib和icudata.lib与编译后的ICU库的名字并不相同，简单修改一下就可以了,如下：<br>libs\icu\lib\icuin.lib -&gt; icui18n.lib<br>libs\icu\lib\icudt.lib -&gt; icudata.lib</p>
 <p>测试了boost 1.39官方文档的regex测试程序，静态链接，一切OK。</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/05/23/bash-regex-ip-port/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/05/23/bash-regex-ip-port/" class="post-title-link" itemprop="url">BASH脚本中使用正则表达式检查IP地址和端口号</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-05-23 20:58:05" itemprop="dateCreated datePublished" datetime="2009-05-23T20:58:05+08:00">2009-05-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>新版本bash(可能从3.0以后)内置了运算符 =~ 来支持正则表达式匹配。请注意此运算符只能用在[[…]]表达式中，而不能用在[…] 中。bash内置支持的好处在于使用方便和效率提升，不需要fork一个process即可以进行正则表达式匹配。但是似乎bash对正则表达式的支持不很完善，比如用 转义符\d无法匹配单个数字，必须用 [0-9]来匹配才行，比较罗嗦。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2009/05/23/bash-regex-ip-port/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 

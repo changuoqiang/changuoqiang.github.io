@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,140 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/12/dataguard-archive-gap-handle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/12/dataguard-archive-gap-handle/" class="post-title-link" itemprop="url">dataguard archive gap 日志间隙处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-12 10:23:12" itemprop="dateCreated datePublished" datetime="2016-05-12T10:23:12+08:00">2016-05-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为网络故障或资源紧张，会使standby出现日志同步间隙(archive gap)。虽然设置好了FAL_CLIENT和FAL_SERVER参数，有时候仍然无法自动解决日志间隙问题。</p>
+<p>比如由于CONTROL_FILE_RECORD_KEEP_TIME设置导致，较旧的主库归档日志记录被循环覆盖，standby无法自动获取相应的日志文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Fetching gap sequence <span class="keyword">in</span> thread <span class="number">1</span>, gap sequence <span class="number">19767</span>-<span class="number">19866</span></span><br><span class="line">Thu May <span class="number">12</span> <span class="number">09</span>:<span class="number">45</span>:<span class="number">47</span> <span class="number">2016</span></span><br><span class="line">FAL\[client\]: Failed to request gap sequence </span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">19767</span>-<span class="number">19866</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br><span class="line">FAL\[client\]: All defined FAL servers have been attempted.</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">Check that the CONTROL_FILE_RECORD_KEEP_TIME initialization</span><br><span class="line">parameter is defined to a value that is sufficiently large</span><br><span class="line">enough to maintain adequate log <span class="keyword">switch</span> information to resolve</span><br><span class="line">archivelog gaps.</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>如果standby缺少的归档日志尚未删除，可以拷贝缺少的日志到备库，然后在备库上注册，备库会apply这些归档日志。<br>如果归档日志已经被删除，则需要从主库做增量备份，然后在备库进行恢复来修复日志间隙。</p>
+<p><strong>手工拷贝归档日志</strong></p>
+<p>首先查看日志间隙:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select * <span class="keyword">from</span> v$archive_gap;</span><br><span class="line">THREAD# LOW_SEQUENCE# HIGH_SEQUENCE#</span><br><span class="line">-------- ---------------- ----------------------</span><br><span class="line"><span class="number">1</span> <span class="number">19767</span> <span class="number">19866</span></span><br></pre></td></tr></table></figure>
+
+<p>将对应的归档日志拷贝到备库端</p>
+<p>最后在备库端注册这些归档日志：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter database register physical logfile <span class="string">&#x27;\\path\\to\\archive_log&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>备库会立即应用这些归档日志。如果日志数量过多,也可以使用以下语句来自动恢复数据库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE;</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建备库导致的日志不同步问题</strong></p>
+<p>最近遇到的一个案例是这样的,rman dupicate创建完备库后,因为没有使用dorecovery恢复增量备份,主库上的部分归档日志又被清除掉了,导致主备库无法进行同步,备库有类似如下错误提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Media Recovery Waiting <span class="keyword">for</span> thread <span class="number">1</span> sequence <span class="number">23943</span></span><br><span class="line">Fetching gap sequence <span class="keyword">in</span> thread <span class="number">1</span>, gap sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line">Sun Jul <span class="number">24</span> <span class="number">13</span>:<span class="number">02</span>:<span class="number">27</span> <span class="number">2016</span></span><br><span class="line">FAL\[client\]: Failed to request gap sequence </span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br><span class="line">FAL\[client\]: All defined FAL servers have been attempted.</span><br><span class="line">-------------------------------------------------------------</span><br><span class="line">Check that the CONTROL_FILE_RECORD_KEEP_TIME initialization</span><br><span class="line">parameter is defined to a value that is sufficiently large</span><br><span class="line">enough to maintain adequate log <span class="keyword">switch</span> information to resolve</span><br><span class="line">archivelog gaps.</span><br><span class="line">-------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>主库有类似如下错误提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FAL Redo Shipping Client Established Network Login</span><br><span class="line">Failed to queue the whole gap</span><br><span class="line"> GAP - thread <span class="number">1</span> sequence <span class="number">23943</span>-<span class="number">24042</span></span><br><span class="line"> DBID <span class="number">1276927241</span> branch <span class="number">874659493</span></span><br></pre></td></tr></table></figure>
+
+<p>此时备库查询v$archive_gap表是没有任何记录的,幸好还有一个备库有完整的归档日志,将相应的归档日志完整拷贝到新建的物理备库上,然后执行以下语句自动恢复数据库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE;</span><br></pre></td></tr></table></figure>
+
+<p>所有可用日志全部恢复完毕后,会有如下提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ALTER DATABASE RECOVER AUTOMATIC STANDBY DATABASE</span><br><span class="line">*</span><br><span class="line">ERROR at line <span class="number">1</span>:</span><br><span class="line">ORA-<span class="number">00279</span>: change <span class="number">7255663631</span> generated at <span class="number">07</span>/<span class="number">25</span>/<span class="number">2016</span> <span class="number">08</span>:<span class="number">51</span>:<span class="number">20</span> needed <span class="keyword">for</span> thread <span class="number">1</span></span><br><span class="line">ORA-<span class="number">00289</span>: suggestion : D:\\ARCHIVED_LOG\\ARC24380_0874659493<span class="number">.001</span></span><br><span class="line">ORA-00280: change 7255663631 for thread 1 is in sequence #24380</span><br><span class="line">ORA-<span class="number">00278</span>: log file <span class="string">&#x27;D:\\ARCHIVED_LOG\\ARC24380_0874659493.001&#x27;</span> no longer needed <span class="keyword">for</span> <span class="built_in">this</span> recovery</span><br><span class="line">ORA-<span class="number">00308</span>: cannot open archived log <span class="string">&#x27;D:\\ARCHIVED_LOG\\ARC24380_0874659493.001&#x27;</span></span><br><span class="line">ORA-<span class="number">27041</span>: unable to open file</span><br><span class="line">OSD-<span class="number">04002</span>: unable to open file</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">2</span>) 系统找不到指定的文件。</span><br></pre></td></tr></table></figure>
+
+<p>这是因为已经没有日志可用于恢复了,此时重新打开实时日志应用就可以开始自动同步了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database recover managed standby database disconnect <span class="keyword">from</span> session;</span><br></pre></td></tr></table></figure>
+
+<p>如果归档日志已经找不到了,则可以采用以下增量备份方式修复备库。</p>
+<p><strong>增量备份修复备库</strong></p>
+<ol>
+<li> 查找恢复点SCN<br>备库端：<br>首先查看日志间隙:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select * <span class="keyword">from</span> v$archive_gap;</span><br><span class="line">THREAD# LOW_SEQUENCE# HIGH_SEQUENCE#</span><br><span class="line">-------- ---------------- ----------------------</span><br><span class="line"><span class="number">1</span> <span class="number">19767</span> <span class="number">19766</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>主库端：<br>然后主库上查找日志间隙中低端日志序号的上一个日志的first_change#</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select SEQUENCE#, FIRST_CHANGE# from v$archived_log where SEQUENCE#=19766;</span><br><span class="line">SEQUENCE# FIRST_CHANGE# </span><br><span class="line">--------- -------------</span><br><span class="line"><span class="number">19766</span> <span class="number">7008518015</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li> 备库停止apply log<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter database recover managed standby database cancel;</span><br></pre></td></tr></table></figure></li>
+<li> 主库增量SCN备份<br>主库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">RMAN&gt; backup incremental <span class="keyword">from</span> scn <span class="number">7008518015</span> database format <span class="string">&#x27;/path/to/stdby_%U.bak&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li> 生成备库控制文件<br>主库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; backup current controlfile <span class="keyword">for</span> standby format <span class="string">&#x27;/path/to/stdby_%U.ctl&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+<li> 拷贝备份和控制文件到备库</li>
+<li> 备库使用新生成的控制文件启动<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rman&gt; shutdown immediate;</span><br><span class="line">rman&gt; startup nomount;</span><br><span class="line">rman&gt; restore standby controlfile <span class="keyword">from</span> <span class="string">&#x27;/path/to/stdby_xxx.ctl&#x27;</span>;</span><br><span class="line">rman&gt; alter database mount</span><br></pre></td></tr></table></figure></li>
+<li> 备库进行数据恢复<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; catalog start <span class="keyword">with</span> <span class="string">&#x27;/path/to_bak&#x27;</span>;</span><br><span class="line">RMAN&gt; recover database noredo;</span><br></pre></td></tr></table></figure></li>
+<li> 备库恢复日志应用<br>备库端：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; alter database recover managed standby database disconnect <span class="keyword">from</span> session;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.programgo.com/article/9189574397/">DataGuard 中处理archive gap的方法</a><br>[2]<a target="_blank" rel="noopener" href="https://shivanandarao-oracle.com/2012/03/26/roll-forward-physical-standby-database-using-rman-incremental-backup/">Roll Forward Physical Standby Database using RMAN incremental backup</a><br>[3]<a target="_blank" rel="noopener" href="http://www.zhongweicheng.com/?p=1305">Oracle Physical DataGuard使用RMAN增量备份修复GAP</a><br>[4]<a target="_blank" rel="noopener" href="http://docs.oracle.com/cd/B19306_01/backup.102/b14191/rcmdupdb.htm#BRADV05444">Using RMAN Incremental Backups to Refresh a Standby Database</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1098,109 +1232,6 @@
 <p>如果不调用join方法，也就无需调用task_done方法了。</p>
 <p>mulitiprocess.Queue并没有join特性，如需要此特性，应该使用multiprocessing.JoinableQueue队列</p>
 <p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/03/30/interfaces-config-wireless-conn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/03/30/interfaces-config-wireless-conn/" class="post-title-link" itemprop="url">interfaces文件配置wireless连接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-03-30 13:53:30" itemprop="dateCreated datePublished" datetime="2016-03-30T13:53:30+08:00">2016-03-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>配置文件访问无线网络</strong></p>
-<p>在/etc/network/interfaces文件可以配置要默认访问的无线热点:</p>
-<p>动态获取ip:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># wireless</span><br><span class="line">auto wlan0</span><br><span class="line">iface wlan0 inet dhcp</span><br><span class="line"> wpa-ssid ESSID/SSID</span><br><span class="line"> wpa-psk pre-shared-key</span><br></pre></td></tr></table></figure>
-
-<p>配置静态ip:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># wireless</span><br><span class="line">auto wlan0</span><br><span class="line">iface wlan0 inet <span class="keyword">static</span></span><br><span class="line"> address <span class="number">192.168</span><span class="number">.1</span><span class="number">.110</span></span><br><span class="line"> netmask <span class="number">255.255</span><span class="number">.255</span><span class="number">.0</span></span><br><span class="line"> network <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span></span><br><span class="line"> broadcast <span class="number">192.168</span><span class="number">.1</span><span class="number">.255</span></span><br><span class="line"> gateway <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line"> wpa-ssid ESSID/SSID</span><br><span class="line"> wpa-psk pre-shared-key</span><br></pre></td></tr></table></figure>
-
-<p>重新启动网络服务即可连接到默认的热点。</p>
-<p><strong>命令行手动扫描并连接到热点</strong></p>
-<p>扫描热点：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># iwlist wlan0 scan</span><br><span class="line"># iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
-
-<p>连接到热点：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wpa_supplicant -i wlan0 -c &lt;(wpa_passphrase ESSID pre-shared-key) -B</span><br></pre></td></tr></table></figure>
-
-<p>动态获取ip:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># dhclient wlan0</span><br></pre></td></tr></table></figure>
-
-<p>设置静态ip:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ip addr add 192.168.1.110/24 dev wlan0</span><br><span class="line"># ip route add default via 192.168.1.1</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

@@ -24943,4 +24943,24 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>Debian</tag>
       </tags>
   </entry>
+  <entry>
+    <title>broadcom bcm4360 enable monitor mode</title>
+    <url>/2022/06/26/broadcom-bcm4360-enable-monitor-mode/</url>
+    <content><![CDATA[<p>2013年的 mba 11’，无线网卡为broadcom bcm4360 (PCI ID 14e4:43a0) rev 3，使用wl(aka broadcom-sta)专有驱动</p>
+<a id="more"></a>
+
+<p>其开启monitor模式的方法与其他无线网卡不太一样。</p>
+<p><code># echo 1 &gt; /proc/brcm_monitor0</code></p>
+<p>或者</p>
+<p><code>$ sudo sh -c &quot;echo 1 &gt; /proc/brcm_monitor0&quot;</code></p>
+<p>然后会出现一个新的接口prism0,就类似其他无线网卡的mon0或wlan0mon</p>
+<p>prism0的命名貌似是promiscuous mode 0的缩写，但promiscuous node混杂模式是有线交换设备的概念，在无线设备中叫monitor模式，无需连接到任何ap,就可以获取空口的数据包。</p>
+<p>如果使用airmod-ng,应该直接使用prism0接口</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># airmod-ng check kill</span></span><br><span class="line"><span class="comment"># airmod-ng start prism0</span></span><br><span class="line"><span class="comment"># airodump-ng prism0</span></span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1]<a href="https://gist.github.com/mkaminsky11/eaf2d643917b22edb510">Enables monitor mode for wl driver(Broadcom)</a></p>
+<p>[2]<a href="https://linuxhint.com/monitor_mode_kali_linux/">Using Monitor Mode in Kali Linux</a></p>
+]]></content>
+  </entry>
 </search>

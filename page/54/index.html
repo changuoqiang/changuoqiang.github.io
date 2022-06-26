@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,126 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/19/mavericks-tomcat7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/19/mavericks-tomcat7/" class="post-title-link" itemprop="url">mavericks安装tomcat7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-19 20:35:43" itemprop="dateCreated datePublished" datetime="2014-04-19T20:35:43+08:00">2014-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>下载解压</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~/Downloads</span><br><span class="line">$ wget http:<span class="comment">//mirror.esocc.com/apache/tomcat/tomcat-7/v7.0.53/bin/apache-tomcat-7.0.53.tar.gz</span></span><br><span class="line">$ cd /usr/local</span><br><span class="line">$ sudo tar xvzf ~<span class="regexp">/Downloads/</span>apache-tomcat-<span class="number">7.0</span><span class="number">.53</span>.tar.gz</span><br><span class="line">$ sudo ln -s apache-tomcat-<span class="number">7.0</span><span class="number">.53</span> tomcat</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建运行tomcat的非特权用户</strong><br>使用root用户运行tomcat会有安全性方面的问题,如果tomcat被攻陷则整个系统就会沦陷。因此创建一个非特权用户来运行tomcat</p>
+<p>首先选择一个User ID和Group ID,500以上的ID用于正常的用户,因此需要选择一个0-500之间的数字作为GID和UID。</p>
+<p>列出当前系统组,用户及其ID</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dscl . -list /Groups PrimaryGroupID sort -n -k <span class="number">2</span></span><br><span class="line">$ dscl . -list /Users UniqueID sort -n -k <span class="number">2</span> </span><br></pre></td></tr></table></figure>
+<p>这里选择101作为UID和GID,创建组和用户：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># dscl . -create /Groups/_tomcat PrimaryGroupID 101</span><br><span class="line"># dscl . -create /Groups/_tomcat RealName &quot;Tomcat Users&quot;</span><br><span class="line"># dscl . -create /Groups/_tomcat Password \\*</span><br><span class="line"># dscl . -create /Users/_tomcat UniqueID 101</span><br><span class="line"># dscl . -create /Users/_tomcat PrimaryGroupID 101</span><br><span class="line"># dscl . -create /Users/_tomcat HomeDirectory /usr/local/tomcat</span><br><span class="line"># dscl . -create /Users/_tomcat UserShell /usr/bin/false</span><br><span class="line"># dscl . -create /Users/_tomcat RealName &quot;Tomcat Administrator&quot;</span><br><span class="line"># dscl . -create /Users/_tomcat Password \\*</span><br></pre></td></tr></table></figure>
+<p>新创建用户的shell设置为/usr/bin/false,使其无法登录,密码设置为*为禁用账户。</p>
+<p><strong>设置tomcat目录权限</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cd /usr/local/tomcat</span><br><span class="line"># chmod 644 conf/*</span><br><span class="line"># chown root:_tomcat conf/tomcat-users.xml</span><br><span class="line"># chmod 640 conf/tomcat-users.xml</span><br><span class="line"># mkdir conf/Catalina</span><br><span class="line"># chown _tomcat:_tomcat conf/Catalina</span><br><span class="line"># chown _tomcat:admin logs temp webapps work</span><br><span class="line"># chmod 2770 logs temp webapps work</span><br></pre></td></tr></table></figure>
+
+<p><strong>launchd脚本</strong><br>写一个launchd包装脚本来启动tomcat,并且一直等待tomcat进程直到其退出。<br>/usr/local/tomcat/bin/tomcat-launchd.sh</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line"># tomcat-launchd.sh</span><br><span class="line"># </span><br><span class="line"># Wrapper script that starts Tomcat and waits for the Tomcat process </span><br><span class="line"># to exit. This is needed for proper interaction with launchd.</span><br><span class="line"></span><br><span class="line">#---------------------------------------------------------</span><br><span class="line"># Helper functions</span><br><span class="line">#---------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># NOTE: We are inheriting CATALINA_HOME from launchd, because its value </span><br><span class="line"># was defined in the launchd plist configuration file.</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shutdown</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line"> # Bye Tomcat!</span><br><span class="line"> echo <span class="string">&quot;Shutting down Tomcat... &quot;</span></span><br><span class="line"> $CATALINA_HOME/bin/catalina.sh stop</span><br><span class="line"> echo <span class="string">&quot;done.&quot;</span></span><br><span class="line"> </span><br><span class="line"> # Cleaning up the temporary file</span><br><span class="line"> rm -f $CATALINA_PID </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startup</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> </span><br><span class="line"> # Define the file where we want the Tomcat process ID to be stored.</span><br><span class="line"> <span class="keyword">export</span> CATALINA_PID=$(mktemp /tmp/\<span class="string">`basename -s .sh $0\`.XXXXXX)</span></span><br><span class="line"><span class="string"> if \[ $? -ne 0 \]</span></span><br><span class="line"><span class="string"> then</span></span><br><span class="line"><span class="string"> echo &quot;$0: Failed to create temporary file. Aborting.&quot;</span></span><br><span class="line"><span class="string"> exit 1</span></span><br><span class="line"><span class="string"> fi</span></span><br><span class="line"><span class="string"> rm -f $CATALINA_PID</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> # Let&#x27;s go!</span></span><br><span class="line"><span class="string"> echo &quot;Starting up Tomcat... &quot;</span></span><br><span class="line"><span class="string"> . $CATALINA_HOME/bin/catalina.sh start</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string"> # Register the shutdown function as callback to execute when a signal </span></span><br><span class="line"><span class="string"> # is sent to this process.</span></span><br><span class="line"><span class="string"> #捕捉以下信号使tomcat关闭</span></span><br><span class="line"><span class="string"> trap shutdown HUP INT QUIT ABRT KILL ALRM TERM TSTP</span></span><br><span class="line"><span class="string"> echo &quot;done.&quot; </span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">function wait_for_tomcat_to_exit() &#123;</span></span><br><span class="line"><span class="string"> echo &quot;Waiting for Tomcat to exit (PID: \`cat $CATALINA_PID\`)... &quot;</span></span><br><span class="line"><span class="string"> #等待tomcat进程退出</span></span><br><span class="line"><span class="string"> wait \`cat $CATALINA_PID\`</span></span><br><span class="line"><span class="string"> echo &quot;done waiting for Tomcat to exit.&quot;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#---------------------------------------------------------</span></span><br><span class="line"><span class="string"># Let&#x27;s go</span></span><br><span class="line"><span class="string">#---------------------------------------------------------</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">startup</span></span><br><span class="line"><span class="string">wait_for_tomcat_to_exit</span></span><br></pre></td></tr></table></figure>
+
+<p>plist配置文件:<br>/usr/local/tomcat/conf/org.apache.tomcat.plist<br>[xml]<br><?xml version="1.0" encoding="UTF-8"?><br><!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><br><plist version="1.0"><br><dict><br> <key>Label</key><br> <string>org.apache.tomcat</string><br> <key>ServiceDescription</key><br> <string>Tomcat Servlet/JSP Server</string><br> <key>UserName</key><br> <string>_tomcat</string><br> <key>GroupName</key><br> <string>_tomcat</string><br> <key>EnvironmentVariables</key><br> <dict><br> <key>CATALINA_HOME</key><br> <string>/usr/local/tomcat</string><br> <key>JAVA_HOME</key><br> <string>/Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home</string><br> </dict><br> <key>ProgramArguments</key><br> <array><br> <string>/usr/local/tomcat/bin/tomcat-launchd.sh</string><br> </array><br> <key>StandardOutPath</key><br> <string>/usr/local/tomcat/logs/launchd-stdout.log</string><br> <key>StandardErrorPath</key><br> <string>/usr/local/tomcat/logs/launchd-stderr.log</string><br> <key>RunAtLoad</key><br> <true/><br> <key>KeepAlive</key><br> <true/><br></dict><br></plist><br>[/xml]</p>
+<p>JAVA_HOME变量的值由以下命令确定:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/libexec/java_home</span><br></pre></td></tr></table></figure>
+
+<p>然后将plist文件符号链接到/Library/LaunchDaemons目录:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cd /Library/LaunchDaemons</span><br><span class="line"># ln -sfv /usr/local/tomcat/conf/org.apache.tomcat.plist</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用launchd管理tomcat</strong><br>设置完成后,可以使用以下命令加载配置并启动tomcat</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># launchctl load /Library/LaunchDaemons/org.apache.tomcat.plist</span><br></pre></td></tr></table></figure>
+<p>修改plist配置文件后重新加载配置:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># launchctl unload /Library/LaunchDaemons/org.apache.tomcat.plist</span><br><span class="line"># launchctl load /Library/LaunchDaemons/org.apache.tomcat.plist</span><br></pre></td></tr></table></figure>
+
+<p>plist文件中RunAtLoad设置为true会使tomcat开机自动运行。而如果KeepAlive设置为true，则当tomcat进程退出后，无论是什么原因导致tomcat进程退出,launchd守护进程会重新启动tomcat。因此更改tomcat配置后可以这样重新启动tomcat进程:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># launchctl stop org.apache.tomcat</span><br></pre></td></tr></table></figure>
+<p>或者直接kill tomcat进程亦可。</p>
+<p>如果KeepAlive设置为false,则需要手工启动tomcat进程,如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># launchctl stop org.apache.tomcat</span><br><span class="line"># launchctl start org.apache.tomcat</span><br></pre></td></tr></table></figure>
+
+<p><strong>servlet api符号链接</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ln -sfv /usr/local/tomcat/lib/servlet-api.jar /usr/share/java/servlet-api.jar</span><br><span class="line"># ln -sfv /usr/local/tomcat/lib/servlet-api.jar /usr/share/java/servlet-api-3.0.jar</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.joel.lopes-da-silva.com/2008/05/13/installing-tomcat-on-mac-os-x/">installing Tomcat On Mac OS X</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1065,86 +1185,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ref: refs/heads/devel</span><br></pre></td></tr></table></figure>
 
 <p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/17/5263/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/17/5263/" class="post-title-link" itemprop="url">Untitled Post - 46</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-17 12:45:22" itemprop="dateCreated datePublished" datetime="2014-03-17T12:45:22+08:00">2014-03-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>挂载NTFS分区一定要用ntfs-3g而不要用ntfs,传统的ntfs驱动读取还可以,不过也有问题,写会存在很多问题。 #linux#</p>
 
       
     </div>

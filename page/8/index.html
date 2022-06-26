@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/29/storwize-v3700-cmmvc8020e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/29/storwize-v3700-cmmvc8020e/" class="post-title-link" itemprop="url">Storwize v3700: CMMVC8020E</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-29 17:10:17" itemprop="dateCreated datePublished" datetime="2019-08-29T17:10:17+08:00">2019-08-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>v3700从服务界面新建系统时，提示：</p>
+<p>CMMVC8020E: 存在存储集群标识时尝试创建集群</p>
+<p>无法创建新系统，是因为以前的集群信息尚未完全清除干净,在机柜配置界面重置集群标识，再次尝试新建系统成功。</p>
+<p>如果还是不行，可以尝试[1]里面讲的方法，ssh登录进存储，执行以下命令:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">satask chenclosurevpd -resetclusterid</span><br></pre></td></tr></table></figure>
+<p>没有尝试，或许可以。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/community/forums/html/topic?id=183e3b72-b2c8-46cd-b677-9e784fee5855">[SOLVED] Storwize v3700: CMMVC8020E</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1202,90 +1289,6 @@
 <p>存储配置主机映射时，需要指定主机HBA(Host Bus Adapter)卡端口的WWN(World Wide Name)<br>因此需要从主机端查看这些WWN,Debian buster系统中这样查看</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat /sys/<span class="class"><span class="keyword">class</span>/<span class="title">fc_host</span>/<span class="title">host</span>*/<span class="title">port_name</span></span></span><br><span class="line"><span class="class">0<span class="title">x10000090fa181673</span></span></span><br><span class="line"><span class="class">0<span class="title">x10000090fa181ad6</span></span></span><br></pre></td></tr></table></figure>
 <p>表明有两个HBA端口，其WWN分别为0x10000090fa181673和0x10000090fa181ad6<br>存储中配置完成后，分别是这个样的10:00:00:90:fa:18:16:73和10:00:00:90:fa:18:1a:d6</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/15/bash-alias-for-wine-apps/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/15/bash-alias-for-wine-apps/" class="post-title-link" itemprop="url">bash alias for wine apps</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-15 20:52:00" itemprop="dateCreated datePublished" datetime="2019-07-15T20:52:00+08:00">2019-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>terminal下运行wine apps比较繁琐，可以在.bashrc中添加alias</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias ssmc=<span class="string">&quot;(cd $HOME/.wine/drive_c/Program\\ Files/StorageManager/client/ &amp;&amp; WINEPREFIX=$HOME/.wine wine start SANtricity\\ Storage\\ Manager\\ Client.exe &gt;/dev/null 2&gt;&amp;1)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>这样终端下只要执行ssmc就可以了，不会破坏当前的工作目录和stdout</p>
 
       
     </div>

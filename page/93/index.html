@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/02/05/ubuntu-blanktime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/02/05/ubuntu-blanktime/" class="post-title-link" itemprop="url">Ubuntu播放视频定期黑屏问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-02-05 22:48:29" itemprop="dateCreated datePublished" datetime="2010-02-05T22:48:29+08:00">2010-02-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>使用mplayer播放视频的时候,如果没有鼠标或键盘活动,大约10分钟后显示器会自动关闭,要动下鼠标才能继续观看,比较烦.我是没有设置屏保的,因为包gnome-screensaver已经卸载掉了.而且power manager里面已经把所有的电源选项都关闭了.竟然还会定期自动关闭LCD,真败了，无法容忍.</p>
+<p>其实”罪魁祸首”就是X server,在/etc/X11/xorg.conf的ServerFlags节增加一下选项就可以了.<br>Section “ServerFlags”<br> Option “BlankTime” “0”<br> Option “StandbyTime” “0”<br> Option “SuspendTime” “0”<br> Option “OffTime” “0”<br>EndSection</p>
+<p>该问题是由Blanktime控制的,这个值控制多长时间没有动作来启动屏保,默认时间是10分钟,设置为0就可以关闭该特性了.</p>
+<p>其他三个选项依次是DPMS的待机、挂起、关闭超时值，也可以通过Monitor节的DPMS选项来关闭这三个特性</p>
+<p>Section “Monitor”<br>Option “DPMS” “false”<br>EndSection</p>
+<p>注意，BlankTime特性是不受DPMS特性控制的。</p>
+<p>这四个参数的详细信息参见<a target="_blank" rel="noopener" href="http://www.x.org/archive/X11R6.8.0/doc/xorg.conf.5.html">xorg配置文件手册</a>。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1014,86 +1100,6 @@
 <li>  RBX, RBP, RDI, RSI, R12, R13, R14, and R15寄存器则必须在使用时进行保护。</li>
 <li>  在寄存器中，所有参数都是右对齐的。小于64位的参数并不进行高位零扩展，也就是高位是无法预测的垃圾数据。</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/28/debian-dhcp-error/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/12/28/debian-dhcp-error/" class="post-title-link" itemprop="url">Starting DHCP server: dhcpd3check syslog for diagnostics</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-12-28 13:15:23" itemprop="dateCreated datePublished" datetime="2009-12-28T13:15:23+08:00">2009-12-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>debian服务器sudo apt-get install dhcp3-server后，出现错误提示“Starting DHCP server: dhcpd3check syslog for diagnostics. failed!”<br>其实这是因为还没有配置dhcp引起的，打开/etc/dhcp3/dhcpd.conf增加一个subnet，比如：<br>subnet 192.168.1.0 netmask 255.255.255.0{<br> range 192.168.1.100 192.168.1.200;<br> option routers 192.168.1.1;<br>}<br>然后sudo /etc/init.d/dhcp3-server start就可以启动了。</p>
 
       
     </div>

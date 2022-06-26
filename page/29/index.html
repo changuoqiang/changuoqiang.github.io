@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/07/gradle-ssh-plugin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/07/gradle-ssh-plugin/" class="post-title-link" itemprop="url">gradle ssh plugin</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-07 22:22:17" itemprop="dateCreated datePublished" datetime="2015-11-07T22:22:17+08:00">2015-11-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>提供gradle访问ssh执行命令、传输文件的功能。</p>
+<p><strong>安装</strong><br>构建脚本中添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plugins &#123;</span><br><span class="line"> id <span class="string">&#x27;org.hidetake.ssh&#x27;</span> version <span class="string">&#x27;1.1.4&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">remotes &#123;</span><br><span class="line"> webServer &#123;</span><br><span class="line"> host = <span class="string">&#x27;192.168.1.101&#x27;</span></span><br><span class="line"> port = <span class="number">2022</span></span><br><span class="line"> user = <span class="string">&#x27;jenkins&#x27;</span></span><br><span class="line"> identity = file(<span class="string">&#x27;id_rsa&#x27;</span>)</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task deploy &lt;&lt; &#123;</span><br><span class="line"> ssh.run &#123;</span><br><span class="line"> <span class="function"><span class="title">session</span>(<span class="params">remotes.webServer</span>)</span> &#123;</span><br><span class="line"> put <span class="keyword">from</span>: <span class="string">&#x27;example.war&#x27;</span>, <span class="attr">into</span>: <span class="string">&#x27;/webapps&#x27;</span></span><br><span class="line"> execute <span class="string">&#x27;sudo service tomcat restart&#x27;</span></span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用此插件通过ssh自动部署应用程序。</p>
+<p>tomcat热部署会持续的泄露PermGen内存，因此还是常规的部署更靠谱，不过应用程序会暂时中断。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/int128/gradle-ssh-plugin">gradle-ssh-plugin</a><br>[2]<a target="_blank" rel="noopener" href="https://gradle-ssh-plugin.github.io/">Deploy your App from Gradle</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1076,89 +1167,6 @@
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/sindresorhus/gulp-debug">gulp-debug</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/gulpjs/gulp-util">Utilities for gulp plugins</a></p>
 <p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/03/postgresql-write-ahead-logging/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/03/postgresql-write-ahead-logging/" class="post-title-link" itemprop="url">postgresql预写日志(Write-Ahead Logging)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-11-03 22:47:12" itemprop="dateCreated datePublished" datetime="2015-11-03T22:47:12+08:00">2015-11-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>postgresql WAL日志是为了保证数据的完整性，基本上是与oracle的redo log十分类似的东西。<br>WAL也是在线复制备份，时间点恢复等高级特性的基石。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgresql.org/docs/9.4/static/wal-intro.html">29.2. Write-Ahead Logging (WAL)</a><br>[2]<a target="_blank" rel="noopener" href="http://www.moeding.net/archives/37-PostgreSQL-WAL-vs.-Oracle-Redo-Log.html">PostgreSQL WAL vs. Oracle Redo Log</a></p>
-<p><strong>===<br>[erq]</strong></p>
 
       
     </div>

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,119 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/11/23/postgresql-performance-issues/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/11/23/postgresql-performance-issues/" class="post-title-link" itemprop="url">PostgreSQL性能诊断与处理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-11-23 20:36:26" itemprop="dateCreated datePublished" datetime="2016-11-23T20:36:26+08:00">2016-11-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>CPU负载居高不下，可以从这几方面入手查找原因，一个比较大的可能是有查询在长期占用CPU资源。</p>
+<p><strong>查看当前连接数</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT count(*) FROM pg_stat_activity;</span><br><span class="line">=&gt; select client_addr, count(*) <span class="keyword">from</span> pg_stat_activity group by client_addr;</span><br></pre></td></tr></table></figure>
+
+<p>可以查看总的连接数，以及每个客户端的连接数，判断是否有客户端泄露连接。</p>
+<p><strong>查看连接状态</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT state, count(*) FROM pg_stat_activity GROUP BY state;</span><br></pre></td></tr></table></figure>
+
+<p>连接有以下几种状态：</p>
+<ul>
+<li>  idle<br>连接对应的后端进程处于空闲状态</li>
+<li>  actvie<br>连接对应的后端进程正在执行查询</li>
+<li>  idle in transaction<br>连接对应的后端进程在一个事务中，但当前并没有执行查询</li>
+<li>  idle in transaction (aborted)<br>在一个事务中，但是事务中的语句出现了错误，事务没有正确回滚</li>
+<li>  fastpath function call<br>正在执行fastpath函数调用</li>
+<li>  disabled<br>后端进程被配置为禁止跟踪</li>
+</ul>
+<p><strong>等待锁的连接</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT count(distinct pid) FROM pg_locks WHERE granted = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看是否有连接在等待排它锁导致效率低下</p>
+<p><strong>查看事务最大执行时间</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT max(now() -xact_start) FROM pg_stat_activity WHERE state IN (<span class="string">&#x27;idle in transaction&#x27;</span>,<span class="string">&#x27;active&#x27;</span>); </span><br></pre></td></tr></table></figure>
+<p>查看当前所有事务中最长事务的执行时间，一般来讲事务应该在数秒内结束，数分钟已经是很长的事务了。如果有事务的执行时间达到了小时的级别，那一定是出现了错误，但是事务还在占用系统资源，应该将其干掉。</p>
+<p><strong>查看事务执行时间</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT pid, xact_start FROM pg_stat_activity ORDER BY xact_start ASC;</span><br></pre></td></tr></table></figure>
+<p>以事务的起始时间为顺序，如果某事务的运行时间过长，比如达到了小时级别，应该查清原因，然后搞掉它。</p>
+<p><strong>杀掉后端进程</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT pg_cancel_backend(<span class="number">1234</span>);</span><br></pre></td></tr></table></figure>
+
+<p>1234就是pg_stat_activity表里的pid,也是postgres进程的系统进程pid，不要用操作系统命令去搞死进程，要用postgresql提供的命令。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/9.6/static/monitoring-stats.html">28.2. The Statistics Collector</a><br>[2]<a target="_blank" rel="noopener" href="https://jee-appy.blogspot.in/2016/10/debug-postgresql-performance-issues.html">Debug Slow Performance &amp; High Resource Utilisation Issue in PostgreSQL</a><br>[3]<a target="_blank" rel="noopener" href="https://jee-appy.blogspot.com/2016/10/find-and-kill-long-running-process-in.html">Find and Kill Long Running Process in PostgreSQL</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -987,86 +1100,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>Console Vim uses whatever font the console/terminal is using. Changing the font in your terminal is done differently depending on your system and the terminal in use.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/11/13/7701/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/11/13/7701/" class="post-title-link" itemprop="url">Untitled Post - 171</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-11-13 10:53:34" itemprop="dateCreated datePublished" datetime="2016-11-13T10:53:34+08:00">2016-11-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>输入:h feature-list查看vim支持的特性,然后可以在脚本中通过if has(“feature-name”)来检测该特性.</p>
 
       
     </div>

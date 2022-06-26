@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">984</span>
+          <span class="site-state-item-count">985</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,91 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/12/19/mybatis-generator-properties-subelement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/12/19/mybatis-generator-properties-subelement/" class="post-title-link" itemprop="url">Mybatis Generator的properties子元素</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-12-19 16:08:44" itemprop="dateCreated datePublished" datetime="2013-12-19T16:08:44+08:00">2013-12-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>Mybatis Generator配置文件中<br>generatorConfiguration元素有一个子元素<a target="_blank" rel="noopener" href="http://mybatis.org/generator/configreference/properties.html">properties</a>，可以用来指定一个java属性文件,从而配置文件内可以通过${property}来引用属性对应的值。可以将一些通用的属性放到共享的属性文件中减少一些冗余。</p>
+<p>properties子元素有两个互斥的属性resource和url,resource用来指定类路径下的属性文件,url用来指定文件系统路径指示的属性文件。<br>二者只能使用一个,resource总是不成功,Mybatis Generator的类路径就没整明白,jdbc驱动类还是用的绝对路径:(</p>
+<p>样例属性文件generatorConfig.properties<br>[xml]<br>classPath=/path/to/WEB-INF/lib/postgresql-9.3-1100.jdbc41.jar<br>driverClass=org.postgresql.Driver<br>dbURL=jdbc:postgresql://localhost/reis<br>userId=general<br>passwd=general<br>project=projectname/src/main<br>[/xml]</p>
+<p><strong>更新(12/30/2013):</strong></p>
+<p>将资源文件放入eclipse已经存在的classpath中,或者将资源文件所在的文件夹添加到eclipse类路径里就可以用resource属性来引用资源文件了。<br>比如资源文件放在WEB-INF/conf文件夹里面,WEB-INF/conf不在eclipse的类路径下,所以需要设置eclipse添加该文件夹,如下：<br>project -&gt; properties -&gt; java build path -&gt; libraries -&gt; add class folder,选择WEB-INF/conf确定就可以了。<br>这样工程根目录下的.classpath文件内会添加一行:<br>[xml]<br><classpathentry kind="lib" path="root/WEB-INF/conf"/><br>[/xml]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1051,86 +1136,6 @@
 <h3 id="延伸"><a href="#延伸" class="headerlink" title="延伸"></a>延伸</h3><p>GoF(Gang of Four)的Design Pattern列举了23种经典设计模式,除此之外,还有其他许许多多的设计模式。设计模式无论如何变化，纷繁复杂，其本质仍然符合上面的概括和列举的设计原则。 理解了设计模式的本质，才不会被各种设计模式晃花了眼睛。</p>
 <p>注:这一篇post是用markdown写，使用pandoc转换为html，然后贴过来的。markdown果然好用。</p>
 <p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/12/12/4477/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2013/12/12/4477/" class="post-title-link" itemprop="url">Untitled Post - 22</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2013-12-12 07:33:54" itemprop="dateCreated datePublished" datetime="2013-12-12T07:33:54+08:00">2013-12-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://www.bitflipper.ca/rapyd/">Rapyd-Tk</a>( Rapid python development with Tkinter) 也不支持python3,看来只能用<a target="_blank" rel="noopener" href="https://wiki.python.org/moin/TkInter">Tkinter</a>了。</p>
 
       
     </div>
