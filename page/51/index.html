@@ -549,7 +549,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+        <time title="Modified: 2023-03-07 12:19:10" itemprop="dateModified" datetime="2023-03-07T12:19:10+08:00">2023-03-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -574,19 +574,18 @@
           <a id="more"></a>
 <p>以替换google在线字体为国内CDN镜像为例：</p>
 <p>1、使用find,sed以及grep</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/fonts\\.googleapis/fonts\\.useso/g&#x27;</span> \<span class="string">`find . xargs grep -rl &#x27;fonts.googleapis&#x27;\`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span> <span class="string">`find . | xargs grep -rl &#x27;fonts.googleapis&#x27;`</span></span><br></pre></td></tr></table></figure>
+
 
 <p>2、使用find和perl</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . xargs perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . | xargs perl -pi -e <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span> \<span class="string">`find .\`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -pi -e <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span> <span class="string">`find .`</span></span><br></pre></td></tr></table></figure>
 
 <p>3、不使用find也行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep oldString -rl /path xargs sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -rl oldString path | xargs sed -i <span class="string">&#x27;s/oldString/newString/g&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> \<span class="string">`grep oldString -rl /path\`</span></span><br></pre></td></tr></table></figure>
-<p><strong>===<br>[erq]</strong></p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/oldString/newString/g&#x27;</span> <span class="string">`grep -rl oldString path`</span></span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -1142,7 +1141,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
