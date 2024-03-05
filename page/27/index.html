@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,111 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/23/apt-mirror-debian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/23/apt-mirror-debian/" class="post-title-link" itemprop="url">使用apt-mirror搭建debian源镜像</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-23 13:55:50" itemprop="dateCreated datePublished" datetime="2015-12-23T13:55:50+08:00">2015-12-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian官方提供了脚本<a href="https://openwares.net/linux/setup_debian_archive_mirror.html">ftpsync来搭建源镜像</a>，而apt-mirror是一个更简单便捷的源镜像搭建工具。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install apt-mirror</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置</strong><br>配置文件/etc/apt/mirror.list只要修改很少的地方，大部分使用默认值即可。</p>
+<p>这里使用中科大镜像ftp.cn.debian.org作为上游镜像,只镜像debian jessie amd64架构,不需要镜像源代码。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">############# config ##################</span><br><span class="line">#</span><br><span class="line"># set base_path /var/spool/apt-mirror</span><br><span class="line">#</span><br><span class="line"># set mirror_path $base_path/mirror</span><br><span class="line"># set skel_path $base_path/skel</span><br><span class="line"># set var_path $base_path/var</span><br><span class="line"># set cleanscript $var_path/clean.sh</span><br><span class="line"># set defaultarch &lt;running host architecture&gt;　# 默认架构与镜像主机的架构一致,这里是amd64</span><br><span class="line"># set postmirror_script $var_path/postmirror.sh</span><br><span class="line"># set run_postmirror 0</span><br><span class="line">set nthreads <span class="number">20</span></span><br><span class="line">set _tilde <span class="number">0</span></span><br><span class="line">#</span><br><span class="line">############# end config ##############</span><br><span class="line"></span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian jessie main contrib non-free</span></span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian/ jessie-backports main contrib non-free</span></span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian/ jessie-proposed-updates main contrib non-free</span></span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian/ jessie-updates main contrib non-free</span></span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian-security/ jessie/updates main contrib non-free</span></span><br><span class="line">#deb-src http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line"></span><br><span class="line"># mirror additional architectures</span><br><span class="line">#deb-alpha http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-amd64 http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-armel http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-hppa http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-i386 http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-ia64 http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-m68k http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-mips http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-mipsel http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-powerpc http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-s390 http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line">#deb-sparc http:<span class="comment">//ftp.us.debian.org/debian unstable main contrib non-free</span></span><br><span class="line"></span><br><span class="line">clean http:<span class="comment">//ftp.cn.debian.org/debian</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>自动同步</strong></p>
+<p>只需root权限cron自动运行apt-mirror命令即可。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># crontab -e</span><br></pre></td></tr></table></figure>
+<p>最后输入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># m h dom mon dow command</span><br><span class="line"><span class="number">0</span> <span class="number">0</span> * * * apt-mirror</span><br></pre></td></tr></table></figure>
+<p>即可</p>
+<p><strong>发布</strong></p>
+<p>使用nginx发布源镜像</p>
+<p>将apt-mirror的镜像目录链接到/var/www/mirror</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ln -sf /var/spool/apt-mirror/mirror/ftp.cn.debian.org/ mirror</span><br></pre></td></tr></table></figure>
+
+<p>然后将nginx默认主机default(或者单独虚拟主机)的根目录设置为/var/www/mirror,并开启目录列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root /<span class="keyword">var</span>/www/mirror</span><br><span class="line">location / &#123;</span><br><span class="line"> autoindex on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他机器就可以正常使用新建的源镜像了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://apt-mirror.github.io/">apt-mirror</a></p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1209,86 +1314,6 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/01/6973/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/01/6973/" class="post-title-link" itemprop="url">Untitled Post - 158</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-01 15:27:09" itemprop="dateCreated datePublished" datetime="2015-12-01T15:27:09+08:00">2015-12-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>KVM qcow2格式镜像文件转换为VirtualBox VDI格式镜像文件，转换完毕后，可以使用VirtualBox直接启动虚拟机：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu-img convert -f qcow2 foo.qcow2 -O vdi foo.vdi</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1324,7 +1349,7 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

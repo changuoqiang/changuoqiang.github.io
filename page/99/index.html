@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,93 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/06/01/boost-1-39-regex-solutions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/06/01/boost-1-39-regex-solutions/" class="post-title-link" itemprop="url">Visual C++ 2008 Express编译boost 1.39 regex库遇到的问题及解决办法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-06-01 11:06:31" itemprop="dateCreated datePublished" datetime="2009-06-01T11:06:31+08:00">2009-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Lang/" itemprop="url" rel="index"><span itemprop="name">Lang</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近在玩boost,用vc++ 2008 express编译最新版本1.39时遇到一点小问题，记录于此。<br>分别下载了zlib,bzip2和icu，python暂时不玩，没接触过。我喜欢静态链接程序，根据官方文档的提示，在console输入如下指令，为了输入方便，最好写个bat脚本：</p>
+<p>bootstrap<br>bjam -sBZIP2_SOURCE=D:/libs/bzip2-1.0.5 -sZLIB_SOURCE=D:/libs/zlib-1.2.3 -sHAVE_ICU=1 -sICU_PATH=D:/libs/icu link=static runtime-link=static threading=multi –without-python</p>
+<p>console窗口一阵晃动后吐出了这么三行error:</p>
+<p>error: link=shared together with runtime-link=static is not allowed<br>error: such property combination is either impossible<br>error: or too dangerious to be of any use</p>
+<p>百思不得其解，明明我的link选项只有static，哪来的shared啊，郁闷啊郁闷，反复折腾后，发现，如果没有ICU选项，则不会出现此错误提示。</p>
+<p>用vim打开boost_1_39_0\libs\regex\build\jamfile.v2,搜索一下/\&lt;shared\&gt;，果然在文件底部，218,223和229行链接选项被写死为shared。那就去掉这该死的shared，重新来过，bjam终于开始正常工作了。</p>
+<p>编译带ICU选项的regex还会遇到一点儿小问题。boost.regex期望的icui18n.lib和icudata.lib与编译后的ICU库的名字并不相同，简单修改一下就可以了,如下：<br>libs\icu\lib\icuin.lib -&gt; icui18n.lib<br>libs\icu\lib\icudt.lib -&gt; icudata.lib</p>
+<p>测试了boost 1.39官方文档的regex测试程序，静态链接，一切OK。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -718,7 +805,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

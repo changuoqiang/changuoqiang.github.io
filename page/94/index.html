@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/28/windows-x64-function-call-convention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/12/28/windows-x64-function-call-convention/" class="post-title-link" itemprop="url">windows x64函数调用约定(function call convention)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-12-28 21:47:31" itemprop="dateCreated datePublished" datetime="2009-12-28T21:47:31+08:00">2009-12-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>　　借PC处理器架构由x86向x64过渡之机，MS清理了windows x64平台上的函数调用约定，由原来的数种包括stdcall,thiscall,fastcall,cdecl,pascal等，统一为一种新的fastcall调用方式。这种调用方式得益于x64平台寄存器数量的增加。<br>　　<br>　　windows x64平台fastcall调用约定的主要特性如下：</p>
+<ul>
+<li>  前四个整型或指针类型参数由RCX,RDX,R8,R9依次传递，前四个浮点类型参数由XMM0,XMM1,XMM2,XMM3依次传递。</li>
+<li>  调用函数为前四个参数在调用栈上保留相应的空间，称作shadow space或spill slot。即使被调用方没有或小于4个参数，调用函数仍然保留那么多的栈空间，这有助于在某些特殊情况下简化调用约定。</li>
+<li>  除前四个参数以外的任何其他参数通过栈来传递，从右至左依次入栈。</li>
+<li>  由调用函数负责清理调用栈。</li>
+<li>  小于等于64位的整型或指针类型返回值由RAX传递。</li>
+<li>  浮点返回值由XMM0传递。</li>
+<li>  更大的返回值(比如结构体)，由调用方在栈上分配空间，并有RCX持有该空间的指针并传递给被调用函数，因此整型参数使用的寄存器依次右移一格，实际只可以利用3个寄存器，其余参数入栈。函数调用结束后，RAX返回该空间的指针。</li>
+<li>  除RCX,RDX,R8,R9以外，RAX、R10、R11、XMM4 和 XMM5也是易变化的(volatile)寄存器。</li>
+<li>  RBX, RBP, RDI, RSI, R12, R13, R14, and R15寄存器则必须在使用时进行保护。</li>
+<li>  在寄存器中，所有参数都是右对齐的。小于64位的参数并不进行高位零扩展，也就是高位是无法预测的垃圾数据。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1006,94 +1098,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/11/03/ubunut-pppoe-mtu-issue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/11/03/ubunut-pppoe-mtu-issue/" class="post-title-link" itemprop="url">ubunut pppoe拨号部分网站无法访问的原因及解决办法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-11-03 20:08:57" itemprop="dateCreated datePublished" datetime="2009-11-03T20:08:57+08:00">2009-11-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ubuntu 9.10(karmic koala)AMD64系统下，设置好ADSL PPPoE拨号后，出现一种情况，部分网站可以正常访问，而有些网站则没有响应，无法正常访问。比如google.cn是正常的，而sina.com.cn则无法访问。</p>
-<p>　　出现这个问题的原因是PPPoE默认设置的MTU1492字节有问题。MTU是链路层的一个特性，叫做最大传输单元(Maximum Transfer Unit)。如果网络层(IP层)要发送的数据比链路层的MTU还要大，那么IP层必须对数据进行分片(fragmentation)。PPPoE的MTU是一种逻辑MTU,因为PPPoE并没有一个实体的链路层存在。通常情况下以太网(ethernet)的MTU为1500字节，所以PPPoE设置其MTU为1492字节，加上PPPoE 8个字节的头部，刚好达到以太网的MTU，从而可以提高网络的利用率。但实际上很多ADSL接入方式的MTU并不是1500字节，比如我的ADSL链路使用traceroute实测的路径MTU(PMTU)是1492字节。那么这种情况下，PPPoE设置其MTU为1492就存在问题了，加上8个字节的PPPoE头部后，就超过了以太网的MTU大小。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2009/11/03/ubunut-pppoe-mtu-issue/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/93/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/93/">93</a><span class="page-number current">94</span><a class="page-number" href="/page/95/">95</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/95/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1129,7 +1133,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

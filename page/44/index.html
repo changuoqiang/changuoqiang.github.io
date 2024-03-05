@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/12/08/vim-multifile-find/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/12/08/vim-multifile-find/" class="post-title-link" itemprop="url">vim多文件查找</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-12-08 14:43:13" itemprop="dateCreated datePublished" datetime="2014-12-08T14:43:13+08:00">2014-12-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在linux平台上,有很多优秀的shell命令组合来做多文件查找/替换,比如这些命令:find,sed,grep,awk,perl。但其他平台比如windows上就没那么方便了,这时候vim内置的多文件查找命令就有用武之地了，虽然比起外部命令来稍微慢了一点点儿。</p>
+<p>这个vim内置命令就是vimgrep,有两种基本的使用方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:vim\[grep\]\[!\] /&#123;pattern&#125;/\[g\]\[j\] &#123;file&#125; ...</span><br><span class="line">:vim\[grep\]\[!\] &#123;pattern&#125; &#123;file&#125; ...</span><br></pre></td></tr></table></figure>
+
+<p>file部分支持通配符,<em>代表当前目录,**代表当前目录及其子目录(递归)，比如</em>/<em>.c代表当前目录下的c源程序文件,**/</em>.c代表当前目录及其递归子目录下的所有源程序文件。file部分可以指定多次。</p>
+<p>g(global)是全局标志，没有g,每行只会匹配一次，如果有g,则匹配行内所有符合的pattern，也就是行可以会多次被添加到quickfix列表。<br>j(jump)是跳转标志，没有j，vim会跳转到第一个匹配，如果有j，则只更新</p>
+<p>以下命令查看匹配结果：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:cn\[ext\] 下一个结果</span><br><span class="line">:cp\[revious\] 上一个结果</span><br><span class="line">:cw\[indow\] quickfix窗口,结果文件列表</span><br></pre></td></tr></table></figure>
+
+<p>更详细的用法参见:help vimgrep 和下面的refs。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://mywcd.sinaapp.com/blog/425">使用vimgrep查找文件</a><br>[2]<a target="_blank" rel="noopener" href="http://easwy.com/blog/archives/advanced-vim-skills-quickfix-mode/">vi/vim使用进阶: 剑不离手 – quickfix</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1100,96 +1192,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/10/30/mac-os-x-free-memory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/10/30/mac-os-x-free-memory/" class="post-title-link" itemprop="url">Mac OS X没有free命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-10-30 21:49:34" itemprop="dateCreated datePublished" datetime="2014-10-30T21:49:34+08:00">2014-10-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>想看内存使用情况,linux上使用free命令,mac上没这命令,擦！</p>
-<p>参考[1]对此有详尽的描述，甚至写了python脚本来输出内存使用情况，一般下面这个简单点儿的命令就够了:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ top -l <span class="number">1</span> head -n <span class="number">10</span> grep PhysMem</span><br><span class="line">PhysMem: 2001M used(659M wired), 6189M unused.</span><br></pre></td></tr></table></figure>
-
-<p>可以在.bashrc文件中添加一个别名叫free</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias free=<span class="string">&#x27;top -l 1 head -n 10 grep PhysMem&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>以后直接使用free来查看就可以了。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://smilejay.com/2014/06/mac-memory-usage-command-line/">Mac上命令行查看系统内存使用量</a><br>[2]<a target="_blank" rel="noopener" href="http://apple.stackexchange.com/questions/4286/is-there-a-mac-os-x-terminal-version-of-the-free-command-in-linux-systems">Is there a Mac OS X Terminal version of the “free” command in Linux systems?</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/43/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/45/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1225,7 +1227,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

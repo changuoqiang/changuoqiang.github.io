@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,123 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/13/dataguard-not-update-v-archived-log-applied-column/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/13/dataguard-not-update-v-archived-log-applied-column/" class="post-title-link" itemprop="url">Dataguard配置中primary不更新v$_archived_log的'APPLIED'列</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-13 08:28:48" itemprop="dateCreated datePublished" datetime="2016-05-13T08:28:48+08:00">2016-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>Dataguard配置中因为网络故障出现了日志gap,修复gap后，恢复自动同步。</p>
+<p>备库看一切正常：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> YES</span><br></pre></td></tr></table></figure>
+
+<p>但主库确显示日志并未应用:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line"></span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> NO</span><br></pre></td></tr></table></figure>
+
+<p>其实日志已经正确的同步并应用了，只是primary没有更新applied列的值而已，这是个bug, 编号1369630.1</p>
+<p>主库上有一个指定的ARCn进程与远程的RFS进程通讯来更新applied列的值，如果此进程挂起，无法与远程通讯也就无法更新v$archived_log的applied列值。</p>
+<p><strong>解决方案</strong></p>
+<p>主库ALERT_sid.LOG文件查找最新的,包含以下类似信息的行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARCn: Becoming the heartbeat ARCH</span><br></pre></td></tr></table></figure>
+
+<p>说明ARCn进程/线程出问题挂起了,n是数字,比如ARC0</p>
+<p>然后查找ARC0的进程/线程号,*nix平台是进程,windows平台是线程:</p>
+<p>windows平台输出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT spid, osuser, s.program FROM v$process p, v$session s WHERE p.addr=s.paddr and p.program like <span class="string">&#x27;%ARC0%&#x27;</span></span><br><span class="line">SPID OSUSER PROGRAM</span><br><span class="line">---------- ----------------- -----------------------</span><br><span class="line"><span class="number">2616</span> SYSTEM ORACLE.EXE (ARC0)</span><br></pre></td></tr></table></figure>
+
+<p>将对应的进程/线程kill掉就可以了,oracle会重新启动相应的进程/线程。</p>
+<p>*nix平台:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># kill -9 processid </span><br></pre></td></tr></table></figure>
+
+<p>windows平台:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; orakill sid threadid</span><br></pre></td></tr></table></figure>
+
+<p>sid是oracle实例名</p>
+<p><strong>或者更简单粗暴的重新启动oracle实例</strong></p>
+<p>alert_sid.log文件中可能会出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
+
+<p>sid_arc0_xxxx.trc文件中也会有：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span> <span class="number">16401</span> creating standby archive log file at host <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
+
+<p>这是出现重复归档的错误提示，因为ARC0想重新归档已经应用到备库的日志，可以安全的忽略掉这些信息，ARC0会更新已经传输到备库的日志的APPLIED列。</p>
+<p>ORA-16401也可能出现在多个主库和/或备库向同一个备库归档的情形下，这种情况一般是因为LOG_ARCHIVE_DEST_n参数配置错误。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://oracle-artifacts.blogspot.com/2012/04/oracle-data-guard-issues-applied-column.html">Oracle Data-guard Issues - ‘APPLIED’-Column not updated in v$archived_log table</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1drYAr6VVQh652kl7cvHFZXEmFlN5eYMrJr6q3hPtWO4/edit?pref=2&pli=1">Bug Note: 1369630.1</a><br>[3]<a target="_blank" rel="noopener" href="http://topmanopensource.iteye.com/blog/1171271">ORACLE在windows上使用orakill结束oracle会话的线程</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1160,96 +1277,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/10/python-queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/10/python-queue/" class="post-title-link" itemprop="url">python队列</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-10 20:39:23" itemprop="dateCreated datePublished" datetime="2016-04-10T20:39:23+08:00">2016-04-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>python有两个队列实现，分别是queue.Queue和mulitiprocess.Queue。</p>
-<p>queue.Queue是线程安全的，用于线程间数据同步，而mulitiprocess.Queue是用于多进程间数据通讯的。如果在多进程间使用queue.Queue是无法共享数据的，每个进程会有一个单独的队列副本。</p>
-<p>因为queue.Queue用于多线程数据同步，而mulitiprocess.Queue用于多进程数据同步。</p>
-<p>python3中线程队列的名字为queue,而python2中其名字为Queue。</p>
-<p>python中的list和dict不是线程安全的。</p>
-<p><strong>task_done与join</strong></p>
-<p>queue.Queue有一个join方法可以阻塞当前线程，直到队列中所有的item都处理完成了，所以需要每处理一个队列的item,调用一次队列的task_done方法，当队里的所有元素都标记为处理过了，join方法会从等待中返回。</p>
-<p>如果不调用join方法，也就无需调用task_done方法了。</p>
-<p>mulitiprocess.Queue并没有join特性，如需要此特性，应该使用multiprocessing.JoinableQueue队列</p>
-<p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1285,7 +1312,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

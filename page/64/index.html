@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,136 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/27/git-show-branch-output/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2013/11/27/git-show-branch-output/" class="post-title-link" itemprop="url">git show-branch输出</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2013-11-27 10:11:42" itemprop="dateCreated datePublished" datetime="2013-11-27T10:11:42+08:00">2013-11-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>为了弄明白git show-branch的输出格式,先做一系列实验，看其输出</p>
+<p><strong>初始化一个空的git库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br><span class="line">Initialized empty Git repository <span class="keyword">in</span> /home/$&#123;username&#125;/test/.git/</span><br></pre></td></tr></table></figure>
+
+<p><strong>在master分支上做初始提交</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ touch master</span><br><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">&quot;master init commit&quot;</span></span><br><span class="line">\[master (root-commit) d47b60d\] master init commit</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">0</span> insertions(+), <span class="number">0</span> deletions(-)</span><br><span class="line"> create mode <span class="number">100644</span> master</span><br></pre></td></tr></table></figure>
+
+<p><strong>看看当前分支的情况</strong></p>
+<p>$ git branch</p>
+<ul>
+<li>master</li>
+</ul>
+<p>$ git show-branch<br>[master] master init commit</p>
+<p><strong>新建devel分支</strong></p>
+<p>$ git branch devel<br>$ git branch<br>   devel</p>
+<ul>
+<li>master</li>
+</ul>
+<p>$ git show-branch<br>!  [devel] master init commit<br>  *  [master] master init commit<br>–<br>+*  [devel] master init commit</p>
+<p><strong>切换到devel分支并做新的提交</strong><br>$ git checkout devel<br>Switched to branch ‘devel’<br>$ touch devel<br>$ git add –all<br>$ git commit -m “first commit on devel”<br>$ git branch</p>
+<ul>
+<li>devel<br>   master</li>
+</ul>
+<p>$ git show-branch<br>*  [devel] first commit on devel<br>  !   [master] master init commit<br>–<br>*     [devel] first commit on devel<br>*+  [master] master init commit</p>
+<p><strong>回到master分支</strong><br>$ git checkout master<br>$ git show-branch<br>!   [devel] first commit on devel<br>   *    [master] master init commit<br>–<br>+      [devel] first commit on devel</p>
+<ul>
+<li><ul>
+<li>  [master] master init commit</li>
+</ul>
+</li>
+</ul>
+<p><strong>在devel分支上新建feature分支</strong></p>
+<p>$ git checkout devel<br>$ git checkout -b feature<br>$ touch feature<br>$ git add –all<br>$ git commit -m “first commit on feature”<br>$ git show-branch<br><img src="/downloads/show_branch_on_feature.png" alt="show_branch_on_feature"></p>
+<p>切换到devel分支<br>$ git checkout devel<br>$ git show-branch<br><img src="/downloads/show_branch_on_devel.png" alt="show_branch_on_devel"></p>
+<p>切换到master分支<br>$ git checkout master<br>$ git show-branch<br><img src="/downloads/show_branch_on_master.png" alt="show_branch_on_master"></p>
+<p><strong>合并分支feature到devel</strong></p>
+<p>$ git checkout devel<br>$ git merge feature<br>$ git show-branch<br><img src="/downloads/show_branch_on_devel_merged_feature.png" alt="show_branch_on_devel_merged_feature"></p>
+<p><strong>feature分支多次提交之后</strong><br><img src="/downloads/multiple_commit.png" alt="multiple_commit"></p>
+<p><strong>然后再将分支feature合并到devel</strong><br><img src="/downloads/merge.png" alt="merge"></p>
+<h5 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h5><ul>
+<li>  git show-branch输出<br>输出分为上下两部分，使用短划线”-“分隔。两个分支使用两个短划线”–”，三个分支使用三个短划线”—“，依次类推。<br>上半部分为层次缩进的分支列表，下半部分为commit列表。<br>上半部分的分支列表中，使用<em>标识当前分支，其他分支使用!标识。分支前的标识符</em>或者!一直垂直贯通到下半部分，这一垂直列的符号都是属于这个分支的。<br>下半部分的commit列表中，前导的符号有<em>和+号。</em>表示这一列上的分支(当前分支)有此commit。而+表示这一列上的分支(非当前分支)有此commit。</li>
+</ul>
+<p>标识符的颜色只是用于容易区分列，一列的颜色是一致的，看起来更清楚。</p>
+<ul>
+<li>  分支名字和commit标识<br>show-branch输出中，上半部分的分支名字使用[分支名字]标识，下半部分的commit使用[分支名字]标识最后的commit,[分支名字^]标识该分支的上一个提交<br>[分支名字~2]标识该分支的倒数第三个commit。这是commit的快捷标识符，在git命令中可以引用对应的commit，也可以直接使用commit的hash tag,不过比较不直观而已。</li>
+<li>  git branch<br>branch只是简单的输出所有的分支，当前分支前使用*表示，当前分支的文字颜色为绿色。</li>
+<li>  merge<br>一个commit只输出一次，分支被合并后，被合并分支的commit使用[合并分支]标识，但commit是属于两个分支的，所以commit的前面有两个标识符号*和+。</li>
+<li>  分支名字空间<br>git的分支名字空间是扁平的，共享同一个namespace。</li>
+</ul>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1098,86 +1228,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/11/23/4285/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2013/11/23/4285/" class="post-title-link" itemprop="url">Untitled Post - 14</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2013-11-23 17:23:17" itemprop="dateCreated datePublished" datetime="2013-11-23T17:23:17+08:00">2013-11-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>PostgeSQL有serial字段的表插入记录时，要么不提供serial字段，要么为serial字段提供DEFAULT这个值。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/63/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/65/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1213,7 +1263,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

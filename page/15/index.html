@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,94 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/25/linode-latest-kernel-docker-service-faile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/25/linode-latest-kernel-docker-service-faile/" class="post-title-link" itemprop="url">linode最新内核docker服务无法启动</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-25 12:20:35" itemprop="dateCreated datePublished" datetime="2018-11-25T12:20:35+08:00">2018-11-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>升级完linode发现docker服务无法启动了，containerd服务报找不到overlay模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">modprobe: FATAL: Module overlay not found</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>linode内核早就启用overlay模块了，这是docker bug导致的。</p>
+<p>执行以下命令来解决此问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ su -</span><br><span class="line">$ mkdir -p /etc/systemd/system/containerd.service.d/</span><br><span class="line"></span><br><span class="line">$ cat &lt;&lt; EOF &gt; <span class="regexp">/etc/</span>systemd/system/containerd.service.d/override.conf</span><br><span class="line">\[Service\]</span><br><span class="line">ExecStartPre=</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">$ systemctl daemon-reload</span><br><span class="line"></span><br><span class="line">$ systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.linode.com/community/questions/17114/docker-wont-start-using-the-latest-linode-kernel#answer-67343">Docker won’t start using the latest Linode kernel</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1069,106 +1157,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/07/18/systemd-template-unit-file-and-instance-unit-file/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/07/18/systemd-template-unit-file-and-instance-unit-file/" class="post-title-link" itemprop="url">systemd的模板单元文件和实例单元文件</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-07-18 09:11:23" itemprop="dateCreated datePublished" datetime="2018-07-18T09:11:23+08:00">2018-07-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>模板单元文件和实例单元文件</strong></p>
-<p>使用模板，一个模板单元(unit)文件可以创建多个实例化的单元文件，从而简化系统配置。</p>
-<p>模板单元文件的文件名中包含一个@符号，@位于单元基本文件名和扩展名之间，比如:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example@.service</span><br></pre></td></tr></table></figure>
-
-<p>当从模板单元文件创建实例单元文件时，在@符号和单元扩展名(包括符号.)之前加入实例名,比如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example@instance1.service</span><br></pre></td></tr></table></figure>
-
-<p>表明实例单元文件<a href="mailto:&#x65;&#120;&#97;&#x6d;&#112;&#108;&#101;&#x40;&#x69;&#x6e;&#115;&#116;&#97;&#x6e;&#99;&#101;&#49;&#x2e;&#x73;&#101;&#x72;&#118;&#105;&#x63;&#101;">&#x65;&#120;&#97;&#x6d;&#112;&#108;&#101;&#x40;&#x69;&#x6e;&#115;&#116;&#97;&#x6e;&#99;&#101;&#49;&#x2e;&#x73;&#101;&#x72;&#118;&#105;&#x63;&#101;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
-<p>实例单元文件一般是模板单元文件的一个符号链接，符号链接命中包含实例名，systemd就会传递实例名给模板单元文件。</p>
-<p>在相应的target中创建实例单元文件符号链接之后，需要运行一下命令将其装载：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
-
-<p><strong>模板标识符/参数</strong></p>
-<p>模板单元文件中可以使用一些标识符，当被实例化为实例单元文件并运行时，systemd会将标识符的实际值传递给对应的标识符，比如在模板单元文件中是用%i，实际运行实例单元文件时，会将实例名传递给%i标识符。</p>
-<p>有以下可用的标识符：</p>
-<blockquote>
-<p>%n: Anywhere where this appears in a template file, the full resulting unit name will be inserted.<br>%N: This is the same as the above, but any escaping, such as those present in file path patterns, will be reversed.<br>%p: This references the unit name prefix. This is the portion of the unit name that comes before the @ symbol.<br>%P: This is the same as above, but with any escaping reversed.<br>%i: This references the instance name, which is the identifier following the @ in the instance unit. This is one of the most commonly used specifiers because it will be guaranteed to be dynamic. The use of this identifier encourages the use of configuration significant identifiers. For example, the port that the service will be run at can be used as the instance identifier and the template can use this specifier to set up the port specification.<br>%I: This specifier is the same as the above, but with any escaping reversed.<br>%f: This will be replaced with the unescaped instance name or the prefix name, prepended with a /.<br>%c: This will indicate the control group of the unit, with the standard parent hierarchy of /sys/fs/cgroup/ssytemd/ removed.<br>%u: The name of the user configured to run the unit.<br>%U: The same as above, but as a numeric UID instead of name.<br>%H: The host name of the system that is running the unit.<br>%%: This is used to insert a literal percentage sign.</p>
-</blockquote>
-<p>References:<br>[1] <a target="_blank" rel="noopener" href="https://www.digitalocean.com/community/tutorials/understanding-systemd-units-and-unit-files">Understanding Systemd Units and Unit Files</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1204,7 +1192,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

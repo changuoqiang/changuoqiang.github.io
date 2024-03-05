@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/15/psql-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/15/psql-variable/" class="post-title-link" itemprop="url">psql变量</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-15 22:34:17" itemprop="dateCreated datePublished" datetime="2016-06-15T22:34:17+08:00">2016-06-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>psql 提供变量替换特性，类似于shell的变量。</p>
+<p>psql的变量就是简单的名字/值对，名字只能有字母、数字和下划线组成。</p>
+<p>使用\set命令来设置变量:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set foo bar</span><br></pre></td></tr></table></figure>
+
+<p>这样设置了变量foo,其值为bar。这样来显示变量的值:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :foo</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
+
+<p>使用\set只指定变量名，不指定值时，会设置该变量，只不过其值为空。</p>
+<p>使用\unset命令来销毁变量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\unset foo</span><br></pre></td></tr></table></figure>
+
+<p>使用\set命令，不提供任何参数，显示全部的变量。<br>下面展示的是系统预置的变量:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set</span><br><span class="line">AUTOCOMMIT = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">PROMPT1 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT2 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT3 = <span class="string">&#x27;&gt;&gt; &#x27;</span></span><br><span class="line">VERBOSITY = <span class="string">&#x27;default&#x27;</span></span><br><span class="line">VERSION = <span class="string">&#x27;PostgreSQL 9.4.8 on x86_64-unknown-linux-gnu, compiled by gcc (Debian 4.9.2-10) 4.9.2, 64-bit&#x27;</span></span><br><span class="line">DBNAME = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">USER = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">HOST = <span class="string">&#x27;localhost&#x27;</span></span><br><span class="line">PORT = <span class="string">&#x27;5432&#x27;</span></span><br><span class="line">ENCODING = <span class="string">&#x27;UTF8&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看PostgreSQL版本</strong></p>
+<p>因此获取postgresql版本就有了另外一种方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :VERSION</span><br><span class="line">PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br></pre></td></tr></table></figure>
+
+<p>另一种方法是:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT VERSION();</span><br><span class="line"> version </span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line"> PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+
+<p>二者结果是一样的。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1191,123 +1295,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/13/dataguard-not-update-v-archived-log-applied-column/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/05/13/dataguard-not-update-v-archived-log-applied-column/" class="post-title-link" itemprop="url">Dataguard配置中primary不更新v$_archived_log的'APPLIED'列</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-05-13 08:28:48" itemprop="dateCreated datePublished" datetime="2016-05-13T08:28:48+08:00">2016-05-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>Dataguard配置中因为网络故障出现了日志gap,修复gap后，恢复自动同步。</p>
-<p>备库看一切正常：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> YES</span><br></pre></td></tr></table></figure>
-
-<p>但主库确显示日志并未应用:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT max(sequence#), applied FROM v$archived_log GROUP BY applied;</span><br><span class="line"></span><br><span class="line">MAX(SEQUENCE#) APPLIED</span><br><span class="line">-------------- ---------</span><br><span class="line"> <span class="number">20114</span> NO</span><br></pre></td></tr></table></figure>
-
-<p>其实日志已经正确的同步并应用了，只是primary没有更新applied列的值而已，这是个bug, 编号1369630.1</p>
-<p>主库上有一个指定的ARCn进程与远程的RFS进程通讯来更新applied列的值，如果此进程挂起，无法与远程通讯也就无法更新v$archived_log的applied列值。</p>
-<p><strong>解决方案</strong></p>
-<p>主库ALERT_sid.LOG文件查找最新的,包含以下类似信息的行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARCn: Becoming the heartbeat ARCH</span><br></pre></td></tr></table></figure>
-
-<p>说明ARCn进程/线程出问题挂起了,n是数字,比如ARC0</p>
-<p>然后查找ARC0的进程/线程号,*nix平台是进程,windows平台是线程:</p>
-<p>windows平台输出：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; SELECT spid, osuser, s.program FROM v$process p, v$session s WHERE p.addr=s.paddr and p.program like <span class="string">&#x27;%ARC0%&#x27;</span></span><br><span class="line">SPID OSUSER PROGRAM</span><br><span class="line">---------- ----------------- -----------------------</span><br><span class="line"><span class="number">2616</span> SYSTEM ORACLE.EXE (ARC0)</span><br></pre></td></tr></table></figure>
-
-<p>将对应的进程/线程kill掉就可以了,oracle会重新启动相应的进程/线程。</p>
-<p>*nix平台:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># kill -9 processid </span><br></pre></td></tr></table></figure>
-
-<p>windows平台:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; orakill sid threadid</span><br></pre></td></tr></table></figure>
-
-<p>sid是oracle实例名</p>
-<p><strong>或者更简单粗暴的重新启动oracle实例</strong></p>
-<p>alert_sid.log文件中可能会出现错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
-
-<p>sid_arc0_xxxx.trc文件中也会有：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span> <span class="number">16401</span> creating standby archive log file at host <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">ORA-<span class="number">16401</span>: archivelog rejected by RFS</span><br></pre></td></tr></table></figure>
-
-<p>这是出现重复归档的错误提示，因为ARC0想重新归档已经应用到备库的日志，可以安全的忽略掉这些信息，ARC0会更新已经传输到备库的日志的APPLIED列。</p>
-<p>ORA-16401也可能出现在多个主库和/或备库向同一个备库归档的情形下，这种情况一般是因为LOG_ARCHIVE_DEST_n参数配置错误。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://oracle-artifacts.blogspot.com/2012/04/oracle-data-guard-issues-applied-column.html">Oracle Data-guard Issues - ‘APPLIED’-Column not updated in v$archived_log table</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1drYAr6VVQh652kl7cvHFZXEmFlN5eYMrJr6q3hPtWO4/edit?pref=2&pli=1">Bug Note: 1369630.1</a><br>[3]<a target="_blank" rel="noopener" href="http://topmanopensource.iteye.com/blog/1171271">ORACLE在windows上使用orakill结束oracle会话的线程</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1343,7 +1330,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

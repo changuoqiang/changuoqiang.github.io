@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/07/29/birdnest-twitter-api-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/07/29/birdnest-twitter-api-proxy/" class="post-title-link" itemprop="url">不基于GAE构建birdnest twitter api proxy</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-07-29 13:25:25" itemprop="dateCreated datePublished" datetime="2010-07-29T13:25:25+08:00">2010-07-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>其实只要空间支持python都可以<a target="_blank" rel="noopener" href="http://yegle.net/2009/07/29/setup-a-birdnest-twitter-api-proxy-on-your-own-host/">使用birdnest搭建twitter api proxy</a>。</p>
+<p>曾经尝试用twip来搭建，但是因为主机用的是nginx，尝试N久未成功，遂放弃改用birdnest，原来是如此简单，记叙如下：</p>
+<p>1.安装python及支持模块。我的VPS已经自带了python。下载<a target="_blank" rel="noopener" href="http://pypi.python.org/pypi/simplejson/">simplejson</a>,解压后进去目录执行python setup.py build和sudo python setup.py install即可</p>
+<p>2.下载birdnest。在某个目录下执行</p>
+<p>svn checkout <a target="_blank" rel="noopener" href="http://birdnest.googlecode.com/svn/branches/stable">http://birdnest.googlecode.com/svn/branches/stable</a> birdnest-read-only</p>
+<p>或者如果你用git的话</p>
+<p>git-svn clone <a target="_blank" rel="noopener" href="http://birdnest.googlecode.com/svn/branches/stable">http://birdnest.googlecode.com/svn/branches/stable</a> birdnest-read-only</p>
+<p>3. 进入birnest目录执行</p>
+<p>python code.py 空间ip:随便指定的port</p>
+<p>测试一下如果正常，则可以在/etc/init.d下面加入脚本birdnest，并在/etc/rc3.d/目录下建立其目录链接,注意你自己的运行级，让其开机自动运行，脚本内容如下</p>
+<p>#!/bin/sh</p>
+<p>cd /你的birdnest路径</p>
+<p>python code.py 空间ip:指定的port &gt; /dev/null 2&gt;&amp;1 &amp;</p>
+<p>4.在twitter客户端设置api地址为http://空间ip:指定的port/api即可.birdnest提供了4种api，/api、/optimized、/image、/text，具体介绍请翻墙去<a target="_blank" rel="noopener" href="http://nest.onedd.net/">官网</a>。我只用了/api，看起来还不错</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1015,86 +1108,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/02/20/tor-youtube/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/02/20/tor-youtube/" class="post-title-link" itemprop="url">ff带套(tor)翻墙上youtube无法播放视频问题的解决办法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-02-20 11:05:08" itemprop="dateCreated datePublished" datetime="2010-02-20T11:05:08+08:00">2010-02-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>firefox 3.6带套上youtube(一定要代理*.youtube.com,只代理<a target="_blank" rel="noopener" href="http://www.youtube.com是不可以的),首页页面显示混乱,打不开视频,随便点击一个视频连接,出现提示“hello/">www.youtube.com是不可以的)，首页页面显示混乱，打不开视频，随便点击一个视频连接，出现提示“Hello</a>, you either have JavaScript turned off or an old version of Adobe’s Flash Player. Get the latest Flash player.” flash版本不够新云云。如果更新了adobe flash player并且打开了JavaScript还是无法观看，请将这个网址ytimg.com一并加入tor代理网络，应该就可以正常观看了。不是火狐的问题，也不是洋葱的问题，都是该死的Great Fucking Wall的问题。郁闷了很久…</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/91/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/91/">91</a><span class="page-number current">92</span><a class="page-number" href="/page/93/">93</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/93/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1130,7 +1143,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

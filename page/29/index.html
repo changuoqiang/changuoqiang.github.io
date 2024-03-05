@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,114 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/14/debian-shadowsocks-qt5-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/11/14/debian-shadowsocks-qt5-install/" class="post-title-link" itemprop="url">debian安装shadowsocks-qt5</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-11-14 10:17:06" itemprop="dateCreated datePublished" datetime="2015-11-14T10:17:06+08:00">2015-11-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian官方源里的shadowsocks最近用不了了。/var/log/shadowsocks.log里出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR M2Crypto is required to use aes-<span class="number">256</span>-cfb, please run apt-get install python-m2crypto</span><br></pre></td></tr></table></figure>
+
+<p>但是实际上python-m2crypto已经安装了，重新安装也不行。那就换个客户端shadowsocks-qt5试试。</p>
+<p><strong>安装依赖</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install qt5-qmake qtbase5-dev libqrencode-dev libappindicator-dev libzbar-dev libbotan1<span class="number">.10</span>-dev</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装libQtShadowsocks</strong><br>shadowsocks-qt5依赖于libQtShadowsocks,所以先安装libQtShadowsocks。</p>
+<p>下载或clone libQtShadowsocks,项目根目录下执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg-buildpackage -uc -us -b</span><br></pre></td></tr></table></figure>
+
+<p>在上一级目录中生成三个deb包:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libqtshadowsocks_1<span class="number">.8</span><span class="number">.0</span>-1_amd64.deb </span><br><span class="line">libqtshadowsocks-dev_1<span class="number">.8</span><span class="number">.0</span>-1_amd64.deb </span><br><span class="line">shadowsocks-libqtshadowsocks_1<span class="number">.8</span><span class="number">.0</span>-1_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>安装前两个即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i libqtshadowsocks_1<span class="number">.8</span><span class="number">.0</span>-1_amd64.deb </span><br><span class="line">$ sudo dpkg -i libqtshadowsocks-dev_1<span class="number">.8</span><span class="number">.0</span>-1_amd64.deb </span><br></pre></td></tr></table></figure>
+
+<p><strong>安装shadowsocks-qt5</strong><br>下载或clone shadowsocks-qt5，项目根目录下执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg-buildpackage -uc -us -b</span><br></pre></td></tr></table></figure>
+
+<p>在上一级目录中生成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shadowsocks-qt5_2<span class="number">.6</span><span class="number">.0</span>-1_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>安装deb包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i shadowsocks-qt5_2<span class="number">.6</span><span class="number">.0</span>-1_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p>安装完成，配置见<a href="https://openwares.net/linux/shadowsocks_fuck_gfw.html">Shadowsocks科学上网</a>。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/shadowsocks/shadowsocks-qt5">shadowsocks-qt5</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/shadowsocks/libQtShadowsocks">libQtShadowsocks</a><br>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1090,101 +1198,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/11/04/gulp-debug-and-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/11/04/gulp-debug-and-log/" class="post-title-link" itemprop="url">gulp debug and log</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-11-04 09:10:19" itemprop="dateCreated datePublished" datetime="2015-11-04T09:10:19+08:00">2015-11-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>gulp-debug插件可以显示哪些文件经过了gulp的流水线(pipeline)</p>
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save-dev gulp-debug</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> debug = <span class="built_in">require</span>(<span class="string">&#x27;gulp-debug&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(<span class="string">&#x27;foo.js&#x27;</span>)</span><br><span class="line"> .pipe(debug())</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>gulp运行时就会输出流中所有处理的文件名:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="number">22</span>:<span class="number">20</span>:<span class="number">36</span>\] gulp-debug: foo.js</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用gulp-util输出错误</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// minify js</span></span><br><span class="line">gulp.task(<span class="string">&#x27;minifyJs&#x27;</span>, \[<span class="string">&#x27;clean&#x27;</span>\], <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(\[<span class="string">&#x27;**/*.js&#x27;</span>\])</span><br><span class="line"> .pipe(uglify().on(<span class="string">&#x27;error&#x27;</span>, util.log))</span><br><span class="line"> .pipe(debug())</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/sindresorhus/gulp-debug">gulp-debug</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/gulpjs/gulp-util">Utilities for gulp plugins</a></p>
-<p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1220,7 +1233,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

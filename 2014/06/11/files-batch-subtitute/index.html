@@ -23,15 +23,15 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"openwares.net","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="以替换google在线字体为国内CDN镜像为例： 1、使用find,sed以及grep 1$ sed -i &amp;#x27;s&#x2F;fonts\\.googleapis&#x2F;fonts\\.useso&#x2F;g&amp;#x27; \&#96;find . xargs grep -rl &amp;#x27;fonts.googleapis&amp;#x27;\&#96;  2、使用find和perl 1$ find . xargs perl -pi -">
+<meta name="description" content="以替换google在线字体为国内CDN镜像为例： 1、使用find,sed以及grep 1$ sed -i &amp;#x27;s&#x2F;fonts.googleapis&#x2F;fonts.useso&#x2F;g&amp;#x27; &#96;find . | xargs grep -rl &amp;#x27;fonts.googleapis&amp;#x27;&#96;   2、使用find和perl 1$ find . | xargs perl -pi -e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="批量替换多个文件中的字符串">
 <meta property="og:url" content="https://openwares.net/2014/06/11/files-batch-subtitute/index.html">
 <meta property="og:site_name" content="openwares.net">
-<meta property="og:description" content="以替换google在线字体为国内CDN镜像为例： 1、使用find,sed以及grep 1$ sed -i &amp;#x27;s&#x2F;fonts\\.googleapis&#x2F;fonts\\.useso&#x2F;g&amp;#x27; \&#96;find . xargs grep -rl &amp;#x27;fonts.googleapis&amp;#x27;\&#96;  2、使用find和perl 1$ find . xargs perl -pi -">
+<meta property="og:description" content="以替换google在线字体为国内CDN镜像为例： 1、使用find,sed以及grep 1$ sed -i &amp;#x27;s&#x2F;fonts.googleapis&#x2F;fonts.useso&#x2F;g&amp;#x27; &#96;find . | xargs grep -rl &amp;#x27;fonts.googleapis&amp;#x27;&#96;   2、使用find和perl 1$ find . | xargs perl -pi -e">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2014-06-11T08:23:09.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.179Z">
+<meta property="article:modified_time" content="2024-03-05T13:56:06.915Z">
 <meta property="article:author" content="openwares">
 <meta property="article:tag" content="Debian">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2024-03-05 21:56:06" itemprop="dateModified" datetime="2024-03-05T21:56:06+08:00">2024-03-05</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -328,19 +328,18 @@
         <a id="more"></a>
 <p>以替换google在线字体为国内CDN镜像为例：</p>
 <p>1、使用find,sed以及grep</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/fonts\\.googleapis/fonts\\.useso/g&#x27;</span> \<span class="string">`find . xargs grep -rl &#x27;fonts.googleapis&#x27;\`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span> <span class="string">`find . | xargs grep -rl &#x27;fonts.googleapis&#x27;`</span></span><br></pre></td></tr></table></figure>
+
 
 <p>2、使用find和perl</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . xargs perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find . | xargs perl -pi -e <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -pi -e <span class="string">&#x27;sfonts\\.googleapisfonts\\.usesog&#x27;</span> \<span class="string">`find .\`</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ perl -pi -e <span class="string">&#x27;s/fonts.googleapis/fonts.useso/g&#x27;</span> <span class="string">`find .`</span></span><br></pre></td></tr></table></figure>
 
 <p>3、不使用find也行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep oldString -rl /path xargs sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep -rl oldString path | xargs sed -i <span class="string">&#x27;s/oldString/newString/g&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&quot;s/oldString/newString/g&quot;</span> \<span class="string">`grep oldString -rl /path\`</span></span><br></pre></td></tr></table></figure>
-<p><strong>===<br>[erq]</strong></p>
-
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sed -i <span class="string">&#x27;s/oldString/newString/g&#x27;</span> <span class="string">`grep -rl oldString path`</span></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -406,7 +405,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

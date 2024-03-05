@@ -31,7 +31,7 @@
 <meta property="og:description" content="在本文里面，com指代complement, neg指代negative,并且本文涉及的是”2的补码”(two’s complement)而不是”1的补码”(one’s complement) 学过计算机的大部分人都知道负数在计算机内部是用补码表示的，但是大部分的教材和文章里面都只是简单的告诉你负数的补码等于其反码加一云云，至于为什么是这样，则基本上都语焉不详。 负数用补码表示的好处就是减法可以转">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2009-07-01T06:34:16.000Z">
-<meta property="article:modified_time" content="2020-12-04T12:01:09.533Z">
+<meta property="article:modified_time" content="2024-03-05T13:56:06.915Z">
 <meta property="article:author" content="openwares">
 <meta name="twitter:card" content="summary">
 
@@ -219,7 +219,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -302,7 +302,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+        <time title="Modified: 2024-03-05 21:56:06" itemprop="dateModified" datetime="2024-03-05T21:56:06+08:00">2024-03-05</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -329,15 +329,24 @@
 <p>负数用补码表示的好处就是减法可以转化为加法，简化硬件设计，CPU只用一个加法器就可以进行加减法运算了。</p>
 <p>下面我就尝试着来证明一下，为什么负数的补码等于反码加一。<br>理解下面的推导要求读者必须了解模数的概念和求模运算。</p>
 <a id="more"></a>
-<p>假设我们的运算使用n位二进制数，那么这n位二进制数的模数为2n,数α为一个用n位二进制表示的常数，数x为一个用n位二进制表示的变数，那么α &lt; 2n ，x &lt; 2n是成立的，在这里α与x都是用原码表示的。现在我们从α减掉x，推导如下：</p>
-<p>α – x = 2n%2n + (α - x) % 2n<br>        = (2n + (α - x)) % 2n<br>        = (α + 2n - x) % 2n<br>        = (α) % 2n + (2n – x) % 2n<br>        = α + (2n – x)</p>
-<p>我们现在将α – x这个减法运算成功演化成了 α + (2n – x)这个加法运算。从模数的概念我们知道,如果两个数相加等于其模数，那么这两个数是互补的。在这里x与2n – x是互补的，减掉数x与加上其补数2n - x是相等的。在这里还隐藏了一层含义，一个正数加上一个负数，如果有进位产生，把进位简单的舍弃掉是不影响计算结果的。<br>我们得出第一个结论：<br>xcom = 2n – x</p>
-<p>反码则简单的多，一个数的全部二进制位取反则得到其反码，由此可知，如果一个数加上它的反码，则此全部二进制位是满的，也就是全部是1，其值为2n-1 + 2n-2 + … + 22 + 21 + 20 = 2n – 1<br>我们得出第二个结论<br>xneg = 2n – 1 – x</p>
-<p>综合结论一和二，我们可以做如下推导：<br>xcom = 2n– x<br>        = 2n – 1 – x + 1<br>        = xneg + 1</p>
+<p>假设我们的运算使用n位二进制数，那么这n位二进制数的模数为2<sup>n</sup>，数α为一个用n位二进制表示的常数，数x为一个用n位二进制表示的变数，那么α &lt; 2<sup>n</sup> ，x &lt; 2<sup>n</sup>是成立的，在这里α与x都是用原码表示的。现在我们从α减掉x，推导如下：</p>
+<p>α – x = 2<sup>n</sup> % 2<sup>n</sup> + (α - x) % 2<sup>n</sup></p>
+<p>= (2<sup>n</sup> + (α - x)) % 2<sup>n</sup></p>
+<p>= (α + 2<sup>n</sup> - x) % 2<sup>n</sup></p>
+<p>= (α) % 2<sup>n</sup> + (2<sup>n</sup> – x) % 2<sup>n</sup></p>
+<p>= α + (2<sup>n</sup> – x)</p>
+<p>我们现在将α – x这个减法运算成功演化成了 α + (2<sup>n</sup> – x)这个加法运算。从模数的概念我们知道,如果两个数相加等于其模数，那么这两个数是互补的。在这里x与2<sup>n</sup> – x是互补的，减掉数x与加上其补数2<sup>n</sup> - x是相等的。在这里还隐藏了一层含义，一个正数加上一个负数，如果有进位产生，把进位简单的舍弃掉是不影响计算结果的。<br>我们得出第一个结论：</p>
+<p>x<sub>com</sub> = 2<sup>n</sup> – x</p>
+<p>反码则简单的多，一个数的全部二进制位取反则得到其反码，由此可知，如果一个数加上它的反码，则此全部二进制位是满的，也就是全部是1，其值为2<sup>n-1</sup> + 2<sup>n-2</sup> + … + 2<sup>2</sup> + 2<sup>1</sup> + 2<sup>0</sup> = 2<sup>n</sup> – 1</p>
+<p>我们得出第二个结论</p>
+<p>x<sub>neg</sub> = 2<sup>n</sup> – 1 – x</p>
+<p>综合结论一和二，我们可以做如下推导：</p>
+<p>x<sub>com</sub> = 2<sup>n</sup>– x</p>
+<p>= 2<sup>n</sup> – 1 – x + 1</p>
+<p>= x<sub>neg</sub> + 1</p>
 <p>至此我们得出最终结论一个n位二进制数的补数等于其反码加一。</p>
-<p>我们再回头看看，我们曾经说“x与2n - x是互补的，减掉数x与加上其补数2n – x是相等的”，减掉数x，我们可以看做是加-x,也就是”加-x”与”加2n – x”是对等的，那么在计算机中-x用2n – x做其补码就顺理成章了,注意这里说的是补码而不是补数。</p>
-<p>现在我们把x替换为1，n替换为8，得出-1的补码为28-1=255=0xFF，这就是-1在计算机里面的真实面目。当然对于正数就另当别论了。</p>
-<p><strong>===<br>[erq]</strong></p>
+<p>我们再回头看看，我们曾经说“x与2<sup>n</sup> - x是互补的，减掉数x与加上其补数2<sup>n</sup> – x是相等的”，减掉数x，我们可以看做是加-x，也就是”加-x”与”加2<sup>n</sup> – x”是对等的，那么在计算机中-x用2<sup>n</sup> – x做其补码就顺理成章了，注意这里说的是补码而不是补数。</p>
+<p>现在我们把x替换为1，n替换为8，得出-1的补码为2<sup>8</sup>-1=255=0xFF，这就是-1在计算机里面的真实面目。当然对于正数就另当别论了。</p>
 
     </div>
 
@@ -401,7 +410,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

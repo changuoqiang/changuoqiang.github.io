@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,134 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/07/06/html5-drag-drop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/07/06/html5-drag-drop/" class="post-title-link" itemprop="url">html5 拖拽(drag and drop)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-07-06 15:42:27" itemprop="dateCreated datePublished" datetime="2015-07-06T15:42:27+08:00">2015-07-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>属性</strong></p>
+<p>在HTML中，除了图片、超链接以及被选中区域，其它元素默认是不可拖拽的。因此如果要其他类型元素可以被拖拽，就需要设置元素的draggable属性为true。</p>
+<p>draggble是属性而不是样式，所以并不能用CSS来设置。</p>
+<p><strong>事件</strong></p>
+<p>一个完整的拖拽，总共会触发七种类型的事件。</p>
+<ul>
+<li>  dragstart</li>
+</ul>
+<p>当一个元素开始被拖拽的时候触发。用户拖拽的元素需要附加dragstart事件。在这个事件中，监听器将设置与这次拖拽相关的信息，例如拖动的数据和图像。</p>
+<ul>
+<li>  dragenter</li>
+</ul>
+<p>当拖拽中的鼠标第一次进入一个元素的时候触发。这个事件的监听器需要指明是否允许在这个区域释放鼠标。如果没有设置监听器，或者监听器没有进行操作，则默认不允许释放。当你想要通过类似高亮或插入标记等方式来告知用户此处可以释放，你将需要监听这个事件。</p>
+<ul>
+<li>  dragover</li>
+</ul>
+<p>当拖拽中的鼠标移动经过一个元素的时候触发。大多数时候，监听过程发生的操作与dragenter事件是一样的。</p>
+<ul>
+<li>  dragleave</li>
+</ul>
+<p>当拖拽中的鼠标离开元素时触发。监听器需要将作为可释放反馈的高亮或插入标记去除。</p>
+<ul>
+<li>  drag</li>
+</ul>
+<p>这个事件在拖拽源触发。即在拖拽操作中触发dragstart事件的元素。</p>
+<ul>
+<li>  drop</li>
+</ul>
+<p>这个事件在拖拽操作结束释放时于释放元素上触发。一个监听器用来响应接收被拖拽的数据并插入到释放之地。这个事件只有在需要时才触发。当用户取消了拖拽操作时将不触发，例如按下了Escape（ESC）按键，或鼠标在非可释放目标上释放了按键。</p>
+<ul>
+<li>  dragend</li>
+</ul>
+<p>拖拽源在拖拽操作结束将得到dragend事件对象，不管操作成功与否。</p>
+<p>其中在被拖拽对象上触发的事件有：<br>dragstart,drag和dragend</p>
+<p>而在目标对象上触发的事件有:<br>dragenter, dragover, dragleave和drop。是不是和mouseenter,mouseover,mouseleave比较像。</p>
+<p><strong>对象</strong></p>
+<p>拖放操作的核心对象是DataTransfer对象，由拖拽事件的dataTransfer属性来引用，只有在拖拽事件内部，此对象才是有效的。</p>
+<p>被拖拽元素和目标元素通过DataTransfer对象来传输数据，一般在被拖拽元素的dragstart事件中，使用dataTransfer.setData来设置要传输的数据，而在目标元素的<br>的drop事件中，使用dataTransfer.getData来获传输的数据。</p>
+<p>DataTransfer对象更详细的信息参考[2]</p>
+<p><strong>默认操作</strong></p>
+<p>浏览器对于拖拽操作，有默认的动作，一般应该取消默认动作。</p>
+<p><strong>拖放效果</strong></p>
+<p>拖放时，浏览器会自动生成缩略图来指示拖动效果，用户也可以用DataTransfer对象的setDragImage方法来指定自定义的拖动效果。不过此方法并不是所有浏览器都支持。</p>
+<p>可以在目标元素的dragenter,dragover,dragleave和drop事件中,为目标元素设置不同的样式来反馈拖放操作。</p>
+<p><strong>其他</strong></p>
+<p>chrome浏览器,dragenter,dragover,dragleave事件中,event.dataTransfer.getData()函数无法获取数据，一直返回undefined,而firefox是正常的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/DragDrop/Drag_and_Drop">拖放操作</a><br>[2]<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer">DataTransfer</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1010,108 +1138,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/06/02/pyinstaller-package-app/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/06/02/pyinstaller-package-app/" class="post-title-link" itemprop="url">pyinstaller打包python应用程序</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-06-02 10:26:51" itemprop="dateCreated datePublished" datetime="2015-06-02T10:26:51+08:00">2015-06-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Lang/" itemprop="url" rel="index"><span itemprop="name">Lang</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>py2exe已经好久不更新了,pyinstaller则是打包python程序更强大的工具。支持多平台打包，包括Linux,Mac,Solaris,AIX和Windows,而且使用十分简单。</p>
-<p>虽然pyinstaller说是实验性的支持python 3,其实已经支持的很好了。</p>
-<p><strong>安装</strong></p>
-<p>linux平台</p>
-<p>pyinstaller开发版已经支持python 3，使用pip3安装支持python 3的开发版pyinstaller</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pip3 install https:<span class="comment">//github.com/pyinstaller/pyinstaller/archive/python3.zip</span></span><br></pre></td></tr></table></figure>
-
-<p>windows平台</p>
-<p>windows 平台需要根据目标python 版本先安装相应的<a target="_blank" rel="noopener" href="http://sourceforge.net/projects/pywin32/">pywin32</a></p>
-<p>然后下载<a target="_blank" rel="noopener" href="https://github.com/pyinstaller/pyinstaller/archive/python3.zip,%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%90%8E%EF%BC%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BF%9B%E5%85%A5%E8%AF%A5%E7%9B%AE%E5%BD%95%E6%89%A7%E8%A1%8C">https://github.com/pyinstaller/pyinstaller/archive/python3.zip,解压缩后，命令行进入该目录执行</a>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&amp;amp;gt; python setup.py install</span><br></pre></td></tr></table></figure>
-
-<p><strong>打包python程序</strong><br>pyinstaller尚不支持跨平台打包应用程序。</p>
-<p>打包应用程序十分简单:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pyinstaller -F -w your_application_entry.py</span><br></pre></td></tr></table></figure>
-
-<p>在当前目录生成一个新目录dist,生成的可执行文件就在该目录之下。</p>
-<p>-F,–onefile 参数指定生成一个可执行文件。<br>-w, –windowed, –noconsole 参数指示不生成控制台窗口,主要针对Mac和Windows平台。</p>
-<p>如果能在当前PATH中找到UPX，会使用UPX来压缩exe文件。</p>
-<p>其他参数详见官方文档(参考[1])</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://pythonhosted.org/PyInstaller/">PyInstaller Manual</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1147,7 +1173,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

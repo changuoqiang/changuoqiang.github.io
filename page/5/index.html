@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/11/lxd-clustering-using-ceph-storage-backend/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/11/11/lxd-clustering-using-ceph-storage-backend/" class="post-title-link" itemprop="url">lxd clustering using ceph storage backend</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-11-11 16:50:44" itemprop="dateCreated datePublished" datetime="2019-11-11T16:50:44+08:00">2019-11-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-03-16 19:23:26" itemprop="dateModified" datetime="2022-03-16T19:23:26+08:00">2022-03-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd集群使用ceph后端共享存储，多个host共同管理一组容器，可以提高lxd容器的可用性，但当前版本的lxd集群功能还不够完善，不支持lxd容器在集群host之间live migration，故障迁移支持也不完善。<br>lxd集群部署ceph后端，数据丢失的风险大大降低，集群中host掉线，可以将lxd容器快速移动到其他host继续提供服务。</p>
+<p><strong>bootstrap节点配置</strong><br>第一个节点加入一个存在的集群选no，集群剩余其他节点选择加入现有集群。一个集群共享一个ceph pool，不同的集群要使用不同的ceph pool。</p>
+<p><strong>其他节点配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ sudo lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">What name should be used to identify <span class="built_in">this</span> node <span class="keyword">in</span> the cluster? \[<span class="keyword">default</span>=web\]: </span><br><span class="line">What IP address or DNS name should be used to reach <span class="built_in">this</span> node? \[<span class="keyword">default</span>=<span class="number">10.100</span><span class="number">.0</span><span class="number">.80</span>\]: </span><br><span class="line">Are you joining an existing cluster? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">IP address or FQDN <span class="keyword">of</span> an existing cluster node: <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span></span><br><span class="line">Cluster fingerprint: 79ec4bdfa32501a664b1adde03a2296f7d663a43676a422781668df1bec2ee12</span><br><span class="line">You can validate <span class="built_in">this</span> fingerprint by running <span class="string">&quot;lxc info&quot;</span> locally on an existing node.</span><br><span class="line">Is <span class="built_in">this</span> the correct fingerprint? (yes/no) \[<span class="keyword">default</span>=no\]: yes</span><br><span class="line">Cluster trust password: </span><br><span class="line">All existing data is lost when joining a cluster, <span class="keyword">continue</span>? (yes/no) \[<span class="keyword">default</span>=no\] yes</span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
+
+<p><strong>集群管理</strong><br>集群节点列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxc cluster list</span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> NAME URL DATABASE STATE MESSAGE </span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> vm02 https:<span class="comment">//10.100.0.33:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> vmsvr02 https:<span class="comment">//10.100.0.31:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br><span class="line"> web https:<span class="comment">//10.100.0.80:8443 YES ONLINE fully operational </span></span><br><span class="line">+---------+--------------------------+----------+--------+-------------------+</span><br></pre></td></tr></table></figure>
+
+<p>容器静态迁移，假设容器名字为foo，将其移动到node2主机运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop foo</span><br><span class="line">$ lxc move foo --target node2</span><br></pre></td></tr></table></figure>
+<p>容器所在主机故障时，可以使用lxc move移动容器到健康的节点继续运行，因为使用ceph,这个过程中没有主机间的数据拷贝。</p>
+<p>如果lxd集群支持在线迁移和故障自动迁移就好用多了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lxd.readthedocs.io/en/latest/clustering/">Clustering</a><br>[2]<a target="_blank" rel="noopener" href="https://ubuntu.com/blog/lxd-clusters-a-primer">LXD Clusters: A Primer</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1154,93 +1247,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/20/ssh-packet-write-wait-broken-pipe/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/20/ssh-packet-write-wait-broken-pipe/" class="post-title-link" itemprop="url">ssh packet_write_wait Broken pipe</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-20 10:12:07" itemprop="dateCreated datePublished" datetime="2019-10-20T10:12:07+08:00">2019-10-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>ssh连接空闲一段时间后出现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">packet_write_wait: Connection to UNKNOWN port <span class="number">65535</span>: Broken pipe</span><br></pre></td></tr></table></figure>
-<p>这是连接超时，需要设置一个保持心跳的参数，客户端是ServerAliveInterval，服务器端是ClientAliveInterval，参数值单位为second，还可以在.ssh/config中为每用户、每连接设置此参数</p>
-<p>客户端：<br>/etc/ssh/ssh_config文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Host *</span><br><span class="line">ServerAliveInterval <span class="number">45</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://askubuntu.com/questions/127369/how-to-prevent-write-failed-broken-pipe-on-ssh-connection">How to prevent “Write Failed: broken pipe” on SSH connection?</a><br>[2]<a target="_blank" rel="noopener" href="https://www.logcg.com/archives/897.html">当SSH遇到“Write failed: Broken pipe”</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1276,7 +1282,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

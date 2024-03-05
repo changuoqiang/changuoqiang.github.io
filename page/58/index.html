@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,142 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/22/cert-conceptions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/01/22/cert-conceptions/" class="post-title-link" itemprop="url">数字证书基础概念</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-22 13:58:18" itemprop="dateCreated datePublished" datetime="2014-01-22T13:58:18+08:00">2014-01-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>X.509</strong></p>
+<p><a target="_blank" rel="noopener" href="http://www.itu.int/rec/T-REC-X.509">X.509</a>是国际电联ITU-T的标准,用于规范基于公钥密码体系PKI(public key infrastructure)体系的数字证书管理。其标准主要由RFC5280[1]描述,现在常用的数字证书正是基于X.509标准的。</p>
+<p><strong>证书结构</strong></p>
+<p>X.509 v3数字证书的结构如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">Certificate</span><br><span class="line"> Version #版本号,区分不同的X.509版本 </span><br><span class="line"> Serial Number #序列号,CA分配给证书的唯一编号</span><br><span class="line"> #签名算法,CA签发证书时使用的公开密钥算法和摘要算法,比如PKCS #1 SHA-1 With RSA Encryption</span><br><span class="line"> Certificate Signature Algorithm </span><br><span class="line"> Issuer #证书签发机构</span><br><span class="line"> Validity #有效期限</span><br><span class="line"> Not Before #起始日期</span><br><span class="line"> Not After #终止日期</span><br><span class="line"> Subject #证书主体信息,证书主体即证书的持有人</span><br><span class="line"> Subject Public Key Info #证书主体的公钥信息</span><br><span class="line"> Public Key Algorithm #证书主体使用的公钥算法</span><br><span class="line"> Subject Public Key #证书主体的公钥</span><br><span class="line"> Issuer Unique Identifier (optional) #证书签发者唯一标识符</span><br><span class="line"> Subject Unique Identifier (optional) #证书主体唯一标识符</span><br><span class="line"> Extensions (optional) #扩展</span><br><span class="line"> ...</span><br><span class="line">Certificate Signature Algorithm #证书签名算法,比如PKCS #1 SHA-1 With RSA Encryption</span><br><span class="line">Certificate Signature #证书的数字签名</span><br><span class="line">Fingerprints #指纹</span><br><span class="line"> SHA-256 Fingerprint #</span><br><span class="line"> SHA-1 Fingerprint #</span><br></pre></td></tr></table></figure>
+<p><strong>数字证书编码和扩展名</strong></p>
+<p>数字证书使用文件作为载体,目前有两种编码方法,多种文件扩展名。</p>
+<p><em>编码格式(同时可以作为对应编码格式的扩展名)</em></p>
+<ul>
+<li><p>  DER(Distinguished Encoding Rules)<br>DER[4]是一种二进制编码格式。可以使用.der作为DER格式编码的数字证书的文件扩展名。通常应该这样说,”我有一个DER编码格式的数字证书”,而不是,”我有一个DER数字证书”。</p>
+</li>
+<li><p>  PEM(Privacy-Enhanced Mail)<br>PEM采用BASE64文本编码格式,用于不同类型的X.509 v3数字证书。PEM一般以BEGIN XXX开头,以END XXX结束。</p>
+</li>
+</ul>
+<p>比如:</p>
+<p>使用PEM格式存储的数字证书:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">...</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
+<p>使用PEM格式存储的私钥</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN PRIVATE KEY-----</span><br><span class="line">...</span><br><span class="line">-----END PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">...</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
+<p>使用PEM格式存储的证书请求文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE REQUEST-----</span><br><span class="line">...</span><br><span class="line">-----END CERTIFICATE REQUEST-----</span><br></pre></td></tr></table></figure>
+
+<p><em>证书文件扩展名</em></p>
+<ul>
+<li><p>.crt<br>CeRTificate的缩写,用于证书文件,可以是DER或者PEM编码格式。</p>
+</li>
+<li><p>.cer<br>CERtificate的缩写,用于证书文件,可以是DER或者PEM编码格式。</p>
+</li>
+<li><p>.key<br>用于存储私钥或者公钥,可以使DER或者PEM编码格式。</p>
+</li>
+</ul>
+<p>CRT文件和CER文件只有在使用相同编码的时候才可以安全地相互替代。</p>
+<p><strong>查看数字证书</strong><br>PEM编码格式证书</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl x509 -<span class="keyword">in</span> cert.(pem cer crt) -text -noout</span><br></pre></td></tr></table></figure>
+<p>DER编码格式证书</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl x509 -<span class="keyword">in</span> cert.(der cer crt) -inform der -text -noout</span><br></pre></td></tr></table></figure>
+
+<p><strong>数字证书编码格式转换</strong></p>
+<p>PEM to DER</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ openssl x509 -<span class="keyword">in</span> cert.crt -outform der -out cert.der</span><br></pre></td></tr></table></figure>
+<p>DER to PEM</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -<span class="keyword">in</span> cert.crt -inform der -outform pem -out cert.pem</span><br></pre></td></tr></table></figure>
+
+<p><strong>其他名词</strong></p>
+<ul>
+<li>  CSR<br>证书请求文件(Certificate Signing Request),生成 X509 数字证书前,一般先由用户提交证书申请文件CSR,然后由 CA 来签发证书。<br>大致流程是,用户自行生成公私密钥对,然后生成证书请求文件CSR,主要包含用户的身份信息,公钥以及一些其他信息,用户使用私钥对上述信息进行签名。CSR文件递交给CA机构后,CA会审核用户的真实身份,通过之后,CA使用自己的私钥为用户签发数字证书。CA的签名可以使用CA公开的根证书来验证。</li>
+<li>  CRL<br>证书撤销列表 (Certification Revocation List) 是一种包含撤销的证书列表的签名数据结构。用于公布某些数字证书不再有效。CRL文件同样需要数字签名。</li>
+<li>  OCSP<br>在线证书状态协议(OCSP,Online Certificate Status Protocol,rfc2560)用于实时表明证书状态。OCSP通过在线方式来查询证书的有效性,避免了CRL的缺陷。</li>
+<li>  PKCS<br>公钥加密标准(Public Key Cryptography Standards)包含一系列的标准,从PKCS#1到PKCS#15,分别定义了PKCS的不同方面。</li>
+</ul>
+<p>PKCS#11是目前最常用的标准之一。</p>
+<p>PKCS#11为加密令牌定义了一组平台无关的API ，如硬件安全模块和智能卡。PKCS#11称为Cyptoki，定义了一套独立于技术的程序设计接口，USBKey安全应用需要实现的接口。由于没有一个真正的标准加密令牌，这个API已经发展成为一个通用的加密令牌的抽象层。 PKCS#11 API定义最常用的加密对象类型（RSA密钥，X.509证书，DES /三重DES密钥等）和所有需要使用的功能，创建/生成，修改和删除这些对象。pkcs#11只提供了接口的定义， 不包括接口的实现，一般接口的实现是由设备提供商提供的，如usbkey的生产厂商会提供 符合PKCS#11接口标准的API的实现。这样你只要通过接口调用API函数即可实现其功能。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.ietf.org/rfc/rfc5280.txt">rfc5280</a><br>[2]<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/X.509">X.509</a><br>[3]<a target="_blank" rel="noopener" href="https://support.ssl.com/index.php?/Knowledgebase/Article/View/19/0/der-vs-crt-vs-cer-vs-pem-certificates-and-how-to-convert-them">DER vs. CRT vs. CER vs. PEM Certificates and How To Convert Them</a><br>[4]<a target="_blank" rel="noopener" href="http://www.planetlarg.net/encyclopedia/ssl-secure-sockets-layer/der-distinguished-encoding-rules-certificate-encoding">DER (Distinguished Encoding Rules) certificate encoding</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1113,86 +1249,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/16/4829/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/01/16/4829/" class="post-title-link" itemprop="url">Untitled Post - 33</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-01-16 10:04:47" itemprop="dateCreated datePublished" datetime="2014-01-16T10:04:47+08:00">2014-01-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>OpenID是Authentication,OAuth是Authorization。OpenID只是认证,而OAuth包含了认证和授权。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/57/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><span class="page-number current">58</span><a class="page-number" href="/page/59/">59</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/59/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1228,7 +1284,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

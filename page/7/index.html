@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,96 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/10/dnscrypt-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/10/dnscrypt-proxy/" class="post-title-link" itemprop="url">dnscrypt-proxy</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-10 09:38:42" itemprop="dateCreated datePublished" datetime="2019-10-10T09:38:42+08:00">2019-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>端口绑定错误</strong><br>dnscrypt-proxy默认设置是绑定到53端口，1024以下的端口为特权端口，普通用户并无权绑定，启动时提示:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[FATAL\] listen udp <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">53</span>: bind: permission denied</span><br></pre></td></tr></table></figure>
+<p>尝试authbind无果，/lib/systemd/system/dnscrypt-proxy.service文件中的ExecStart修改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=<span class="regexp">/usr/</span>bin/authbind --deep /usr/sbin/dnscrypt-proxy -config /etc/dnscrypt-proxy/dnscrypt-proxy.toml</span><br></pre></td></tr></table></figure>
+<p>并设置了authbind的byport,byuid,byaddr皆无果，修改User=root了事。</p>
+<p><strong>动态生成blacklist</strong><br>官方提供了一个python脚本<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/tree/master/utils/generate-domains-blacklists">generate-domains-blacklist.py</a>，可以从多个来源动态生成blacklist列表文件。</p>
+<p>下载generate-domains-blacklist.py，domains-blacklist-local-additions.txt，domains-blacklist.conf，domains-time-restricted.txt，domains-whitelist.txt这几个文件，然后执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./generate-domains-blacklist.py &gt; blacklist.txt</span><br></pre></td></tr></table></figure>
+<p>dnscrypt-proxy.toml中配置blacklist使用生成的blacklist.txt文件即可。<br>可以使用cron周期性自动重新生成/更新blacklist.txt文件。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/DNSCrypt/dnscrypt-proxy/wiki">dnscrypt-proxy wiki</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1150,110 +1240,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/30/cassandra-replace-dead-seed-node/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/30/cassandra-replace-dead-seed-node/" class="post-title-link" itemprop="url">cassandra替换当掉的种子节点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-08-30 14:55:49" itemprop="dateCreated datePublished" datetime="2019-08-30T14:55:49+08:00">2019-08-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>分为两个步骤，首先用新的节点替换宕机的节点，其次把新节点提升为种子节点。</p>
-<p><strong>替换故障节点</strong></p>
-<p>1、<code>nodetool status</code>命令找到DN节点的ip地址比如192.168.0.82，后面会用到这个ip地址。</p>
-<p>2、新节点安装与集群其他节点一样版本的cassandra，然后停止cassandra服务，并清除节点全部数据</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop cassandra</span><br><span class="line"><span class="comment">//$ sudo kill -sigterm &lt;pid_of_cassandra&gt;</span></span><br><span class="line"><span class="comment">//$ sudo kill -15 &lt;pid_of_cassandra&gt;</span></span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/cassandra<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
-
-<p>3、设置参数文件cassandra.yaml和cassandra-rackdc.properties或者 cassandra-topology.properties</p>
-<p>auto_bootstrap要设置为true，因为新节点要从种子节点获取数据。<br>cluster_name设置为要加入的集群的名字<br>linsten_address和rpc_address设置为本机ip<br>endpoint_snitch 要与集群其他节点一致，然后修改对应的属性文件<br>seed_provider只要要提供一个集群中现有的种子节点，但不要将新添加节点的地址加入，因为种子节点并不会bootstrap，等新节点bootstrap完成后再将新节点提升为种子节点。</p>
-<p>可以提取集群中其他节点的配置文件，只对应修改新节点独有的参数即可。</p>
-<p>4、使用 replace_address 选项启动新节点</p>
-<p>修改/etc/cassandra/cassandra-env.sh 文件，添加选项：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JVM_OPTS=<span class="string">&quot;$JVM_OPTS -Dcassandra.replace_address=192.168.0.82&quot;</span></span><br></pre></td></tr></table></figure>
-<p>这里的ip地址就是上面找到的要被替换的节点ip地址</p>
-<p>5、启动新节点</p>
-<p>等新节点bootstrap完成后再执行以下步骤，并且需要去掉replace_address选项</p>
-<p>6、cassandra-rackdc.properties或cassandra-topology.properties文件中去掉被替换的节点</p>
-<p>7、从集群中移除当掉的节点</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool removenode &lt;hostid&gt;</span><br></pre></td></tr></table></figure>
-
-<p>nodetool status命令可以获取到节点的hostid</p>
-<p><strong>提升为种子节点</strong></p>
-<p>新添加节点bootstrap完成之后，可以提升为种子节点。</p>
-<p>1、因为种子节点不能bootstrap，所以需要将其cassandra.yaml文件中的auto_bootstrap参数设置为false<br>2、在集群所有节点执行以下操作:<br> 将cassandra.yaml配置文件中的种子列表中去掉被替换的节点，将新添加节点的地址加入种子列表，然后重启节点。<br>注意不要并行操作，最好一个节点接一个节点的逐一操作。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/operations/opsReplaceNode.html">Replacing a dead node or dead seed node</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.scylladb.com/operating-scylla/procedures/cluster-management/replace_dead_node/">Replace a Dead Node in a Scylla Cluster</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.scylladb.com/operating-scylla/procedures/cluster-management/replace_seed_node/">Replacing a dead seed node</a><br>[4]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsRemoveNode.html">nodetool removenode</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1289,7 +1275,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

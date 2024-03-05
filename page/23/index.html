@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">985</span>
+          <span class="site-state-item-count">986</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,111 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/25/debian-enable-hugepages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/07/25/debian-enable-hugepages/" class="post-title-link" itemprop="url">debian启用巨页内存</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-07-25 15:50:25" itemprop="dateCreated datePublished" datetime="2016-07-25T15:50:25+08:00">2016-07-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>内存是分页管理的,传统上每页内存是4K大小,当系统内存很大时,页表项剧增,查找内存页表增加了系统的负担,因此出现了巨页.当前amd64架构支持2M内存页和1G内存页,默认巨页大小是2M.</p>
+<p><strong>创建巨页内存组</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># groupadd hugetlbfs</span><br><span class="line"># getent group hugetlbfs</span><br><span class="line">hugetlbfs:x:<span class="number">1001</span>:</span><br><span class="line"># adduser postgres hugetlbfs</span><br></pre></td></tr></table></figure>
+
+<p>把postgres用户加入巨页内存组,从而使postgresql可以分配巨页内存</p>
+<p><strong>编辑/etc/sysctl.conf</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vm.nr_hugepages = 13824 # 巨页内存池大小,系统保留多少页巨页内存,这里保留了13824*2M=27G</span><br><span class="line">vm.vm.hugetlb_shm_group = 1001 #巨页内存所属组</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建巨页内存挂载点</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /hugepages</span><br></pre></td></tr></table></figure>
+
+<p><strong>编辑/etc/fstab自动挂载巨页内存文件系统</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hugetlbfs /hugepages hugetlbfs mode=<span class="number">1770</span>,gid=<span class="number">1001</span> <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置生效</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>如果内存碎片化太严重而无法为巨页池保留足够的内存,可以重新启动系统,或者先试图释放系统缓存再重试sysctl命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># sync ; echo 3 &gt; /proc/sys/vm/drop_caches</span><br><span class="line"># sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>查看巨页内存使用情况:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="string">&#x27;Huge&#x27;</span> /proc/meminfo </span><br><span class="line">AnonHugePages: <span class="number">0</span> kB</span><br><span class="line">HugePages_Total: <span class="number">13824</span></span><br><span class="line">HugePages_Free: <span class="number">13710</span></span><br><span class="line">HugePages_Rsvd: <span class="number">4096</span></span><br><span class="line">HugePages_Surp: <span class="number">0</span></span><br><span class="line">Hugepagesize: <span class="number">2048</span> kB</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/Hugepages">Hugepages</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1051,110 +1156,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/15/psql-variable/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/06/15/psql-variable/" class="post-title-link" itemprop="url">psql变量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-06-15 22:34:17" itemprop="dateCreated datePublished" datetime="2016-06-15T22:34:17+08:00">2016-06-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>psql 提供变量替换特性，类似于shell的变量。</p>
-<p>psql的变量就是简单的名字/值对，名字只能有字母、数字和下划线组成。</p>
-<p>使用\set命令来设置变量:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set foo bar</span><br></pre></td></tr></table></figure>
-
-<p>这样设置了变量foo,其值为bar。这样来显示变量的值:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :foo</span><br><span class="line">bar</span><br></pre></td></tr></table></figure>
-
-<p>使用\set只指定变量名，不指定值时，会设置该变量，只不过其值为空。</p>
-<p>使用\unset命令来销毁变量：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\unset foo</span><br></pre></td></tr></table></figure>
-
-<p>使用\set命令，不提供任何参数，显示全部的变量。<br>下面展示的是系统预置的变量:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\set</span><br><span class="line">AUTOCOMMIT = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">PROMPT1 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT2 = <span class="string">&#x27;%/%R%# &#x27;</span></span><br><span class="line">PROMPT3 = <span class="string">&#x27;&gt;&gt; &#x27;</span></span><br><span class="line">VERBOSITY = <span class="string">&#x27;default&#x27;</span></span><br><span class="line">VERSION = <span class="string">&#x27;PostgreSQL 9.4.8 on x86_64-unknown-linux-gnu, compiled by gcc (Debian 4.9.2-10) 4.9.2, 64-bit&#x27;</span></span><br><span class="line">DBNAME = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">USER = <span class="string">&#x27;reis&#x27;</span></span><br><span class="line">HOST = <span class="string">&#x27;localhost&#x27;</span></span><br><span class="line">PORT = <span class="string">&#x27;5432&#x27;</span></span><br><span class="line">ENCODING = <span class="string">&#x27;UTF8&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>查看PostgreSQL版本</strong></p>
-<p>因此获取postgresql版本就有了另外一种方法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; \\echo :VERSION</span><br><span class="line">PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br></pre></td></tr></table></figure>
-
-<p>另一种方法是:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">=&gt; SELECT VERSION();</span><br><span class="line"> version </span><br><span class="line">-----------------------------------------------------------------------------------------------</span><br><span class="line"> PostgreSQL <span class="number">9.4</span><span class="number">.8</span> on x86_64-unknown-linux-gnu, compiled by gcc (Debian <span class="number">4.9</span><span class="number">.2</span>-<span class="number">10</span>) <span class="number">4.9</span><span class="number">.2</span>, <span class="number">64</span>-bit</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
-
-<p>二者结果是一样的。</p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1190,7 +1191,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
