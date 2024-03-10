@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,97 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/07/29/alter-keyspace-replication-factor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/07/29/alter-keyspace-replication-factor/" class="post-title-link" itemprop="url">更新keyspace的复制因子</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-07-29 13:23:49" itemprop="dateCreated datePublished" datetime="2015-07-29T13:23:49+08:00">2015-07-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>keyspace创建以后，仍然可以更改其复制因子，也就是keyspace中数据的复制份数是可以动态修改的。</p>
+<p>cassandra集群的系统keyspace system_auth默认的replication factor是1，也就是其实是没有冗余的。如果这唯一的节点挂掉，就无法再登录到集群了。<br>因此官方文档推荐将其复制因子设置为每个数据中心的每一个节点。也就是将其复制到集群中的每一个节点上。</p>
+<p>查看system_auth的复制因子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; DESC KEYSPACE system_auth</span><br><span class="line">CREATE KEYSPACE system_auth WITH replication = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;SimpleStrategy&#x27;</span>, <span class="string">&#x27;replication_factor&#x27;</span>: <span class="string">&#x27;1&#x27;</span>&#125; AND durable_writes = <span class="literal">true</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>果然replication factor只有1,修改之：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; ALTER KEYSPACE system_auth WITH replication = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;dc1&#x27;</span>:<span class="number">2</span>,<span class="string">&#x27;dc2&#x27;</span>:<span class="number">2</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>durable_writes参数用于设置写数据时是否写入commit log,如果设置为false,则写请求不会写commit log，会有丢失数据的风险。<br>此参数默认为true,即要写commit log,生产系统应该将该参数设置为true。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/create_keyspace_r.html">CREATE KEYSPACE</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1020,86 +1111,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>主要的浏览器平台都已经支持promise了，当然IE还不行，但是Edge支持。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/07/12/6511/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/07/12/6511/" class="post-title-link" itemprop="url">Untitled Post - 123</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-07-12 20:52:49" itemprop="dateCreated datePublished" datetime="2015-07-12T20:52:49+08:00">2015-07-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:08" itemprop="dateModified" datetime="2020-12-04T20:01:08+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>标准化的web客户端存储,除了传统的cookie,现在还有Web Storage(LocalStorage, SessionStorage)和<a target="_blank" rel="noopener" href="http://javascript.ruanyifeng.com/bom/indexeddb.html">IndexedDB</a>可用,而Web SQL已被废弃. 各大浏览器对Web Storage的支持度更高.</p>
 
       
     </div>

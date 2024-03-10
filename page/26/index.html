@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,112 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/19/swift-on-linux-debian/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/19/swift-on-linux-debian/" class="post-title-link" itemprop="url">swift on linux debian</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-19 13:58:23" itemprop="dateCreated datePublished" datetime="2016-04-19T13:58:23+08:00">2016-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>swift已经支持ubuntu,也可以在debian上安装</p>
+<p><strong>下载</strong></p>
+<p>下载ubuntu 15.10版本的安装包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//swift.org/builds/swift-2.2-release/ubuntu1510/swift-2.2-RELEASE/swift-2.2-RELEASE-ubuntu15.10.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解压重新打包</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf swift-<span class="number">2.2</span>-RELEASE-ubuntu15<span class="number">.10</span>.tar.gz</span><br><span class="line">$ cd swift-<span class="number">2.2</span>-RELEASE-ubuntu15<span class="number">.10</span></span><br><span class="line">$ tar czvf swift-<span class="number">2.2</span>.tar.gz usr</span><br><span class="line">$ sudo alien -v swift-<span class="number">2.2</span>.tar.gz </span><br></pre></td></tr></table></figure>
+
+<p>会生成deb安装包swift_2.2-2_all.deb</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i swift_2<span class="number">.2</span>-2_all.deb</span><br></pre></td></tr></table></figure>
+
+<p><strong>测试</strong></p>
+<p>新建main.swift文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">&quot;hello swift&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>编译</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ swiftc main.swift -o main.s</span><br></pre></td></tr></table></figure>
+
+<p>查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ file main.s</span><br><span class="line">main.s: ELF <span class="number">64</span>-bit LSB executable, x86-<span class="number">64</span>, version <span class="number">1</span> (SYSV), dynamically linked,</span><br><span class="line">interpreter /lib64/ld-linux-x86-<span class="number">64.</span>so<span class="number">.2</span>, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, </span><br><span class="line">BuildID\[sha1\]=9ed9fa8e5accc18cd0a4482b465aecf814a2a114, not stripped</span><br><span class="line"></span><br><span class="line">$ ldd main.s</span><br><span class="line"> linux-vdso.so<span class="number">.1</span> (<span class="number">0x00007ffe06af4000</span>)</span><br><span class="line"> libswiftCore.so =&gt; <span class="regexp">/usr/</span>lib/swift/linux/libswiftCore.so (<span class="number">0x00007fc4d764f000</span>)</span><br><span class="line"> libstdc++.so<span class="number">.6</span> =&gt; <span class="regexp">/usr/</span>lib/x86_64-linux-gnu/libstdc++.so<span class="number">.6</span> (<span class="number">0x00007fc4d72bc000</span>)</span><br><span class="line"> libm.so<span class="number">.6</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libm.so<span class="number">.6</span> (<span class="number">0x00007fc4d6fbd000</span>)</span><br><span class="line"> libgcc_s.so<span class="number">.1</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libgcc_s.so<span class="number">.1</span> (<span class="number">0x00007fc4d6da7000</span>)</span><br><span class="line"> libc.so<span class="number">.6</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libc.so<span class="number">.6</span> (<span class="number">0x00007fc4d6a03000</span>)</span><br><span class="line"> libpthread.so<span class="number">.0</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libpthread.so<span class="number">.0</span> (<span class="number">0x00007fc4d67e5000</span>)</span><br><span class="line"> libdl.so<span class="number">.2</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libdl.so<span class="number">.2</span> (<span class="number">0x00007fc4d65e1000</span>)</span><br><span class="line"> libicuuc.so<span class="number">.55</span> =&gt; <span class="regexp">/usr/</span>lib/x86_64-linux-gnu/libicuuc.so<span class="number">.55</span> (<span class="number">0x00007fc4d624d000</span>)</span><br><span class="line"> libicui18n.so<span class="number">.55</span> =&gt; <span class="regexp">/usr/</span>lib/x86_64-linux-gnu/libicui18n.so<span class="number">.55</span> (<span class="number">0x00007fc4d5dea000</span>)</span><br><span class="line"> libbsd.so<span class="number">.0</span> =&gt; <span class="regexp">/lib/</span>x86_64-linux-gnu/libbsd.so<span class="number">.0</span> (<span class="number">0x00007fc4d5bd4000</span>)</span><br><span class="line"> /lib64/ld-linux-x86-<span class="number">64.</span>so<span class="number">.2</span> (<span class="number">0x0000557356b81000</span>)</span><br><span class="line"> libicudata.so<span class="number">.55</span> =&gt; <span class="regexp">/usr/</span>lib/x86_64-linux-gnu/libicudata.so<span class="number">.55</span> (<span class="number">0x00007fc4d411c000</span>)</span><br></pre></td></tr></table></figure>
+
+<p>也可以动态解释执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ swift</span><br><span class="line">Welcome to Swift version <span class="number">2.2</span> (swift-<span class="number">2.2</span>-RELEASE). Type :help <span class="keyword">for</span> assistance.</span><br><span class="line"> <span class="number">1</span>&gt; print(<span class="string">&quot;hello, swift&quot;</span>)</span><br><span class="line">hello, swift</span><br><span class="line"> <span class="number">2</span>&gt; :q</span><br></pre></td></tr></table></figure>
+
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1162,86 +1268,6 @@
 </ol>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsSnapShot.html">cassandra 2.2 document</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/ddac/doc/datastax_enterprise/operations/opsSnapshotRestoreNewCluster.html">Restoring a snapshot into a new cluster</a></p>
 <p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/23/7091/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/23/7091/" class="post-title-link" itemprop="url">Untitled Post - 161</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-23 15:06:04" itemprop="dateCreated datePublished" datetime="2015-12-23T15:06:04+08:00">2015-12-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>JNA(Java Native Access) provides Java programs easy access to native shared libraries without writing anything but Java code - no JNI or native code is required. This functionality is comparable to Windows’ Platform/Invoke and Python’s ctypes.</p>
 
       
     </div>

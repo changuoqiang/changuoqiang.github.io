@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/02/mount-virtualbox-share-folders/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/02/mount-virtualbox-share-folders/" class="post-title-link" itemprop="url">挂载virtualbox共享文件夹</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-02 10:11:27" itemprop="dateCreated datePublished" datetime="2019-06-02T10:11:27+08:00">2019-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>首先需要<a href="https://openwares.net/2019/06/02/guiless-install-virtualbox-guest-additions/">安装guest addtions</a></p>
+<p>主机端：</p>
+<p>为客户机配置共享文件夹，略。</p>
+<p>客户机：</p>
+<p>列出可用的share folders</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo VBoxControl sharedfolder list</span><br><span class="line">Oracle VM VirtualBox Guest Additions Command Line Management Interface Version <span class="number">6.0</span><span class="number">.8</span></span><br><span class="line">(C) <span class="number">2008</span>-<span class="number">2019</span> Oracle Corporation</span><br><span class="line">All rights reserved.</span><br><span class="line"></span><br><span class="line">Shared Folder mappings (<span class="number">1</span>):</span><br><span class="line"></span><br><span class="line"><span class="number">01</span> - Downloads \[idRoot=<span class="number">0</span> writable auto-mount host-icase guest-icase mnt-pt=<span class="regexp">/media/</span>host/\]</span><br></pre></td></tr></table></figure>
+
+<p>如果设定了自动挂装, virtualbox会自动挂载之，否则可以手动挂载：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mount -t vboxsf Downloads /media/host</span><br></pre></td></tr></table></figure>
+
+<p>访问权限问题，将当前用户加入vboxsf组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER vboxsf</span><br></pre></td></tr></table></figure>
+
+<p>然后注销重新登录，或者使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ newgrp vboxsf</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1081,91 +1175,6 @@
     <div class="post-body" itemprop="articleBody">
           <a id="more"></a>
 <p>mplayer的OSD(On-Screen Display)依赖于X11，so字幕无法显示:(，目前改投IINA了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/01/21/ssh-execute-background-jobs-remotely/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/21/ssh-execute-background-jobs-remotely/" class="post-title-link" itemprop="url">ssh execute background jobs remotely</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-21 21:35:27" itemprop="dateCreated datePublished" datetime="2019-01-21T21:35:27+08:00">2019-01-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>ssh远程执行后台作业时，在命令行最后添加<code>&amp;</code>标识并不是太好用，ssh还是会挂起，无法正常退出，可以使用nohup，并且重定向其所有的三个标准输入输出来解决：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh -T server &lt;&lt; EOF</span><br><span class="line"> nohup foobar &gt;<span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> &lt;<span class="regexp">/dev/</span><span class="literal">null</span> &amp;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nohup">nohup</a></p>
 
       
     </div>

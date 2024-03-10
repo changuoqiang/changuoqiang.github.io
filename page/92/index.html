@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/09/07/ubuntu-change-username-home/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/09/07/ubuntu-change-username-home/" class="post-title-link" itemprop="url">Ubuntu更改用户名及相应的用户主目录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2010-09-07 19:38:46" itemprop="dateCreated datePublished" datetime="2010-09-07T19:38:46+08:00">2010-09-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>　　某天突然感觉用了一阵子的用户名不爽,想换个名字新鲜新鲜,不过最好不要简单的编辑/etc/passwd和/etc/group了事,linux有相应的命令来做这些dirty things。最好不要在当前用户下操作,去recovery模式下做这件事比较妥当。<br>　　1、修改用户名。<br>　　usermod -l new_username -d /home/new_username -m old_username<br>用usermod命令来修改用户帐户相关信息，-l指定新的登录名称,-d指定新的主目录,如果同时指定-m选项则移动原来用户主目录的内容到新的用户住目录,最后指定原来的登录用户名。<br>　　2、修改组名<br>　　groupmod -n new_username old_username<br>groupmod命令用来修改组相关信息，-n用来指定新的组名，用原来的组名作为参数。这里修改的是与用户默认同名的组。<br>　　3、更改用户的全称<br>　　chfn -f new_fullname username<br>chfn命令来修改真实的用户名称和其他相关信息,-f指定新的用户全称,需要修改全称的用户名作为参数<br>　　4、其他修改<br>更改用户主目录后,有些依赖于绝对路径的程序需要进行相应的修改。firefox profile路径下的extensions.ini里面的有依赖于用户名的绝对路径，修改之，用vim打开，然后:%s/old_username/new_username/g，然后:wq即可，prefs.js里面做同样的处理，firefox就可以正常使用了。其他的东西基本不用动就可以了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1008,88 +1088,6 @@
 <p>update wp_options set option_value=replace(option_value,’<a target="_blank" rel="noopener" href="http://old_domain_name&/#39;,&#39;http://new_domain_name&#39;">http://old_domain_name&#39;,&#39;http://new_domain_name&#39;</a>);</p>
 <p>update wp_posts set post_content=replace(post_content,’<a target="_blank" rel="noopener" href="http://old_domain_name&/#39;,&#39;http://new_domain_name&#39;">http://old_domain_name&#39;,&#39;http://new_domain_name&#39;</a>);</p>
 <p>update wp_posts set guid=replace(guid,’<a target="_blank" rel="noopener" href="http://old_domain_name&/#39;,&#39;http://new_domain_name&#39;">http://old_domain_name&#39;,&#39;http://new_domain_name&#39;</a>);</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2010/03/22/xp-ping-problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/03/22/xp-ping-problem/" class="post-title-link" itemprop="url">xp机器ping出现问号无法上网解决一例</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2010-03-22 20:21:52" itemprop="dateCreated datePublished" datetime="2010-03-22T20:21:52+08:00">2010-03-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>一台xp系统机器，无法上网浏览， ping本地私有地址和外部公有地址都通，但是ping命令输出出现问号并伴随一声蜂鸣。输出类似如下：</p>
-<p>ping ? 192.168.1.1 with 32 bytes of data:<br>reply from 192.168.1.1: bytes=32 time &lt;10 ttl=64<br>reply from 192.168.1.1: bytes=32 time &lt;10 ttl=64<br>reply from 192.168.1.1: bytes=32 time &lt;10 ttl=64</p>
-<p>卸载网卡驱动，重新安装故障依旧。交换机及网线确认无问题，执行如下命令<br>netsh winsock reset<br>重置winsock组件，问题解决，应该是恶意软件或插件所为。</p>
 
       
     </div>

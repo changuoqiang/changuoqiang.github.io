@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,98 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/07/19/wine-fonts-link/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/19/wine-fonts-link/" class="post-title-link" itemprop="url">wine中文字体链接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-07-19 08:47:43" itemprop="dateCreated datePublished" datetime="2018-07-19T08:47:43+08:00">2018-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>字体链接</strong></p>
+<p>M$的字体是专有的，有版权的，因此应该使用开源字体。</p>
+<p>Windows支持字体链接：当一种字体中不存在某个字时，可以尝试从另一个字体文件中寻找相应的字形。所以只要把当前系统中的中文字体设为”fallback”字体，汉字通常就能正确显示了。方法也很简单，只需创建一个文本文件，如chn_font.reg如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">REGEDIT4</span><br><span class="line"> </span><br><span class="line">\[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\FontLink\\SystemLink\]</span><br><span class="line"><span class="string">&quot;Lucida Sans Unicode&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Microsoft Sans Serif&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;MS Sans Serif&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Tahoma&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Tahoma Bold&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;SimSun&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Arial&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br><span class="line"><span class="string">&quot;Arial Black&quot;</span>=<span class="string">&quot;wqy-microhei.ttc&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意请将wqy-microhei.ttc替换为你系统中的字体文件名，如文泉驿正黑是wqy-zenhei.ttc（请在/usr/share/fonts及其子文件夹中寻找相应字体文件）。<br>MacOSX上可以使用PingFang.ttc。</p>
+<p>如果想使用其它字体，也可直接将相应的ttf或ttc文件复制到~/.wine/drive_c/windows/Fonts/，再用其文件名替换上面的wqy-zenhei.ttc即可。</p>
+<p>最后，打开注册表wine regedit，导入上面的注册表文件即可。中文应该都能完美显示了（包括Picasa中文显示为方框、软件安装程序汉字无法显示等问题均可被解决）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wine regedit chn_font.reg</span><br></pre></td></tr></table></figure>
+
+<p>注意上面的注册表键值只能使用字体的文件名，而不能使用字体名，这是由“字体链接”本身的特性决定的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://linux-wiki.cn/wiki/%E8%AE%BE%E7%BD%AEwine%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%AD%97%E4%BD%93">Wine的中文显示与字体设置</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1074,90 +1166,6 @@
 
 <p>如果需要ptrace，可以添加如下参数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--cap-add=SYS_PTRACE</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2017/12/02/enable-wordpress-post-status/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/12/02/enable-wordpress-post-status/" class="post-title-link" itemprop="url">让wordpress支持发布status</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2017-12-02 17:06:09" itemprop="dateCreated datePublished" datetime="2017-12-02T17:06:09+08:00">2017-12-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>现在post格式的支持放在theme里，打开当前使用的theme的function.php，找到</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Enable support for Post Formats.</span></span><br><span class="line"><span class="comment"> * See http://codex.wordpress.org/Post_Formats</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> add_theme_support( <span class="string">&#x27;post-formats&#x27;</span>, array(</span><br><span class="line"> <span class="string">&#x27;aside&#x27;</span>, <span class="string">&#x27;image&#x27;</span>, <span class="string">&#x27;video&#x27;</span>, <span class="string">&#x27;quote&#x27;</span>, <span class="string">&#x27;link&#x27;</span>, <span class="string">&#x27;status&#x27;</span>,</span><br><span class="line"> ) );</span><br></pre></td></tr></table></figure>
-
-<p>在format列表里添加status即可。</p>
-
       
     </div>
 

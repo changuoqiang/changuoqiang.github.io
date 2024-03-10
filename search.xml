@@ -24992,4 +24992,25 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>Debian</tag>
       </tags>
   </entry>
+  <entry>
+    <title>increase lxd storage pool</title>
+    <url>/2024/03/10/resize-lxd-storage-pool/</url>
+    <content><![CDATA[<p>lxd 存储池扩容</p>
+<a id="more"></a>
+
+<p>lxd 5.13版本之后，添加了存储池扩容支持</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">lxc storage set &lt;pool_name&gt; size=&lt;new_size&gt;</span><br></pre></td></tr></table></figure>
+<p>比如为default存储器扩容</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">lxc storage set <span class="keyword">default</span> size=400GB</span><br></pre></td></tr></table></figure>
+
+<p>这只适用于lxd管理的loop-back存储池，而且只能增大存储池，而不能缩小它。（This will only work for loop-backed storage pools that are managed by LXD. You can only grow the pool (increase its size), not shrink it.）</p>
+<p>5.13以前的版本可以这样扩容：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sudo truncate -c -s +100G /<span class="keyword">var</span>/snap/lxd/common/lxd/disks/<span class="keyword">default</span>.img</span><br><span class="line">sudo btrfs filesystem resize max /<span class="keyword">var</span>/snap/lxd/common/mntns/<span class="keyword">var</span>/snap/lxd/common/lxd/storage-pools/<span class="keyword">default</span></span><br><span class="line">Resize <span class="string">&#x27;/var/snap/lxd/common/mntns/var/snap/lxd/common/lxd/storage-pools/default&#x27;</span> <span class="keyword">of</span> <span class="string">&#x27;max&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1]<a href="https://documentation.ubuntu.com/lxd/en/latest/howto/storage_pools/">Resize a storage pool</a></p>
+<p>[2]<a href="https://discuss.linuxcontainers.org/t/resize-underlying-btrfs-storage/3023/1">Resize underlying btrfs storage</a></p>
+<p>[3]<a href="https://superuser.com/questions/1483551/increase-the-lxd-lxc-btrfs-loop-file-storage-pool-size">Increase the LXD/LXC Btrfs loop file storage pool size</a></p>
+]]></content>
+  </entry>
 </search>

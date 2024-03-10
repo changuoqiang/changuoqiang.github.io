@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,114 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/07/09/postgresql-stream-replication-switchover/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/07/09/postgresql-stream-replication-switchover/" class="post-title-link" itemprop="url">PostgreSQL流复制主备切换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-09 13:46:31" itemprop="dateCreated datePublished" datetime="2020-07-09T13:46:31+08:00">2020-07-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>一、判断主备角色</strong><br>有几个方法可以判断：<br>1、查看wal进程</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux grep wal</span><br></pre></td></tr></table></figure>
+<p>如果进程名有”postgres: 11/main: walwriter”字样，则为主库，walwriter为wal发送方。<br>如果进程名有”postgres: 11/main: walreceiver streaming 2A/ACAA1088”字样，则为备库，walreceiver为wal接收方。<br>2、pg_is_in_recovery函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql</span><br><span class="line">postgres=# select pg_is_in_recovery();</span><br><span class="line">pg_is_in_recovery</span><br><span class="line">-------------------</span><br><span class="line"> f</span><br><span class="line">(<span class="number">1</span> row)</span><br></pre></td></tr></table></figure>
+<p>显示f说明是主库，显示t说明为备库。<br>3、查看数据库控制信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres /usr/lib/postgresql/<span class="number">11</span>/bin/pg_controldata -D /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main/</span><br><span class="line">g_control version number: <span class="number">1100</span></span><br><span class="line">Catalog version number: <span class="number">201809051</span></span><br><span class="line">Database system identifier: <span class="number">6745356148899875633</span></span><br><span class="line">Database cluster state: <span class="keyword">in</span> production</span><br><span class="line">pg_control last modified: Thu <span class="number">09</span> Jul <span class="number">2020</span> <span class="number">02</span>:<span class="number">40</span>:<span class="number">49</span> PM CST</span><br><span class="line">Latest checkpoint location: <span class="number">825</span>/245660D8</span><br><span class="line">Latest checkpoint<span class="string">&#x27;s REDO location: 825/245660A0</span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+<p>Database cluster state这行为in production说明位主库，为in archive recovery说明为备库。<br>4、通过recovery.conf 文件判断<br>一般的，备库才有recovery.conf，主库一般没有或是改名为recovery.done</p>
+<p><strong>二、主备切换</strong><br>1、使用trigger文件切换</p>
+<p>a. 在备库启动时在 recovery.conf 文件中加入一个触发文件的路径（新加则需要重启备库）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trigger_file=<span class="string">&#x27;/var/lib/postgresql/11/main/.postgresql.trigger&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>b. 关闭主库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop postgresql@<span class="number">11</span>-main.service</span><br></pre></td></tr></table></figure>
+<p>或者<br>先查看postgresql集群信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pg_lsclusters</span><br><span class="line">Ver Cluster Port Status Owner Data directory Log file</span><br><span class="line"><span class="number">11</span> main <span class="number">5432</span> online postgres /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main /<span class="keyword">var</span>/log/postgresql/postgresql-<span class="number">11</span>-main.log</span><br></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pg_ctlcluster <span class="number">11</span> main stop</span><br></pre></td></tr></table></figure>
+
+<p>c.在备库上创建trigger文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo touch /<span class="keyword">var</span>/lib/postgresql/<span class="number">11</span>/main/.postgresql.trigger</span><br></pre></td></tr></table></figure>
+<p>可以看到备库上的recovery文件已经成为done了,此时备库已经被激活为主库，可以直接做读写操作了<br>在新主库上创建复制槽</p>
+<p>d. 原主库搭建为新备库<br>准备recovery.conf文件，primary_conninfo指向新主库，使用合适的复制槽，然后重新启动数据库即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">recovery_target_timeline=<span class="string">&#x27;latest&#x27;</span></span><br><span class="line">standby_mode = <span class="string">&#x27;on&#x27;</span></span><br><span class="line">primary_conninfo = <span class="string">&#x27;host=59.206.31.149 port=5432 user=xxxx password=xxxx&#x27;</span></span><br><span class="line">primary_slot_name = <span class="string">&#x27;repl_slot_2&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这里必须添加recovery_target_timeline=’latest’，因为主备切换时timeline更新了。<br>注意pg_hba_conf中对replication的权限设定</p>
+<p>2、使用pg_ctlcluster命令切换<br>a. 停止应用程序，关闭主库<br>b. 备库提升为主库<br>备库端执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pg_ctlcluster <span class="number">11</span> main promote</span><br></pre></td></tr></table></figure>
+<p>c. 老主库上配置recovery.conf文件，启动原主库为新的备库</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.postgresql.org/docs/11/warm-standby-failover.html">26.3. Failover</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43303221/article/details/85777529">PostgreSQL 流复制的主备切换</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.51cto.com/heyiyi/1917655">PostgreSQL Switchover vs. Failover</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lottu/p/7490759.html">PostgreSQL主备切换</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1101,136 +1209,6 @@
 
 <p>至此，数据库转换完成，最后以OPEN RESETLOGS方式打开新数据库。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/backup.102/b14191/dbxptrn.htm#BRADV05432">15 RMAN Cross-Platform Transportable Databases and Tablespaces</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34556414/article/details/80188533">使用RMAN Convert Database命令实现跨平台的数据库迁移</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/04/28/debian-buster-install-oracle-10g/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/04/28/debian-buster-install-oracle-10g/" class="post-title-link" itemprop="url">debian buster安装oracle 10g</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-04-28 22:12:33" itemprop="dateCreated datePublished" datetime="2020-04-28T22:12:33+08:00">2020-04-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>oracle 10g已经太老了，直接在debian buster上安装是不可以的。但可以迂回一下，先在debian squeeze上安装，然后将安装好的oracle文件打包拷贝到debian buster相同的目录结构下，并且使用相同的用户和组权限。</p>
-<p><strong>一、安装</strong></p>
-<p>1、安装squeeze及支持组件</p>
-<p>下载squeeze最后的版本<a target="_blank" rel="noopener" href="https://cdimage.debian.org/mirror/cdimage/archive/6.0.10/amd64/iso-cd/debian-6.0.10-amd64-netinst.iso">6.0.10</a>，脱机安装完毕后，编辑/etc/apt/sources.list使用以下源：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb http:<span class="comment">//archive.debian.org/debian squeeze main contrib non-free</span></span><br></pre></td></tr></table></figure>
-<p>其他镜像源都已不可用，只有此归档源可以。</p>
-<p>安装支持组件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install build-essential ia32-libs ia32-libs-dev libc6 libc6-i386 libc6-dev libc6-dev-i386 rpm libstdc++<span class="number">5</span> libaio1 gcc-multilib xauth unzip</span><br></pre></td></tr></table></figure>
-
-<p>创建符号链接</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># ln -sf /usr/bin/awk /bin/awk</span><br><span class="line"># ln -sf /usr/bin/rpm /bin/rpm</span><br><span class="line"># ln -sf /usr/bin/basename /bin/basename</span><br></pre></td></tr></table></figure>
-
-<p>2、创建用户和组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># groupadd oinstall</span><br><span class="line"># groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line"># groupadd nobody</span><br><span class="line"># id oracle</span><br><span class="line">uid=<span class="number">1001</span>(oracle) gid=<span class="number">1001</span>(oinstall) groups=<span class="number">1001</span>(oinstall),<span class="number">1002</span>(dba)</span><br></pre></td></tr></table></figure>
-
-<p>3、修改内核参数<br>添加文件/etc/sysctl.d/oracle.conf:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fs.file-max = <span class="number">65536</span></span><br><span class="line">fs.aio-max-nr = <span class="number">1048576</span></span><br><span class="line"># semaphores: semmsl, semmns, semopm, semmni</span><br><span class="line">kernel.sem = <span class="number">250</span> <span class="number">32000</span> <span class="number">100</span> <span class="number">128</span></span><br><span class="line"># (Oracle recommends total machine Ram -1 byte)</span><br><span class="line">kernel.shmmax = <span class="number">2147483648</span></span><br><span class="line">kernel.shmall = <span class="number">4194304</span></span><br><span class="line">kernel.shmmni = <span class="number">4096</span></span><br><span class="line">net.ipv4.ip_local_port_range = <span class="number">1024</span> <span class="number">65000</span></span><br><span class="line"># dba group</span><br><span class="line">vm.hugetlb_shm_group = <span class="number">1002</span></span><br><span class="line">vm.nr_hugepages = <span class="number">64</span></span><br></pre></td></tr></table></figure>
-
-<p>4、修改资源限制<br>添加文件/etc/security/limits.d/oracle.conf:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">oracle soft nproc <span class="number">2047</span></span><br><span class="line">oracle hard nproc <span class="number">16384</span></span><br><span class="line">oracle soft nofile <span class="number">1024</span></span><br><span class="line">oracle hard nofile <span class="number">65536</span></span><br><span class="line">oracle soft memlock <span class="number">204800</span></span><br><span class="line">oracle hard memlock <span class="number">204800</span></span><br></pre></td></tr></table></figure>
-
-<p>5、准备目录结构</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line"></span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
-<p>从其他用户主目录拷贝.profile，.bashrc，.bash_logout文件到oracle用户主目录</p>
-<p>6、安装10.2.0.1<br>通过X11 forward远程安装，安装路径设定为/u01/app/oracle/product/10.2.0/db_1<br>只安装软件，不创建数据库，忽略ins_emdb.mk错误继续安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -XC oracle@host</span><br><span class="line">$ gunzip 10201_database_linux_x86_64.cpio.gz</span><br><span class="line">$ cpio -idmv &lt; 10201_database_linux_x86_64.cpio</span><br><span class="line">$ database/runInstaller -ignoreSysPrereqs</span><br></pre></td></tr></table></figure>
-
-<p>7、升级10.2.0.4</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ unzip p6810189_10204_Linux-x86-<span class="number">64.</span>zip</span><br><span class="line">$ Disk1/runInstaller -ignoreSysPrereqs</span><br></pre></td></tr></table></figure>
-<p>升级时选择同一个实例，即OraDb10g_home1</p>
-<p><strong>二、移植</strong></p>
-<p>1、在squeeze上打包</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zcvf /tmp/oracle.tar.gz /u01</span><br><span class="line">$ tar zcvf /tmp/oracle_conf.tar.gz /etc/oratab /etc/oraInst.loc /usr/local/bin/ <span class="regexp">/etc/</span>sysctl.d/oracle.conf /etc/security/limits.d/oracle.conf</span><br></pre></td></tr></table></figure>
-
-<p>2、buster上创建用户组</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#groupadd oinstall</span><br><span class="line">#groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line">#groupadd nobody</span><br></pre></td></tr></table></figure>
-
-<p>3、准备目录结构</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chown -R oracle:oinstall /u01/app</span><br><span class="line">#chown -R oracle:oinstall /u01/app/oracle</span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
-
-<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录，以oracle用户执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf /tmp/oracle.tar.gz -C /</span><br></pre></td></tr></table></figure>
-<p>以root用户执行:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
-
-<p>5、oracle用户配置<br>.bashrc添加如下环境变量</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> ORACLE_SID=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_UNQNAME=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_OWNER=oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_BASE=<span class="regexp">/u01/</span>app/oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=$ORACLE_BASE/product/<span class="number">10.2</span><span class="number">.0</span>/db_1</span><br><span class="line"><span class="keyword">export</span> PATH=$ORACLE_HOME/bin:$PATH</span><br><span class="line"><span class="keyword">export</span> TNS_ADMIN=$ORACLE_HOME/network/admin</span><br><span class="line"><span class="keyword">export</span> SQLPATH=$ORACLE_HOME/scripts</span><br><span class="line"><span class="keyword">export</span> LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
-
-<p>安装完成，经测试可以正常创建数据库，正常使用。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/OracleDB">OracleDB</a></p>
 
       
     </div>

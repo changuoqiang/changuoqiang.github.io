@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,91 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/20/bash-alias-in-scripts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/20/bash-alias-in-scripts/" class="post-title-link" itemprop="url">bash alias in scripts</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-20 11:29:18" itemprop="dateCreated datePublished" datetime="2019-10-20T11:29:18+08:00">2019-10-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>bash在非交互式模式下是不扩展alias定义的，除非明确指定shell选项expand_aliases</p>
+<p>因此要在脚本中使用alias定义，可以这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">shopt -s expand_aliases</span><br><span class="line">source ~/.bash_aliases</span><br><span class="line">alias ll=<span class="string">&#x27;ls -lht&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.thegeekdiary.com/how-to-make-alias-command-work-in-bash-script-or-bashrc-file/">How to make alias command work in bash script or bashrc file</a><br>[2]<a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/1496/why-doesnt-my-bash-script-recognize-aliases">Why doesn’t my Bash script recognize aliases?</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1183,99 +1268,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo truncate -s +5G /<span class="keyword">var</span>/lib/lxd/disks/&lt;POOL&gt;.img</span><br><span class="line">sudo zpool set autoexpand=on lxd</span><br><span class="line">sudo zpool online -e lxd /<span class="keyword">var</span>/lib/lxd/disks/&lt;POOL&gt;.img</span><br><span class="line">sudo zpool set autoexpand=off lxd</span><br></pre></td></tr></table></figure>
 
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://discuss.linuxcontainers.org/t/how-to-resize-zfs-used-in-lxd/1333">How to resize ZFS used in LXD</a><br>[2]<a target="_blank" rel="noopener" href="https://tomasz.korwel.net/2014/01/03/growing-zfs-pool/">GROWING ZFS POOL</a><br>[3]<a target="_blank" rel="noopener" href="https://lxd.readthedocs.io/en/latest/storage/">Storage configuration</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/10/ssh-x11forward-from-linux-to-macos/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/10/10/ssh-x11forward-from-linux-to-macos/" class="post-title-link" itemprop="url">ssh x11forward from linux to macos</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-10-10 15:35:44" itemprop="dateCreated datePublished" datetime="2019-10-10T15:35:44+08:00">2019-10-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>MacOS Catalina上使用ssh -Xv 登录远程debian linux进行X11转发时提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">debug1: No xauth program.</span><br><span class="line">Warning: untrusted X11 forwarding setup failed: xauth key data not generated</span><br></pre></td></tr></table></figure>
-<p>这是因为MacOS上的xauth路径与linux上不同，MacOS上使用XQuartZ其xauth路径为/opt/X11/bin/xauth，而debian上为/usr/bin/xauth，所以ssh客户端没有找到xauth，无法生成认证数据。<br>在~/.ssh/config文件中为单个主机，或者在/etc/ssh/ssh_config中为所有主机设置：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XAuthLocation /opt/X11/bin/xauth</span><br></pre></td></tr></table></figure>
-
-<p>在远程debian上执行glxinfo有错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ glxinfo</span><br><span class="line">name <span class="keyword">of</span> display: localhost:<span class="number">10.0</span></span><br><span class="line">libGL error: No matching fbConfigs or visuals found</span><br><span class="line">libGL error: failed to load driver: swrast</span><br><span class="line">X <span class="built_in">Error</span> <span class="keyword">of</span> failed request: GLXBadContext</span><br><span class="line"> Major opcode <span class="keyword">of</span> failed request: <span class="number">149</span> (GLX)</span><br><span class="line"> Minor opcode <span class="keyword">of</span> failed request: <span class="number">6</span> (X_GLXIsDirect)</span><br><span class="line"> Serial number <span class="keyword">of</span> failed request: <span class="number">26</span></span><br><span class="line"> Current serial number <span class="keyword">in</span> output stream: <span class="number">25</span></span><br></pre></td></tr></table></figure>
-<p>在MacOS端执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ defaults write org.macosforge.xquartz.X11 enable_iglx -bool <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>重启XQuartz 2.7.11，然后就可以了，但是前两行错误继续存在。<br>iglx就是IndirectGLX的缩写，也就是关闭直接渲染。<br>远程debian上开启libgl debug</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> LIBGL_DEBUG=verbose</span><br><span class="line">$ glxgear</span><br><span class="line">libGL: OpenDriver: trying /usr/lib/x86_64-linux-gnu/dri/tls/swrast_dri.so</span><br><span class="line">libGL: OpenDriver: trying /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so</span><br><span class="line">libGL: Can<span class="string">&#x27;t open configuration file /etc/drirc: No such file or directory.</span></span><br><span class="line"><span class="string">libGL: Can&#x27;</span>t open configuration file /home/john/.drirc: No such file or directory.</span><br><span class="line">libGL: Can<span class="string">&#x27;t open configuration file /etc/drirc: No such file or directory.</span></span><br><span class="line"><span class="string">libGL: Can&#x27;</span>t open configuration file /home/john/.drirc: No such file or directory.</span><br><span class="line">libGL error: No matching fbConfigs or visuals found</span><br><span class="line">libGL error: failed to load driver: swrast</span><br></pre></td></tr></table></figure>
-<p>设置环境变量export LIBGL_ALWAYS_INDIRECT=1可以关闭这个错误提示，但是仍然是间接渲染。</p>
-<p>这个问题需要XQuartz来解决，这货已经好久好久没有升级了…</p>
 
       
     </div>

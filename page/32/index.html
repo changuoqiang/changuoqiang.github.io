@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,95 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/10/08/homebrew-naming-convention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/10/08/homebrew-naming-convention/" class="post-title-link" itemprop="url">有趣的Homebrew命名逻辑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-10-08 22:36:04" itemprop="dateCreated datePublished" datetime="2015-10-08T22:36:04+08:00">2015-10-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/FreeBSD/" itemprop="url" rel="index"><span itemprop="name">FreeBSD</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>嗯，这篇是转帖的，因为GFW blocked this <a target="_blank" rel="noopener" href="http://wildjcrt.pixnet.net/blog/post/29182044-the-naming-logic-from-homebrew">post</a>,又没有再写一篇的必要。</p>
+<p><strong>“</strong> Homebrew 是一套在 Mac OS X 下使用的套件管理工具，以往大家會使用 Mac Ports ，但是 port 的套件相依性太深，常常會為了裝個小套件而跟著裝上一堆用不到的相依套件，甚至造成套件版本衝突…… 因此 Homwbrew 甫一推出立刻受到大家的歡迎。</p>
+<p>今天早上我剛好重裝 readline 套件，安裝完成後訊息提示我 readline 套件是 「keg-only」。我為了查出「keg-only」到底是指什麼意思，結果解開一連串的謎題，真相終於大白！ Homebrew 的所有命名真的非常有邏輯～～</p>
+<p>首先， brew 本身是釀造、釀酒的意思，會用這個字的原因是 homebrew 的安裝方式為下載 source code 回來做編譯，由於是在自己電腦做 local complie 編譯套件，所以這個工具叫做 homebrew 自家釀酒。</p>
+<p>釀酒需要有配方 formula ，當你需要安裝套件時，流程就是下 brew 命令去根據配方 formula ，釀造出一桶（keg）酒來。所以 keg 指的是整個編譯完成的套件資料夾。</p>
+<p>再來，放置套件的位置在 /usr/local/Cellar ， Cellar 就是地窖，一桶一桶釀好的酒當然要存放在地窖裡囉！所以編譯完成的套件資料夾 keg 預設目錄在 /usr/local/Cellar 。</p>
+<p>最後回到「keg-only」這個詞，字面上意思現在就很清楚，表示這個套件只會存放在桶子裡，不會跑出桶子外；實際上的行為是 brew 不會幫你做 symlink 到 /usr/local ，避免你的原生系統內還有一套 readline 而打架，所以訊息提示說 readline 套件是 keg-only 。</p>
+<p>至此謎題全部解開啦！ Homebrew 的命名邏輯真是超有趣的～ <strong>”</strong></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1055,86 +1144,6 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>短信点播MO业务流程图<br><img src="http://p.blog.csdn.net/images/p_blog_csdn_net/gnuhpc/598384/o_image_20_633951732428125000.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/09/24/6659/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/09/24/6659/" class="post-title-link" itemprop="url">Untitled Post - 141</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-09-24 20:37:58" itemprop="dateCreated datePublished" datetime="2015-09-24T20:37:58+08:00">2015-09-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>短信网关结构图<br><img src="http://p.blog.csdn.net/images/p_blog_csdn_net/gnuhpc/598384/o_e847a81610192c244b90a71a_16b7bf09-1dba-4ac2-8b83-08b2356ad02a.jpg"></p>
 
       
     </div>

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/10/10/postgresql-checkpoints-parameters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/10/10/postgresql-checkpoints-parameters/" class="post-title-link" itemprop="url">postgresql checkpoints相关参数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-10-10 09:36:29" itemprop="dateCreated datePublished" datetime="2016-10-10T09:36:29+08:00">2016-10-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>数据库日志中出现警告：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2016</span>-<span class="number">10</span>-<span class="number">10</span> <span class="number">03</span>:<span class="number">04</span>:<span class="number">29</span> CST \[<span class="number">26586</span>-<span class="number">131</span>\] LOG: checkpoints are occurring too frequently (<span class="number">17</span> seconds apart)</span><br><span class="line"><span class="number">2016</span>-<span class="number">10</span>-<span class="number">10</span> <span class="number">03</span>:<span class="number">04</span>:<span class="number">29</span> CST \[<span class="number">26586</span>-<span class="number">132</span>\] HINT: Consider increasing the configuration parameter <span class="string">&quot;checkpoint_segments&quot;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>checkpoint_segments参数按默认设置3过小了，这里有几个相互关联的参数，有时间好好看看。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://mysql.taobao.org/monthly/2015/09/06/">PgSQL · 特性分析 · 谈谈checkpoint的调度</a><br>[2]<a target="_blank" rel="noopener" href="http://www.weixinkd.com/n/8244035">PostgreSQL 中 checkpoint 和 WAL 日志量的关系以及优化</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.csdn.net/sszgg2006/article/details/26826501">postgresql之checkpoint(检查点)</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1065,103 +1151,6 @@
 <p>可以看到libreoffice已经启用了后台服务，并在8100端口进行监听。</p>
 <p><strong>update(17/10/2019):</strong><br>debian buster系统:<br>只安装libreoffice-common和libreoffice-writer包即可，tomcat9的系统用户为tomcat，权限问题<a href="https://openwares.net/2016/09/17/soffice_permission_deny_issues/">参考权限导致soffice(libreoffice/openoffice)无法运行的问题</a></p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="http://serverfault.com/questions/753819/systemd-service-script-for-libreoffice-openoffice">systemd service script for libreoffice/openoffice</a><br>[2]<a target="_blank" rel="noopener" href="https://gist.github.com/vjt/4194760">Libreoffice LSB init script</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.art-of-coding.eu/starting-multiple-openoffice-instances/">Starting Multiple OpenOffice Instances</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/09/13/hello-qt5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/09/13/hello-qt5/" class="post-title-link" itemprop="url">Hello Qt5</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-09-13 14:33:09" itemprop="dateCreated datePublished" datetime="2016-09-13T14:33:09+08:00">2016-09-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-04 20:01:09" itemprop="dateModified" datetime="2020-12-04T20:01:09+08:00">2020-12-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Lang/" itemprop="url" rel="index"><span itemprop="name">Lang</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>传统上，第一个程序就是hello world, Qt也不例外。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;QApplication&gt;</span><br><span class="line">#include &lt;QLabel&gt;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span>(<span class="params">int argc, char** argv</span>)</span>&#123;</span><br><span class="line"> QApplication app(argc, argv);</span><br><span class="line"></span><br><span class="line"> QLabel lMsg(<span class="string">&quot;Hello QT5!&quot;</span>);</span><br><span class="line"> lMsg.show();</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>编译</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ qmake -project</span><br><span class="line">$ qmake </span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
-
-<p>出现错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello.cpp:<span class="number">1</span>:<span class="number">24</span>: fatal error: QApplication: No such file or directory</span><br></pre></td></tr></table></figure>
-
-<p>是因为Qt5将大部分桌面部件移到了Qt Widgets模块中，即QApplication已经从原来的QtGui/QApplication移动到QtWidgets/QApplication了。<br>而qmake默认只连接core和gui下的模块，因此需要修改生成的hello.pro,最后面添加widgets里面的模块：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT += widgets</span><br></pre></td></tr></table></figure>
-
-<p>然后重新qmake和make就可以生成动态连接的目标文件hello,执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./hello</span><br></pre></td></tr></table></figure>
-
-<p>一个最简单的Qt5 GUI程序就出现了。</p>
 <p><strong>===<br>[erq]</strong></p>
 
       
