@@ -212,6 +212,27 @@
 ]]></content>
   </entry>
   <entry>
+    <title>increase lxd storage pool</title>
+    <url>/2024/03/10/resize-lxd-storage-pool/</url>
+    <content><![CDATA[<p>lxd 存储池扩容</p>
+<a id="more"></a>
+
+<p>lxd 5.13版本之后，添加了存储池扩容支持</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">lxc storage set &lt;pool_name&gt; size=&lt;new_size&gt;</span><br></pre></td></tr></table></figure>
+<p>比如为default存储器扩容</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">lxc storage set <span class="keyword">default</span> size=400GB</span><br></pre></td></tr></table></figure>
+
+<p>这只适用于lxd管理的loop-back存储池，而且只能增大存储池，而不能缩小它。（This will only work for loop-backed storage pools that are managed by LXD. You can only grow the pool (increase its size), not shrink it.）</p>
+<p>5.13以前的版本可以这样扩容：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">sudo truncate -c -s +100G /<span class="keyword">var</span>/snap/lxd/common/lxd/disks/<span class="keyword">default</span>.img</span><br><span class="line">sudo btrfs filesystem resize max /<span class="keyword">var</span>/snap/lxd/common/mntns/<span class="keyword">var</span>/snap/lxd/common/lxd/storage-pools/<span class="keyword">default</span></span><br><span class="line">Resize <span class="string">&#x27;/var/snap/lxd/common/mntns/var/snap/lxd/common/lxd/storage-pools/default&#x27;</span> <span class="keyword">of</span> <span class="string">&#x27;max&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1]<a href="https://documentation.ubuntu.com/lxd/en/latest/howto/storage_pools/">Resize a storage pool</a></p>
+<p>[2]<a href="https://discuss.linuxcontainers.org/t/resize-underlying-btrfs-storage/3023/1">Resize underlying btrfs storage</a></p>
+<p>[3]<a href="https://superuser.com/questions/1483551/increase-the-lxd-lxc-btrfs-loop-file-storage-pool-size">Increase the LXD/LXC Btrfs loop file storage pool size</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>Untitled Post - 1</title>
     <url>/2013/11/04/3781/</url>
     <content><![CDATA[<p>kernel 3.12 released!</p>
@@ -231,19 +252,19 @@
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 4</title>
-    <url>/2013/11/09/4012/</url>
-    <content><![CDATA[<p>游标(Cursor)不就是个结果集迭代器 (Iterator)嘛</p>
-<p>发自 WordPress for Android</p>
+    <title>Untitled Post - 3</title>
+    <url>/2013/11/08/4010/</url>
+    <content><![CDATA[<p>BASH的命令替换有两种方式，传统的方式为使用后置引用`command`,但这种方式不能嵌套，还有一种方式是$(command),这种方式可以嵌套。命令替换会产生一个子shell进程。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 3</title>
-    <url>/2013/11/08/4010/</url>
-    <content><![CDATA[<p>BASH的命令替换有两种方式，传统的方式为使用后置引用`command`,但这种方式不能嵌套，还有一种方式是$(command),这种方式可以嵌套。命令替换会产生一个子shell进程。</p>
+    <title>Untitled Post - 4</title>
+    <url>/2013/11/09/4012/</url>
+    <content><![CDATA[<p>游标(Cursor)不就是个结果集迭代器 (Iterator)嘛</p>
+<p>发自 WordPress for Android</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -365,18 +386,18 @@
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 18</title>
-    <url>/2013/11/25/4353/</url>
-    <content><![CDATA[<p>jQuery对象(实际是jQuery.fn.init对象)并不会继承jQuery.xxx这些jQuery名字空间下的函数，但可以调用这些函数，因为所有人都可以调用。jQuery.xxx函数只是使用了jQuery作为名字空间，避免了全局名字空间污染而已。当用普通方式调用jQuery.xxx函数时,this指针指向jQuery函数对象自身。</p>
+    <title>Untitled Post - 17</title>
+    <url>/2013/11/24/4316/</url>
+    <content><![CDATA[<p>批量查找文件内的字符串，并输出结果的行号，可以这样find . -name “*.foo” xargs grep -n -s ‘bar’或者grep -n -s ‘bar’ `find . -name “*.foo”`</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 17</title>
-    <url>/2013/11/24/4316/</url>
-    <content><![CDATA[<p>批量查找文件内的字符串，并输出结果的行号，可以这样find . -name “*.foo” xargs grep -n -s ‘bar’或者grep -n -s ‘bar’ `find . -name “*.foo”`</p>
+    <title>Untitled Post - 18</title>
+    <url>/2013/11/25/4353/</url>
+    <content><![CDATA[<p>jQuery对象(实际是jQuery.fn.init对象)并不会继承jQuery.xxx这些jQuery名字空间下的函数，但可以调用这些函数，因为所有人都可以调用。jQuery.xxx函数只是使用了jQuery作为名字空间，避免了全局名字空间污染而已。当用普通方式调用jQuery.xxx函数时,this指针指向jQuery函数对象自身。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -419,18 +440,18 @@
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 23</title>
-    <url>/2013/12/14/4488/</url>
-    <content><![CDATA[<p><a href="http://florence.sourceforge.net/english.html">Florence</a>是一款不错的GNOME屏幕虚拟键盘，如果不使用GNOME,可以使用另一款屏幕虚拟键盘<a href="http://homepage3.nifty.com/tsato/xvkbd/">xvkbd</a>,xvkbd只依赖于X11。有了屏幕虚拟键盘，触摸本用起来更爽了。</p>
+    <title>Untitled Post - 24</title>
+    <url>/2013/12/15/4492/</url>
+    <content><![CDATA[<p><a href="http://tomcat.apache.org/tomcat-8.0-doc/changelog.html">Tomcat 8.0.0</a> 已经RC5了，应该很快就可以正式发布了吧！</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 24</title>
-    <url>/2013/12/15/4492/</url>
-    <content><![CDATA[<p><a href="http://tomcat.apache.org/tomcat-8.0-doc/changelog.html">Tomcat 8.0.0</a> 已经RC5了，应该很快就可以正式发布了吧！</p>
+    <title>Untitled Post - 23</title>
+    <url>/2013/12/14/4488/</url>
+    <content><![CDATA[<p><a href="http://florence.sourceforge.net/english.html">Florence</a>是一款不错的GNOME屏幕虚拟键盘，如果不使用GNOME,可以使用另一款屏幕虚拟键盘<a href="http://homepage3.nifty.com/tsato/xvkbd/">xvkbd</a>,xvkbd只依赖于X11。有了屏幕虚拟键盘，触摸本用起来更爽了。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -1678,19 +1699,19 @@
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 159</title>
-    <url>/2015/12/12/7054/</url>
-    <content><![CDATA[<p>cassandra的native_transport使用与rpc_address同样的绑定地址，默认情况下只绑定到localhost,所以从外部是无法访问到cassandra的9042端口的，使用native协议的驱动也就无法访问节点了。因此，可以在不启用rpc的情况下，修改rpc_address地址为外部可访问接口，从而可以从外部访问native transport。</p>
-]]></content>
+    <title>Untitled Post - 158</title>
+    <url>/2015/12/01/6973/</url>
+    <content><![CDATA[<p>KVM qcow2格式镜像文件转换为VirtualBox VDI格式镜像文件，转换完毕后，可以使用VirtualBox直接启动虚拟机：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ qemu-img convert -f qcow2 foo.qcow2 -O vdi foo.vdi</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>
-    <title>Untitled Post - 158</title>
-    <url>/2015/12/01/6973/</url>
-    <content><![CDATA[<p>KVM qcow2格式镜像文件转换为VirtualBox VDI格式镜像文件，转换完毕后，可以使用VirtualBox直接启动虚拟机：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ qemu-img convert -f qcow2 foo.qcow2 -O vdi foo.vdi</span><br></pre></td></tr></table></figure>]]></content>
+    <title>Untitled Post - 159</title>
+    <url>/2015/12/12/7054/</url>
+    <content><![CDATA[<p>cassandra的native_transport使用与rpc_address同样的绑定地址，默认情况下只绑定到localhost,所以从外部是无法访问到cassandra的9042端口的，使用native协议的驱动也就无法访问节点了。因此，可以在不启用rpc的情况下，修改rpc_address地址为外部可访问接口，从而可以从外部访问native transport。</p>
+]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
@@ -1723,6 +1744,17 @@
       </categories>
   </entry>
   <entry>
+    <title>Untitled Post - 163</title>
+    <url>/2016/06/16/7397/</url>
+    <content><![CDATA[<p>vim可以通过scp来编辑远程文件，大约是这个样子:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ vim scp:<span class="comment">//user@host/path/to/file </span></span><br><span class="line">$ vim scp:<span class="comment">//server_alias/path/to/file</span></span><br></pre></td></tr></table></figure>
+<p>很神奇的样子。此功能依赖于netrw.vim，vim已经在发行中集成。</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Untitled Post - 164</title>
     <url>/2016/06/18/7409/</url>
     <content><![CDATA[<p>如果cqlsh执行COPY命令时出现错误”get_num_processes() takes no keyword arguments”,删除掉/usr/lib/pymodules/python2.7/cqlshlib/copyutil.so文件，如果有文件copyutil.c也删除掉就可以了。</p>
@@ -1733,17 +1765,6 @@
       <tags>
         <tag>cassandra</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Untitled Post - 163</title>
-    <url>/2016/06/16/7397/</url>
-    <content><![CDATA[<p>vim可以通过scp来编辑远程文件，大约是这个样子:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ vim scp:<span class="comment">//user@host/path/to/file </span></span><br><span class="line">$ vim scp:<span class="comment">//server_alias/path/to/file</span></span><br></pre></td></tr></table></figure>
-<p>很神奇的样子。此功能依赖于netrw.vim，vim已经在发行中集成。</p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
   </entry>
   <entry>
     <title>Untitled Post - 165</title>
@@ -2350,7 +2371,7 @@
     <url>/2009/09/27/antibanned/</url>
     <content><![CDATA[<p>tor was banned recently by “some fucking reason”,all tor tcp connections stay at SYN_SENT state,that is,the packets is eated somewhere,so the connections can’t be established.oh fuck! </p>
 <p>to reslove this fucking matter,following the steps list below.</p>
-<p>step 1:<br>send a mail with subject and content all “get bridges” to <a href="mailto:&#x62;&#114;&#105;&#100;&#103;&#101;&#x73;&#x40;&#116;&#111;&#x72;&#x70;&#114;&#x6f;&#106;&#x65;&#x63;&#x74;&#x2e;&#x6f;&#x72;&#103;">&#x62;&#114;&#105;&#100;&#103;&#101;&#x73;&#x40;&#116;&#111;&#x72;&#x70;&#114;&#x6f;&#106;&#x65;&#x63;&#x74;&#x2e;&#x6f;&#x72;&#103;</a>,after a moment,the bridges list will be delivered to your mailbox.the bridges list looks like this</p>
+<p>step 1:<br>send a mail with subject and content all “get bridges” to <a href="mailto:&#98;&#114;&#x69;&#x64;&#x67;&#x65;&#x73;&#x40;&#x74;&#x6f;&#x72;&#x70;&#x72;&#111;&#106;&#x65;&#x63;&#116;&#46;&#111;&#x72;&#103;">&#98;&#114;&#x69;&#x64;&#x67;&#x65;&#x73;&#x40;&#x74;&#x6f;&#x72;&#x70;&#x72;&#111;&#106;&#x65;&#x63;&#116;&#46;&#111;&#x72;&#103;</a>,after a moment,the bridges list will be delivered to your mailbox.the bridges list looks like this</p>
 <p>bridge ip:port</p>
 <p>it can be more than one bridges.</p>
 <p>step 2:<br>open the /etc/tor/torrc file,add tow lines with contents “UseBridges 1” and “UpdateBridgesFromAuthority 1” separately at the last.whereafter,add the bridges you received.finally looks like this<br>UseBridges 1<br>UpdateBridgesFromAuthority 1<br>bridge ip:port</p>
@@ -6394,7 +6415,7 @@ $_SESSION\["submitid"\] += 1;
 <p>/etc/postfix/sasl_access:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># Use this when smtpd_sasl_local_domain is empty.</span><br><span class="line">username HOLD</span><br><span class="line"># Use this when smtpd_sasl_local_domain=example.com.</span><br><span class="line">username@example.com HOLD</span><br></pre></td></tr></table></figure>
 
-<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#106;&#111;&#x68;&#x6e;&#x40;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;">&#106;&#111;&#x68;&#x6e;&#x40;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
+<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;">&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
 <p><em>隐藏sasl认证</em><br>可以为部分客户或网络隐藏SASL认证,因为有些不需要认证的客户如果发现服务提供SASL认证能力,那么他们会试图去认证,但客户端有没有提供认证信息,这样客户就一直处于认证失败状态。</p>
 <p>/etc/postfix/main.cf:<br> smtpd_sasl_exceptions_networks = !192.0.2.171/32, 192.0.2.0/24</p>
 <p><em>添加sasl登录名到邮件头</em></p>
@@ -6442,9 +6463,9 @@ $_SESSION\["submitid"\] += 1;
 <p>modules_enabled = {<br>…<br>“register”; – Allow users to register on this server using a client and change passwords<br>…<br>}</p>
 <p>然后设置参数<br>allow_registration = true</p>
 <p><strong>手动添加账户</strong></p>
-<p>#prosodyctl adduser <a href="mailto:&#x75;&#x73;&#101;&#x72;&#110;&#97;&#109;&#101;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#x6f;&#x6d;">&#x75;&#x73;&#101;&#x72;&#110;&#97;&#109;&#101;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#110;&#x6e;&#97;&#109;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a></p>
-<p>删除账户<br>#prosodyctl deluser <a href="mailto:&#117;&#x73;&#101;&#114;&#x6e;&#x61;&#x6d;&#101;&#x40;&#100;&#111;&#109;&#97;&#105;&#x6e;&#110;&#97;&#x6d;&#101;&#x2e;&#x63;&#111;&#109;">&#117;&#x73;&#101;&#114;&#x6e;&#x61;&#x6d;&#101;&#x40;&#100;&#111;&#109;&#97;&#105;&#x6e;&#110;&#97;&#x6d;&#101;&#x2e;&#x63;&#111;&#109;</a></p>
-<p>更改用户密码<br>#prosodyctl passwd <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#x6d;&#101;&#x40;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#110;&#x61;&#109;&#x65;&#46;&#x63;&#x6f;&#x6d;">&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#x6d;&#101;&#x40;&#x64;&#x6f;&#109;&#x61;&#x69;&#110;&#110;&#x61;&#109;&#x65;&#46;&#x63;&#x6f;&#x6d;</a></p>
+<p>#prosodyctl adduser <a href="mailto:&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#64;&#x64;&#x6f;&#x6d;&#x61;&#x69;&#110;&#x6e;&#x61;&#x6d;&#101;&#x2e;&#99;&#111;&#x6d;">&#117;&#x73;&#101;&#x72;&#x6e;&#x61;&#x6d;&#x65;&#64;&#x64;&#x6f;&#x6d;&#x61;&#x69;&#110;&#x6e;&#x61;&#x6d;&#101;&#x2e;&#99;&#111;&#x6d;</a></p>
+<p>删除账户<br>#prosodyctl deluser <a href="mailto:&#117;&#x73;&#x65;&#114;&#x6e;&#x61;&#109;&#x65;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#110;&#110;&#97;&#109;&#x65;&#x2e;&#99;&#x6f;&#x6d;">&#117;&#x73;&#x65;&#114;&#x6e;&#x61;&#109;&#x65;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#110;&#110;&#97;&#109;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>更改用户密码<br>#prosodyctl passwd <a href="mailto:&#x75;&#115;&#x65;&#114;&#x6e;&#97;&#x6d;&#101;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x6e;&#97;&#x6d;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x75;&#115;&#x65;&#114;&#x6e;&#97;&#x6d;&#101;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x6e;&#97;&#x6d;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
 <h2 id="端口映射"><a href="#端口映射" class="headerlink" title="端口映射"></a><strong>端口映射</strong></h2><p>XMPP服务器的著名端口为TCP/5222,XMPP服务器间互联的著名端口为TCP/5269</p>
 <p><strong>XMPP/JABBER客户端</strong></p>
 <p>只要符合XMPP协议标准的客户端都可以连接到prosody服务器。推荐开源跨平台的XMPP客户端<a href="http://psi-im.org/">Psi</a>,Psi界面使用QT开发,可以在Linux/MacOS/Windows等平台上运行。其他常见的客户端还有,<a href="http://gajim.org/downloads.php?lang=en">Gajim</a>(GTK+开发),<a href="http://pandion.im/">Pandion</a>等。</p>
@@ -8181,7 +8202,7 @@ $_SESSION\["submitid"\] += 1;
 <p><strong>* User Authentication<br>*</strong> 使用HTTP认证,OPENID需要服务器连接互联网,还可以使用LDAP认证服务</p>
 <p>Authentication method [OPENID/?]: http<br>Get username from custom HTTP header [y/N]?<br>SSO logout URL : </p>
 <p><strong>* Email Delivery<br>*</strong> gerrit发送邮件设置,可以使用本地或远程SMTP服务器,<br>*** 只要在smtp服务器上有帐号即可。</p>
-<p>SMTP server hostname [localhost]: mail.openwares.net<br>SMTP server port [(default)]: 25<br>SMTP encryption [NONE/?]: tls<br>SMTP username [gerrit2]: <a href="mailto:&#x67;&#101;&#x72;&#114;&#105;&#x74;&#50;&#64;&#111;&#x70;&#101;&#110;&#x77;&#x61;&#x72;&#101;&#x73;&#46;&#x6e;&#101;&#x74;">&#x67;&#101;&#x72;&#114;&#105;&#x74;&#50;&#64;&#111;&#x70;&#101;&#110;&#x77;&#x61;&#x72;&#101;&#x73;&#46;&#x6e;&#101;&#x74;</a><br><a href="mailto:&#103;&#x65;&#114;&#x72;&#105;&#116;&#x32;&#x40;&#111;&#112;&#101;&#x6e;&#119;&#x61;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#x74;">&#103;&#x65;&#114;&#x72;&#105;&#116;&#x32;&#x40;&#111;&#112;&#101;&#x6e;&#119;&#x61;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#x74;</a>‘s password :<br> confirm password : </p>
+<p>SMTP server hostname [localhost]: mail.openwares.net<br>SMTP server port [(default)]: 25<br>SMTP encryption [NONE/?]: tls<br>SMTP username [gerrit2]: <a href="mailto:&#x67;&#x65;&#x72;&#114;&#105;&#116;&#50;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#101;&#x73;&#x2e;&#x6e;&#x65;&#116;">&#x67;&#x65;&#x72;&#114;&#105;&#116;&#50;&#64;&#x6f;&#112;&#x65;&#x6e;&#119;&#x61;&#114;&#101;&#x73;&#x2e;&#x6e;&#x65;&#116;</a><br><a href="mailto:&#103;&#101;&#x72;&#x72;&#x69;&#116;&#50;&#64;&#111;&#x70;&#x65;&#110;&#119;&#97;&#x72;&#x65;&#x73;&#46;&#x6e;&#101;&#116;">&#103;&#101;&#x72;&#x72;&#x69;&#116;&#50;&#64;&#111;&#x70;&#x65;&#110;&#119;&#97;&#x72;&#x65;&#x73;&#46;&#x6e;&#101;&#116;</a>‘s password :<br> confirm password : </p>
 <p><strong>* Container Process<br>*</strong> 使用gerrit2用户运行gerrit</p>
 <p>Run as [gerrit2]:<br>Java runtime [/usr/lib/jvm/java-7-openjdk-amd64/jre]:<br>Copy gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war [Y/n]?<br>Copying gerrit-2.8.1.war to /home/gerrit2/review/bin/gerrit.war</p>
 <p><strong>* SSH Daemon<br>*</strong> gerrit自带的ssh服务,与服务器自身的ssh服务无关,监听默认端口即可<br>*** 注意:如要使用低于1024的特权端口,需authbind授权,否则ssh会绑定端口失败<br>Listen on address [*]:<br>Listen on port [29418]: </p>
@@ -8217,7 +8238,7 @@ $_SESSION\["submitid"\] += 1;
 <p>其他用户帐号的配置与管理员的配置方式一样。</p>
 <p><strong>SSH访问gerrit</strong></p>
 <p>添加ssh公钥后就可以使用ssh来使用gerrit了。</p>
-<h1 id="ssh-p-29418-i-ssh-id-rsa-gerrit-x61-x64-x6d-105-110-64-114-101-x76-105-x65-119-x2e-100-x6f-109-x61-x69-x6e-46-x74-x6c-100"><a href="#ssh-p-29418-i-ssh-id-rsa-gerrit-x61-x64-x6d-105-110-64-114-101-x76-105-x65-119-x2e-100-x6f-109-x61-x69-x6e-46-x74-x6c-100" class="headerlink" title="ssh -p 29418 -i ~/.ssh/id_rsa.gerrit &#x61;&#x64;&#x6d;&#105;&#110;&#64;&#114;&#101;&#x76;&#105;&#x65;&#119;&#x2e;&#100;&#x6f;&#109;&#x61;&#x69;&#x6e;&#46;&#x74;&#x6c;&#100;"></a>ssh -p 29418 -i ~/.ssh/id_rsa.gerrit <a href="mailto:&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#114;&#101;&#x76;&#105;&#x65;&#119;&#x2e;&#100;&#x6f;&#109;&#x61;&#x69;&#x6e;&#46;&#x74;&#x6c;&#100;">&#x61;&#x64;&#x6d;&#105;&#110;&#64;&#114;&#101;&#x76;&#105;&#x65;&#119;&#x2e;&#100;&#x6f;&#109;&#x61;&#x69;&#x6e;&#46;&#x74;&#x6c;&#100;</a></h1><p>如果私钥名字为id_rsa可以不用使用-i参数。为ssh主机配置别名访问起来更简单,~/.ssh/config文件中添加:</p>
+<h1 id="ssh-p-29418-i-ssh-id-rsa-gerrit-97-x64-x6d-x69-110-x40-114-x65-x76-105-101-x77-x2e-x64-111-109-x61-105-x6e-x2e-116-x6c-100"><a href="#ssh-p-29418-i-ssh-id-rsa-gerrit-97-x64-x6d-x69-110-x40-114-x65-x76-105-101-x77-x2e-x64-111-109-x61-105-x6e-x2e-116-x6c-100" class="headerlink" title="ssh -p 29418 -i ~/.ssh/id_rsa.gerrit &#97;&#x64;&#x6d;&#x69;&#110;&#x40;&#114;&#x65;&#x76;&#105;&#101;&#x77;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#x2e;&#116;&#x6c;&#100;"></a>ssh -p 29418 -i ~/.ssh/id_rsa.gerrit <a href="mailto:&#97;&#x64;&#x6d;&#x69;&#110;&#x40;&#114;&#x65;&#x76;&#105;&#101;&#x77;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#x2e;&#116;&#x6c;&#100;">&#97;&#x64;&#x6d;&#x69;&#110;&#x40;&#114;&#x65;&#x76;&#105;&#101;&#x77;&#x2e;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#x2e;&#116;&#x6c;&#100;</a></h1><p>如果私钥名字为id_rsa可以不用使用-i参数。为ssh主机配置别名访问起来更简单,~/.ssh/config文件中添加:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Host review</span><br><span class="line"> Hostname review.domain.tld</span><br><span class="line"> User admin</span><br><span class="line"> Port <span class="number">29418</span></span><br><span class="line"> #如果私钥名字为id_rsa,可以省略下面一行</span><br><span class="line"> IdentityFile ~<span class="regexp">/.ssh/i</span>d_rsa.gerrit</span><br></pre></td></tr></table></figure>
 
 <p>这样ssh访问gerrit就可以了:</p>
@@ -8984,24 +9005,6 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
-    <title>gnome shell firefox 自带图标无法显示</title>
-    <url>/2013/09/12/gnome-shell-firefox-icon-disapper/</url>
-    <content><![CDATA[<p>最近手动更新firefox后，无论如何无法设置启动程序图标为firefox自带的图标，使用系统自带图标则没问题。</p>
-<a id="more"></a>
-<p>debian版本为jessie,firefox版本为23.0.1</p>
-<p>将firefox自带图标拷贝到系统图标目录</p>
-<h1 id="cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps"><a href="#cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps" class="headerlink" title="cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/"></a>cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/</h1><p>通过更新图标缓存，注册主题图标</p>
-<h1 id="gtk-update-icon-cache-usr-share-icons-hicolor"><a href="#gtk-update-icon-cache-usr-share-icons-hicolor" class="headerlink" title="gtk-update-icon-cache /usr/share/icons/hicolor/"></a>gtk-update-icon-cache /usr/share/icons/hicolor/</h1><p>gtk-update-icon-cache: Cache file created successfully.</p>
-<p>然后再设置firefox图标为/usr/share/icons/hicolor/128x128/apps/mozicon128.png则可以了。</p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>GNOME环境X应用程序自启动</title>
     <url>/2015/11/22/gnome-x-app-autostart/</url>
     <content><![CDATA[<a id="more"></a>
@@ -9015,6 +9018,24 @@ $_SESSION\["submitid"\] += 1;
 <p>或者使用GNOME Tweak Tool -&gt; Startup Applications选择一下就可以了。</p>
 <p>References:<br>[1]<a href="https://wiki.archlinux.org/index.php/Autostarting">Autostarting</a></p>
 <p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gnome shell firefox 自带图标无法显示</title>
+    <url>/2013/09/12/gnome-shell-firefox-icon-disapper/</url>
+    <content><![CDATA[<p>最近手动更新firefox后，无论如何无法设置启动程序图标为firefox自带的图标，使用系统自带图标则没问题。</p>
+<a id="more"></a>
+<p>debian版本为jessie,firefox版本为23.0.1</p>
+<p>将firefox自带图标拷贝到系统图标目录</p>
+<h1 id="cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps"><a href="#cp-opt-firefox-browser-icons-mozicon128-png-usr-share-icons-hicolor-128x128-apps" class="headerlink" title="cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/"></a>cp /opt/firefox/browser/icons/mozicon128.png /usr/share/icons/hicolor/128x128/apps/</h1><p>通过更新图标缓存，注册主题图标</p>
+<h1 id="gtk-update-icon-cache-usr-share-icons-hicolor"><a href="#gtk-update-icon-cache-usr-share-icons-hicolor" class="headerlink" title="gtk-update-icon-cache /usr/share/icons/hicolor/"></a>gtk-update-icon-cache /usr/share/icons/hicolor/</h1><p>gtk-update-icon-cache: Cache file created successfully.</p>
+<p>然后再设置firefox图标为/usr/share/icons/hicolor/128x128/apps/mozicon128.png则可以了。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -9090,22 +9111,6 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
-    <title>gradle代理设置</title>
-    <url>/2016/05/30/gradle-proxy-setup/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>众所周知的原因，访问国外的网络不是那么顺畅。gradle下载插件时，几乎无法下载，而使用proxychains也不凑效。<br>可以这样为gradle设置全局socks5代理：</p>
-<p>$HOME/.gradle/gradle.properties文件中添加如下行，如没有该文件请自行建立：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">org.gradle.jvmargs=-DsocksProxyHost=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -DsocksProxyPort=<span class="number">1080</span></span><br></pre></td></tr></table></figure>
-
-<p>如果不设置代理，也可以使用maven镜像仓库，或者maven本地仓库。</p>
-<p>最后，祝狗日的Great Fucking Wall和XXX早日死掉！ </p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Gradle SSH Plugin reject HostKey问题</title>
     <url>/2015/11/04/gradle-ssh-plugin-reject-hostkey/</url>
     <content><![CDATA[<a id="more"></a>
@@ -9122,6 +9127,22 @@ $_SESSION\["submitid"\] += 1;
       <tags>
         <tag>Debian</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>gradle代理设置</title>
+    <url>/2016/05/30/gradle-proxy-setup/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>众所周知的原因，访问国外的网络不是那么顺畅。gradle下载插件时，几乎无法下载，而使用proxychains也不凑效。<br>可以这样为gradle设置全局socks5代理：</p>
+<p>$HOME/.gradle/gradle.properties文件中添加如下行，如没有该文件请自行建立：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">org.gradle.jvmargs=-DsocksProxyHost=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -DsocksProxyPort=<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不设置代理，也可以使用maven镜像仓库，或者maven本地仓库。</p>
+<p>最后，祝狗日的Great Fucking Wall和XXX早日死掉！ </p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
   </entry>
   <entry>
     <title>gradle ssh plugin</title>
@@ -9243,6 +9264,34 @@ $_SESSION\["submitid"\] += 1;
       </tags>
   </entry>
   <entry>
+    <title>gulp 清理文件/文件夹(cleanup)</title>
+    <url>/2015/10/29/gulp-cleanup/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>删除文件或文件夹时，并不会访问文件的内容，因此没有理由非要使用gulp插件处理此事，因为gulp插件主要是用来处理文件流的。</p>
+<p>gulp-clean和gulp-rimraf都已经deprecated,使用del和vinyl-paths来做此项工作。</p>
+<p><strong>直接删除文件</strong></p>
+<p>安装del</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ npm install --save-dev del</span><br></pre></td></tr></table></figure>
+
+<p>定义clean任务:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> del(\[<span class="string">&#x27;path1&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;path2&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;!path3&#x27;</span></span><br><span class="line"> \]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:mobile&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
+
+<p>可以为del传递单个路径，也可以传递一个路径数组，支持globbing。</p>
+<p><strong>从pipeline流中删除文件</strong></p>
+<p>如果想在流中处理之后删除某些文件，可以使用vinyl-paths来获取流中的文件路径，然后传递给del</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> stripDebug = <span class="built_in">require</span>(<span class="string">&#x27;gulp-strip-debug&#x27;</span>); <span class="comment">// only as an example</span></span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> vinylPaths = <span class="built_in">require</span>(<span class="string">&#x27;vinyl-paths&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean:tmp&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(<span class="string">&#x27;tmp/*&#x27;</span>)</span><br><span class="line"> .pipe(vinylPaths(del))</span><br><span class="line"> .pipe(stripDebug())</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:tmp&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md">Delete files and folders</a><br>[2]<a href="https://github.com/robrich/gulp-rimraf">gulp-rimraf</a><br>[3]<a href="https://github.com/peter-vilja/gulp-clean">gulp-clean</a></p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>javascript</category>
+      </categories>
+      <tags>
+        <tag>Javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>无GUI安装Virtualbox Guest Additions</title>
     <url>/2019/06/02/guiless-install-virtualbox-guest-additions/</url>
     <content><![CDATA[<a id="more"></a>
@@ -9270,34 +9319,6 @@ $_SESSION\["submitid"\] += 1;
       </categories>
       <tags>
         <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gulp 清理文件/文件夹(cleanup)</title>
-    <url>/2015/10/29/gulp-cleanup/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>删除文件或文件夹时，并不会访问文件的内容，因此没有理由非要使用gulp插件处理此事，因为gulp插件主要是用来处理文件流的。</p>
-<p>gulp-clean和gulp-rimraf都已经deprecated,使用del和vinyl-paths来做此项工作。</p>
-<p><strong>直接删除文件</strong></p>
-<p>安装del</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ npm install --save-dev del</span><br></pre></td></tr></table></figure>
-
-<p>定义clean任务:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> del(\[<span class="string">&#x27;path1&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;path2&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;!path3&#x27;</span></span><br><span class="line"> \]);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:mobile&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
-
-<p>可以为del传递单个路径，也可以传递一个路径数组，支持globbing。</p>
-<p><strong>从pipeline流中删除文件</strong></p>
-<p>如果想在流中处理之后删除某些文件，可以使用vinyl-paths来获取流中的文件路径，然后传递给del</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">&#x27;gulp&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> stripDebug = <span class="built_in">require</span>(<span class="string">&#x27;gulp-strip-debug&#x27;</span>); <span class="comment">// only as an example</span></span><br><span class="line"><span class="keyword">var</span> del = <span class="built_in">require</span>(<span class="string">&#x27;del&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> vinylPaths = <span class="built_in">require</span>(<span class="string">&#x27;vinyl-paths&#x27;</span>);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;clean:tmp&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line"> <span class="keyword">return</span> gulp.src(<span class="string">&#x27;tmp/*&#x27;</span>)</span><br><span class="line"> .pipe(vinylPaths(del))</span><br><span class="line"> .pipe(stripDebug())</span><br><span class="line"> .pipe(gulp.dest(<span class="string">&#x27;dist&#x27;</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">&#x27;default&#x27;</span>, \[<span class="string">&#x27;clean:tmp&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a href="https://github.com/gulpjs/gulp/blob/master/docs/recipes/delete-files-folder.md">Delete files and folders</a><br>[2]<a href="https://github.com/robrich/gulp-rimraf">gulp-rimraf</a><br>[3]<a href="https://github.com/peter-vilja/gulp-clean">gulp-clean</a></p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>javascript</category>
-      </categories>
-      <tags>
-        <tag>Javascript</tag>
       </tags>
   </entry>
   <entry>
@@ -12377,7 +12398,7 @@ if (!document.all) {
     <content><![CDATA[<p>查看linux distribution版本信息的命令有以下几个</p>
 <a id="more"></a>
 <p>系统信息<br>1 $uname -a<br>2 Linux debian 2.6.32-5-686 #1 SMP Wed Jan 12 04:01:41 UTC 2011 i686 GNU/Linux  </p>
-<p>详细版本<br>1 $cat /proc/version<br>2 Linux version 2.6.32-5-686 (Debian 2.6.32-30) (<a href="mailto:&#98;&#101;&#110;&#x40;&#100;&#101;&#x63;&#97;&#100;&#x65;&#110;&#x74;&#46;&#111;&#x72;&#x67;&#x2e;&#x75;&#107;">&#98;&#101;&#110;&#x40;&#100;&#101;&#x63;&#97;&#100;&#x65;&#110;&#x74;&#46;&#111;&#x72;&#x67;&#x2e;&#x75;&#107;</a>) (gcc version 4.3.5 (Debian 4.3.5-4) ) #1 SMP Wed Jan 12 04:01:41 UTC 2011  </p>
+<p>详细版本<br>1 $cat /proc/version<br>2 Linux version 2.6.32-5-686 (Debian 2.6.32-30) (<a href="mailto:&#98;&#101;&#110;&#64;&#x64;&#x65;&#99;&#x61;&#x64;&#101;&#x6e;&#116;&#46;&#x6f;&#114;&#x67;&#x2e;&#117;&#x6b;">&#98;&#101;&#110;&#64;&#x64;&#x65;&#99;&#x61;&#x64;&#101;&#x6e;&#116;&#46;&#x6f;&#114;&#x67;&#x2e;&#117;&#x6b;</a>) (gcc version 4.3.5 (Debian 4.3.5-4) ) #1 SMP Wed Jan 12 04:01:41 UTC 2011  </p>
 <p>发行版版本信息<br>1 $lsb_release -a<br>2 No LSB modules are available.<br>3 Distributor ID: Debian<br>4 Description:    Debian GNU/Linux 6.0 (squeeze)<br>5 Release:        6.0<br>6 Codename:       squeeze  </p>
 <p><strong>UPDATE(09/19/2013):</strong><br>还有一个配置文件有发行版本信息<br>$ cat /etc/issue<br>Debian GNU/Linux jessie/sid \n \l</p>
 ]]></content>
@@ -14639,7 +14660,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ ./configure --add-<span class="built_in">module</span>=../nginx_upstream_check_module --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-stream_ssl_preread_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-stream</span><br><span class="line">...</span><br><span class="line">Configuration summary</span><br><span class="line"> + using system PCRE library</span><br><span class="line"> + using system OpenSSL library</span><br><span class="line"> + using system zlib library</span><br><span class="line"></span><br><span class="line"> nginx path prefix: <span class="string">&quot;/usr/local/nginx&quot;</span></span><br><span class="line"> nginx binary file: <span class="string">&quot;/usr/local/nginx/sbin/nginx&quot;</span></span><br><span class="line"> nginx modules path: <span class="string">&quot;/usr/local/nginx/modules&quot;</span></span><br><span class="line"> nginx configuration prefix: <span class="string">&quot;/usr/local/nginx/conf&quot;</span></span><br><span class="line"> nginx configuration file: <span class="string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"> nginx pid file: <span class="string">&quot;/usr/local/nginx/logs/nginx.pid&quot;</span></span><br><span class="line"> nginx error log file: <span class="string">&quot;/usr/local/nginx/logs/error.log&quot;</span></span><br><span class="line"> nginx http access log file: <span class="string">&quot;/usr/local/nginx/logs/access.log&quot;</span></span><br><span class="line"> nginx http client request body temporary files: <span class="string">&quot;client_body_temp&quot;</span></span><br><span class="line"> nginx http proxy temporary files: <span class="string">&quot;proxy_temp&quot;</span></span><br><span class="line"> nginx http fastcgi temporary files: <span class="string">&quot;fastcgi_temp&quot;</span></span><br><span class="line"> nginx http uwsgi temporary files: <span class="string">&quot;uwsgi_temp&quot;</span></span><br><span class="line"> nginx http scgi temporary files: <span class="string">&quot;scgi_temp&quot;</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
 <p>安装目录位于/usr/local/nginx</p>
 <p>添加systemd服务nginx.service<br>将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service</p>
-<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Stop dance for nginx</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span><br><span class="line"><span class="comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="comment"># and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span></span><br><span class="line"><span class="comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx signals reference doc:</span></span><br><span class="line"><span class="comment"># http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=A high performance web server and a reverse proxy server</span><br><span class="line"><span class="attr">Documentation</span>=man:nginx(<span class="number">8</span>)</span><br><span class="line"><span class="attr">After</span>=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line"><span class="attr">ExecStop</span>=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /run/nginx.pid</span><br><span class="line"><span class="attr">TimeoutStopSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">KillMode</span>=mixed</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Stop dance for nginx</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span><br><span class="line"><span class="comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="comment"># and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span></span><br><span class="line"><span class="comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx signals reference doc:</span></span><br><span class="line"><span class="comment"># http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=A high performance web server and a reverse proxy server</span><br><span class="line"><span class="attr">Documentation</span>=man:nginx(<span class="number">8</span>)</span><br><span class="line"><span class="attr">After</span>=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line"><span class="attr">ExecStop</span>=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">TimeoutStopSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">KillMode</span>=mixed</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
 
 <p>enable服务并启动</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl enable nginx.service </span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.</span><br><span class="line">$ sudo systemctl start nginx.service</span><br></pre></td></tr></table></figure>
@@ -15196,27 +15217,6 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
       </categories>
   </entry>
   <entry>
-    <title>oh OnionShare</title>
-    <url>/2019/07/08/oh-onionshare/</url>
-    <content><![CDATA[<a id="more"></a>
-<p><a href="https://onionshare.org/">OnionShare</a>是一个安全匿名的开源文件分享工具，可以使用它在本地机器通过tor网络发布共享服务，生成一个不可猜测的onion地址，通过这个地址其他人可以使用tor browser来获取分享的文件。只要生成的onion地址没有泄露，文件就是安全的。文件传输的过程不会被任何第三方窃取。</p>
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo apt install onionshare</span><br></pre></td></tr></table></figure>
-
-<p><strong>分享文件</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ onionshare go.sh </span><br><span class="line">Onionshare <span class="number">1.3</span><span class="number">.2</span> https:<span class="comment">//onionshare.org/</span></span><br><span class="line">Connecting to the Tor network: <span class="number">100</span>% - Done</span><br><span class="line">Configuring onion service on port <span class="number">17620.</span></span><br><span class="line">Starting ephemeral Tor onion service and awaiting publication</span><br><span class="line">Settings saved to /home/xxx/.config/onionshare/onionshare.json</span><br><span class="line">Preparing files to share.</span><br><span class="line"> * Serving Flask app <span class="string">&quot;onionshare.web&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line"> WARNING: Do not use the development server <span class="keyword">in</span> a production environment.</span><br><span class="line"> Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http:<span class="comment">//127.0.0.1:17620/ (Press CTRL+C to quit)</span></span><br><span class="line">Give <span class="built_in">this</span> address to the person you<span class="string">&#x27;re sending the file to:</span></span><br><span class="line"><span class="string">http://huq64ocyu666ecom.onion/negligee-easing</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Press Ctrl-C to stop server</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>获取文件</strong></p>
-<p>将生成的连接通过安全路径发送，然后在tor browser中打开连接即可，简单可靠又安全，美中不足，速度慢慢慢。</p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>debian启动时激活numlock</title>
     <url>/2014/03/14/numlock-on-startup/</url>
     <content><![CDATA[<p>debian启动时默认关闭numlock有一阵子了。</p>
@@ -15239,6 +15239,27 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>记得要在最后一行exit 0之前添加。</p>
 <p>References:<br>[1]<a href="https://wiki.archlinux.org/index.php/Activating_Numlock_on_Bootup">Activating Numlock on Bootup</a></p>
 <p>===<br>[erq]</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>oh OnionShare</title>
+    <url>/2019/07/08/oh-onionshare/</url>
+    <content><![CDATA[<a id="more"></a>
+<p><a href="https://onionshare.org/">OnionShare</a>是一个安全匿名的开源文件分享工具，可以使用它在本地机器通过tor网络发布共享服务，生成一个不可猜测的onion地址，通过这个地址其他人可以使用tor browser来获取分享的文件。只要生成的onion地址没有泄露，文件就是安全的。文件传输的过程不会被任何第三方窃取。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo apt install onionshare</span><br></pre></td></tr></table></figure>
+
+<p><strong>分享文件</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ onionshare go.sh </span><br><span class="line">Onionshare <span class="number">1.3</span><span class="number">.2</span> https:<span class="comment">//onionshare.org/</span></span><br><span class="line">Connecting to the Tor network: <span class="number">100</span>% - Done</span><br><span class="line">Configuring onion service on port <span class="number">17620.</span></span><br><span class="line">Starting ephemeral Tor onion service and awaiting publication</span><br><span class="line">Settings saved to /home/xxx/.config/onionshare/onionshare.json</span><br><span class="line">Preparing files to share.</span><br><span class="line"> * Serving Flask app <span class="string">&quot;onionshare.web&quot;</span> (lazy loading)</span><br><span class="line"> * Environment: production</span><br><span class="line"> WARNING: Do not use the development server <span class="keyword">in</span> a production environment.</span><br><span class="line"> Use a production WSGI server instead.</span><br><span class="line"> * Debug mode: off</span><br><span class="line"> * Running on http:<span class="comment">//127.0.0.1:17620/ (Press CTRL+C to quit)</span></span><br><span class="line">Give <span class="built_in">this</span> address to the person you<span class="string">&#x27;re sending the file to:</span></span><br><span class="line"><span class="string">http://huq64ocyu666ecom.onion/negligee-easing</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Press Ctrl-C to stop server</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>获取文件</strong></p>
+<p>将生成的连接通过安全路径发送，然后在tor browser中打开连接即可，简单可靠又安全，美中不足，速度慢慢慢。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -16666,7 +16687,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>一个域要么是本地域,要么是虚拟域;一个虚拟域要么是虚拟别名域,要么是虚拟邮箱域。也就是<strong>本地域,虚拟别名域,虚拟邮箱域是互斥的</strong>。</p>
 <p>那么一个postfix邮件系统要添加一个额外的域,有这么几种选择,几个实例如下：</p>
 <ul>
-<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#x6e;&#102;&#x6f;&#x40;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#49;&#x2e;&#x74;&#x6c;&#100;">&#105;&#x6e;&#102;&#x6f;&#x40;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#49;&#x2e;&#x74;&#x6c;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
+<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#x6e;&#102;&#x6f;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;">&#105;&#x6e;&#102;&#x6f;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
 <li>加入虚拟别名域<br>/etc/postfix/main.cf:<figure class="highlight"><table><tr><td class="code"><pre><span class="line"> virtual_alias_domains = example.com</span><br><span class="line"> virtual_alias_maps = hash:<span class="regexp">/etc/</span>postfix/virtual</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"> /etc/postfix/virtual:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"> postmaster@example.com postmaster</span><br><span class="line"> info@example.com joe</span><br><span class="line"> sales@example.com jane</span><br><span class="line"> # Uncomment entry below to implement a catch-all address</span><br><span class="line"> # @example.com jim #example.com域上的所有其他用户的邮件都发送给jim,这样可能会有垃圾邮件的困扰</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -16693,7 +16714,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line"># groupadd -g 5000 vmail</span><br><span class="line"># useradd -g vmail -u 5000 vmail -d /var/mail/vmail -m</span><br></pre></td></tr></table></figure>
 <p>在users表里添加用户</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mysql&gt; insert into users values (<span class="string">&#x27;test@openwares.net&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>就可以使用<a href="mailto:&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#x61;&#x72;&#101;&#x73;&#x2e;&#x6e;&#101;&#x74;">&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#x61;&#x72;&#101;&#x73;&#x2e;&#x6e;&#101;&#x74;</a>邮箱了。</p>
+<p>就可以使用<a href="mailto:&#x74;&#101;&#x73;&#116;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#116;">&#x74;&#101;&#x73;&#116;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#116;</a>邮箱了。</p>
 <p><strong>别名设置</strong></p>
 <p>/etc/aliases为postfix的本地别名数据库,可以为本地收件人重定向邮件，这种重定向由本地交付代理(local delivery agent)处理。可以添加一个重定向将root重定向到自己的用户,从而所有的系统邮件都会发给你。比如在文件中添加如下行:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">root: yourname</span><br></pre></td></tr></table></figure>
@@ -16714,7 +16735,7 @@ sql映射文件:<figure class="highlight xml"><table><tr><td class="code"><pre><
 <p>postfix也可以通过配置直接使用465端口提供加密连接,而不是使用STARTSSL。部分客户端依赖于这种方式,但这种方式是不鼓励使用的。<br>postfix使用wrapper来支持smtps。</p>
 <p><strong>配额quota</strong><br>可以使用<a href="http://vda.sourceforge.net/">VDA</a>添加配额支持,需要给postfix打补丁。</p>
 <p><strong>UPDATE(01/24/2014):</strong><br>在user表中添加一个用户帐号后,用户的虚拟邮箱目录是尚未建立的,只有当用户收到第一封邮件时,postfix才会为用户建立maildir目录。之后才能使用imap登录用户邮箱,否则imap会有错误提示:</p>
-<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#120;&#120;&#x78;&#x40;&#111;&#112;&#x65;&#x6e;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#101;&#116;">&#120;&#120;&#x78;&#x40;&#111;&#112;&#x65;&#x6e;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#101;&#116;</a>: No such file or directory</p>
+<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#x78;&#x78;&#120;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#97;&#x72;&#x65;&#x73;&#x2e;&#x6e;&#101;&#x74;">&#x78;&#x78;&#120;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#97;&#x72;&#x65;&#x73;&#x2e;&#x6e;&#101;&#x74;</a>: No such file or directory</p>
 <p>所以新增邮箱用户后,立马向其发送一个welcome邮件吧。</p>
 <p>参考:<br><a href="http://www.postfix.org/BASIC_CONFIGURATION_README.html">Postfix Basic Configuration</a><br><a href="http://www.postfix.org/VIRTUAL_README.html">Postfix Virtual Domain Hosting Howto</a><br><a href="http://www.postfix.org/DATABASE_README.html">Postfix Lookup Table Overview</a><br><a href="http://www.howtoforge.com/virtual-users-and-domains-with-postfix-courier-mysql-and-squirrelmail-ubuntu-12.04-lts">Virtual Users And Domains With Postfix, Courier, MySQL And SquirrelMail (Ubuntu 12.04 LTS)</a><br><a href="http://www.postfix.org/TLS_README.html">Postfix TLS Support</a><br><a href="https://www.fastmail.fm/help/technology_ssl_vs_tls_starttls.html">SSL vs TLS vs STARTTLS</a></p>
 <p><strong>===<br>[erq]</strong></p>
@@ -18728,43 +18749,6 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
       </tags>
   </entry>
   <entry>
-    <title>减少qcow2虚拟磁盘文件实际占用的存储空间</title>
-    <url>/2012/04/26/reduce-qcow2-image-size-kvm/</url>
-    <content><![CDATA[<p>虚拟磁盘文件占用的空间会越来越大,就算从客户机里面删除了很多文件,但这些空间并未释放出来,qcow2文件仍然占用大量的主机存储空间。</p>
-<a id="more"></a>
-<p>虽然qcow2有一个特点,客户机需要时才分配存储空间,这工作的一直很好。但是当从客户机删除了很多文件,释放了很多空间时,从KVM主机端完全看不到qcow2虚拟磁盘文件有变小的迹象。这是因为现在的文件系统都有一个特点,删除文件时并没有真正的清除文件的内容,只是简单的做了标记,这样删除文件会很迅速,只有当用到这些空间时才重新写入新的数据。这也是反删除甚至反格式化软件存在的基础。所以要想缩小qcow2虚拟磁盘文件的大小,就要真正释放这些未使用的空间才可以。</p>
-<p>不同的客户机类型有不同解决方式,基本思路就是用0填充未使用的客户机磁盘空间,然后用qemu-img转换磁盘镜像文件,转换后的磁盘镜像文件将只包含所有已使用的磁盘空间。</p>
-<p><strong>linux客户机</strong></p>
-<ol>
-<li><p>使用dd命令将客户机未使用的磁盘空间用0填满<br> $dd if=/dev/zero of=~/junk<br> dd: writing to `/home/***/junk’: No space left on device<br> 然后<br> $rm junk<br> 关闭客户机</p>
-</li>
-<li><p>转换磁盘镜像文件<br> $qemu-img convert -O qcow2 debian.qcow2 debian_new.qcow2</p>
-<p> 转换完成后可以看到debian_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件debian_new.qcow2启动客户机即可。</p>
-</li>
-</ol>
-<p><strong>windows客户机</strong></p>
-<ol>
-<li><p> 删除不需要的文件,清理系统垃圾,然后整理磁盘碎片</p>
-</li>
-<li><p>下载<a href="http://technet.microsoft.com/en-us/sysinternals/bb897443">SDelete</a>,借助sdelete用0来填充未使用硬盘空间</p>
-<p> 查看sdelete帮助<br> C:\&gt;sdelete<br> SDelete - Secure Delete v1.6<br> Copyright (C) 1999-2010 Mark Russinovich<br> Sysinternals - <a href="http://www.sysinternals.com/">www.sysinternals.com</a></p>
-<p> usage: sdelete.exe [-p passes] [-s] [-q] …<br>  sdelete.exe [-p passes] [-z-c] [drive letter] …<br>  -a Remove Read-Only attribute<br>  -c Clean free space<br>  -p passes Specifies number of overwrite passes (default is 1)<br>  -q Don’t print errors (Quiet)<br>  -s or -r Recurse subdirectories<br>  -z Zero free space (good for virtual disk optimization)</p>
-<p> 用0填充C分区空闲区域<br> C:\&gt;sdelete -z c</p>
-<p> 关闭客户机</p>
-</li>
-<li><p>最后在KVM主机上转换qcow2磁盘镜像文件</p>
-<p> $qemu-img convert -O qcow2 windows.qcow2 windows_new.qcow2<br> 转换完成后可以看到windows_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件windows_new.qcow2启动客户机即可。</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>KVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>redis sentinel主从复制高可用安装配置</title>
     <url>/2019/09/30/redis-install-configuration/</url>
     <content><![CDATA[<a id="more"></a>
@@ -18842,6 +18826,43 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>减少qcow2虚拟磁盘文件实际占用的存储空间</title>
+    <url>/2012/04/26/reduce-qcow2-image-size-kvm/</url>
+    <content><![CDATA[<p>虚拟磁盘文件占用的空间会越来越大,就算从客户机里面删除了很多文件,但这些空间并未释放出来,qcow2文件仍然占用大量的主机存储空间。</p>
+<a id="more"></a>
+<p>虽然qcow2有一个特点,客户机需要时才分配存储空间,这工作的一直很好。但是当从客户机删除了很多文件,释放了很多空间时,从KVM主机端完全看不到qcow2虚拟磁盘文件有变小的迹象。这是因为现在的文件系统都有一个特点,删除文件时并没有真正的清除文件的内容,只是简单的做了标记,这样删除文件会很迅速,只有当用到这些空间时才重新写入新的数据。这也是反删除甚至反格式化软件存在的基础。所以要想缩小qcow2虚拟磁盘文件的大小,就要真正释放这些未使用的空间才可以。</p>
+<p>不同的客户机类型有不同解决方式,基本思路就是用0填充未使用的客户机磁盘空间,然后用qemu-img转换磁盘镜像文件,转换后的磁盘镜像文件将只包含所有已使用的磁盘空间。</p>
+<p><strong>linux客户机</strong></p>
+<ol>
+<li><p>使用dd命令将客户机未使用的磁盘空间用0填满<br> $dd if=/dev/zero of=~/junk<br> dd: writing to `/home/***/junk’: No space left on device<br> 然后<br> $rm junk<br> 关闭客户机</p>
+</li>
+<li><p>转换磁盘镜像文件<br> $qemu-img convert -O qcow2 debian.qcow2 debian_new.qcow2</p>
+<p> 转换完成后可以看到debian_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件debian_new.qcow2启动客户机即可。</p>
+</li>
+</ol>
+<p><strong>windows客户机</strong></p>
+<ol>
+<li><p> 删除不需要的文件,清理系统垃圾,然后整理磁盘碎片</p>
+</li>
+<li><p>下载<a href="http://technet.microsoft.com/en-us/sysinternals/bb897443">SDelete</a>,借助sdelete用0来填充未使用硬盘空间</p>
+<p> 查看sdelete帮助<br> C:\&gt;sdelete<br> SDelete - Secure Delete v1.6<br> Copyright (C) 1999-2010 Mark Russinovich<br> Sysinternals - <a href="http://www.sysinternals.com/">www.sysinternals.com</a></p>
+<p> usage: sdelete.exe [-p passes] [-s] [-q] …<br>  sdelete.exe [-p passes] [-z-c] [drive letter] …<br>  -a Remove Read-Only attribute<br>  -c Clean free space<br>  -p passes Specifies number of overwrite passes (default is 1)<br>  -q Don’t print errors (Quiet)<br>  -s or -r Recurse subdirectories<br>  -z Zero free space (good for virtual disk optimization)</p>
+<p> 用0填充C分区空闲区域<br> C:\&gt;sdelete -z c</p>
+<p> 关闭客户机</p>
+</li>
+<li><p>最后在KVM主机上转换qcow2磁盘镜像文件</p>
+<p> $qemu-img convert -O qcow2 windows.qcow2 windows_new.qcow2<br> 转换完成后可以看到windows_new.qcow2占用的KVM主机存储空间与客户机使用的磁盘空间基本是一致的。然后用新的磁盘镜像文件windows_new.qcow2启动客户机即可。</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>KVM</tag>
       </tags>
   </entry>
   <entry>
@@ -20006,40 +20027,6 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
       </tags>
   </entry>
   <entry>
-    <title>搭建git服务器</title>
-    <url>/2019/07/29/setu-git-server/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>使用git和ssh搭建一个私有的小型git服务器</p>
-<p><strong>安装</strong></p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># apt install git openssh-server</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建用户</strong></p>
-<p>使用git用户来运行git服务</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># adduser git</span><br></pre></td></tr></table></figure>
-
-<p><strong>添加用户公钥</strong></p>
-<p>把所有用户的公钥导入到/home/git/.ssh/authorized_keys文件里，一个公钥独占一行。</p>
-<p><strong>初始化仓库</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># su - git</span><br><span class="line">$ git init --bare test.git</span><br></pre></td></tr></table></figure>
-
-<p><strong>克隆仓库</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git clone git@server:test</span><br></pre></td></tr></table></figure>
-
-<p><strong>禁止git用户登录</strong></p>
-<p>将git用户的shell修改为/usr/bin/git-shell</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod --shell=/usr/bin/git-shell git</span><br></pre></td></tr></table></figure>
-
-<p>或者直接修改/etc/passwd文件</p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java servlet 3 入门</title>
     <url>/2013/09/30/servlet3-hello/</url>
     <content><![CDATA[<p>web开发没怎么搞过，还是看好java ee在web开发领域的实力。servlet 3 来了，写个简单的hello world程序，熟悉熟悉。</p>
@@ -20078,6 +20065,40 @@ max_wal_senders参数要比standby备库的数量再多一些，防止某些备�
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建git服务器</title>
+    <url>/2019/07/29/setu-git-server/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>使用git和ssh搭建一个私有的小型git服务器</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># apt install git openssh-server</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建用户</strong></p>
+<p>使用git用户来运行git服务</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># adduser git</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加用户公钥</strong></p>
+<p>把所有用户的公钥导入到/home/git/.ssh/authorized_keys文件里，一个公钥独占一行。</p>
+<p><strong>初始化仓库</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"># su - git</span><br><span class="line">$ git init --bare test.git</span><br></pre></td></tr></table></figure>
+
+<p><strong>克隆仓库</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ git clone git@server:test</span><br></pre></td></tr></table></figure>
+
+<p><strong>禁止git用户登录</strong></p>
+<p>将git用户的shell修改为/usr/bin/git-shell</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># usermod --shell=/usr/bin/git-shell git</span><br></pre></td></tr></table></figure>
+
+<p>或者直接修改/etc/passwd文件</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -20341,15 +20362,14 @@ Disk identifier: 0x0005fc82
   </entry>
   <entry>
     <title>一条命令统计源代码行数</title>
-    <url>/2015/03/30/souece-code-line-stat/</url>
+    <url>/2015/03/30/source-code-line-stat/</url>
     <content><![CDATA[<a id="more"></a>
-<p>一条命令统计源代码行数<br><code>js$ find . -name &quot;*.java&quot; -or -name &quot;*.js&quot; xargs wc -l sort -g</code></p>
-<p>只输出总行数:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . -name <span class="string">&quot;*.java&quot;</span> xargs wc -l sort -g grep <span class="string">&#x27;total&#x27;</span> awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>一条命令统计源代码行数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . -name <span class="string">&quot;*.java&quot;</span> -or -name <span class="string">&quot;*.js&quot;</span> | xargs cat | wc -l </span><br></pre></td></tr></table></figure>
 
-<p>去空行版:<br><code>js$ find . -name &quot;*.java&quot; xargs grep -v &quot;^$&quot; wc -l </code></p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
+
+<p>去空行版:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ find . -name <span class="string">&quot;*.java&quot;</span> |  xargs grep -v <span class="string">&quot;^$&quot;</span> | wc -l </span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>GNU/Linux</category>
       </categories>
@@ -20447,46 +20467,6 @@ Disk identifier: 0x0005fc82
       </tags>
   </entry>
   <entry>
-    <title>Spring Bean Scopes</title>
-    <url>/2013/11/24/spring-bean-scopes/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>Spring 3 内置支持5种scope(bound),还可以自定义scope。</p>
-<ul>
-<li>  <strong>singleton</strong></li>
-</ul>
-<p>如果没有明确的指定scope,默认就是singleton。Spring IoC容器只会创建一个singleton bean的实例，所有对这个bean的请求，spring都会返回这个实例。spring的singleton不同于GOF模式书中的singleton,GOF的singleton是每一个类装载器实例化一个对象，而spring是每一个容器实例化一个对象。<br>因为singleton是被共享的，因此singleton bean应该是无状态的，线程安全的，不然并发访问会出现问题。</p>
-<ul>
-<li>  <strong>prototype</strong></li>
-</ul>
-<p>每次请求prototype bean，容器会生成(或从缓存队列中挑选)一个新的bean实例，因此prototype bean没有并发的问题，因为没有共享问题。所有有状态的bean应该使用prototype scope,而所有无状态的bean应该使用singleton scope。<br>singleton bean的性能和节约资源方面会优于prototype bean</p>
-<p>但是spring不会管理prototype bean的全部生命周期，spring只负责实例并初始化prototype bean，然后交付给客户就撒手不管了，客户使用完prototype bean后必须负责清理bean使用的资源。也可以通过<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp">bean post-processor</a>让容器负责prototype bean的清理工作。</p>
-<ul>
-<li>  <strong>Request</strong></li>
-</ul>
-<p>每一个HTTP请求有一个Request scope bean的实例。每一个http请求会在一个单独的线程里处理，因此Request scope bean无需考虑并发问题。其他的HTTP请求不会看到另一个HTTP请求使用的bean实例的状态。</p>
-<ul>
-<li>  <strong>Session</strong></li>
-</ul>
-<p>每一个HTTP Session生成一个Session scope bean实例。会话之间是隔离的，因此也不会有并发问题。</p>
-<ul>
-<li>  <strong>Global session</strong></li>
-</ul>
-<p>只有portlet web应用程序中才有的scope,绑定到整个portlet Session。</p>
-<p><strong>注意事项：</strong></p>
-<p>1、只要有可能，尽量将bean设计为线程安全的，从而可以使用默认的singleton scope,提高程序的运行效率，减少对系统资源的占用。<br>可以通过使用ThreadLocal改造非线程安全的类，使其可以使用singleton scope。Spring和Mybatis的很多组件使用了这个技术。</p>
-<p>2、@Controller, @Service, @Repository, @Compenent等注解修饰的bean默认都是singleton scope,因此一定要注意线程安全问题。非线程安全的类要么使用ThreadLocal改造为线程安全的，要么使用其他scope。</p>
-<p>3、Request，Session和Global session只在web应用程序环境中存在。</p>
-<p>4、通常不应该让容器管理细粒度的domain对象(又叫entity对象或者model对象)，因为创建和管理domain对象是DAO和业务逻辑层的职责。实际上一定不要让容器管理domain对象，因为domain对象是state full的，非线程安全的，自己管理比交给容器管理更容易，更少出问题。<br>Typically one does not configure fine-grained domain objects in the container, because it is usually the responsibility of DAOs and business logic to create and load domain objects.</p>
-<p><strong>参考：</strong><br><a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-factory-scopes">The IoC container</a></p>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Framework,MyBatis,PostgreSQL整合示例</title>
     <url>/2013/10/16/spring-mybatis-postgres-integration/</url>
     <content><![CDATA[<p>Spring Framework,MyBatis,PostgreSQL整合</p>
@@ -20549,15 +20529,37 @@ Disk identifier: 0x0005fc82
       </tags>
   </entry>
   <entry>
-    <title>Spring找不到bean定义异常</title>
-    <url>/2013/11/21/spring-nosuchbeandefinitionexception/</url>
+    <title>Spring Bean Scopes</title>
+    <url>/2013/11/24/spring-bean-scopes/</url>
     <content><![CDATA[<a id="more"></a>
-<p>测试部署应用程序时，spring容器出现异常:</p>
-<p>org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [xxx.xxx.service.UploadService] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}</p>
-<p>明明UploadService是个POJO类都编译通过了,最后发现错误原因是service层的组件需要用@Service注解来修饰。那为啥DAO层的组件就没报错来！！！</p>
-<p><strong>注：知道为什么报错了，因为controller使用@Autowired(required=true)来引用UploadService,而UploadService没有使用注解修饰，从而不会被spring管理，故而出错。而DAO组件是Mybatis-Spring自动管理的，所以不会有问题。不加注解，spring是不会理会用户定义的POJO的。</strong></p>
-<p>好吧，以后DAO层组件也老老实实的加上@Repository注解，就算普通的POJO，如果需要spring容器来自动管理注入，也要用@Component注解修饰。</p>
-<p>@Controller,@Service，@Repository，@Component都在包org.springframework.stereotype里。</p>
+<p>Spring 3 内置支持5种scope(bound),还可以自定义scope。</p>
+<ul>
+<li>  <strong>singleton</strong></li>
+</ul>
+<p>如果没有明确的指定scope,默认就是singleton。Spring IoC容器只会创建一个singleton bean的实例，所有对这个bean的请求，spring都会返回这个实例。spring的singleton不同于GOF模式书中的singleton,GOF的singleton是每一个类装载器实例化一个对象，而spring是每一个容器实例化一个对象。<br>因为singleton是被共享的，因此singleton bean应该是无状态的，线程安全的，不然并发访问会出现问题。</p>
+<ul>
+<li>  <strong>prototype</strong></li>
+</ul>
+<p>每次请求prototype bean，容器会生成(或从缓存队列中挑选)一个新的bean实例，因此prototype bean没有并发的问题，因为没有共享问题。所有有状态的bean应该使用prototype scope,而所有无状态的bean应该使用singleton scope。<br>singleton bean的性能和节约资源方面会优于prototype bean</p>
+<p>但是spring不会管理prototype bean的全部生命周期，spring只负责实例并初始化prototype bean，然后交付给客户就撒手不管了，客户使用完prototype bean后必须负责清理bean使用的资源。也可以通过<a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-factory-extension-bpp">bean post-processor</a>让容器负责prototype bean的清理工作。</p>
+<ul>
+<li>  <strong>Request</strong></li>
+</ul>
+<p>每一个HTTP请求有一个Request scope bean的实例。每一个http请求会在一个单独的线程里处理，因此Request scope bean无需考虑并发问题。其他的HTTP请求不会看到另一个HTTP请求使用的bean实例的状态。</p>
+<ul>
+<li>  <strong>Session</strong></li>
+</ul>
+<p>每一个HTTP Session生成一个Session scope bean实例。会话之间是隔离的，因此也不会有并发问题。</p>
+<ul>
+<li>  <strong>Global session</strong></li>
+</ul>
+<p>只有portlet web应用程序中才有的scope,绑定到整个portlet Session。</p>
+<p><strong>注意事项：</strong></p>
+<p>1、只要有可能，尽量将bean设计为线程安全的，从而可以使用默认的singleton scope,提高程序的运行效率，减少对系统资源的占用。<br>可以通过使用ThreadLocal改造非线程安全的类，使其可以使用singleton scope。Spring和Mybatis的很多组件使用了这个技术。</p>
+<p>2、@Controller, @Service, @Repository, @Compenent等注解修饰的bean默认都是singleton scope,因此一定要注意线程安全问题。非线程安全的类要么使用ThreadLocal改造为线程安全的，要么使用其他scope。</p>
+<p>3、Request，Session和Global session只在web应用程序环境中存在。</p>
+<p>4、通常不应该让容器管理细粒度的domain对象(又叫entity对象或者model对象)，因为创建和管理domain对象是DAO和业务逻辑层的职责。实际上一定不要让容器管理domain对象，因为domain对象是state full的，非线程安全的，自己管理比交给容器管理更容易，更少出问题。<br>Typically one does not configure fine-grained domain objects in the container, because it is usually the responsibility of DAOs and business logic to create and load domain objects.</p>
+<p><strong>参考：</strong><br><a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/beans.html#beans-factory-scopes">The IoC container</a></p>
 ]]></content>
       <categories>
         <category>java</category>
@@ -20704,6 +20706,24 @@ Disk identifier: 0x0005fc82
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = true)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultFooService</span> <span class="keyword">implements</span> <span class="title">FooService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> Foo <span class="title">getFoo</span><span class="params">(String fooName)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// do something</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// these settings have precedence for this method</span></span><br><span class="line"> <span class="comment">//方法上注解属性会覆盖类注解上的相同属性</span></span><br><span class="line"> <span class="meta">@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateFoo</span><span class="params">(Foo foo)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// do something</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p><strong>参考</strong><br><a href="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/transaction.html">Transaction Management</a></p>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring找不到bean定义异常</title>
+    <url>/2013/11/21/spring-nosuchbeandefinitionexception/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>测试部署应用程序时，spring容器出现异常:</p>
+<p>org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type [xxx.xxx.service.UploadService] found for dependency: expected at least 1 bean which qualifies as autowire candidate for this dependency. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}</p>
+<p>明明UploadService是个POJO类都编译通过了,最后发现错误原因是service层的组件需要用@Service注解来修饰。那为啥DAO层的组件就没报错来！！！</p>
+<p><strong>注：知道为什么报错了，因为controller使用@Autowired(required=true)来引用UploadService,而UploadService没有使用注解修饰，从而不会被spring管理，故而出错。而DAO组件是Mybatis-Spring自动管理的，所以不会有问题。不加注解，spring是不会理会用户定义的POJO的。</strong></p>
+<p>好吧，以后DAO层组件也老老实实的加上@Repository注解，就算普通的POJO，如果需要spring容器来自动管理注入，也要用@Component注解修饰。</p>
+<p>@Controller,@Service，@Repository，@Component都在包org.springframework.stereotype里。</p>
 ]]></content>
       <categories>
         <category>java</category>
@@ -20910,6 +20930,29 @@ Disk identifier: 0x0005fc82
       </categories>
   </entry>
   <entry>
+    <title>ssh断点续传</title>
+    <url>/2019/07/08/ssh-download-partial/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>scp是不支持断点续传的，传输大文件意外中断会很痛苦。<br>rsync支持断点续传，也支持使用ssh协议传输数据，所以可以这样</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ rsync -P --rsh=ssh nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
+
+<p>这里linode是为一个ssh服务器配置的别名，而且支持tab补全，很好用。</p>
+<p>可以在.bashrc中设置一个alias</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">alias scpr=<span class="string">&quot;rsync -P --rsh=ssh&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>就可以这样用了</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ scpr nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
+
+<p>注意，客户端和服务器都要安装rsync。</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>debian:ssh安全自动登录设置</title>
     <url>/2009/06/29/ssh-auto-login/</url>
     <content><![CDATA[<p>用ssh来管理远程服务器真是一件很舒适安逸的事情,当然前提是要做足安全工作,internet上可是杀机四伏啊。</p>
@@ -20931,29 +20974,6 @@ Disk identifier: 0x0005fc82
 <p>这样就OK了，要登录服务器的时候，shell中输入:ssh server_name就可以自动登录到服务器，是不是很方便啊。<br>如果你在windows上面使用PuTTY来登录远程服务器的话，有一点必须要注意，ssh-keygen产生的私钥格式PuTTY是不认识的，要用puttygen来转换一下才可以使用。至于PuTTY的详细设置就不详述了。</p>
 <p>通过这样的设置后，清净、放心多了，再也没有看到那些无聊的登录尝试。只要你的私钥没有泄漏，就可以高枕无忧了，2048位的RSA加密基本是上无法破解的。</p>
 <p>最后还要说明一点，这样的自动登录设置对scp一样有效，类似于这样scp server_name:/path/to/file就可以存取服务器端的文件了。</p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ssh断点续传</title>
-    <url>/2019/07/08/ssh-download-partial/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>scp是不支持断点续传的，传输大文件意外中断会很痛苦。<br>rsync支持断点续传，也支持使用ssh协议传输数据，所以可以这样</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ rsync -P --rsh=ssh nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
-
-<p>这里linode是为一个ssh服务器配置的别名，而且支持tab补全，很好用。</p>
-<p>可以在.bashrc中设置一个alias</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">alias scpr=<span class="string">&quot;rsync -P --rsh=ssh&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>就可以这样用了</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ scpr nasmdoc.pdf linode:</span><br></pre></td></tr></table></figure>
-
-<p>注意，客户端和服务器都要安装rsync。</p>
 ]]></content>
       <categories>
         <category>GNU/Linux</category>
@@ -21344,24 +21364,6 @@ Disk identifier: 0x0005fc82
       </tags>
   </entry>
   <entry>
-    <title>Github fork 分支与上游同步</title>
-    <url>/2016/11/23/sync-github-fork-brach/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>fork之后上游可能又有了一些更新，在提交pull request之前最好重新同步一下上游主干，解决可能存在的冲突之后再发起pull request</p>
-<p>步骤如下：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git remote add upstream https:<span class="comment">//github.com/jiangwen365/pypyodbc # 添加上游仓库</span></span><br><span class="line">$ git fetch upstream # 获取上游最新更新</span><br><span class="line">$ git checkout master # 切换到本地需要更新的分支头，master或者其他名字的分子都行，看需要</span><br><span class="line">$ git merge upstream/master # 合并上游master分支到本地master分支，分支名字根据需要指定，rebase亦可</span><br><span class="line">$ git push # 将更新后的本地分支推送到github</span><br></pre></td></tr></table></figure>
-
-<p>简单明了。</p>
-<p><strong>===<br>[erq]</strong></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>swift on linux debian</title>
     <url>/2016/04/19/swift-on-linux-debian/</url>
     <content><![CDATA[<a id="more"></a>
@@ -21397,6 +21399,24 @@ Disk identifier: 0x0005fc82
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Github fork 分支与上游同步</title>
+    <url>/2016/11/23/sync-github-fork-brach/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>fork之后上游可能又有了一些更新，在提交pull request之前最好重新同步一下上游主干，解决可能存在的冲突之后再发起pull request</p>
+<p>步骤如下：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git remote add upstream https:<span class="comment">//github.com/jiangwen365/pypyodbc # 添加上游仓库</span></span><br><span class="line">$ git fetch upstream # 获取上游最新更新</span><br><span class="line">$ git checkout master # 切换到本地需要更新的分支头，master或者其他名字的分子都行，看需要</span><br><span class="line">$ git merge upstream/master # 合并上游master分支到本地master分支，分支名字根据需要指定，rebase亦可</span><br><span class="line">$ git push # 将更新后的本地分支推送到github</span><br></pre></td></tr></table></figure>
+
+<p>简单明了。</p>
+<p><strong>===<br>[erq]</strong></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -21556,7 +21576,7 @@ Disk identifier: 0x0005fc82
 <p>当从模板单元文件创建实例单元文件时，在@符号和单元扩展名(包括符号.)之前加入实例名,比如：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">example@instance1.service</span><br></pre></td></tr></table></figure>
 
-<p>表明实例单元文件<a href="mailto:&#x65;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x40;&#x69;&#x6e;&#115;&#x74;&#97;&#x6e;&#99;&#x65;&#x31;&#46;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#x65;">&#x65;&#x78;&#x61;&#109;&#112;&#x6c;&#x65;&#x40;&#x69;&#x6e;&#115;&#x74;&#97;&#x6e;&#99;&#x65;&#x31;&#46;&#115;&#101;&#114;&#x76;&#x69;&#x63;&#x65;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
+<p>表明实例单元文件<a href="mailto:&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#64;&#105;&#110;&#115;&#116;&#97;&#x6e;&#x63;&#x65;&#x31;&#x2e;&#x73;&#x65;&#114;&#x76;&#105;&#99;&#101;">&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#64;&#105;&#110;&#115;&#116;&#97;&#x6e;&#x63;&#x65;&#x31;&#x2e;&#x73;&#x65;&#114;&#x76;&#105;&#99;&#101;</a>实例化自模板单元文件example@.service，其实例名为instance1</p>
 <p>实例单元文件一般是模板单元文件的一个符号链接，符号链接命中包含实例名，systemd就会传递实例名给模板单元文件。</p>
 <p>在相应的target中创建实例单元文件符号链接之后，需要运行一下命令将其装载：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
@@ -21575,6 +21595,20 @@ Disk identifier: 0x0005fc82
       <tags>
         <tag>Debian</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>terminal modes</title>
+    <url>/2020/02/25/terminal-modes/</url>
+    <content><![CDATA[<a id="more"></a>
+<p>The Linux terminals that are provided by the console device drivers include line-mode terminals, block-mode terminals, and full-screen mode terminals.</p>
+<p>On a full-screen mode terminal, pressing any key immediately results in data being sent to the terminal. Also, terminal output can be positioned anywhere on the screen. This feature facilitates advanced interactive capability for terminal-based applications like the vi editor. It works in raw mode default,can set to cbreak mode also.</p>
+<p>On a line-mode terminal, the user first types a full line, and then presses Enter to indicate that the line is complete. The device driver then issues a read to get the completed line, adds a new line, and hands over the input to the generic TTY routines. It works in cooked mode default.</p>
+<p>The terminal that is provided by the 3270 terminal device driver is a traditional IBM® mainframe block-mode terminal. Block-mode terminals provide full-screen output support and users can type input in predefined fields on the screen. Other than on typical full-screen mode terminals, no input is passed on until the user presses Enter. The terminal that is provided by the 3270 terminal device driver provides limited support for full-screen applications. For example, the ned editor is supported, but not vi.</p>
+<p>References:<br>[1]<a href="https://en.wikipedia.org/wiki/Terminal_mode">Terminal mode</a><br>[2]<a href="https://stackoverflow.com/questions/13104460/confusion-about-raw-vs-cooked-terminal-modes">Confusion about raw vs. cooked terminal modes?</a><br>[3]<a href="http://foldoc.org/cooked%20mode">cooked mode</a><br>[4]<a href="https://utcc.utoronto.ca/~cks/space/blog/unix/CBreakAndRaw">What goes into the terminal’s ‘cbreak’ and ‘raw’ modes</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
   </entry>
   <entry>
     <title>SyntaxHighlighter Evolved test</title>
@@ -21615,20 +21649,6 @@ Disk identifier: 0x0005fc82
 ]]></content>
       <categories>
         <category>Misc</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>terminal modes</title>
-    <url>/2020/02/25/terminal-modes/</url>
-    <content><![CDATA[<a id="more"></a>
-<p>The Linux terminals that are provided by the console device drivers include line-mode terminals, block-mode terminals, and full-screen mode terminals.</p>
-<p>On a full-screen mode terminal, pressing any key immediately results in data being sent to the terminal. Also, terminal output can be positioned anywhere on the screen. This feature facilitates advanced interactive capability for terminal-based applications like the vi editor. It works in raw mode default,can set to cbreak mode also.</p>
-<p>On a line-mode terminal, the user first types a full line, and then presses Enter to indicate that the line is complete. The device driver then issues a read to get the completed line, adds a new line, and hands over the input to the generic TTY routines. It works in cooked mode default.</p>
-<p>The terminal that is provided by the 3270 terminal device driver is a traditional IBM® mainframe block-mode terminal. Block-mode terminals provide full-screen output support and users can type input in predefined fields on the screen. Other than on typical full-screen mode terminals, no input is passed on until the user presses Enter. The terminal that is provided by the 3270 terminal device driver provides limited support for full-screen applications. For example, the ned editor is supported, but not vi.</p>
-<p>References:<br>[1]<a href="https://en.wikipedia.org/wiki/Terminal_mode">Terminal mode</a><br>[2]<a href="https://stackoverflow.com/questions/13104460/confusion-about-raw-vs-cooked-terminal-modes">Confusion about raw vs. cooked terminal modes?</a><br>[3]<a href="http://foldoc.org/cooked%20mode">cooked mode</a><br>[4]<a href="https://utcc.utoronto.ca/~cks/space/blog/unix/CBreakAndRaw">What goes into the terminal’s ‘cbreak’ and ‘raw’ modes</a></p>
-]]></content>
-      <categories>
-        <category>GNU/Linux</category>
       </categories>
   </entry>
   <entry>

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">986</span>
+          <span class="site-state-item-count">987</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,104 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/01/09/addfirmare-sh-script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/01/09/addfirmare-sh-script/" class="post-title-link" itemprop="url">为debian testing netinst镜像添加non-free firmware的addfirmare.sh脚本</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-01-09 20:48:40" itemprop="dateCreated datePublished" datetime="2014-01-09T20:48:40+08:00">2014-01-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>上一篇<a href="https://openwares.net/linux/debian_testing_netinst_iso_add_non_free_firmware.html">post</a>提到已经有集成firmware的netinst iso镜像文件可以下载了,但很不幸,服务器安装的时候仍然提示找不到ql2400_fw.bin,也就是installer仍然没有找到qlogic卡的firmware。</p>
+<p> 无论使用原始的netinst还是添加firmware的netinst镜像,都不会提示需要额外的firmware。官方的<a target="_blank" rel="noopener" href="https://wiki.debian.org/Firmware">wiki</a>也提到,安装程序有时候会提示用户完成安装所需要的firmware,有时候却不会提示。所以建议在安装之前,下载<a target="_blank" rel="noopener" href="http://cdimage.debian.org/cdimage/unofficial/non-free/firmware/">non-free的firmware包</a>,将其解压到移动存储设备的/firmware目录下,安装程序如果需要会自动的去移动存储设备的/firmware目录下寻找相应的firmware。</p>
+<p>另一个解决办法是为原始的netinst iso镜像添加firmware,脚本如下,只支持netinst testing iso镜像:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">set -ex</span><br><span class="line"></span><br><span class="line">if \[ $# != 2 \]; then</span><br><span class="line"> echo <span class="string">&quot;Usage: addfirmware.sh &lt;origin_iso_file&gt; &lt;new_iso_file&gt;&quot;</span></span><br><span class="line"> exit <span class="number">1</span></span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">orign_iso_file=$<span class="number">1</span></span><br><span class="line">new_iso_file=$<span class="number">2</span></span><br><span class="line"></span><br><span class="line">#临时目录</span><br><span class="line">temp=$(mktemp -d)</span><br><span class="line">origin_iso=$&#123;temp&#125;/old</span><br><span class="line">new_iso=$&#123;temp&#125;/<span class="keyword">new</span></span><br><span class="line">firmware_file=$&#123;temp&#125;/firmware</span><br><span class="line">firmware_target=$&#123;firmware_file&#125;/target</span><br><span class="line">initrd=$&#123;temp&#125;/initrd</span><br><span class="line"></span><br><span class="line">#原始工作目录</span><br><span class="line">origin_pwd=$(pwd)</span><br><span class="line"></span><br><span class="line">mkdir $&#123;origin_iso&#125; $&#123;firmware_file&#125; $&#123;initrd&#125;</span><br><span class="line"></span><br><span class="line">#挂载原始镜像iso文件,挂载后是只读的,拷贝全部文件到./new目录</span><br><span class="line">sudo mount -o loop $&#123;orign_iso_file&#125; $&#123;origin_iso&#125;</span><br><span class="line">cp -a $&#123;origin_iso&#125; $&#123;new_iso&#125;</span><br><span class="line">sudo umount $&#123;origin_iso&#125;</span><br><span class="line"></span><br><span class="line">#将初始化内存盘压缩cpio文件解压到./initrd目录</span><br><span class="line">cd $&#123;initrd&#125; &amp;&amp; gunzip &lt; $&#123;new_iso&#125;/install.amd/initrd.gz sudo cpio --extract --preserve --verbose</span><br><span class="line"></span><br><span class="line">#下载testing的firmware包</span><br><span class="line">cd $&#123;firmware_file&#125; &amp;&amp; </span><br><span class="line">wget http:<span class="comment">//cdimage.debian.org/cdimage/unofficial/non-free/firmware/testing/current/firmware.tar.gz </span></span><br><span class="line">&amp;&amp; tar zxf firmware.tar.gz</span><br><span class="line"></span><br><span class="line">#将所有的firmware deb包提取到./firmware/target目录</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *deb; <span class="keyword">do</span></span><br><span class="line"> dpkg-deb -x $&#123;file&#125; $&#123;firmware_target&#125;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#将target目录下所有的内容拷贝到./initrd目录</span><br><span class="line">sudo cp -ra $&#123;firmware_target&#125;/. $&#123;initrd&#125;</span><br><span class="line"></span><br><span class="line">#打包新的initrd文件并拷贝到./new目录下</span><br><span class="line">cd $&#123;initrd&#125; &amp;&amp; find . cpio --create --format=<span class="string">&#x27;newc&#x27;</span> gzip -<span class="number">9</span> &gt; ../initrd.gz.new</span><br><span class="line">sudo cp ../initrd.gz.new $&#123;new_iso&#125;/install.amd/initrd.gz</span><br><span class="line"></span><br><span class="line">#制作新的镜像文件</span><br><span class="line">cd $&#123;origin_pwd&#125; &amp;&amp;</span><br><span class="line">sudo genisoimage -o $&#123;new_iso_file&#125; -b isolinux/isolinux.bin \\</span><br><span class="line"> -c isolinux/boot.cat -no-emul-boot -boot-load-size <span class="number">4</span> -boot-info-table -J -R $&#123;new_iso&#125;</span><br><span class="line"></span><br><span class="line">sudo rm -rf $&#123;temp&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>USB stick引导</strong></p>
+<p>上面制作的iso镜像刻录光盘安装系统是没有问题的。但如果要从USB引导就不可以了,因为从USB或硬盘启动时,PC-BIOS需要一个MBR,这样需要再为ISO镜像文件添加一个MBR,这与原来的El Torito引导记录并不冲突,二者可以共存。因此就可以创建一个MBR来启动El Torito引导记录,从而无论是从CDROM还是USB,HDD都可以正确引导。<br>这种MBR就叫做<a target="_blank" rel="noopener" href="http://libburnia-project.org/wiki/FAQ#isohybrid">isohybrid</a>。</p>
+<p>syslinux提供了这样的isohybrid MBR,还需要使用xorriso来制作镜像。因此先安装xorriso和syslinux</p>
+<h1 id="apt-get-install-xorriso-syslinux"><a href="#apt-get-install-xorriso-syslinux" class="headerlink" title="apt-get install xorriso syslinux"></a>apt-get install xorriso syslinux</h1><p>然后将上面脚本最后制作iso的命令更改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># -iso-level iso级别3允许文件大于4G</span><br><span class="line"># -partition_offset 分区表起始位置</span><br><span class="line"># -isohybrid-mbr 主引导记录文件</span><br><span class="line"># -b 为PC-BIOS指定El Torito引导记录文件(boot image)</span><br><span class="line"># -e 为EFI指定El Torito引导记录文件(boot image)</span><br><span class="line"># -c 指定El Torito Boot Catalog文件</span><br><span class="line"># -no-emul-boot 没有模拟启动,默认是软盘模拟启动</span><br><span class="line"># -boot-load-size BIOS要读取引导记录文件(boot image)的几个数据块,boot image由-b参数指定。</span><br><span class="line"># -boot-info-table 引导信息表写入boot image</span><br><span class="line"># -r或-R Rock Ridge扩展 </span><br><span class="line"># -J Joliet扩展,用于windows系统</span><br><span class="line"># -V 指定volume lable</span><br><span class="line"># -o 输出iso文件</span><br><span class="line">sudo xorriso -<span class="keyword">as</span> mkisofs -iso-level <span class="number">3</span> -partition_offset <span class="number">16</span> -isohybrid-mbr \\</span><br><span class="line">/usr/lib/syslinux/isohdpfx.bin -o $&#123;new_iso_file&#125; -b isolinux/isolinux.bin -c isolinux/boot.cat \\</span><br><span class="line">-no-emul-boot -boot-load-size <span class="number">4</span> -boot-info-table -r -V <span class="string">&quot;firmwared debian&quot;</span> $&#123;new_iso&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里没有使用-J参数,如果添加了此参数会有警告:</p>
+<p>libisofs: WARNING : Can’t add /debian to Joliet tree. Symlinks can<br> only be added to a Rock Ridget tree.<br>…</p>
+<p>-J参数为iso生成Joliet目录树,当iso文件在windows系统下使用时才有用,Joliet不是标准的,只有windows和linux(为了和windows兼容)在使用。因此这个参数可以安全的去掉。</p>
+<p>这里使用的isohybrid MBR为syslinux提供的/usr/lib/syslinux/isohdpfx.bin,这样生成的iso无论是刻盘还是写到usb stick都可以正常的引导安装了。</p>
+<p><a href="/downloads/addfirmware.sh">脚本下载</a>。</p>
+<p>参考:<br><a target="_blank" rel="noopener" href="https://github.com/YunoHost/cd_build/blob/master/add-firmware-to">add-firmware-to</a><br><a target="_blank" rel="noopener" href="http://lumux.co.uk/2012/08/09/rebuilding-debian-installer-iso-to-include-additional-drivers/">REBUILDING DEBIAN INSTALLER ISO TO INCLUDE ADDITIONAL DRIVERS</a><br><a target="_blank" rel="noopener" href="http://wiki.osdev.org/Mkisofs">Mkisofs</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -914,7 +1012,7 @@
 <p>/etc/postfix/sasl_access:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Use this when smtpd_sasl_local_domain is empty.</span><br><span class="line">username HOLD</span><br><span class="line"># Use this when smtpd_sasl_local_domain=example.com.</span><br><span class="line">username@example.com HOLD</span><br></pre></td></tr></table></figure>
 
-<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#106;&#111;&#x68;&#x6e;&#x40;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;">&#106;&#111;&#x68;&#x6e;&#x40;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
+<p><em>默认认证域</em><br>为没有域名部分的SASL登录名添加域名,比如登录名为john,替换为<a href="mailto:&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;">&#106;&#111;&#104;&#110;&#64;&#101;&#x78;&#97;&#109;&#x70;&#108;&#x65;&#46;&#99;&#111;&#x6d;</a><br>/etc/postfix/main.cf:<br> smtpd_sasl_local_domain = example.com</p>
 <p><em>隐藏sasl认证</em><br>可以为部分客户或网络隐藏SASL认证,因为有些不需要认证的客户如果发现服务提供SASL认证能力,那么他们会试图去认证,但客户端有没有提供认证信息,这样客户就一直处于认证失败状态。</p>
 <p>/etc/postfix/main.cf:<br> smtpd_sasl_exceptions_networks = !192.0.2.171/32, 192.0.2.0/24</p>
 <p><em>添加sasl登录名到邮件头</em></p>
@@ -1030,7 +1128,7 @@
 <p>一个域要么是本地域,要么是虚拟域;一个虚拟域要么是虚拟别名域,要么是虚拟邮箱域。也就是<strong>本地域,虚拟别名域,虚拟邮箱域是互斥的</strong>。</p>
 <p>那么一个postfix邮件系统要添加一个额外的域,有这么几种选择,几个实例如下：</p>
 <ul>
-<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#x6e;&#102;&#x6f;&#x40;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#49;&#x2e;&#x74;&#x6c;&#100;">&#105;&#x6e;&#102;&#x6f;&#x40;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#49;&#x2e;&#x74;&#x6c;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
+<li>  加入本地域<br>很简单,直接将域名添加到mydestination中即可。这样有两个缺点：<br>第一，所有本地域上的同名用户都对应同一个unix系统账户,也就是<a href="mailto:&#105;&#x6e;&#102;&#x6f;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;">&#105;&#x6e;&#102;&#x6f;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#x6e;&#x31;&#46;&#116;&#x6c;&#100;</a>和info@domain2.tld的所有邮件都将发给unix系统用户info。<br>第二，所有的用户必须有对应的unix系统用户,如果用户很多,管理起来比较麻烦。</li>
 <li>加入虚拟别名域<br>/etc/postfix/main.cf:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> virtual_alias_domains = example.com</span><br><span class="line"> virtual_alias_maps = hash:<span class="regexp">/etc/</span>postfix/virtual</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"> /etc/postfix/virtual:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"> postmaster@example.com postmaster</span><br><span class="line"> info@example.com joe</span><br><span class="line"> sales@example.com jane</span><br><span class="line"> # Uncomment entry below to implement a catch-all address</span><br><span class="line"> # @example.com jim #example.com域上的所有其他用户的邮件都发送给jim,这样可能会有垃圾邮件的困扰</span><br></pre></td></tr></table></figure>
 
 </li>
@@ -1057,7 +1155,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># groupadd -g 5000 vmail</span><br><span class="line"># useradd -g vmail -u 5000 vmail -d /var/mail/vmail -m</span><br></pre></td></tr></table></figure>
 <p>在users表里添加用户</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into users values (<span class="string">&#x27;test@openwares.net&#x27;</span>, <span class="string">&#x27;password&#x27;</span>);</span><br></pre></td></tr></table></figure>
-<p>就可以使用<a href="mailto:&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#x61;&#x72;&#101;&#x73;&#x2e;&#x6e;&#101;&#x74;">&#x74;&#x65;&#115;&#x74;&#64;&#x6f;&#x70;&#x65;&#x6e;&#119;&#x61;&#x72;&#101;&#x73;&#x2e;&#x6e;&#101;&#x74;</a>邮箱了。</p>
+<p>就可以使用<a href="mailto:&#x74;&#101;&#x73;&#116;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#116;">&#x74;&#101;&#x73;&#116;&#x40;&#111;&#112;&#x65;&#x6e;&#x77;&#97;&#114;&#101;&#115;&#x2e;&#x6e;&#x65;&#116;</a>邮箱了。</p>
 <p><strong>别名设置</strong></p>
 <p>/etc/aliases为postfix的本地别名数据库,可以为本地收件人重定向邮件，这种重定向由本地交付代理(local delivery agent)处理。可以添加一个重定向将root重定向到自己的用户,从而所有的系统邮件都会发给你。比如在文件中添加如下行:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root: yourname</span><br></pre></td></tr></table></figure>
@@ -1078,7 +1176,7 @@
 <p>postfix也可以通过配置直接使用465端口提供加密连接,而不是使用STARTSSL。部分客户端依赖于这种方式,但这种方式是不鼓励使用的。<br>postfix使用wrapper来支持smtps。</p>
 <p><strong>配额quota</strong><br>可以使用<a target="_blank" rel="noopener" href="http://vda.sourceforge.net/">VDA</a>添加配额支持,需要给postfix打补丁。</p>
 <p><strong>UPDATE(01/24/2014):</strong><br>在user表中添加一个用户帐号后,用户的虚拟邮箱目录是尚未建立的,只有当用户收到第一封邮件时,postfix才会为用户建立maildir目录。之后才能使用imap登录用户邮箱,否则imap会有错误提示:</p>
-<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#120;&#120;&#x78;&#x40;&#111;&#112;&#x65;&#x6e;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#101;&#116;">&#120;&#120;&#x78;&#x40;&#111;&#112;&#x65;&#x6e;&#119;&#97;&#114;&#101;&#x73;&#46;&#x6e;&#101;&#116;</a>: No such file or directory</p>
+<p>Jan 24 10:33:29 www imapd-ssl: <a href="mailto:&#x78;&#x78;&#120;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#97;&#x72;&#x65;&#x73;&#x2e;&#x6e;&#101;&#x74;">&#x78;&#x78;&#120;&#64;&#x6f;&#x70;&#101;&#110;&#x77;&#97;&#x72;&#x65;&#x73;&#x2e;&#x6e;&#101;&#x74;</a>: No such file or directory</p>
 <p>所以新增邮箱用户后,立马向其发送一个welcome邮件吧。</p>
 <p>参考:<br><a target="_blank" rel="noopener" href="http://www.postfix.org/BASIC_CONFIGURATION_README.html">Postfix Basic Configuration</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/VIRTUAL_README.html">Postfix Virtual Domain Hosting Howto</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/DATABASE_README.html">Postfix Lookup Table Overview</a><br><a target="_blank" rel="noopener" href="http://www.howtoforge.com/virtual-users-and-domains-with-postfix-courier-mysql-and-squirrelmail-ubuntu-12.04-lts">Virtual Users And Domains With Postfix, Courier, MySQL And SquirrelMail (Ubuntu 12.04 LTS)</a><br><a target="_blank" rel="noopener" href="http://www.postfix.org/TLS_README.html">Postfix TLS Support</a><br><a target="_blank" rel="noopener" href="https://www.fastmail.fm/help/technology_ssl_vs_tls_starttls.html">SSL vs TLS vs STARTTLS</a></p>
 <p><strong>===<br>[erq]</strong></p>
@@ -1180,86 +1278,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2013/12/31/4608/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2013/12/31/4608/" class="post-title-link" itemprop="url">Untitled Post - 29</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2013-12-31 21:25:29" itemprop="dateCreated datePublished" datetime="2013-12-31T21:25:29+08:00">2013-12-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>MyBatis Generator自身已经提供了分页代码生成<a target="_blank" rel="noopener" href="http://mybatis.org/generator/reference/plugins.html">插件</a>org.mybatis.generator.plugins.RowBoundsPlugin,还有一个网友实现的oracle方言的<a target="_blank" rel="noopener" href="http://ufopw.iteye.com/blog/1289274">分页插件</a>。JDBC的游标分页和拦截Sql做分页都不如直接在数据库级别作分页靠谱,也就是直接生成查询数据库分页SQL代码。当然不同的数据库分页代码不尽相同。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1295,7 +1313,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
