@@ -41,7 +41,7 @@ blog目录下执行
 ```js
 $ npm install hexo-theme-next
 ```
-编辑_config.xml将主题修改为next:
+编辑_config.yml将主题修改为next:
 ```js
 theme: next
 ```
@@ -131,7 +131,7 @@ $ gsed -i 's/\\\*/*/g' *
 
 安装部署插件
 ```js
-$ pm install hexo-deployer-git --save
+$ npm install hexo-deployer-git --save
 ```
 修改_config.yml文件：
 ```js
