@@ -14,7 +14,7 @@
 
 <h3 id="安装next主题"><a href="#安装next主题" class="headerlink" title="安装next主题"></a>安装next主题</h3><p>blog目录下执行</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-theme-next</span><br></pre></td></tr></table></figure>
-<p>编辑_config.xml将主题修改为next:</p>
+<p>编辑_config.yml将主题修改为next:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">theme: next</span><br></pre></td></tr></table></figure>
 <p>拷贝next配置文件</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ cp node_modules/hexo-theme-next/_config.yml _config.next.yml</span><br></pre></td></tr></table></figure>
@@ -50,7 +50,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ gsed -i <span class="string">&#x27;s/\\\[bash\\\]/```js/g&#x27;</span>  *</span><br><span class="line">$ gsed -i <span class="string">&#x27;s/\\\[\/bash\\]/```/g&#x27;</span>  *</span><br><span class="line">$ gsed -i <span class="string">&#x27;s/\\_/_/g&#x27;</span> *</span><br><span class="line">$ gsed -i <span class="string">&#x27;s/\\\*/*/g&#x27;</span> *</span><br></pre></td></tr></table></figure>
 <h3 id="部署到github-pages"><a href="#部署到github-pages" class="headerlink" title="部署到github pages"></a>部署到github pages</h3><p>登录github新建public仓库，因为要发布为github pages，所以仓库的名字必须为your_github_username.github.io</p>
 <p>安装部署插件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ pm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
 <p>修改_config.yml文件：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:<span class="comment">//github.com/your_github_username/your_github_username.github.io</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
 <p>发布到gh-pages分支</p>
@@ -25011,6 +25011,264 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       </categories>
       <tags>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cassandra 2.2在jdk8最新版本nodetool报错</title>
+    <url>/2025/05/18/cassandra-2-2%E5%9C%A8jdk8%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACnodetool%E6%8A%A5%E9%94%99/</url>
+    <content><![CDATA[<p>新安装的cassandra 2.2.19运行<code>nodetool status</code>时报错</p>
+<a id="more"></a>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ nodetool status</span><br><span class="line">nodetool: Failed to connect to <span class="string">&#x27;127.0.0.1:7199&#x27;</span> - URISyntaxException: <span class="string">&#x27;Malformed IPv6 address at index 7: rmi://[127.0.0.1]:7199&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>出错原因：</p>
+<p>JNDI 提供程序的 URL 解析器包括 RMI（由 JMX 使用）在 Oracle Java 8u331 中得到了改进，并且只允许在 IPv6 地址周围使用括号 (JDK-8278972)。</p>
+<p>nodetool使用较新的 Java 版本运行会中断，因为 RMI URL 中的主机包含在方括号中（来自NodeProbe.java类）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">private static final String fmtUrl = <span class="string">&quot;service:jmx:rmi:///jndi/rmi://[%s]:%d/jmxrmi&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>解决方法:</p>
+<p>选项 1 - 在运行时添加“传统”解析标志nodetool，例如：</p>
+<p>$ nodetool -Dcom.sun.jndi.rmiURLParsing=legacy status</p>
+<p>选项 2 - 指定带有 IPv6 子网前缀的主机名，例如：</p>
+<p>$ nodetool -h ::FFFF:127.0.0.1 status</p>
+<p>选项 3 </p>
+<p>此问题已在Apache Cassandra 3.0.27、3.11.13、4.0.4 和 4.1 及以后版本 ( CASSANDRA-17581 ) 中得到解决</p>
+<p>References:</p>
+<p>[1]<a href="https://www.cnblogs.com/chinaops/p/16998722.html">Cassandra集群搭建</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Cassandra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>debian 12 bookworm 安装openjdk 8</title>
+    <url>/2025/05/18/debian-12-bookworm-%E5%AE%89%E8%A3%85openjdk-8/</url>
+    <content><![CDATA[<p>这里安装Adoptium组织的Eclipse Temurin项目的openjdk</p>
+<a id="more"></a>
+
+<ol start="0">
+<li>背景</li>
+</ol>
+<p>Adoptium工作组是Eclipse基金会的子组织，在加入Eclipse之前，叫AdoptOpenJDK，加入之后改名为Eclipse Adoptium</p>
+<p>Adoptium负责的项目Eclipse Temurin是一个OpenJDK的发行版。</p>
+<p>Temurin这个名字来自于runtime的两个音节前后颠倒。</p>
+<ol>
+<li>安装必要的包</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt install -y wget apt-transport-https gpg</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>获取Eclipse Adoptium GPG key</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/adoptium.gpg &gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置Eclipse Adoptium apt源</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://packages.adoptium.net/artifactory/deb <span class="subst">$(awk -F= &#x27;/^VERSION_CODENAME/&#123;print$2&#125;&#x27; /etc/os-release)</span> main&quot;</span> | sudo tee /etc/apt/sources.list.d/adoptium.list</span><br></pre></td></tr></table></figure>
+<p>配置完后是这样的：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat /etc/apt/sources.list.d/adoptium.list </span><br><span class="line">deb https://packages.adoptium.net/artifactory/deb bookworm main</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>安装temurin jdk</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install temurin-8-jdk</span><br><span class="line">$ java -version</span><br><span class="line">openjdk version <span class="string">&quot;1.8.0_452&quot;</span></span><br><span class="line">OpenJDK Runtime Environment (Temurin)(build 1.8.0_452-b09)</span><br><span class="line">OpenJDK 64-Bit Server VM (Temurin)(build 25.452-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<p>其他版本以此类推，比如temurin-17-jdk, temurin-21-jre</p>
+<p>References:</p>
+<p>[1]<a href="https://en.wikipedia.org/wiki/Adoptium">Adoptium</a></p>
+<p>[2]<a href="https://adoptium.net/installation/linux/">Linux (RPM/DEB/APK) installer packages</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>debian 12 bookworm安装python 2.7</title>
+    <url>/2025/05/18/debian-12-bookworm%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85python-2-7/</url>
+    <content><![CDATA[<p>cassandra 2.2 依赖python2.7，但debian 12开始官方源已经不再提供python2</p>
+<a id="more"></a>
+
+<p>一、从源码编译安装</p>
+<ol start="0">
+<li>安装编译依赖</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget -y </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>从官方下载解压源码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://www.python.org/ftp/python/2.7.18/Python-2.7.18.tgz</span><br><span class="line">$ tar -xzvf Python-2.7.18.tgz</span><br><span class="line">$ <span class="built_in">cd</span> Python-2.7.18</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>配置编译参数‌</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./configure --prefix=/opt/python --enable-unicode=ucs4</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>编译 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ make -j$(nproc)</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建链接</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo ln -s /opt/python/bin/python2.7 /usr/<span class="built_in">local</span>/bin/python</span><br><span class="line">$ python --version</span><br><span class="line">$ Python 2.7.18</span><br></pre></td></tr></table></figure>
+
+<p>二、从buster官方源安装</p>
+<p>debian在一定程度上是可以混源安装的</p>
+<p><code>/etc/apt/sources.list</code> 中添加buster源</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">deb https://mirrors.163.com/debian/ buster main</span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install python</span><br><span class="line">$ python --version</span><br><span class="line">$ Python 2.7.16</span><br></pre></td></tr></table></figure>
+
+<p>安装完python后，注释掉buster源，然后<code>apt update</code>，以免引起其他混乱。</p>
+<p>References:</p>
+<p>[1] <a href="https://www.cnblogs.com/fanqisoft/p/18834438">Debian 12 安装Python 2.7 </a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用官方云镜像创建Debian 12 KVM 客户机</title>
+    <url>/2025/05/18/%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E4%BA%91%E9%95%9C%E5%83%8F%E5%88%9B%E5%BB%BADebian-12-KVM-%E5%AE%A2%E6%88%B7%E6%9C%BA/</url>
+    <content><![CDATA[<p>使用debian官方云镜像安装debian 12 KVM客户机</p>
+<a id="more"></a>
+
+<ol start="0">
+<li>安装软件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt install virtinst libvirt-daemon-system libvirt-clients cloud-utils</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>下载官方镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mkdir /var/lib/libvirt/images/templates</span><br><span class="line">$ wget https://cdimage.debian.org/images/cloud/bookworm/latest/debian-12-nocloud-amd64.qcow2</span><br><span class="line">$ sudo mv debian-12-nocloud-amd64.qcow2 /var/lib/libvirt/images/templates/</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>增加镜像文件系统空间</li>
+</ol>
+<p>假设客户机标识为guest_name</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mkdir /var/lib/libvirt/images/guest_name</span><br><span class="line">$ sudo cp /var/lib/libvirt/images/templates/debian-12-nocloud-amd64.qcow2 /var/lib/libvirt/images/guest_name/root-disk.qcow2</span><br><span class="line">$ sudo qemu-img resize /var/lib/libvirt/images/guest_name/root-disk.qcow2 100G</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>生成云镜像初始化iso</li>
+</ol>
+<p>cloud-init.cfg 为云镜像初始化文件，可以配置很多选项</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo <span class="built_in">echo</span> <span class="string">&quot;#cloud-config</span></span><br><span class="line"><span class="string">hostname: guest_name</span></span><br><span class="line"><span class="string">&quot;</span> | sudo tee /var/lib/libvirt/images/guest_name/cloud-init.cfg</span><br><span class="line"></span><br><span class="line">$ sudo cloud-localds \</span><br><span class="line">  /var/lib/libvirt/images/guest_name/cloud-init.iso \</span><br><span class="line">  /var/lib/libvirt/images/guest_name/cloud-init.cfg</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>创建客户机</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh net-start default</span><br><span class="line">$ sudo virsh net-autostart default</span><br></pre></td></tr></table></figure>
+<p>先启动客户机默认网络并设置为自动启动，不然创建客户机时会报错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ERROR    Requested operation is not valid: network &#39;default&#39; is not active</span><br></pre></td></tr></table></figure>
+<p>如果使用桥接网络不需要启动默认网络</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virt-install \</span><br><span class="line">  --name guest_name \</span><br><span class="line">  --memory 2048 \</span><br><span class="line">  --disk /var/lib/libvirt/images/guest_name/root-disk.qcow2,device=disk,bus=virtio \</span><br><span class="line">  --disk /var/lib/libvirt/images/guest_name/cloud-init.iso,device=cdrom \</span><br><span class="line">  --os-variant debian11 \</span><br><span class="line">  --virt-type kvm \</span><br><span class="line">  --graphics none \</span><br><span class="line">  --network bridge=br0,model=virtio \</span><br><span class="line">  --import</span><br></pre></td></tr></table></figure>
+
+<p>出现登录控制台后输入root进入系统，默认没有设置密码，退出控制台键入<code>ctrl + ]</code></p>
+<p>重新连接控制台</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh list --all</span><br><span class="line"> Id   Name          State</span><br><span class="line">-----------------------------</span><br><span class="line"> 1    guest_name   running</span><br><span class="line"></span><br><span class="line">$ sudo virsh console 1</span><br></pre></td></tr></table></figure>
+
+<p>管理客户机</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh shutdown guest_name</span><br><span class="line">$ sudo virsh start guest_name</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>网络配置</li>
+</ol>
+<p>客户机创建后可以通过virsh edit来修改客户机的网络及其他配置</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh edit guest_name</span><br></pre></td></tr></table></figure>
+
+<p>如果安装时使用的是默认网络，可以从默认网络</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;interface <span class="built_in">type</span>=<span class="string">&#x27;network&#x27;</span>&gt;</span><br><span class="line">&lt;mac ***/&gt;</span><br><span class="line">&lt;<span class="built_in">source</span> network=<span class="string">&#x27;default&#x27;</span>/&gt;</span><br><span class="line">&lt;address ***/&gt;</span><br><span class="line">&lt;/interface&gt;</span><br></pre></td></tr></table></figure>
+<p>更改为桥接网络</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;interface <span class="built_in">type</span>=<span class="string">&#x27;bridge&#x27;</span>&gt;</span><br><span class="line">&lt;mac ***/&gt;</span><br><span class="line">&lt;<span class="built_in">source</span> bridge=<span class="string">&#x27;br0&#x27;</span>/&gt;</span><br><span class="line">&lt;address ***/&gt;</span><br><span class="line">&lt;/interface&gt;</span><br></pre></td></tr></table></figure>
+
+<p>更改网络之前先安装上</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt install openvswitch-switch</span><br></pre></td></tr></table></figure>
+
+<p>不然更改网络配置文件后<code>netplan apply</code>时会报错误：</p>
+<p><code>Cannot call openvswitch: ovsdb-server.service is not running.</code></p>
+<p>从debian 12 “Bookworm” 开始，云镜像默认网络配置工具为netplan<br>修改网络配置文件<code>/etc/netplan/90-default.yaml</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">network:</span><br><span class="line">    version: 2</span><br><span class="line">    ethernets:</span><br><span class="line">        enp1s0:</span><br><span class="line">          dhcp4: no</span><br><span class="line">          addresses: [192.168.0.16/24]</span><br><span class="line">          gateway4: 192.168.0.1</span><br><span class="line">          nameservers:</span><br><span class="line">            addresses: [114.114.114.114]</span><br></pre></td></tr></table></figure>
+
+<p>然后执行<code># netplan apply</code></p>
+<p>会有</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">`gateway4` has been deprecated, use default routes instead.</span><br><span class="line">See the <span class="string">&#x27;Default routes&#x27;</span> section of the documentation <span class="keyword">for</span> more details.</span><br></pre></td></tr></table></figure>
+<p>的过时告警，所以改用route来配置默认网关</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">network:</span><br><span class="line">    version: 2</span><br><span class="line">    ethernets:</span><br><span class="line">        enp1s0:</span><br><span class="line">          dhcp4: no</span><br><span class="line">          dhcp6: no</span><br><span class="line">          addresses: </span><br><span class="line">            - 192.168.0.16/24</span><br><span class="line">          routes:</span><br><span class="line">            - to: default</span><br><span class="line">              via: 192.168.0.1</span><br><span class="line">          nameservers:</span><br><span class="line">            addresses: [114.114.114.114]</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>清理</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo rm /var/lib/libvirt/images/guest_name/cloud-init.iso </span><br><span class="line">$ sudo rm /var/lib/libvirt/images/guest_name/cloud-init.cfg</span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1] <a href="https://wiki.debian.org/KVM">KVM</a></p>
+<p>[2]<a href="https://wiki.archlinux.org/title/Libvirt">libvirt</a></p>
+<p>[3]<a href="https://wiki.debian.org/Netplan">Netplan</a></p>
+<p>[4]<a href="https://wiki.debian.org/NetworkConfiguration">NetworkConfiguration</a></p>
+<p>[5]<a href="https://www.cnblogs.com/qiuhom-1874/p/13520939.html"> 虚拟化技术之kvm虚拟机创建工具virt-install
+</a></p>
+<p>[6]<a href="https://www.cnblogs.com/zjdxr-up/p/17444844.html">/etc/netplan/network-manager-all.yaml 配置服务器ip</a></p>
+<p>[7]<a href="https://www.cnblogs.com/xieshengsen/p/6215168.html">KVM 通过virsh console连入虚拟机</a></p>
+<p>[8]<a href="https://www.cnblogs.com/ariesblog/p/13808670.html">KVM虚拟机常用的一些命令</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>KVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>virsh为kvm客户机添加vnc和cdrom设备及挂载iso文件</title>
+    <url>/2025/05/19/virsh%E4%B8%BAkvm%E5%AE%A2%E6%88%B7%E6%9C%BA%E6%B7%BB%E5%8A%A0vnc%E5%92%8Ccdrom%E8%AE%BE%E5%A4%87%E5%8F%8A%E6%8C%82%E8%BD%BDiso%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>如果安装配置客户机时没有添加vnc和cdrom设备，可以通过编辑xml配置文件和命令来添加支持</p>
+<a id="more"></a>
+
+<ol start="0">
+<li>添加VNC</li>
+</ol>
+<p>关闭客户机后<code>virsh edit guest_name</code>，在devices内添加:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;graphics <span class="built_in">type</span>=<span class="string">&#x27;vnc&#x27;</span> port=<span class="string">&#x27;5900&#x27;</span> autoport=<span class="string">&#x27;no&#x27;</span> listen=<span class="string">&#x27;0.0.0.0&#x27;</span>&gt;</span><br><span class="line">      &lt;listen <span class="built_in">type</span>=<span class="string">&#x27;address&#x27;</span> address=<span class="string">&#x27;0.0.0.0&#x27;</span>/&gt;</span><br><span class="line">&lt;/graphics&gt;</span><br></pre></td></tr></table></figure>
+<p>重新启动客户机后，会在主机的5900监听vnc</p>
+<p>查看客户机的vnc监听</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh domdisplay guest_name</span><br><span class="line">vnc://localhost:0</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>添加CDROM设备</li>
+</ol>
+<p>关闭客户机后<code>virsh edit guest_name</code>，在devices内添加:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;disk <span class="built_in">type</span>=<span class="string">&#x27;file&#x27;</span> device=<span class="string">&#x27;cdrom&#x27;</span>&gt;</span><br><span class="line">      &lt;driver name=<span class="string">&#x27;qemu&#x27;</span> <span class="built_in">type</span>=<span class="string">&#x27;raw&#x27;</span>/&gt;</span><br><span class="line">      &lt;<span class="built_in">source</span> file=<span class="string">&#x27;/var/lib/libvirt/images/cdrom/cdrom.iso&#x27;</span> index=<span class="string">&#x27;1&#x27;</span>/&gt;</span><br><span class="line">      &lt;backingStore/&gt;</span><br><span class="line">      &lt;target dev=<span class="string">&#x27;sda&#x27;</span> bus=<span class="string">&#x27;sata&#x27;</span>/&gt;</span><br><span class="line">      &lt;<span class="built_in">readonly</span>/&gt;</span><br><span class="line">      &lt;<span class="built_in">alias</span> name=<span class="string">&#x27;sata0-0-0&#x27;</span>/&gt;</span><br><span class="line">      &lt;address <span class="built_in">type</span>=<span class="string">&#x27;drive&#x27;</span> controller=<span class="string">&#x27;0&#x27;</span> bus=<span class="string">&#x27;0&#x27;</span> target=<span class="string">&#x27;0&#x27;</span> unit=<span class="string">&#x27;0&#x27;</span>/&gt;</span><br><span class="line">&lt;/disk&gt;</span><br></pre></td></tr></table></figure>
+
+<p>查看客户机快设备列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo virsh domblklist guest_name</span><br><span class="line"></span><br><span class="line"> Target   Source</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line"> vda      /var/lib/libvirt/images/guest_name/root-disk.qcow2</span><br><span class="line"> sda      /var/lib/libvirt/images/guest_name/cloud-init.iso</span><br></pre></td></tr></table></figure>
+
+<p>可以在客户机运行时，动态更换cdrom设备的iso文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh attach-disk guest_name /var/lib/libvirt/images/cdrom/foo.iso sda --<span class="built_in">type</span> cdrom --mode <span class="built_in">readonly</span></span><br></pre></td></tr></table></figure>
+
+<p>使用完成后，可以弹出cdrom设备里的iso</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo virsh change-media guest_name sda --eject</span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1]<a href="https://medium.com/@osama.ibrahim.89/how-to-add-a-cdrom-to-a-libvirt-vm-and-boot-from-it-a0e46589e76f">How to add a cdrom to a libvirt VM and boot from it</a></p>
+<p>[2]<a href="https://lvii.github.io/system/2022-01-14-virsh-add-cdrom-device-and-attach-a-boot-iso/">KVM 虚拟机添加 CDROM 设备并挂载 ISO 引导文件</a></p>
+<p>[3]<a href="https://cloud-atlas.readthedocs.io/zh-cn/latest/kvm/startup/vm_attach_dev.html">KVM虚拟机添加设备</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>KVM</tag>
       </tags>
   </entry>
 </search>

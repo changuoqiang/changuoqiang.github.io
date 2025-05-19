@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,509 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/06/01/pandoc%E8%BD%AC%E6%8D%A2markdown%E4%B8%BApdf/" class="post-title-link" itemprop="url">pandoc转换markdown为pdf</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-06-01 21:19:30" itemprop="dateCreated datePublished" datetime="2016-06-01T21:19:30+08:00">2016-06-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pandoc是一款强悍的文档的转换工具，支持绝大多数文档格式之间的相互转换，而且具有强大的控制能力。</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install texlive-xetex pandoc</span><br></pre></td></tr></table></figure>
+
+<p><strong>转换markdown</strong></p>
+<p>默认latex引擎pdflatex不支持中文，需要使用xelatex引擎，并且要指定中文字体</p>
+<p>可以这样查看系统中文字体:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fc-list :lang=zh</span><br></pre></td></tr></table></figure>
+
+<p>然后mkd转换到pdf:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc foo.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o foo.pdf</span><br></pre></td></tr></table></figure>
+
+<p>然而对中文的支持还是有些问题，这样会把较长的文本行截断，需要定制template来解决此问题。</p>
+<p>先导出pandoc默认模板：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc -D latex &gt; mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>在生成的模板文件mytemplate.tex文件的第一行后面添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\\XeTeXlinebreaklocale <span class="string">&quot;zh&quot;</span></span><br><span class="line">\\XeTeXlinebreakskip = 0pt plus 1pt minus <span class="number">0.</span>1pt</span><br></pre></td></tr></table></figure>
+
+<p>将模板文件mytemplate.lex置于~/.pandoc/templates/路径下，或者置于转换命令当前目录下。</p>
+<p>然后这样转换：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>还有一个小问题，默认生成的pdf边距比较大，可以通过geometry参数来控制边距。</p>
+<p>所以最后的命令行大约是这个样子的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pandoc manual.mkd --latex-engine=xelatex -V CJKmainfont=<span class="string">&quot;Noto Sans CJK SC&quot;</span> -o manual.pdf -V geometry:<span class="string">&quot;top=2cm, bottom=1.5cm, left=1cm, right=1cm&quot;</span> --template=mytemplate.tex</span><br></pre></td></tr></table></figure>
+
+<p>可以用模板文件指定使用的字体，模板文件可以很复杂，嗯，latex太复杂了。</p>
+<p>pandoc转换markdown时，对两个tab缩进支持不好，还没找到好的解决办法。</p>
+<p><strong>Mac OS X</strong></p>
+<p>安装pandoc和mactex</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ brew install pandoc</span><br><span class="line">$ brew cask install mactex</span><br></pre></td></tr></table></figure>
+
+<p>中文字体可以使用苹方简体中文 “PingFang SC”</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc/wiki/Pandoc-With-Chinese-(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Pandoc With Chinese (简体中文)</a><br>[2]<a target="_blank" rel="noopener" href="http://pandoc.org/faqs.html">pandoc faqs</a><br>[3]<a target="_blank" rel="noopener" href="http://tex.stackexchange.com/questions/179926/pandoc-markdown-to-pdf-without-cutting-off-code-block-lines-that-are-too-long">Pandoc: Markdown to PDF, without cutting off code block lines that are too long</a><br>[4]<a target="_blank" rel="noopener" href="https://jdhao.github.io/2017/12/10/pandoc-markdown-with-chinese/">纯文本做笔记 — 使用 Pandoc 与 Markdown 生成 PDF 文件</a><br>[5]<a target="_blank" rel="noopener" href="http://blog.jqian.net/post/xelatex.html">使用xelatex生成中文pdf</a><br>[6]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7f9a9ff053bb">使用pandoc转换md为PDF并添加中文支持</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/31/nginx-tomcat-memcached-session-share-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/31/nginx-tomcat-memcached-session-share-cluster/" class="post-title-link" itemprop="url">nginx,tomcat,memcached会话共享集群配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-31 20:40:19" itemprop="dateCreated datePublished" datetime="2016-05-31T20:40:19+08:00">2016-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>tomcat自身支持会话复制的集群。</p>
+<p>此post主要讲使用memcached存储会话，使用msm(memcached-session-manager)来管理会话复制。</p>
+<p>通过配置共享会话的tomcat集群，可以提高服务的高可用性，并可以做到不停机连续更新应用程序。</p>
+<p>示例配置采用两台机器，ip分别为10.100.0.20和10.100.0.21。每台机器分别部署nginx,tomcat和memcached。两个tomcat实例和两个memcached实例通过msm组成一个会话共享集群，前端由nginx做负载均衡。</p>
+<p>还可以在nginx之前做DNS负载均衡。</p>
+<p><strong>nginx配置</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">upstream servers &#123;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.20</span>:<span class="number">8080</span>;</span><br><span class="line"> server <span class="number">10.100</span><span class="number">.0</span><span class="number">.21</span>:<span class="number">8080</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location / &#123;</span><br><span class="line"> proxy_pass http:<span class="comment">//servers;</span></span><br><span class="line"> proxy_set_header Accept-Encoding <span class="string">&quot;gzip&quot;</span>;</span><br><span class="line"></span><br><span class="line"> # proxy websocket reverse</span><br><span class="line"> proxy_http_version <span class="number">1.1</span>;</span><br><span class="line"> proxy_set_header Upgrade $http_upgrade;</span><br><span class="line"> proxy_set_header Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>nginx会将客户请求分发到后端服务器组</p>
+<p><strong>memcached配置</strong><br>安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install memcached</span><br></pre></td></tr></table></figure>
+
+<p>memcached默认安装只监听本地回环地址，更改/etc/memcached.conf，注释掉下面的行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#-l 127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<p>重启memcached服务会监听所有本地接口。</p>
+<p><strong>msm和tomcat配置</strong></p>
+<p>kiro序列化性能较高，因此这里使用kiro序列化器。</p>
+<p>将msm基础包memcached-session-manager-${version}.jar，memcached-session-manager-tc8-${version}.jar和spymemcached-2.11.1.jar，以及kryo序列化支持jar包拷贝到$CATALINA_HOME/lib/目录。</p>
+<p>debian系统中tomcat8的lib目录位于/usr/share/tomcat8/lib/</p>
+<p>还有一个包<a target="_blank" rel="noopener" href="http://objenesis.org/download.html">Objenesis</a>也需要下载安装到此目录中。</p>
+<p><strong>sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line"> memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line"> failoverNodes=<span class="string">&quot;n1&quot;</span></span><br><span class="line"> requestUriIgnorePattern=<span class="string">&quot;.*\\.(icopnggifjpgcssjs)$&quot;</span></span><br><span class="line"> transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line"> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>msm默认处于sticky模式，因此不用显式指定sticky参数。failoverNodes参数指定本机memcached节点名称,这样正常情况下msm会存储会话到其他memcached节点，当没有其他节点可用时才会使用failoverNodes。</p>
+<p><strong>non-sticky sessions + kryo配置</strong></p>
+<p>/etc/tomcat8/context.xml文件中context一节最后添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=<span class="string">&quot;de.javakaffee.web.msm.MemcachedBackupSessionManager&quot;</span></span><br><span class="line">memcachedNodes=<span class="string">&quot;n1:10.100.0.20:11211,n2:10.100.0.21:11211&quot;</span></span><br><span class="line">sticky=<span class="string">&quot;false&quot;</span></span><br><span class="line">sessionBackupAsync=<span class="string">&quot;false&quot;</span></span><br><span class="line">lockingMode=<span class="string">&quot;auto&quot;</span></span><br><span class="line">transcoderFactoryClass=<span class="string">&quot;de.javakaffee.web.msm.serializer.kryo.KryoTranscoderFactory&quot;</span></span><br><span class="line">/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>这里明确指定sticky参数为false，注意不要设置requestUriIgnorePattern参数，否则当前配置下会出现问题，无法完成session共享。</p>
+<p>sticky会话模式就是将用户“粘”在某一个服务器节点上，即同一个会话中的请求必须被转发到同一个节点上，除非该节点宕机才转发到故障转移节点。</p>
+<p>non-sticky会话模式则是每一次请求都可能转发到不同节点。</p>
+<p>sticky会话模式性能更好。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/magro/memcached-session-manager/wiki/SetupAndConfiguration">SetupAndConfiguration</a><br>[2]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic4.html">分布式session</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/30/gradle-proxy-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/30/gradle-proxy-setup/" class="post-title-link" itemprop="url">gradle代理设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-30 21:08:23" itemprop="dateCreated datePublished" datetime="2016-05-30T21:08:23+08:00">2016-05-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>众所周知的原因，访问国外的网络不是那么顺畅。gradle下载插件时，几乎无法下载，而使用proxychains也不凑效。<br>可以这样为gradle设置全局socks5代理：</p>
+<p>$HOME/.gradle/gradle.properties文件中添加如下行，如没有该文件请自行建立：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.gradle.jvmargs=-DsocksProxyHost=<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> -DsocksProxyPort=<span class="number">1080</span></span><br></pre></td></tr></table></figure>
+
+<p>如果不设置代理，也可以使用maven镜像仓库，或者maven本地仓库。</p>
+<p>最后，祝狗日的Great Fucking Wall和XXX早日死掉！ </p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/26/h3c-secpath-nat-destination-replace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/26/h3c-secpath-nat-destination-replace/" class="post-title-link" itemprop="url">H3C SecPath防火墙内部服务器NAT访问所有源地址被替换问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-26 22:26:49" itemprop="dateCreated datePublished" datetime="2016-05-26T22:26:49+08:00">2016-05-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>设置NAT内部服务器，并且设置了<a href="https://openwares.net/2014/03/25/h3c_backward/">端口回流</a>，内网可以正常通过公网ip访问内部服务。</p>
+<p>但是当通过外网访问该服务时，从服务器上观察，TCP连接的源地址也被替换成了防火墙的内网接口地址，不过访问一切正常。</p>
+<p>经排查，是因为设置端口回流时，在内网接口的ACL条目中未指定source,类似如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">216</span> permit ip destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>导致防火墙将所有访问NAT服务的源地址全部替换成了防火墙的内网接口地址(内网接口优先级高，且不区分内外网网络地址???)。</p>
+<p>通过指定哪些内网段访问NAT服务器时可以通过内网接口，可以只替换这些网段的源地址。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="number">226</span> permit ip source <span class="number">192.168</span><span class="number">.1</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span> </span><br><span class="line">rule <span class="number">227</span> permit ip source <span class="number">192.168</span><span class="number">.2</span><span class="number">.0</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.255</span> destination <span class="number">10.100</span><span class="number">.0</span><span class="number">.31</span> <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+<p>这样以来，外网访问时，源地址没有被替换，但acl rule未指定的其他内网地址段将不能通过公网ip访问NAT服务。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/05/16/rman-06214-delte-obsolete-archivelog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/16/rman-06214-delte-obsolete-archivelog/" class="post-title-link" itemprop="url">rman-06214无法删除废弃的归档日志</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-16 14:26:17" itemprop="dateCreated datePublished" datetime="2016-05-16T14:26:17+08:00">2016-05-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>rman备份脚本出现错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">06207</span>: WARNING: <span class="number">380</span> objects could not be deleted <span class="keyword">for</span> DISK channel(s) due</span><br><span class="line">RMAN-<span class="number">06208</span>: to mismatched status. Use CROSSCHECK command to fix status</span><br><span class="line">RMAN-<span class="number">06210</span>: List <span class="keyword">of</span> Mismatched objects</span><br><span class="line">RMAN-<span class="number">06211</span>: ==========================</span><br><span class="line">RMAN-<span class="number">06212</span>: <span class="built_in">Object</span> Type Filename/Handle</span><br><span class="line">RMAN-<span class="number">06213</span>: --------------- ---------------------------------------------------</span><br><span class="line">RMAN-<span class="number">06214</span>: Archivelog D:\\ARCHIVED_LOG\\ARC24290_0749146507<span class="number">.001</span></span><br></pre></td></tr></table></figure>
+
+<p>然后手动执行crosscheck并重新删除:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; crosscheck archivelog all;</span><br><span class="line">RMAN&gt; <span class="keyword">delete</span> obsolete;</span><br></pre></td></tr></table></figure>
+
+<p>提示由于恢复目录中没有归档日志的信息，无法删除。列出的归档日志是早已经物理删除掉、无用的日志。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+<p>也无法删除</p>
+<p>最后，强制删除废弃的归档日志，<code>force</code>关键字会忽略掉错误将其干掉。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAMN&gt; <span class="keyword">delete</span> force obsolete;</span><br></pre></td></tr></table></figure>
+
+<p>删除成功。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -844,479 +1347,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/28/oracle-instant-client-and-tnsping/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/28/oracle-instant-client-and-tnsping/" class="post-title-link" itemprop="url">oracle instant client and tnsping</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-28 16:09:31" itemprop="dateCreated datePublished" datetime="2016-04-28T16:09:31+08:00">2016-04-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>最近版本的即时客户端已经没有了tnsping这个命令，可以从相应版本的客户端或服务器bin目录中拷贝此文件，或者用脚本简单的替代：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tnsping &gt;<span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> </span><br><span class="line"> <span class="function"><span class="title">tnsping</span>(<span class="params"></span>)</span> &#123; </span><br><span class="line"> sqlplus -L -S x/x@$<span class="number">1</span> &lt;<span class="regexp">/dev/</span><span class="literal">null</span> grep ORA- (grep -v ORA-<span class="number">01017</span> echo OK) </span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
-
-<p>将此段脚本放入.profile或.bashrc即可。</p>
-<p>又或者直接测试一下服务器的1521端口是否正常开放:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ telnet a.b.c.d <span class="number">1521</span></span><br><span class="line">Trying a.b.c.d...</span><br><span class="line">Connected to a.b.c.d.</span><br><span class="line">Escape character is <span class="string">&#x27;^\]&#x27;</span>.</span><br></pre></td></tr></table></figure>
-
-<p>这样就说明oracle监听是正常的。</p>
-<p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/25/serial-console-access-kvm-guest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/25/serial-console-access-kvm-guest/" class="post-title-link" itemprop="url">通过串行控制台访问kvm客户机</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-25 11:20:37" itemprop="dateCreated datePublished" datetime="2016-04-25T11:20:37+08:00">2016-04-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>当ssh,vnc都不能访问客户机时,serial console可以提供另一种访问客户机的途径。</p>
-<p><strong>客户机serial console配置</strong></p>
-<p>/etc/inittab文件打开或添加如下行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T0:<span class="number">23</span>:respawn:<span class="regexp">/sbin/g</span>etty -L ttyS0 <span class="number">38400</span> vt100</span><br></pre></td></tr></table></figure>
-
-<p>/etc/securetty文件中确保列出了ttyS0:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ttyS0</span><br></pre></td></tr></table></figure>
-
-<p>/etc/default/grub文件添加:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=<span class="string">&#x27;console=tty0 console=ttyS0,38400n8&#x27;</span></span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_SERIAL_COMMAND=<span class="string">&quot;serial --speed=38400 --unit=0 --word=8 --parity=no --stop=1&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>波特率是38400，没有奇偶校验，停止位是1</p>
-<p>使用virsh来连接客户机串行控制台比较简单，应该也可以重定向客户机的串行端口到主机。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/howto-setup-serial-console-on-debian-linux/">Debian Linux: Set a Serial Console</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/working_with_the_serial_console">Working with the serial console</a><br>[3]<a target="_blank" rel="noopener" href="https://blackdot.be/2013/07/qemu-kvm-monitor-and-serial-console-over-sockets-with-minicom/">qemu(-kvm) monitor and serial console over sockets with minicom</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/25/kvm-guest-access-host-dir/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/25/kvm-guest-access-host-dir/" class="post-title-link" itemprop="url">kvm客户机共享主机目录</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-25 10:28:06" itemprop="dateCreated datePublished" datetime="2016-04-25T10:28:06+08:00">2016-04-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>主机通过virtio上的9p文件系统以及文件系统设备，可以将主机上的文件系统导出给客户机来挂载使用</p>
-<p>v9fs是plan 9 9p远程文件系统协议的实现</p>
-<p><strong>主机配置</strong></p>
-<p>在客户机启动命令上新添加fsdev和device选项</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-fsdev local,security_model=passthrough,id=fsdev0,path=<span class="regexp">/mnt/</span>share </span><br><span class="line">-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare</span><br></pre></td></tr></table></figure>
-<p>这样导出了主机的/mnt/share目录供客户机来存取</p>
-<p><strong>客户机配置</strong></p>
-<p>客户机需要在内核中开启9P文件系统相关选项，可以这样查看:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat /boot/config-$(uname -r) grep 9P</span><br><span class="line">CONFIG_NET_9P=m</span><br><span class="line">CONFIG_NET_9P_VIRTIO=m</span><br><span class="line">CONFIG_NET_9P_RDMA=m</span><br><span class="line"># CONFIG_NET_9P_DEBUG is not set</span><br><span class="line">CONFIG_9P_FS=m</span><br><span class="line">CONFIG_9P_FSCACHE=y</span><br><span class="line">CONFIG_9P_FS_POSIX_ACL=y</span><br><span class="line">CONFIG_9P_FS_SECURITY=y</span><br></pre></td></tr></table></figure>
-
-<p>可以看到9P配置成了内核模块的形式，然后就可以挂载主机的目录来使用了：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t 9p -o trans=virtio\[,version=9p2000.L\] hostshare /mnt/point</span><br></pre></td></tr></table></figure>
-
-<p>hostshare就是主机导出的挂载点的名称，此处将其挂载到客户机的/mnt/point。<br>version选项是可选的。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.linux-kvm.org/page/9p_virtio">Example Sharing Host files with the Guest</a><br>[2]<a target="_blank" rel="noopener" href="http://wiki.qemu.org/Documentation/9psetup">Documentation/9psetup</a><br>[3]<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/9p.txt">v9fs: Plan 9 Resource Sharing for Linux</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/23/sqlplus-auto-completion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/23/sqlplus-auto-completion/" class="post-title-link" itemprop="url">sqlplus 自动补全/完成</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-23 11:45:01" itemprop="dateCreated datePublished" datetime="2016-04-23T11:45:01+08:00">2016-04-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>通过rlwrap可以<a href="https://openwares.net/linux/debian%E4%B8%8B%E4%BD%BFsqlplus%E5%85%B7%E6%9C%89%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2%E5%9B%9E%E6%BA%AF%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E8%BE%91%E5%8A%9F%E8%83%BD.html">使sqlplus具有具有命令历史回溯和命令行编辑功能</a>,通过提供自动完成字典，可以更进一步使sqlplus具有tab自动补全/完成功能。</p>
-<p>德国一个哥们写了rlwrap_ext for oralce可以使sqlplus自动补全sql关键字，oracle视图、表、包等等，比较全面。</p>
-<p><strong>下载</strong></p>
-<p>可以直接下载最新的版本</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//www.linuxification.at/download/rlwrap-extensions-V12-0.03.tar.gz</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo tar zxvf rlwrap-extensions-V12-<span class="number">0.03</span>.tar.gz -C /usr/local/share/rlwrap/completions</span><br><span class="line">$ sudo cp /usr/local/share/rlwrap/completions/sql+ <span class="regexp">/usr/</span>local/bin/</span><br></pre></td></tr></table></figure>
-
-<p>然后使用sql+替代sqlplus就可以了。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.linuxification.at/rlwrap_ext.html.en">rlwrap_ext for oracle</a></p>
-<p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/22/ora-12518/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/04/22/ora-12518/" class="post-title-link" itemprop="url">ORA-12518 TNS:监听程序无法分发客户机连接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-04-22 19:42:34" itemprop="dateCreated datePublished" datetime="2016-04-22T19:42:34+08:00">2016-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>最常见的原因是process和session数量设置过低。</p>
-<p><strong>查看修改process参数</strong> </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; show parameter process</span><br><span class="line"></span><br><span class="line">NAME TYPE VALUE</span><br><span class="line">------------------------------------ --------------------------------- -------------------</span><br><span class="line">aq_tm_processes integer <span class="number">0</span></span><br><span class="line">db_writer_processes integer <span class="number">3</span></span><br><span class="line">gcs_server_processes integer <span class="number">0</span></span><br><span class="line">job_queue_processes integer <span class="number">20</span></span><br><span class="line">log_archive_max_processes integer <span class="number">2</span></span><br><span class="line">processes integer <span class="number">150</span></span><br></pre></td></tr></table></figure>
-
-<p>偏低，修改process参数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; alter system set processes=<span class="number">1000</span> scope = spfile;</span><br></pre></td></tr></table></figure>
-<p>这里无法直接修改内存值，也就是不能使用scope=both,否则会有提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">02095</span>: specified initialization parameter cannot be modified</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看修改session参数</strong></p>
-<p>查看</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; show parameter session</span><br><span class="line">NAME TYPE VALUE</span><br><span class="line">------------------------------------ --------------------------------- --------------------</span><br><span class="line">java_max_sessionspace_size integer <span class="number">0</span></span><br><span class="line">java_soft_sessionspace_limit integer <span class="number">0</span></span><br><span class="line">license_max_sessions integer <span class="number">0</span></span><br><span class="line">license_sessions_warning integer <span class="number">0</span></span><br><span class="line">logmnr_max_persistent_sessions integer <span class="number">1</span></span><br><span class="line">session_cached_cursors integer <span class="number">20</span></span><br><span class="line">session_max_open_files integer <span class="number">10</span></span><br><span class="line">sessions integer <span class="number">170</span></span><br><span class="line">shared_server_sessions integer</span><br></pre></td></tr></table></figure>
-
-<p>修改</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; alter system set sessions=<span class="number">1105</span> scope = spfile;</span><br></pre></td></tr></table></figure>
-
-<p>sessions是个派生值,由processes的值决定,公式sessions=1.1*process + 5</p>
-<p>因为修改的是spfile,所以并不会立即生效，只有重新启动oracle，设置才会生效。</p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

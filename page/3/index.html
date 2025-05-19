@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,499 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/26/ora-19815/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/26/ora-19815/" class="post-title-link" itemprop="url">ORA-19815归档日志磁盘空间占满</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-26 08:11:38" itemprop="dateCreated datePublished" datetime="2020-06-26T08:11:38+08:00">2020-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-11 14:52:41" itemprop="dateModified" datetime="2021-06-11T14:52:41+08:00">2021-06-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>客户端连接失败，提示ORA-19815，alert.log有以下提示：<br>Errors in file /u01/app/oracle/admin/orcl/bdump/orcl_arc0_2734.trc:<br>ORA-19815: WARNING: db_recovery_file_dest_size of 2147483648 bytes is 100.00% used, and has 0 remaining bytes available.<br>Wed Jun 24 09:02:21 2020</p>
+<hr>
+<p>You have following choices to free up space from flash recovery area:</p>
+<ol>
+<li>Consider changing RMAN RETENTION POLICY. If you are using Data Guard,<br>then consider changing RMAN ARCHIVELOG DELETION POLICY.</li>
+<li>Back up files to tertiary device such as tape using RMAN<br>BACKUP RECOVERY AREA command.</li>
+<li>Add disk space and increase db_recovery_file_dest_size parameter to<br>reflect the new space.</li>
+<li>Delete unnecessary files using RMAN DELETE command. If an operating<br>system command was used to delete files, then use RMAN CROSSCHECK and<br>DELETE EXPIRED commands.</li>
+</ol>
+<p>查看磁盘空间还有很多剩余空间，是因为默认的归档目标设置为USE_DB_RECOVERY_FILE_DEST，并且flash_recovery_area的最大尺寸设置为了2GB(db_recovery_file_dest_size= 2147483648)，可以有多种方法来解决此问题，通过设置RMAN归档保持策略来自动删除过期的日志文件。也可以使用RMAN DELETE来删除日志文件。<br>比如删除系统时间1天以前的归档日志</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt;<span class="keyword">delete</span> archivelog all completed before <span class="string">&#x27;sysdate-1&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>如果使用操作系统命令直接删除归档文件，并不能真正释放空间，还需要执行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target /</span><br><span class="line">rman&gt; crosscheck archivelog all;</span><br><span class="line">rman&gt; <span class="keyword">delete</span> expired archivelog all;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/14/cassandra-mutidatacenter-multinetworking-deploy/" class="post-title-link" itemprop="url">cassandra跨数据中心、多网络接口部署</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-14 12:36:06" itemprop="dateCreated datePublished" datetime="2020-06-14T12:36:06+08:00">2020-06-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra集群以前运行于本地机房，现在需要扩展到云端，云主机添加为集群的新数据中心。因为并不是公有云，所有没有启动SSL认证和加密。</p>
+<p>本地机房与云机房通过专线连接，并且本地只有两个互联ip地址可用。本地机房原集群内节点只使用私有网络地址，无法被云端访问。云端主机使用私有地址，云平台将私有地址映射到专线可以访问的“公有地址”，这里并不是真正的“公有地址”，仍然是一个大的私有网络，不过本地机房和云机房通过这些地址可以互访，所有这里也叫做“公有地址”</p>
+<p>因此集群的本地机房节点通过NAT映射，将私有地址的7000和9042端口映射到公有地址，从而可以被云主机访问，同时做了端口回流，保证本地机房其他机器也可以通过公有地址访问节点。<br>如果不做或不能做端口回流，应该也可以使用iptables/nftables在集群内节点以及需要访问集群的客户机器上添加nat转换规则,从公有ip转换到对应的私有ip，这个没试。</p>
+<p>这样本地机房和云机房的节点都有私有地址和映射后的公有地址，cassandra集群节点需要使用公有地址进行互访，但cassandra都无法直接监听公有地址。这需要配置cassandra.yaml,设置listen_address和rpc_address为私有地址，设置broadcast_address和broadcast_rpc_address为公有ip地址，但是listen_on_broadcast_address设置为false，因为各个节点并不能在公有ip上监听。这样当跨数据中心时使用公有ip通讯，但在本地网络内部可以使用私有网络。</p>
+<p>cassandra-rackdc.properties配置文件可以打开prefer_local选项，这样可以优先使用本地网络，降低网络延迟。</p>
+<p>配置实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listen_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line">rpc_address: <span class="number">192.168</span><span class="number">.136</span><span class="number">.250</span></span><br><span class="line">broadcast_rpc_address: <span class="number">59.206</span><span class="number">.31</span><span class="number">.152</span></span><br><span class="line"></span><br><span class="line">seed_provider:</span><br><span class="line"> # Addresses of hosts that are deemed contact points. </span><br><span class="line"> # Cassandra nodes use this list of hosts to find each other and learn</span><br><span class="line"> # the topology of the ring. You must change this if you are running</span><br><span class="line"> # multiple nodes!</span><br><span class="line"> - class_name: org.apache.cassandra.locator.SimpleSeedProvider</span><br><span class="line"> parameters:</span><br><span class="line"> # seeds is actually a comma-delimited list of addresses.</span><br><span class="line"> # Ex: &quot;&lt;ip1&gt;,&lt;ip2&gt;,&lt;ip3&gt;&quot;</span><br><span class="line"> - seeds: <span class="string">&quot;59.206.31.152,10.160.4.196,10.160.4.197&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这样本地数据中心和云数据中心就可以通过公有ip相互通讯了。<br><strong>备注：</strong>rpc并不是必须的，只使用cql是可行的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/configMultiNetworks.html">Using multiple network interfaces</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/06/06/load-pubkey-users-xxx-ssh-id-rsa-invalid-format/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/06/load-pubkey-users-xxx-ssh-id-rsa-invalid-format/" class="post-title-link" itemprop="url">load pubkey "/Users/xxx/.ssh/id_rsa": invalid format</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-06 10:11:27" itemprop="dateCreated datePublished" datetime="2020-06-06T10:11:27+08:00">2020-06-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>brew upgrade升级了openssh以后，每次登录远程服务器都提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load pubkey <span class="string">&quot;/Users/xxx/.ssh/id_rsa&quot;</span>: invalid format</span><br></pre></td></tr></table></figure>
+
+<p>因为客户端根本就没存储公钥啊，为什么要读取公钥？公钥放在服务器端了啊</p>
+<p>客户端重新生成对应的公钥，满足openssh的无理要求就可以了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -f ~<span class="regexp">/.ssh/i</span>d_rsa -y &gt; ~<span class="regexp">/.ssh/i</span>d_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>以前也没这问题。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/05/19/debian-use-dvd-iso-set-apt-source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/19/debian-use-dvd-iso-set-apt-source/" class="post-title-link" itemprop="url">debian使用dvd iso镜像配置本地源</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-19 21:06:10" itemprop="dateCreated datePublished" datetime="2020-05-19T21:06:10+08:00">2020-05-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为某云在某个网络内没有debian安装源，所以只能使用本地源。<br>debian支持的软件包很多，amd64架构的dvd iso竟然有16张之多，bd格式iso则只有4张，这里使用dvd格式的iso。</p>
+<p>首先，下载debian 10.1.0 amd64架构的dvd iso，<a target="_blank" rel="noopener" href="https://cdimage.debian.org/cdimage/archive/10.1.0/amd64/iso-dvd/">http方式只能下载前三个iso</a>,下载其他iso需要使用jigdo方式即时下载在线制作iso文件。</p>
+<p>debian系统安装jigdo-file使用jigdo-lite命令，输入iso的jigdo文件url即可下载制作iso镜像。debian 10.1.0 dvd iso的<a target="_blank" rel="noopener" href="https://cdimage.debian.org/cdimage/archive/10.1.0/amd64/jigdo-dvd/">jigdo下载地址在此</a>。<br>因为需要安装的包postgresql-11-postgis-2.5不在前三张dvd，所以使用jigdo下载了第四张dvd镜像。</p>
+<p>然后，将四张dvd iso分别挂载到/media目录的挂载点:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-1.iso /media/cdrom1/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-2.iso /media/cdrom2/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-3.iso /media/cdrom3/</span><br><span class="line"># mount /path/to/debian-10.1.0-amd64-DVD-4.iso /media/cdrom4/</span><br></pre></td></tr></table></figure>
+<p>也可以添加到/etc/fstab:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">1.</span>iso/media/cdrom1udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">2.</span>iso/media/cdrom2udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">3.</span>iso/media/cdrom3udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br><span class="line">/srv/debsrcs/debian-<span class="number">10.1</span><span class="number">.0</span>-amd64-DVD-<span class="number">4.</span>iso/media/cdrom4udf,iso9660 loop <span class="number">0</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -a</span><br></pre></td></tr></table></figure>
+<p>编辑/etc/apt/sources.list文件，添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom1/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom2/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom3/ buster main contrib </span><br><span class="line">deb \[ trusted=yes \] file:<span class="regexp">/media/</span>cdrom4/ buster main contrib </span><br></pre></td></tr></table></figure>
+
+<p>最后，apt update后正常安装软件即可，如果要安装的软件还是找不到，可能需要下载更多的dvd iso镜像。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/04/29/rman-convert-database-from-windows-x64-to-linux-amd6-for-oracle-10g-10-2-0-4/" class="post-title-link" itemprop="url">使用rman从windows x64向linux amd64平台迁移oracle 10g 10.2.0.4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-04-29 12:05:21" itemprop="dateCreated datePublished" datetime="2020-04-29T12:05:21+08:00">2020-04-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用rman convert database将oracle 10g 10.2.0.4 for windows x64环境下的数据库转换到oracle 10g 10.2.0.4 for linux x64环境下。</p>
+<p>**注意:**无法使用standby备库来进行转换。</p>
+<p><strong>1、以只读方式打开数据库</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; shutdown immediate</span><br><span class="line">SQL&gt; startup mount</span><br><span class="line">SQL&gt; alter database open read only;</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、检查可转换性和标示外部对象。</strong></p>
+<p>使用DBMS_TDB.CHECK_DB检查数据库状态，是否可以顺利转换到目标平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">    db_ready boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* db_ready is ignored, but with SERVEROUTPUT set to ON any </span></span><br><span class="line"><span class="comment">     * conditions preventing transport will be output to console */</span></span><br><span class="line">    db_ready := dbms_tdb.check_db(<span class="string">&#x27;Linux x86 64-bit&#x27;</span>, dbms_tdb.skip_none);</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>DBMS_TDB.CHECK_DB返回TRUE表示可以转换到目标平台，返回FALSE则不可以，同时会输出不可已转换的原因。</p>
+<p>使用DBMS_TDB.CHECK_EXTERNAL标识外部对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SQL&gt; set serveroutput on</span><br><span class="line">SQL&gt; declare</span><br><span class="line">     external boolean;</span><br><span class="line">  begin</span><br><span class="line">    <span class="comment">/* value of external is ignored, but with SERVEROUTPUT set to ON</span></span><br><span class="line"><span class="comment">     * dbms_tdb.check_external displays report of external objects</span></span><br><span class="line"><span class="comment">     * on console */</span></span><br><span class="line">    external := dbms_tdb.check_external;</span><br><span class="line">  end;</span><br><span class="line"> /</span><br></pre></td></tr></table></figure>
+<p>如果有外部对象会在输出中显示出来。</p>
+<p><strong>3、转换数据库</strong></p>
+<p>可以在源数据库，也可以在目标数据库进行数据文件的转换。这里选择在目标数据库进行数据文件转换，这样可以减少源数据库的停止服务时间。</p>
+<p>在源数据库执行rman convert database:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/passwd@dbinst</span><br><span class="line">RMAN&gt; CONVERT DATABASE ON TARGET PLATFORM</span><br><span class="line"> CONVERT SCRIPT <span class="string">&#x27;D:\\rman\\convertscript.rman&#x27;</span></span><br><span class="line"> TRANSPORT SCRIPT <span class="string">&#x27;D:\\rman\\transportscript.sql&#x27;</span></span><br><span class="line"> <span class="keyword">new</span> database <span class="string">&#x27;orcl&#x27;</span></span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\rman\\%U&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>命令执行完成会生成一个transport脚本用于在目标平台上创建数据库，一个pfile文件包含源数据库相同的参数配置，还生成一个convert脚本用于在目标平台上转换数据文件。</p>
+<p><strong>注意：</strong>在windows平台上只能使用windows系统路径名，包括FORMAT参数使用的路径，在linux平台上做数据库转换时，根据linux平台上oracle数据库的目录结构布局来相应修改生成的convertscript.rman，pfile和transportscript.sql。</p>
+<p><strong>3.1 convertscript.rman</strong><br>生成的转换脚本类似如下： </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>根据目标平台文件系统布局，修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RUN &#123;</span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-38_HDV216EA&#x27;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> CONVERT DATAFILE <span class="string">&#x27;/mnt/data/database/DIGITALSCANDATA01.DAT&#x27;</span> </span><br><span class="line"> FROM PLATFORM <span class="string">&#x27;Microsoft Windows x86 64-bit&#x27;</span> </span><br><span class="line"> FORMAT <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-DIGITALSCANDATA_FNO-39_HEV216EA&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>/mnt/data/database目录下为从源库直接拷贝过来待转换的数据文件，转换完成的数据文件存储到/u01/oradata/orcl/目录下。</p>
+<p><strong>3.2 pfile</strong><br>生成的INIT文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;D:\\RMAN\\CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;D:\\RMAN\\flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;D:\\RMAN\\ADUMP&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Please change the values of the following parameters:</span><br><span class="line"></span><br><span class="line"> control_files = <span class="string">&quot;/u01/oradata/orcl/CF_D-ORCL_ID-1276927241_00V216EA&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest = <span class="string">&quot;/u01/app/oracle/flash_recovery_area&quot;</span></span><br><span class="line"></span><br><span class="line"> db_recovery_file_dest_size= <span class="number">2147483648</span></span><br><span class="line"></span><br><span class="line"> audit_file_dest = <span class="string">&quot;/u01/app/oracle/admin/orcl/adump&quot;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.3 transportscript.sql</strong><br>生成的建库脚本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-- The following commands will create a <span class="keyword">new</span> control file and use it</span><br><span class="line">-- to open the database.</span><br><span class="line">-- Data used by Recovery Manager will be lost.</span><br><span class="line">-- The contents <span class="keyword">of</span> online logs will be lost and all backups will</span><br><span class="line">-- be invalidated. Use <span class="built_in">this</span> only <span class="keyword">if</span> online logs are damaged.</span><br><span class="line"></span><br><span class="line">-- After mounting the created controlfile, the following SQL</span><br><span class="line">-- statement will place the database <span class="keyword">in</span> the appropriate</span><br><span class="line">-- protection mode:</span><br><span class="line">-- ALTER DATABASE SET STANDBY DATABASE TO MAXIMIZE PERFORMANCE</span><br><span class="line"></span><br><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;D:\\RMAN\\INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;D:\\RMAN\\ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;D:\\RMAN\\DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>相应修改为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">STARTUP NOMOUNT PFILE=<span class="string">&#x27;/u01/app/oracle/admin/orcl/pfile/INIT_00V216EA_1_0.ORA&#x27;</span></span><br><span class="line">CREATE CONTROLFILE REUSE SET DATABASE <span class="string">&quot;ORCL&quot;</span> RESETLOGS FORCE LOGGING ARCHIVELOG</span><br><span class="line"> MAXLOGFILES <span class="number">16</span></span><br><span class="line"> MAXLOGMEMBERS <span class="number">3</span></span><br><span class="line"> MAXDATAFILES <span class="number">100</span></span><br><span class="line"> MAXINSTANCES <span class="number">8</span></span><br><span class="line"> MAXLOGHISTORY <span class="number">14616</span></span><br><span class="line">LOGFILE</span><br><span class="line"> GROUP <span class="number">1</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-517_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">2</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-515_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M,</span><br><span class="line"> GROUP <span class="number">3</span> <span class="string">&#x27;/u01/oradata/orcl/ARCH_D-ORCL_ID-1276927241_S-516_T-1_A-1017328065_00V216EA&#x27;</span> SIZE 50M</span><br><span class="line">DATAFILE</span><br><span class="line"> <span class="string">&#x27;/u01/oradata/orcl/DATA_D-ORCL_I-1276927241_TS-SYSTEM_FNO-1_IKV216EF&#x27;</span>,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><strong>3.4 实施转换</strong></p>
+<p>首先，将源数据库的数据文件全部拷贝到目标数据库（因为只拷贝数据文件，可以从standby备库拷贝），然后根据数据文件所在的路径相应的修改convert脚本，然后使用rman执行转换脚本，转换后的数据文件存储在format指定的位置。</p>
+<p>目标平台必须要有一个已经存在的数据库，因为rman需要连接到target数据库才能工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rman target / nocatalog</span><br><span class="line">RMAN&gt; @CONVERTSCRIPT.RMAN</span><br></pre></td></tr></table></figure>
+
+<p>然后，根据目标平台环境修改生成的pfile文件参数<br>最后，执行transportscript.sql生成目标数据库。使用utlirp.sql和utlrp.sql脚本重新编译目标平台数据的PL/SQL模块。<br>先关闭已有的数据库，oracle实例每次只能启动一个数据库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus / <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; @TRANSPORTSCRIPT.SQL</span><br></pre></td></tr></table></figure>
+<p>脚本最后最自动调用utlirp.sql和utlrp.sql编译模块。</p>
+<p>其中遇到了错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">27102</span>: out <span class="keyword">of</span> memory</span><br><span class="line">Linux-x86_64 <span class="built_in">Error</span>: <span class="number">28</span>: No space left on device</span><br></pre></td></tr></table></figure>
+<p>是因为内核参数kernel.shmall设置为了2097152，oracle最大只能使用2097152*4096=8GB的系统内存，而INIT文件中设置的SGA大小超过了10GB，重新设置kernel.shmall为4194304可以最大允许16GB，问题解决。</p>
+<p>数据库的sys用户是由本地密码文件验证的，数据库转换时并没有涉及到sys用户，因此需要本地重新为sys用户新建一个密码文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ orapwd file=$ORACLE_HOME/dbs/orapw$ORACLE_SID password=passwd_for_sys force=y</span><br></pre></td></tr></table></figure>
+
+<p>至此，数据库转换完成，最后以OPEN RESETLOGS方式打开新数据库。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/backup.102/b14191/dbxptrn.htm#BRADV05432">15 RMAN Cross-Platform Transportable Databases and Tablespaces</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34556414/article/details/80188533">使用RMAN Convert Database命令实现跨平台的数据库迁移</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -733,497 +1226,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/07/nginx-ssl-preread-real-client-ip/" class="post-title-link" itemprop="url">nginx启用ssl_preread时获取客户真实ip地址</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-07 16:48:38" itemprop="dateCreated datePublished" datetime="2020-02-07T16:48:38+08:00">2020-02-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>使用ssl_preread分流请求时，真正的服务程序无法获取到真实的客户ip，这时候可以借助<a target="_blank" rel="noopener" href="https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt">proxy_protocol</a>来获取真实的客户ip地址</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> proxy_headers_hash_bucket_size 6400; #添加此行</span><br><span class="line"> include mime.types;</span><br><span class="line"> default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line"> log_format main <span class="string">&#x27;$proxy_protocol_addr - $remote_user \[$time_local\] &quot;$request&quot; &#x27;</span></span><br><span class="line"> <span class="string">&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line"> &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;; #修改此行,用$proxy_protocol_addr替换$remote_addr</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"> listen 8443 ssl http2 proxy_protocol default_server;#此行添加proxy_protocol指令</span><br><span class="line">...</span><br><span class="line"># ssl preread for request certs</span><br><span class="line">stream &#123;</span><br><span class="line"> map $ssl_preread_alpn_protocols $tls_port &#123;</span><br><span class="line"> ~\\bacme-tls/<span class="number">1</span>\\b <span class="number">10443</span>;</span><br><span class="line"> <span class="keyword">default</span> <span class="number">8443</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">443</span>;</span><br><span class="line"> listen \[::\]:<span class="number">443</span>;</span><br><span class="line"> proxy_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:$tls_port;</span><br><span class="line"> proxy_protocol on; #添加此行</span><br><span class="line"> ssl_preread on;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样access日志就可以获取到真实的客户ip地址($proxy_protocol_addr)了，但是nginx的error日志格式无法改变，只能更改日志级别，因此preread之后的错误日志就没办法了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/xpra-intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/04/xpra-intro/" class="post-title-link" itemprop="url">Xpra入门</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-04 18:49:22" itemprop="dateCreated datePublished" datetime="2020-02-04T18:49:22+08:00">2020-02-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>ssh x11 forward太慢了，真的。</p>
-<p>Xpra除了很快，还可以后台运行gui应用，被称为screen for X11。还可以远程运行整个桌面。</p>
-<p>下面使用macos远程使用debian buster系统上的gui application</p>
-<p><strong>安装</strong></p>
-<p>debian端:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q https:<span class="comment">//xpra.org/gpg.asc -O- sudo apt-key add -</span></span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://xpra.org/ buster main&quot;</span></span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install xpra -y</span><br></pre></td></tr></table></figure>
-
-<p>mac端：<br>下载<a target="_blank" rel="noopener" href="https://xpra.org/dists/osx/x86_64/Xpra.pkg">Xpra.pkg</a>安装即可。<br>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install xpra</span><br></pre></td></tr></table></figure>
-
-<p><strong>运行</strong></p>
-<p>通过ssh隧道运行</p>
-<p>linux/macos平台:</p>
-<p>一次性运行gui应用，结束时自动关闭xpra服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
-
-<p>启动gui应用,结束时不关闭xpra服务，可以再次附加到gui应用程序</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo</span></span><br></pre></td></tr></table></figure>
-
-<p>断开后可以重新附加到已经运行的gui应用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra attach ssh:<span class="comment">//user@host</span></span><br></pre></td></tr></table></figure>
-
-<p>windows平台：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; xpra_cmd start ssh:<span class="comment">//user@host --ssh=&quot;C:\\\\Program Files\\\\putty\\\\Plink.exe -ssh -noagent -i c:\\\\***.ppk -P 22&quot; --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>其他命令</strong></p>
-<p>列出所有会话</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra list</span><br></pre></td></tr></table></figure>
-
-<p>终止所有会话</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra stop</span><br></pre></td></tr></table></figure>
-
-<p><strong>输入法</strong><br>服务器上安装ibus</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ibus-pinyin</span><br></pre></td></tr></table></figure>
-
-<p>配置ibus</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-setup&quot;</span></span><br></pre></td></tr></table></figure>
-<p>运行firefox，同时启动ibus输入法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=firefox --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-daemon -x -d -r&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>其他请参考<code>xpra --help</code></p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://xpra.org/trac/browser/xpra/trunk/src/man/xpra.1">manual</a><br>[2]<a target="_blank" rel="noopener" href="https://xpra.org/trac/wiki/FAQ">FAQ</a><br>[3]<a target="_blank" rel="noopener" href="https://medium.com/@summitkwan/guide-work-remotely-on-a-linux-server-from-local-mac-windows-f05cdc6db0e0">GUIDE: Work remotely on a Linux server from local Mac</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/pgadmin4-start-error/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/04/pgadmin4-start-error/" class="post-title-link" itemprop="url">pgadmin4无法启动错误</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-04 16:49:15" itemprop="dateCreated datePublished" datetime="2020-02-04T16:49:15+08:00">2020-02-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>pgadmin4无法启动，有类似错误</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: <span class="string">&#x27;module&#x27;</span> object has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>是因为python3-paramiko与python3-gssapi冲突，启动python3,import paramiko会报错：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.3</span> (<span class="keyword">default</span>, Apr <span class="number">3</span> <span class="number">2019</span>, <span class="number">05</span>:<span class="number">39</span>:<span class="number">12</span>) </span><br><span class="line">\[GCC <span class="number">8.3</span><span class="number">.0</span>\] on linux</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> paramiko</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"> File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/__init__.py&quot;</span>, line <span class="number">22</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.transport <span class="keyword">import</span> SecurityOptions, Transport</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/transport.py&quot;</span>, line <span class="number">38</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.auth_handler <span class="keyword">import</span> AuthHandler</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/auth_handler.py&quot;</span>, line <span class="number">72</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.ssh_gss <span class="keyword">import</span> GSSAuth, GSS_EXCEPTIONS</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/ssh_gss.py&quot;</span>, line <span class="number">55</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> GSS_EXCEPTIONS = (gssapi.GSSException,)</span><br><span class="line">AttributeError: <span class="built_in">module</span> <span class="string">&#x27;gssapi&#x27;</span> has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>临时的解决办法就是卸载掉python3-gssapi</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove python3-gssapi</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/03/pgadmin4-server-deployment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/03/pgadmin4-server-deployment/" class="post-title-link" itemprop="url">以服务方式部署pgadmin4</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-03 20:46:14" itemprop="dateCreated datePublished" datetime="2020-02-03T20:46:14+08:00">2020-02-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>在debian buster系统上以服务方式部署pgadmin4</p>
-<p><strong>配置</strong></p>
-<p>/usr/share/pgadmin4/web目录下添加config_local.py文件，内容如下：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOG_FILE = <span class="string">&#x27;/var/log/pgadmin/pgadmin4.log&#x27;</span></span><br><span class="line">SQLITE_PATH = <span class="string">&#x27;/var/lib/pgadmin/pgadmin4.db&#x27;</span></span><br><span class="line">SESSION_DB_PATH = <span class="string">&#x27;/var/lib/pgadmin/sessions&#x27;</span></span><br><span class="line">STORAGE_DIR = <span class="string">&#x27;/var/lib/pgadmin/storage&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>然后执行:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python3 setup.py</span><br></pre></td></tr></table></figure>
-<p>配置过程中输入用户登录认证信息，email和password，访问服务时需要提供</p>
-<p><strong>运行</strong></p>
-<p>使用gunicorn来运行python服务，先安装gunicorn</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install gunicorn3</span><br></pre></td></tr></table></figure>
-
-<p>启动服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gunicorn3 --bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">80</span> \\</span><br><span class="line"> --workers=<span class="number">1</span> \\</span><br><span class="line"> --threads=<span class="number">25</span> \\</span><br><span class="line"> --chdir /usr/share/pgadmin4/web \\</span><br><span class="line"> pgAdmin4:app</span><br></pre></td></tr></table></figure>
-
-<p>然后打开浏览器，输入服务所在的ip地址即可。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.pgadmin.org/docs/pgadmin4/latest/server_deployment.html">Server Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/02/ssh-x11-forward-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/02/02/ssh-x11-forward-tips/" class="post-title-link" itemprop="url">ssh x11 forward点滴</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-02-02 16:54:48" itemprop="dateCreated datePublished" datetime="2020-02-02T16:54:48+08:00">2020-02-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>firefox</strong></p>
-<p>加速X11 forward速度</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -XC4 user@host firefox --no-remote</span><br></pre></td></tr></table></figure>
-
-<p><strong>chrome</strong></p>
-<p>直接下载chrome for linux amd64 latest</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</span></span><br></pre></td></tr></table></figure>
-
-<p>安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i google-chrome-stable_current_amd64.deb</span><br><span class="line">$ sudo apt install -f </span><br><span class="line">$ sudo apt install upower</span><br></pre></td></tr></table></figure>
-
-<p>chrome会将自己设置为x和gnome默认的浏览器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/x-www-browser (x-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/gnome-www-browser (gnome-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/google-chrome (google-chrome) <span class="keyword">in</span> auto mode</span><br></pre></td></tr></table></figure>
-
-<p>运行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -YC4 user@host google-chrome --disable-gpu --temp-profile</span><br></pre></td></tr></table></figure>
-<p>但仍然无法运行成功，会不停的出现GCM通道请求失败错误</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="number">17069</span>:<span class="number">17069</span>:<span class="number">0202</span>/<span class="number">170630.407817</span>:ERROR:gcm_channel_status_request.cc(<span class="number">145</span>)\] GCM channel request failed.</span><br></pre></td></tr></table></figure>
-<p>GCM是Google Cloud Messaging,google推出firebase云后，更名为FCM(Firebase Cloud Messaging)，看样子是Great Fucking Wall的锅</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

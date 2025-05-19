@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,495 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/07/nginx-ssl-preread-real-client-ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/07/nginx-ssl-preread-real-client-ip/" class="post-title-link" itemprop="url">nginx启用ssl_preread时获取客户真实ip地址</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-07 16:48:38" itemprop="dateCreated datePublished" datetime="2020-02-07T16:48:38+08:00">2020-02-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用ssl_preread分流请求时，真正的服务程序无法获取到真实的客户ip，这时候可以借助<a target="_blank" rel="noopener" href="https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt">proxy_protocol</a>来获取真实的客户ip地址</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> proxy_headers_hash_bucket_size 6400; #添加此行</span><br><span class="line"> include mime.types;</span><br><span class="line"> default_type application/octet-stream;</span><br><span class="line"></span><br><span class="line"> log_format main <span class="string">&#x27;$proxy_protocol_addr - $remote_user \[$time_local\] &quot;$request&quot; &#x27;</span></span><br><span class="line"> <span class="string">&#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span></span><br><span class="line"> &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;; #修改此行,用$proxy_protocol_addr替换$remote_addr</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line"> listen 8443 ssl http2 proxy_protocol default_server;#此行添加proxy_protocol指令</span><br><span class="line">...</span><br><span class="line"># ssl preread for request certs</span><br><span class="line">stream &#123;</span><br><span class="line"> map $ssl_preread_alpn_protocols $tls_port &#123;</span><br><span class="line"> ~\\bacme-tls/<span class="number">1</span>\\b <span class="number">10443</span>;</span><br><span class="line"> <span class="keyword">default</span> <span class="number">8443</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">443</span>;</span><br><span class="line"> listen \[::\]:<span class="number">443</span>;</span><br><span class="line"> proxy_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:$tls_port;</span><br><span class="line"> proxy_protocol on; #添加此行</span><br><span class="line"> ssl_preread on;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样access日志就可以获取到真实的客户ip地址($proxy_protocol_addr)了，但是nginx的error日志格式无法改变，只能更改日志级别，因此preread之后的错误日志就没办法了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/xpra-intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/04/xpra-intro/" class="post-title-link" itemprop="url">Xpra入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-04 18:49:22" itemprop="dateCreated datePublished" datetime="2020-02-04T18:49:22+08:00">2020-02-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>ssh x11 forward太慢了，真的。</p>
+<p>Xpra除了很快，还可以后台运行gui应用，被称为screen for X11。还可以远程运行整个桌面。</p>
+<p>下面使用macos远程使用debian buster系统上的gui application</p>
+<p><strong>安装</strong></p>
+<p>debian端:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q https:<span class="comment">//xpra.org/gpg.asc -O- sudo apt-key add -</span></span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://xpra.org/ buster main&quot;</span></span><br><span class="line">$ sudo apt update &amp;&amp; sudo apt install xpra -y</span><br></pre></td></tr></table></figure>
+
+<p>mac端：<br>下载<a target="_blank" rel="noopener" href="https://xpra.org/dists/osx/x86_64/Xpra.pkg">Xpra.pkg</a>安装即可。<br>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew cask install xpra</span><br></pre></td></tr></table></figure>
+
+<p><strong>运行</strong></p>
+<p>通过ssh隧道运行</p>
+<p>linux/macos平台:</p>
+<p>一次性运行gui应用，结束时自动关闭xpra服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p>启动gui应用,结束时不关闭xpra服务，可以再次附加到gui应用程序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=xlogo</span></span><br></pre></td></tr></table></figure>
+
+<p>断开后可以重新附加到已经运行的gui应用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra attach ssh:<span class="comment">//user@host</span></span><br></pre></td></tr></table></figure>
+
+<p>windows平台：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; xpra_cmd start ssh:<span class="comment">//user@host --ssh=&quot;C:\\\\Program Files\\\\putty\\\\Plink.exe -ssh -noagent -i c:\\\\***.ppk -P 22&quot; --start-child=xlogo --exit-with-children=yes --speaker=off --webcam=no</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>其他命令</strong></p>
+<p>列出所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra list</span><br></pre></td></tr></table></figure>
+
+<p>终止所有会话</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra stop</span><br></pre></td></tr></table></figure>
+
+<p><strong>输入法</strong><br>服务器上安装ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install ibus-pinyin</span><br></pre></td></tr></table></figure>
+
+<p>配置ibus</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-setup&quot;</span></span><br></pre></td></tr></table></figure>
+<p>运行firefox，同时启动ibus输入法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xpra start ssh:<span class="comment">//user@host --start-child=firefox --exit-with-children=yes --speaker=off --webcam=no --input-method=IBus --start-child=&quot;ibus-daemon -x -d -r&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其他请参考<code>xpra --help</code></p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://xpra.org/trac/browser/xpra/trunk/src/man/xpra.1">manual</a><br>[2]<a target="_blank" rel="noopener" href="https://xpra.org/trac/wiki/FAQ">FAQ</a><br>[3]<a target="_blank" rel="noopener" href="https://medium.com/@summitkwan/guide-work-remotely-on-a-linux-server-from-local-mac-windows-f05cdc6db0e0">GUIDE: Work remotely on a Linux server from local Mac</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/04/pgadmin4-start-error/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/04/pgadmin4-start-error/" class="post-title-link" itemprop="url">pgadmin4无法启动错误</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-04 16:49:15" itemprop="dateCreated datePublished" datetime="2020-02-04T16:49:15+08:00">2020-02-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pgadmin4无法启动，有类似错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: <span class="string">&#x27;module&#x27;</span> object has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>是因为python3-paramiko与python3-gssapi冲突，启动python3,import paramiko会报错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Python <span class="number">3.7</span><span class="number">.3</span> (<span class="keyword">default</span>, Apr <span class="number">3</span> <span class="number">2019</span>, <span class="number">05</span>:<span class="number">39</span>:<span class="number">12</span>) </span><br><span class="line">\[GCC <span class="number">8.3</span><span class="number">.0</span>\] on linux</span><br><span class="line">Type <span class="string">&quot;help&quot;</span>, <span class="string">&quot;copyright&quot;</span>, <span class="string">&quot;credits&quot;</span> or <span class="string">&quot;license&quot;</span> <span class="keyword">for</span> more information.</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> paramiko</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line"> File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/__init__.py&quot;</span>, line <span class="number">22</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.transport <span class="keyword">import</span> SecurityOptions, Transport</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/transport.py&quot;</span>, line <span class="number">38</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.auth_handler <span class="keyword">import</span> AuthHandler</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/auth_handler.py&quot;</span>, line <span class="number">72</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> <span class="keyword">from</span> paramiko.ssh_gss <span class="keyword">import</span> GSSAuth, GSS_EXCEPTIONS</span><br><span class="line"> File <span class="string">&quot;/usr/lib/python3/dist-packages/paramiko/ssh_gss.py&quot;</span>, line <span class="number">55</span>, <span class="keyword">in</span> &lt;<span class="built_in">module</span>&gt;</span><br><span class="line"> GSS_EXCEPTIONS = (gssapi.GSSException,)</span><br><span class="line">AttributeError: <span class="built_in">module</span> <span class="string">&#x27;gssapi&#x27;</span> has no attribute <span class="string">&#x27;GSSException&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>临时的解决办法就是卸载掉python3-gssapi</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt remove python3-gssapi</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/03/pgadmin4-server-deployment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/03/pgadmin4-server-deployment/" class="post-title-link" itemprop="url">以服务方式部署pgadmin4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-03 20:46:14" itemprop="dateCreated datePublished" datetime="2020-02-03T20:46:14+08:00">2020-02-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在debian buster系统上以服务方式部署pgadmin4</p>
+<p><strong>配置</strong></p>
+<p>/usr/share/pgadmin4/web目录下添加config_local.py文件，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOG_FILE = <span class="string">&#x27;/var/log/pgadmin/pgadmin4.log&#x27;</span></span><br><span class="line">SQLITE_PATH = <span class="string">&#x27;/var/lib/pgadmin/pgadmin4.db&#x27;</span></span><br><span class="line">SESSION_DB_PATH = <span class="string">&#x27;/var/lib/pgadmin/sessions&#x27;</span></span><br><span class="line">STORAGE_DIR = <span class="string">&#x27;/var/lib/pgadmin/storage&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后执行:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python3 setup.py</span><br></pre></td></tr></table></figure>
+<p>配置过程中输入用户登录认证信息，email和password，访问服务时需要提供</p>
+<p><strong>运行</strong></p>
+<p>使用gunicorn来运行python服务，先安装gunicorn</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install gunicorn3</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gunicorn3 --bind <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">80</span> \\</span><br><span class="line"> --workers=<span class="number">1</span> \\</span><br><span class="line"> --threads=<span class="number">25</span> \\</span><br><span class="line"> --chdir /usr/share/pgadmin4/web \\</span><br><span class="line"> pgAdmin4:app</span><br></pre></td></tr></table></figure>
+
+<p>然后打开浏览器，输入服务所在的ip地址即可。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://www.pgadmin.org/docs/pgadmin4/latest/server_deployment.html">Server Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2020/02/02/ssh-x11-forward-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/02/02/ssh-x11-forward-tips/" class="post-title-link" itemprop="url">ssh x11 forward点滴</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-02 16:54:48" itemprop="dateCreated datePublished" datetime="2020-02-02T16:54:48+08:00">2020-02-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>firefox</strong></p>
+<p>加速X11 forward速度</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -XC4 user@host firefox --no-remote</span><br></pre></td></tr></table></figure>
+
+<p><strong>chrome</strong></p>
+<p>直接下载chrome for linux amd64 latest</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</span></span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i google-chrome-stable_current_amd64.deb</span><br><span class="line">$ sudo apt install -f </span><br><span class="line">$ sudo apt install upower</span><br></pre></td></tr></table></figure>
+
+<p>chrome会将自己设置为x和gnome默认的浏览器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/x-www-browser (x-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/gnome-www-browser (gnome-www-browser) <span class="keyword">in</span> auto mode</span><br><span class="line">update-alternatives: using /usr/bin/google-chrome-stable to provide /usr/bin/google-chrome (google-chrome) <span class="keyword">in</span> auto mode</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -YC4 user@host google-chrome --disable-gpu --temp-profile</span><br></pre></td></tr></table></figure>
+<p>但仍然无法运行成功，会不停的出现GCM通道请求失败错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[<span class="number">17069</span>:<span class="number">17069</span>:<span class="number">0202</span>/<span class="number">170630.407817</span>:ERROR:gcm_channel_status_request.cc(<span class="number">145</span>)\] GCM channel request failed.</span><br></pre></td></tr></table></figure>
+<p>GCM是Google Cloud Messaging,google推出firebase云后，更名为FCM(Firebase Cloud Messaging)，看样子是Great Fucking Wall的锅</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -691,492 +1180,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/15/dd-io-performance-test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/15/dd-io-performance-test/" class="post-title-link" itemprop="url">dd命令测试磁盘IO性能</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-15 13:46:02" itemprop="dateCreated datePublished" datetime="2019-11-15T13:46:02+08:00">2019-11-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ time dd <span class="keyword">if</span>=<span class="regexp">/dev/</span>zero <span class="keyword">of</span>=<span class="regexp">/tmp/</span>test.img bs=1G count=<span class="number">1</span> oflag=dsync</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/prometheus-grafan-alertmanager-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/14/prometheus-grafan-alertmanager-config/" class="post-title-link" itemprop="url">prometheus grafana alertmanager 监控报警基本配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-14 15:16:24" itemprop="dateCreated datePublished" datetime="2019-11-14T15:16:24+08:00">2019-11-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>此配置主要用于监控主机状态,prometheus还可以监控各种服务的状态,只要使用相应的exporter即可。</p>
-<p><strong>prometheus</strong></p>
-<p>监控节点安装prometheus,被监控节点只需安装prometheus-node-exporter</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus</span><br></pre></td></tr></table></figure>
-<p>/etc/prometheus/prometheus.yml文件中添加被监控节点</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- job_name: node</span><br><span class="line"> # If prometheus-node-exporter is installed, grab stats about the local</span><br><span class="line"> # machine by default.</span><br><span class="line"> static_configs:</span><br><span class="line"> # 被监控节点,默认</span><br><span class="line"> - targets: \[<span class="string">&#x27;localhost:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmin&#x27;</span></span><br><span class="line"> # 被监控节点</span><br><span class="line"> - targets: \[<span class="string">&#x27;10.100.0.31:9100&#x27;</span>\]</span><br><span class="line"> labels:</span><br><span class="line"> hostname: <span class="string">&#x27;vmsvr02&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>添加主机名标签，方便管理。<br>通过监控主机的9090端口访问prometheus,<code>http://ip_of_monitor:9090/</code></p>
-<p><strong>alertmanager</strong><br>在监控主机安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install prometheus-alertmanager</span><br></pre></td></tr></table></figure>
-
-<p>添加节点监控规则文件/etc/prometheus/node-alert.rules:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># hostStatsAlert</span><br><span class="line">groups:</span><br><span class="line">- name: hostStatsAlert</span><br><span class="line"> rules:</span><br><span class="line"> - alert: InstanceDown</span><br><span class="line"> expr: up == <span class="number">0</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123;$labels.instance&#125;&#125; down&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123;$labels.instance&#125;&#125; of job &#123;&#123;$labels.job&#125;&#125; has been down for more than 5 minutes.&quot;</span></span><br><span class="line"> - alert: hostCpuUsageAlert</span><br><span class="line"> expr: sum(avg without (cpu)(irate(node_cpu_seconds_total&#123;mode!=<span class="string">&#x27;idle&#x27;</span>&#125;\[5m\]))) by (instance) &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; CPU usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; CPU usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: hostMemUsageAlert</span><br><span class="line"> expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes &gt; <span class="number">0.85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; MEM usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; MEM usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br><span class="line"> - alert: filesystemUsageAlert</span><br><span class="line"> expr: <span class="number">100</span> - ((node_filesystem_avail_bytes&#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125; * <span class="number">100</span>) / node_filesystem_size_bytes &#123;mountpoint=<span class="string">&quot;/&quot;</span>,fstype=~<span class="string">&quot;ext4xfs&quot;</span>&#125;) &gt; <span class="number">85</span></span><br><span class="line"> <span class="keyword">for</span>: 1m</span><br><span class="line"> labels:</span><br><span class="line"> severity: page</span><br><span class="line"> annotations:</span><br><span class="line"> summary: <span class="string">&quot;Instance &#123;&#123; $labels.instance &#125;&#125; root DISK usgae high&quot;</span></span><br><span class="line"> description: <span class="string">&quot;&#123;&#123; $labels.instance &#125;&#125; root DISK usage above 85% (current value: &#123;&#123; $value &#125;&#125;)&quot;</span></span><br></pre></td></tr></table></figure>
-<p>此规则文件主要监测主机在线状态，cpu、memory和filesystem使用率</p>
-<p>/etc/prometheus/prometheus.yml引用此规则文件：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule_files:</span><br><span class="line"> - <span class="string">&quot;node-alert.rules&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>alertmanager配置邮件报警/etc/prometheus/alertmanager.yml:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">global</span>:</span><br><span class="line"> # The smarthost and SMTP sender used for mail notifications.</span><br><span class="line"> smtp_smarthost: <span class="string">&#x27;smtp.163.com:25&#x27;</span></span><br><span class="line"> smtp_from: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_username: <span class="string">&#x27;abc@163.com&#x27;</span></span><br><span class="line"> smtp_auth_password: <span class="string">&#x27;password&#x27;</span></span><br><span class="line">...</span><br><span class="line"> # A default receiver</span><br><span class="line"> receiver: team-X-mails</span><br><span class="line">...</span><br><span class="line">receivers:</span><br><span class="line">- name: <span class="string">&#x27;team-X-mails&#x27;</span></span><br><span class="line"> email_configs:</span><br><span class="line"> - to: <span class="string">&#x27;123@163.com&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>重新装载prometheus和alertmanager服务,停止一个被监控节点的监控服务，就可以收到报警邮件了。</p>
-<p><strong>grafana</strong></p>
-<p>可以使用grafana来展示prometheus监控信息<br>安装grafana</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install -y software-properties-common</span><br><span class="line">$ sudo add-apt-repository <span class="string">&quot;deb https://packages.grafana.com/oss/deb stable main&quot;</span></span><br><span class="line">$ wget -q -O - https:<span class="comment">//packages.grafana.com/gpg.key sudo apt-key add -</span></span><br><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install grafana</span><br></pre></td></tr></table></figure>
-
-<p>通过http 3000端口来访问grafana，然后添加prometheus数据源，添加展示prometheus数据的dashboard</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://aeric.io/post/prometheus-alertmanager-config/">Prometheus Alertmanager 基本配置</a><br>[2]<a target="_blank" rel="noopener" href="https://www.kancloud.cn/huyipow/prometheus/527563">alertmanager报警规则详解</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/ceph-remove-osds/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/14/ceph-remove-osds/" class="post-title-link" itemprop="url">ceph集群移除osd,mon,mdr,mds节点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-14 10:50:22" itemprop="dateCreated datePublished" datetime="2019-11-14T10:50:22+08:00">2019-11-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>移除osd节点</strong></p>
-<p>查看当前osd状态</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd tree</span><br><span class="line">ID CLASS WEIGHT TYPE NAME STATUS REWEIGHT PRI-AFF </span><br><span class="line">-<span class="number">1</span> <span class="number">9.74405</span> root <span class="keyword">default</span> </span><br><span class="line">-<span class="number">9</span> <span class="number">0.95409</span> host bank1 </span><br><span class="line"> <span class="number">3</span> hdd <span class="number">0.95409</span> osd<span class="number">.3</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">3</span> <span class="number">5.99799</span> host vm01 </span><br><span class="line"> <span class="number">0</span> hdd <span class="number">5.99799</span> osd<span class="number">.0</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">5</span> <span class="number">1.81929</span> host vm02 </span><br><span class="line"> <span class="number">1</span> hdd <span class="number">1.81929</span> osd<span class="number">.1</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br><span class="line">-<span class="number">7</span> <span class="number">0.97269</span> host web </span><br><span class="line"> <span class="number">2</span> hdd <span class="number">0.97269</span> osd<span class="number">.2</span> up <span class="number">1.00000</span> <span class="number">1.00000</span> </span><br></pre></td></tr></table></figure>
-
-<p>将osd标记为out，准备踢出集群，{osd-num}为osd编号,比如osd.2</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
-
-<p>集群会进行重新平衡和数据迁移，查看 </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph -w</span><br></pre></td></tr></table></figure>
-<p><code>ceps -s</code>也可以查看进度，当完成时集群状态会重新回归到actice+clean状态<br>如果卡在active+clean+remapped或者active+remapped状态,先将osd回归集群</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd <span class="keyword">in</span> &#123;osd-num&#125;</span><br></pre></td></tr></table></figure>
-<p>等集群恢复到active+clean状态后，执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd crush reweight osd.&#123;osd-num&#125; <span class="number">0</span></span><br></pre></td></tr></table></figure>
-<p>等集群状态再次变成active+clean状态后，将osd标记为out,并停止ceph-osd服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd out &#123;osd-num&#125;</span><br><span class="line">$ sudo systemctl stop ceph-osd@<span class="number">2.</span>service</span><br></pre></td></tr></table></figure>
-
-<p>移除osd</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd purge osd.&#123;osd-num&#125; --yes-i-really-mean-it</span><br><span class="line">purged osd<span class="number">.2</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mon节点</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph mon remove &#123;mon-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mgr节点</strong><br>在将要被移除的mgr节点上执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mgr@&#123;mgr-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mgr/ceph-&#123;mgr-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>移除mds节点</strong><br>在将要被移除的mds节点上执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo systemctl disable ceph-mds@&#123;mds-name&#125;</span><br><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/ceph/mds/ceph-&#123;mds-name&#125;</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/rados/operations/add-or-rm-osds/">ADDING/REMOVING OSDS</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.ceph.com/docs/master/cephfs/add-remove-mds/">DEPLOYING METADATA SERVERS</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/ceph-cluster-benchmark/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/14/ceph-cluster-benchmark/" class="post-title-link" itemprop="url">ceph cluster benchmark</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-14 10:34:06" itemprop="dateCreated datePublished" datetime="2019-11-14T10:34:06+08:00">2019-11-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>创建测试使用的pool</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ceph osd pool create testbench <span class="number">32</span> <span class="number">32</span></span><br></pre></td></tr></table></figure>
-
-<p>写测试</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> write --no-cleanup</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line">Maintaining <span class="number">16</span> concurrent writes <span class="keyword">of</span> <span class="number">4194304</span> bytes to objects <span class="keyword">of</span> size <span class="number">4194304</span> <span class="keyword">for</span> up to <span class="number">10</span> seconds or <span class="number">0</span> objects</span><br><span class="line"><span class="built_in">Object</span> prefix: benchmark_data_work_17785</span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">18</span> <span class="number">2</span> <span class="number">7.99976</span> <span class="number">8</span> <span class="number">0.743612</span> <span class="number">0.641529</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">30</span> <span class="number">14</span> <span class="number">27.9973</span> <span class="number">48</span> <span class="number">1.85864</span> <span class="number">1.29122</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">42</span> <span class="number">26</span> <span class="number">34.663</span> <span class="number">48</span> <span class="number">1.28555</span> <span class="number">1.39395</span></span><br><span class="line"> <span class="number">4</span> <span class="number">16</span> <span class="number">55</span> <span class="number">39</span> <span class="number">38.9956</span> <span class="number">52</span> <span class="number">1.32261</span> <span class="number">1.43965</span></span><br><span class="line"> <span class="number">5</span> <span class="number">16</span> <span class="number">58</span> <span class="number">42</span> <span class="number">33.5958</span> <span class="number">12</span> <span class="number">1.53666</span> <span class="number">1.44482</span></span><br><span class="line"> <span class="number">6</span> <span class="number">16</span> <span class="number">68</span> <span class="number">52</span> <span class="number">34.662</span> <span class="number">40</span> <span class="number">2.08014</span> <span class="number">1.50223</span></span><br><span class="line"> <span class="number">7</span> <span class="number">16</span> <span class="number">84</span> <span class="number">68</span> <span class="number">38.8516</span> <span class="number">64</span> <span class="number">0.823587</span> <span class="number">1.5045</span></span><br><span class="line"> <span class="number">8</span> <span class="number">16</span> <span class="number">96</span> <span class="number">80</span> <span class="number">39.9944</span> <span class="number">48</span> <span class="number">0.899492</span> <span class="number">1.44845</span></span><br><span class="line"> <span class="number">9</span> <span class="number">16</span> <span class="number">114</span> <span class="number">98</span> <span class="number">43.5496</span> <span class="number">72</span> <span class="number">0.633734</span> <span class="number">1.40136</span></span><br><span class="line"> <span class="number">10</span> <span class="number">16</span> <span class="number">123</span> <span class="number">107</span> <span class="number">42.7941</span> <span class="number">36</span> <span class="number">0.856593</span> <span class="number">1.3861</span></span><br><span class="line">Total time run: <span class="number">10.6523</span></span><br><span class="line">Total writes made: <span class="number">124</span></span><br><span class="line">Write size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">46.5625</span></span><br><span class="line">Stddev Bandwidth: <span class="number">20.2254</span></span><br><span class="line">Max bandwidth (MB/sec): <span class="number">72</span></span><br><span class="line">Min bandwidth (MB/sec): <span class="number">8</span></span><br><span class="line">Average IOPS: <span class="number">11</span></span><br><span class="line">Stddev IOPS: <span class="number">5.05635</span></span><br><span class="line">Max IOPS: <span class="number">18</span></span><br><span class="line">Min IOPS: <span class="number">2</span></span><br><span class="line">Average Latency(s): <span class="number">1.3707</span></span><br><span class="line">Stddev Latency(s): <span class="number">0.472979</span></span><br><span class="line">Max latency(s): <span class="number">2.64427</span></span><br><span class="line">Min latency(s): <span class="number">0.539447</span></span><br></pre></td></tr></table></figure>
-
-<p>顺序读测试</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> seq</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">42</span> <span class="number">26</span> <span class="number">103.976</span> <span class="number">104</span> <span class="number">0.588145</span> <span class="number">0.431675</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">69</span> <span class="number">53</span> <span class="number">105.983</span> <span class="number">108</span> <span class="number">0.593612</span> <span class="number">0.500811</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">98</span> <span class="number">82</span> <span class="number">109.319</span> <span class="number">116</span> <span class="number">0.555486</span> <span class="number">0.529656</span></span><br><span class="line"> <span class="number">4</span> <span class="number">15</span> <span class="number">124</span> <span class="number">109</span> <span class="number">108.986</span> <span class="number">108</span> <span class="number">0.408214</span> <span class="number">0.531251</span></span><br><span class="line">Total time run: <span class="number">4.45077</span></span><br><span class="line">Total reads made: <span class="number">124</span></span><br><span class="line">Read size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">111.441</span></span><br><span class="line">Average IOPS: <span class="number">27</span></span><br><span class="line">Stddev IOPS: <span class="number">1.25831</span></span><br><span class="line">Max IOPS: <span class="number">29</span></span><br><span class="line">Min IOPS: <span class="number">26</span></span><br><span class="line">Average Latency(s): <span class="number">0.567093</span></span><br><span class="line">Max latency(s): <span class="number">1.16315</span></span><br><span class="line">Min latency(s): <span class="number">0.062019</span></span><br></pre></td></tr></table></figure>
-
-<p>随机读测试</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ rados bench -p testbench <span class="number">10</span> rand</span><br><span class="line">hints = <span class="number">1</span></span><br><span class="line"> sec Cur ops started finished avg MB/s cur MB/s last lat(s) avg lat(s)</span><br><span class="line"> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> - <span class="number">0</span></span><br><span class="line"> <span class="number">1</span> <span class="number">16</span> <span class="number">43</span> <span class="number">27</span> <span class="number">107.978</span> <span class="number">108</span> <span class="number">0.548233</span> <span class="number">0.400351</span></span><br><span class="line"> <span class="number">2</span> <span class="number">16</span> <span class="number">70</span> <span class="number">54</span> <span class="number">107.985</span> <span class="number">108</span> <span class="number">0.507102</span> <span class="number">0.467039</span></span><br><span class="line"> <span class="number">3</span> <span class="number">16</span> <span class="number">99</span> <span class="number">83</span> <span class="number">110.653</span> <span class="number">116</span> <span class="number">0.66861</span> <span class="number">0.518288</span></span><br><span class="line"> <span class="number">4</span> <span class="number">16</span> <span class="number">128</span> <span class="number">112</span> <span class="number">111.987</span> <span class="number">116</span> <span class="number">0.821184</span> <span class="number">0.518217</span></span><br><span class="line"> <span class="number">5</span> <span class="number">16</span> <span class="number">155</span> <span class="number">139</span> <span class="number">111.187</span> <span class="number">108</span> <span class="number">0.71247</span> <span class="number">0.532804</span></span><br><span class="line"> <span class="number">6</span> <span class="number">16</span> <span class="number">183</span> <span class="number">167</span> <span class="number">111.32</span> <span class="number">112</span> <span class="number">0.698042</span> <span class="number">0.541571</span></span><br><span class="line"> <span class="number">7</span> <span class="number">16</span> <span class="number">211</span> <span class="number">195</span> <span class="number">111.416</span> <span class="number">112</span> <span class="number">0.137</span> <span class="number">0.545219</span></span><br><span class="line"> <span class="number">8</span> <span class="number">16</span> <span class="number">239</span> <span class="number">223</span> <span class="number">111.488</span> <span class="number">112</span> <span class="number">0.797219</span> <span class="number">0.549091</span></span><br><span class="line"> <span class="number">9</span> <span class="number">16</span> <span class="number">267</span> <span class="number">251</span> <span class="number">111.543</span> <span class="number">112</span> <span class="number">0.249707</span> <span class="number">0.547871</span></span><br><span class="line"> <span class="number">10</span> <span class="number">16</span> <span class="number">296</span> <span class="number">280</span> <span class="number">111.988</span> <span class="number">116</span> <span class="number">0.577749</span> <span class="number">0.555318</span></span><br><span class="line">Total time run: <span class="number">10.5902</span></span><br><span class="line">Total reads made: <span class="number">297</span></span><br><span class="line">Read size: <span class="number">4194304</span></span><br><span class="line"><span class="built_in">Object</span> size: <span class="number">4194304</span></span><br><span class="line">Bandwidth (MB/sec): <span class="number">112.179</span></span><br><span class="line">Average IOPS: <span class="number">28</span></span><br><span class="line">Stddev IOPS: <span class="number">0.816497</span></span><br><span class="line">Max IOPS: <span class="number">29</span></span><br><span class="line">Min IOPS: <span class="number">27</span></span><br><span class="line">Average Latency(s): <span class="number">0.565831</span></span><br><span class="line">Max latency(s): <span class="number">1.20987</span></span><br><span class="line">Min latency(s): <span class="number">0.0559923</span></span><br></pre></td></tr></table></figure>
-
-<p>清除测试数据</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rados -p testbench cleanup</span><br><span class="line">Removed <span class="number">124</span> objects</span><br></pre></td></tr></table></figure>
-
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/1.3/html/administration_guide/benchmarking_performance">CHAPTER 9. BENCHMARKING PERFORMANCE</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/11/14/tomcat9-umask/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/14/tomcat9-umask/" class="post-title-link" itemprop="url">tomcat9 默认文件/目录创建权限</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-14 10:31:12" itemprop="dateCreated datePublished" datetime="2019-11-14T10:31:12+08:00">2019-11-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>tomcat9默认的文件创建权限UMASK更改为0027,创建的文件/目录其他用户是没有权限访问的,而nginx worker process默认使用nobody用户来运行,因此也无法访问tomcat9创建的文件</p>
-<p><strong>更改tomcat9的UMASK</strong></p>
-<p>/usr/share/tomcat9/bin目录下如果没有setenv.sh,添加此文件,内容如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UMASK=<span class="number">0022</span></span><br></pre></td></tr></table></figure>
-
-<p>使此文件可执行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod +x setenv.sh</span><br></pre></td></tr></table></figure>
-
-<p>重新启动tomcat9</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl restart tomcat9</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

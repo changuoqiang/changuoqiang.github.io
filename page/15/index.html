@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,517 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/28/flatpak-intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/28/flatpak-intro/" class="post-title-link" itemprop="url">flatpak简单介绍</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-28 14:11:49" itemprop="dateCreated datePublished" datetime="2018-11-28T14:11:49+08:00">2018-11-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>GIMP改用flatpak打包，flatpak以前叫xdg-app，现在flatpak是指flat package吗?</p>
+<p>flatpak是一种致力于减少依赖的通用应用打包格式，与之竞争的还有snap和AppImage</p>
+<p><strong>安装</strong></p>
+<p>flatpak已经进入debian当前的testing buster源和sid源， debian stretch可以从官方的backports源<code>deb http://ftp.tw.debian.org/debian stretch-backports main contrib non-free</code>安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install flatpak</span><br></pre></td></tr></table></figure>
+
+<p>添加flatpak官方源</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo flatpak remote-add --<span class="keyword">if</span>-not-exists flathub https:<span class="comment">//flathub.org/repo/flathub.flatpakrepo</span></span><br></pre></td></tr></table></figure>
+
+<p>因为flatpak本身就是一种app打包格式，官方应该提供一个自举安装的shell脚本才显得更专业:)</p>
+<p><strong>安装gimp</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ flatpak install https:<span class="comment">//flathub.org/repo/appstream/org.gimp.GIMP.flatpakref</span></span><br></pre></td></tr></table></figure>
+
+<p>可以使用桌面图标运行，或者使用以下命令：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ flatpak run org.gimp.GIMP<span class="comment">//stable</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>flatpak文件系统布局</strong></p>
+<p>flatpak支持系统范围安装和用户安装，系统安装在/var/lib/flatpak,<br>安装的app系统配置在/var/lib/flatpak/app，其他子目录为flatpak本身系统范围的配置<br>安装的app的当前用户配置在$HOME/.var/app，flatpak本身的当前用户配置在$HOME/.local/share/flatpak</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://flatpak.org/">Flatpak</a><br>[2]<a target="_blank" rel="noopener" href="https://github.com/flatpak/flatpak/wiki/Filesystem">Flatpak filesystem layout</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/27/cwrap-call-webassembly-method/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/27/cwrap-call-webassembly-method/" class="post-title-link" itemprop="url">使用cwrap调用WebAssembly模块方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-27 22:26:29" itemprop="dateCreated datePublished" datetime="2018-11-27T22:26:29+08:00">2018-11-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>Emscripten提供了很多库的webassembly实现，甚至为了文件系统存取还提供了虚拟文件系统，这可以让很多C/C++代码做很少的修改就可以移植到web上来运行。</p>
+<p>目前来讲js直接与wasm代码交互还不是那么方便，通过Emscripten提供的js glue代码可以使这个过程更简单一点。</p>
+<p>胶水代码导出了一个名字空间Module，其中有两个方法ccall和cwarp作为桥接原生代码的桥梁，ccall适合一次性的调用C/C++函数，而cwrap则返回一个函数适配器，适合多次反复调用C/C++代码。</p>
+<p>使用如下命令编译C/C++代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ emcc area.c triangle.c -Os -s WASM=<span class="number">1</span> -o area.js </span><br><span class="line">-s <span class="string">&quot;EXPORTED_FUNCTIONS=\[&#x27;_getArea&#x27;\]&quot;</span> </span><br><span class="line">-s EXTRA_EXPORTED_RUNTIME_METHODS=<span class="string">&#x27;\[&quot;ccall&quot;, &quot;cwrap&quot;\]&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>-Oz比-Os可以做更进一步的编译器优化，生成的代码更小。</p>
+<p>除了要导出你自己的函数之外，还要导出这两个辅助方法ccall和cwrap<br>编译完后会生成area.wasm和胶水代码area.js</p>
+<p>将area.js导入到html中，然后就可以写下面的代码来获取到导出的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> area = Module.cwrap(<span class="string">&#x27;getArea&#x27;</span>, <span class="string">&#x27;number&#x27;</span>, \[<span class="string">&#x27;number&#x27;</span>, <span class="string">&#x27;array&#x27;</span>\]);</span><br></pre></td></tr></table></figure>
+
+<p>cwrap的第一个参数为导出的函数名，第二个参数为函数返回值，第三个参数为函数的参数。<br>目前数据类型支持的很少，有number, array, string, boolean, null等，而且array只接受Uint8Array类型。<br>对于C/C++的指针类型可以用array来传递数据。</p>
+<p>对于ccall来讲，则除了cwrap的参数之外，还要将函数的实参传递进去，完成真正的函数调用，然后返回函数值。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html">Interacting with code</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/27/beautiful-font-for-terminal-and-dev/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/27/beautiful-font-for-terminal-and-dev/" class="post-title-link" itemprop="url">一款漂亮开放自由的编程、终端字体</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-27 20:33:38" itemprop="dateCreated datePublished" datetime="2018-11-27T20:33:38+08:00">2018-11-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>偶然发现一款漂亮的编程字体inconsolata，而且是自由、开放字体，值得推荐</p>
+<p>debian官方源里就有:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install fonts-inconsolata</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/27/webassembly-standalone%E6%A8%A1%E5%9D%97%E7%A4%BA%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/27/webassembly-standalone%E6%A8%A1%E5%9D%97%E7%A4%BA%E4%BE%8B/" class="post-title-link" itemprop="url">WebAssembly standalone模块示例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-27 14:50:17" itemprop="dateCreated datePublished" datetime="2018-11-27T14:50:17+08:00">2018-11-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>WebAssembly还是个很新鲜的玩意儿，ABI都还没稳定。<br>通常emscripten/emcc会产生厚厚的胶水代码来连接Javascript和wasm模块，通过import/export，Javascript和原生代码可以相互访问、调用，<br>除了简单数据类型，还可以通过memory和table来模拟指针、函数指针运算。<br>当前，emscripten/emcc已经支持生成standalone单独的wasm模块，无需胶水代码就可以简单使用标准的JS来访问wasm数据和代码，下面是一个简单的栗子：</p>
+<p><strong>C代码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">double buf\[<span class="number">1024</span>\];</span><br><span class="line"></span><br><span class="line">double* <span class="function"><span class="title">getOffset</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> <span class="keyword">return</span> buf;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double <span class="function"><span class="title">add</span>(<span class="params">int count</span>)</span>&#123;</span><br><span class="line"> double sum = <span class="number">0.0</span>;</span><br><span class="line"> <span class="keyword">for</span>(int i=<span class="number">0</span>; i&lt;count; i++)&#123;</span><br><span class="line"> sum += buf\[i\];</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>add函数计算buf缓冲区中前count个浮点数之和，注意这里整个C代码没有任何其他库的依赖。</p>
+<p><strong>编译成wasm</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ emcc add.c -Os -s WASM=<span class="number">1</span> -s <span class="string">&quot;EXPORTED_FUNCTIONS=\[&#x27;_add&#x27;, &#x27;_getOffset&#x27;\]&quot;</span> -s SIDE_MODULE=<span class="number">1</span> -o add.wasm</span><br></pre></td></tr></table></figure>
+
+<p>-Os 编译优化选项会将所有用不到的代码去除掉，也不会包括任何标准库<br>-s WASM=1 指示生成wasm文件<br>-s “EXPORTED_FUNCTIONS=[‘_add’, ‘_getOffset’]“ 指示导出add和getOffset这个两个函数，导出标识符要用C的方式，C++语言的时候要注意名字碾压，导出的函数需要使用extern “C”修饰<br>-s SIDE_MODULE=1 指示生成wasm动态库</p>
+<p>生成的add.wasm可以使用<a target="_blank" rel="noopener" href="https://github.com/WebAssembly/wabt">wabt</a>(The WebAssembly Binary Toolkit)工具集中的命令wasm2wat转换为WebAssembly的wat/wast文本S-Express格式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">$ wasm2wat add.wasm</span><br><span class="line">(<span class="built_in">module</span></span><br><span class="line"> (type (;<span class="number">0</span>;) (func (result i32)))</span><br><span class="line"> (type (;<span class="number">1</span>;) (func (param i32) (result f64)))</span><br><span class="line"> (type (;<span class="number">2</span>;) (func))</span><br><span class="line"> (<span class="keyword">import</span> <span class="string">&quot;env&quot;</span> <span class="string">&quot;__memory_base&quot;</span> (<span class="built_in">global</span> (;<span class="number">0</span>;) i32))</span><br><span class="line"> (<span class="keyword">import</span> <span class="string">&quot;env&quot;</span> <span class="string">&quot;memory&quot;</span> (memory (;<span class="number">0</span>;) <span class="number">256</span>))</span><br><span class="line"> (func (;<span class="number">0</span>;) (type <span class="number">0</span>) (result i32)</span><br><span class="line"> get_global <span class="number">0</span>)</span><br><span class="line"> (func (;<span class="number">1</span>;) (type <span class="number">1</span>) (param i32) (result f64)</span><br><span class="line"> (local i32 f64)</span><br><span class="line"> get_local <span class="number">0</span></span><br><span class="line"> i32.const <span class="number">0</span></span><br><span class="line"> i32.gt_s</span><br><span class="line"> <span class="keyword">if</span> ;; label = @<span class="number">1</span></span><br><span class="line"> loop ;; label = @<span class="number">2</span></span><br><span class="line"> get_local <span class="number">2</span></span><br><span class="line"> get_global <span class="number">0</span></span><br><span class="line"> get_local <span class="number">1</span></span><br><span class="line"> i32.const <span class="number">3</span></span><br><span class="line"> i32.shl</span><br><span class="line"> i32.add</span><br><span class="line"> f64.load</span><br><span class="line"> f64.add</span><br><span class="line"> set_local <span class="number">2</span></span><br><span class="line"> get_local <span class="number">1</span></span><br><span class="line"> i32.const <span class="number">1</span></span><br><span class="line"> i32.add</span><br><span class="line"> tee_local <span class="number">1</span></span><br><span class="line"> get_local <span class="number">0</span></span><br><span class="line"> i32.ne</span><br><span class="line"> br_if <span class="number">0</span> (;@<span class="number">2</span>;)</span><br><span class="line"> end</span><br><span class="line"> end</span><br><span class="line"> get_local <span class="number">2</span>)</span><br><span class="line"> (func (;<span class="number">2</span>;) (type <span class="number">2</span>)</span><br><span class="line"> nop)</span><br><span class="line"> (func (;<span class="number">3</span>;) (type <span class="number">2</span>)</span><br><span class="line"> get_global <span class="number">0</span></span><br><span class="line"> i32.const -<span class="number">8192</span></span><br><span class="line"> i32.sub</span><br><span class="line"> set_global <span class="number">1</span></span><br><span class="line"> get_global <span class="number">1</span></span><br><span class="line"> i32.const <span class="number">5242880</span></span><br><span class="line"> i32.add</span><br><span class="line"> set_global <span class="number">2</span>)</span><br><span class="line"> (<span class="built_in">global</span> (;<span class="number">1</span>;) (mut i32) (i32.const <span class="number">0</span>))</span><br><span class="line"> (<span class="built_in">global</span> (;<span class="number">2</span>;) (mut i32) (i32.const <span class="number">0</span>))</span><br><span class="line"> (<span class="built_in">global</span> (;<span class="number">3</span>;) i32 (i32.const <span class="number">0</span>))</span><br><span class="line"> (<span class="keyword">export</span> <span class="string">&quot;__post_instantiate&quot;</span> (func <span class="number">3</span>))</span><br><span class="line"> (<span class="keyword">export</span> <span class="string">&quot;_add&quot;</span> (func <span class="number">1</span>))</span><br><span class="line"> (<span class="keyword">export</span> <span class="string">&quot;_getOffset&quot;</span> (func <span class="number">0</span>))</span><br><span class="line"> (<span class="keyword">export</span> <span class="string">&quot;runPostSets&quot;</span> (func <span class="number">2</span>))</span><br><span class="line"> (<span class="keyword">export</span> <span class="string">&quot;_buf&quot;</span> (<span class="built_in">global</span> <span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>可以看到add.wasm的import和export的各种东西global、func、memory，如果使用了函数指针还会有table<br>如果没用到memory，可以用wasm2wat将其转为wat/wast文本格式，将import memory相关去掉，<br>然后使用wat2wasm再编译回wasm格式就无需导入任何东西了。</p>
+<p><strong>调用wasm</strong></p>
+<p>写一个简单的页面来调用wasm代码：<br>[html]<br><!doctype html></p>
+<html lang="en-us">
+ <head>
+ <meta charset="utf-8">
+ <script>
+ // Check for wasm support.
+ if (!('WebAssembly' in window)) {
+ alert('you need a browser with wasm support enabled :(');
+ }
+ // Loads a WebAssembly dynamic library, returns a promise.
+ // imports is an optional imports object
+ var importObj = {
+ 'env': {'__memory_base': 0, 
+ 'memory': new WebAssembly.Memory({initial: 256})
+ // if used function pointer
+ '__table_base': 0,
+ 'table': new WebAssembly.Table({ initial: 0, element: 'anyfunc' })
+ }
+ }
+ WebAssembly.instantiateStreaming(fetch('add.wasm'), importObj)
+ .then(obj => {
+ var button = document.getElementById('run');
+ button.value = 'Call a method in the WebAssembly module';
+ var exports= obj.instance.exports;
+ button.addEventListener('click', function() {
+ var offset = exports._getOffset();
+ var mem = new Float64Array(importObj.env.memory.buffer, offset , 2);
+ //var mem = new Float64Array(importObj.env.memory.buffer, exports._buf , 2);
+ mem\[0\] = 1.2;
+ mem\[1\] = 2.4;
+ alert('1.2 + 2.4 is ' + exports._add(2));
+ }, false);
+ });
+ </script>
+ </head>
+ <body>
+ <input type="button" id="run" value="(waiting for WebAssembly)"/>
+ </body>
+</html>
+\[/html\]
+
+<p>其实获取C代码缓冲区起始地址的getOffset并没有必要，因为wasm模块直接导出了缓冲器的标识符_buf，其实就是缓冲区的首地址<br>除了基本类型，JS和原生代码通过memory的buffer来交换大块的数据。</p>
+<p><strong>访问</strong></p>
+<p>需要起一个web server</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -m http.server <span class="number">8081</span></span><br></pre></td></tr></table></figure>
+
+<p>然后访问<a target="_blank" rel="noopener" href="http://127.0.0.1:8081/add.html%EF%BC%8C%E7%82%B9%E5%87%BB%E6%8C%89%E9%92%AE%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0JS%E8%B0%83%E7%94%A8WASM%E4%B8%AD%E7%9A%84routine%E7%84%B6%E5%90%8E%E8%BF%94%E5%9B%9E%E4%BA%86%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E3%80%82">http://127.0.0.1:8081/add.html，点击按钮可以看到JS调用WASM中的routine然后返回了计算结果。</a></p>
+<p><strong>最后</strong></p>
+<p>如果WASM模块依赖于其他库代码，目前还无法生成standalone模块，需要生成胶水js代码来访问。</p>
+<p>另外，tableBase和memoryBase已经更名为__table_base和__memory_base</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://github.com/kripken/emscripten/wiki/WebAssembly-Standalone">WebAssembly Standalone</a><br>[2]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/41653792/disable-linking-libc-in-emscripten/41871785">Disable linking libc in emscripten</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/kripken/emscripten/pull/7467/commits/74ec83aec8227c55c1431411ceed15e3585ddff5">Rename tableBase/memoryBase to __table_base/__memory_base</a><br>[4]<a target="_blank" rel="noopener" href="https://github.com/WebAssembly/tool-conventions/blob/master/DynamicLinking.md">WebAssembly Dynamic Linking</a><br>[5]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/46748572/how-to-access-webassembly-linear-memory-from-c-c">How to access WebAssembly linear memory from C/C++</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/26/python3-http-server-wasm-mime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/11/26/python3-http-server-wasm-mime/" class="post-title-link" itemprop="url">python3 http.server中wasm的mime类型配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-11-26 23:25:49" itemprop="dateCreated datePublished" datetime="2018-11-26T23:25:49+08:00">2018-11-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>使用WebAssembly.instantiateStreaming(fetch(‘add.wasm’), imports)以流方式获取wasmw文件时,chrome会抱怨:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uncaught (<span class="keyword">in</span> promise) <span class="built_in">TypeError</span>: Failed to execute <span class="string">&#x27;compile&#x27;</span> on <span class="string">&#x27;WebAssembly&#x27;</span>: </span><br><span class="line">Incorrect response MIME type. Expected <span class="string">&#x27;application/wasm&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>查看server.py发现使用了mimetypes模块来管理mime types，调用mimetypes.init()方法时，会使用mimetypes.knownfiles文件中记载的mime types</p>
+<p>查看knowfiles路径：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ python3</span><br><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> mimetypes</span><br><span class="line">&gt;&gt;&gt; mimetypes.knownfiles</span><br><span class="line">\[<span class="string">&#x27;/etc/mime.types&#x27;</span>, <span class="string">&#x27;/etc/httpd/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/etc/httpd/conf/mime.types&#x27;</span>, <span class="string">&#x27;/etc/apache/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/etc/apache2/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/usr/local/etc/httpd/conf/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/usr/local/lib/netscape/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/usr/local/etc/httpd/conf/mime.types&#x27;</span>, </span><br><span class="line"><span class="string">&#x27;/usr/local/etc/mime.types&#x27;</span>\]</span><br></pre></td></tr></table></figure>
+
+<p>MacOS上这些文件基本都不存在，添加文件/usr/local/etc/mime.types，其内容添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">application/wasm wasm</span><br></pre></td></tr></table></figure>
+
+<p>重新启动http.server就好了，注意清除浏览器缓存再试。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -690,465 +1201,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/22/vim-repalce-with-sequence/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/22/vim-repalce-with-sequence/" class="post-title-link" itemprop="url">vim技巧两则:使用数字序列替换匹配的pattern和插入数字序列</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-22 15:13:57" itemprop="dateCreated datePublished" datetime="2018-11-22T15:13:57+08:00">2018-11-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>使用数字序列替换</strong></p>
-<p>vim查找替换时，可以使用一个数字序列来替换匹配的内容</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:<span class="keyword">let</span> i=<span class="number">1</span> \[range\]g/PATTERN/s<span class="comment">//\\=i/g let i=i+1</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>插入数字序列</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:put =range(<span class="number">11</span>,<span class="number">15</span>)</span><br></pre></td></tr></table></figure>
-<p>可以在文件当前行后插入５行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span></span><br><span class="line"><span class="number">15</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>函数式替换</strong></p>
-<p>在替换命令 s/// 中可以使用函数表达式来书写替换内容，格式为</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:s/替换字符串/\\=函数式</span><br></pre></td></tr></table></figure>
-
-<p>在函数式中可以使用 submatch(1)、submatch(2) 等来引用 \1、\2 等的内容，而submatch(0)可以引用匹配的整个内容。</p>
-<p>举个栗子，将文件从第一行开始的行首替换为如下样式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mem\[<span class="number">0</span>\]=</span><br><span class="line">mem\[<span class="number">1</span>\]=</span><br><span class="line">mem\[<span class="number">2</span>\]=</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<p>可以执行如下替换：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/^/\\=<span class="string">&#x27;mem\[&#x27;</span>.(line(<span class="string">&quot;.&quot;</span>)-<span class="number">1</span>).<span class="string">&#x27;\]=&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://vim.wikia.com/wiki/Making_a_list_of_numbers">Making a list of numbers</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.csdn.net/hylaking/article/details/80270763">vi/vim的巧妙使用-数值加减,递增,序列等</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/17/nginx-for-windows-x64/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/17/nginx-for-windows-x64/" class="post-title-link" itemprop="url">nginx for windows x64</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-17 09:53:59" itemprop="dateCreated datePublished" datetime="2018-11-17T09:53:59+08:00">2018-11-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>Kevin Worthington 一直在维护<a target="_blank" rel="noopener" href="https://kevinworthington.com/nginx-for-windows/">nginx for windows x64</a>版本的build,致敬。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/16/linux-xmodmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/16/linux-xmodmap/" class="post-title-link" itemprop="url">linux 修改按键映射</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-16 09:19:08" itemprop="dateCreated datePublished" datetime="2018-11-16T09:19:08+08:00">2018-11-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>xmodmap(X modify key map)可以修改X下的键位映射<br>比如０现在用的键盘没有右边的CTRL，很难用，右侧的INSERT键刚好在空格右侧不远的地方，可以把它修改为右CTRL</p>
-<p>可以使用xev程序来查看当前的keymap，可以看到右侧的INSERT键位映射为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">KeyPress event, serial <span class="number">33</span>, synthetic NO, <span class="built_in">window</span> <span class="number">0x2a00001</span>,</span><br><span class="line"> root <span class="number">0xdc</span>, subw <span class="number">0x0</span>, time <span class="number">102519</span>, (<span class="number">936</span>,<span class="number">455</span>), <span class="attr">root</span>:(<span class="number">986</span>,<span class="number">569</span>),</span><br><span class="line"> state <span class="number">0x10</span>, keycode <span class="number">118</span> (keysym <span class="number">0xff63</span>, Insert), same_screen YES,</span><br><span class="line"> XLookupString gives <span class="number">0</span> bytes: </span><br><span class="line"> XmbLookupString gives <span class="number">0</span> bytes: </span><br><span class="line"> XFilterEvent returns: False</span><br></pre></td></tr></table></figure>
-
-<p><strong>导出原映射</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xmodmap -pke &gt; ~/.Xmodmap</span><br></pre></td></tr></table></figure>
-
-<p><strong>修改映射</strong></p>
-<p>控制键要先clear，最后再add<br>编辑.Xmodmap文件，文件开头处添加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear Control</span><br></pre></td></tr></table></figure>
-
-<p>将keycode 118修改为</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keycode <span class="number">118</span> = Control_R NoSymbol Control_R</span><br></pre></td></tr></table></figure>
-
-<p>然后文件尾部添加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add Control = Control_L Control_R</span><br></pre></td></tr></table></figure>
-
-<p><strong>测试配置</strong></p>
-<p>修改好映射文件后</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xmodmap ~/.Xmodmap</span><br></pre></td></tr></table></figure>
-
-<p>GDM,XDM和LightDM在开启xsession时会自动读取$HOME/.Xmodmap，但不稳定，时好时坏:(</p>
-<p>使用startx时激活你自己的映射表，请添加下面的文件和内容：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~/.xinitrc</span><br><span class="line"><span class="keyword">if</span> \[ -f $HOME/.Xmodmap \]; then</span><br><span class="line"> /usr/bin/xmodmap $HOME/.Xmodmap</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Xmodmap_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">Xmodmap</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.kankanan.com/article/linux-4e0b4fee6539952e4f4d66205c04.html">linux下修改键位映射</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/15/bash-dollar-var/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/15/bash-dollar-var/" class="post-title-link" itemprop="url">bash $-变量</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-15 20:01:35" itemprop="dateCreated datePublished" datetime="2018-11-15T20:01:35+08:00">2018-11-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>$-是bash内置变量，其值为bash shell打开的选项的一个集合</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ echo <span class="string">&quot;$-&quot;</span></span><br><span class="line">himBH</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">H - histexpand</span><br><span class="line">m - monitor</span><br><span class="line">h - hashall</span><br><span class="line">B - braceexpand</span><br><span class="line">i - interactive</span><br></pre></td></tr></table></figure>
-
-<p>可以使用set -/+ options来打开或者关闭这些shell选项</p>
-<p>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/ziyunfei/p/4913758.html">Bash 为何要发明 shopt 命令</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/11/09/macos-missing-xcrun/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/11/09/macos-missing-xcrun/" class="post-title-link" itemprop="url">MacOS missing xcrun问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-11-09 19:18:42" itemprop="dateCreated datePublished" datetime="2018-11-09T19:18:42+08:00">2018-11-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>升级MacOS后brew upgrade经常会出现如下错误：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">The bottle needs the Apple Command Line Tools to be installed.</span><br><span class="line"> You can install them, <span class="keyword">if</span> desired, <span class="attr">with</span>:</span><br><span class="line"> xcode-select --install</span><br><span class="line"></span><br><span class="line">xcrun: error: invalid active developer path (<span class="regexp">/Library/</span>Developer/CommandLineTools), missing xcrun at: <span class="regexp">/Library/</span>Developer/CommandLineTools/usr/bin/xcrun</span><br></pre></td></tr></table></figure>
-
-<p>是因为系统升级后没有安装相应版本的Apple Command Line Tools<br>解决办法就是像错误提示里说的一样：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ xcode-select --install</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

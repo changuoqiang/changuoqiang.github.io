@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,454 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/26/linux-wma2mp3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/26/linux-wma2mp3/" class="post-title-link" itemprop="url">linux系统wma转换到mp3格式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-26 22:50:37" itemprop="dateCreated datePublished" datetime="2015-03-26T22:50:37+08:00">2015-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>其实只要是mplayer可以播放的音频或视频都可以转换到其他输出格式，下面这条bash语句可以批量转换当前目录下的所有wma文件为mp3格式文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> *.wma ; <span class="keyword">do</span> mplayer -ao pcm $i &amp;&amp; lame --preset cbr <span class="number">32</span> audiodump.wav -o <span class="string">&quot;\`basename &quot;</span>$i<span class="string">&quot; .wma\`.mp3&quot;</span>; done</span><br><span class="line"></span><br><span class="line">rm audiodump.wav</span><br></pre></td></tr></table></figure>
+<p>为了兼容性，使用CBR编码模式。如果参数中去掉cbr,而指定码率则会使用ABR编码模式,其他则会使用VRB编码模式。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/26/git-ignore-tracked-files/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/26/git-ignore-tracked-files/" class="post-title-link" itemprop="url">GIT忽略已跟踪文件的修改</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-26 13:28:34" itemprop="dateCreated datePublished" datetime="2015-03-26T13:28:34+08:00">2015-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>忽略未纳入版本管理的文件或文件夹</strong></p>
+<p>我们知道可以通过几种方法来配置git忽略对某些未跟踪文件的跟踪。</p>
+<ol>
+<li> .gitignore<br>版本库中的每个目录层级都可以有一个.gitignore文件，这个文件每一行保存了一个匹配的规则,如：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># build生成文件</span><br><span class="line">build/</span><br><span class="line">root/WEB-INF/classes/</span><br><span class="line">*.class</span><br><span class="line"></span><br><span class="line"># lib文件和meta文件</span><br><span class="line">#root/WEB-INF/lib/</span><br><span class="line">root/META-INF/</span><br><span class="line"></span><br><span class="line"># vim交换文件</span><br><span class="line">*.swp</span><br><span class="line"></span><br><span class="line"># eclipse工程文件</span><br><span class="line">#.classpath</span><br><span class="line">#.project</span><br><span class="line">#.settings/</span><br><span class="line"></span><br><span class="line"># netbeans工程文件</span><br><span class="line">#build.xml</span><br><span class="line">#nbproject/</span><br><span class="line"></span><br><span class="line">#gradle</span><br><span class="line">.gradle</span><br><span class="line"></span><br><span class="line">#python cache folder</span><br><span class="line">__pycache__</span><br></pre></td></tr></table></figure>
+.gitignore文件本身是纳入版本库管理的。</li>
+<li> 全局ignore文件<br>可以为自己配置一个全局的ignore文件，位于任何版本库之外：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --<span class="built_in">global</span> core.excludesfile ~/.gitignoreglobal</span><br></pre></td></tr></table></figure>
+其语法与.gitignore一样</li>
+<li> exclude<br>git还提供了另一种exclude方法来排除文件。.gitignore用来保存的是公共的需要排除的文件,<br>而.git/info/exclude文件里设置的则是你自己本地需要排除的文件,他不会影响到其他人,也不会提交到版本库中去。</li>
+</ol>
+<p><strong>忽略已纳入版本管理的文件或文件夹</strong></p>
+<p>以上这些方法对于尚未被git跟踪管理的文件是有效的，如果想忽略已经被git纳入版本库管理的文件的修改，则需要另外的方法。</p>
+<p>告诉git忽略对已经纳入版本管理的文件.classpath的修改,git会一直忽略此文件直到重新告诉git可以再次跟踪此文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --assume-unchanged .classpath</span><br></pre></td></tr></table></figure>
+
+<p>告诉git恢复跟踪.classpath</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --no-assume-unchanged .classpath</span><br></pre></td></tr></table></figure>
+
+<p>查看当前被忽略的、已经纳入版本库管理的文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git ls-files -v grep -e <span class="string">&quot;^\[hsmrck\]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cnblogs.com/pylemon/archive/2012/07/16/2593112.html">在 git 中忽略文件 gitignore 与 exclude</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/24/cassandra-permission-deny/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/24/cassandra-permission-deny/" class="post-title-link" itemprop="url">文件系统权限不足导致cassandra无法启动一例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-24 10:53:02" itemprop="dateCreated datePublished" datetime="2015-03-24T10:53:02+08:00">2015-03-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>集群中的某一node无法启动,nodetool status输出如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">error: No nodes present <span class="keyword">in</span> the cluster. Has <span class="built_in">this</span> node finished starting up?</span><br><span class="line">-- StackTrace --</span><br><span class="line">java.lang.RuntimeException: No nodes present <span class="keyword">in</span> the cluster. Has <span class="built_in">this</span> node finished starting up?</span><br><span class="line"> at org.apache.cassandra.dht.Murmur3Partitioner.describeOwnership(Murmur3Partitioner.java:<span class="number">129</span>)</span><br><span class="line"> at org.apache.cassandra.service.StorageService.getOwnership(StorageService.java:<span class="number">3856</span>)</span><br><span class="line"> at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line"> at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.reflect.misc.Trampoline.invoke(MethodUtil.java:<span class="number">71</span>)</span><br><span class="line"> at sun.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.reflect.misc.MethodUtil.invoke(MethodUtil.java:<span class="number">275</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:<span class="number">112</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.StandardMBeanIntrospector.invokeM2(StandardMBeanIntrospector.java:<span class="number">46</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.MBeanIntrospector.invokeM(MBeanIntrospector.java:<span class="number">237</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.PerInterface.getAttribute(PerInterface.java:<span class="number">83</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.MBeanSupport.getAttribute(MBeanSupport.java:<span class="number">206</span>)</span><br><span class="line"> at com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute(DefaultMBeanServerInterceptor.java:<span class="number">647</span>)</span><br><span class="line"> at com.sun.jmx.mbeanserver.JmxMBeanServer.getAttribute(JmxMBeanServer.java:<span class="number">678</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:<span class="number">1443</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.access$300(RMIConnectionImpl.java:<span class="number">76</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:<span class="number">1307</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:<span class="number">1399</span>)</span><br><span class="line"> at javax.management.remote.rmi.RMIConnectionImpl.getAttribute(RMIConnectionImpl.java:<span class="number">637</span>)</span><br><span class="line"> at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)</span><br><span class="line"> at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line"> at java.lang.reflect.Method.invoke(Method.java:<span class="number">497</span>)</span><br><span class="line"> at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:<span class="number">323</span>)</span><br><span class="line"> at sun.rmi.transport.Transport$1.run(Transport.java:<span class="number">200</span>)</span><br><span class="line"> at sun.rmi.transport.Transport$1.run(Transport.java:<span class="number">197</span>)</span><br><span class="line"> at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line"> at sun.rmi.transport.Transport.serviceCall(Transport.java:<span class="number">196</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:<span class="number">568</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:<span class="number">826</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$78(TCPTransport.java:<span class="number">683</span>)</span><br><span class="line"> at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler$$Lambda$1/<span class="number">294183905.</span>run(Unknown Source)</span><br><span class="line"> at java.security.AccessController.doPrivileged(Native Method)</span><br><span class="line">at sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:<span class="number">682</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>)</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>)</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure>
+
+<p>/var/log/cassandra/system.log有如下错误信息:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[MemtableFlushWriter:<span class="number">3</span>\] <span class="number">2015</span>-<span class="number">03</span>-<span class="number">23</span> <span class="number">18</span>:<span class="number">26</span>:<span class="number">37</span>,<span class="number">996</span> CassandraDaemon.java:<span class="number">153</span> - Exception <span class="keyword">in</span> thread Thread\[MemtableFlushWriter:<span class="number">3</span>,<span class="number">5</span>,main\]</span><br><span class="line">java.lang.RuntimeException: java.io.FileNotFoundException: <span class="regexp">/var/</span>lib/cassandra/data/image/image-2a19ce908f1f11e481c2a9fac1d00bce/image-image-tmp-ka--&gt; <span class="number">2</span>-Index.db (Permission denied)</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.&lt;init&gt;(SequentialWriter.java:<span class="number">75</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">104</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">99</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.sstable.SSTableWriter$IndexWriter.&lt;init&gt;(SSTableWriter.java:<span class="number">552</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.sstable.SSTableWriter.&lt;init&gt;(SSTableWriter.java:<span class="number">134</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.createFlushWriter(Memtable.java:<span class="number">390</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.writeSortedContents(Memtable.java:<span class="number">329</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.db.Memtable$FlushRunnable.runWith(Memtable.java:<span class="number">313</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.DiskAwareRunnable.runMayThrow(DiskAwareRunnable.java:<span class="number">48</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at com.google.common.util.concurrent.MoreExecutors$SameThreadExecutorService.execute(MoreExecutors.java:<span class="number">297</span>) ~\[guava-<span class="number">16.0</span>.jar:na\]</span><br><span class="line"> at org.apache.cassandra.db.ColumnFamilyStore$Flush.run(ColumnFamilyStore.java:<span class="number">1037</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1145</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">615</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line">Caused by: java.io.FileNotFoundException: <span class="regexp">/var/</span>lib/cassandra/data/image/image-2a19ce908f1f11e481c2a9fac1d00bce/image-image-tmp-ka-<span class="number">2</span>-Index.db -&gt; (Permission denied)</span><br><span class="line"> at java.io.RandomAccessFile.open(Native Method) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at java.io.RandomAccessFile.&lt;init&gt;(RandomAccessFile.java:<span class="number">241</span>) ~\[na:<span class="number">1.7</span><span class="number">.0_65</span>\]</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.&lt;init&gt;(SequentialWriter.java:<span class="number">71</span>) ~\[apache-cassandra-<span class="number">2.1</span><span class="number">.2</span>.jar:<span class="number">2.1</span><span class="number">.2</span>\]</span><br><span class="line"> ... <span class="number">14</span> common frames omitted</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>看错误信息为文件系统访问权限问题所致，查看/var/lib/cassandra/data/image,果然此目录的属主和组都成了root</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chown -R cassandra:cassandra /var/lib/cassandra/data/image</span><br></pre></td></tr></table></figure>
+
+<p>重新启动cassandra成功。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/24/debian-jessie-sourcelist/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/24/debian-jessie-sourcelist/" class="post-title-link" itemprop="url">debian jessie 源列表</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-24 10:12:13" itemprop="dateCreated datePublished" datetime="2015-03-24T10:12:13+08:00">2015-03-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deb http:<span class="comment">//ftp.tw.debian.org/debian/ jessie main contrib non-free </span></span><br><span class="line">deb http:<span class="comment">//ftp.tw.debian.org/debian/ jessie-updates main contrib non-free </span></span><br><span class="line">deb http:<span class="comment">//ftp.tw.debian.org/debian/ jessie-backports main contrib non-free </span></span><br><span class="line">deb http:<span class="comment">//ftp.tw.debian.org/debian/ jessie-proposed-updates main contrib non-free </span></span><br><span class="line">deb http:<span class="comment">//security.debian.org/ jessie/updates main contrib non-free </span></span><br></pre></td></tr></table></figure>
+
+<p>debian官方源是ftp.debian.org,美国镜像是ftp.us.debian.org,台湾官方镜像是ftp.tw.debian.org,中国官方源镜像是ftp.cn.debian.org<br>日本是jp,韩国是kr,…</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/24/apt-get-setup-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/03/24/apt-get-setup-proxy/" class="post-title-link" itemprop="url">为apt-get设置代理服务器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-03-24 10:01:16" itemprop="dateCreated datePublished" datetime="2015-03-24T10:01:16+08:00">2015-03-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<ol>
+<li> 使用配置文件<br>在全局配置文件中添加如下格式的代理：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Acquire::http::<span class="built_in">Proxy</span> <span class="string">&quot;http://proxy_ip:8080&quot;</span>;</span><br><span class="line">Acquire::ftp::proxy <span class="string">&quot;ftp://proxy_ip:8000/&quot;</span>;</span><br><span class="line">Acquire::https::proxy <span class="string">&quot;https://proxy_ip:8000/&quot;</span>;</span><br><span class="line">Acquire::socks::proxy <span class="string">&quot;socks://proxy_ip:proxy_port/&quot;</span>;</span><br><span class="line"># 如果ftp需要登陆</span><br><span class="line">Acquire::ftp</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="built_in">Proxy</span> <span class="string">&quot;ftp://proxy_ip:2121/&quot;</span>;</span><br><span class="line"> ProxyLogin</span><br><span class="line"> &#123;</span><br><span class="line"> <span class="string">&quot;USER $(SITE_USER)@$(SITE)&quot;</span>;</span><br><span class="line"> <span class="string">&quot;PASS $(SITE_PASS)&quot;</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+或者在apt-get 命令行指定参数文件的位置：<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt-get -c ~/apt_proxy.conf update</span><br></pre></td></tr></table></figure></li>
+<li> 命令行参数<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># apt-get -o Acquire::http::proxy=&quot;http://proxy_ip:proxy_port/&quot; update</span><br><span class="line"># apt-get -o Acquire::http::proxy=&quot;http://proxy_ip:proxy_port/&quot; upgrade</span><br></pre></td></tr></table></figure></li>
+<li> 全局环境变量<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="keyword">export</span> http_proxy=http:<span class="comment">//proxy_ip:proxy_port</span></span><br></pre></td></tr></table></figure>
+不过貌似apt-get不是用全局代理配置了？</li>
+</ol>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -686,408 +1134,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/02/11/6172/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/02/11/6172/" class="post-title-link" itemprop="url">Untitled Post - 99</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-02-11 21:59:07" itemprop="dateCreated datePublished" datetime="2015-02-11T21:59:07+08:00">2015-02-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>PostgreSQL还有一个外部表功能，很有趣，<a target="_blank" rel="noopener" href="http://blog.osdba.net/521.html">PostgreSQL中使用外部表快速分析nginx日志</a>。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/02/04/6170/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/02/04/6170/" class="post-title-link" itemprop="url">Untitled Post - 98</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-02-04 20:29:57" itemprop="dateCreated datePublished" datetime="2015-02-04T20:29:57+08:00">2015-02-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>QR二维码真复杂,虽然最终就是一些黑白点，但有着复杂的控制、数据、纠错编码，这篇文章说的很详细:<a target="_blank" rel="noopener" href="http://coolshell.cn/articles/10590.html">二维码的生成细节和原理</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/01/30/6167/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/01/30/6167/" class="post-title-link" itemprop="url">Untitled Post - 97</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-01-30 15:00:42" itemprop="dateCreated datePublished" datetime="2015-01-30T15:00:42+08:00">2015-01-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a> is a new Certificate Authority: It’s free, automated, and open. Arriving Mid-2015</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/01/27/6165/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/01/27/6165/" class="post-title-link" itemprop="url">Untitled Post - 96</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-01-27 14:13:48" itemprop="dateCreated datePublished" datetime="2015-01-27T14:13:48+08:00">2015-01-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>debian平台上,python3运行GUI程序时提示”ImportError: No module named ‘_tkinter’”,apt-get安装python3-tk包即可。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/01/26/6163/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/01/26/6163/" class="post-title-link" itemprop="url">Untitled Post - 95</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-01-26 22:03:00" itemprop="dateCreated datePublished" datetime="2015-01-26T22:03:00+08:00">2015-01-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>cql官方文档:”CQL for Cassandra 2.0 deprecated super columns.” 超列已死.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/40/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><span class="page-number current">41</span><a class="page-number" href="/page/42/">42</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/42/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,586 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-copy-move-containers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/04/lxd-copy-move-containers/" class="post-title-link" itemprop="url">lxd拷贝/迁移容器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-04 22:20:16" itemprop="dateCreated datePublished" datetime="2019-06-04T22:20:16+08:00">2019-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>假设有两个lxd host，分别为lxd-l和lxd-r,在lxd-l机器上添加一个remote叫做lxd-r</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add lxd-r &lt;ip <span class="keyword">of</span> lxd-r&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>拷贝容器</strong></p>
+<ol>
+<li>停止容器并拷贝到远程</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop pridns</span><br><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line">$ lxc start pridns</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>制作容器快照，第一个快照为snap0，以此类推，然后拷贝快照到lxd-r</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot my-container</span><br><span class="line">$ lxc copy my-container/snap0 lxd-r:my-container-backup</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接拷贝运行中的容器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line"><span class="built_in">Error</span>: Unable to perform container live migration. CRIU isn<span class="string">&#x27;t installed on the source server</span></span><br></pre></td></tr></table></figure>
+<p>直接拷贝运行中的容器叫做live migration，需要将其运行状态一起拷贝到目标容器，保持二者完全一致，这需要CRIU的支持，lxd已经打包了CUIR,需要在本地和远程host上分别启用CRIU</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap set lxd criu.enable=<span class="literal">true</span></span><br><span class="line">$ sudo systemctl reload snap.lxd.daemon</span><br></pre></td></tr></table></figure>
+<p>然后再拷贝</p>
+</li>
+</ol>
+<p>lxc move</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-images/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/04/lxd-images/" class="post-title-link" itemprop="url">lxd镜像/映像</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-04 19:17:08" itemprop="dateCreated datePublished" datetime="2019-06-04T19:17:08+08:00">2019-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd使用镜像来生成容器，可以有几种不同的方式来使用镜像</p>
+<p><strong>内建映像服务</strong></p>
+<p>lxd内建三个映像服务，分别是<br>ubuntu - 提供稳定版ubuntu镜像<br>ubuntu-daily - 提供每日构建版ubuntu镜像<br>images - 提供其他发行版镜像</p>
+<p>这样使用内置镜像服务</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> my-ubuntu</span><br><span class="line">$ lxc launch ubuntu-daily:<span class="number">19.04</span> my-ubuntu-dev</span><br><span class="line">$ lxc launch images:debian/buster/amd64 my-debian</span><br></pre></td></tr></table></figure>
+
+<p>显示镜像列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list ubuntu:</span><br><span class="line">$ lxc image list ubuntu-daily:</span><br><span class="line">$ lxc image list images:</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用远程lxd实例的镜像</strong></p>
+<p>添加远程lxd实例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add my-images <span class="number">192.168</span><span class="number">.0</span>.x</span><br></pre></td></tr></table></figure>
+
+<p>使用远程lxd实例的镜像实例化容器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-images:image-name your-container</span><br></pre></td></tr></table></figure>
+
+<p>远程lxd实例上的镜像列表</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list my-images:</span><br></pre></td></tr></table></figure>
+
+<p>其实lxd内建的镜像服务就是lxd实例，无非其remote的名字为ubuntu, ubuntu-daily和images而已。</p>
+<p><strong>手动导入镜像文件</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image <span class="keyword">import</span> &lt;file&gt; --alias my-alias</span><br></pre></td></tr></table></figure>
+
+<p>使用此导入的镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-alias my-container</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用容器或快照创建镜像</strong></p>
+<p>使用容器创建镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc my-container stop</span><br><span class="line">$ lxc publish my-container --alias test-image</span><br></pre></td></tr></table></figure>
+
+<p>使用快照创建镜像</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc publish my-container/my-snap --alias test-image2</span><br></pre></td></tr></table></figure>
+
+<p>之后就可以正常的使用这些镜像来生成容器了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-snapshots/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/04/lxd-snapshots/" class="post-title-link" itemprop="url">lxd容器快照</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-04 16:10:37" itemprop="dateCreated datePublished" datetime="2019-06-04T16:10:37+08:00">2019-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>以下使用的容器名字为test8，运行debian/buster/amd64</p>
+<p><strong>创建容器快照</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot test8 test8snap0</span><br></pre></td></tr></table></figure>
+
+<p>默认创建的是无状态快照，如果要将容器当前的运行状态一起保存到快照，需要使用<code>--stateful</code>参数,比如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot test8 test8snap1 --stateful</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看容器快照</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ lxc info test8</span><br><span class="line">Name: test8</span><br><span class="line">Remote: unix:<span class="comment">//</span></span><br><span class="line">Architecture: x86_64</span><br><span class="line">Created: <span class="number">2019</span>/<span class="number">06</span>/<span class="number">04</span> <span class="number">07</span>:<span class="number">52</span> UTC</span><br><span class="line">Status: Running</span><br><span class="line">Type: persistent</span><br><span class="line">Profiles: <span class="keyword">default</span></span><br><span class="line">Pid: <span class="number">7769</span></span><br><span class="line">Ips:</span><br><span class="line"> eth0: inet <span class="number">192.168</span><span class="number">.0</span><span class="number">.8</span> vethM2PWUN</span><br><span class="line"> eth0: inet6 fe80::<span class="number">216</span>:3eff:fea7:706b vethM2PWUN</span><br><span class="line"> lo: inet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"> lo: inet6 ::<span class="number">1</span></span><br><span class="line">Resources:</span><br><span class="line"> Processes: <span class="number">5</span></span><br><span class="line"> CPU usage:</span><br><span class="line"> CPU usage (<span class="keyword">in</span> seconds): <span class="number">123</span></span><br><span class="line"> Memory usage:</span><br><span class="line"> Memory (current): <span class="number">2.</span>05GB</span><br><span class="line"> Memory (peak): <span class="number">2.</span>45GB</span><br><span class="line"> Network usage:</span><br><span class="line"> eth0:</span><br><span class="line"> Bytes received: <span class="number">347.</span>96MB</span><br><span class="line"> Bytes sent: <span class="number">5.</span>86MB</span><br><span class="line"> Packets received: <span class="number">132127</span></span><br><span class="line"> Packets sent: <span class="number">63110</span></span><br><span class="line"> lo:</span><br><span class="line"> Bytes received: <span class="number">4.</span>07kB</span><br><span class="line"> Bytes sent: <span class="number">4.</span>07kB</span><br><span class="line"> Packets received: <span class="number">52</span></span><br><span class="line"> Packets sent: <span class="number">52</span></span><br><span class="line">Snapshots:</span><br><span class="line"> test8snap0 (taken at <span class="number">2019</span>/<span class="number">06</span>/<span class="number">04</span> <span class="number">08</span>:<span class="number">17</span> UTC) (stateless)</span><br></pre></td></tr></table></figure>
+
+<p><strong>快照恢复</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc restore test8 test8snap0</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除快照</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc <span class="keyword">delete</span> test8/test8snap0</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/03/lxd-containers-bridged-host-network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/03/lxd-containers-bridged-host-network/" class="post-title-link" itemprop="url">lxd容器桥接host网络</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-03 19:54:05" itemprop="dateCreated datePublished" datetime="2019-06-03T19:54:05+08:00">2019-06-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。</p>
+<p><strong>host设置网桥</strong></p>
+<p>安装bridge-utils</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install bridge-utiles</span><br></pre></td></tr></table></figure>
+
+<p>编辑/etc/network/interfaces文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># This file describes the network interfaces available on your system</span><br><span class="line"># and how to activate them. For more information, see interfaces(5).</span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d<span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line"><span class="comment">auto lo</span></span><br><span class="line"><span class="comment">iface lo inet loopback</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line"><span class="comment">auto enp0s3</span></span><br><span class="line"><span class="comment">iface enp0s3 inet manual</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># bridge interface</span></span><br><span class="line"><span class="comment">auto br0 </span></span><br><span class="line"><span class="comment">iface br0 inet static</span></span><br><span class="line"><span class="comment"> address 192.168.3.6/24</span></span><br><span class="line"><span class="comment"> gateway 192.168.3.1</span></span><br><span class="line"><span class="comment"> # bridge options</span></span><br><span class="line"><span class="comment"> bridge_ports enp0s3</span></span><br><span class="line"><span class="comment"> bridge_stp off </span></span><br><span class="line"><span class="comment"> bridge_fd 0</span></span><br><span class="line"><span class="comment"> bridge_maxwait 0</span></span><br><span class="line"><span class="comment"> bridge_waitport 0 </span></span><br></pre></td></tr></table></figure>
+<p>这里配置了host本地网桥br0，需要重新启动网络才能生效。</p>
+<p><strong>配置容器网络接口(方法一)</strong></p>
+<p>为容器添加网络设备eth0，桥接到host本地网络</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config device add bst eth0 nic nictype=bridged parent=br0 name=eth0</span><br></pre></td></tr></table></figure>
+<p>注意，容器原有的重名网络设备eth0会被直接覆盖，这时候容器新添加的网络设备默认使用dhcp获取ip地址，如果需要指定静态ip，请编辑容器的/etc/network/interfaces文件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec bst -- vim /etc/network/interfaces</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法二)</strong></p>
+<p>通过创建新的profile，并使已有容器或新建容器使用此profile</p>
+<p>查看现有profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+---------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+---------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+---------+---------+</span><br></pre></td></tr></table></figure>
+<p>可以看到有一个容器在使用默认profile，来看一下default profile的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: <span class="keyword">default</span></span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>containers/bst</span><br></pre></td></tr></table></figure>
+<p>其实这就是执行<code>lxd init</code>命令时创建的默认profile</p>
+<p>下面创建新的host桥接网络profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile create hostbridgedprofile</span><br><span class="line">Profile hostbridgedprofile created</span><br></pre></td></tr></table></figure>
+
+<p>编辑新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF lxc profile edit hostbridgedprofile</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>可以确认一下新的profile:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+--------------------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> hostbridgedprofile <span class="number">0</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"></span><br><span class="line">$ lxc profile show hostbridgedprofile</span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">name: hostbridgedprofile</span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
+
+<p>在现有容器bst上叠加新添加的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile assign bst <span class="keyword">default</span>,hostbridgedprofile </span><br><span class="line">Profiles <span class="keyword">default</span>,hostbridgedprofile applied to bst</span><br></pre></td></tr></table></figure>
+<p>注意，这里先使用default，然后用hostbridgedprofile来覆盖默认的网络设置</p>
+<p>新建容器可以指定要使用的profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch -p <span class="keyword">default</span> -p hostbridgedprofile images:debian/buster/amd64 new_container</span><br></pre></td></tr></table></figure>
+
+<p>如果一个profile不再使用，可以删除掉，当然不能有容器在使用它才行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile <span class="keyword">delete</span> hostbridgedprofile </span><br><span class="line"><span class="built_in">Error</span>: Profile is currently <span class="keyword">in</span> use</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置容器网络接口(方法三)</strong></p>
+<p>重新初始化lxd,注意在有容器实例存在的情况下，重新初始化网络设置是可以的，但是已经存在的storage pool是不能改动的，当然可以添加新的storage pool</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Do you want to configure a <span class="keyword">new</span> storage pool? (yes/no) \[<span class="keyword">default</span>=yes\]: no</span><br><span class="line">Would you like to connect to a MAAS server? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like to create a <span class="keyword">new</span> local network bridge? (yes/no) \[<span class="keyword">default</span>=yes\]: no &lt;=这里为no</span><br><span class="line">Would you like to configure LXD to use an existing bridge or host interface? (yes/no) \[<span class="keyword">default</span>=no\]: yes &lt;= 这里为yes</span><br><span class="line">Name <span class="keyword">of</span> the existing bridge or host interface: br0 &lt;= 这里输入主机桥接接口bro</span><br><span class="line">Would you like LXD to be available over the network? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like stale cached images to be updated automatically? (yes/no) \[<span class="keyword">default</span>=yes\] </span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
+<p>这其实是修改的default profile</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://blog.simos.info/how-to-initialize-lxd-again/">How to initialize LXD again</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/02/lxd-container-first/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/02/lxd-container-first/" class="post-title-link" itemprop="url">lxd容器初步</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-02 11:32:04" itemprop="dateCreated datePublished" datetime="2019-06-02T11:32:04+08:00">2019-06-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-03-17 15:45:52" itemprop="dateModified" datetime="2022-03-17T15:45:52+08:00">2022-03-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>docker为应用级容器技术，容器内只能运行一个主进程，而lxd是lxc的上层包装，是系统级容器技术，可以像虚拟化技术一样在容器内运行一个guest OS，但是更轻量。</p>
+<p>惯例，主机debian，这次版本是buster。</p>
+<p><strong>安装snap</strong></p>
+<p>lxd是ubuntu亲生的,所以除了ubuntu可以直接用apt安装，其他发行版需要用snap安装，忍！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install snapd</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装lxd</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap install lxd --channel=<span class="number">3.0</span>/stable</span><br></pre></td></tr></table></figure>
+<p>这里选择stable版本</p>
+<p><strong>用户权限及sudo</strong></p>
+<p>如果想使用当前普通用户来管理lxd容器，则需要将用户添加到lxd用户组中 </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER lxd</span><br></pre></td></tr></table></figure>
+<p>当前用户需要重新登录用户组才能生效</p>
+<p>因为snap安装的lxd并不在任何传统的文件系统中，它奇葩的位于/snap/bin路径下，so需要编辑/etc/sudoer文件，添加/snap/bin到secure_path</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ which lxd</span><br><span class="line">/snap/bin/lxd</span><br></pre></td></tr></table></figure>
+
+<p>下面就可以进入正题了</p>
+<p><strong>初始化lxd</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br></pre></td></tr></table></figure>
+<p>基本上一路enter即可，以后再详细了解每一项的含义吧, go</p>
+<p><strong>创建容器</strong><br>从官方镜像源创建debian buster容器实例bst</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch images:debian/buster/amd64 bst</span><br></pre></td></tr></table></figure>
+
+<p>如果创建ubuntu容器实例ubt，则可以这样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> ubt</span><br></pre></td></tr></table></figure>
+<p>ubuntu的源标签是ubuntu，其他所有发行版的源标签是images，再一次，忍！</p>
+<p><strong>容器列表</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc list</span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> NAME STATE IPV4 IPV6 TYPE SNAPSHOTS </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> bst RUNNING <span class="number">10.132</span><span class="number">.77</span><span class="number">.54</span> (eth0) fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5c (eth0) PERSISTENT <span class="number">0</span> </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看容器实例信息</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ lxc info bst</span><br><span class="line">Name: bst</span><br><span class="line">Remote: unix:<span class="comment">//</span></span><br><span class="line">Architecture: x86_64</span><br><span class="line">Created: <span class="number">2019</span>/<span class="number">06</span>/<span class="number">02</span> <span class="number">03</span>:<span class="number">19</span> UTC</span><br><span class="line">Status: Running</span><br><span class="line">Type: persistent</span><br><span class="line">Profiles: <span class="keyword">default</span></span><br><span class="line">Pid: <span class="number">1166</span></span><br><span class="line">Ips:</span><br><span class="line"> eth0:inet10<span class="number">.132</span><span class="number">.77</span>.54vethKTBXNA</span><br><span class="line"> eth0:inet6fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> eth0:inet6fe80::<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> lo:inet127<span class="number">.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"> lo:inet6::<span class="number">1</span></span><br><span class="line">Resources:</span><br><span class="line"> Processes: <span class="number">6</span></span><br><span class="line"> CPU usage:</span><br><span class="line"> CPU usage (<span class="keyword">in</span> seconds): <span class="number">7</span></span><br><span class="line"> Memory usage:</span><br><span class="line"> Memory (current): <span class="number">211.</span>66MB</span><br><span class="line"> Memory (peak): <span class="number">297.</span>09MB</span><br><span class="line"> Network usage:</span><br><span class="line"> eth0:</span><br><span class="line"> Bytes received: <span class="number">1.</span>43MB</span><br><span class="line"> Bytes sent: <span class="number">69.</span>46kB</span><br><span class="line"> Packets received: <span class="number">966</span></span><br><span class="line"> Packets sent: <span class="number">902</span></span><br><span class="line"> lo:</span><br><span class="line"> Bytes received: 0B</span><br><span class="line"> Bytes sent: 0B</span><br><span class="line"> Packets received: <span class="number">0</span></span><br><span class="line"> Packets sent: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>容器交互</strong><br>获取容器的shell</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
+
+<p>或者执行一次性命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- apt install procps</span><br></pre></td></tr></table></figure>
+<p>源里的镜像很干净，基本的工具都需要自己安装，比如procps包里提供了free, kill, pkill, pgrep, pmap, ps, pwdx, skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, 和 watch等基本命令行工具</p>
+<p>从容器内部往外拉取文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file pull first/etc/hosts .</span><br></pre></td></tr></table></figure>
+<p>从外部向容器推送文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push hosts first/etc/</span><br></pre></td></tr></table></figure>
+
+<p>向容器推送文件夹</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push -r folder first/path/to</span><br></pre></td></tr></table></figure>
+
+<p><strong>停止容器</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop bst</span><br></pre></td></tr></table></figure>
+
+<p><strong>彻底删除容器</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc <span class="keyword">delete</span> bst</span><br></pre></td></tr></table></figure>
+
+<p><strong>管理远程lxd服务器</strong><br>lxc命令行工具既可以管理本地lxd服务器，也可以管理远程lxd服务器，这里的服务器是指运行的用于管理容器的lxd服务</p>
+<p>要管理远程lxd服务器，首先在远程lxd服务器上执行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config set core.https_address <span class="string">&quot;\[::\]&quot;</span></span><br><span class="line">$ lxc config set core.trust_password some-password</span><br></pre></td></tr></table></figure>
+
+<p>第一条命令使lxd服务在所有本地地址上监听8443端口<br>第二条命令设定访问的密码凭证</p>
+<p>然后就可以在本地添加远程的lxd服务器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add host-a &lt;ip address or DNS name&gt;</span><br></pre></td></tr></table></figure>
+<p>会提示服务器指纹，并要求提供上一步设置的密码，完成之后就可以像管理本地lxd服务一样来管理远程lxd服务，除了要明确的指定远程lxd服务区的别名之外：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec host-a:bst -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
+<p>这就是在本地管理远程lxd服务器的容器实例了。</p>
+<p>后面继续探索…</p>
+<p><strong>Updated(03/16/2022):</strong></p>
+<p>如果使用zfs后端存储，OpenZFS(zfs-dmks)更新后需要将lxd更新到4.0.x稳定版，不然会有各种问题。</p>
+<p>更新到当前的LTS Stable Release 4.0.x</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap refresh lxd --channel=<span class="number">4.0</span>/stable</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -738,463 +1318,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/04/06/acpi-pad-high-cpu-util/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/04/06/acpi-pad-high-cpu-util/" class="post-title-link" itemprop="url">acpi_pad导致高cpu占用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-04-06 22:24:23" itemprop="dateCreated datePublished" datetime="2019-04-06T22:24:23+08:00">2019-04-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>服务器上突然出现很多acpi_pad/*进程,*为0,1,2,3,…，每个进程都占用100%CPU，导致系统极度缓慢</p>
-<p>解决办法就是移除acpi_pad模块</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rmmod acpi_pad</span><br></pre></td></tr></table></figure>
-<p>并将其加入模块blacklist，/etc/modprobe.d/blacklist.conf文件中添加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacklist acpi_pad</span><br></pre></td></tr></table></figure>
-
-<p>或者<br>在 grub 的 kernel 配置后面，添加 acpi_pad.disable=1 重启机器之后，开机就不会自动加载 acpi_pad 模块</p>
-<p>注：早上跑到机房一看，空调自己关闭了，环境温度40几度，服务器、机柜一片报警，赶快打开两个空调降温，acpi_pad的问题是不是与环境温度过高有关呢？</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/04/06/postgresql-stop-archiving/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/04/06/postgresql-stop-archiving/" class="post-title-link" itemprop="url">postgresql停止归档</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-04-06 22:23:21" itemprop="dateCreated datePublished" datetime="2019-04-06T22:23:21+08:00">2019-04-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>因为存储归档文件的服务器硬件故障宕机，写入不成功导致postgresql无法归档。这时候可以临时修改配置文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>然后reload postgresql</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql reload</span><br></pre></td></tr></table></figure>
-<p>这时服务器不会发送归档日志文件，但是服务器在继续累积产生的WAL日志文档，直到提供一个合适的归档命令，重新开始归档，这样不会丢失WAL日志文档。</p>
-<p>如果提供如下归档命令</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;/bin/true&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>这样归档进程总是认为归档成功，但实际上并没有真正写归档文件，但服务器上的WAL会被删除掉(与参数wal_keep_segments有关)，当硬件恢复或者换用其他硬件时，必须重新制作基础备份，因为WAL归档日志文件已经缺失了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/16/linux-amd64-memory-mapping/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/02/16/linux-amd64-memory-mapping/" class="post-title-link" itemprop="url">linux amd64 memory mapping</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-02-16 14:40:21" itemprop="dateCreated datePublished" datetime="2019-02-16T14:40:21+08:00">2019-02-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>amd64架构linux kernel使用四级页表映射结构，但是存在两套terminology来描述这个事情</p>
-<p>其一：</p>
-<p>PML4(Page Map Leve4)(Level 4) -&gt; PDP(Page Directory Pointer) (Level 3) -&gt; PD(Page Directory) (Level 2) -&gt; PTE(Page Table Entry)(Level 1)</p>
-<p>另一：</p>
-<p>PGD(Page Global Directory)(Level 4) -&gt; PUD(Page Upper Directory)(Level 3) -&gt; PMD(Page Middle Directory)(Level 2) -&gt; PTE(Page Table Entry) (Level 1)</p>
-<p>这两套术语其实表达的都是一样的东西,CR3寄存器保存Level 4表的物理地址，Level 4只有一页，4K大小，总共512个表项，每个表项可以寻址512GB内存，总共可以寻址256TB内存。<br>当前amd64处理器只是用了64位中的48位来寻址，因此使用四级页表时，虚拟地址的低48位为9+9+9+9+12映射结构，每个物理页框(Page Frame)为4K，4K地址对齐。<br>当使用2M的大页/巨页时，使用三级页表映射，虚拟地址的低48位为9+9+9+21映射结构，每个物理页框为2M,2M地址对齐。</p>
-<p>参见下面两图：</p>
-<p>4K页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image004.gif" alt="4K页面地址转换"></p>
-<p>2M 页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image006.gif" alt="2M 页面地址转换"></p>
-<p>为了支持更大的线性地址空间，以后的CPU会扩展到57位虚拟地址寻址。linux目前已经提供5级页表映射，如果启用5级页表，会在PGD和PUD之间插入新的一级页表，叫做P4D(Page 4 Directory)，这样PGD会成为第五级页表,参见[1]。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lwn.net/Articles/717293/">Five-level page tables</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/09/cpl-vs-dpl-vs-rpl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/02/09/cpl-vs-dpl-vs-rpl/" class="post-title-link" itemprop="url">CPL vs. DPL vs. RPL</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-02-09 15:02:00" itemprop="dateCreated datePublished" datetime="2019-02-09T15:02:00+08:00">2019-02-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<h1 id="CPL-vs-DPL-vs-RPL"><a href="#CPL-vs-DPL-vs-RPL" class="headerlink" title="CPL vs. DPL vs. RPL"></a>CPL vs. DPL vs. RPL</h1><p>To make this simpler, let’s first just consider CPL and DPL:</p>
-<ul>
-<li>  The CPL is your current privilege level.</li>
-<li>  The DPL is the privilege level of a segment. It defines the minimum1 privilege level required to access the segment.</li>
-<li>  Privilege levels range from 0-3; lower numbers are <em>more</em> privileged</li>
-<li>  So: To access a segment, CPL must be less than or equal to the DPL of the segment</li>
-</ul>
-<p>RPL is a privilege level associated with a <em>segment selector</em>. A segment selector is just a 16-bit value that references a segment. Every memory access (implicitly2 or otherwise) uses a segment selector as part of the access.</p>
-<p>When accessing a segment, there are actually two checks that must be performed. Access to the segment is only allowed if <em>both</em> of the following are true:</p>
-<ul>
-<li>  CPL &lt;= DPL</li>
-<li>  RPL &lt;= DPL</li>
-</ul>
-<p>So even if CPL is sufficiently privileged to access a segment, the access will still be denied if the segment selector that references that segment is not sufficiently privileged.</p>
-<h1 id="The-motivation-behind-RPL"><a href="#The-motivation-behind-RPL" class="headerlink" title="The motivation behind RPL"></a>The motivation behind RPL</h1><p><em>What’s the purpose of this?</em> Well, the reasoning is a bit dated now, but the Intel documentation offers a scenario that goes something like this:</p>
-<ul>
-<li>  Suppose the operating system provides a system call that accepts a logical address (segment selector + offset) from the caller and writes to that address</li>
-<li>  Normal applications run with a CPL of 3; system calls run with a CPL of 0</li>
-<li>  Let’s say some segment (we’ll call it X) has a DPL of 0</li>
-</ul>
-<p>An application would ordinarily not be able to access the memory in segment X (because CPL &gt; DPL). But depending on how the system call was implemented, an application might be able to invoke the system call with a parameter of an address within segment X. Then, because the system call is privileged, it would be able to write to segment X on behalf of the application. This could introduce a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Privilege_escalation">privilege escalation vulnerability</a> into the operating system.</p>
-<p>To mitigate this, the official recommendation is that when a privileged routine accepts a segment selector provided by unprivileged code, it should first set the RPL of the segment selector to match that of the unprivileged code3. This way, the operating system would not be able to make any accesses to that segment that the unprivileged caller would not already be able to make. This helps enforce the boundary between the operating system and applications.</p>
-<h1 id="Then-and-now"><a href="#Then-and-now" class="headerlink" title="Then and now"></a>Then and now</h1><p>Segment protection was introduced with the 286, before paging existed in the x86 family of processors. Back then, segmentation was the only way to restrict access to kernel memory from a user-mode context. RPL provided a convenient way to enforce this restriction when passing pointers across different privilege levels.</p>
-<p>Modern operating systems use paging to restrict access to memory, which removes the need for segmentation. Since we don’t need segmentation, we can use a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Flat_memory_model">flat memory model</a>, which means segment registers <code>CS</code>, <code>DS</code>, <code>SS</code>, and <code>ES</code> all have a base of zero and extend through the entire address space. In fact, in 64-bit “long mode”, a flat memory model is <em>enforced</em>, regardless of the contents of those four segment registers. Segments are still used sometimes (for example, Windows uses <code>FS</code> and <code>GS</code> to point to the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Win32_Thread_Information_Block">Thread Information Block</a> and 0x23 and 0x33 to <a target="_blank" rel="noopener" href="http://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html">switch between 32- and 64-bit code</a>, and Linux is similar), but you just don’t go passing segments around anymore. So RPL is mostly an unused leftover from older times.</p>
-<h1 id="RPL-Was-it-ever-necessary"><a href="#RPL-Was-it-ever-necessary" class="headerlink" title="RPL: Was it ever necessary?"></a>RPL: Was it ever <em>necessary</em>?</h1><p>You asked why it was a necessity to have both DPL and RPL. Even in the context of the 286, it wasn’t actually a <em>necessity</em> to have RPL. Considering the above scenario, a privileged procedure could always just retrieve the DPL of the provided segment via the LAR instruction, compare this to the privilege of the caller, and preemptively bail out if the caller’s privilege is insufficient to access the segment. However, setting the RPL, in my opinion, is a more elegant and simpler way of managing segment accesses across different privilege levels.</p>
-<p>To learn more about privilege levels, check out Volume 3 of <a target="_blank" rel="noopener" href="http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html">Intel’s software developer manuals</a>, particularly the sections titled “Privilege Levels” and “Checking Caller Access Privileges”.</p>
-<p>1 Technically, the DPL can have different meanings depending on what type of segment or gate is being accessed. For the sake of simplicity, everything I describe applies to <em>data segments</em> specifically. Check the Intel docs for more information<br>2 For example, the instruction pointer implicitly uses the segment selector stored in CS when fetching instructions; most types of data accesses implicitly use the segment selector stored in DS, etc.<br>3 See the ARPL instruction (16-bit/32-bit protected mode only)</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/08/macosx-mplayer-osd-issue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/02/08/macosx-mplayer-osd-issue/" class="post-title-link" itemprop="url">MacOSX mplayer OSD issue</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-02-08 22:46:17" itemprop="dateCreated datePublished" datetime="2019-02-08T22:46:17+08:00">2019-02-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>mplayer的OSD(On-Screen Display)依赖于X11，so字幕无法显示:(，目前改投IINA了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

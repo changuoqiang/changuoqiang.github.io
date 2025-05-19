@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,477 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/28/oracle-instant-client-and-tnsping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/28/oracle-instant-client-and-tnsping/" class="post-title-link" itemprop="url">oracle instant client and tnsping</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-28 16:09:31" itemprop="dateCreated datePublished" datetime="2016-04-28T16:09:31+08:00">2016-04-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>最近版本的即时客户端已经没有了tnsping这个命令，可以从相应版本的客户端或服务器bin目录中拷贝此文件，或者用脚本简单的替代：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tnsping &gt;<span class="regexp">/dev/</span><span class="literal">null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span> </span><br><span class="line"> <span class="function"><span class="title">tnsping</span>(<span class="params"></span>)</span> &#123; </span><br><span class="line"> sqlplus -L -S x/x@$<span class="number">1</span> &lt;<span class="regexp">/dev/</span><span class="literal">null</span> grep ORA- (grep -v ORA-<span class="number">01017</span> echo OK) </span><br><span class="line"> &#125; </span><br></pre></td></tr></table></figure>
+
+<p>将此段脚本放入.profile或.bashrc即可。</p>
+<p>又或者直接测试一下服务器的1521端口是否正常开放:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ telnet a.b.c.d <span class="number">1521</span></span><br><span class="line">Trying a.b.c.d...</span><br><span class="line">Connected to a.b.c.d.</span><br><span class="line">Escape character is <span class="string">&#x27;^\]&#x27;</span>.</span><br></pre></td></tr></table></figure>
+
+<p>这样就说明oracle监听是正常的。</p>
+<p>===<br>[erq]</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/25/serial-console-access-kvm-guest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/25/serial-console-access-kvm-guest/" class="post-title-link" itemprop="url">通过串行控制台访问kvm客户机</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-25 11:20:37" itemprop="dateCreated datePublished" datetime="2016-04-25T11:20:37+08:00">2016-04-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>当ssh,vnc都不能访问客户机时,serial console可以提供另一种访问客户机的途径。</p>
+<p><strong>客户机serial console配置</strong></p>
+<p>/etc/inittab文件打开或添加如下行:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T0:<span class="number">23</span>:respawn:<span class="regexp">/sbin/g</span>etty -L ttyS0 <span class="number">38400</span> vt100</span><br></pre></td></tr></table></figure>
+
+<p>/etc/securetty文件中确保列出了ttyS0:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ttyS0</span><br></pre></td></tr></table></figure>
+
+<p>/etc/default/grub文件添加:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=<span class="string">&#x27;console=tty0 console=ttyS0,38400n8&#x27;</span></span><br><span class="line">GRUB_TERMINAL=serial</span><br><span class="line">GRUB_SERIAL_COMMAND=<span class="string">&quot;serial --speed=38400 --unit=0 --word=8 --parity=no --stop=1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>波特率是38400，没有奇偶校验，停止位是1</p>
+<p>使用virsh来连接客户机串行控制台比较简单，应该也可以重定向客户机的串行端口到主机。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.cyberciti.biz/faq/howto-setup-serial-console-on-debian-linux/">Debian Linux: Set a Serial Console</a><br>[2]<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/working_with_the_serial_console">Working with the serial console</a><br>[3]<a target="_blank" rel="noopener" href="https://blackdot.be/2013/07/qemu-kvm-monitor-and-serial-console-over-sockets-with-minicom/">qemu(-kvm) monitor and serial console over sockets with minicom</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/25/kvm-guest-access-host-dir/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/25/kvm-guest-access-host-dir/" class="post-title-link" itemprop="url">kvm客户机共享主机目录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-25 10:28:06" itemprop="dateCreated datePublished" datetime="2016-04-25T10:28:06+08:00">2016-04-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>主机通过virtio上的9p文件系统以及文件系统设备，可以将主机上的文件系统导出给客户机来挂载使用</p>
+<p>v9fs是plan 9 9p远程文件系统协议的实现</p>
+<p><strong>主机配置</strong></p>
+<p>在客户机启动命令上新添加fsdev和device选项</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-fsdev local,security_model=passthrough,id=fsdev0,path=<span class="regexp">/mnt/</span>share </span><br><span class="line">-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare</span><br></pre></td></tr></table></figure>
+<p>这样导出了主机的/mnt/share目录供客户机来存取</p>
+<p><strong>客户机配置</strong></p>
+<p>客户机需要在内核中开启9P文件系统相关选项，可以这样查看:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat /boot/config-$(uname -r) grep 9P</span><br><span class="line">CONFIG_NET_9P=m</span><br><span class="line">CONFIG_NET_9P_VIRTIO=m</span><br><span class="line">CONFIG_NET_9P_RDMA=m</span><br><span class="line"># CONFIG_NET_9P_DEBUG is not set</span><br><span class="line">CONFIG_9P_FS=m</span><br><span class="line">CONFIG_9P_FSCACHE=y</span><br><span class="line">CONFIG_9P_FS_POSIX_ACL=y</span><br><span class="line">CONFIG_9P_FS_SECURITY=y</span><br></pre></td></tr></table></figure>
+
+<p>可以看到9P配置成了内核模块的形式，然后就可以挂载主机的目录来使用了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount -t 9p -o trans=virtio\[,version=9p2000.L\] hostshare /mnt/point</span><br></pre></td></tr></table></figure>
+
+<p>hostshare就是主机导出的挂载点的名称，此处将其挂载到客户机的/mnt/point。<br>version选项是可选的。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.linux-kvm.org/page/9p_virtio">Example Sharing Host files with the Guest</a><br>[2]<a target="_blank" rel="noopener" href="http://wiki.qemu.org/Documentation/9psetup">Documentation/9psetup</a><br>[3]<a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/filesystems/9p.txt">v9fs: Plan 9 Resource Sharing for Linux</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/23/sqlplus-auto-completion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/23/sqlplus-auto-completion/" class="post-title-link" itemprop="url">sqlplus 自动补全/完成</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-23 11:45:01" itemprop="dateCreated datePublished" datetime="2016-04-23T11:45:01+08:00">2016-04-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>通过rlwrap可以<a href="https://openwares.net/linux/debian%E4%B8%8B%E4%BD%BFsqlplus%E5%85%B7%E6%9C%89%E5%91%BD%E4%BB%A4%E5%8E%86%E5%8F%B2%E5%9B%9E%E6%BA%AF%E5%92%8C%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%BC%96%E8%BE%91%E5%8A%9F%E8%83%BD.html">使sqlplus具有具有命令历史回溯和命令行编辑功能</a>,通过提供自动完成字典，可以更进一步使sqlplus具有tab自动补全/完成功能。</p>
+<p>德国一个哥们写了rlwrap_ext for oralce可以使sqlplus自动补全sql关键字，oracle视图、表、包等等，比较全面。</p>
+<p><strong>下载</strong></p>
+<p>可以直接下载最新的版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget http:<span class="comment">//www.linuxification.at/download/rlwrap-extensions-V12-0.03.tar.gz</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo tar zxvf rlwrap-extensions-V12-<span class="number">0.03</span>.tar.gz -C /usr/local/share/rlwrap/completions</span><br><span class="line">$ sudo cp /usr/local/share/rlwrap/completions/sql+ <span class="regexp">/usr/</span>local/bin/</span><br></pre></td></tr></table></figure>
+
+<p>然后使用sql+替代sqlplus就可以了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.linuxification.at/rlwrap_ext.html.en">rlwrap_ext for oracle</a></p>
+<p> <strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/04/22/ora-12518/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/04/22/ora-12518/" class="post-title-link" itemprop="url">ORA-12518 TNS:监听程序无法分发客户机连接</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-04-22 19:42:34" itemprop="dateCreated datePublished" datetime="2016-04-22T19:42:34+08:00">2016-04-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>最常见的原因是process和session数量设置过低。</p>
+<p><strong>查看修改process参数</strong> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt; show parameter process</span><br><span class="line"></span><br><span class="line">NAME TYPE VALUE</span><br><span class="line">------------------------------------ --------------------------------- -------------------</span><br><span class="line">aq_tm_processes integer <span class="number">0</span></span><br><span class="line">db_writer_processes integer <span class="number">3</span></span><br><span class="line">gcs_server_processes integer <span class="number">0</span></span><br><span class="line">job_queue_processes integer <span class="number">20</span></span><br><span class="line">log_archive_max_processes integer <span class="number">2</span></span><br><span class="line">processes integer <span class="number">150</span></span><br></pre></td></tr></table></figure>
+
+<p>偏低，修改process参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; alter system set processes=<span class="number">1000</span> scope = spfile;</span><br></pre></td></tr></table></figure>
+<p>这里无法直接修改内存值，也就是不能使用scope=both,否则会有提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORA-<span class="number">02095</span>: specified initialization parameter cannot be modified</span><br></pre></td></tr></table></figure>
+
+<p><strong>查看修改session参数</strong></p>
+<p>查看</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&gt; show parameter session</span><br><span class="line">NAME TYPE VALUE</span><br><span class="line">------------------------------------ --------------------------------- --------------------</span><br><span class="line">java_max_sessionspace_size integer <span class="number">0</span></span><br><span class="line">java_soft_sessionspace_limit integer <span class="number">0</span></span><br><span class="line">license_max_sessions integer <span class="number">0</span></span><br><span class="line">license_sessions_warning integer <span class="number">0</span></span><br><span class="line">logmnr_max_persistent_sessions integer <span class="number">1</span></span><br><span class="line">session_cached_cursors integer <span class="number">20</span></span><br><span class="line">session_max_open_files integer <span class="number">10</span></span><br><span class="line">sessions integer <span class="number">170</span></span><br><span class="line">shared_server_sessions integer</span><br></pre></td></tr></table></figure>
+
+<p>修改</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; alter system set sessions=<span class="number">1105</span> scope = spfile;</span><br></pre></td></tr></table></figure>
+
+<p>sessions是个派生值,由processes的值决定,公式sessions=1.1*process + 5</p>
+<p>因为修改的是spfile,所以并不会立即生效，只有重新启动oracle，设置才会生效。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -752,542 +1223,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/01/11/nautilus-smb-share-mount-point/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/01/11/nautilus-smb-share-mount-point/" class="post-title-link" itemprop="url">Nautilus smb共享挂载点</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-01-11 20:21:36" itemprop="dateCreated datePublished" datetime="2016-01-11T20:21:36+08:00">2016-01-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>Nautilus可以自动挂装smb共享目录，但是mount命令却看不到共享目录的挂载点。</p>
-<p>nautilus使用gvfs来自动挂载smb共享,需要安装gvfs-fuse来提供本地文件系统视图:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install gvfs-fuse</span><br></pre></td></tr></table></figure>
-
-<p>系统重新启动</p>
-<p>当前debian系统nautilus自动将共享目录挂载到/run/user/$UID/gvfs下，形如:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smb-share:server=server_name,share=foobar</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/30/mac-os-x-dyld-library-path/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/30/mac-os-x-dyld-library-path/" class="post-title-link" itemprop="url">Mac OS X 库路径环境变量DYLD_LIBRARY_PATH</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-30 14:54:11" itemprop="dateCreated datePublished" datetime="2015-12-30T14:54:11+08:00">2015-12-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/FreeBSD/" itemprop="url" rel="index"><span itemprop="name">FreeBSD</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>安装了oracle instant client,执行sqlplus时,找不到库文件:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: <span class="regexp">/ade/</span>dosulliv_sqlplus_mac/oracle/sqlplus/lib/libsqlplus.dylib</span><br><span class="line"> Referenced <span class="keyword">from</span>: <span class="regexp">/opt/</span>oracle/instantclient_11_2/sqlplus</span><br><span class="line"> Reason: image not found</span><br></pre></td></tr></table></figure>
-
-<p>Mac的库路径环境变量与linux不同，其名字为DYLD_LIBRARY_PATH<br>bashrc中设置此变量：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
-<p>问题解决。</p>
-<p>References:<br>[1] <a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-14504139-id-3867128.html">环境变量LIBRARY_PATH的设置</a></p>
-<p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/27/oracle-instant-installpython3-cx-oracle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/27/oracle-instant-installpython3-cx-oracle/" class="post-title-link" itemprop="url">oracle即时客户端安装python3 oracle驱动cx_Oracle</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-27 23:17:46" itemprop="dateCreated datePublished" datetime="2015-12-27T23:17:46+08:00">2015-12-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>下载安装instantclient-sdk包，这个包里有编译需要的头和库文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo unzip instantclient-sdk-linux.x64-<span class="number">12.1</span><span class="number">.0</span><span class="number">.2</span><span class="number">.0</span>.zip -d /opt/oracle</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">不然会有错误提示:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line">oci.h: No such file or directory</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装cx_Oracle</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo pip3 install cx_oracle</span><br></pre></td></tr></table></figure>
-
-<p>会有错误提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">usr/bin/ld: cannot find -lclntsh</span><br><span class="line"></span><br><span class="line">collect2: error: ld returned <span class="number">1</span> exit status</span><br><span class="line"></span><br><span class="line">error: command <span class="string">&#x27;x86_64-linux-gnu-gcc&#x27;</span> failed <span class="keyword">with</span> exit status <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>是因为找不到libclntsh库，创建一个符号连接:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd /opt/oracle/instantclient_12_1</span><br><span class="line">$ sudo ln -sf libclntsh.so<span class="number">.12</span><span class="number">.1</span> libclntsh.so</span><br><span class="line">$ sudo ln -sf libclntshcore.so<span class="number">.12</span><span class="number">.1</span> libclntshcore.so</span><br><span class="line">$ sudo ln -sf libocci.so<span class="number">.12</span><span class="number">.1</span> libocci.so</span><br></pre></td></tr></table></figure>
-
-<p>重新安装就可以了。</p>
-<p>如果安装过程中提示找不到oracle安装，要注意sudo是在root用户的环境下执行pip3安装,要在root用户下设置相应的oracle环境变量。</p>
-<p><strong>python3连接oracle</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; <span class="keyword">import</span> cx_Oracle</span><br><span class="line">&gt;&gt;&gt; conn = cx_Oracle.connet(<span class="string">&#x27;user/passwd@db&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt; print(conn.version)</span><br><span class="line"><span class="number">10.2</span><span class="number">.0</span><span class="number">.4</span><span class="number">.0</span></span><br><span class="line">&gt;&gt;&gt; conn.close()</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/24/zabbix-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/24/zabbix-setup/" class="post-title-link" itemprop="url">zabbix服务端安装配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-24 16:22:52" itemprop="dateCreated datePublished" datetime="2015-12-24T16:22:52+08:00">2015-12-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>zabbix是开源的企业级监控平台，可以用来监控服务器、网络设备以及网络服务等的健康状况和运行状态。</p>
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install zabbix-server-pgsql zabbix-frontend-php</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建数据库</strong></p>
-<p>创建数据库及角色</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres createdb zabbix</span><br><span class="line">$ sudo -u postgres createuser -SDRP zabbix # 根据提示输入密码</span><br></pre></td></tr></table></figure>
-
-<p>初始化数据库</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ zcat /usr/share/zabbix-server-pgsql/&#123;schema,images,data&#125;.sql.gz psql -h localhost zabbix zabbix</span><br></pre></td></tr></table></figure>
-
-<p>修改配置文件,添加如下参数:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBPassword=zabbix #　以实际的数据库用户密码为准</span><br></pre></td></tr></table></figure>
-
-<p><strong>启动服务</strong></p>
-<p>/etc/default/zabbix文件中，设置START=yes,然后启动服务:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service zabbix-servere start</span><br></pre></td></tr></table></figure>
-
-<p>有错误提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Job <span class="keyword">for</span> zabbix-server.service failed because the control process exited <span class="keyword">with</span> error code. See <span class="string">&quot;systemctl status zabbix-server.service&quot;</span> and <span class="string">&quot;journalctl -xe&quot;</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
-
-<p>执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status zabbix-server.service</span><br><span class="line">● zabbix-server.service - Zabbix Server (PostgreSQL)</span><br><span class="line"> Loaded: loaded (<span class="regexp">/lib/</span>systemd/system/zabbix-server.service; disabled; vendor preset: enabled)</span><br><span class="line"> Active: failed (Result: exit-code) since Thu <span class="number">2015</span>-<span class="number">12</span>-<span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> EST; 6s ago</span><br><span class="line"> Docs: man:zabbix_server</span><br><span class="line"> Process: <span class="number">1014</span> ExecStart=<span class="regexp">/usr/</span>sbin/zabbix_server (code=exited, status=<span class="number">1</span>/FAILURE)</span><br><span class="line"></span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix systemd\[<span class="number">1</span>\]: Starting Zabbix Server (PostgreSQL)...</span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix zabbix_server\[<span class="number">1014</span>\]: zabbix_server \[<span class="number">1014</span>\]: <span class="regexp">/etc/</span>zabbix/zabbix_server.conf.d: \[<span class="number">2</span>\] No such file or directory</span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix systemd\[<span class="number">1</span>\]: zabbix-server.service: Control process exited, code=exited status=<span class="number">1</span></span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix systemd\[<span class="number">1</span>\]: Failed to start Zabbix Server (PostgreSQL).</span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix systemd\[<span class="number">1</span>\]: zabbix-server.service: Unit entered failed state.</span><br><span class="line">Dec <span class="number">24</span> <span class="number">03</span>:<span class="number">37</span>:<span class="number">10</span> zabbix systemd\[<span class="number">1</span>\]: zabbix-server.service: Failed <span class="keyword">with</span> result <span class="string">&#x27;exit-code&#x27;</span>.</span><br></pre></td></tr></table></figure>
-
-<p>创建目录,重新启动</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir /etc/zabbix/zabbix_server.conf.d</span><br><span class="line">$ sudo service zabbix-server start</span><br></pre></td></tr></table></figure>
-
-<p><strong>配置php前端</strong></p>
-<p>确认已安装依赖libapache2-mod-php5，如果使用postgresql数据库，还需要安装依赖php5-pgsql</p>
-<p>配置apache2虚拟主机:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/share/doc/zabbix-frontend-php/examples/apache.conf /etc/apache2/conf-available/zabbix.conf</span><br><span class="line">$ sudo a2enconf zabbix</span><br></pre></td></tr></table></figure>
-
-<p>修改php配置文件:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">post_max_size = 16M </span><br><span class="line">max_execution_time = <span class="number">300</span> </span><br><span class="line">max_input_time = <span class="number">300</span> </span><br><span class="line">always_populate_raw_post_data = -<span class="number">1</span></span><br><span class="line">date.timezone = Asia/Shanghai</span><br></pre></td></tr></table></figure>
-
-<p>重新启动apache2</p>
-<p>配置前端运行环境：</p>
-<p>浏览器访问<a target="_blank" rel="noopener" href="http://zabbix_server_ip/zabbix%E6%A0%B9%E6%8D%AE%E6%8F%90%E7%A4%BA%E5%A1%AB%E5%86%99%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF%EF%BC%8C%E6%9C%80%E5%90%8E%E7%94%9F%E6%88%90zabbix%E5%89%8D%E7%AB%AF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6zabbix.conf.php">http://zabbix_server_ip/zabbix根据提示填写相关信息，最后生成zabbix前端配置文件zabbix.conf.php</a><br>如果提示无权限写入配置文件，则将文件下载，拷贝到/etc/zabbix目录下，前端配置完成。</p>
-<p>重新访问<a target="_blank" rel="noopener" href="http://zabbix_server_ip/zabbix%EF%BC%8C%E7%94%A8%E9%BB%98%E8%AE%A4%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7Admin/zabbix%E7%99%BB%E5%85%A5%E5%8D%B3%E5%8F%AF%E3%80%82">http://zabbix_server_ip/zabbix，用默认管理员账户Admin/zabbix登入即可。</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/12/23/cassandra-snapshot/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/23/cassandra-snapshot/" class="post-title-link" itemprop="url">Cassandra快照</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-23 15:48:53" itemprop="dateCreated datePublished" datetime="2015-12-23T15:48:53+08:00">2015-12-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>概念</strong></p>
-<p>cassandra通过为数据目录下所有的SSTable磁盘文件制作快照来备份数据。当系统在线时，可以为所有的keyspace、单独的keyspace或者单独的表制作快照。如果使用并行ssh工具，比如pssh,可以为整个集群制作快照。</p>
-<p>虽然制作快照时并不能保证节点与其复制节点保持一致，但当快照恢复后，依靠cassandra的一致性机制，最终还是会达到一致状态。</p>
-<p>快照支持增量备份机制。</p>
-<p>Cassandra通过硬链接(需要JNA,当前版本默认打开JNA)来制作快照，因此成本还是比较低的。</p>
-<p><strong>查看快照</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool listsnapshots</span><br><span class="line"></span><br><span class="line">Snapshot Details: </span><br><span class="line">Snapshot name Keyspace name Column family name True size Size on disk </span><br><span class="line"><span class="number">1541832995400</span> reis image_increment <span class="number">0</span> bytes <span class="number">13</span> bytes </span><br><span class="line"><span class="number">1541832995400</span> reis image <span class="number">1.23</span> GB <span class="number">1.73</span> TB </span><br><span class="line"></span><br><span class="line">Total TrueDiskSpaceUsed: <span class="number">1.23</span> GB</span><br></pre></td></tr></table></figure>
-
-<p><strong>制作快照</strong></p>
-<p>制作快照时会先将内存数据刷写到硬盘，然后硬链接SSTable文件到备份目录。快照会创建到data_directory_location/keyspace_name/table_name-UUID/<br>snapshots/snapshot_name/目录下,里面有许多的.db文件记录了快照制作时的数据。<br>快照制作完成后，一般应将其拷贝到另外的存储空间单独存放。</p>
-<p>使用以下命令来制作快照:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool snapshot foo</span><br><span class="line">Requested creating snapshot(s) <span class="keyword">for</span> \[foo\] <span class="keyword">with</span> snapshot name \[<span class="number">1450876735125</span>\]</span><br><span class="line">Snapshot directory: <span class="number">1450876735125</span></span><br></pre></td></tr></table></figure>
-
-<p>foo这里是keyspace的名字，如果不指定keyspace则默认制作所有keyspaces的快照。</p>
-<p>应为只是创建硬链接，因此快照速度飞快，无论节点有多大的容量，但是拷贝快照到另外的机器另当别论。</p>
-<p>可以看到table_name-UUID/snapshots目录下多了一个以快照名命名的目录1450876735125，其内容即为方才制作的快照。</p>
-<p>之后将快照归档，然后删除掉快照目录即可。</p>
-<p><strong>删除快照</strong></p>
-<p>快照会阻止删除已经无用的数据文件，因此保留快照会占用额外的存储空间。</p>
-<p>删除所有的快照：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool clearsnapshot</span><br><span class="line">Requested clearing snapshot(s) <span class="keyword">for</span> \[all keyspaces\]</span><br></pre></td></tr></table></figure>
-<p>或者单独删除某个keyspace的所有快照:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool clearsnapshot foo</span><br><span class="line">Requested clearing snapshot(s) <span class="keyword">for</span> \[foo\]</span><br></pre></td></tr></table></figure>
-
-<p><strong>增量备份</strong></p>
-<p>Cassandra支持增量备份，但默认配置没有打开。需要在cassanda.yaml文件中将incremental_backups设置为true以打开增量备份。<br>打开增量备份后，Cassandra会将每一个写入磁盘的SSTable制作一个硬链接写入data_directory_location/keyspace_name/table_name-UUID/backups目录下。</p>
-<p>这样快照加上增量备份就可以提供一个可靠活的备份机制。</p>
-<p>但是有一点儿需要注意，增量备份目录/backups下的文件Cassandra并不会自动删除，移除这些硬链接是用户的责任。因此应该在制作快照之前删除掉backups目录下的所有文件。</p>
-<p><strong>其实,增量备份并不依赖于快照。</strong></p>
-<p><strong>快照恢复</strong></p>
-<p>恢复快照，需要表的所有快照文件以及可能有的增量备份文件。<br>在恢复快照之前应该先truncate表。如果在删除某些数据前制作快照，然后在删除后没有truncate表的情况下恢复数据，那些删除的数据并不会恢复回来。因为cassandra删除数据时并不会真正删除原始的数据，而是生成一个带有墓碑标志的一样的行来标记删除了某行，原始行和标记删除行存在于不同的SSTable中。因此恢复原始的数据，并不能去掉数据的删除标记，从来数据看起来仍然是被删除掉的。</p>
-<p>快照恢复时需要表的schema已经存在，因此快照恢复之前需要重建表的schema。</p>
-<p>快照恢复有多种方法：</p>
-<ul>
-<li>  使用sstableloader</li>
-<li>  拷贝所有的快照文件及增量备份文件到data_directory_location/keyspace/table_name-UUID目录下，然后通过JConsole调用column family MBean 中的JMX方法loadNewSSTables()，或者调用nodetool refresh命令。</li>
-<li>  重启节点的方式<br>如果恢复一个节点，需要关闭该节点，如果要恢复整个集群，则需要关闭集群内所有的节点。</li>
-</ul>
-<ol>
-<li> 关闭节点</li>
-<li> 删除commitlog目录下的所有文件<br>debian包安装方式，commitlog所在目录为<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/<span class="keyword">var</span>/lib/cassandra/commitlog</span><br></pre></td></tr></table></figure></li>
-<li> 删除*.db文件<br>删除data_directory_location/keyspace_name/table_name-UUID目录下的所有*.db文件</li>
-<li> 拷贝最新快照及增量备份文件<br>将需要恢复的快照文件拷贝到data_directory/keyspace_name/table_name-UUID目录</li>
-<li> 拷贝增量备份文件<br>如果有增量备份文件，同样拷贝到data_directory/keyspace_name/table_name-UUID目录</li>
-<li> 重启节点</li>
-<li> 运行nodetool repair</li>
-</ol>
-<p><strong>快照恢复到新集群</strong></p>
-<p>假设需要从三个节点的集群(256 tokens)拷贝SSTable快照数据文件，然后将其恢复到一个新创建的三节点集群(256 tokens)上，新集群节点的token范围必须手动指定以与原始集群相匹配。</p>
-<p>恢复过程：</p>
-<ol>
-<li> 获取节点tokens<br>从原始集群中的每个节点上执行如下命令，获取其负责的tokens<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool ring grep ip_address_of_node awk <span class="string">&#x27;&#123;print $NF &quot;,&quot;&#125;&#x27;</span> xargs</span><br></pre></td></tr></table></figure></li>
-<li> 配置新集群节点<br>新集群每个节点的cassandra.ymal文件中，initial_token参数分别设置为上一步获取的tokens。新集群节点要使用与旧集群节点相同的num_tokens参数，同时新旧集群节点的其他参数也要相匹配。</li>
-<li> 清除新集群节点的system数据<br>新集群每个节点执行:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo rm -rf /<span class="keyword">var</span>/lib/cassandra/data/system<span class="comment">/*</span></span><br></pre></td></tr></table></figure></li>
-<li> 拷贝节点数据<br>将旧集群节点的快照数据拷贝到新集群节点的相同的数据目录下,三个节点分别一一对应进行。</li>
-<li> 启动新集群<br>依次分别启动新集群的节点。</li>
-</ol>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsSnapShot.html">cassandra 2.2 document</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/ddac/doc/datastax_enterprise/operations/opsSnapshotRestoreNewCluster.html">Restoring a snapshot into a new cluster</a></p>
-<p> <strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

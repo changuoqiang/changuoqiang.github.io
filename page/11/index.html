@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,506 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/26/7z-compatibility-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/26/7z-compatibility-issue/" class="post-title-link" itemprop="url">7z版本兼容性问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-26 10:43:09" itemprop="dateCreated datePublished" datetime="2019-06-26T10:43:09+08:00">2019-06-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>有一个7z格式分卷压缩的备份文件，使用7z解压缩时出现错误</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ 7z x db_2019_06_25.7z<span class="number">.001</span> </span><br><span class="line"></span><br><span class="line"><span class="number">7</span>-Zip \[<span class="number">64</span>\] <span class="number">16.02</span> : Copyright (c) <span class="number">1999</span>-<span class="number">2016</span> Igor Pavlov : <span class="number">2016</span>-<span class="number">05</span>-<span class="number">21</span></span><br><span class="line">p7zip Version <span class="number">16.02</span> (locale=en_US.UTF-<span class="number">8</span>,Utf16=on,HugeFiles=on,<span class="number">64</span> bits,<span class="number">4</span> CPUs Intel(R) Core(TM) i5-<span class="number">6400</span> CPU @ <span class="number">2.</span>70GHz (<span class="number">506E3</span>),ASM,AES-NI)</span><br><span class="line"></span><br><span class="line">Scanning the drive <span class="keyword">for</span> archives:</span><br><span class="line"><span class="number">1</span> file, <span class="number">4697620480</span> bytes (<span class="number">4480</span> MiB)</span><br><span class="line"></span><br><span class="line">Extracting archive: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">ERROR: db_2019_06_25.7z<span class="number">.001</span></span><br><span class="line">db_2019_06_25.7z</span><br><span class="line">Open ERROR: Can not open the file <span class="keyword">as</span> \[7z\] archive</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">Can<span class="string">&#x27;t open as archive: 1</span></span><br><span class="line"><span class="string">Files: 0</span></span><br><span class="line"><span class="string">Size: 0</span></span><br><span class="line"><span class="string">Compressed: 0</span></span><br><span class="line"><span class="string">$ file db_2019_06_25.7z.001</span></span><br><span class="line"><span class="string">db_2019_06_25.7z.001: 7-zip archive data, version 0.3</span></span><br></pre></td></tr></table></figure>
+
+<p>因为这个备份文件是在一个debian jessie服务器上使用7-Zip [64] 9.20分卷压缩的，7z archive 版本为0.3<br>而解压缩的机器使用的是7-Zip [64] 16.02，7z archive版本为0.4<br>使用7z 9.20解压缩此文档没有问题，这是7z的向后兼容性问题</p>
+<p>备份服务器升级到debian stretch, 7z版本升级到了7-Zip [64] 16.02，这个问题就不存在了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/23/compaction-strategy-migration-one-node-by-one-use-jmx/" class="post-title-link" itemprop="url">使用JMX逐节点迁移集群的compaction策略</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-23 17:32:18" itemprop="dateCreated datePublished" datetime="2019-06-23T17:32:18+08:00">2019-06-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>这里使用交互式jmx命令行客户端<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">jmxterm</a>来与mbeans交互。</p>
+<p>下载uber依赖自包含版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//github.com/jiaqi/jmxterm/releases/download/v1.0.1/jmxterm-1.0.1-uber.jar</span></span><br></pre></td></tr></table></figure>
+
+<p>使用很简单</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar -h</span><br><span class="line">\[USAGE\]</span><br><span class="line"> jmxterm &lt;OPTIONS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Main executable <span class="keyword">of</span> JMX terminal CLI tool</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -a --appendtooutput With <span class="built_in">this</span> flag, the outputfile is preserved and content is appended to it</span><br><span class="line"> -e --exitonfailure With <span class="built_in">this</span> flag, terminal exits <span class="keyword">for</span> any Exception</span><br><span class="line"> -h --help Show usage <span class="keyword">of</span> <span class="built_in">this</span> command line</span><br><span class="line"> -i --input &lt;value&gt; Input script file. There can only be one input file. <span class="string">&quot;stdin&quot;</span> is the <span class="keyword">default</span> value which means <span class="built_in">console</span> input</span><br><span class="line"> -n --noninteract Non interactive mode. Use <span class="built_in">this</span> mode <span class="keyword">if</span> input doesn<span class="string">&#x27;t come from human or jmxterm is embedded</span></span><br><span class="line"><span class="string"> -o --output &lt;value&gt; Output file, stdout or stderr. Default value is stdout</span></span><br><span class="line"><span class="string"> -p --password &lt;value&gt; Password for user/password authentication</span></span><br><span class="line"><span class="string"> -s --sslrmiregistry Whether the server&#x27;</span>s RMI registry is protected <span class="keyword">with</span> SSL/TLS</span><br><span class="line"> -l --url &lt;value&gt; Location <span class="keyword">of</span> MBean service. It can be &lt;host&gt;:&lt;port&gt; or full service URL.</span><br><span class="line"> -u --user &lt;value&gt; User name <span class="keyword">for</span> user/password authentication</span><br><span class="line"> -v --verbose &lt;value&gt; Verbose level, could be silentbriefverbose. Default value is brief</span><br><span class="line">\[NOTE\]</span><br><span class="line"> Without any option, <span class="built_in">this</span> command opens an interactive command line based <span class="built_in">console</span>. With a given input file, commands <span class="keyword">in</span> file will be executed and process ends after file is processed</span><br><span class="line"></span><br><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar</span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;help</span><br><span class="line">#following commands are available to use:</span><br><span class="line">about - Display about page</span><br><span class="line">bean - Display or set current selected MBean. </span><br><span class="line">beans - List available beans under a domain or all domains</span><br><span class="line">bye - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">close - Close current JMX connection</span><br><span class="line">domain - Display or set current selected domain. </span><br><span class="line">domains - List all available domain names</span><br><span class="line">exit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">get - Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">help - Display available commands or usage <span class="keyword">of</span> a command</span><br><span class="line">info - Display detail information about an MBean</span><br><span class="line">jvms - List all running local JVM processes</span><br><span class="line">open - Open JMX session or display current connection</span><br><span class="line">option - <span class="built_in">Set</span> options <span class="keyword">for</span> command session</span><br><span class="line">quit - Terminate <span class="built_in">console</span> and exit</span><br><span class="line">run - Invoke an MBean operation</span><br><span class="line">set - <span class="built_in">Set</span> value <span class="keyword">of</span> an MBean attribute</span><br><span class="line">subscribe - Subscribe to the notifications <span class="keyword">of</span> a bean</span><br><span class="line">unsubscribe - Unsubscribe the notifications <span class="keyword">of</span> an earlier subscribed bean</span><br><span class="line">watch - Watch the value <span class="keyword">of</span> one MBean attribute constantly</span><br><span class="line">$&gt;help get</span><br><span class="line">\[USAGE\]</span><br><span class="line"> get &lt;OPTIONS&gt; &lt;ARGS&gt;</span><br><span class="line">\[DESCRIPTION\]</span><br><span class="line"> Get value <span class="keyword">of</span> MBean attribute(s)</span><br><span class="line">\[OPTIONS\]</span><br><span class="line"> -b --bean &lt;value&gt; MBean name where the attribute is. Optional <span class="keyword">if</span> bean has been set</span><br><span class="line"> -l --delimiter &lt;value&gt; Sets an optional delimiter to be printed after the value</span><br><span class="line"> -d --domain &lt;value&gt; Domain <span class="keyword">of</span> bean, optional</span><br><span class="line"> -h --help Display usage</span><br><span class="line"> -i --info Show detail information <span class="keyword">of</span> each attribute</span><br><span class="line"> -q --quots Quotation marks around value</span><br><span class="line"> -s --simple Print simple expression <span class="keyword">of</span> value without full expression</span><br><span class="line"> -n --singleLine Prints result without a newline - <span class="keyword">default</span> is <span class="literal">false</span></span><br><span class="line">\[ARGS\]</span><br><span class="line"> &lt;attr&gt;... Name <span class="keyword">of</span> attributes to select</span><br><span class="line">\[NOTE\]</span><br><span class="line"> * stands <span class="keyword">for</span> all attributes. eg. get Attribute1 Attribute2 or get *</span><br></pre></td></tr></table></figure>
+
+<p>设置compaction策略为LCS</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ java -jar jmxterm-<span class="number">1.0</span><span class="number">.1</span>-uber.jar --url localhost:<span class="number">7199</span></span><br><span class="line">Welcome to JMX terminal. Type <span class="string">&quot;help&quot;</span> <span class="keyword">for</span> available commands.</span><br><span class="line">$&gt;domain org.apache.cassandra.db #设置当前domain</span><br><span class="line">#domain is set to org.apache.cassandra.db</span><br><span class="line">$&gt;bean org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies #设置当前mbean</span><br><span class="line">#bean is set to org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">$&gt;info #显示当前mbean的信息</span><br><span class="line">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies</span><br><span class="line">#<span class="class"><span class="keyword">class</span> <span class="title">name</span> </span>= org.apache.cassandra.db.ColumnFamilyStore</span><br><span class="line"># attributes</span><br><span class="line"> %<span class="number">0</span> - AutoCompactionDisabled (boolean, r)</span><br><span class="line"> %<span class="number">1</span> - BuiltIndexes (java.util.List, r)</span><br><span class="line"> %<span class="number">2</span> - ColumnFamilyName (java.lang.String, r)</span><br><span class="line"> %<span class="number">3</span> - CompactionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">4</span> - CompactionParametersJson (java.lang.String, rw)</span><br><span class="line"> %<span class="number">5</span> - CompactionStrategyClass (java.lang.String, rw)</span><br><span class="line"> %<span class="number">6</span> - CompressionParameters (java.util.Map, rw)</span><br><span class="line"> %<span class="number">7</span> - CrcCheckChance (double, w)</span><br><span class="line"> %<span class="number">8</span> - DroppableTombstoneRatio (double, r)</span><br><span class="line"> %<span class="number">9</span> - MaximumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">10</span> - MinimumCompactionThreshold (int, rw)</span><br><span class="line"> %<span class="number">11</span> - SSTableCountPerLevel (\[I, r)</span><br><span class="line"> %<span class="number">12</span> - UnleveledSSTables (int, r)</span><br><span class="line"># operations</span><br><span class="line"> %<span class="number">0</span> - <span class="keyword">void</span> beginLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">1</span> - long estimateKeys()</span><br><span class="line"> %<span class="number">2</span> - javax.management.openmbean.CompositeData finishLocalSampling(java.lang.String p1,int p2)</span><br><span class="line"> %<span class="number">3</span> - <span class="keyword">void</span> forceMajorCompaction(boolean p1)</span><br><span class="line"> %<span class="number">4</span> - java.util.List getSSTablesForKey(java.lang.String p1)</span><br><span class="line"> %<span class="number">5</span> - <span class="keyword">void</span> loadNewSSTables()</span><br><span class="line"> %<span class="number">6</span> - <span class="keyword">void</span> setCompactionThresholds(int p1,int p2)</span><br><span class="line"> %<span class="number">7</span> - long trueSnapshotsSize()</span><br><span class="line">#there<span class="string">&#x27;s no notifications</span></span><br><span class="line"><span class="string">$&gt;get CompactionStrategyClass # 查询compaction当前策略类</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=mytable,keyspace=mykeyspace,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionStrategyClass = org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy;</span></span><br><span class="line"><span class="string">$&gt;set CompactionStrategyClass &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot; #设置compaction策略类为LCS</span></span><br><span class="line"><span class="string">#Value of attribute CompactionStrategyClass is set to &quot;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&quot;</span></span><br><span class="line"><span class="string">$&gt;get CompactionParametersJson #查询LCS的CompactionParametersJson参数</span></span><br><span class="line"><span class="string">#mbean = org.apache.cassandra.db:columnfamily=image,keyspace=reis,type=ColumnFamilies:</span></span><br><span class="line"><span class="string">CompactionParametersJson = &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;160&quot;&#125;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">$&gt;set CompactionParametersJson #设置LCS的CompactionParametersJson参数 \\&#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;\\&#125;</span></span><br><span class="line"><span class="string">#Value of attribute CompactionParametersJson is set to &#123;&quot;class&quot;:&quot;LeveledCompactionStrategy&quot;,&quot;sstable_size_in_mb&quot;:&quot;200&quot;&#125; </span></span><br></pre></td></tr></table></figure>
+
+<p>在逐节点compaction策略转换过程中不要alter table，alter table会将jmx对节点的设置扩散到所有的其他节点。</p>
+<p>所有节点转换完成后,使用alter table永久的改变compaction策略，否则节点重启后会用table的schema定义覆盖掉jmx对table的修改。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/213370546-Change-CompactionStrategy-and-sub-properties-via-JMX">Change CompactionStrategy and sub-properties via JMX</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.alteroot.org/articles/2015-04-20/change-cassandra-compaction-strategy-on-production-cluster.html">How to change Cassandra compaction strategy on a production cluster</a><br>[3]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm">JMXTERM</a><br>[4]<a target="_blank" rel="noopener" href="https://docs.cyclopsgroup.org/jmxterm/user-manual">LAUNCH JMXTERM</a><br>[5]<a target="_blank" rel="noopener" href="https://github.com/jiaqi/jmxterm">Interactive command line JMX client</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/22/cassandra-compaction-strategy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/22/cassandra-compaction-strategy/" class="post-title-link" itemprop="url">cassandra compaction strategy</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-22 11:29:53" itemprop="dateCreated datePublished" datetime="2019-06-22T11:29:53+08:00">2019-06-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>cassandra更新或删除rows时并不会真正的更新或删除原先的rows，只是添加新的rows并将原rows打上tombstone标记，所以cassandra需要周期性的运行compaction来整理数据库。</p>
+<p>compaction有三种策略，SizeTieredCompactionStrategy (STCS)、LeveledCompactionStrategy (LCS)和DateTieredCompactionStrategy (DTCS)，默认的compaction策略是STCS。</p>
+<p>当前使用的集群在compaction时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[CompactionExecutor:<span class="number">41367</span>\] <span class="number">2019</span>-<span class="number">06</span>-<span class="number">22</span> <span class="number">11</span>:<span class="number">22</span>:<span class="number">02</span>,<span class="number">063</span> CassandraDaemon.java:<span class="number">185</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">41367</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">1</span>, expected write size = <span class="number">678107716200</span></span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">275</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">118</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">256</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.6</span>.jar:<span class="number">2.2</span><span class="number">.6</span>\]</span><br><span class="line"> at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"> at java.lang.Thread.run(Thread.java:<span class="number">745</span>) \[na:<span class="number">1.8</span><span class="number">.0_66</span>\]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>需要600多G的空间来compaction，昏！</p>
+<p>是的，有一个数据文件达到了600多G，默认的SizeTieredCompactionStrategy压缩策略需要比数据文件大一些的空闲空间来执行compaction，但是磁盘剩余空间只有不到400G了，so.</p>
+<p>“SizeTieredCompactionStrategy Compaction requires a lot of temporary space: In worst case, we need to merge all existing SSTables into one, so we need half the disk to be empty to write the output file and only later can delete the old SSTables”</p>
+<p>使用STCS compaction策略，cassandra节点一般要保持50%以上的剩余空间，对于大数据集来讲，太可怕了，几个T的数据，需要额外几个T的剩余空间才能正常运行, WTF!</p>
+<p>STCS策略会在达到min_threshold(默认为4)时，将这几个SSTABLE合并为一个大的SSTABLE，这个SSTABLE并不会有上限大小的限制，初期数据少的时候并不会有什么问题。但是目前2T的节点，已经有3个600G的SSTABLE了，下一步compaction要生成单个2T以上的SSTABLE了，看来默认的STCS策略并不太适合大数据集。</p>
+<p>LeveledCompactionStrategy压缩策略只使用很少的空间来执行压缩，只要10 * sstable_size_in_mb的空间，目前默认的sstable_size_in_mb为160MB，10倍的话差不多2个G的样子，不过官方也讲最好保持10G以上的剩余空间。</p>
+<p>sstable_size_in_mb是LeveledCompactionStrategy bean的一个RW attribute来控制compaction后生成的sstable的大小，一般使用当前默认的160M或设置为200M都是适合的。对于大数据集LCS会生成数量很多的sstables。</p>
+<p><strong>当前表的compaction</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt; desc TABLE image;</span><br><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH bloom_filter_fp_chance = <span class="number">0.01</span></span><br><span class="line"> AND caching = <span class="string">&#x27;&#123;&quot;keys&quot;:&quot;ALL&quot;, &quot;rows_per_partition&quot;:&quot;NONE&quot;&#125;&#x27;</span></span><br><span class="line"> AND comment = <span class="string">&#x27;&#x27;</span></span><br><span class="line"> AND compaction = &#123;<span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy&#x27;</span>&#125;</span><br><span class="line"> AND compression = &#123;<span class="string">&#x27;sstable_compression&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.io.compress.LZ4Compressor&#x27;</span>&#125;</span><br><span class="line"> AND dclocal_read_repair_chance = <span class="number">0.1</span></span><br><span class="line"> AND default_time_to_live = <span class="number">0</span></span><br><span class="line"> AND gc_grace_seconds = <span class="number">864000</span></span><br><span class="line"> AND max_index_interval = <span class="number">2048</span></span><br><span class="line"> AND memtable_flush_period_in_ms = <span class="number">0</span></span><br><span class="line"> AND min_index_interval = <span class="number">128</span></span><br><span class="line"> AND read_repair_chance = <span class="number">0.0</span></span><br><span class="line"> AND speculative_retry = <span class="string">&#x27;99.0PERCENTILE&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>果然是SizeTieredCompactionStrategy</p>
+<p><strong>修改compaction策略</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh&gt;ALTER TABLE image WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>,<span class="string">&#x27;sstable_size_in_mb&#x27;</span>:<span class="string">&#x27;200&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里虽然将compaction策略由STCS修改成了LCS，但是要完成一次完整的转换仍然需要巨大的剩余磁盘空间，因为在完整的转换为LCS之前，那些大的sstable,当前有3个600G以上的，会一直保留在磁盘上，完整转换完毕后才能删除，只剩下数量众多的小sstabel，之后的compaction就不会需要这么多的剩余磁盘空间了。</p>
+<p>official documnet: “While a merge of several SSTables is ongoing, the request path continues to read the old SSTables. Ideally, the old SSTables would be deleted as soon as the merge is done, but we must not delete an SSTable that still has in-progress reads.”</p>
+<p>还有一个问题，直接alter table修改compaction策略，会使所有的集群节点开始转换到LCS的compaction动作，集群的负载会高居不下，所以也可以使用jmx来逐个节点的迁移到LCS策略。</p>
+<p>当然也可以关闭节点的自动compaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool disableautocompation -- keyspacename tablename </span><br></pre></td></tr></table></figure>
+
+<p>修改完table的compaction策略后，手动逐个执行compaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool compact -- keyspacename tablename</span><br></pre></td></tr></table></figure>
+
+<p>最后再打开autocompaction</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool enableautocompaction</span><br></pre></td></tr></table></figure>
+
+<p><strong>创建新表时</strong><br>可以直接指定compaction策略</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE reis.image (</span><br><span class="line"> id text PRIMARY KEY,</span><br><span class="line"> content blob,</span><br><span class="line"> name text</span><br><span class="line">) WITH compaction = &#123; <span class="string">&#x27;class&#x27;</span>: <span class="string">&#x27;org.apache.cassandra.db.compaction.LeveledCompactionStrategy&#x27;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/dml/dmlHowDataMaintain.html">How is data maintained?</a><br>[2]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/leveled-compaction-in-apache-cassandra">Leveled Compaction in Apache Cassandra</a><br>[3]<a target="_blank" rel="noopener" href="https://www.datastax.com/dev/blog/when-to-use-leveled-compaction">When to Use Leveled Compaction</a><br>[4]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/didda/p/4728588.html">Cassandra 的压缩策略STCS，LCS 和 DTCS</a><br>[5]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/gpcuster/archive/2010/05/27/1745859.html">介绍CASSANDRA中的压缩</a><br>[6]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45419041/cancelling-ongoing-compaction-jobs-in-cassandra">Cancelling ongoing compaction jobs in Cassandra</a><br>[7]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/tools/toolsSetCompactionThreshold.html">nodetool setcompactionthreshold</a><br>[8]<a target="_blank" rel="noopener" href="https://www.cnblogs.com/sing1ee/archive/2012/05/24/2765042.html">被忽视的Compaction策略-有关NoSQL Compaction策略的一点思考</a><br>[9]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29392153/cassandra-control-sstable-size">Cassandra control SSTable size</a><br>[10]<a target="_blank" rel="noopener" href="https://github.com/scylladb/scylla/wiki/SSTable-compaction-and-compaction-strategies">SSTable compaction and compaction strategies</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/20/debian-10-buster-install-oracle-jdk8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/20/debian-10-buster-install-oracle-jdk8/" class="post-title-link" itemprop="url">debian 10 buster安装jdk8</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-20 18:49:04" itemprop="dateCreated datePublished" datetime="2019-06-20T18:49:04+08:00">2019-06-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>buster官方源里已经不再提供openjdk-8-jdk, default-jdk版本为openjdk-11-jdk</p>
+<p>可以使用java-packge包来安装oracle jdk 8,或者build openjdk8u</p>
+<p><em>1. oracle jdk 8</em></p>
+<p><strong>安装</strong></p>
+<p>安装java-package及其他需要的依赖包</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install java-package java-common libgtk-<span class="number">3</span>-dev libcairo-gobject2</span><br></pre></td></tr></table></figure>
+
+<p><strong>下载</strong></p>
+<p>oracle官方下载jdk-8u211-linux-x64.tar.gz</p>
+<p><strong>打包</strong></p>
+<p>切换到下载目录执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make-jpkg jdk-8u211-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>会在当前目录下生成oracle-java8-jdk_8u211_amd64.deb</p>
+<p><strong>安装</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo dpkg -i oracle-java8-jdk_8u211_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<p><em>2. openjdk8u</em></p>
+<p><a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/">openjdk8u</a>是openjdk8的更新版本，其官方代码仓库为<a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/">http://hg.openjdk.java.net/jdk8u/jdk8u/</a></p>
+<p>根据其<a target="_blank" rel="noopener" href="https://hg.openjdk.java.net/jdk8u/jdk8u/raw-file/tip/README-builds.html">官方build说明文件</a>，clone源代码并编译安装即可。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://hg.openjdk.java.net/jdk8u/jdk8u/">OpenJDK / jdk8u / jdk8u</a><br>[2]<a target="_blank" rel="noopener" href="https://hg.openjdk.java.net/jdk8u/jdk8u/raw-file/tip/README-builds.html">OpenJDK Build README</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/15/qemu-monitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/15/qemu-monitor/" class="post-title-link" itemprop="url">qemu monitor</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-15 17:09:32" itemprop="dateCreated datePublished" datetime="2019-06-15T17:09:32+08:00">2019-06-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>qemu monitor可以监控guest的运行状态，还可以操纵guest的运行</p>
+<p><strong>telnet访问</strong></p>
+<p>qemu命令行上添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-monitor telnet:<span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span>:<span class="number">1234</span>,server,nowait</span><br></pre></td></tr></table></figure>
+<p>这样在qemu在host接口192.168.0.86端口1234上打开telnet监听，可以使用telnet连接monitor</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ telnet <span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span> <span class="number">1234</span></span><br><span class="line">Trying <span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span>...</span><br><span class="line">Connected to <span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span>.</span><br><span class="line">Escape character is <span class="string">&#x27;^\]&#x27;</span>.</span><br><span class="line">QEMU <span class="number">3.1</span><span class="number">.0</span> monitor - type <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> more information</span><br><span class="line">(qemu)</span><br></pre></td></tr></table></figure>
+
+<p>注意，如果在qemu命令上quit会结束guest的运行，如果只是想退出telnet连接，应该按’^]‘，然后输入quit退出telnet，之后还可以再次连接qemu monitor</p>
+<p><strong>raw socket访问</strong><br>命令行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-monitor tcp:<span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span>:<span class="number">1234</span>,server,nowait</span><br></pre></td></tr></table></figure>
+<p>然后可以这样连接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ nc <span class="number">192.168</span><span class="number">.0</span><span class="number">.86</span> <span class="number">1234</span></span><br><span class="line">QEMU <span class="number">3.1</span><span class="number">.0</span> monitor - type <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> more information</span><br><span class="line">(qemu) </span><br></pre></td></tr></table></figure>
+
+<p>again，在qemu命令行上quit，会结束guest的运行，如果只是退出nc的话crtl+c就可以了。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://smilejay.com/2014/01/access-qemu-monitor-accross-network/">通过网络连接到QEMU MONITOR</a><br>[2]<a target="_blank" rel="noopener" href="https://en.wikibooks.org/wiki/QEMU/Monitor">QEMU/Monitor</a><br>[3]<a target="_blank" rel="noopener" href="https://www.linux-kvm.org/page/Migration">kvm guest live migration</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -698,588 +1198,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-copy-move-containers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/04/lxd-copy-move-containers/" class="post-title-link" itemprop="url">lxd拷贝/迁移容器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-04 22:20:16" itemprop="dateCreated datePublished" datetime="2019-06-04T22:20:16+08:00">2019-06-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>假设有两个lxd host，分别为lxd-l和lxd-r,在lxd-l机器上添加一个remote叫做lxd-r</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add lxd-r &lt;ip <span class="keyword">of</span> lxd-r&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>拷贝容器</strong></p>
-<ol>
-<li>停止容器并拷贝到远程</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop pridns</span><br><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line">$ lxc start pridns</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>制作容器快照，第一个快照为snap0，以此类推，然后拷贝快照到lxd-r</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot my-container</span><br><span class="line">$ lxc copy my-container/snap0 lxd-r:my-container-backup</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>直接拷贝运行中的容器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc copy pridns lxd-r:pridns-backup</span><br><span class="line"><span class="built_in">Error</span>: Unable to perform container live migration. CRIU isn<span class="string">&#x27;t installed on the source server</span></span><br></pre></td></tr></table></figure>
-<p>直接拷贝运行中的容器叫做live migration，需要将其运行状态一起拷贝到目标容器，保持二者完全一致，这需要CRIU的支持，lxd已经打包了CUIR,需要在本地和远程host上分别启用CRIU</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap set lxd criu.enable=<span class="literal">true</span></span><br><span class="line">$ sudo systemctl reload snap.lxd.daemon</span><br></pre></td></tr></table></figure>
-<p>然后再拷贝</p>
-</li>
-</ol>
-<p>lxc move</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-images/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/04/lxd-images/" class="post-title-link" itemprop="url">lxd镜像/映像</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-04 19:17:08" itemprop="dateCreated datePublished" datetime="2019-06-04T19:17:08+08:00">2019-06-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>lxd使用镜像来生成容器，可以有几种不同的方式来使用镜像</p>
-<p><strong>内建映像服务</strong></p>
-<p>lxd内建三个映像服务，分别是<br>ubuntu - 提供稳定版ubuntu镜像<br>ubuntu-daily - 提供每日构建版ubuntu镜像<br>images - 提供其他发行版镜像</p>
-<p>这样使用内置镜像服务</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> my-ubuntu</span><br><span class="line">$ lxc launch ubuntu-daily:<span class="number">19.04</span> my-ubuntu-dev</span><br><span class="line">$ lxc launch images:debian/buster/amd64 my-debian</span><br></pre></td></tr></table></figure>
-
-<p>显示镜像列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list ubuntu:</span><br><span class="line">$ lxc image list ubuntu-daily:</span><br><span class="line">$ lxc image list images:</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用远程lxd实例的镜像</strong></p>
-<p>添加远程lxd实例</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add my-images <span class="number">192.168</span><span class="number">.0</span>.x</span><br></pre></td></tr></table></figure>
-
-<p>使用远程lxd实例的镜像实例化容器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-images:image-name your-container</span><br></pre></td></tr></table></figure>
-
-<p>远程lxd实例上的镜像列表</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image list my-images:</span><br></pre></td></tr></table></figure>
-
-<p>其实lxd内建的镜像服务就是lxd实例，无非其remote的名字为ubuntu, ubuntu-daily和images而已。</p>
-<p><strong>手动导入镜像文件</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc image <span class="keyword">import</span> &lt;file&gt; --alias my-alias</span><br></pre></td></tr></table></figure>
-
-<p>使用此导入的镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch my-alias my-container</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用容器或快照创建镜像</strong></p>
-<p>使用容器创建镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc my-container stop</span><br><span class="line">$ lxc publish my-container --alias test-image</span><br></pre></td></tr></table></figure>
-
-<p>使用快照创建镜像</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc publish my-container/my-snap --alias test-image2</span><br></pre></td></tr></table></figure>
-
-<p>之后就可以正常的使用这些镜像来生成容器了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/04/lxd-snapshots/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/04/lxd-snapshots/" class="post-title-link" itemprop="url">lxd容器快照</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-04 16:10:37" itemprop="dateCreated datePublished" datetime="2019-06-04T16:10:37+08:00">2019-06-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>以下使用的容器名字为test8，运行debian/buster/amd64</p>
-<p><strong>创建容器快照</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot test8 test8snap0</span><br></pre></td></tr></table></figure>
-
-<p>默认创建的是无状态快照，如果要将容器当前的运行状态一起保存到快照，需要使用<code>--stateful</code>参数,比如</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc snapshot test8 test8snap1 --stateful</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看容器快照</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ lxc info test8</span><br><span class="line">Name: test8</span><br><span class="line">Remote: unix:<span class="comment">//</span></span><br><span class="line">Architecture: x86_64</span><br><span class="line">Created: <span class="number">2019</span>/<span class="number">06</span>/<span class="number">04</span> <span class="number">07</span>:<span class="number">52</span> UTC</span><br><span class="line">Status: Running</span><br><span class="line">Type: persistent</span><br><span class="line">Profiles: <span class="keyword">default</span></span><br><span class="line">Pid: <span class="number">7769</span></span><br><span class="line">Ips:</span><br><span class="line"> eth0: inet <span class="number">192.168</span><span class="number">.0</span><span class="number">.8</span> vethM2PWUN</span><br><span class="line"> eth0: inet6 fe80::<span class="number">216</span>:3eff:fea7:706b vethM2PWUN</span><br><span class="line"> lo: inet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"> lo: inet6 ::<span class="number">1</span></span><br><span class="line">Resources:</span><br><span class="line"> Processes: <span class="number">5</span></span><br><span class="line"> CPU usage:</span><br><span class="line"> CPU usage (<span class="keyword">in</span> seconds): <span class="number">123</span></span><br><span class="line"> Memory usage:</span><br><span class="line"> Memory (current): <span class="number">2.</span>05GB</span><br><span class="line"> Memory (peak): <span class="number">2.</span>45GB</span><br><span class="line"> Network usage:</span><br><span class="line"> eth0:</span><br><span class="line"> Bytes received: <span class="number">347.</span>96MB</span><br><span class="line"> Bytes sent: <span class="number">5.</span>86MB</span><br><span class="line"> Packets received: <span class="number">132127</span></span><br><span class="line"> Packets sent: <span class="number">63110</span></span><br><span class="line"> lo:</span><br><span class="line"> Bytes received: <span class="number">4.</span>07kB</span><br><span class="line"> Bytes sent: <span class="number">4.</span>07kB</span><br><span class="line"> Packets received: <span class="number">52</span></span><br><span class="line"> Packets sent: <span class="number">52</span></span><br><span class="line">Snapshots:</span><br><span class="line"> test8snap0 (taken at <span class="number">2019</span>/<span class="number">06</span>/<span class="number">04</span> <span class="number">08</span>:<span class="number">17</span> UTC) (stateless)</span><br></pre></td></tr></table></figure>
-
-<p><strong>快照恢复</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc restore test8 test8snap0</span><br></pre></td></tr></table></figure>
-
-<p><strong>删除快照</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc <span class="keyword">delete</span> test8/test8snap0</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/03/lxd-containers-bridged-host-network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/03/lxd-containers-bridged-host-network/" class="post-title-link" itemprop="url">lxd容器桥接host网络</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-03 19:54:05" itemprop="dateCreated datePublished" datetime="2019-06-03T19:54:05+08:00">2019-06-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>lxd容器默认的profile使用独立的私有桥接NAT网络，从外部不能直接访问容器。可以配置容器使用host网桥，从而可以使用与host在同一网段的ip地址，就可以方便的像访问host一样来访问容器了。</p>
-<p><strong>host设置网桥</strong></p>
-<p>安装bridge-utils</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install bridge-utiles</span><br></pre></td></tr></table></figure>
-
-<p>编辑/etc/network/interfaces文件:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># This file describes the network interfaces available on your system</span><br><span class="line"># and how to activate them. For more information, see interfaces(5).</span><br><span class="line"></span><br><span class="line">source /etc/network/interfaces.d<span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line"><span class="comment">auto lo</span></span><br><span class="line"><span class="comment">iface lo inet loopback</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line"><span class="comment">auto enp0s3</span></span><br><span class="line"><span class="comment">iface enp0s3 inet manual</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># bridge interface</span></span><br><span class="line"><span class="comment">auto br0 </span></span><br><span class="line"><span class="comment">iface br0 inet static</span></span><br><span class="line"><span class="comment"> address 192.168.3.6/24</span></span><br><span class="line"><span class="comment"> gateway 192.168.3.1</span></span><br><span class="line"><span class="comment"> # bridge options</span></span><br><span class="line"><span class="comment"> bridge_ports enp0s3</span></span><br><span class="line"><span class="comment"> bridge_stp off </span></span><br><span class="line"><span class="comment"> bridge_fd 0</span></span><br><span class="line"><span class="comment"> bridge_maxwait 0</span></span><br><span class="line"><span class="comment"> bridge_waitport 0 </span></span><br></pre></td></tr></table></figure>
-<p>这里配置了host本地网桥br0，需要重新启动网络才能生效。</p>
-<p><strong>配置容器网络接口(方法一)</strong></p>
-<p>为容器添加网络设备eth0，桥接到host本地网络</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config device add bst eth0 nic nictype=bridged parent=br0 name=eth0</span><br></pre></td></tr></table></figure>
-<p>注意，容器原有的重名网络设备eth0会被直接覆盖，这时候容器新添加的网络设备默认使用dhcp获取ip地址，如果需要指定静态ip，请编辑容器的/etc/network/interfaces文件。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec bst -- vim /etc/network/interfaces</span><br></pre></td></tr></table></figure>
-
-<p><strong>配置容器网络接口(方法二)</strong></p>
-<p>通过创建新的profile，并使已有容器或新建容器使用此profile</p>
-<p>查看现有profile</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+---------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+---------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+---------+---------+</span><br></pre></td></tr></table></figure>
-<p>可以看到有一个容器在使用默认profile，来看一下default profile的配置：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: <span class="keyword">default</span></span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>containers/bst</span><br></pre></td></tr></table></figure>
-<p>其实这就是执行<code>lxd init</code>命令时创建的默认profile</p>
-<p>下面创建新的host桥接网络profile</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile create hostbridgedprofile</span><br><span class="line">Profile hostbridgedprofile created</span><br></pre></td></tr></table></figure>
-
-<p>编辑新添加的profile</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ cat &lt;&lt;EOF lxc profile edit hostbridgedprofile</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-
-<p>可以确认一下新的profile:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile list</span><br><span class="line">+--------------------+---------+</span><br><span class="line"> NAME USED BY </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> <span class="keyword">default</span> <span class="number">1</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"> hostbridgedprofile <span class="number">0</span> </span><br><span class="line">+--------------------+---------+</span><br><span class="line"></span><br><span class="line">$ lxc profile show hostbridgedprofile</span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Host Bridged networking LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: br0</span><br><span class="line"> type: nic</span><br><span class="line">name: hostbridgedprofile</span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
-
-<p>在现有容器bst上叠加新添加的profile</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile assign bst <span class="keyword">default</span>,hostbridgedprofile </span><br><span class="line">Profiles <span class="keyword">default</span>,hostbridgedprofile applied to bst</span><br></pre></td></tr></table></figure>
-<p>注意，这里先使用default，然后用hostbridgedprofile来覆盖默认的网络设置</p>
-<p>新建容器可以指定要使用的profile</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch -p <span class="keyword">default</span> -p hostbridgedprofile images:debian/buster/amd64 new_container</span><br></pre></td></tr></table></figure>
-
-<p>如果一个profile不再使用，可以删除掉，当然不能有容器在使用它才行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile <span class="keyword">delete</span> hostbridgedprofile </span><br><span class="line"><span class="built_in">Error</span>: Profile is currently <span class="keyword">in</span> use</span><br></pre></td></tr></table></figure>
-
-<p><strong>配置容器网络接口(方法三)</strong></p>
-<p>重新初始化lxd,注意在有容器实例存在的情况下，重新初始化网络设置是可以的，但是已经存在的storage pool是不能改动的，当然可以添加新的storage pool</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br><span class="line">Would you like to use LXD clustering? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Do you want to configure a <span class="keyword">new</span> storage pool? (yes/no) \[<span class="keyword">default</span>=yes\]: no</span><br><span class="line">Would you like to connect to a MAAS server? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like to create a <span class="keyword">new</span> local network bridge? (yes/no) \[<span class="keyword">default</span>=yes\]: no &lt;=这里为no</span><br><span class="line">Would you like to configure LXD to use an existing bridge or host interface? (yes/no) \[<span class="keyword">default</span>=no\]: yes &lt;= 这里为yes</span><br><span class="line">Name <span class="keyword">of</span> the existing bridge or host interface: br0 &lt;= 这里输入主机桥接接口bro</span><br><span class="line">Would you like LXD to be available over the network? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br><span class="line">Would you like stale cached images to be updated automatically? (yes/no) \[<span class="keyword">default</span>=yes\] </span><br><span class="line">Would you like a YAML <span class="string">&quot;lxd init&quot;</span> preseed to be printed? (yes/no) \[<span class="keyword">default</span>=no\]: </span><br></pre></td></tr></table></figure>
-<p>这其实是修改的default profile</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://blog.simos.info/how-to-initialize-lxd-again/">How to initialize LXD again</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/06/02/lxd-container-first/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/06/02/lxd-container-first/" class="post-title-link" itemprop="url">lxd容器初步</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-06-02 11:32:04" itemprop="dateCreated datePublished" datetime="2019-06-02T11:32:04+08:00">2019-06-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-03-17 15:45:52" itemprop="dateModified" datetime="2022-03-17T15:45:52+08:00">2022-03-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>docker为应用级容器技术，容器内只能运行一个主进程，而lxd是lxc的上层包装，是系统级容器技术，可以像虚拟化技术一样在容器内运行一个guest OS，但是更轻量。</p>
-<p>惯例，主机debian，这次版本是buster。</p>
-<p><strong>安装snap</strong></p>
-<p>lxd是ubuntu亲生的,所以除了ubuntu可以直接用apt安装，其他发行版需要用snap安装，忍！</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install snapd</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装lxd</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap install lxd --channel=<span class="number">3.0</span>/stable</span><br></pre></td></tr></table></figure>
-<p>这里选择stable版本</p>
-<p><strong>用户权限及sudo</strong></p>
-<p>如果想使用当前普通用户来管理lxd容器，则需要将用户添加到lxd用户组中 </p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser $USER lxd</span><br></pre></td></tr></table></figure>
-<p>当前用户需要重新登录用户组才能生效</p>
-<p>因为snap安装的lxd并不在任何传统的文件系统中，它奇葩的位于/snap/bin路径下，so需要编辑/etc/sudoer文件，添加/snap/bin到secure_path</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ which lxd</span><br><span class="line">/snap/bin/lxd</span><br></pre></td></tr></table></figure>
-
-<p>下面就可以进入正题了</p>
-<p><strong>初始化lxd</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxd init</span><br></pre></td></tr></table></figure>
-<p>基本上一路enter即可，以后再详细了解每一项的含义吧, go</p>
-<p><strong>创建容器</strong><br>从官方镜像源创建debian buster容器实例bst</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch images:debian/buster/amd64 bst</span><br></pre></td></tr></table></figure>
-
-<p>如果创建ubuntu容器实例ubt，则可以这样</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc launch ubuntu:<span class="number">18.04</span> ubt</span><br></pre></td></tr></table></figure>
-<p>ubuntu的源标签是ubuntu，其他所有发行版的源标签是images，再一次，忍！</p>
-<p><strong>容器列表</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lxc list</span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> NAME STATE IPV4 IPV6 TYPE SNAPSHOTS </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br><span class="line"> bst RUNNING <span class="number">10.132</span><span class="number">.77</span><span class="number">.54</span> (eth0) fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5c (eth0) PERSISTENT <span class="number">0</span> </span><br><span class="line">+------+---------+---------------------+-----------------------------------------------+------------+-----------+</span><br></pre></td></tr></table></figure>
-
-<p><strong>查看容器实例信息</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">$ lxc info bst</span><br><span class="line">Name: bst</span><br><span class="line">Remote: unix:<span class="comment">//</span></span><br><span class="line">Architecture: x86_64</span><br><span class="line">Created: <span class="number">2019</span>/<span class="number">06</span>/<span class="number">02</span> <span class="number">03</span>:<span class="number">19</span> UTC</span><br><span class="line">Status: Running</span><br><span class="line">Type: persistent</span><br><span class="line">Profiles: <span class="keyword">default</span></span><br><span class="line">Pid: <span class="number">1166</span></span><br><span class="line">Ips:</span><br><span class="line"> eth0:inet10<span class="number">.132</span><span class="number">.77</span>.54vethKTBXNA</span><br><span class="line"> eth0:inet6fd42:2d28:<span class="number">4331</span>:ad36:<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> eth0:inet6fe80::<span class="number">216</span>:3eff:fed5:4b5cvethKTBXNA</span><br><span class="line"> lo:inet127<span class="number">.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line"> lo:inet6::<span class="number">1</span></span><br><span class="line">Resources:</span><br><span class="line"> Processes: <span class="number">6</span></span><br><span class="line"> CPU usage:</span><br><span class="line"> CPU usage (<span class="keyword">in</span> seconds): <span class="number">7</span></span><br><span class="line"> Memory usage:</span><br><span class="line"> Memory (current): <span class="number">211.</span>66MB</span><br><span class="line"> Memory (peak): <span class="number">297.</span>09MB</span><br><span class="line"> Network usage:</span><br><span class="line"> eth0:</span><br><span class="line"> Bytes received: <span class="number">1.</span>43MB</span><br><span class="line"> Bytes sent: <span class="number">69.</span>46kB</span><br><span class="line"> Packets received: <span class="number">966</span></span><br><span class="line"> Packets sent: <span class="number">902</span></span><br><span class="line"> lo:</span><br><span class="line"> Bytes received: 0B</span><br><span class="line"> Bytes sent: 0B</span><br><span class="line"> Packets received: <span class="number">0</span></span><br><span class="line"> Packets sent: <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>容器交互</strong><br>获取容器的shell</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
-
-<p>或者执行一次性命令</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec first -- apt install procps</span><br></pre></td></tr></table></figure>
-<p>源里的镜像很干净，基本的工具都需要自己安装，比如procps包里提供了free, kill, pkill, pgrep, pmap, ps, pwdx, skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, 和 watch等基本命令行工具</p>
-<p>从容器内部往外拉取文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file pull first/etc/hosts .</span><br></pre></td></tr></table></figure>
-<p>从外部向容器推送文件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push hosts first/etc/</span><br></pre></td></tr></table></figure>
-
-<p>向容器推送文件夹</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc file push -r folder first/path/to</span><br></pre></td></tr></table></figure>
-
-<p><strong>停止容器</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc stop bst</span><br></pre></td></tr></table></figure>
-
-<p><strong>彻底删除容器</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc <span class="keyword">delete</span> bst</span><br></pre></td></tr></table></figure>
-
-<p><strong>管理远程lxd服务器</strong><br>lxc命令行工具既可以管理本地lxd服务器，也可以管理远程lxd服务器，这里的服务器是指运行的用于管理容器的lxd服务</p>
-<p>要管理远程lxd服务器，首先在远程lxd服务器上执行:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc config set core.https_address <span class="string">&quot;\[::\]&quot;</span></span><br><span class="line">$ lxc config set core.trust_password some-password</span><br></pre></td></tr></table></figure>
-
-<p>第一条命令使lxd服务在所有本地地址上监听8443端口<br>第二条命令设定访问的密码凭证</p>
-<p>然后就可以在本地添加远程的lxd服务器</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc remote add host-a &lt;ip address or DNS name&gt;</span><br></pre></td></tr></table></figure>
-<p>会提示服务器指纹，并要求提供上一步设置的密码，完成之后就可以像管理本地lxd服务一样来管理远程lxd服务，除了要明确的指定远程lxd服务区的别名之外：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc exec host-a:bst -- <span class="regexp">/bin/</span>bash</span><br></pre></td></tr></table></figure>
-<p>这就是在本地管理远程lxd服务器的容器实例了。</p>
-<p>后面继续探索…</p>
-<p><strong>Updated(03/16/2022):</strong></p>
-<p>如果使用zfs后端存储，OpenZFS(zfs-dmks)更新后需要将lxd更新到4.0.x稳定版，不然会有各种问题。</p>
-<p>更新到当前的LTS Stable Release 4.0.x</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo snap refresh lxd --channel=<span class="number">4.0</span>/stable</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

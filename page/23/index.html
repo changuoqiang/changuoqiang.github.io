@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,534 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/10/sqlplus-output-xls/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/10/sqlplus-output-xls/" class="post-title-link" itemprop="url">sqlplus输出xls</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-10 15:04:46" itemprop="dateCreated datePublished" datetime="2016-08-10T15:04:46+08:00">2016-08-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>sql脚本文件内容如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set linesize <span class="number">200</span> </span><br><span class="line">set term off verify off feedback off pagesize <span class="number">999</span> </span><br><span class="line">set markup html on entmap ON spool on preformat off</span><br><span class="line">spool result.xls</span><br><span class="line">@query.sql</span><br><span class="line">spool off</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<p>entmap是指html实体映射,ent是entity的简写</p>
+<p>将输出文件的名称改为.html后缀,即可输出html文档.其实输出的内容是完全一样的,只是文件扩展名不同.</p>
+<p>sqlplus set指令详见[1]</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/E11882_01/server.112/e16604/ch_twelve040.htm#SQPUG060">SET System Variable Summary</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/10/bash-script-trap-signals/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/10/bash-script-trap-signals/" class="post-title-link" itemprop="url">bash脚本中捕捉信号</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-10 11:00:55" itemprop="dateCreated datePublished" datetime="2016-08-10T11:00:55+08:00">2016-08-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>当脚本遇到错误或被用户终止时,有些清理动作需要执行,这时候可以通过捕捉signal来完成这项工作.</p>
+<p>trap格式为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trap commands signals</span><br></pre></td></tr></table></figure>
+
+<p>commands可以是任何内建命令,外部命令或者脚本中的函数等.<br>signals是要捕捉的信号,可以一次扑捉多个信号,只要提供信号列表即可.</p>
+<p>系统支持的信号列表:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kill -l</span><br></pre></td></tr></table></figure>
+
+<p>trap不只可以捕获各种信号，还可以捕获EXIT和ERR。<br>trap func EXIT允许在脚本结束时调用注册的函数。由于无论正常退出抑或异常退出，因此是写脚本清理函数绝佳所在。<br>trap func ERR允许在运行出错时调用注册的函数。不过要记住，程序异常退出时，既会调用EXIT注册的函数，也会调用ERR注册的函数。</p>
+<p>如果脚本中设置了:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set -e</span><br></pre></td></tr></table></figure>
+
+<p>当脚本中任何命令退出码非0时,立即退出脚本,这时候可以扑捉ERR,并设置处理程序:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trap <span class="string">&#x27;err_handler $&#123;LINENO&#125; $?&#x27;</span> ERR </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">err_handler</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"> # some clean works</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过捕捉ERR,可以捕捉到程序非正常退出包括SIGINT(Ctrl+C)</p>
+<p>${LINENO}为出错的行号,$?为最后执行命令的退出码</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://blog.robotshell.org/2012/necessary-details-about-signal-trap-in-shell/">关于Linux Shell的信号trap功能你必须知道的细节</a><br>[2]<a target="_blank" rel="noopener" href="http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html">12.2. Traps</a><br>[3]<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006900083">编写可靠shell脚本的八个建议</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/07/pg-dumppg-dumpallpg-restore-psql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/07/pg-dumppg-dumpallpg-restore-psql/" class="post-title-link" itemprop="url">pg_dump,pg_dumpall,pg_restore与psql</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-07 10:28:18" itemprop="dateCreated datePublished" datetime="2016-08-07T10:28:18+08:00">2016-08-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>pg_dump可以转储数据库为一个sql脚本文件或其他归档格式文件，比如pg_restore使用的归档格式。</p>
+<p>pg_dump默认输出普通的sql脚本，指定-F –format=format来指定pg_restore支持的格式，比如-Fc或-Ft</p>
+<p>pg_dumpall内部使用pg_dump来转储数据库，只输出文本格式的sql脚本文件。</p>
+<p>在转储的同时可以进行bzip2压缩，比如:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pg_dumpall -U user -h localhost -c --<span class="keyword">if</span>-exists --role=postgres bzip2 &gt; db.sql.bz2</span><br></pre></td></tr></table></figure>
+<p>-c选项指定在重建数据库对象之前插入清理语句(drop)。</p>
+<p>sql脚本文件只能使用psql来执行，如果使用pg_restore，则会有如下错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pg_restore: \[archiver\] input file appears to be a text format dump. Please use psql</span><br></pre></td></tr></table></figure>
+
+<p>其他格式则需要使用pg_restore来恢复。</p>
+<p>恢复pg_dumpall转储的sql脚本时，使用超级用户postgres来恢复：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u postgres psql -f reis_2016_08_07.sql &gt; <span class="keyword">import</span>.log</span><br><span class="line">psql:reis_2016_08_07.sql:<span class="number">24</span>: ERROR: current user cannot be dropped</span><br><span class="line">psql:reis_2016_08_07.sql:<span class="number">33</span>: ERROR: role <span class="string">&quot;postgres&quot;</span> already exists</span><br></pre></td></tr></table></figure>
+<p>有错误提示不能drop掉postgres用户和postgres用户已经存在，在sql脚本中有这样两行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DROP ROLE IF EXISTS postgres;</span><br><span class="line">CREATE ROLE postgres;</span><br></pre></td></tr></table></figure>
+
+<p>因为当前用户正是postgres,所以会有这样的错误，忽略掉即可。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.postgres.cn/news/viewone/1/244">Postgresql 转存恢复数据经验</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/08/05/oracle-expdp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/05/oracle-expdp/" class="post-title-link" itemprop="url">oracle expdp and impdp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-05 22:18:39" itemprop="dateCreated datePublished" datetime="2016-08-05T22:18:39+08:00">2016-08-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>expdp是10g及以后新增的数据导出工具，数据导出速度有了很大的提升。而且expdp比exp有了更细粒度的导出支持，比如可以排除指定的表。</p>
+<p>expdp真正的数据导出是在服务器端执行的，因此需要先建立directory数据库对象。</p>
+<p><strong>创建directory对象</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; CREATE DIRECTORY dir_expdp <span class="keyword">as</span> <span class="string">&#x27;\\\\192.168.0.82\\exp&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>directory对象可以使用网络路径，这样可以从数据库服务器expdp到网络上的远程机器。</p>
+<p>查询目录对象:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; SELECT * FROM dba_directories;</span><br></pre></td></tr></table></figure>
+
+<p>当前并没有alter directory对象的支持，如果修改只能先drop，然后再create。</p>
+<p><strong>导出数据</strong></p>
+<p>expdp使用schemas来指定需要导出的schema，类似于exp的owner参数，可以理解为用户名，其实二者并不同，只是一般二者同名而已。<br>directory指定使用哪个目录对象，就是上一步创建的目录对象。<br>dumpfile指定导出的数据文件<br>logfile指定导出日志文件<br>exclude指定需要排除的数据库对象，包括table等很多种对象</p>
+<p>比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ expdp system/passwd@orcl schemas=user1,user2 EXCLUDE=TABLE:<span class="string">&quot;IN(&#x27;table1&#x27;,&#x27;table2&#x27;)&quot;</span></span><br><span class="line">directory=dir_expdp dumpfile=$&#123;dmp_file&#125; logfile=$&#123;explog_file&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>expdp优化</strong><br>expdp的优化主要在于提高并行度，也就是指定parallel参数，一般此参数等于cpu个数，并且要小于dump文件的个数,可以在dumpfile中指定％U让expdp自动按需要按顺序生成dump文件</p>
+<p>查看cpu数量：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; show parameter cpu</span><br></pre></td></tr></table></figure>
+
+<p>列如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ expdp system/passwd@orcl schemas=user1,user2 EXCLUDE=TABLE:<span class="string">&quot;IN(&#x27;table1&#x27;,&#x27;table2&#x27;)&quot;</span></span><br><span class="line">directory=dir_expdp dumpfile=db_%U.dmp logfile=explog_file parallel=<span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+<p>还可以使用filesize来限制每个dump文件的最大尺寸。</p>
+<p><strong>impdp导入</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ impdp system/passwd@orcl schemas=user1,user2 directory=dir_impdp dumpfile=db_%U.dmp logfile=explog_file parallel=<span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+<p>impdp导入时也可以使用%U来指定输入的dump文件,也可以使用parallel参数来提速.</p>
+<p>如果出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ora-<span class="number">31684</span> object type user already exists</span><br></pre></td></tr></table></figure>
+<p>是因为在导入之前已经创建了user的原因,可以忽略掉此错误,或者impdp添加参数exclude=user</p>
+<p><strong>使用参数文件</strong></p>
+<p>可以将所有的expdp,impdp参数写入一个参数文件,然后在命令行上引用此文件,比如编辑一个expdp.par参数文件:<br>expdp.par</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">schemas=user1,user2,user3</span><br><span class="line">exclude=TABLE:<span class="string">&quot;IN(&#x27;table1&#x27;,&#x27;table2&#x27;,&#x27;table3&#x27;,&#x27;table4&#x27;,&#x27;table5&#x27;)&quot;</span></span><br><span class="line">directory=dir_expdp</span><br><span class="line">dumpfile=db_%U.dmp</span><br><span class="line">logfile=db.log</span><br><span class="line">parallel=<span class="number">4</span></span><br><span class="line">version=<span class="number">10.2</span><span class="number">.0</span><span class="number">.3</span><span class="number">.0</span> </span><br></pre></td></tr></table></figure>
+
+<p>然后这样使用参数文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ expdp parfile=expdp.par</span><br></pre></td></tr></table></figure>
+
+<p><strong>排除对象</strong></p>
+<p>使用exclude参数排除对象,其语法为:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXCLUDE=object_type\[:name_clause\] \[, ...\]</span><br></pre></td></tr></table></figure>
+
+<p>Object_type用于指定要排除的对象类型,name_clause用于指定要排除的具体对象.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">EXCLUDE=SCHEMA:&quot;=&#x27;HR&#x27;&quot; #排除名字为HR的schema</span><br><span class="line">EXCLUDE=USER #排除所有创建user的DDL语句</span><br><span class="line">EXCLUDE=USER:&quot;=&#x27;HR&#x27;&quot; #排除创建用户HR的DDL语句</span><br><span class="line">EXCLUDE=VIEW,PACKAGE,FUNCTION #排除视图,包和函数</span><br><span class="line">EXCLUDE=INDEX #排除索引</span><br><span class="line">EXCLUDE=GRANT #排除授权</span><br><span class="line">EXCLUDE=TRIGGER #排除触发器</span><br><span class="line">EXCLUDE=TABLE:&quot;IN (&#x27;COUNTRIES&#x27;, &#x27;REGIONS&#x27;)&quot; #排除某些表</span><br><span class="line">EXCLUDE=SCHEMA:&quot;LIKE &#x27;SYS%&#x27;&quot; #排除以SYS开头的schema</span><br></pre></td></tr></table></figure>
+
+<p>exclude参数可以多次出现,也可以将所有的排除写到一个exclude参数中.</p>
+<p>include语法与EXCLUDE相同,但二者不能同时使用.</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.oracle.com/cd/B19306_01/server.102/b14215/dp_export.htm">Data Pump Export</a><br>[2]<a target="_blank" rel="noopener" href="http://blog.csdn.net/tonyzhou_cn/article/details/10176783">优化IMPDP/EXPDP导入导出速度</a><br>[3]<a target="_blank" rel="noopener" href="http://shitou118.blog.51cto.com/715507/310033">expdp impdp 数据库导入导出命令详解</a><br>[4]<a target="_blank" rel="noopener" href="http://www.dba-oracle.com/t_ora_31684_import_impdp.htm">ORA-31684 import error Tips</a></p>
+<p> <strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/31/debian-install-docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/07/31/debian-install-docker/" class="post-title-link" itemprop="url">debian 安装 docker</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-07-31 18:38:03" itemprop="dateCreated datePublished" datetime="2016-07-31T18:38:03+08:00">2016-07-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>debian源里的docker叫docker.io,版本略低。这里从官方源安装docker,官方源里叫docker-engine。</p>
+<p>安装docker要求内核必须为3.10以上版本，而且必须为64位架构。</p>
+<p>debian版本最小支持到wheezy,但是wheezy必须添加backports源.</p>
+<p>docker官方源使用https协议，因此先安装以下包：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install apt-transport-https ca-certificates</span><br></pre></td></tr></table></figure>
+
+<p>导入doker公钥：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gpg --keyserver pgp.mit.edu --recv-keys 58118E89F3A912897C070ADBF76221572C52609D</span><br><span class="line">$ gpg --<span class="keyword">export</span> --armor 58118E89F3A912897C070ADBF76221572C52609D sudo apt-key add -</span><br></pre></td></tr></table></figure>
+
+<p>/etc/apt/sources.list.d/docker.lis文件中添加官方源：</p>
+<p>当前的testing stretch：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https:<span class="comment">//apt.dockerproject.org/repo debian-stretch main</span></span><br></pre></td></tr></table></figure>
+
+<p>jessie版本：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deb https:<span class="comment">//apt.dockerproject.org/repo debian-jessie main</span></span><br></pre></td></tr></table></figure>
+
+<p>安装：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># apt update</span><br><span class="line"># apt update docker-engine</span><br></pre></td></tr></table></figure>
+
+<p>运行docker daemon:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker start</span><br></pre></td></tr></table></figure>
+
+<p>运行docker hello world：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br><span class="line"></span><br><span class="line">Unable to find image <span class="string">&#x27;hello-world:latest&#x27;</span> locally</span><br><span class="line">latest: Pulling <span class="keyword">from</span> library/hello-world</span><br><span class="line">c04b14da8d14: Pull complete </span><br><span class="line">Digest: sha256:0256e8a36e2070f7bf2d0b0763dbabdd67798512411de4cdcf9431a1feb60fd9</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> hello-world:latest</span><br><span class="line"></span><br><span class="line">Hello <span class="keyword">from</span> Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate <span class="built_in">this</span> message, Docker took the following steps:</span><br><span class="line"> <span class="number">1.</span> The Docker client contacted the Docker daemon.</span><br><span class="line"> <span class="number">2.</span> The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image <span class="keyword">from</span> the Docker Hub.</span><br><span class="line"> <span class="number">3.</span> The Docker daemon created a <span class="keyword">new</span> container <span class="keyword">from</span> that image which runs the</span><br><span class="line"> executable that produces the output you are currently reading.</span><br><span class="line"> <span class="number">4.</span> The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line"> to your terminal.</span><br><span class="line"></span><br><span class="line">To <span class="keyword">try</span> something more ambitious, you can run an Ubuntu container <span class="keyword">with</span>:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more <span class="keyword">with</span> a free Docker Hub account:</span><br><span class="line"> https:<span class="comment">//hub.docker.com</span></span><br><span class="line"></span><br><span class="line">For more examples and ideas, <span class="attr">visit</span>:</span><br><span class="line"> https:<span class="comment">//docs.docker.com/engine/userguide/</span></span><br></pre></td></tr></table></figure>
+
+<p>docker安装正常。</p>
+<p>docker daemon始终以root用户运行，但通过将用户加入docker组，可以使用户访问docker的客户程序不使用root权限来访问docker服务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo gpasswd -a $USER docker</span><br><span class="line">Adding user xxx to group docker</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+
+<p>如果没有docker用户组，请自行建立。将foo替换成你想要的用户名，然后重新启动docker服务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service docker restart</span><br></pre></td></tr></table></figure>
+
+<p><strong>updated(07/07/2019)</strong>:<br>官方安装源地址发生变化，最新的安装说明参见[2]</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/debian/">Installation on Debian - Docker</a><br>[2]<a target="_blank" rel="noopener" href="https://docs.docker.com/install/linux/docker-ce/debian/">Get Docker CE for Debian</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -706,457 +1234,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/09/cqlsh-operation-timeput/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/07/09/cqlsh-operation-timeput/" class="post-title-link" itemprop="url">cqlsh操作超时</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-07-09 13:32:26" itemprop="dateCreated datePublished" datetime="2016-07-09T13:32:26+08:00">2016-07-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>执行cqlsh查询：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cqlsh:xxx&gt; select count(*) <span class="keyword">from</span> image;</span><br></pre></td></tr></table></figure>
-
-<p>时出现错误提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OperationTimedOut: errors=&#123;&#125;, last_host=x.x.x.x</span><br></pre></td></tr></table></figure>
-
-<p>在~/.cassandra/cqlshrc中设置客户端超时时间即可：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[connection\]</span><br><span class="line">request_timeout = 120 # seconds</span><br></pre></td></tr></table></figure>
-
-<p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/04/activemq-debian-service/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/07/04/activemq-debian-service/" class="post-title-link" itemprop="url">activemq debian 自启动配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-07-04 11:33:22" itemprop="dateCreated datePublished" datetime="2016-07-04T11:33:22+08:00">2016-07-04</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>activemq官方提供了init脚本</p>
-<p>添加运行activemq的用户：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># useradd -m activemq -d /srv/activemq</span><br></pre></td></tr></table></figure>
-
-<p>安装activemq</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cd /srv/activemq</span><br><span class="line">$ sudo -u activemq tar zxvf apache-activemq-&lt;version&gt;-bin.tar.gz</span><br><span class="line"># ln -snf apache-activemq-&lt;version&gt; current</span><br><span class="line"># chown -R activemq:users apache-activemq-&lt;version&gt;</span><br></pre></td></tr></table></figure>
-
-<p>修改activemq默认配置，使用activemq用户来运行activemq</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cp apache-activemq-&lt;version&gt;/bin/env /etc/default/activemq</span><br><span class="line"># sed -i &#x27;~s/^ACTIVEMQ_USER=&quot;&quot;/ACTIVEMQ_USER=&quot;activemq&quot;/&#x27; /etc/default/activemq</span><br></pre></td></tr></table></figure>
-
-<p>安装init脚本:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ln -snf /srv/activemq/current/bin/activemq /etc/init.d/activemq</span><br><span class="line"># update-rc.d activemq defaults</span><br></pre></td></tr></table></figure>
-
-<p>===<br>[erq]</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/07/02/activemq-start-error/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/07/02/activemq-start-error/" class="post-title-link" itemprop="url">activemq无法启动问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-07-02 15:15:09" itemprop="dateCreated datePublished" datetime="2016-07-02T15:15:09+08:00">2016-07-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>安装完成后，首先要启用默认实例：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ln -sf /etc/activemq/instances-available/main /etc/activemq/instances-enabled/main</span><br></pre></td></tr></table></figure>
-
-<p>然后以debug方式启动activemq的main实例：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># /etc/init.d/activemq console main</span><br></pre></td></tr></table></figure>
-<p>会有错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR Temporary Store limit is <span class="number">50000</span> mb, whilst the temporary data directory: <span class="regexp">/var/</span>lib/activemq/main/data/localhost/tmp_storage only has <span class="number">3346</span> mb <span class="keyword">of</span> usable space</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这是因为硬盘空间不够了，需要更改配置文件/etc/activemq/instances-enabled/main/activemq.xml，broker节内添加以下行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> &lt;systemUsage&gt;</span><br><span class="line"> &lt;systemUsage&gt;</span><br><span class="line"> &lt;storeUsage&gt;</span><br><span class="line"> &lt;storeUsage limit=<span class="string">&quot;1 gb&quot;</span>/&gt;</span><br><span class="line"> &lt;/storeUsage&gt;</span><br><span class="line"> &lt;tempUsage&gt;</span><br><span class="line"> &lt;tempUsage limit=<span class="string">&quot;500 mb&quot;</span>/&gt;</span><br><span class="line"> &lt;/tempUsage&gt;</span><br><span class="line"> &lt;/systemUsage&gt;</span><br><span class="line">&lt;/systemUsage&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果不配置storeUsage,会有这样的错误提示：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR Store limit is <span class="number">0</span> mb, whilst the max journal file size <span class="keyword">for</span> the store is: <span class="number">32</span> mb, the store will not accept any data when used.</span><br></pre></td></tr></table></figure>
-
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://access.redhat.com/solutions/348353">Temporary Store Limit Error When Starting the Broker</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/18/7409/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/06/18/7409/" class="post-title-link" itemprop="url">Untitled Post - 164</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-06-18 12:00:35" itemprop="dateCreated datePublished" datetime="2016-06-18T12:00:35+08:00">2016-06-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>如果cqlsh执行COPY命令时出现错误”get_num_processes() takes no keyword arguments”,删除掉/usr/lib/pymodules/python2.7/cqlshlib/copyutil.so文件，如果有文件copyutil.c也删除掉就可以了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2016/06/18/cassandra-change-dc-rack-name/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/06/18/cassandra-change-dc-rack-name/" class="post-title-link" itemprop="url">更改cassandra集群数据中心和机架(rack)名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-06-18 11:10:25" itemprop="dateCreated datePublished" datetime="2016-06-18T11:10:25+08:00">2016-06-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>为了防止意外，cassandra不允许更改节点的数据中心和机架名字。会有类似错误提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[main\] <span class="number">2016</span>-<span class="number">06</span>-<span class="number">18</span> <span class="number">11</span>:<span class="number">01</span>:<span class="number">40</span>,<span class="number">730</span> CassandraDaemon.java:<span class="number">638</span> - Cannot start node <span class="keyword">if</span> snitch<span class="string">&#x27;s </span></span><br><span class="line"><span class="string">data center (DC1) differs from previous data center (datacenter1). Please fix the snitch configuration, </span></span><br><span class="line"><span class="string">decommission and rebootstrap this node or use the flag -Dcassandra. ignore_dc=true.</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你知道你在做什么，可以添加两个JVM参数cassandra.ignore_rack和cassandra.ignore_dc来更改数据中心和机架的名字。</p>
-<p>编辑/etc/cassandra/cassandra-env.sh文件,添加JVM参数:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JVM_OPTS=<span class="string">&quot;$JVM_OPTS -Dcassandra.ignore_dc=true -Dcassandra.ignore_rack=true&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/35056986/failed-to-start-dse-solr-node">failed to start dse solr node</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

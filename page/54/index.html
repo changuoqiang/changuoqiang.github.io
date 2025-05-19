@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,495 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/22/bash-here-doc-indent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/22/bash-here-doc-indent/" class="post-title-link" itemprop="url">Bash heredoc界定终止符缩进</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-22 16:01:10" itemprop="dateCreated datePublished" datetime="2014-04-22T16:01:10+08:00">2014-04-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>即时文档(heredoc)的界定符是可以自定义的,但一般习惯上使用EOF。<br>界定符的终止符有一个限制,终止符必须放到行首,后面也不能有任何空白,有时候不缩进会很不美观。</p>
+<p>这时候可以这样来使终止符EOF可以使用TAB缩进:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo</span><br><span class="line"> cat &lt;&lt;-EOF</span><br><span class="line"> test</span><br><span class="line"> EOF</span><br></pre></td></tr></table></figure>
+
+<p>在设定终止符时加一个横线,也就是使用<code>&lt;&lt;-</code><br>但这里还有一个坑,即使是这样写,EOF缩进时也只能使用TAB字符而不能使用任何其他空白字符。<br>我的vim配置里使用了expandtab来将tab自动替换为空格,因此踩上了这个大坑,无论如何都提示错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">warning: here-<span class="built_in">document</span> at line xxx delimited by end-<span class="keyword">of</span>-file (wanted \<span class="string">`EOF&#x27;)</span></span><br><span class="line"><span class="string">syntax error: unexpected end of file</span></span><br></pre></td></tr></table></figure>
+
+<p>这时候只要输入真正的TAB字符就可以了,<code>Ctrl+V+TAB</code>,windows下要用<code>Ctrl+Q+TAB</code></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/21/git-remote-branch-tag/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/21/git-remote-branch-tag/" class="post-title-link" itemprop="url">git操作远程分支和tag</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-21 21:41:58" itemprop="dateCreated datePublished" datetime="2014-04-21T21:41:58+08:00">2014-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>查看远程分支</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -av</span><br><span class="line">* devel <span class="number">86e9595</span> Merge branch <span class="string">&#x27;guoqiang&#x27;</span> into devel</span><br><span class="line"> lifeng dbd7a71 增加流程图绘制菜单</span><br><span class="line"> remotes/origin/HEAD -&gt; origin/devel</span><br><span class="line"> remotes/origin/devel <span class="number">86e9595</span> Merge branch <span class="string">&#x27;guoqiang&#x27;</span> into devel</span><br><span class="line"> remotes/origin/lifeng dbd7a71 增加流程图绘制菜单</span><br><span class="line"> remotes/origin/master d025ce0 Merge branch <span class="string">&#x27;devel&#x27;</span></span><br><span class="line"> remotes/origin/minli 1fa16ba <span class="string">&#x27;test&#x27;</span></span><br><span class="line"> remotes/origin/zjl 72aa56a test2</span><br></pre></td></tr></table></figure>
+<p>远程分支会用红颜色显示</p>
+<p><strong>删除远程分支</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -r -d origin/branch-name</span><br></pre></td></tr></table></figure>
+<p>或者推送一个空的分支到远程分支</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :branch_to_delete</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除远程tag</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin --<span class="keyword">delete</span> tag tag_to_delete</span><br></pre></td></tr></table></figure>
+<p>或者用一个空的tag覆盖远程tag</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :refs/tags/tag_to_delete</span><br></pre></td></tr></table></figure>
+
+<p><strong>重命名远程分支</strong><br>先删除远程分支,然后重命名本地分支,然后将重命名后的分支推送到远程。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -m old_name new_name</span><br></pre></td></tr></table></figure>
+
+<p><strong>本地tag推送到远程</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取远程tag</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch origin tag tag_name</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://zengrong.net/post/1746.htm">GIT查看、删除、重命名远程分支和TAG</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/21/git-reset-revert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/21/git-reset-revert/" class="post-title-link" itemprop="url">git reset与revert</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-21 10:34:21" itemprop="dateCreated datePublished" datetime="2014-04-21T10:34:21+08:00">2014-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>reset和revert都可以修改历史提交,但二者的区别是很大的。</p>
+<p><strong>reset</strong><br>git reset - Reset current HEAD to the specified state</p>
+<p>对于撤销提交,git reset的命令格式如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset \[--soft --mixed --hard --merge --keep\] \[-q\] \[&lt;commit&gt;\]</span><br></pre></td></tr></table></figure>
+
+<p>这种形式的reset会将当前分支的头设置到指定的commit，并且根据不同的模式可能会更新索引区域(使用指定commit的目录树)和工作树。如果省略模式参数,则默认为<code>--mixed</code>,模式只能设置为以下值之一:</p>
+<ul>
+<li>  <code>--soft</code><br>不修改索引区域(staging area)和工作目录(woring tree)，直接将当前分支的头设置为commit。 </li>
+<li>  <code>--mixed</code><br>使用commit的目录树重置索引区域,当前工作树保持不变。因此工作树中修改的文件需要重新添加到索引区域才能提交。</li>
+<li>  <code>--hard</code><br>使用commit的目录树重设索引区域和工作树。完全丢弃commit之后的所有修改。 </li>
+<li>  <code>--merge</code><br>使用commit的目录树重设索引区域,并且更新工作树中在commit和HEAD之间存在差异的文件,但是不更新工作树中索引区域与工作树之间存在差异的文件。<br>如果一个文件在commit和有修改但未将修改更新到索引区域的文件之间存在差异,则撤销会被终止。</li>
+<li>  <code>--keep</code><br>使用commit的目录树重设索引区域,并且更新工作树中在commit和HEAD之间存在差异的文件。</li>
+</ul>
+<p><strong>revert</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git revert &lt;commit&gt;...</span><br></pre></td></tr></table></figure>
+<p>git revert用于反转提交,执行evert命令时要求工作树必须是干净的。git revert用一个新提交来消除一个历史提交所做的任何修改。</p>
+<p><strong>区别</strong></p>
+<p>reset会将历史提交直接撤销掉,不会保留提交历史。而revert会增加一个新的提交来反转指定的历史提交所做的修改,保留完整的提交历史,但被反转的提交相当于没对代码库做任何修改。简单来说,一次提交修改了代码库,revert后另一个提交把对应的修改恢复了原样。</p>
+<p>如果comit已经push到远程服务器,要慎用甚至最好不要用reset来撤销修改,除非你真的知道你在做什么。这时候用revert是比较合适的。如果这时候执行git push,会有错误提示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">To gitsvr:xxx</span><br><span class="line"> ! \[rejected\] devel -&gt; devel (non-fast-forward)</span><br><span class="line">error: failed to push some refs to <span class="string">&#x27;gitsvr:xxx&#x27;</span></span><br><span class="line">hint: Updates were rejected because the tip <span class="keyword">of</span> your current branch is behind</span><br><span class="line">hint: its remote counterpart. Integrate the remote changes (e.g.</span><br><span class="line">hint: <span class="string">&#x27;git pull ...&#x27;</span>) before pushing again.</span><br><span class="line">hint: See the <span class="string">&#x27;Note about fast-forwards&#x27;</span> <span class="keyword">in</span> <span class="string">&#x27;git push --help&#x27;</span> <span class="keyword">for</span> details.</span><br></pre></td></tr></table></figure>
+<p>如果你确信你push到远程服务器的提交没有别人在引用,比如就你自己在使用代码库,可以强制更新远程代码库:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -f</span><br></pre></td></tr></table></figure>
+<p>如果你的强制撤销会影响到别人，就应该使用git revert了。</p>
+<p><strong>git reset后悔药</strong> </p>
+<p>git reset后还能恢复吗？只要提交对象还在代码库中存在就可以恢复,因为只不过是HEAD指针被移动了而已,可以重新移动到原来的提交对象。<br>使用git reflog查看操作历史，找到之前 HEAD 的 hash 值，然后<code>git reset --hard</code>到那个hash就可以了。</p>
+<p>References:<br>[1]man git</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/20/mac-install-eclipse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/20/mac-install-eclipse/" class="post-title-link" itemprop="url">Mac安装Eclipse</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-20 21:15:37" itemprop="dateCreated datePublished" datetime="2014-04-20T21:15:37+08:00">2014-04-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>系统为mavericks</p>
+<p>下载Mac OS X(Cocoa 64)版本的Eclipse IDE for Java EE Developers，当前版本为Kepler。</p>
+<p>然后将其解压到/opt目录下就算完成了安装</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /opt</span><br><span class="line">$ sudo tar zxvf ~<span class="regexp">/Downloads/</span>eclipse-jee-kepler-SR2-macosx-cocoa-x86_64.tar.gz -C /opt</span><br></pre></td></tr></table></figure>
+
+<p>安装自带了Eclipse.app,将其从finder中拖到dock中的Lauchpad图标上就可以将其加入到Lauchpad中,也可以直接将其拖到dock中。或许将其直接拖放到Applications文件夹中也可以。</p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/04/19/mac-tomcat-port-80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2014/04/19/mac-tomcat-port-80/" class="post-title-link" itemprop="url">mac系统tomcat使用80端口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2014-04-19 22:55:03" itemprop="dateCreated datePublished" datetime="2014-04-19T22:55:03+08:00">2014-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>mac与linux一样,1024以下的端口为特权端口,只有root用户才有权监听。</p>
+<p>因此要使用80端口要么使用root启动tomcat,要么使用端口转发。</p>
+<p><strong>使用ipfw(Internet Protocol Firewall)设置端口转发</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ipfw add 100 fwd 127.0.0.1,8080 tcp from any to any 80 in</span><br></pre></td></tr></table></figure>
+
+<p>不过ipfw已经被标记为废弃状态。</p>
+<p><strong>使用pf(packet filter)设置端口转发</strong></p>
+<ol>
+<li> 创建anchor文件<br>/etc/pf.anchors/tomcat<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdr pass on lo0 inet proto tcp <span class="keyword">from</span> any to <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">80</span> -&gt; <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> port <span class="number">8080</span></span><br></pre></td></tr></table></figure></li>
+<li> 测试anchor文件<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pfctl -vnf /etc/pf.anchors/tomcat</span><br></pre></td></tr></table></figure></li>
+<li> 添加到主配置文件<br>pf启动时会自动装载/etc/pf.conf文件,因此将anchor文件链接到/etc/pf.conf,转发规则就会自动建立了。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rdr-anchor <span class="string">&quot;tomcat-forwarding&quot;</span></span><br><span class="line">load anchor <span class="string">&quot;tomcat-forwarding&quot;</span> <span class="keyword">from</span> <span class="string">&quot;/etc/pf.anchors/tomcat&quot;</span></span><br></pre></td></tr></table></figure>
+注意要紧随文件中现有的rdr-anchor后面添加上面两行</li>
+<li> 打开pf<br>pf默认是关闭的。可以使用以下命令启动pf:<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pfctl -ef /etc/pf.conf</span><br></pre></td></tr></table></figure>
+也可以使用其他配置文件启动pf。</li>
+</ol>
+<p>也可以修改LaunchDaemons来使pf开机自动打开。<br>/System/Library/LaunchDaemons/com.apple.pfctl.plist<br>[xml]<br><key>ProgramArguments</key><br><array><br><string>pfctl</string><br><string>-e</string><br><string>-f</string><br><string>/etc/pf.conf</string><br></array><br>[/xml]<br>添加的为-e参数,即enable。<br>有一点一定要<strong>注意</strong>,-f和/etc/pf.conf这两个参数不能被打断，因为-f必须紧跟一个文件参数，所以说添加-e参数时不要打断-f参数，否则开机不会自动启动pf，切记。</p>
+<ol start="6">
+<li> 跨接口转发<br>如果需要跨接口转发，则需设置系统参数：<br>/etc/sysctl.conf<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.inet.ip.forwarding=<span class="number">1</span></span><br><span class="line">net.inet6.ip6.forwarding=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+这与linux一致。</li>
+</ol>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://gist.github.com/kujohn/7209628">Port Forwarding in Mavericks</a></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -761,429 +1250,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/29/5372/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/29/5372/" class="post-title-link" itemprop="url">Untitled Post - 48</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-29 22:13:37" itemprop="dateCreated datePublished" datetime="2014-03-29T22:13:37+08:00">2014-03-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>macbook air上没有右CRTL键,vim里面使用CTRL+F翻页简直没法用了。而在mac上vim里重新映射option键(ALT)却无法工作,参数winaltkeys没用的,因为根本就不使用vim的菜单,都是光秃秃的窗口,linux上重新映射ALT键没问题的。只好在mba上全局性的修改键盘映射,<code>System Preferences -&gt; Keyboard -&gt; Modifier Keys</code>将Control和Option互换,勉强凑合用吧。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/28/5367/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/28/5367/" class="post-title-link" itemprop="url">Untitled Post - 47</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-28 20:46:51" itemprop="dateCreated datePublished" datetime="2014-03-28T20:46:51+08:00">2014-03-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>mac os x咋这样尼,想让用户登录时执行一个脚本,写到 <del>/.profile里竟然不执行,你默认的shell是bash啊,亲！然后需要各种方法执行一个用户登录脚本,麻烦死了,最后将登录脚本丢到login items里面,也勾选了hide选项,登录时竟然还有一个shell窗口一闪而过。<br>还有啊,打开非登录交互式终端竟然也不执行</del>/.bashrc,你这是bash吗???幸好~/.bash_profile还会被执行,完全不如linux好用啊！</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">MAC平台PAC文件编写和自动代理配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-27 23:38:17" itemprop="dateCreated datePublished" datetime="2014-03-27T23:38:17+08:00">2014-03-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Internet/" itemprop="url" rel="index"><span itemprop="name">Internet</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>使用PAC(Proxy auto-config)可以使用户代理根据不同的URL采用不同的代理访问策略。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/27/mac%E5%B9%B3%E5%8F%B0pac%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%92%8C%E8%87%AA%E5%8A%A8%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/27/git-flow/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/27/git-flow/" class="post-title-link" itemprop="url">git私有小团队工作流程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-27 10:21:28" itemprop="dateCreated datePublished" datetime="2014-03-27T10:21:28+08:00">2014-03-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>git的工作流程可以多种多样。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/27/git-flow/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2014/03/26/gitolite-v3-install-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2014/03/26/gitolite-v3-install-setup/" class="post-title-link" itemprop="url">gitolite v3安装配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2014-03-26 08:55:51" itemprop="dateCreated datePublished" datetime="2014-03-26T08:55:51+08:00">2014-03-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>gitolite用于git版本库的权限控制。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2014/03/26/gitolite-v3-install-setup/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/53/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span><a class="page-number" href="/page/55/">55</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/55/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/53/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span><a class="page-number" href="/page/55/">55</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/55/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

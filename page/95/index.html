@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,422 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/21/remove-link-local-route-entry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/12/21/remove-link-local-route-entry/" class="post-title-link" itemprop="url">ubuntu 9.10 删除link-local 路由表项</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-12-21 21:19:48" itemprop="dateCreated datePublished" datetime="2009-12-21T21:19:48+08:00">2009-12-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>route -n 时你总能看到这样一条路由</p>
+<p>Destination Gateway Genmask Flags Metric Ref Use Iface<br>169.254.0.0 0.0.0.0 255.255.0.0 U 1000 0 0 eth0</p>
+<p>由RFC3330 可知 169.254.0.0/16 为本地链路地址</p>
+<p>“169.254.0.0/16 - This is the “link local” block. It is allocated for<br> communication between hosts on a single link. Hosts obtain these<br> addresses by auto-configuration, such as when a DHCP server may not<br> be found.”</p>
+<p>当系统配置为使用动态地址，而找不到DHCP服务器时，系统会为本机设置一个169.254.X.X的地址。<br>这个路由表项是有zeroconf 协议Daemon 程序添加的,我们一般是用不到的</p>
+<p>只是注释掉/etc/networks 里面的link-local 项是无法去掉该路由表项的,/etc/networks 与/etc/hosts<br>文件的作用差不多,是用来关联网络号(数字格式)和网络名(字符格式)的,注释掉该条目后,只是169.254.0.0<br>无法解析为网络名link-local了.</p>
+<p>可以用以下命令来删除zeroconf 相关的程序包<br>sudo apt-get remove avahi-autoipd –purge<br>下次启动机器后这条路由就不会自动出现了.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/12/21/blog-reload/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/12/21/blog-reload/" class="post-title-link" itemprop="url">博客重新上线</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-12-21 11:22:05" itemprop="dateCreated datePublished" datetime="2009-12-21T11:22:05+08:00">2009-12-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>　　世界是普遍联系的。<br>　　上个月，CCAV曝光了手机色情，本来这种事情和我们这些安分守己的P民是没有什么牵扯的。做梦也不会梦到和我们有什么瓜葛。但就在上个月末的某一天，美梦中醒来发现博客无法访问了，其他几个站点也都无法访问了。心中暗自惴惴，不知道这次又错在哪里了。traceroute发现到ip的路由出现了问题，也就是ip被封了，闷。记得前几日那备案核查的打过电话，核实的信息都是无误的，而且对方也说没问题，怎么这就又给下线了呢。电话打到接入商那里才明白，原来也是拜手机色情所赐，先强制下线再说，给我的理由是“网页语言为英文，无法进行核实。” 诸位，这也能算是理由吗？是的，那个ip上面是有英文站，难道你们看不懂反要来怪我吗？是不是色情难道还需要看懂英文吗？这种作风实在太彪悍了，无语。这种环境下和谁去讲理呢。我们是鱼肉，人家是刀俎，哪天想切就切呗。<br>　　没几天，这cn域名也开始整治了，据说就算你跑到国外注册域名也逃不过censorship，生猛啊。幸亏原来的com域名都转移到name.com了，看来这cn域名也用不了几天了，先有心理准备吧。<br>　　如果互联网、IT是先进生产力的话，是不是这先进的生产力和落后的生产关系之间很矛盾呢？不然怎么理解呢，让我们拭目以待吧。<br>　　这几天购买了<a target="_blank" rel="noopener" href="http://www.diahosting.com/client/aff.php?aff=190">diahosting</a>的Xen VPS，开始折腾nginx了，apache实在太占用资源了。<br> 　　实在是受够了这些烦心事，从备案开始就没消停过，从此以后就在国外流浪吧，天知道哪天那些阴魂不散的东西会搞出什么新花样来。<br>　　不过，就算你跑到国外，说不定也要被墙的，随它去吧。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/11/24/debian-lenny-backports/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/11/24/debian-lenny-backports/" class="post-title-link" itemprop="url">Debian lenny backports源</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-11-24 20:45:37" itemprop="dateCreated datePublished" datetime="2009-11-24T20:45:37+08:00">2009-11-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>backport的含义是“向后移植”，就是将软件新版本的某些功能移植到旧版本上来,这种行为就称为backport。</p>
+<p>Debian向来以稳定性著称，所以就存在一个问题，官方源分发的软件版本比软件本身的版本总是要慢一拍，所以就有了backports源。backports主要从testing源，部分安全更新从unstable源重新编译包，使这些包不依赖于新版本的库就可以在debian的stable发行版上面运行。所以backports是stable和testing的一个折衷。</p>
+<p>backports源的使用方法如下：<br>在/etc/apt/sources.list增加下面的行<br>deb <a target="_blank" rel="noopener" href="http://www.backports.org/debian/">http://www.backports.org/debian/</a> lenny-backports main contrib non-free<br>deb-src <a target="_blank" rel="noopener" href="http://www.backports.org/debian/">http://www.backports.org/debian/</a> lenny-backports main contrib non-free<br>然后安装backports源的GnuPG archive key<br>sudo apt-get update<br>sudo apt-get install debian-backports-keyring<br>就可以正常的使用backports源了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/11/18/static-semantics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/11/18/static-semantics/" class="post-title-link" itemprop="url">C/C++ static语义(semantics)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-11-18 11:00:21" itemprop="dateCreated datePublished" datetime="2009-11-18T11:00:21+08:00">2009-11-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Lang/" itemprop="url" rel="index"><span itemprop="name">Lang</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>　　static可以用来修饰变量(variant)和函数(function)。但static作用于普通变量/函数与类(calss)变量/函数的语义是不一样的。<br>　　static有两种基本的语义，第一种是存储方式(storage)，这种语义只作用于变量，不适用于函数，第二种是访问控制(Access Control)。<br>　　用static修饰一个普通变量有两层含义。其一是表示该变量的值在超出作用域范围后仍然有效，一般编译器将static变量放置到全局静态存储区，比如.data或.bss(Block Started by Symbol)节，这就是存储方式语义。其二是表示该变量只在声明的作用域范围内可以被访问，比如， 声明在一个文件作用域内的变量不能被其他文件访问，这就是访问控制语义。<br>　　用static来修饰普通函数的时候则只有一种语义，即访问控制，因为无论如何，函数总是要被编译器放置到.text节的。也就是说用static修饰的普通函数不能被其他文件内的代码访问。<br>　　C++中用static来修饰成员变量和函数的语义稍有不同，其含义表示这些变量或函数是属于整个类(class)而不特定于任何一个该类的对象(object),即使该类没有一个对象产生，仍然可用使用类来访问这些变量和函数。这是C++对C static语义的扩展。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/11/16/client-data-corrupt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/11/16/client-data-corrupt/" class="post-title-link" itemprop="url">VirtualBox主机(host)I/O负载过重导致客户机数据破坏(corruption)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2009-11-16 13:03:04" itemprop="dateCreated datePublished" datetime="2009-11-16T13:03:04+08:00">2009-11-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>先说一下主机和客户机配置<br>主机：4颗双核AMD 8218HE CPU,16G内存,windows 2003 R2 server x86<br>客户机：单颗CPU,1500MB内存,debian lenny amd64</p>
+<p>最近经常能遇到客户机运行迟缓(lag)，无法正常提供服务的情况，客户机的控制台一般有这样的提示：<br>end_request: I/O error,dev hda,sector xxxxxxxx(扇区号)<br>Buffer I/O error on device hda6,logical block xxx(块号)<br>…<br>日志文件/var/log/messages中有这样的消息：<br>Nov 16 10:54:06 debian kernel: [255938.816139] hda: dma_timer_expiry: dma status == 0x21<br>Nov 16 10:54:16 debian kernel: [255948.816121] hda: DMA timeout error<br>Nov 16 10:54:16 debian kernel: [255948.816174] hda: dma timeout error: status=0x48 { DriveReady DataRequest }<br>Nov 16 10:54:16 debian kernel: [255948.816183] ide: failed opcode was: unknown<br>Nov 16 10:54:16 debian kernel: [255948.816199] hda: DMA disabled<br>Nov 16 10:54:16 debian kernel: [255948.965023] ide0: reset: master: error (0x00?)</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2009/11/16/client-data-corrupt/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -676,427 +1092,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/10/29/ubuntu-9-10-offical-released/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/10/29/ubuntu-9-10-offical-released/" class="post-title-link" itemprop="url">Ubuntu 9.10(Karmic Koala)官方正式发布啦</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-10-29 22:58:28" itemprop="dateCreated datePublished" datetime="2009-10-29T22:58:28+08:00">2009-10-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>终于等到这一刻，呵呵<br>明天本本T400的系统就全新安装到Ubuntu 9.10 AMD64版本,64位应该很爽吧，除了该死的ATI卡,不行就切换到Intel的卡子了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/10/20/xmarks-banned/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/10/20/xmarks-banned/" class="post-title-link" itemprop="url">xmarks也被\"和谐\"掉</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-10-20 23:37:38" itemprop="dateCreated datePublished" datetime="2009-10-20T23:37:38+08:00">2009-10-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>　　大约从前天开始xmarks开始不正常，无法同步，总以为只是xmarks服务器在维护什么的，很快就能用了，毕竟用了这么久，都习惯了。好几天过去了，还是不能用，google一下，原来大家都无法同步，原来是被“墙”了，真不敢相信，这么个有用的工具，招谁惹谁了。现在连骂都不想骂了，真应了那句话，“天朝有风险，投胎需谨慎”。<br>　　xmarks之后，下一个遭毒手的会是谁呢？</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/10/18/ubuntu-g1-adhoc-wifi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/10/18/ubuntu-g1-adhoc-wifi/" class="post-title-link" itemprop="url">ubuntu系统HTC G1通过笔记本wifi ad hoc网络共享宽带上网</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-10-18 17:13:46" itemprop="dateCreated datePublished" datetime="2009-10-18T17:13:46+08:00">2009-10-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>因为没有使用无线路由器，两台笔记本一直使用wifi的ad hoc模式网络互联，xp共享ubuntu的wifi上网。新入手黑色HTC G1，自然也想利用笔记本的ad hoc wifi网络共享上网，没必要再购置无线路由器。幸好G1支持wifi的ad hoc网络模式，拥有宽带的笔记本使用32bits ubuntu 9.04，记叙设置方法如下。</p>
-<p>1、参考<a target="_blank" rel="noopener" href="http://modmygphone.com/forums/showthread.php?t=22681">Connect G1 to Ad-hoc network SOLVED</a>弄好G1端的wifi设置</p>
-<p>2、因为我的ad hoc网络没有启用DHCP,笔记本ubuntu无线网卡wlan0的静态IP设置为10.42.43.1,mask为255.255.255.0,网关未设，所以设置G1的wifi也使用静态IP。G1的“wifi设置-&gt;高级”里面，这样设置，IP在一个网段即可，我设置为10.42.43.8,掩码为255.255.255.0,网关设置为ubuntu wlan0的IP，也就是10.42.43.1。可以根据个人情况自由选择私有网络地址。</p>
-<p>3、默认设置下， ubuntu是不在多个接口间转发数据的，也就是没有开启路由功能，通过修改/etc/sysctrl.conf来打开IP转发功能。使net.ipv4.ip_forward=1就可以了，这是启用ipv4的转发功能，如果要启用ipv6的转发功能，使net.ipv6.conf.all.forwarding=1就可以了。这样ubuntu主机上来自ad hoc网络的请求就可以被路由到其他网络接口了。但是现在G1还不能访问internet,因为我们使用的是私有ip地址，是不能在公网上路由的，必须要进行NAT才可以。可以使用iptables来设置NAT规则，打开rc.local，在exit 0之前添加下面这几句:<br>iptables -F<br>iptables -P INPUT ACCEPT<br>iptables -P FORWARD ACCEPT<br>iptables -t nat -A POSTROUTING -s 10.42.43.0/24 -o ppp0 -j MASQUERADE</p>
-<p>其中-s 10.42.43.0/24可以根据你使用的私有IP段和掩码位数来设置，-o ppp0根据你使用的上网宽带接口设置，我使用pppoe拨号，所以此处设置为ppp0。</p>
-<p>ubuntu重启一下应该就可以了。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/09/27/antibanned/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/09/27/antibanned/" class="post-title-link" itemprop="url">use bridges to antibanned for tor on debian/ubuntu linux</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-09-27 19:05:44" itemprop="dateCreated datePublished" datetime="2009-09-27T19:05:44+08:00">2009-09-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>tor was banned recently by “some fucking reason”,all tor tcp connections stay at SYN_SENT state,that is,the packets is eated somewhere,so the connections can’t be established.oh fuck! </p>
-<p>to reslove this fucking matter,following the steps list below.</p>
-<p>step 1:<br>send a mail with subject and content all “get bridges” to <a href="mailto:&#98;&#114;&#x69;&#x64;&#x67;&#x65;&#x73;&#x40;&#x74;&#x6f;&#x72;&#x70;&#x72;&#111;&#106;&#x65;&#x63;&#116;&#46;&#111;&#x72;&#103;">&#98;&#114;&#x69;&#x64;&#x67;&#x65;&#x73;&#x40;&#x74;&#x6f;&#x72;&#x70;&#x72;&#111;&#106;&#x65;&#x63;&#116;&#46;&#111;&#x72;&#103;</a>,after a moment,the bridges list will be delivered to your mailbox.the bridges list looks like this</p>
-<p>bridge ip:port</p>
-<p>it can be more than one bridges.</p>
-<p>step 2:<br>open the /etc/tor/torrc file,add tow lines with contents “UseBridges 1” and “UpdateBridgesFromAuthority 1” separately at the last.whereafter,add the bridges you received.finally looks like this<br>UseBridges 1<br>UpdateBridgesFromAuthority 1<br>bridge ip:port</p>
-<p>step 3:<br>issue the command<br>sudo /etc/init.d/tor restart<br>on terminal to restart the tor and it will be ok</p>
-<p>the great fucking wall is damn.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2009/09/21/server-name-indication/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/09/21/server-name-indication/" class="post-title-link" itemprop="url">服务器名字指示SNI(Server Name Indication)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2009-09-21 20:11:26" itemprop="dateCreated datePublished" datetime="2009-09-21T20:11:26+08:00">2009-09-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Server Name Indication是用来改善SSL(Secure Socket Layer)和TLS(Transport Layer Security)的一项特性。它允许客户端在服务器端向其发送证书之前请求服务器的域名。这对于在虚拟主机模式使用TLS是必要的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2009/09/21/server-name-indication/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/94/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><span class="page-number current">95</span><a class="page-number" href="/page/96/">96</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/96/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/94/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/94/">94</a><span class="page-number current">95</span><a class="page-number" href="/page/96/">96</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/96/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

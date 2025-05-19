@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,550 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/10/01/rman-configure%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">rman configure命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-10-01 07:33:13" itemprop="dateCreated datePublished" datetime="2019-10-01T07:33:13+08:00">2019-10-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>rman备份时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RMAN-<span class="number">03009</span>: failure <span class="keyword">of</span> Control File and SPFILE Autobackup command on ORA_DISK_1 channel at <span class="number">10</span>/<span class="number">01</span>/<span class="number">2019</span> <span class="number">00</span>:<span class="number">31</span>:<span class="number">53</span></span><br><span class="line">ORA-<span class="number">19504</span>: failed to create file <span class="string">&quot;\\\\192.168.0.82\\SHARE\\TT\\CTL_C-1276927241-20191001-00&quot;</span></span><br><span class="line">ORA-<span class="number">27056</span>: could not <span class="keyword">delete</span> file</span><br><span class="line">OSD-<span class="number">04029</span>: unable to get file attributes</span><br><span class="line">O/S-<span class="built_in">Error</span>: (OS <span class="number">53</span>) 找不到网络路径。</span><br></pre></td></tr></table></figure>
+<p>是因为rman配置了控制文件自动备份，但是设置的自动备份路径早已经失效了<br>所以需要关闭控制文件自动备份配置，并恢复默认设置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP OFF;</span><br><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>CLEAR用于恢复默认设置，比如控制文件自动备份的默认设置是OFF，所以也可以这样关闭控制文件自动备份：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; CONFIGURE CONTROLFILE AUTOBACKUP CLEAR;</span><br></pre></td></tr></table></figure>
+
+<p>查看全部配置选项：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; SHOW ALL;</span><br><span class="line">RMAN configuration parameters are:</span><br><span class="line">CONFIGURE RETENTION POLICY TO REDUNDANCY <span class="number">1</span>;</span><br><span class="line">CONFIGURE BACKUP OPTIMIZATION ON;</span><br><span class="line">CONFIGURE DEFAULT DEVICE TYPE TO DISK; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP OFF; # default</span><br><span class="line">CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO &#x27;%F&#x27;; # default</span><br><span class="line">CONFIGURE DEVICE TYPE DISK PARALLELISM 1 BACKUP TYPE TO BACKUPSET; # default</span><br><span class="line">CONFIGURE DATAFILE BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE ARCHIVELOG BACKUP COPIES FOR DEVICE TYPE DISK TO 1; # default</span><br><span class="line">CONFIGURE CHANNEL DEVICE TYPE DISK MAXPIECESIZE <span class="number">30</span> G;</span><br><span class="line">CONFIGURE MAXSETSIZE TO UNLIMITED; # default</span><br><span class="line">CONFIGURE ENCRYPTION FOR DATABASE OFF; # default</span><br><span class="line">CONFIGURE ENCRYPTION ALGORITHM &#x27;AES128&#x27;; # default</span><br><span class="line">CONFIGURE ARCHIVELOG DELETION POLICY TO NONE; # default</span><br><span class="line">CONFIGURE SNAPSHOT CONTROLFILE NAME TO &#x27;E:\\ORACLE\\PRODUCT\\10.2.0\\DB_1\\DATABASE\\SNCFORCL.ORA&#x27;; # default</span><br></pre></td></tr></table></figure>
+
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://www.juliandyke.com/Research/RMAN/ConfigureCommand.php">RMAN Configure Command</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/09/30/redis-install-configuration/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/30/redis-install-configuration/" class="post-title-link" itemprop="url">redis sentinel主从复制高可用安装配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-30 15:29:29" itemprop="dateCreated datePublished" datetime="2019-09-30T15:29:29+08:00">2019-09-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>redis sentinel与cluster是不同的，虽然都是分布式系统，sentinel只是实现高可用，而cluster则可以进一步实现数据分片和负载均衡。</p>
+<p>sentinel配置至少需要三个节点。<br>后面采用如下的配置,三个独立的节点，数字代表节点编号，M代表Master，S代表Sentinel，R代表Replica</p>
+<pre><code>   +----+
+    M1 
+    S1 
+   +----+</code></pre>
+<p>+—-+        +—-+<br> R2 —-+—- R3<br> S2           S3<br>+—-+         +—-+</p>
+<p>Configuration: quorum = 2</p>
+<p><strong>安装</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install redis-server redis-sentinel</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-server配置</strong></p>
+<p>配置文件为/etc/redis/redis.conf<br>所有的server节点注释掉bind本地回环地址这一行，并且将protect-mode设置为no</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br><span class="line">protect-mode no</span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>slave节点2和3需要添加replicaof配置项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replicaof ip_of_master <span class="number">6379</span></span><br></pre></td></tr></table></figure>
+
+<p>diskless配置</p>
+<p>如果redis只是用于存储session，可以无需持久化到硬盘，进一步提高性能</p>
+<p>注释掉配置文件中的所有save行，replica参数设置如下即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># save 900 1</span><br><span class="line"># save 300 10</span><br><span class="line"># save 60 10000</span><br><span class="line">repl-diskless-sync yes</span><br><span class="line">repl-diskless-sync-delay <span class="number">0</span></span><br><span class="line">repl-disable-tcp-nodelay no</span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-sentinel配置</strong><br>配置文件为/etc/redis/sentinel.conf<br>注释掉</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#bind <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> ::<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>请注意网络安全风险，如果节点直连互联网，可以添加安全认证，或者只bind到内部网络地址<br>sentinel monitor配置为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster ip_of_master <span class="number">6379</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>其他参数，比如down-after-milliseconds，failover-timeout，parallel-syncs等都使用系统默认值即可。</p>
+<p>注意：sentinel启动时会自动生成sentinel myid用于在集群中标识本实例，生成后只要不删除会一直使用这个id，如果其他节点复制本节点的配置文件，注意要注释或删除掉已经生成的myid，因为sentinel集群中所有的实例要有不同的myid</p>
+<p><strong>sentinel集群状态</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">$ redis-cli -p <span class="number">26379</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel master mymaster</span><br><span class="line"> <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;mymaster&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;eb70c88ffcf007fd54032e85fc35e500dfbbb2a0&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"><span class="number">10</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"><span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"><span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"><span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"><span class="number">18</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"><span class="number">20</span>) <span class="string">&quot;173&quot;</span></span><br><span class="line"><span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"><span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"><span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"><span class="number">24</span>) <span class="string">&quot;2289&quot;</span></span><br><span class="line"><span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"><span class="number">26</span>) <span class="string">&quot;master&quot;</span></span><br><span class="line"><span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"><span class="number">28</span>) <span class="string">&quot;6058526968&quot;</span></span><br><span class="line"><span class="number">29</span>) <span class="string">&quot;config-epoch&quot;</span></span><br><span class="line"><span class="number">30</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"><span class="number">31</span>) <span class="string">&quot;num-slaves&quot;</span></span><br><span class="line"><span class="number">32</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">33</span>) <span class="string">&quot;num-other-sentinels&quot;</span></span><br><span class="line"><span class="number">34</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">35</span>) <span class="string">&quot;quorum&quot;</span></span><br><span class="line"><span class="number">36</span>) <span class="string">&quot;2&quot;</span></span><br><span class="line"><span class="number">37</span>) <span class="string">&quot;failover-timeout&quot;</span></span><br><span class="line"><span class="number">38</span>) <span class="string">&quot;180000&quot;</span></span><br><span class="line"><span class="number">39</span>) <span class="string">&quot;parallel-syncs&quot;</span></span><br><span class="line"><span class="number">40</span>) <span class="string">&quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到当前的master节点信息，num-slaves表明有几个replica，num-other-sentinels表明除本节点外有几个其他的sentinel节点。</p>
+<p>relipa节点的信息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel slaves mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.18:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;f8213930280bbf28202922474c045bb225ed0685&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;3994&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058776146&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825725&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;192.168.0.17:6379&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.17&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;dc208df92659b72d94e5da0335cc6bc1b9fe814b&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;432&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;info-refresh&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;6361&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;role-reported&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;slave&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;role-reported-time&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;6058766018&quot;</span></span><br><span class="line"> <span class="number">29</span>) <span class="string">&quot;master-link-down-time&quot;</span></span><br><span class="line"> <span class="number">30</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">31</span>) <span class="string">&quot;master-link-status&quot;</span></span><br><span class="line"> <span class="number">32</span>) <span class="string">&quot;ok&quot;</span></span><br><span class="line"> <span class="number">33</span>) <span class="string">&quot;master-host&quot;</span></span><br><span class="line"> <span class="number">34</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">35</span>) <span class="string">&quot;master-port&quot;</span></span><br><span class="line"> <span class="number">36</span>) <span class="string">&quot;6379&quot;</span></span><br><span class="line"> <span class="number">37</span>) <span class="string">&quot;slave-priority&quot;</span></span><br><span class="line"> <span class="number">38</span>) <span class="string">&quot;100&quot;</span></span><br><span class="line"> <span class="number">39</span>) <span class="string">&quot;slave-repl-offset&quot;</span></span><br><span class="line"> <span class="number">40</span>) <span class="string">&quot;1250825169&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>sentinel节点的信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">26379</span>&gt; sentinel sentinels mymaster</span><br><span class="line"><span class="number">1</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.18&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;779c2860c9f27aa416ad40df9f7213389b410350&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;493&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"><span class="number">2</span>) <span class="number">1</span>) <span class="string">&quot;name&quot;</span></span><br><span class="line"> <span class="number">2</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">3</span>) <span class="string">&quot;ip&quot;</span></span><br><span class="line"> <span class="number">4</span>) <span class="string">&quot;192.168.0.19&quot;</span></span><br><span class="line"> <span class="number">5</span>) <span class="string">&quot;port&quot;</span></span><br><span class="line"> <span class="number">6</span>) <span class="string">&quot;26379&quot;</span></span><br><span class="line"> <span class="number">7</span>) <span class="string">&quot;runid&quot;</span></span><br><span class="line"> <span class="number">8</span>) <span class="string">&quot;4c74e99d150700d256712c66f139372c42247073&quot;</span></span><br><span class="line"> <span class="number">9</span>) <span class="string">&quot;flags&quot;</span></span><br><span class="line"> <span class="number">10</span>) <span class="string">&quot;sentinel&quot;</span></span><br><span class="line"> <span class="number">11</span>) <span class="string">&quot;link-pending-commands&quot;</span></span><br><span class="line"> <span class="number">12</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">13</span>) <span class="string">&quot;link-refcount&quot;</span></span><br><span class="line"> <span class="number">14</span>) <span class="string">&quot;1&quot;</span></span><br><span class="line"> <span class="number">15</span>) <span class="string">&quot;last-ping-sent&quot;</span></span><br><span class="line"> <span class="number">16</span>) <span class="string">&quot;0&quot;</span></span><br><span class="line"> <span class="number">17</span>) <span class="string">&quot;last-ok-ping-reply&quot;</span></span><br><span class="line"> <span class="number">18</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">19</span>) <span class="string">&quot;last-ping-reply&quot;</span></span><br><span class="line"> <span class="number">20</span>) <span class="string">&quot;483&quot;</span></span><br><span class="line"> <span class="number">21</span>) <span class="string">&quot;down-after-milliseconds&quot;</span></span><br><span class="line"> <span class="number">22</span>) <span class="string">&quot;30000&quot;</span></span><br><span class="line"> <span class="number">23</span>) <span class="string">&quot;last-hello-message&quot;</span></span><br><span class="line"> <span class="number">24</span>) <span class="string">&quot;454&quot;</span></span><br><span class="line"> <span class="number">25</span>) <span class="string">&quot;voted-leader&quot;</span></span><br><span class="line"> <span class="number">26</span>) <span class="string">&quot;?&quot;</span></span><br><span class="line"> <span class="number">27</span>) <span class="string">&quot;voted-leader-epoch&quot;</span></span><br><span class="line"> <span class="number">28</span>) <span class="string">&quot;0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>redis-service优化配置</strong></p>
+<p>1、TCP BACKLOG<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The TCP backlog setting <span class="keyword">of</span> <span class="number">511</span> cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value <span class="keyword">of</span> <span class="number">128.</span></span><br></pre></td></tr></table></figure>
+<p>查看当前配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/sys/net/core/somaxconn</span><br><span class="line"><span class="number">128</span></span><br></pre></td></tr></table></figure>
+<p>显然主机的tcp backlog设置过低了，不能很好的支持大量的并发连接，应该把对应的参数调高<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.core.somaxconn = <span class="number">10240</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>/etc/redis/redis.conf文件中修改tcp-backlog为4096或更高，但不能超过系统参数设置，重启redis后生效。</p>
+<p>2、overcommit_memory<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING overcommit_memory is set to <span class="number">0</span>! Background save may fail under low memory condition. To fix <span class="built_in">this</span> issue add <span class="string">&#x27;vm.overcommit_memory = 1&#x27;</span> to /etc/sysctl.conf and then reboot or run the command <span class="string">&#x27;sysctl vm.overcommit_memory=1&#x27;</span> <span class="keyword">for</span> <span class="built_in">this</span> to take effect.</span><br></pre></td></tr></table></figure>
+<p>一般在低内存条件时，此参数才会派上用场<br>系统参数文件/etc/sysctl.conf末尾添加：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.overcommit_memory = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>使其生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+
+<p>3、关闭透明巨页<br>/var/log/redis/redis-server.log中有警告:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING you have Transparent Huge Pages (THP) support enabled <span class="keyword">in</span> your kernel. This will create latency and memory usage issues <span class="keyword">with</span> Redis. To fix <span class="built_in">this</span> issue run the command <span class="string">&#x27;echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled&#x27;</span> <span class="keyword">as</span> root, and add it to your /etc/rc.local <span class="keyword">in</span> order to retain the setting after a reboot. Redis must be restarted after THP is disabled.</span><br></pre></td></tr></table></figure>
+<p>开启透明巨页会有些问题，可以通过grub传递内核参数来关闭透明巨页<br>/etc/default/grub文件中GRUB_CMDLINE_LINUX_DEFAULT中添加transparent_hugepage=never</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=<span class="string">&quot;quiet transparent_hugepage=never&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后更新grub配置，重启生效</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-grub</span><br><span class="line">$ sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>4、repl-backlog-size参数<br>这个参数是为replica保持数据的缓冲区大小，当replica离线时，使用此缓冲为其保存数据，当replica重新上线可以不用执行full sync，使用partial sync就可以了，默认设置为1MB，显然太小了，可以根据单位时间内业务数据多少、支持replica离线时间、内存大小等因素设置此参数，比如设置为16MB以上。</p>
+<p>5、client-output-buffer-limit参数</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://redis.io/topics/replication">Replication</a><br>[2]<a target="_blank" rel="noopener" href="https://redis.io/topics/sentinel">Redis Sentinel Documentation</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.csdn.net/angjunqiang/article/details/81190562">Redis Sentinel 与 Redis Cluster</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/09/29/standby%E6%95%B0%E6%8D%AE%E5%BA%93rman%E5%A4%87%E4%BB%BD%E9%94%99%E8%AF%AFrman-10006/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/29/standby%E6%95%B0%E6%8D%AE%E5%BA%93rman%E5%A4%87%E4%BB%BD%E9%94%99%E8%AF%AFrman-10006/" class="post-title-link" itemprop="url">standby数据库rman备份错误RMAN-10006</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-29 10:02:49" itemprop="dateCreated datePublished" datetime="2019-09-29T10:02:49+08:00">2019-09-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>在物理备库上执行rman备份时出现错误:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MAN-<span class="number">00601</span>: fatal error <span class="keyword">in</span> recovery manager</span><br><span class="line">RMAN-<span class="number">03004</span>: fatal error during execution <span class="keyword">of</span> command</span><br><span class="line">RMAN-10006: error running SQL statement: select sofar, context, start_time from v$session_longops where (start_time &gt; nvl(:1, sysdate-100) or start_time = nvl(:2, sysdate+100)) and sid = :3 and serial# = :4 and opname like &#x27;RMAN:%&#x27; order by start_time desc, context desc</span><br><span class="line">RMAN-<span class="number">10002</span>: ORACLE error: ORA-<span class="number">00000</span>: normal, successful completion</span><br></pre></td></tr></table></figure>
+
+<p>这是oracle的一个bug</p>
+<p>Metalink NoteID：1080134.1.<br>Cause<br>Unpublished Bug 4230058: FAIL TO CONNECT TO RMAN AFTER PHYSICAL STANDBY IS OPENED READ ONLY</p>
+<p>If the standby database is opened readonly and then managed recovery is restarted without bouncing the database, queries against v$session_longops will fail with:</p>
+<p>ORA-01219: database not open: queries allowed on fixed tables/views only</p>
+<p>RMAN likewise will fail trying to access this view with RMAN-10006 error.</p>
+<p>Solution<br>Restart the standby database after opening it in READ ONLY mode before restarting the Managed Recovery process.</p>
+<p>最简单的解决方案就是重启standby实例，还有一个方法是修改数据库参数，但是如果备库转换为主库，这个参数可能会有影响，所以还是重启实例最简单。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.oracle.com/knowledge/Oracle%20Database%20Products/1080134_1.html">RMAN backup of physical standby fails RMAN-10006 querying v$session_longops (Doc ID 1080134.1)</a><br>[2]<a target="_blank" rel="noopener" href="https://www.linuxidc.com/Linux/2013-09/90095.htm">Standby上执行RMAN报错RMAN-10006错误处理</a><br>[3]<a target="_blank" rel="noopener" href="http://blog.itpub.net/79499/viewspace-616835/">9208物理standby备份报错</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/09/25/oracle-10g-recover-primary-datafiles-by-standby-database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/25/oracle-10g-recover-primary-datafiles-by-standby-database/" class="post-title-link" itemprop="url">oracle 10g使用物理备库恢复主库损坏/丢失的数据文件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-25 13:54:48" itemprop="dateCreated datePublished" datetime="2019-09-25T13:54:48+08:00">2019-09-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p><strong>0 症状</strong></p>
+<p>oracle 10g dataguard主库某一数据文件发现有损坏，使用dbv检测数据文件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; dbv file=E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\db_1\\database\\afsts.dbf feedback=<span class="number">100</span></span><br><span class="line">....</span><br><span class="line">DBV-<span class="number">00102</span>: File I/O error on FILE (E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\db_1\\database\\afsts.dbf) during verification read operation (-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>操作系统中拷贝数据文件会出现错误”无法复制 AFSTS: 数据错误(循环冗余检查)。”，事件查看器中发现错误“设备 \Device\Harddisk1\DR1 有一个不正确的区块。”，数据文件有物理损坏。</p>
+<p>此时数据文件无法拷贝和删除，需要将数据文件离线，然后用chkdsk系统工具修复，或者使用“分区”右键属性里的”工具”-&gt;”查错”-&gt;“开始检查”,选中“自动修复文件系统错误”</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; chkdsk e: <span class="regexp">/F /</span>I /C</span><br></pre></td></tr></table></figure>
+<p>/I和/C用于跳过部分检查，减少扫描时间。<br>修复错误后，数据文件的内容可能已经不正确了，需要使用standby数据库数据文件恢复。</p>
+<p><strong>注：使用rman restore数据文件可以直接恢复，无需提前修复文件系统错误。</strong></p>
+<p><strong>1 修复</strong></p>
+<p>1.1 首先确保用于恢复的数据文件是没有损坏的</p>
+<p>备库端:</p>
+<p>a. dbv检查</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cmd&gt; dbv file=E:\\oracle\\product\\<span class="number">10.2</span><span class="number">.0</span>\\db_1\\database\\afsts.dbf feedback=<span class="number">100</span></span><br><span class="line">........</span><br><span class="line">Total Pages Examined : <span class="number">61440</span></span><br><span class="line">Total Pages Processed (Data) : <span class="number">70</span></span><br><span class="line">Total Pages Failing (Data) : <span class="number">0</span></span><br><span class="line">Total Pages Processed (Index): <span class="number">58217</span></span><br><span class="line">Total Pages Failing (Index): <span class="number">0</span></span><br><span class="line">Total Pages Processed (Other): <span class="number">1009</span></span><br><span class="line">Total Pages Processed (Seg) : <span class="number">0</span></span><br><span class="line">Total Pages Failing (Seg) : <span class="number">0</span></span><br><span class="line">Total Pages Empty : <span class="number">2144</span></span><br><span class="line">Total Pages Marked Corrupt : <span class="number">0</span></span><br><span class="line">Total Pages Influx : <span class="number">0</span></span><br><span class="line">Highest block SCN : <span class="number">1519113269</span> (<span class="number">2.1519113269</span>)</span><br></pre></td></tr></table></figure>
+<p>确保Total Pages Failing (Data),Total Pages Failing (Index),Total Pages Failing (Seg) 和Total Pages Marked Corrupt皆为0</p>
+<p>b. rman检查</p>
+<p>找出数据文件的编号</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; select FILE#,NAME,STATUS from v$datafile where name like &#x27;%AFSTS.DBF%&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>数据文件检查</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/password@db_feich;</span><br><span class="line">RMAN&gt; backup validate check logical datafile <span class="number">20</span>;</span><br><span class="line">SQL&gt; select * <span class="keyword">from</span> v$database_block_corruption;</span><br></pre></td></tr></table></figure>
+<p>因为物理standby是mounted状态，是不可写的。所以此检查对于正在进行日志恢复的standby是无法实施的。</p>
+<p>1.2 备库端操作</p>
+<p>备份数据文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/password@db_standby;</span><br><span class="line">RMAN&gt; backup <span class="keyword">as</span> copy datafile <span class="number">20</span> format <span class="string">&#x27;d:\\afsts.bak&#x27;</span>;</span><br><span class="line"><span class="comment">//RMAN&gt; backup datafile 20 format &#x27;d:\\afsts.bak&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>1.3 主库端操作</p>
+<p>a. 将备库备份的数据文件拷贝到主库相同的目录结构下</p>
+<p>b. 将备份加入恢复目录catalog</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/password@db_primary;</span><br><span class="line">RMAN&gt; catalog datafilecopy <span class="string">&#x27;d:\\afsts.bak&#x27;</span>;</span><br><span class="line">RMAN&gt; list datafilecopy all;</span><br><span class="line">RMAN&gt; list datafilecopy <span class="string">&#x27;d:\\afsts.bak&#x27;</span>;</span><br><span class="line"><span class="comment">//RMAN&gt; catalog backuppiece &#x27;d:\\afsts.bak&#x27;;</span></span><br><span class="line"><span class="comment">//RMAN&gt; list backup of datafile 20;</span></span><br><span class="line"><span class="comment">//RMAN&gt; list backuppiece &#x27;d:\\afsts.bak&#x27;;</span></span><br></pre></td></tr></table></figure>
+
+<p>c. 数据文件离线</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sqlplus sys/password@db_primary <span class="keyword">as</span> sysdba;</span><br><span class="line">SQL&gt; alter database datafile <span class="number">20</span> offline;</span><br></pre></td></tr></table></figure>
+
+<p>d. restore/recover数据文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rman target sys/password@db_primary;</span><br><span class="line">RMAN&gt; restore datafile <span class="number">20</span>;</span><br><span class="line">RMAN&gt; recover datafile <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<p>e. 数据文件上线</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; sql <span class="string">&#x27;alter database datafile 20 online&#x27;</span>;</span><br><span class="line"><span class="comment">//SQL&gt; alter database datafile 20 online;</span></span><br></pre></td></tr></table></figure>
+
+<p>f. 检查数据文件完整性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RMAN&gt; backup validate check logical datafile <span class="number">20</span>;</span><br><span class="line">SQL&gt; select * <span class="keyword">from</span> v$database_block_corruption;</span><br><span class="line">no rows selected</span><br></pre></td></tr></table></figure>
+<p>也可以再用dbv检查一下</p>
+<p>完毕，也可以用主库数据文件恢复备库丢失或损坏的数据文件，只不过操作方向不同而已。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://support.oracle.com/knowledge/Oracle%20Database%20Products/453153_1.html#aref_section22">Recovering the primary database’s datafile using the physical standby, and vice versa (Doc ID 453153.1)</a><br>[2]<a target="_blank" rel="noopener" href="http://yvrk1973.blogspot.com/2012/08/recover-primary-databases-datafile.html">Recover the Primary Database’s datafile using a copy of a Physical Standby Database’s Datafile</a><br>[3]<a target="_blank" rel="noopener" href="https://shivanandarao-oracle.com/2014/05/03/recovering-a-corruptedlost-datafile-on-primary-database-from-the-standby-database/">Recovering a corrupted/lost datafile on Primary database from the Standby database</a><br>[4]<a target="_blank" rel="noopener" href="http://oracle-help.com/dataguard/steps-to-recover-the-standby-databases-datafile-using-backup-of-primary-databases-datafile/">Steps to recover the standby database’s datafile using a backup of the primary database’s data file</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/09/21/tsc-deadline-disabled-due-to-errata/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/21/tsc-deadline-disabled-due-to-errata/" class="post-title-link" itemprop="url">TSC_DEADLINE disabled due to Errata</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-21 10:21:06" itemprop="dateCreated datePublished" datetime="2019-09-21T10:21:06+08:00">2019-09-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>dmesg中有错误消息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\[Firmware Bug\]: TSC_DEADLINE disabled due to Errata; please update microcode to version: <span class="number">0x3a</span> (or later)</span><br></pre></td></tr></table></figure>
+
+<p>安装intel微码可以解决此问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install intel-microcode</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -752,558 +1296,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/01/wine-set-windows-path-environment-variables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/08/01/wine-set-windows-path-environment-variables/" class="post-title-link" itemprop="url">wine set windows PATH environment variables</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-08-01 18:51:36" itemprop="dateCreated datePublished" datetime="2019-08-01T18:51:36+08:00">2019-08-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>wine会将大部分的linux环境变量直接传递给windows程序，但是PATH, SYSTEM和TEMP这几个变量除外，主要还是因为冲突，这些变量需要在windows registry中设置。</p>
-<p><code>js$ wine regedit</code></p>
-<p>打开注册表编辑器，然后在<code>HKEY_CURRENT_USER/Environment</code>下添加或修改PATH等变量就可以了，比如设置PATH为以下值：</p>
-<p><code>jsc:\\windows;c:\\windows\\system32;c:\\Program Files (x86)\\Mozilla Firefox</code></p>
-<p>然后运行程序时就无需指定繁琐的全路径了，比如</p>
-<p><code>js$ wine firefox</code></p>
-<p>就可以运行firefox了。</p>
-<p>另外，macosx下每次运行wine都需要打开app，其实只要在.bashrc中添加几个环境变量就可以在terminal下直接使用wine了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Devel.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line">#<span class="keyword">export</span> PATH=<span class="string">&quot;/Applications/Wine Stable.app/Contents/Resources/wine/bin:$PATH&quot;</span></span><br><span class="line"><span class="keyword">export</span> FREETYPE_PROPERTIES=<span class="string">&quot;truetype:interpreter-version=35&quot;</span></span><br><span class="line"><span class="keyword">export</span> DYLD_FALLBACK_LIBRARY_PATH=<span class="string">&quot;/usr/lib:/opt/X11/lib:$DYLD_FALLBACK_LIBRARY_PATH&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.winehq.org/Wine_User%27s_Guide#Setting_Windows.2FDOS_environment_variables">3.6.6 Setting Windows/DOS environment variables</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/31/split-sstables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/31/split-sstables/" class="post-title-link" itemprop="url">拆分sstables</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-31 17:43:32" itemprop="dateCreated datePublished" datetime="2019-07-31T17:43:32+08:00">2019-07-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>因为使用默认的compaction策略SizeTieredCompactionStrategy，导致产生了几个巨大的sstable，虽然已经更改为了LeveledCompactionStrategy策略，但是cassadra自动进行major compaction的时候因为需要巨大的空闲存储空间出错了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">WARN \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">726</span> CompactionTask.java:<span class="number">298</span> - Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">ERROR \[CompactionExecutor:<span class="number">6</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">31</span> <span class="number">16</span>:<span class="number">32</span>:<span class="number">15</span>,<span class="number">727</span> CassandraDaemon.java:<span class="number">195</span> - Exception <span class="keyword">in</span> thread Thread\[CompactionExecutor:<span class="number">6</span>,<span class="number">1</span>,main\]</span><br><span class="line">java.lang.RuntimeException: Not enough space <span class="keyword">for</span> compaction, estimated sstables = <span class="number">8643</span>, expected write size = <span class="number">2320284556243</span></span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.checkAvailableDiskSpace(CompactionTask.java:<span class="number">299</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">119</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.compaction.CompactionManager$BackgroundCompactionCandidate.run(CompactionManager.java:<span class="number">257</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1149</span>) ~\[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">624</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br><span class="line">at java.lang.Thread.run(Thread.java:<span class="number">748</span>) \[na:<span class="number">1.8</span><span class="number">.0_211</span>\]</span><br></pre></td></tr></table></figure>
-
-<p>所有可以借助离线工具sstablesplit拆分大的sstables，拆分后使用LCS策略进行compaction就不需要那么多的空闲磁盘空间了。</p>
-<p><strong>安装</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install cassandra-tools</span><br></pre></td></tr></table></figure>
-<p>cassandra-tools包中包含sstablesplit和sstablemeta等工具</p>
-<p><strong>停止cassandra</strong></p>
-<p>要注意，拆分sstable一定要在离线状态下进行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl stop cassandra</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo kill -sigterm &lt;pid_of_cassandra&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>拆分</strong></p>
-<p>sstablesplit帮助信息</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sstablesplit -h</span><br><span class="line">usage: sstablesplit \[options\] &lt;filename&gt; \[&lt;filename&gt;\]*</span><br><span class="line">--</span><br><span class="line">Split the provided sstables files <span class="keyword">in</span> sstables <span class="keyword">of</span> maximum provided filesize (see option --size).</span><br><span class="line">--</span><br><span class="line">Options are:</span><br><span class="line"> --debug display stack traces</span><br><span class="line"> -h,--help display <span class="built_in">this</span> help message</span><br><span class="line"> --no-snapshot don<span class="string">&#x27;t snapshot the sstables before splitting</span></span><br><span class="line"><span class="string"> -s,--size &lt;size&gt; maximum size in MB for the output sstables (default:</span></span><br><span class="line"><span class="string"> 50)</span></span><br></pre></td></tr></table></figure>
-
-<p>sstablesplit按给定的文件尺寸拆分指定的sstables，可以一次指定多个。注意文件权限的问题，使用cassandra用户来执行操作，下面是一个例子，：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra sstablesplit -s <span class="number">256</span> /<span class="keyword">var</span>/lib/cassandra/data/keyspace/table-xxxx/la-xxxx-big-Data.db</span><br></pre></td></tr></table></figure>
-
-<p>拆分完成后cassandra可以重新上线。</p>
-<p>sstablesplit设定的默认堆内存只有256M，拆分过程中出现了OOM错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Direct buffer memory</span><br><span class="line"> at java.nio.Bits.reserveMemory(Bits.java:<span class="number">694</span>)</span><br><span class="line"> at java.nio.DirectByteBuffer.&lt;init&gt;(DirectByteBuffer.java:<span class="number">123</span>)</span><br><span class="line"> at java.nio.ByteBuffer.allocateDirect(ByteBuffer.java:<span class="number">311</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.BufferType$2.allocate(BufferType.java:<span class="number">35</span>)</span><br><span class="line"> at org.apache.cassandra.io.compress.CompressedSequentialWriter.&lt;init&gt;(CompressedSequentialWriter.java:<span class="number">70</span>)</span><br><span class="line"> at org.apache.cassandra.io.util.SequentialWriter.open(SequentialWriter.java:<span class="number">168</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigTableWriter.&lt;init&gt;(BigTableWriter.java:<span class="number">75</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.big.BigFormat$WriterFactory.open(BigFormat.java:<span class="number">107</span>)</span><br><span class="line"> at org.apache.cassandra.io.sstable.format.SSTableWriter.create(SSTableWriter.java:<span class="number">84</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.writers.MaxSSTableSizeWriter.append(MaxSSTableSizeWriter.java:<span class="number">83</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.runMayThrow(CompactionTask.java:<span class="number">186</span>)</span><br><span class="line"> at org.apache.cassandra.utils.WrappedRunnable.run(WrappedRunnable.java:<span class="number">28</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.CompactionTask.executeInternal(CompactionTask.java:<span class="number">74</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.AbstractCompactionTask.execute(AbstractCompactionTask.java:<span class="number">59</span>)</span><br><span class="line"> at org.apache.cassandra.db.compaction.SSTableSplitter.split(SSTableSplitter.java:<span class="number">44</span>)</span><br><span class="line"> at org.apache.cassandra.tools.StandaloneSplitter.main(StandaloneSplitter.java:<span class="number">156</span>)</span><br></pre></td></tr></table></figure>
-
-<p>修改/usr/bin/sstablesplit脚本中的<code>MAX_HEAP_SIZE=&quot;256M&quot;</code>为<code>MAX_HEAP_SIZE=&quot;8192M&quot;</code>，重启一下cassandra会自动清除掉临时的sstables，<code>nodetool clearsnapshot</code>清除掉sstablesplit自动生成的快照，最后停止cassandra再重新拆分。</p>
-<p><strong>删除再repair</strong></p>
-<p>拆分大sstable需要离线操作，重新上线后应该需要repair,其实还有一种最小离线时间的方法，那就是”停止节点-&gt;删除大sstable-&gt;启动节点-&gt;repair节点”，这也是一种可行的方法。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/archived/cassandra/2.2/cassandra/tools/toolsSSTableSplit.html">sstablesplit</a><br>[2]<a target="_blank" rel="noopener" href="https://support.datastax.com/hc/en-us/articles/115005668426-FAQ-How-to-split-large-SSTables-on-another-server">FAQ - How to split large SSTables on another server</a><br>[3]<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42042665/do-sstablesplit-on-the-side">do sstablesplit on the side</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/29/setu-git-server/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/29/setu-git-server/" class="post-title-link" itemprop="url">搭建git服务器</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-29 10:42:52" itemprop="dateCreated datePublished" datetime="2019-07-29T10:42:52+08:00">2019-07-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>使用git和ssh搭建一个私有的小型git服务器</p>
-<p><strong>安装</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install git openssh-server</span><br></pre></td></tr></table></figure>
-
-<p><strong>创建用户</strong></p>
-<p>使用git用户来运行git服务</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># adduser git</span><br></pre></td></tr></table></figure>
-
-<p><strong>添加用户公钥</strong></p>
-<p>把所有用户的公钥导入到/home/git/.ssh/authorized_keys文件里，一个公钥独占一行。</p>
-<p><strong>初始化仓库</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># su - git</span><br><span class="line">$ git init --bare test.git</span><br></pre></td></tr></table></figure>
-
-<p><strong>克隆仓库</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git@server:test</span><br></pre></td></tr></table></figure>
-
-<p><strong>禁止git用户登录</strong></p>
-<p>将git用户的shell修改为/usr/bin/git-shell</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># usermod --shell=/usr/bin/git-shell git</span><br></pre></td></tr></table></figure>
-
-<p>或者直接修改/etc/passwd文件</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/27/nginx-add-upstream-health-check-module/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/27/nginx-add-upstream-health-check-module/" class="post-title-link" itemprop="url">nginx添加upstream健康检查模块</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-27 16:12:56" itemprop="dateCreated datePublished" datetime="2019-07-27T16:12:56+08:00">2019-07-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2025-05-14 12:20:17" itemprop="dateModified" datetime="2025-05-14T12:20:17+08:00">2025-05-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>nginx社区版仅支持十分有限的upstream健康检查，其他高级特性需要商业订阅。<br>github上有个开源的upstream检查模块<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">nginx_upstream_check_module</a></p>
-<p><strong>安装</strong></p>
-<p>安装必要的编译环境</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install build-essential patch libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl1<span class="number">.1</span> libssl-dev</span><br></pre></td></tr></table></figure>
-
-<p>下载最新的nginx stable <del>1.16</del> 1.22版本，clone nginx_upstream_check_module master分支</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ wget http://nginx.org/download/nginx-1.16.1.tar.gz</span></span><br><span class="line">$ wget https:<span class="comment">//nginx.org/download/nginx-1.22.0.tar.gz</span></span><br><span class="line">$ git clone https:<span class="comment">//github.com/yaoweibin/nginx_upstream_check_module</span></span><br></pre></td></tr></table></figure>
-
-<p>为源码打补丁</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//$ tar zxvf nginx-1.16.1.tar.gz</span></span><br><span class="line"><span class="comment">//$ cd nginx-1.16.1/</span></span><br><span class="line"><span class="comment">//$ patch -p1 &lt; ../nginx_upstream_check_module/check_1.14.0+.patch</span></span><br><span class="line">$ tar zxvf nginx-<span class="number">1.22</span><span class="number">.0</span>.tar.gz</span><br><span class="line">$ cd nginx-<span class="number">1.22</span><span class="number">.0</span>/</span><br><span class="line">$ patch -p1 &lt; ../nginx_upstream_check_module/check_1<span class="number">.20</span><span class="number">.1</span>+.patch</span><br></pre></td></tr></table></figure>
-
-<p>配置、编译、安装nginx</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --add-<span class="built_in">module</span>=../nginx_upstream_check_module --<span class="keyword">with</span>-http_ssl_module --<span class="keyword">with</span>-stream_ssl_preread_module --<span class="keyword">with</span>-http_v2_module --<span class="keyword">with</span>-stream</span><br><span class="line">...</span><br><span class="line">Configuration summary</span><br><span class="line"> + using system PCRE library</span><br><span class="line"> + using system OpenSSL library</span><br><span class="line"> + using system zlib library</span><br><span class="line"></span><br><span class="line"> nginx path prefix: <span class="string">&quot;/usr/local/nginx&quot;</span></span><br><span class="line"> nginx binary file: <span class="string">&quot;/usr/local/nginx/sbin/nginx&quot;</span></span><br><span class="line"> nginx modules path: <span class="string">&quot;/usr/local/nginx/modules&quot;</span></span><br><span class="line"> nginx configuration prefix: <span class="string">&quot;/usr/local/nginx/conf&quot;</span></span><br><span class="line"> nginx configuration file: <span class="string">&quot;/usr/local/nginx/conf/nginx.conf&quot;</span></span><br><span class="line"> nginx pid file: <span class="string">&quot;/usr/local/nginx/logs/nginx.pid&quot;</span></span><br><span class="line"> nginx error log file: <span class="string">&quot;/usr/local/nginx/logs/error.log&quot;</span></span><br><span class="line"> nginx http access log file: <span class="string">&quot;/usr/local/nginx/logs/access.log&quot;</span></span><br><span class="line"> nginx http client request body temporary files: <span class="string">&quot;client_body_temp&quot;</span></span><br><span class="line"> nginx http proxy temporary files: <span class="string">&quot;proxy_temp&quot;</span></span><br><span class="line"> nginx http fastcgi temporary files: <span class="string">&quot;fastcgi_temp&quot;</span></span><br><span class="line"> nginx http uwsgi temporary files: <span class="string">&quot;uwsgi_temp&quot;</span></span><br><span class="line"> nginx http scgi temporary files: <span class="string">&quot;scgi_temp&quot;</span></span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
-<p>安装目录位于/usr/local/nginx</p>
-<p>添加systemd服务nginx.service<br>将以下内容的文件nginx.service添加到/lib/systemd/system/nginx.service</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Stop dance for nginx</span></span><br><span class="line"><span class="comment"># =======================</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ExecStop sends SIGSTOP (graceful stop) to the nginx process.</span></span><br><span class="line"><span class="comment"># If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control</span></span><br><span class="line"><span class="comment"># and sends SIGTERM (fast shutdown) to the main process.</span></span><br><span class="line"><span class="comment"># After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends</span></span><br><span class="line"><span class="comment"># SIGKILL to all the remaining processes in the process group (KillMode=mixed).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># nginx signals reference doc:</span></span><br><span class="line"><span class="comment"># http://nginx.org/en/docs/control.html</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=A high performance web server and a reverse proxy server</span><br><span class="line"><span class="attr">Documentation</span>=man:nginx(<span class="number">8</span>)</span><br><span class="line"><span class="attr">After</span>=network.target nss-lookup.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=forking</span><br><span class="line"><span class="attr">PIDFile</span>=/usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">ExecStartPre</span>=/usr/local/nginx/sbin/nginx -t -q -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecStart</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span></span><br><span class="line"><span class="attr">ExecReload</span>=/usr/local/nginx/sbin/nginx -g <span class="string">&#x27;daemon on; master_process on;&#x27;</span> -s reload</span><br><span class="line"><span class="attr">ExecStop</span>=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/<span class="number">5</span> --pidfile /usr/local/nginx/logs/nginx.pid</span><br><span class="line"><span class="attr">TimeoutStopSec</span>=<span class="number">5</span></span><br><span class="line"><span class="attr">KillMode</span>=mixed</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
-
-<p>enable服务并启动</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable nginx.service </span><br><span class="line">Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /lib/systemd/system/nginx.service.</span><br><span class="line">$ sudo systemctl start nginx.service</span><br></pre></td></tr></table></figure>
-
-<p><strong>健康检查配置</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line"> upstream cluser &#123;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.17</span>:<span class="number">8080</span>;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.18</span>:<span class="number">8080</span>;</span><br><span class="line">server <span class="number">192.168</span><span class="number">.0</span><span class="number">.19</span>:<span class="number">8080</span>;</span><br><span class="line"></span><br><span class="line">check interval=<span class="number">1000</span> fall=<span class="number">1</span> rise=<span class="number">2</span> timeout=<span class="number">1000</span> default_down=<span class="literal">true</span> type=http;</span><br><span class="line">check_http_send <span class="string">&quot;HEAD /aurl/ HTTP/1.0\\r\\n\\r\\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> server &#123;</span><br><span class="line"> listen <span class="number">80</span>;</span><br><span class="line"> server_name localhost;</span><br><span class="line"></span><br><span class="line"> location /aurl/ &#123;</span><br><span class="line">proxy_pass http:<span class="comment">//cluser/aurl/;</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> location /status &#123;</span><br><span class="line"> check_status;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>设置的检查间隔为1000毫秒，一次没有响应就标记节点down(fall)了，接连两次检查有响应节点才算up(rise)，没有检查之前节点的默认状态为down，使用http方式检查，检查的超时时间为1000毫秒，总之1000毫秒没有应答就是无响应。</p>
-<p>使用_http方式_检查upstream服务的_业务入口/aurl/_是否已经就绪</p>
-<p><strong>upstream状态</strong></p>
-<p>访问<a target="_blank" rel="noopener" href="http://your_ip/status%E6%9F%A5%E7%9C%8B%E6%A3%80%E6%9F%A5%E7%BB%93%E6%9E%9C">http://your_ip/status查看检查结果</a><br>Nginx http upstream check status<br>Check upstream server number: 3, generation: 1</p>
-<table>
-<thead>
-<tr>
-<th>Index</th>
-<th>Upstream</th>
-<th>Name</th>
-<th>Status</th>
-<th>Rise counts</th>
-<th>Fall counts</th>
-<th>Check type</th>
-<th>Check port</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>cluser</td>
-<td>192.168.0.17:8080</td>
-<td>up</td>
-<td>30</td>
-<td>0</td>
-<td>http</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>cluser</td>
-<td>192.168.0.18:8080</td>
-<td>up</td>
-<td>19</td>
-<td>0</td>
-<td>http</td>
-<td>0</td>
-</tr>
-<tr>
-<td>2</td>
-<td>cluser</td>
-<td>192.168.0.19:8080</td>
-<td>up</td>
-<td>15</td>
-<td>0</td>
-<td>http</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p>References:</p>
-<p>[1]<a target="_blank" rel="noopener" href="https://github.com/yaoweibin/nginx_upstream_check_module">Health checks upstreams for nginx</a></p>
-<p>[2]<a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-health-check/">HTTP Health Checks</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/24/%E7%83%BD%E7%81%ABhg2201u%E6%94%B9%E6%A1%A5%E6%8E%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/24/%E7%83%BD%E7%81%ABhg2201u%E6%94%B9%E6%A1%A5%E6%8E%A5/" class="post-title-link" itemprop="url">烽火HG2201U改桥接</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-24 19:02:00" itemprop="dateCreated datePublished" datetime="2019-07-24T19:02:00+08:00">2019-07-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>拿到配置文件就可以破译管理员密码了，只是base64编码了一下下，秒解码。<br>有两种方法可以拿到配置文件</p>
-<p><strong>telnet方法</strong></p>
-<p>用光猫后面提供的user密码登录，然后访问<a target="_blank" rel="noopener" href="http://192.168.1.1/servmngr.html%EF%BC%8C%E7%95%8C%E9%9D%A2%E5%87%A0%E4%B9%8E%E6%98%AF%E5%85%A8%E7%99%BD%E7%9A%84%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%8B%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B0%E5%A4%A7%E9%83%A8%E5%88%86%E5%86%85%E5%AE%B9%E4%BA%86%EF%BC%8C%E5%90%AF%E7%94%A8telnet%E5%B9%B6%E8%AE%BE%E7%BD%AE%E4%B8%BA%E5%9C%A8LAN%E7%BD%91%E7%BB%9C%E7%9B%91%E5%90%AC%EF%BC%8C%E9%BB%98%E8%AE%A4%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E6%98%AFadmin/admin%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BF%AE%E6%94%B9%EF%BC%8C%E7%84%B6%E5%90%8E">http://192.168.1.1/servmngr.html，界面几乎是全白的，选择一下就可以看到大部分内容了，启用telnet并设置为在LAN网络监听，默认账号密码是admin/admin，可以修改，然后</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ telnet <span class="number">192.168</span><span class="number">.1</span><span class="number">.1</span></span><br><span class="line">&gt; help</span><br><span class="line">&gt; dumpcfg</span><br></pre></td></tr></table></figure>
-<p>找到</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Web&gt;</span><br><span class="line"> &lt;UserPassword&gt;NXB1c2RmbTQA&lt;/UserPassword&gt;</span><br><span class="line"> &lt;AdminPassword&gt;Y3VhZG1pbxxxxxxNTgwAA==&lt;/AdminPassword&gt;</span><br><span class="line">&lt;/Web&gt;</span><br></pre></td></tr></table></figure>
-<p>这一段，UserPassword就是光猫后面印刷的user账户的密码，AdminPassword就是管理员的密码了，都是base64编码的，随便找个在线服务解码一下好了。</p>
-<p>telnet模式还可以执行sh获的shell，可以慢慢研究一下，跑的就是个linux系统</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; sh</span><br><span class="line">BusyBox v1<span class="number">.17</span><span class="number">.2</span> (<span class="number">2018</span>-<span class="number">09</span>-<span class="number">04</span> <span class="number">20</span>:<span class="number">22</span>:<span class="number">42</span> CST) built-<span class="keyword">in</span> shell (ash)</span><br><span class="line">Enter <span class="string">&#x27;help&#x27;</span> <span class="keyword">for</span> a list <span class="keyword">of</span> built-<span class="keyword">in</span> commands.</span><br><span class="line"></span><br><span class="line"># uname -a</span><br><span class="line">Linux (none) 3.4.11-rt19 #1 SMP PREEMPT Tue Sep 4 18:24:42 CST 2018 mips GNU/Linux</span><br></pre></td></tr></table></figure>
-<p>获得是特权shell，切记不要乱删东西。</p>
-<p><strong>工程账号方法</strong></p>
-<p>访问<a target="_blank" rel="noopener" href="http://192.168.1.1/logoffaccount.html%EF%BC%8C%E9%9A%90%E8%97%8F%E8%B4%A6%E6%88%B7%E9%80%89%E6%8B%A9%E2%80%9C%E5%90%AF%E7%94%A8%E2%80%9D%EF%BC%8C&quot;%E4%BF%9D%E5%AD%98/%E5%BA%94%E7%94%A8&quot;%E4%B9%8B%E5%90%8E%EF%BC%8C%E8%B7%B3%E8%BD%AC%E5%88%B0http://192.168.1.1/logoffaccount.cmd?enableFactoryAccount=1%EF%BC%8C%E5%9C%A8%E6%AD%A4%E7%95%8C%E9%9D%A2%E4%B8%8B%E8%BE%93%E5%85%A5%E5%B7%A5%E5%8E%82%E8%B4%A6%E5%8F%B7%E7%9A%84%E5%AF%86%E7%A0%81%E2%80%9Chg2x0%E2%80%9D%E8%BF%9B%E5%85%A5%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F">http://192.168.1.1/logoffaccount.html，隐藏账户选择“启用”，&quot;保存/应用&quot;之后，跳转到http://192.168.1.1/logoffaccount.cmd?enableFactoryAccount=1，在此界面下输入工厂账号的密码“hg2x0”进入工厂模式</a></p>
-<p>然后访问<a target="_blank" rel="noopener" href="http://192.168.1.1/backupsettings.html%E9%A1%B5%E9%9D%A2,%E7%82%B9%E5%87%BB%E2%80%9C%E4%BF%9D%E5%AD%98/%E5%BA%94%E7%94%A8%E2%80%9D%E4%B8%8B%E8%BD%BD%E5%BD%93%E5%89%8D%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%AC%E5%9C%B0%E7%94%B5%E8%84%91%EF%BC%8C%E5%90%8E%E9%9D%A2%E5%B0%B1%E5%92%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%E4%BA%86%E3%80%82">http://192.168.1.1/backupsettings.html页面,点击“保存/应用”下载当前配置文件到本地电脑，后面就和第一个方法一样了。</a></p>
-<p><strong>桥接模式</strong></p>
-<p>访问<a target="_blank" rel="noopener" href="http://192.168.1.1/cu.html%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%BD%BF%E7%94%A8%E7%AE%A1%E7%90%86%E5%91%98%E8%B4%A6%E6%88%B7%E7%99%BB%E5%BD%95%E5%85%89%E7%8C%AB%EF%BC%8C&quot;%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE&quot;-&gt;&quot;%E5%AE%BD%E5%B8%A6%E9%85%8D%E7%BD%AE&quot;%E7%95%8C%E9%9D%A2%E9%80%89%E6%8B%A9%E2%80%9C*_INTERNET_R_VID_*%E2%80%9D%E8%BF%99%E4%B8%AA%E8%BF%9E%E6%8E%A5%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%94%B9%E4%B8%BA%E6%A1%A5%E6%8E%A5%E5%B0%B1%E5%A5%BD%E4%BA%86%EF%BC%8C%E6%AF%94%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%B9%E5%BC%8F%E7%AE%80%E5%8D%95%E4%B8%8D%E6%98%93%E5%87%BA%E9%94%99%E3%80%82">http://192.168.1.1/cu.html页面，使用管理员账户登录光猫，&quot;基本配置&quot;-&gt;&quot;宽带配置&quot;界面选择“*_INTERNET_R_VID_*”这个连接名称，改为桥接就好了，比修改配置文件上传的方式简单不易出错。</a></p>
-<p>据说user用户登录后，直接访问<a target="_blank" rel="noopener" href="http://192.168.1.1/fbctwanconfig.html%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BF%AE%E6%94%B9%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%EF%BC%8C%E8%83%BD%E7%9C%8B%E5%88%B0%E9%85%8D%E7%BD%AE%E7%95%8C%E9%9D%A2%EF%BC%8C%E6%B2%A1%E6%9C%89%E5%B0%9D%E8%AF%95%E3%80%82">http://192.168.1.1/fbctwanconfig.html也可以修改桥接模式，能看到配置界面，没有尝试。</a></p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://flyfish.im/liferecords/1698.html">上海联通光猫烽火HG2201U改桥接，路由拨号上网并做解析</a><br>[2]<a target="_blank" rel="noopener" href="https://blog.acesheep.com/index.php/archives/608/">烽火HG2201U 5.0/5.01 版本 光猫改桥接 设置IPV6 超级管理员获取</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,461 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/04/06/acpi-pad-high-cpu-util/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/04/06/acpi-pad-high-cpu-util/" class="post-title-link" itemprop="url">acpi_pad导致高cpu占用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-04-06 22:24:23" itemprop="dateCreated datePublished" datetime="2019-04-06T22:24:23+08:00">2019-04-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>服务器上突然出现很多acpi_pad/*进程,*为0,1,2,3,…，每个进程都占用100%CPU，导致系统极度缓慢</p>
+<p>解决办法就是移除acpi_pad模块</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rmmod acpi_pad</span><br></pre></td></tr></table></figure>
+<p>并将其加入模块blacklist，/etc/modprobe.d/blacklist.conf文件中添加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blacklist acpi_pad</span><br></pre></td></tr></table></figure>
+
+<p>或者<br>在 grub 的 kernel 配置后面，添加 acpi_pad.disable=1 重启机器之后，开机就不会自动加载 acpi_pad 模块</p>
+<p>注：早上跑到机房一看，空调自己关闭了，环境温度40几度，服务器、机柜一片报警，赶快打开两个空调降温，acpi_pad的问题是不是与环境温度过高有关呢？</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/04/06/postgresql-stop-archiving/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/04/06/postgresql-stop-archiving/" class="post-title-link" itemprop="url">postgresql停止归档</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-04-06 22:23:21" itemprop="dateCreated datePublished" datetime="2019-04-06T22:23:21+08:00">2019-04-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>因为存储归档文件的服务器硬件故障宕机，写入不成功导致postgresql无法归档。这时候可以临时修改配置文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>然后reload postgresql</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service postgresql reload</span><br></pre></td></tr></table></figure>
+<p>这时服务器不会发送归档日志文件，但是服务器在继续累积产生的WAL日志文档，直到提供一个合适的归档命令，重新开始归档，这样不会丢失WAL日志文档。</p>
+<p>如果提供如下归档命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">archive_command=<span class="string">&#x27;/bin/true&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这样归档进程总是认为归档成功，但实际上并没有真正写归档文件，但服务器上的WAL会被删除掉(与参数wal_keep_segments有关)，当硬件恢复或者换用其他硬件时，必须重新制作基础备份，因为WAL归档日志文件已经缺失了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/16/linux-amd64-memory-mapping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/16/linux-amd64-memory-mapping/" class="post-title-link" itemprop="url">linux amd64 memory mapping</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-16 14:40:21" itemprop="dateCreated datePublished" datetime="2019-02-16T14:40:21+08:00">2019-02-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>amd64架构linux kernel使用四级页表映射结构，但是存在两套terminology来描述这个事情</p>
+<p>其一：</p>
+<p>PML4(Page Map Leve4)(Level 4) -&gt; PDP(Page Directory Pointer) (Level 3) -&gt; PD(Page Directory) (Level 2) -&gt; PTE(Page Table Entry)(Level 1)</p>
+<p>另一：</p>
+<p>PGD(Page Global Directory)(Level 4) -&gt; PUD(Page Upper Directory)(Level 3) -&gt; PMD(Page Middle Directory)(Level 2) -&gt; PTE(Page Table Entry) (Level 1)</p>
+<p>这两套术语其实表达的都是一样的东西,CR3寄存器保存Level 4表的物理地址，Level 4只有一页，4K大小，总共512个表项，每个表项可以寻址512GB内存，总共可以寻址256TB内存。<br>当前amd64处理器只是用了64位中的48位来寻址，因此使用四级页表时，虚拟地址的低48位为9+9+9+9+12映射结构，每个物理页框(Page Frame)为4K，4K地址对齐。<br>当使用2M的大页/巨页时，使用三级页表映射，虚拟地址的低48位为9+9+9+21映射结构，每个物理页框为2M,2M地址对齐。</p>
+<p>参见下面两图：</p>
+<p>4K页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image004.gif" alt="4K页面地址转换"></p>
+<p>2M 页面地址转换<br><img src="https://www.ibm.com/developerworks/cn/linux/l-lvm64/images/image006.gif" alt="2M 页面地址转换"></p>
+<p>为了支持更大的线性地址空间，以后的CPU会扩展到57位虚拟地址寻址。linux目前已经提供5级页表映射，如果启用5级页表，会在PGD和PUD之间插入新的一级页表，叫做P4D(Page 4 Directory)，这样PGD会成为第五级页表,参见[1]。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://lwn.net/Articles/717293/">Five-level page tables</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/09/cpl-vs-dpl-vs-rpl/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/09/cpl-vs-dpl-vs-rpl/" class="post-title-link" itemprop="url">CPL vs. DPL vs. RPL</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-09 15:02:00" itemprop="dateCreated datePublished" datetime="2019-02-09T15:02:00+08:00">2019-02-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<h1 id="CPL-vs-DPL-vs-RPL"><a href="#CPL-vs-DPL-vs-RPL" class="headerlink" title="CPL vs. DPL vs. RPL"></a>CPL vs. DPL vs. RPL</h1><p>To make this simpler, let’s first just consider CPL and DPL:</p>
+<ul>
+<li>  The CPL is your current privilege level.</li>
+<li>  The DPL is the privilege level of a segment. It defines the minimum1 privilege level required to access the segment.</li>
+<li>  Privilege levels range from 0-3; lower numbers are <em>more</em> privileged</li>
+<li>  So: To access a segment, CPL must be less than or equal to the DPL of the segment</li>
+</ul>
+<p>RPL is a privilege level associated with a <em>segment selector</em>. A segment selector is just a 16-bit value that references a segment. Every memory access (implicitly2 or otherwise) uses a segment selector as part of the access.</p>
+<p>When accessing a segment, there are actually two checks that must be performed. Access to the segment is only allowed if <em>both</em> of the following are true:</p>
+<ul>
+<li>  CPL &lt;= DPL</li>
+<li>  RPL &lt;= DPL</li>
+</ul>
+<p>So even if CPL is sufficiently privileged to access a segment, the access will still be denied if the segment selector that references that segment is not sufficiently privileged.</p>
+<h1 id="The-motivation-behind-RPL"><a href="#The-motivation-behind-RPL" class="headerlink" title="The motivation behind RPL"></a>The motivation behind RPL</h1><p><em>What’s the purpose of this?</em> Well, the reasoning is a bit dated now, but the Intel documentation offers a scenario that goes something like this:</p>
+<ul>
+<li>  Suppose the operating system provides a system call that accepts a logical address (segment selector + offset) from the caller and writes to that address</li>
+<li>  Normal applications run with a CPL of 3; system calls run with a CPL of 0</li>
+<li>  Let’s say some segment (we’ll call it X) has a DPL of 0</li>
+</ul>
+<p>An application would ordinarily not be able to access the memory in segment X (because CPL &gt; DPL). But depending on how the system call was implemented, an application might be able to invoke the system call with a parameter of an address within segment X. Then, because the system call is privileged, it would be able to write to segment X on behalf of the application. This could introduce a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Privilege_escalation">privilege escalation vulnerability</a> into the operating system.</p>
+<p>To mitigate this, the official recommendation is that when a privileged routine accepts a segment selector provided by unprivileged code, it should first set the RPL of the segment selector to match that of the unprivileged code3. This way, the operating system would not be able to make any accesses to that segment that the unprivileged caller would not already be able to make. This helps enforce the boundary between the operating system and applications.</p>
+<h1 id="Then-and-now"><a href="#Then-and-now" class="headerlink" title="Then and now"></a>Then and now</h1><p>Segment protection was introduced with the 286, before paging existed in the x86 family of processors. Back then, segmentation was the only way to restrict access to kernel memory from a user-mode context. RPL provided a convenient way to enforce this restriction when passing pointers across different privilege levels.</p>
+<p>Modern operating systems use paging to restrict access to memory, which removes the need for segmentation. Since we don’t need segmentation, we can use a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Flat_memory_model">flat memory model</a>, which means segment registers <code>CS</code>, <code>DS</code>, <code>SS</code>, and <code>ES</code> all have a base of zero and extend through the entire address space. In fact, in 64-bit “long mode”, a flat memory model is <em>enforced</em>, regardless of the contents of those four segment registers. Segments are still used sometimes (for example, Windows uses <code>FS</code> and <code>GS</code> to point to the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Win32_Thread_Information_Block">Thread Information Block</a> and 0x23 and 0x33 to <a target="_blank" rel="noopener" href="http://www.malwaretech.com/2014/02/the-0x33-segment-selector-heavens-gate.html">switch between 32- and 64-bit code</a>, and Linux is similar), but you just don’t go passing segments around anymore. So RPL is mostly an unused leftover from older times.</p>
+<h1 id="RPL-Was-it-ever-necessary"><a href="#RPL-Was-it-ever-necessary" class="headerlink" title="RPL: Was it ever necessary?"></a>RPL: Was it ever <em>necessary</em>?</h1><p>You asked why it was a necessity to have both DPL and RPL. Even in the context of the 286, it wasn’t actually a <em>necessity</em> to have RPL. Considering the above scenario, a privileged procedure could always just retrieve the DPL of the provided segment via the LAR instruction, compare this to the privilege of the caller, and preemptively bail out if the caller’s privilege is insufficient to access the segment. However, setting the RPL, in my opinion, is a more elegant and simpler way of managing segment accesses across different privilege levels.</p>
+<p>To learn more about privilege levels, check out Volume 3 of <a target="_blank" rel="noopener" href="http://www.intel.com/content/www/us/en/processors/architectures-software-developer-manuals.html">Intel’s software developer manuals</a>, particularly the sections titled “Privilege Levels” and “Checking Caller Access Privileges”.</p>
+<p>1 Technically, the DPL can have different meanings depending on what type of segment or gate is being accessed. For the sake of simplicity, everything I describe applies to <em>data segments</em> specifically. Check the Intel docs for more information<br>2 For example, the instruction pointer implicitly uses the segment selector stored in CS when fetching instructions; most types of data accesses implicitly use the segment selector stored in DS, etc.<br>3 See the ARPL instruction (16-bit/32-bit protected mode only)</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/02/08/macosx-mplayer-osd-issue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/08/macosx-mplayer-osd-issue/" class="post-title-link" itemprop="url">MacOSX mplayer OSD issue</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-08 22:46:17" itemprop="dateCreated datePublished" datetime="2019-02-08T22:46:17+08:00">2019-02-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>mplayer的OSD(On-Screen Display)依赖于X11，so字幕无法显示:(，目前改投IINA了</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -733,448 +1188,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/26/ssh-over-socks5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/26/ssh-over-socks5/" class="post-title-link" itemprop="url">ssh over socks5</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-26 14:19:18" itemprop="dateCreated datePublished" datetime="2018-12-26T14:19:18+08:00">2018-12-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>nc要使用netcat-openbsd版本或者使用nmap实作的ncat</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/26/ssh-over-socks5/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/22/gnome-alacarte-crash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/22/gnome-alacarte-crash/" class="post-title-link" itemprop="url">gnome alacarte崩溃</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-22 16:44:55" itemprop="dateCreated datePublished" datetime="2018-12-22T16:44:55+08:00">2018-12-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>编辑菜单项时，alacarte突然崩溃，应该是因为wine生成的菜单有乱码导致的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/22/gnome-alacarte-crash/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/11/macports-install-mypaint/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/11/macports-install-mypaint/" class="post-title-link" itemprop="url">macports安装mypaint</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-11 19:08:08" itemprop="dateCreated datePublished" datetime="2018-12-11T19:08:08+08:00">2018-12-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>brew没有打包mypaint，所以使用macports来安装</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/11/macports-install-mypaint/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/07/unzip-gbk-filename/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/07/unzip-gbk-filename/" class="post-title-link" itemprop="url">unzip解压缩中文名乱码问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-07 10:34:03" itemprop="dateCreated datePublished" datetime="2018-12-07T10:34:03+08:00">2018-12-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/uncategorized/" itemprop="url" rel="index"><span itemprop="name">uncategorized</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>windows平台生成的zip文件名是使用CP936也就是GBK编码的，导致这样的文件在linux平台utf-8环境下解压缩的时候文件名会成为乱码，这个问题由来已久，但并没有从zip那边有个根本性的解决方案。</p>
-<p>可以使用python的zipfile模块来解决这个问题。</p>
-<p>python3版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">import zipfile</span><br><span class="line"></span><br><span class="line">print(&quot;Processing File &quot; + sys.argv[1])</span><br><span class="line"></span><br><span class="line">file&#x3D;zipfile.ZipFile(sys.argv[1],&quot;r&quot;);</span><br><span class="line">for name in file.namelist():</span><br><span class="line">    utf8name&#x3D;name.encode(&#39;cp437&#39;).decode(&#39;cp936&#39;)</span><br><span class="line">    print(&quot;Extracting &quot; + utf8name)</span><br><span class="line">    pathname &#x3D; os.path.dirname(utf8name)</span><br><span class="line">    if not os.path.exists(pathname) and pathname!&#x3D; &quot;&quot;:</span><br><span class="line">        os.makedirs(pathname)</span><br><span class="line">    data &#x3D; file.read(name)</span><br><span class="line">    if not os.path.exists(utf8name):</span><br><span class="line">        fo &#x3D; open(utf8name, &quot;wb&quot;)</span><br><span class="line">        fo.write(data)</span><br><span class="line">        fo.close</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
-
-<p>因为zipfile把所有非utf-8编码格式的文件名都作为cp437进行处理，因此需要先还原回cp437，然后重新编码为cp936。</p>
-<p>python版本见Reference[1]。</p>
-<p>References:</p>
-<p>[1]<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/72bb8d2ed4df">Linux 下 zip 文件解压乱码解决方案</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2018/12/06/apt-install-package-versioned/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2018/12/06/apt-install-package-versioned/" class="post-title-link" itemprop="url">apt安装软件包指定版本</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2018-12-06 08:59:08" itemprop="dateCreated datePublished" datetime="2018-12-06T08:59:08+08:00">2018-12-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>当配置了多个源，特别是添加backports源之后，一个package可能有多个候选版本<br>源是有优先级的，apt会默认从优先级高的源安装package</p>
-<p>可以通过apt-cache来查看package候选版本信息</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ apt-cache policy tmux</span><br><span class="line">tmux:</span><br><span class="line"> Installed: (none)</span><br><span class="line"> Candidate: <span class="number">2.3</span>-<span class="number">4</span></span><br><span class="line"> Version table:</span><br><span class="line"> <span class="number">2.8</span>-<span class="number">1</span>~bpo9+<span class="number">1</span> <span class="number">100</span></span><br><span class="line"> <span class="number">100</span> http:<span class="comment">//ftp.tw.debian.org/debian stretch-backports/main amd64 Packages</span></span><br><span class="line"> <span class="number">2.3</span>-<span class="number">4</span> <span class="number">500</span></span><br><span class="line"> <span class="number">500</span> http:<span class="comment">//ftp.tw.debian.org/debian stretch/main amd64 Packages</span></span><br></pre></td></tr></table></figure>
-<p>可以看到backports源优先级比较低，所以默认安装并不会安装最新版本</p>
-<p>可以通过指定版本来安装</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tmux=<span class="number">2.8</span>-<span class="number">1</span>~bpo9+<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>bpo就是backports的缩写，</p>
-<p>或者指定从backports源里安装：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install tmux -t stretch-backports</span><br></pre></td></tr></table></figure>
-
-<p>还可以查看源里多个版本的详细信息：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ apt-cache show tmux</span><br><span class="line">Package: tmux</span><br><span class="line">Version: <span class="number">2.8</span>-<span class="number">1</span>~bpo9+<span class="number">1</span></span><br><span class="line">Installed-Size: <span class="number">677</span></span><br><span class="line">...</span><br><span class="line">Package: tmux</span><br><span class="line">Version: <span class="number">2.3</span>-<span class="number">4</span></span><br><span class="line">Installed-Size: <span class="number">620</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

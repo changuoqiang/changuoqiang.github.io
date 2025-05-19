@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">987</span>
+          <span class="site-state-item-count">992</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -230,7 +230,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,6 +259,424 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/05/07/vim%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E4%B8%8E%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/05/07/vim%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E4%B8%8E%E9%9D%9E%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D/" class="post-title-link" itemprop="url">vim贪婪匹配与非贪婪匹配</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-05-07 20:10:51" itemprop="dateCreated datePublished" datetime="2015-05-07T20:10:51+08:00">2015-05-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Vim/" itemprop="url" rel="index"><span itemprop="name">Vim</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>贪婪匹配模式会尽可能多的匹配结果，非贪婪模式则相反，尽可能少的去匹配。</p>
+<p>以下这些为贪婪匹配,参见:help /\{</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\\&#123;n,m&#125; Matches n to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;n&#125; Matches n <span class="keyword">of</span> the preceding atom</span><br><span class="line">\\&#123;n,&#125; Matches at least n <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible </span><br><span class="line">\\&#123;,m&#125; Matches <span class="number">0</span> to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;&#125; Matches <span class="number">0</span> or more <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> many <span class="keyword">as</span> possible (like *)</span><br></pre></td></tr></table></figure>
+
+<p>以下这些为非贪婪匹配,参见:hep /\{-</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">\\&#123;-n,m&#125; matches n to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-n&#125; matches n <span class="keyword">of</span> the preceding atom </span><br><span class="line">\\&#123;-n,&#125; matches at least n <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-,m&#125; matches <span class="number">0</span> to m <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br><span class="line">\\&#123;-&#125; matches <span class="number">0</span> or more <span class="keyword">of</span> the preceding atom, <span class="keyword">as</span> few <span class="keyword">as</span> possible</span><br></pre></td></tr></table></figure>
+
+<p>因此*<em>.\{-}可以实现.<em>的非贪婪匹配，.\{-1,}可以实现.+的非贪婪匹配</em></em></p>
+<p><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/05/05/html-native-combobox/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/05/05/html-native-combobox/" class="post-title-link" itemprop="url">HTML原生combobox</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-05-05 13:27:15" itemprop="dateCreated datePublished" datetime="2015-05-05T13:27:15+08:00">2015-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>带有datalist的input即是html原生的combobox,再也无需用select+input来模拟combobox了。</p>
+<p>而且每个option还可以有label。</p>
+<p>就像下面这样：</p>
+<p>源代码：<br>[html]<br><input type="url" list="url_list" name="link" /><br><datalist id="url_list"><br> <option label="W3Schools" value="http://www.w3schools.com" /><br> <option label="Google" value="http://www.google.com" /><br> <option label="Microsoft" value="http://www.microsoft.com" /><br></datalist><br>[/html]</p>
+<p>当前主要的浏览器中只有safari还完全不支持datalist,可以使用<a target="_blank" rel="noopener" href="https://github.com/aFarkas/webshim/">webshim</a>HTML5垫片程序提供支持。</p>
+<p>检测浏览器是否支持datalist<br>[javascript]<br>if (‘options’ in document.createElement(‘datalist’)) {<br> // supported!<br>}<br>[/javascript]</p>
+<p>References:<br>[1] <a target="_blank" rel="noopener" href="http://diveintohtml5.info/everything.html">THE ALL-IN-ONE ALMOST-ALPHABETICAL GUIDE TO DETECTING EVERYTHING</a><br><strong>===<br>[erq]</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/05/02/6378/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/05/02/6378/" class="post-title-link" itemprop="url">Untitled Post - 113</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-05-02 22:40:41" itemprop="dateCreated datePublished" datetime="2015-05-02T22:40:41+08:00">2015-05-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>inline-block流式布局明显优于浮动布局，float可以休矣！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/30/6375/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/30/6375/" class="post-title-link" itemprop="url">Untitled Post - 112</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-30 19:40:21" itemprop="dateCreated datePublished" datetime="2015-04-30T19:40:21+08:00">2015-04-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>上次dataguard主备切换时，将job_queue_processes设置为0,关闭了job背景进程。切换完毕后忘了重新设置此参数，导致所有job都停止了，今天才发现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql&gt; alter system set job_queue_processes=<span class="number">20</span> scope=both;</span><br></pre></td></tr></table></figure>
+<p>这样job就可以恢复正常运行了！</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/24/6371/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/04/24/6371/" class="post-title-link" itemprop="url">Untitled Post - 111</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-04-24 15:33:48" itemprop="dateCreated datePublished" datetime="2015-04-24T15:33:48+08:00">2015-04-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>代码如其人</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -660,504 +1078,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/07/setuid-setgid/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/04/07/setuid-setgid/" class="post-title-link" itemprop="url">setuid与setgid</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-04-07 16:16:39" itemprop="dateCreated datePublished" datetime="2015-04-07T16:16:39+08:00">2015-04-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>setuid与setgid使可执行二进制文件(不包括脚本)无论用哪个用户执行都具有文件属主或属组的权限。<br>比如一个文件的属主为root,如果设置了setuid位,则一个非特权用户执行此程序时就可以以root的身份运行此程序，可以访问到非特权用户访问不到的用户资源。setgid与此同。</p>
-<p>setuid</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chmod u+s binary </span><br></pre></td></tr></table></figure>
-
-<p>setgid</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># chmod g+s binary</span><br></pre></td></tr></table></figure>
-
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/06/uwsgi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/04/06/uwsgi/" class="post-title-link" itemprop="url">uWSGI简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-04-06 22:31:50" itemprop="dateCreated datePublished" datetime="2015-04-06T22:31:50+08:00">2015-04-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>为了实现动态web,我们发展出了各式各样的技术，那真是五花八门，乱花渐欲迷人眼。</p>
-<p>各种网关接口协议，从最古老的<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a>(Common Gateway Interface)到<a target="_blank" rel="noopener" href="http://python.ca/scgi/protocol.txt">SCGI</a>(Simple Common Gateway Interface),<a target="_blank" rel="noopener" href="http://www.fastcgi.com/drupal/">FastCGI</a>,<a target="_blank" rel="noopener" href="https://www.python.org/dev/peps/pep-0333/">WSGI</a>(Python Web Server Gateway Interface),<a target="_blank" rel="noopener" href="http://plackperl.org/">PSGI</a>(Perl Web Server Gateway Interface),<a target="_blank" rel="noopener" href="http://rack.github.io/">rack</a>,<a target="_blank" rel="noopener" href="http://keplerproject.github.io/wsapi/">WSAPI</a>(Lua Web Server API),甚至还出现了JWSGI(Java Web Server Gateway Interface)等,当然还有HTTP协议。这些协议大部分已经标准化，还有许许多多的私有协议。只有协议是不够的，所以又有了对协议的各种各样的实现，比如<a target="_blank" rel="noopener" href="http://php-fpm.org/">php-fpm</a>,<a target="_blank" rel="noopener" href="http://redmine.lighttpd.net/projects/spawn-fcgi/wiki">spawn-fcgi</a>,<a target="_blank" rel="noopener" href="http://wiki.nginx.org/Fcgiwrap">fcgiwrap</a>,<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/index.html#">uWSGI</a>等</p>
-<p>web server也通过很多内置的模块来直接实现对动态web支持，比如<a target="_blank" rel="noopener" href="https://perl.apache.org/">mod_perl</a>,<a target="_blank" rel="noopener" href="http://modpython.org/">mod_python</a>,mod_php,<a target="_blank" rel="noopener" href="http://httpd.apache.org/docs/trunk/mod/mod_lua.html">mod_lua</a>等。</p>
-<p>传统的web server，比如apache,nginx等，自身处理静态资源请求，然后将动态资源请求通过内置模块或者支持相关网关协议的application server转发到相应的应用程序来处理。当然也有tomcat此类的应用服务器，可以通过http来与传统的web服务器进行集成，甚至自身完全担当起application server和web server两种角色。有很多web框架自己也提供了http服务器。但一般来讲传统的web server除了处理静态资源性能上的优势，还有其他很多丰富的功能，比如访问控制，反向代理，负载均衡等等。</p>
-<p>为什么会有这么多的协议，这么多的模块？应该讲主要还是性能方面的考量，动态web从无到有，从小规模到大规模，还要面对各种各样的后端开发技术，有这么多的协议和模块也是无可避免的。</p>
-<p>一般来讲，部署一个动态应用可以有多种不同的选择。比如部署php应用可以使用php-fpm,也可以使用mod_php,甚至也可以使用其他的FCGI服务器，只要FCGI服务器实现了对PHP的支持即可。</p>
-<p><strong>uWSGI是个什么东东?</strong></p>
-<p>uWSGI是一个应用服务器，支持几乎所有现有的网关接口协议，同时自己也实现了另一个网关接口协议，叫做<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/Protocol.html">uwsgi</a>。这么多接口了，为什么再造一个？据说还是性能，据说uwsgi比fastcgi和wsgi都快的多。</p>
-<p>且不论uWSGI的性能有多高，只是能支持几乎所有的网关接口协议就已经很不错了。nginx已经内置支持uWSGI,这样nginx + uWSGI这种组合可以应对各种各样的后端应用，部署和管理起来都方便的多。</p>
-<p>nginx不支持CGI,只能通过<a href="https://openwares.net/internet/fastcgi_intro.html">FastCGI</a>来调用CGI程序。</p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://uwsgi-docs.readthedocs.org/en/latest/index.html">uWSGI</a><br>[2]<a target="_blank" rel="noopener" href="http://metz.gehn.net/2013/02/running-anything-on-nginx-with-uwsgi/">Running (almost) anything on Nginx with uWSGI</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/06/6283/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/04/06/6283/" class="post-title-link" itemprop="url">Untitled Post - 105</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-04-06 18:15:34" itemprop="dateCreated datePublished" datetime="2015-04-06T18:15:34+08:00">2015-04-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>ext4文件系统的时间戳精度达到了nanosecond,而之前的ext2和ext3文件系统的时间戳精度只有second。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/04/05/trac-git-nginx-configuration/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/04/05/trac-git-nginx-configuration/" class="post-title-link" itemprop="url">trac + git + nginx + postgresql 配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-04-05 22:04:18" itemprop="dateCreated datePublished" datetime="2015-04-05T22:04:18+08:00">2015-04-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p><strong>简介(intro)</strong><br>Trac is an enhanced wiki and issue tracking system for software development projects.<br>Trac是成熟的软件开发项目管理自由软件，支持wiki，问题跟踪，里程碑，版本控制工具集成等特性。</p>
-<p><strong>先决条件(prerequisites)</strong></p>
-<p>不使用源里的包安装，使用pip安装最新的stable,所以需要先安装python-dev</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt-get install python-dev</span><br></pre></td></tr></table></figure>
-
-<p>安装uWGSI</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install uwsgi uwsgi-plugin-python</span><br></pre></td></tr></table></figure>
-
-<p><strong>安装(install)</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># pip \[--proxy http://ip:port\] install babel pygments trac psycopg2</span><br></pre></td></tr></table></figure>
-<p>如果需要使用代理，指定–proxy参数<br>babel用于国际化，pygments用于语法高亮,由于使用PostgresQL数据库，所以要安装psycopg2</p>
-<p><strong>创建数据库角色和数据库</strong></p>
-<p>创建角色</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ createuser -U postgres -h localhost --createdb trac_db_admin </span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - postgres</span><br><span class="line">postgres@xxx:~$ createuser --pwprompt --createdb trac_db_admin</span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres=# CREATE ROLE trac_db_admin CREATEDB LOGIN PASSWORD &#x27;passwd&#x27;;</span><br></pre></td></tr></table></figure>
-
-<p>创建数据库</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ createdb --host=localhost --username=trac_db_admin --owner=trac_db_admin --encoding=UTF8 trac_db</span><br></pre></td></tr></table></figure>
-
-<p>or</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ psql -U trac_db_admin -h localhost</span><br><span class="line">sql&gt;create database trac_db;</span><br></pre></td></tr></table></figure>
-
-<p><strong>升级setuptools</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https:<span class="comment">//bootstrap.pypa.io/ez_setup.py -O - sudo python</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>创建trac项目/环境</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># trac-admin /var/trac/projects/proj_name initenv</span><br></pre></td></tr></table></figure>
-
-<p>提示输入数据库连接串时这样输入：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postgres:<span class="comment">//trac_db_admin:admin@localhost/trac_db</span></span><br></pre></td></tr></table></figure>
-<p>也可以用unix socket方式，具体看官方文档。</p>
-<p><strong>WSGI方式部署trac到nginx</strong></p>
-<p>生成uWSGI入口程序/var/trac/cgi-bin/trac.wsgi文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># trac-admin /var/trac/projects/proj_name deploy /var/trac</span><br></pre></td></tr></table></figure>
-<p>修改trac.wsgi支持多项目,去掉trac.env_path环境变量，添加trac.env_parent_dir变量为多个项目所在路径的父路径。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">environ.setdefault(<span class="string">&#x27;trac.env_parent_dir&#x27;</span>, <span class="string">&#x27;/var/trac/projects&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>配置uWSGI应用trac,配置文件/etc/uwsgi/apps-enabled/trac.ini</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\[uwsgi\]</span><br><span class="line">plugins = python</span><br><span class="line">;socket = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3000</span></span><br><span class="line">wsgi-file = <span class="regexp">/var/</span>trac/cgi-bin/trac.wsgi</span><br><span class="line">processes = <span class="number">2</span></span><br><span class="line">stats = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3001</span></span><br></pre></td></tr></table></figure>
-
-<p>配置nginx,配置文件/etc/nginx/sites-enabled/trac.xxx.com.conf</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"> listen <span class="number">80</span>; </span><br><span class="line"> server_name trac.xxx.com ;</span><br><span class="line"> access_log /<span class="keyword">var</span>/log/nginx/trac_xxx_com_access.log;</span><br><span class="line"> error_log /<span class="keyword">var</span>/log/nginx/trac_xxx_com_error.log;</span><br><span class="line"></span><br><span class="line"> location / &#123; </span><br><span class="line"> include uwsgi_params;</span><br><span class="line"> #uwsgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">3000</span>;</span><br><span class="line"> uwsgi_pass unix:<span class="comment">///run/uwsgi/app/trac/socket;</span></span><br><span class="line"> &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>uWSGI应用生成的unix socket文件为/run/uwsgi/app/{$app_name}/socket，$app_name即是配置文件/etc/uwsgi/apps-enabled/trac.ini配置文件的basename,不包含扩展名。</p>
-<p><strong>用户管理插件</strong></p>
-<p>不是用trac内置的用户管理模块，安装AccountManagerPlugin插件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># easy_install ​https://trac-hacks.org/svn/accountmanagerplugin/tags/acct_mgr-0.4.4</span><br></pre></td></tr></table></figure>
-
-<p>配置文件/var/trac/projects/proj_name/conf/trac.ini添加:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">\[account-manager\]</span><br><span class="line">htpasswd_file = <span class="regexp">/var/</span>trac/trac.htpasswd</span><br><span class="line">htpasswd_hash_type = md5</span><br><span class="line">;hash_method = md5</span><br><span class="line">password_store = HtPasswdStore</span><br><span class="line">reset_password = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">\[components\]</span><br><span class="line">acct_mgr.admin.* = enabled</span><br><span class="line">acct_mgr.api.* = enabled</span><br><span class="line">acct_mgr.db.sessionstore = disabled</span><br><span class="line">acct_mgr.htfile.htdigeststore = disabled</span><br><span class="line">acct_mgr.htfile.htpasswdstore = enabled</span><br><span class="line">acct_mgr.pwhash.* = enabled</span><br><span class="line">acct_mgr.pwhash.htpasswdhashmethod = enabled</span><br><span class="line">acct_mgr.http.* = disabled</span><br><span class="line">acct_mgr.notification.* = enabled</span><br><span class="line">acct_mgr.register.* = enabled</span><br><span class="line">acct_mgr.svnserve.svnservepasswordstore = disabled</span><br><span class="line">acct_mgr.web_ui.* = enabled</span><br><span class="line">acct_mgr.web_ui.resetpwstore = disabled</span><br><span class="line">trac.web.auth.loginmodule = disabled</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>插件官方文档中配置了acct_mgr.pwhash.* = disabled，会导致以下错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot find an implementation <span class="keyword">of</span> the IPasswordHashMethod interface named HtDigestHashMethod. Please check that the Component is enabled or update the option \[account-manager\] hash_method <span class="keyword">in</span> trac.ini.</span><br></pre></td></tr></table></figure>
-
-<p>注册第一个用户，然后将第一个用户设置为管理员:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># trac-admin /var/trac/projects/proj_name permission add firstusername TRAC_ADMIN</span><br></pre></td></tr></table></figure>
-
-<p><strong>git集成</strong></p>
-<p>配置文件/var/trac/projects/proj_name/conf/trac.ini添加:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">\[components\]</span><br><span class="line">; git</span><br><span class="line">tracopt.versioncontrol.git.* = enabled</span><br><span class="line"></span><br><span class="line">\[trac\]</span><br><span class="line">repository_dir = <span class="regexp">/home/gi</span>t/repositories/xxx.git/</span><br><span class="line">repository_sync_per_request = (<span class="keyword">default</span>)</span><br><span class="line">repository_type = git</span><br></pre></td></tr></table></figure>
-
-<p>uWSGI是以用户www-data运行的，www-data用户必须拥有读git仓库的权限，否则可能会提示:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warning: Can<span class="string">&#x27;t synchronize with repository &quot;(default)&quot; (/home/git/repositories/reis.git does not appear to be a Git repository.). Look in the Trac log for more information.</span></span><br></pre></td></tr></table></figure>
-
-<p>如果无法浏览代码，且log文件中有如下错误字样：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Trac\[PyGIT\] DEBUG: git exits <span class="keyword">with</span> <span class="number">128</span>, <span class="attr">dir</span>: u<span class="string">&#x27;/path/to/xxx.git/&#x27;</span>, <span class="attr">args</span>: branch -&gt; (<span class="string">&#x27;-v&#x27;</span>, <span class="string">&#x27;--no-abbrev&#x27;</span>), <span class="attr">stderr</span>: <span class="string">&#x27;fatal: Failed to resolve HEAD as a valid ref.\\n&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>则仍然应该是权限的问题，运行trac的用户无法读取一些文件，可以将git仓库对other用户开发rx权限，或者更改仓库文件的组为www-data并适当授权。</p>
-<p><strong>gitolite集成</strong><br>可以使用插件<a target="_blank" rel="noopener" href="https://github.com/boldprogressives/trac-GitolitePlugin">trac-GitolitePlugin</a>集成trac和gitolite</p>
-<p><strong>日志</strong></p>
-<p>日志设置见<a target="_blank" rel="noopener" href="http://trac.edgewall.org/wiki/TracLogging">Trac Logging</a></p>
-<p><strong>安装结束</strong></p>
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="http://trac.edgewall.org/wiki/TracGuide">The Trac User and Administration Guide</a><br>[2]<a target="_blank" rel="noopener" href="https://sandalov.org/blog/1981/">Trac 1.0.1 in Ubuntu 14.04 with Basic Authentication (Nginx + uWSGI)</a><br>[3]<a target="_blank" rel="noopener" href="http://www.iroowe.com/installs_trac_in_funtoo/">installs Trac with uWSGI and Nginx in gentoo/funtoo</a><br>[4]<a target="_blank" rel="noopener" href="http://wiki.woodpecker.org.cn/moin/NginxuWSGIPublishTrac">Nginx8.x+uWSGI驱动 Trac</a><br>[5]<a target="_blank" rel="noopener" href="http://trac-hacks.org/wiki/AccountManagerPlugin">Account Manager Plugin to manage user accounts</a></p>
-<p><strong>===<br>[erq]</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2015/03/30/6266/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/03/30/6266/" class="post-title-link" itemprop="url">Untitled Post - 104</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-03-30 22:49:17" itemprop="dateCreated datePublished" datetime="2015-03-30T22:49:17+08:00">2015-03-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Misc/" itemprop="url" rel="index"><span itemprop="name">Misc</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Cassandra is a row-oriented database.</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/99/">99</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/38/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/page/100/">100</a><a class="extend next" rel="next" href="/page/40/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
