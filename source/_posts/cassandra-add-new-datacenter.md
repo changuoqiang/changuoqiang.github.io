@@ -24,8 +24,32 @@ $ sudo rm -rf /var/lib/cassandra/*
 ```
 3.  配置cassandra.yaml
 新数据中心节点cassandra.yaml文件中添加`auto_bootstrap: false`。auto_bootstrap默认是true，并且没有在cassandra.yaml文件中列出来。设置其他参数，比如seeds和endpoint_snitch，匹配原有集群的配置。num_tokens参数可以设置与原集群一致，但不要设置initial_token参数。
+
+核心的参数设置如下：
+```js
+cluster_name: 'fooCluster'
+seed_provider:
+ - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+ parameters:
+ - seeds: "192.168.0.100,192.168.0.101"
+
+listen_address: 192.168.0.100
+broadcast_address: x.x.x.x
+endpoint_snitch: GossipingPropertyFileSnitch
+auto_bootstrap: false
+```
+seeds设置为每个数据中心两个节点或以上
+如果数据中心之间需要跨网访问，broadcast_address需要设置为跨网访问的公网ip
+
 5.  编辑相关配置文件
 GossipingPropertyFileSnitch使用的配置文件cassandra-rackdc.properties中添加新数据中心和机架。
+比如：
+
+```js
+dc = DC4
+rack= RAC1
+```
+
 6.  客户端配置
 如果使用DataStax驱动,负载均衡策略设置为DCAwareRoundRobinPolicy,其他驱动做相应修改，以使客户端与新的集群相适应。
 如果原来使用一致性级别QUORUM，那么现在重新审视一下，是否LOCAL_QUORUM或者EACH_QUORUM一致性级别更适合现在的多数据中心集群。
@@ -53,6 +77,3 @@ References:
 \[2\][Using multiple network interfaces](https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/configMultiNetworks.html)
 \[3\][Apache Cassandra Deployed on Private and Public Networks](https://www.instaclustr.com/apache-cassandra-deployed-on-private-and-public-networks/)
 \[4\][Adding nodes to an existing cluster](https://docs.datastax.com/en/cassandra-oss/2.2/cassandra/operations/opsAddNodeToCluster.html)
-
-**\===
-\[erq\]**
