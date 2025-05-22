@@ -25158,7 +25158,7 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
 </ol>
 <p>假设客户机标识为guest_name</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo mkdir /var/lib/libvirt/images/guest_name</span><br><span class="line">$ sudo cp /var/lib/libvirt/images/templates/debian-12-nocloud-amd64.qcow2 /var/lib/libvirt/images/guest_name/root-disk.qcow2</span><br><span class="line">$ sudo qemu-img resize /var/lib/libvirt/images/guest_name/root-disk.qcow2 100G</span><br></pre></td></tr></table></figure>
-
+<p>qemu-img resize扩展镜像文件空间后，只是客户机的硬盘增大了，但客户机的分区和文件系统还是原来的样子，并没有得到自动扩展。<br>等客户机运行起来后可以使用growpart来在线扩展分区，再使用resize2fs在线扩展文件系统到分区大小。</p>
 <ol start="3">
 <li>生成云镜像初始化iso</li>
 </ol>
@@ -25207,10 +25207,24 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">network:</span><br><span class="line">    version: 2</span><br><span class="line">    ethernets:</span><br><span class="line">        enp1s0:</span><br><span class="line">          dhcp4: no</span><br><span class="line">          dhcp6: no</span><br><span class="line">          addresses: </span><br><span class="line">            - 192.168.0.16/24</span><br><span class="line">          routes:</span><br><span class="line">            - to: default</span><br><span class="line">              via: 192.168.0.1</span><br><span class="line">          nameservers:</span><br><span class="line">            addresses: [114.114.114.114]</span><br></pre></td></tr></table></figure>
 
 <ol start="7">
-<li>清理</li>
+<li>扩展文件系统空间</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo rm /var/lib/libvirt/images/guest_name/cloud-init.iso </span><br><span class="line">$ sudo rm /var/lib/libvirt/images/guest_name/cloud-init.cfg</span><br></pre></td></tr></table></figure>
+<p>安装growpart</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt install cloud-guest-utils gdisk</span><br></pre></td></tr></table></figure>
 
+<p>查看客户机的块设备列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo lsblk</span><br><span class="line">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">vda     254:0    0  100G  0 disk </span><br><span class="line">├─vda1  254:1    0  2.9G  0 part /</span><br><span class="line">├─vda14 254:14   0    3M  0 part </span><br><span class="line">└─vda15 254:15   0  124M  0 part /boot/efi</span><br></pre></td></tr></table></figure>
+<p>可以看到块设备vda有100G空间，但vda1只有2.9G大小</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo gdisk /dev/vda</span><br><span class="line">gdisk /dev/vda</span><br><span class="line">GPT fdisk (gdisk) version 1.0.9</span><br><span class="line"></span><br><span class="line">Partition table scan:</span><br><span class="line">  MBR: protective</span><br><span class="line">  BSD: not present</span><br><span class="line">  APM: not present</span><br><span class="line">  GPT: present</span><br><span class="line"></span><br><span class="line">Found valid GPT with protective MBR; using GPT.</span><br><span class="line"></span><br><span class="line">Command (? <span class="keyword">for</span> <span class="built_in">help</span>): p</span><br><span class="line">Disk /dev/vda: 209715200 sectors, 100.0 GiB</span><br><span class="line">Sector size (logical/physical): 512/512 bytes</span><br><span class="line">Disk identifier (GUID): 9D6B96D0-7CEC-794F-B6FB-AF6C1DC25D0E</span><br><span class="line">Partition table holds up to 128 entries</span><br><span class="line">Main partition table begins at sector 2 and ends at sector 33</span><br><span class="line">First usable sector is 2048, last usable sector is 6291422</span><br><span class="line">Partitions will be aligned on 2048-sector boundaries</span><br><span class="line">Total free space is 2015 sectors (1007.5 KiB)</span><br><span class="line"></span><br><span class="line">Number  Start (sector)    End (sector)  Size       Code  Name</span><br><span class="line">   1          262144         6289407   2.9 GiB     8304  </span><br><span class="line">  14            2048            8191   3.0 MiB     EF02  </span><br><span class="line">  15            8192          262143   124.0 MiB   EF00  </span><br></pre></td></tr></table></figure>
+<p>云镜像文件根分区在硬盘的最后一个分区，方便在线扩展<br>可以看到vda1分区也就是根分区在块设备的最后面，可以将其扩展到包含块设备剩余的全部空间</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">growpart /dev/vda 1</span><br><span class="line">CHANGED: partition=1 start=262144 old: size=6027264 end=6289407 new: size=209453023 end=209715166</span><br></pre></td></tr></table></figure>
+<p>上面的命令将<code>/dev/vda</code>设备上的编号为1的分区自动扩展到最大剩余空间</p>
+<p>然后将根分区上的文件系统扩展到整个分区</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo resize2fs /dev/vda1</span><br><span class="line">resize2fs 1.47.0 (5-Feb-2023)</span><br><span class="line">Filesystem at /dev/vda1 is mounted on /; on-line resizing required</span><br><span class="line">old_desc_blocks = 1, new_desc_blocks = 13</span><br><span class="line">[74616.147208] EXT4-fs (vda1): resizing filesystem from 753408 to 26181627 blocks</span><br><span class="line">[74617.899341] EXT4-fs (vda1): resized filesystem to 26181627</span><br><span class="line">The filesystem on /dev/vda1 is now 26181627 (4k) blocks long.</span><br></pre></td></tr></table></figure>
+
+<p>再查看客户机的块设备列表</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo lsblk</span><br><span class="line">NAME    MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS</span><br><span class="line">vda     254:0    0  100G  0 disk </span><br><span class="line">├─vda1  254:1    0 99.9G  0 part /</span><br><span class="line">├─vda14 254:14   0    3M  0 part </span><br><span class="line">└─vda15 254:15   0  124M  0 part /boot/efi</span><br></pre></td></tr></table></figure>
+<p>可以看到根分区vda1已经扩展到接近100G的空间。</p>
 <p>References:</p>
 <p>[1] <a href="https://wiki.debian.org/KVM">KVM</a></p>
 <p>[2]<a href="https://wiki.archlinux.org/title/Libvirt">libvirt</a></p>
@@ -25269,6 +25283,82 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
       </categories>
       <tags>
         <tag>KVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cassandra 2.2 启用用户认证</title>
+    <url>/2025/05/20/cassandra-2-2-%E5%90%AF%E7%94%A8%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81/</url>
+    <content><![CDATA[<p>cassandra默认是没有启用用户认证的，为了提高安全性可以开启用户认证</p>
+<a id="more"></a>
+
+<h3 id="更改配置文件cassandra-yaml的认证选项"><a href="#更改配置文件cassandra-yaml的认证选项" class="headerlink" title="更改配置文件cassandra.yaml的认证选项"></a>更改配置文件cassandra.yaml的认证选项</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">authenticator:</span> <span class="string">PasswordAuthenticator</span></span><br></pre></td></tr></table></figure>
+<h3 id="重启cassandra节点"><a href="#重启cassandra节点" class="headerlink" title="重启cassandra节点"></a>重启cassandra节点</h3><h3 id="增加system-auth的复制因子"><a href="#增加system-auth的复制因子" class="headerlink" title="增加system_auth的复制因子"></a>增加system_auth的复制因子</h3><p>使用内置超级用户cassandra/cassandra登陆节点，system_auth的replication factor一般每个数据中心设置为3即可，如果节点小于3,则设置实际的节点数。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cqlsh -u cassandra -p cassandra host</span><br><span class="line">$ cqlsh&gt; ALTER KEYSPACE <span class="string">&quot;system_auth&quot;</span> WITH REPLICATION = &#123;<span class="string">&#x27;class&#x27;</span> : <span class="string">&#x27;NetworkTopologyStrategy&#x27;</span>, <span class="string">&#x27;dc1&#x27;</span> : 3&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>The system_auth keyspace uses a QUORUM consistency level when checking authentication for the default cassandra user. For all other users created, superuser or otherwise, a LOCAL_ONE consistency level is used for authenticating.</p>
+<p>当认证默认用户cassandra时，system_auth使用QUORUM一致性级别，也就是通过认证的节点要达到法定数的才能登陆集群。对于其他用户，认证时使用LOCAL_ONE一致性级别，也就是只要有一个节点认证通过就可以登陆集群。</p>
+<p>当使用cassandra用户登陆不满足一致性级别时，会被拒绝登陆集群：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Connection error: (<span class="string">&#x27;Unable to connect to any servers&#x27;</span>, &#123;<span class="string">&#x27;192.168.0.6&#x27;</span>: AuthenticationFailed(<span class="string">&#x27;Failed to authenticate to 192.168.0.6: Error from server: code=0100 [Bad credentials] message=&quot;Unable to perform authentication: Cannot achieve consistency level QUORUM&quot;&#x27;</span>,)&#125;)</span><br></pre></td></tr></table></figure>
+<p>Quorum法定数一致性计算公式如下<br><code>Quorum = (sum_of_replication_factors / 2) + 1</code><br>为相应keyspace的复制因子总数除以2再加1</p>
+<h3 id="使system-auth的改变扩散到集群其他节点"><a href="#使system-auth的改变扩散到集群其他节点" class="headerlink" title="使system_auth的改变扩散到集群其他节点"></a>使system_auth的改变扩散到集群其他节点</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ nodetool repair system_auth</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建新的超级用户"><a href="#创建新的超级用户" class="headerlink" title="创建新的超级用户"></a>创建新的超级用户</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cqlsh&gt; CREATE ROLE &lt;new_super_user&gt; WITH PASSWORD = <span class="string">&#x27;&lt;some_secure_password&gt;&#x27;</span> </span><br><span class="line">    AND SUPERUSER = <span class="literal">true</span> </span><br><span class="line">    AND LOGIN = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="用新的超级用户登录"><a href="#用新的超级用户登录" class="headerlink" title="用新的超级用户登录"></a>用新的超级用户登录</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cqlsh -u &lt;new_super_user&gt; -p &lt;some_secure_password&gt; host</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改默认用户"><a href="#更改默认用户" class="headerlink" title="更改默认用户"></a>更改默认用户</h3><p>默认超级管理员用户cassandra是无法删除的，可以为其设置极其复杂的密码，并将其设置为非超级用户来提高系统安全性</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cqlsh&gt; ALTER ROLE cassandra WITH PASSWORD=<span class="string">&#x27;SomeNonsenseThatNoOneWillThinkOf&#x27;</span></span><br><span class="line">    AND SUPERUSER=<span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他节点依次启用密码认证"><a href="#其他节点依次启用密码认证" class="headerlink" title="其他节点依次启用密码认证"></a>其他节点依次启用密码认证</h3><p>References:</p>
+<p>[1]<a href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/secureConfigNativeAuth.html">Configuring authentication</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>cassandra</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>aarch64平台安装运行cassandra 2.2</title>
+    <url>/2025/05/22/aarch64%E5%B9%B3%E5%8F%B0%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8Ccassandra-2-2/</url>
+    <content><![CDATA[<p>cassandra 2.2在arm64平台上安装运行的一些问题</p>
+<a id="more"></a>
+
+<h3 id="增加JVM线程栈大小"><a href="#增加JVM线程栈大小" class="headerlink" title="增加JVM线程栈大小"></a>增加JVM线程栈大小</h3><p>编辑配置文件<code>/etc/cassandra/conf/cassandra-env.sh</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Per-thread stack size</span></span><br><span class="line">JVM_OPTS=<span class="string">&quot;<span class="variable">$JVM_OPTS</span> -Xss512k&quot;</span> </span><br></pre></td></tr></table></figure>
+<p>Xss参数设置为512k<br>如果该参数设置过小，cassandra会拒绝启动，日志文件<code>/var/log/cassandra/cassandra.log</code>中会有错误信息：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">The stack size specified is too small, Specify at least 456k</span><br><span class="line">Error: Could not create the Java Virtual Machine.</span><br><span class="line">Error: A fatal exception has occurred. Program will <span class="built_in">exit</span>.</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换JNA库-模块"><a href="#替换JNA库-模块" class="headerlink" title="替换JNA库/模块"></a>替换JNA库/模块</h3><p>cassandra 2.2自带的JNA为4.0.0版本，不支持aarch64架构<br>下载当前最新版本JNA 5.17.0，并进行替换</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.17.0/jna-5.17.0.jar</span><br><span class="line">$ sudo rm /usr/share/cassandra/lib/jna-4.0.0.jar</span><br><span class="line">$ sudo cp jna-5.17.0.jar /usr/share/cassandra/lib/</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改cassandra服务sysv-rc脚本"><a href="#修改cassandra服务sysv-rc脚本" class="headerlink" title="修改cassandra服务sysv rc脚本"></a>修改cassandra服务sysv rc脚本</h3><p>cassandra自动的服务脚本为sysv rc风格的，systemd可以兼容，但需要修改pid文件的路径</p>
+<p>编辑脚本文件<code>/etc/rc.d/init.d/cassandra</code>，做如下修改：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pid_file=/run/cassandra/cassandra.pid</span><br></pre></td></tr></table></figure>
+<p>也就是pid_file从/var/run目录修改为/run目录下，因为systemd现在默认使用/run目录来存储pid文件</p>
+<p>如果不修改，会有以下错误：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cassandra.service: New main PID 1221568 does not exist or is a zombie.</span><br><span class="line">cassandra.service: Failed with result <span class="string">&#x27;protocol&#x27;</span>.</span><br><span class="line">Failed to start LSB: distributed storage system <span class="keyword">for</span> structured data.</span><br><span class="line">/run/systemd/generator.late/cassandra.service:27: PIDFile= references a path below legacy directory /var/run/, updating /var/run/cassandracassandra.pid → /run/cassandra/cassandra.pid; please update the unit file accordingly.</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用cassandra服务"><a href="#启用cassandra服务" class="headerlink" title="启用cassandra服务"></a>启用cassandra服务</h3><p>安装完成默认是没有启用服务的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl is-enabled cassandra.service</span><br><span class="line">cassandra.service is not a native service, redirecting to systemd-sysv-install.</span><br><span class="line">Executing: /usr/lib/systemd/systemd-sysv-install is-enabled cassandra</span><br><span class="line">disabled</span><br></pre></td></tr></table></figure>
+
+<p>启用服务</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl <span class="built_in">enable</span> cassandra.service</span><br><span class="line">cassandra.service is not a native service, redirecting to systemd-sysv-install.</span><br><span class="line">Executing: /usr/lib/systemd/systemd-sysv-install <span class="built_in">enable</span> cassandra</span><br></pre></td></tr></table></figure>
+
+<p>启动服务</p>
+<p>正常启动服务就可以了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl start cassandra.service</span><br></pre></td></tr></table></figure>
+
+<p>References:</p>
+<p>[1]<a href="https://stackoverflow.com/questions/45821760/cassandra-3-10-could-not-initialize-class-com-sun-jna-native">Cassandra 3.10 Could not initialize class com.sun.jna.Native</a></p>
+<p>[2]<a href="https://issues.apache.org/jira/browse/CASSANDRA-13072">Cassandra failed to run on Linux-aarch64</a></p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>cassandra</tag>
       </tags>
   </entry>
 </search>

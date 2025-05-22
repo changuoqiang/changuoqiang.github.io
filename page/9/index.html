@@ -217,7 +217,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">992</span>
+          <span class="site-state-item-count">994</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,6 +259,219 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/13/lxd-change-storage-backend/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/13/lxd-change-storage-backend/" class="post-title-link" itemprop="url">lxd容器改变存储后端</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-13 15:41:43" itemprop="dateCreated datePublished" datetime="2019-08-13T15:41:43+08:00">2019-08-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>已经创建的容器可以通过一定的方法更改为使用其他的存储池/存储后端</p>
+<p><strong>本机</strong></p>
+<p>本机有两个存储池，分别使用btrfs和zfs</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage list</span><br><span class="line">+---------+-------------+--------+--------------------------------------------+---------+</span><br><span class="line"> NAME DESCRIPTION DRIVER SOURCE USED BY </span><br><span class="line">+---------+-------------+--------+--------------------------------------------+---------+</span><br><span class="line"> <span class="keyword">default</span> btrfs /<span class="keyword">var</span>/snap/lxd/common/lxd/disks/<span class="keyword">default</span>.img <span class="number">1</span> </span><br><span class="line">+---------+-------------+--------+--------------------------------------------+---------+</span><br><span class="line"> lxd_zfs zfs /<span class="keyword">var</span>/snap/lxd/common/lxd/disks/lxd_zfs.img <span class="number">2</span> </span><br><span class="line">+---------+-------------+--------+--------------------------------------------+---------+</span><br></pre></td></tr></table></figure>
+
+<p>使用btrfs存储池新建一个alpine容器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ lxc init images:alpine/<span class="number">3.10</span>/amd64 alp -s <span class="keyword">default</span></span><br><span class="line">$ lxc storage show <span class="keyword">default</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到alp容器使用default存储池，也就是btrfs后端。</p>
+<p>然后通过将容器发布为image，使用image创建新容器的方式使新的alp容器使用lxd_zfs存储后端</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ lxc publish -f alp --alias alp_img</span><br><span class="line">$ lxc <span class="keyword">delete</span> alp</span><br><span class="line">$ lxc init alp_img alp -s lxd_zfs</span><br><span class="line">$ lxc image <span class="keyword">delete</span> alp_img</span><br><span class="line">$ lxc storage show lxd_zfs</span><br><span class="line">config:</span><br><span class="line"> size: 15GB</span><br><span class="line"> source: <span class="regexp">/var/</span>snap/lxd/common/lxd/disks/lxd_zfs.img</span><br><span class="line"> zfs.pool_name: lxd_zfs</span><br><span class="line">description: <span class="string">&quot;&quot;</span></span><br><span class="line">name: lxd_zfs</span><br><span class="line">driver: zfs</span><br><span class="line">used_by:</span><br><span class="line">- <span class="regexp">/1.0/</span>containers/alp</span><br><span class="line">- <span class="regexp">/1.0/</span>profiles/<span class="keyword">default</span></span><br><span class="line">status: Created</span><br><span class="line">locations:</span><br><span class="line">- none</span><br></pre></td></tr></table></figure>
+<p>可以看到容器alp使用zfs后端存储，其实这是一个全新的容器，不过使用image做了一下中转。</p>
+<p><strong>异机</strong></p>
+<p>在目标服务器上新建zfs存储池和profile</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage create lxd_zfs zfs</span><br><span class="line">$ lxc profile create storage_zfs</span><br><span class="line">$ lxc profile device add storage_zfs root disk path=/ pool=lxd_zfs</span><br><span class="line">$ lxc profile show storage_zfs </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: <span class="string">&quot;&quot;</span></span><br><span class="line">devices:</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: lxd_zfs</span><br><span class="line"> type: disk</span><br><span class="line">name: storage_zfs</span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
+
+<p>这样在向目标服务器上copy/move容器时，指定storage_zfs profile就可以了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc copy container1 remotesvr1: -p storage_zfs</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/08/08/lxd-zfs-storagepool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="openwares">
+      <meta itemprop="description" content="open source and free matters">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="openwares.net">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/08/08/lxd-zfs-storagepool/" class="post-title-link" itemprop="url">lxd容器使用zfs存储池</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-08-08 10:49:49" itemprop="dateCreated datePublished" datetime="2019-08-08T10:49:49+08:00">2019-08-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <a id="more"></a>
+<p>lxd支持btrfs,zfs,lvm和ceph存储后端，默认使用btrfs，但在线迁移容器的时候btrfs总是不成功，可以尝试更换到zfs存储后端，zfsonlinux项目已经十分成熟。</p>
+<p><strong>安装</strong></p>
+<p>buster发布后，debian-backports已经启用了，为了安装更新版本的zfs，最好添加这个源：<br>/etc/apt/source.list</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># backports</span><br><span class="line">deb http:<span class="comment">//ftp.cn.debian.org/debian buster-backports main contrib non-free</span></span><br></pre></td></tr></table></figure>
+<p>/etc/apt/preferences.d/90_zfs</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Package: libnvpair1linux libuutil1linux libzfs2linux libzpool2linux spl-dkms zfs-dkms zfs-test zfsutils-linux zfsutils-linux-dev zfs-zed</span><br><span class="line">Pin: release n=buster-backports</span><br><span class="line">Pin-Priority: <span class="number">990</span></span><br></pre></td></tr></table></figure>
+
+<p>因为需要编译内核模块,先安装内核头文件</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># apt update</span><br><span class="line"># apt install linux-headers-$(uname -r) linux-image-amd64</span><br></pre></td></tr></table></figure>
+
+<p>安装zfsonlinux</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install zfs-dkms zfsutils-linux</span><br></pre></td></tr></table></figure>
+<p>安装到最后会有一些错误提示，不要害怕，那是因为还没有加载zfs内核模块</p>
+<p>加载内核模块</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># modprobe zfs</span><br></pre></td></tr></table></figure>
+
+<p>然后重新执行上一个安装命令，zfs就会配置成功了。</p>
+<p>系统自动加载内核模块</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># echo &quot;zfs&quot; &gt;&gt; /etc/modules</span><br></pre></td></tr></table></figure>
+
+<p>如果安装zfs之前已经安装了lxd，那么需要将lxd daemon重启一下，否则lxd会报错：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span>: The <span class="string">&quot;zfs&quot;</span> tool is not enabled</span><br></pre></td></tr></table></figure>
+
+<p>重启lxd daemon</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl reload snap.lxd.daemon</span><br></pre></td></tr></table></figure>
+
+<p><strong>存储池</strong></p>
+<p><code>lxd init</code>的时候就可以选择ZFS作为存储后端来新建default storage pool了，默认会使用当前文件系统内的文件来虚拟一个zfs文件系统，也可以使用真实的zfs文件系统来建立存储池。</p>
+<p>也可以使用<code>lxc storage create</code>命令来创建新的使用zfs作为存储后端的存储池。<br>创建zfs存储池lxd_zfs</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ lxc storage create lxd_zfs zfs size=100GB</span><br></pre></td></tr></table></figure>
+
+<p>将默认配置的存储池设置为lxd_zfs，前提是没有容器在使用default profile的root disk设备。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ lxc profile device remove <span class="keyword">default</span> root</span><br><span class="line">$ lxc profile device add <span class="keyword">default</span> root disk path=/ pool=lxd_zfs</span><br><span class="line">$ lxc profile show <span class="keyword">default</span> </span><br><span class="line">config: &#123;&#125;</span><br><span class="line">description: Default LXD profile</span><br><span class="line">devices:</span><br><span class="line"> eth0:</span><br><span class="line"> name: eth0</span><br><span class="line"> nictype: bridged</span><br><span class="line"> parent: lxdbr0</span><br><span class="line"> type: nic</span><br><span class="line"> root:</span><br><span class="line"> path: /</span><br><span class="line"> pool: lxd_zfs</span><br><span class="line"> type: disk</span><br><span class="line">name: <span class="keyword">default</span></span><br><span class="line">used_by: \[\]</span><br></pre></td></tr></table></figure>
+
+<p>后面再新建容器就会自动使用zfs存储池lxd_zfs了。<br>也可以将default存储池删除掉，重现创建一个default存储池，只要default存储池没有被镜像、容器或profile使用即可。<br>其实default就是一个名字而已，与其他存储池并无任何不同。</p>
+<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://angristan.xyz/lxc-zfs-pool-lxd/">Setup a ZFS pool for your LXC containers with LXD</a><br>[2]<a target="_blank" rel="noopener" href="https://zfsonlinux.org/">zfsonlinux</a><br>[3]<a target="_blank" rel="noopener" href="https://github.com/zfsonlinux/zfs/wiki/Debian">debian</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1073,210 +1286,6 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias ssmc=<span class="string">&quot;(cd $HOME/.wine/drive_c/Program\\ Files/StorageManager/client/ &amp;&amp; WINEPREFIX=$HOME/.wine wine start SANtricity\\ Storage\\ Manager\\ Client.exe &gt;/dev/null 2&gt;&amp;1)&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>这样终端下只要执行ssmc就可以了，不会破坏当前的工作目录和stdout</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/15/cassandra-fix-corrupt-sstables/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/15/cassandra-fix-corrupt-sstables/" class="post-title-link" itemprop="url">cassandra修复损坏的sstables</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-15 15:21:08" itemprop="dateCreated datePublished" datetime="2019-07-15T15:21:08+08:00">2019-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-          , 
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>由于磁盘阵列Unreadable Sectors错误，强制修复后导致cassandra的一个sstable损坏，cassandra启动时报错:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ERROR \[CompactionExecutor:<span class="number">2</span>\] <span class="number">2019</span>-<span class="number">07</span>-<span class="number">15</span> <span class="number">15</span>:<span class="number">03</span>:<span class="number">27</span>,<span class="number">161</span> DefaultFSErrorHandler.java:<span class="number">92</span> - Exiting forcefully due to file system exception on startup, disk failure policy <span class="string">&quot;stop&quot;</span></span><br><span class="line">org.apache.cassandra.io.FSReadError: org.apache.cassandra.io.sstable.CorruptSSTableException: Corrupted: <span class="regexp">/mnt/</span>data/cassandra/reis/image-6a85c44086a711e5aef4b53617129a2a/lb-<span class="number">47344</span>-big-Data.db</span><br><span class="line">at org.apache.cassandra.io.util.RandomAccessReader.readBytes(RandomAccessReader.java:<span class="number">365</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.ByteBufferUtil.read(ByteBufferUtil.java:<span class="number">361</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.utils.ByteBufferUtil.readWithLength(ByteBufferUtil.java:<span class="number">324</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.ColumnSerializer.deserializeColumnBody(ColumnSerializer.java:<span class="number">132</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.OnDiskAtom$Serializer.deserializeFromSSTable(OnDiskAtom.java:<span class="number">92</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br><span class="line">at org.apache.cassandra.db.AbstractCell$1.computeNext(AbstractCell.java:<span class="number">52</span>) ~\[apache-cassandra-<span class="number">2.2</span><span class="number">.14</span>.jar:<span class="number">2.2</span><span class="number">.14</span>\]</span><br></pre></td></tr></table></figure>
-<p>lb-47344-big-Data.db这个sstable被破坏了。<br>因为节点已经无法启动了，所以下面的尝试无可避免的失败了</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool scrub</span><br><span class="line">nodetool: Failed to connect to <span class="string">&#x27;127.0.0.1:7199&#x27;</span> - ConnectException: <span class="string">&#x27;Connection refused (Connection refused)&#x27;</span>.</span><br></pre></td></tr></table></figure>
-
-<p>尝试离线修复，如果数据量很大，记得开启screen会话</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo -u cassandra sstablescrub reis image</span><br></pre></td></tr></table></figure>
-<p>注意cassandra数据目录的权限，这里使用cassandra用户来执行scrub<br>执行结束后，删除掉已经损坏的sstable，scrub时cassandra会将损坏的sstable保持原样</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mv lb-<span class="number">47344</span>* backups/</span><br></pre></td></tr></table></figure>
-
-<p>启动cassandra</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl start cassandra</span><br></pre></td></tr></table></figure>
-
-<p>确认系统运行正常</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool status </span><br></pre></td></tr></table></figure>
-
-<p>之后可以删除sstablescrub自动创建的快照，释放掉已经无用的sstables</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool clearsnapshot</span><br><span class="line">Requested clearing snapshot(s) <span class="keyword">for</span> \[all keyspaces\]</span><br></pre></td></tr></table></figure>
-
-<p>最后需要repair本节点，修复节点数据</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nodetool repair -local -- reis image</span><br></pre></td></tr></table></figure>
-
-<p>References:<br>[1]<a target="_blank" rel="noopener" href="https://docs.datastax.com/en/dse/5.1/dse-admin/datastax_enterprise/tools/toolsSStables/toolsSSTableScrub.html">sstablescrub</a><br>[2]<a target="_blank" rel="noopener" href="https://engineering.gosquared.com/dealing-corrupt-sstable-cassandra">Dealing with a corrupt SSTable in Cassandra</a><br>[3]<a target="_blank" rel="noopener" href="https://blog.pythian.com/so-you-have-a-broken-cassandra-sstable-file/">So You Have A Broken Cassandra SSTable File?</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://openwares.net/2019/07/15/ds5020-unreadable-sectors-fix/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="openwares">
-      <meta itemprop="description" content="open source and free matters">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="openwares.net">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/07/15/ds5020-unreadable-sectors-fix/" class="post-title-link" itemprop="url">DS5020存储Unreadable Sectors故障修复</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-07-15 14:46:01" itemprop="dateCreated datePublished" datetime="2019-07-15T14:46:01+08:00">2019-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/GNU-Linux/" itemprop="url" rel="index"><span itemprop="name">GNU/Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <a id="more"></a>
-<p>一台IBM DS5020(1814-20 FAStT) RAID5存储阵列，OS报错误:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">\[ 274.331664\] sd 4:0:0:0: \[sdc\] tag#5206 Add. Sense: Unrecovered read error</span><br><span class="line">\[ <span class="number">274.331673</span>\] print_req_error: critical medium error, dev sdc, sector <span class="number">177668608</span></span><br><span class="line">\[ <span class="number">274.331752</span>\] print_req_error: critical medium error, dev dm-<span class="number">0</span>, sector <span class="number">177668608</span></span><br><span class="line">\[ 274.371749\] sd 4:0:0:0: \[sdc\] tag#5206 Add. Sense: Unrecovered read error</span><br><span class="line">\[ <span class="number">274.371757</span>\] print_req_error: critical medium error, dev sdc, sector <span class="number">177668632</span></span><br><span class="line">\[ <span class="number">274.371848</span>\] print_req_error: critical medium error, dev dm-<span class="number">0</span>, sector <span class="number">177668632</span></span><br></pre></td></tr></table></figure>
-
-<p>连上存储，有报警信息：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Failure Entry <span class="number">1</span>: USM_UNREADABLE_SECTORS_EXIST-Recovery Failure Type Code: <span class="number">75</span></span><br><span class="line">Storage array: Unnamed</span><br><span class="line">Unreadable sectors detected: <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<p>有两个不可读取的扇区，可以进一步看到这两个扇区位于哪个磁盘驱动器，这种故障一般就是硬盘不稳定了，该换就换吧。</p>
-<p>存储管理EMW(Enterprise Manage Window)窗口找到存储阵列，右击弹出context菜单中选择“Exectute script…”</p>
-<p>脚本窗口中执行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show storageArray unreadableSectors;</span><br></pre></td></tr></table></figure>
-<p>结果窗口输出:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Executing script...</span><br><span class="line">Volume LUN Accessible By <span class="built_in">Date</span>/Time Volume LBA Drive Location Drive LBA Failure Type </span><br><span class="line"><span class="number">1</span> <span class="number">0</span> Host Group ibm <span class="number">7</span>/<span class="number">11</span>/<span class="number">19</span> <span class="number">3</span>:<span class="number">07</span>:<span class="number">58</span> AM <span class="number">0xa97021e</span> Tray <span class="number">85</span>, Slot <span class="number">2</span> <span class="number">0x12d391e</span> Logical </span><br><span class="line"><span class="number">1</span> <span class="number">0</span> Host Group ibm <span class="number">7</span>/<span class="number">11</span>/<span class="number">19</span> <span class="number">3</span>:<span class="number">07</span>:<span class="number">58</span> AM <span class="number">0xa97061e</span> Tray <span class="number">85</span>, Slot <span class="number">6</span> <span class="number">0x12d391e</span> Physical </span><br><span class="line"></span><br><span class="line">Script execution complete.</span><br></pre></td></tr></table></figure>
-<p>可以看到这两个扇区的详细状况，然后继续执行命令清除这两个扇区</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear allVolumes unreadableSectors;</span><br></pre></td></tr></table></figure>
-
-<p>最后重新查看</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">show storageArray unreadableSectors;</span><br><span class="line">Executing script...</span><br><span class="line">There are currently no unreadable sectors on the storage array.</span><br><span class="line">Script execution complete.</span><br></pre></td></tr></table></figure>
-<p>可以看到已经没有不可读取的扇区了，阵列的报警灯也恢复正常。<br>注意，那两个扇区的数据应该是丢失了，应用程序如果需要这些数据应该通过其他途径恢复数据。</p>
 
       
     </div>
