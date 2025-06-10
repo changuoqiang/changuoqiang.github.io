@@ -5582,15 +5582,16 @@ $_SESSION\["submitid"\] += 1;
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#groupadd oinstall</span><br><span class="line">#groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line">#groupadd nobody</span><br></pre></td></tr></table></figure>
 
 <p>3、准备目录结构</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chown -R oracle:oinstall /u01/app</span><br><span class="line">#chown -R oracle:oinstall /u01/app/oracle</span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chmod <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
 
-<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录，以oracle用户执行</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ tar zxvf /tmp/oracle.tar.gz -C /</span><br></pre></td></tr></table></figure>
-<p>以root用户执行:</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
+<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle.tar.gz -C /</span><br><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
 
 <p>5、oracle用户配置<br>.bashrc添加如下环境变量</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> ORACLE_SID=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_UNQNAME=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_OWNER=oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_BASE=<span class="regexp">/u01/</span>app/oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=$ORACLE_BASE/product/<span class="number">10.2</span><span class="number">.0</span>/db_1</span><br><span class="line"><span class="keyword">export</span> PATH=$ORACLE_HOME/bin:$PATH</span><br><span class="line"><span class="keyword">export</span> TNS_ADMIN=$ORACLE_HOME/network/admin</span><br><span class="line"><span class="keyword">export</span> SQLPATH=$ORACLE_HOME/scripts</span><br><span class="line"><span class="keyword">export</span> LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<p>6、安装libaio1</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># apt install libaio1</span><br></pre></td></tr></table></figure>
 
 <p>安装完成，经测试可以正常创建数据库，正常使用。</p>
 <p>References:<br>[1]<a href="https://wiki.debian.org/OracleDB">OracleDB</a></p>
@@ -25316,6 +25317,9 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
 
 <h3 id="更改默认用户"><a href="#更改默认用户" class="headerlink" title="更改默认用户"></a>更改默认用户</h3><p>默认超级管理员用户cassandra是无法删除的，可以为其设置极其复杂的密码，并将其设置为非超级用户来提高系统安全性</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cqlsh&gt; ALTER ROLE cassandra WITH PASSWORD=<span class="string">&#x27;SomeNonsenseThatNoOneWillThinkOf&#x27;</span></span><br><span class="line">    AND SUPERUSER=<span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或者将其禁用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cqlsh&gt; ALTER ROLE cassandra WITH SUPERUSER = <span class="literal">false</span> AND LOGIN = <span class="literal">false</span>;</span><br><span class="line">$ cqlsh -ucassandra -pcassandra host</span><br><span class="line">$ Connection error: (<span class="string">&#x27;Unable to connect to any servers&#x27;</span>, &#123;host: AuthenticationFailed(<span class="string">&#x27;Failed to authenticate to host: Error from server:</span></span><br><span class="line"><span class="string"> code=0100 [Bad credentials] message=&quot;cassandra is not permitted to log in&quot;&#x27;</span>,)&#125;)</span><br></pre></td></tr></table></figure>
 
 <h3 id="其他节点依次启用密码认证"><a href="#其他节点依次启用密码认证" class="headerlink" title="其他节点依次启用密码认证"></a>其他节点依次启用密码认证</h3><p>References:</p>
 <p>[1]<a href="https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/configuration/secureConfigNativeAuth.html">Configuring authentication</a></p>

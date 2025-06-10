@@ -31,7 +31,7 @@
 <meta property="og:description" content="oracle 10g已经太老了，直接在debian buster上安装是不可以的。但可以迂回一下，先在debian squeeze上安装，然后将安装好的oracle文件打包拷贝到debian buster相同的目录结构下，并且使用相同的用户和组权限。 一、安装 1、安装squeeze及支持组件 下载squeeze最后的版本6.0.10，脱机安装完毕后，编辑&#x2F;etc&#x2F;apt&#x2F;sources.lis">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-04-28T14:12:33.000Z">
-<meta property="article:modified_time" content="2020-12-07T02:20:40.993Z">
+<meta property="article:modified_time" content="2025-06-10T08:34:07.220Z">
 <meta property="article:author" content="openwares">
 <meta property="article:tag" content="Oracle">
 <meta name="twitter:card" content="summary">
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:40" itemprop="dateModified" datetime="2020-12-07T10:20:40+08:00">2020-12-07</time>
+        <time title="Modified: 2025-06-10 16:34:07" itemprop="dateModified" datetime="2025-06-10T16:34:07+08:00">2025-06-10</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -364,15 +364,16 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#groupadd oinstall</span><br><span class="line">#groupadd dba</span><br><span class="line"># adduser oracle</span><br><span class="line"># usermod -g oinstall -G dba oracle</span><br><span class="line"><span class="comment">//# useradd -g oinstall -G dba oracle</span></span><br><span class="line"><span class="comment">//# passwd oracle</span></span><br><span class="line">#groupadd nobody</span><br></pre></td></tr></table></figure>
 
 <p>3、准备目录结构</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chown -R oracle:oinstall /u01/app</span><br><span class="line">#chown -R oracle:oinstall /u01/app/oracle</span><br><span class="line">#chmod -R <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#mkdir -p /u01/app/oracle</span><br><span class="line">#chown -R oracle:oinstall /u01</span><br><span class="line">#chmod <span class="number">775</span> /u01/app/oracle</span><br><span class="line"></span><br><span class="line">#usermod -d /u01/app/oracle oracle</span><br><span class="line">#usermod -s /bin/bash oracle</span><br></pre></td></tr></table></figure>
 
-<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录，以oracle用户执行</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf /tmp/oracle.tar.gz -C /</span><br></pre></td></tr></table></figure>
-<p>以root用户执行:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
+<p>4、buster上还原oracle<br>将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar zxvf /tmp/oracle.tar.gz -C /</span><br><span class="line"># tar zxvf /tmp/oracle_conf.tar.gz -C /</span><br></pre></td></tr></table></figure>
 
 <p>5、oracle用户配置<br>.bashrc添加如下环境变量</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> ORACLE_SID=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_UNQNAME=orcl</span><br><span class="line"><span class="keyword">export</span> ORACLE_OWNER=oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_BASE=<span class="regexp">/u01/</span>app/oracle</span><br><span class="line"><span class="keyword">export</span> ORACLE_HOME=$ORACLE_BASE/product/<span class="number">10.2</span><span class="number">.0</span>/db_1</span><br><span class="line"><span class="keyword">export</span> PATH=$ORACLE_HOME/bin:$PATH</span><br><span class="line"><span class="keyword">export</span> TNS_ADMIN=$ORACLE_HOME/network/admin</span><br><span class="line"><span class="keyword">export</span> SQLPATH=$ORACLE_HOME/scripts</span><br><span class="line"><span class="keyword">export</span> LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<p>6、安装libaio1</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># apt install libaio1</span><br></pre></td></tr></table></figure>
 
 <p>安装完成，经测试可以正常创建数据库，正常使用。</p>
 <p>References:<br>[1]<a target="_blank" rel="noopener" href="https://wiki.debian.org/OracleDB">OracleDB</a></p>
