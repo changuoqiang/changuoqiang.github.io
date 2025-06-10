@@ -127,21 +127,16 @@ $ tar zcvf /tmp/oracle_conf.tar.gz /etc/oratab /etc/oraInst.loc /usr/local/bin/ 
 ```js
 #mkdir -p /u01/app/oracle
 #chown -R oracle:oinstall /u01
-#chown -R oracle:oinstall /u01/app
-#chown -R oracle:oinstall /u01/app/oracle
-#chmod -R 775 /u01/app/oracle
+#chmod 775 /u01/app/oracle
 
 #usermod -d /u01/app/oracle oracle
 #usermod -s /bin/bash oracle
 ```
 
 4、buster上还原oracle
-将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录，以oracle用户执行
+将oracle.tar.gz和oracle_conf.tar.gz拷贝到/tmp目录
 ```js
-$ tar zxvf /tmp/oracle.tar.gz -C /
-```
-以root用户执行:
-```js
+# tar zxvf /tmp/oracle.tar.gz -C /
 # tar zxvf /tmp/oracle_conf.tar.gz -C /
 ```
 
@@ -157,6 +152,11 @@ export PATH=$ORACLE_HOME/bin:$PATH
 export TNS_ADMIN=$ORACLE_HOME/network/admin
 export SQLPATH=$ORACLE_HOME/scripts
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+```
+
+6、安装libaio1
+```js
+# apt install libaio1
 ```
 
 安装完成，经测试可以正常创建数据库，正常使用。
