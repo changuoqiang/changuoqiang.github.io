@@ -25373,4 +25373,29 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>cassandra</tag>
       </tags>
   </entry>
+  <entry>
+    <title>debian bookworm set oracle 10g systemd service</title>
+    <url>/2025/06/16/debian-bookworm-set-oracle-10g-systemd-service/</url>
+    <content><![CDATA[<p>debian bookworm配置systemd管理oracle 10g服务</p>
+<a id="more"></a>
+
+<h3 id="配置-etc-oratab文件"><a href="#配置-etc-oratab文件" class="headerlink" title="配置/etc/oratab文件"></a>配置/etc/oratab文件</h3><p>这是dbstart和dbshut脚本要使用的配置文件，用于配置可启动的oracle实例</p>
+<p>oratab文件中项的格式为</p>
+<p><code>$ORACLE_SID:$ORACLE_HOME:N | Y</code></p>
+<p>每个$ORACLE_SID只能有一个项,Y表示可以通过dbstart工具启动，比如：</p>
+<p><code>orcl:/u01/app/oracle/product/10.2.0/db_1:Y</code></p>
+<h3 id="添加systemd-service-unit文件"><a href="#添加systemd-service-unit文件" class="headerlink" title="添加systemd service unit文件"></a>添加systemd service unit文件</h3><p>单元文件为<code>/etc/systemd/system/oracle10g.service</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Oracle 10g Database Service</span><br><span class="line">After=network.target</span><br><span class="line">Requires=network-online.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">User=oracle</span><br><span class="line">Group=oinstall</span><br><span class="line">Environment=<span class="string">&quot;ORACLE_HOME=/u01/app/oracle/product/10.2.0/db_1&quot;</span></span><br><span class="line">Environment=<span class="string">&quot;ORACLE_SID=orcl&quot;</span></span><br><span class="line">ExecStart=/bin/bash /u01/app/oracle/product/10.2.0/db_1/bin/dbstart <span class="variable">$ORACLE_HOME</span></span><br><span class="line">ExecStop=/bin/bash /u01/app/oracle/product/10.2.0/db_1/bin/dbshut <span class="variable">$ORACLE_HOME</span></span><br><span class="line">Restart=on-failure</span><br><span class="line">TimeoutSec=600</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用并启动oracle-10g服务"><a href="#启用并启动oracle-10g服务" class="headerlink" title="启用并启动oracle 10g服务"></a>启用并启动oracle 10g服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl <span class="built_in">enable</span> oracl10g</span><br><span class="line">$ sudo systemctl start oracle10g</span><br><span class="line">$ sudo systemctl status oracle10g</span><br><span class="line"> oracle10g.service - Oracle 10g Database Service</span><br><span class="line">     Loaded: loaded (/etc/systemd/system/oracle10g.service; enabled; preset: enabled)</span><br><span class="line">     Active: active (running) since Mon 2025-06-16 14:56:06 CST; 1s ago</span><br><span class="line">    Process: 17466 ExecStart=/bin/bash /u01/app/oracle/product/10.2.0/db_1/bin/dbstart <span class="variable">$ORACLE_HOME</span> (code=exited, status=0/SUCCESS)</span><br><span class="line">      Tasks: 22 (<span class="built_in">limit</span>: 38313)</span><br><span class="line">     Memory: 437.4M</span><br><span class="line">        CPU: 2.886s</span><br><span class="line">     CGroup: /system.slice/oracle10g.service</span><br><span class="line">             ├─17474 /u01/app/oracle/product/10.2.0/db_1/bin/tnslsnr LISTENER -inherit</span><br><span class="line">             ├─17565 ora_pmon_orcl</span><br><span class="line">             ├─17567 ora_psp0_orcl</span><br><span class="line">             ├─17569 ora_mman_orcl</span><br><span class="line">             ├─17571 ora_dbw0_orcl</span><br><span class="line">             ├─17573 ora_lgwr_orcl</span><br><span class="line">             ├─17575 ora_ckpt_orcl</span><br><span class="line">             ├─17577 ora_smon_orcl</span><br><span class="line">             ├─17579 ora_reco_orcl</span><br><span class="line">             ├─17581 ora_mmon_orcl</span><br><span class="line">             ├─17583 ora_mmnl_orcl</span><br><span class="line">             ├─17585 ora_d000_orcl</span><br><span class="line">             ├─17587 ora_s000_orcl</span><br><span class="line">             ├─17591 ora_p000_orcl</span><br><span class="line">             ├─17593 ora_p001_orcl</span><br><span class="line">             ├─17595 ora_p002_orcl</span><br><span class="line">             ├─17597 ora_p003_orcl</span><br><span class="line">             ├─17599 ora_p004_orcl</span><br><span class="line">             ├─17603 ora_qmnc_orcl</span><br><span class="line">             └─17673 ora_cjq0_orcl</span><br><span class="line"></span><br><span class="line">Jun 16 14:55:57 web systemd[1]: Starting oracle10g.service - Oracle 10g Database Service...</span><br><span class="line">Jun 16 14:55:58 web bash[17513]: Processing Database instance <span class="string">&quot;orcl&quot;</span>: <span class="built_in">log</span> file /u01/app/oracle/product/10.2.0/db_1/startup.log</span><br><span class="line">Jun 16 14:56:06 web systemd[1]: Started oracle10g.service - Oracle 10g Database Service.</span><br></pre></td></tr></table></figure>
+
+
+]]></content>
+      <categories>
+        <category>Database</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+      </tags>
+  </entry>
 </search>
