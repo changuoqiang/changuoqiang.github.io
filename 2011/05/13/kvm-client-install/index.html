@@ -31,7 +31,7 @@
 <meta property="og:description" content="KVM主机端设置完毕后,开始安装客户机,这里介绍两个客户机的安装,Debian Squeeze AMD64和Windows 2003 x64">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2011-05-13T05:35:52.000Z">
-<meta property="article:modified_time" content="2020-12-07T02:20:41.001Z">
+<meta property="article:modified_time" content="2025-09-28T07:40:04.751Z">
 <meta property="article:author" content="openwares">
 <meta property="article:tag" content="KVM">
 <meta name="twitter:card" content="summary">
@@ -303,7 +303,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-07 10:20:41" itemprop="dateModified" datetime="2020-12-07T10:20:41+08:00">2020-12-07</time>
+        <time title="Modified: 2025-09-28 15:40:04" itemprop="dateModified" datetime="2025-09-28T15:40:04+08:00">2025-09-28</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -327,6 +327,7 @@
     <div class="post-body" itemprop="articleBody">
         <p>KVM主机端设置完毕后,开始安装客户机,这里介绍两个客户机的安装,Debian Squeeze AMD64和Windows 2003 x64</p>
 <a id="more"></a>
+
 <p>当然主机系统是64位平台,必须的。</p>
 <p><strong>准备</strong></p>
 <p>因为要使用半虚拟化(Paravirtualized)驱动virtio,但是当前的Debian Stable版本也就是squeeze发行版的kvm并不支持从virtio驱动器启动,所以需要更新一下seabios,从Debian官方sid源下载<a target="_blank" rel="noopener" href="http://ftp.us.debian.org/debian/pool/main/s/seabios/seabios_0.6.1.2-2_all.deb">seabios 0.6.1.2</a>,然后手动安装该包 seabios_0.6.1.2-2_all.deb</p>
@@ -334,27 +335,27 @@
 <p>主机系统只安装了debian基本系统(base system),没有X,因此使用VNC来远程安装客户机，如果使用windows系统,请自行下载TightVNC Viewer。</p>
 <p><strong>KVM核心参数</strong></p>
 <p>这是只简单介绍几个主要的参数,详细的文档请见man kvm。</p>
-<p>-bios file<br>指定虚拟机使用的BIOS,file指定BIOS文件路径</p>
-<p>-smp n[,cores=cores][,threads=threads][,sockets=sockets][,maxcpus=maxcpus]<br>模拟一个有n个cpu的smp系统,可以简单的指定n为一个数值,或者分别指定socket数,core数/socket,线程数/core</p>
-<p>-m megs<br>指定虚拟机使用的内存数量,可以使用M或G后缀</p>
-<p>-rtc [base=utclocaltimedate][,clock=hostvm][,driftfix=noneslew]<br>指定虚拟机使用的时间,linux客户机使用-rtc base=utc,clock=host,windows客户机使用-rtc base=localtime,clock=host</p>
-<p>-net nic,model=virtio,macaddr=52-54-00-12-34-01 -net tap,ifname=tap0<br>桥接网络，客户机网络接口通过tap接口桥接到主机网络，使用的tap接口名为tap0，由/etc/kvm/kvm-ifup来动态配置tap0接口。model=virtio指定虚拟机网卡使用半虚拟化驱动,如果有多个虚拟客户机同时运行则必须指定macaddr为一个独一无二的值,否则会出现mac地址冲突。如果通过主机的/etc/network/interfaces来静态配置tap接口,则此处应在-net tap接口处附加两个另外的参数script=no,downscript=no</p>
-<p>-drive file=debian.img,if=virtio,index=0,media=disk,format=qcow2,cache=writeback<br>指定客户机使用的硬盘驱动器,if=virtio指定使用半虚拟化驱动,index=0指定该硬盘为接口的第一个驱动器,media=disk指定为硬盘驱动器,如果是光盘则为media=cdrom。旧式指定第一个硬盘驱动器的参数为-hda debian.img,已经不再推荐使用。</p>
-<p>-drive file=debian.iso,index=2,media=cdrom或者-hdc debian.iso<br>指定光盘驱动器,debian.iso为使用的光驱映像文件</p>
-<p>-fda file<br>指定软盘驱动器,file为软磁盘镜像 </p>
-<p>-no-fd-bootchk<br>客户机启动时不检查软盘驱动器,加速客户机启动</p>
-<p>-boot order=c<br>指定引导顺序,c为第一个硬盘驱动器,d为第一个光盘驱动器</p>
-<p>-vnc :0<br>将虚拟机的视频输出重定向到vnc端口,通过vnc viewer可以连接到虚拟机的视频输出</p>
-<p>-nographic<br>禁止kvm虚拟机的视频输出</p>
-<p>-daemonize<br>后台运行虚拟机</p>
+<p><code>-bios file</code><br>指定虚拟机使用的BIOS,file指定BIOS文件路径</p>
+<p><code>-smp n[,cores=cores][,threads=threads][,sockets=sockets][,maxcpus=maxcpus]</code><br>模拟一个有n个cpu的smp系统,可以简单的指定n为一个数值,或者分别指定socket数,core数/socket,线程数/core</p>
+<p><code>-m megs</code><br>指定虚拟机使用的内存数量,可以使用M或G后缀</p>
+<p><code>-rtc [base=utclocaltimedate][,clock=hostvm][,driftfix=noneslew]</code><br>指定虚拟机使用的时间,linux客户机使用<code>-rtc base=utc,clock=host</code>,windows客户机使用<code>-rtc base=localtime,clock=host</code></p>
+<p><code>-net nic,model=virtio,macaddr=52-54-00-12-34-01 -net tap,ifname=tap0</code><br>桥接网络，客户机网络接口通过tap接口桥接到主机网络，使用的tap接口名为tap0，由<code>/etc/kvm/kvm-ifup</code>来动态配置tap0接口。<code>model=virtio</code>指定虚拟机网卡使用半虚拟化驱动,如果有多个虚拟客户机同时运行则必须指定macaddr为一个独一无二的值,否则会出现mac地址冲突。如果通过主机的<code>/etc/network/interfaces</code>来静态配置tap接口,则此处应在-net tap接口处附加两个另外的参数<code>script=no,downscript=no</code></p>
+<p><code>-drive file=debian.img,if=virtio,index=0,media=disk,format=qcow2,cache=writeback</code><br>指定客户机使用的硬盘驱动器,<code>if=virtio</code>指定使用半虚拟化驱动,<code>index=0</code>指定该硬盘为接口的第一个驱动器,<code>media=disk</code>指定为硬盘驱动器,如果是光盘则为<code>media=cdrom</code>。旧式指定第一个硬盘驱动器的参数为<code>-hda debian.img</code>,已经不再推荐使用。</p>
+<p><code>-drive file=debian.iso,index=2,media=cdrom</code><br>或者<br><code>-hdc debian.iso</code><br>指定光盘驱动器,debian.iso为使用的光驱映像文件</p>
+<p><code>-fda file</code><br>指定软盘驱动器,file为软磁盘镜像 </p>
+<p><code>-no-fd-bootchk</code><br>客户机启动时不检查软盘驱动器,加速客户机启动</p>
+<p><code>-boot order=c</code><br>指定引导顺序,c为第一个硬盘驱动器,d为第一个光盘驱动器</p>
+<p><code>-vnc :0</code><br>将虚拟机的视频输出重定向到vnc端口,通过vnc viewer可以连接到虚拟机的视频输出</p>
+<p><code>-nographic</code><br>禁止kvm虚拟机的视频输出</p>
+<p><code>-daemonize</code><br>后台运行虚拟机</p>
 <p><strong>安装Debian Squeeze AMD64客户机</strong></p>
 <p>使用一下脚本开始安装debian客户机</p>
 <p>1 #!/bin/bash<br>2<br>3 sudo kvm -bios /usr/share/seabios/bios.bin -smp 16 -m 4G -rtc base=utc,clock=host       <strong>\</strong><br>4     -net nic,model=virtio,macaddr=52-54-00-12-34-01 -net tap,ifname=tap0                <strong>\</strong><br>5     -boot order=c -no-fd-bootchk                                                        <strong>\</strong><br>6     -drive file=debian.img,if=virtio,index=0,media=disk,format=qcow2,cache=writeback    <strong>\</strong><br>7     -drive file=debian.iso,index=2,media=cdrom                                          <strong>\</strong><br>8     -vnc :0  </p>
 <p>这里指定虚拟机使用的BIOS,这样安装完成后才能从virtio磁盘启动客户机,debian.iso为客户机安装光盘镜像,远程通过vnc viewer连接到主机开始安装客户机,Debian Squeeze内置支持virtio设备支持,因此正常安装即可。</p>
-<p>安装完毕开启sshd后,将-vnc :0参数更换为-nographic -daemonize,以后通过ssh登录即可。</p>
+<p>安装完毕开启sshd后,将<code>-vnc :0</code>参数更换为<code>-nographic -daemonize</code>,以后通过ssh登录即可。</p>
 <p><strong>安装windows 2003 R2 x64客户机</strong></p>
-<p>首先从Fedora下载<a target="_blank" rel="noopener" href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">virtio for windows驱动</a>,使用如下脚本启动虚拟安装<br>1 #!/bin/bash<br>2<br>3 sudo kvm -bios /usr/share/seabios/bios.bin -smp 16 -m 2G -rtc base=localtime,clock=host     <strong>\</strong><br>4     -boot order=d                                                                           <strong>\</strong><br>5     -net nic,model=virtio,macaddr=52-54-00-12-34-02 -net tap,ifname=tap1                    <strong>\</strong><br>6     -drive file=win2k3_dns.qcow2,if=virtio,index=0,media=disk,format=qcow2,cache=writeback  <strong>\</strong><br>7     -drive file=windows_2003_r2_x64_cd1.iso,index=2,media=cdrom                             <strong>\</strong><br>8     -fda virtio-win-1.1.16.vfd                                                              <strong>\</strong><br>9     -vnc :0   </p>
-<p>使用vnc viewer连接到主机开始安装,按F6从<a href="/downloads/virtio-win-1.1.16.vfd">virtio软磁盘镜像</a>加载virto驱动,否则会找不到硬盘驱动器,系统安装完成后将光驱换上virtio-win-1.1.16.iso安装virtio网卡驱动,打开远程桌面后将-vnc :0替换成-nographic -daemonize,然后用远程桌面管理虚拟机即可。</p>
+<p>首先从Fedora下载<a target="_blank" rel="noopener" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/">virtio for windows驱动</a>,使用如下脚本启动虚拟安装<br>1 #!/bin/bash<br>2<br>3 sudo kvm -bios /usr/share/seabios/bios.bin -smp 16 -m 2G -rtc base=localtime,clock=host     <strong>\</strong><br>4     -boot order=d                                                                           <strong>\</strong><br>5     -net nic,model=virtio,macaddr=52-54-00-12-34-02 -net tap,ifname=tap1                    <strong>\</strong><br>6     -drive file=win2k3_dns.qcow2,if=virtio,index=0,media=disk,format=qcow2,cache=writeback  <strong>\</strong><br>7     -drive file=windows_2003_r2_x64_cd1.iso,index=2,media=cdrom                             <strong>\</strong><br>8     -fda virtio-win-1.1.16.vfd                                                              <strong>\</strong><br>9     -vnc :0   </p>
+<p>使用vnc viewer连接到主机开始安装,按F6从<a href="/downloads/virtio-win-1.1.16.vfd">virtio软磁盘镜像</a>加载virto驱动,否则会找不到硬盘驱动器,系统安装完成后将光驱换上virtio-win-1.1.16.iso安装virtio网卡驱动,打开远程桌面后将<code>-vnc :0</code>替换成<code>-nographic -daemonize</code>,然后用远程桌面管理虚拟机即可。</p>
 
     </div>
 
