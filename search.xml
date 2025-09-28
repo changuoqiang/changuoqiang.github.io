@@ -25398,4 +25398,32 @@ path留空，则表示根虚拟路径/映射到/path/to/webapps目录。如果pa
         <tag>Oracle</tag>
       </tags>
   </entry>
+  <entry>
+    <title>dnscrypt-proxy-can-not-start</title>
+    <url>/2025/09/28/dnscrypt-proxy-can-not-start/</url>
+    <content><![CDATA[<p>Debian Trixie dnscrypt-proxy 2.1.8 启动问题：无法绑定53端口</p>
+<a id="more"></a>
+
+<p>dnscrypt-proxy 2.1.8启动失败，日志提示：</p>
+<p><code>listen udp4 127.0.0.1:53: bind: permission denied</code></p>
+<p>也就是没有网路权限，无法绑定53端口，低于1024的端口为特权端口，普通用户需要授权才能绑定</p>
+<p>查看systemd服务单元文件，发现dnscrypt-proxy使用非特权用户启动</p>
+<p><code>User=_dnscrypt-proxy</code></p>
+<p>因此需要为非特权用户授权网络权限</p>
+<p><code>$ sudo systemctl edit dnscrypt-proxy.service</code></p>
+<p>添加如下行：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[Service]</span><br><span class="line">AmbientCapabilities=cap_net_bind_service</span><br></pre></td></tr></table></figure>
+
+<p>然后</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ sudo systemctl start dnscrypt-proxy.service</span><br></pre></td></tr></table></figure>
+
+<p>问题解决，可以顺利启动</p>
+]]></content>
+      <categories>
+        <category>GNU/Linux</category>
+      </categories>
+      <tags>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
 </search>
